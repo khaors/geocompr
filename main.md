@@ -202,7 +202,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserved681266b1530877f
+preservee31aa68a4b3708c1
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2724,7 +2724,7 @@ plot(buff, add = TRUE)
 
 <!-- Todo: improve this figure, e.g. by creating a new hidden chunk - still show this one -->
 <div class="figure" style="text-align: center">
-preserve4312a26469de63ca
+preserve5cb3ddc22328b409
 <p class="caption">(\#fig:africa-buff)Subset of the `africa` data selected based on their intersection with a circle 2000 km in radius with a center point at 0 degrees longitude and 0 degrees latitude.</p>
 </div>
 
@@ -4444,10 +4444,12 @@ plot(greenwich_buff_latlon, graticule = st_crs(4326))
 ## CRS transformation
 
 While CRSs can be set manually, it is more common in real world applications to *transform* a known CRS into another.
+CRS transformation could be vital to obtain proper results in many cases.
 A typical example is when geometry data is provided in a geographic CRS but you want to do spatial operations, which require it to be in a projected CRS.
-<!-- CRS also represent spatial relationship between datasets. -->
-<!-- Therefore, spatial operations could only be correctly performed on data with the same CRS. -->
-<!-- - objectives - 1/ to combine different datasets, 2/ area calculations, 3/ distance mesasurement, 4/ navigation, 5/ spatial data representations -->
+It include area calculations or distance measurements.
+CRS also represent spatial relationship between datasets.
+Therefore, spatial operations on multiply datasets can only be correctly performed when all the data have the same CRS.
+The most common reason to unify the CRS is to combine different datasets (e.g. merge two rasters) or apply methods which need at least two objects (e.g spatial subsetting or raster map algebra).
 Let's use real-world examples to illustrate this.
 
 ### Vector data
