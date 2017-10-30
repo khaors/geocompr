@@ -75,6 +75,27 @@ browseURL("_book/index.html") # to view it
 
 For further details see the book's GitHub page at [Robinlovelace/geocompr](https://github.com/Robinlovelace/geocompr#geocomputation-with-r).
 
+# Preface
+
+This book is certainly aimed at people with an interest in spatial data analysis with the help of R.
+This includes graduate students and researchers from geography, remote sensing and GIScience but also from other backgrounds as diverse as remote sensing, biogeosciences, ecology, forestry, transportation, ... <!-- please add further fields-->
+This is the beauty of GIScience as it is applicable to all fields dealing with spatial phenomena.
+And even more importantly, GIScience is not only a scientific domain but also used in the public sector and in the business world.
+This makes our book, furthermore, interesting to people dealing with urban planning, transportation (logistics) and (geo-)marketing, ... <!-- please add further examples-->
+This book also aims at persons with a solid knowledge of GIS technologies who wish to automate  their spatial data analysis workflow in a reproducible manner on the command line.
+
+Though we have tried our best to make our book as accessible as possible to a wide audience, people new to R might find it hard at first reading. 
+People who prefer a GUI-based GIS approach over the command line might find this book only interesting from a conceptual point of view. 
+Our programming language is R, and though we refer at times to other languages, people with an interest in geoprocessing with Python, Java, C++ or alike should probably look for another book.
+
+<!-- to think about, not sure if needed but then this would be a good place to point out why our book might have advantages over the other books --> 
+compare with:
+- ASDAR
+- An intro to R for spatial analysis and mapping
+- Remote Sensing and GIS for ecologists
+- Mapping and Environmental and Ecological Statistics with R (not really a competitor, I have ordered a copy, this book is really about modeling, and I would rather prefer the Zuur et al. books over it)
+- http://rspatial.org/intr/index.html (haven't read it but might be more suitable for beginners, however, it does not consider sf; additionally, it provides more code than text, and hence, probably less explanations than our book)
+
 <!-- ## Acknowledgements {-} -->
 <!-- add list of people who helped with this book -->
 
@@ -202,7 +223,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservee31aa68a4b3708c1
+preserve6ca9c96bccd8d529
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2724,7 +2745,7 @@ plot(buff, add = TRUE)
 
 <!-- Todo: improve this figure, e.g. by creating a new hidden chunk - still show this one -->
 <div class="figure" style="text-align: center">
-preserve5cb3ddc22328b409
+preservecfd812e30a8c731b
 <p class="caption">(\#fig:africa-buff)Subset of the `africa` data selected based on their intersection with a circle 2000 km in radius with a center point at 0 degrees longitude and 0 degrees latitude.</p>
 </div>
 
