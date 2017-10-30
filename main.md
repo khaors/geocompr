@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2017-10-29'
+date: '2017-10-30'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -44,7 +44,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2017-10-29 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2017-10-30 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 **bookdown** makes editing a book as easy as editing a wiki, provided you have a GitHub account ([sign-up at github.com](https://github.com/)).
 Once logged-in to GitHub, clicking on the 'edit me' icon highlighted in the image below will take you to the source [R Markdown](http://rmarkdown.rstudio.com/) where you can make changes:
 
@@ -202,7 +202,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservefadcef01c4408f85
+preserve4fd403dbfc237925
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2724,7 +2724,7 @@ plot(buff, add = TRUE)
 
 <!-- Todo: improve this figure, e.g. by creating a new hidden chunk - still show this one -->
 <div class="figure" style="text-align: center">
-preserve5b63e5c09c200671
+preserve76eda54747c5fe52
 <p class="caption">(\#fig:africa-buff)Subset of the `africa` data selected based on their intersection with a circle 2000 km in radius with a center point at 0 degrees longitude and 0 degrees latitude.</p>
 </div>
 
@@ -3089,8 +3089,6 @@ Note that before performing the relation both datasets must be transformed into 
 
 
 ```r
-# factor -> numeric: to be removed with later version of spData
-cycle_hire_osm$capacity = as.numeric(as.character(cycle_hire_osm$capacity))
 x = st_transform(cycle_hire, 27700)
 y = st_transform(cycle_hire_osm, 27700)
 sel = st_is_within_distance(x, y, dist = 20)
@@ -3153,7 +3151,7 @@ In section \@ref(vector-attribute-aggregation) we have already seen how attribut
 Spatial data aggregation is the same conceptually but in addition to aggregating the attribute data, it dissolves the underlying polygons.
 Here, we want to aggregate the state population into regions.
 This means that we not only end up with four rows but also with four polygons (out of 49 in the beginning).
-As with spatial subsetting, spatial aggregation operations work by extending existing functions:
+As with spatial subsetting, spatial aggregation operations work by extending existing functions, as illustrated in the code chunk below which aggregates US states to create the right hand map in Figure \@ref(fig:us-regions).
 
 
 ```r
@@ -3164,7 +3162,10 @@ plot(us_states[, "total_pop_15"], main = "US states")
 plot(regions[, "total_pop_15"], main = "US regions")
 ```
 
-<img src="figures/unnamed-chunk-41-1.png" width="576" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures/us-regions-1.png" alt="Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions. Note the operation automatically dissolves boundaries between touching polygons in the same region." width="576" />
+<p class="caption">(\#fig:us-regions)Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions. Note the operation automatically dissolves boundaries between touching polygons in the same region.</p>
+</div>
 
 Spatial aggregation can also be done in the **tidyverse**, using **dplyr** functions as follows:
 
@@ -3298,7 +3299,7 @@ plot(b)
 plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
 ```
 
-<img src="figures/unnamed-chunk-46-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-45-1.png" width="576" style="display: block; margin: auto;" />
 
 The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
 <!-- Todo: reference r4ds -->

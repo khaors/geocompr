@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2017-10-29">
+<meta name="date" content="2017-10-30">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -524,9 +524,7 @@ Figure 4.6: The spatial distribution of cycle hire points in London based on off
 </p>
 </div>
 <p>Imagine that we need to join the <code>capacity</code> variable in <code>cycle_hire_osm</code> onto the official ‘target’ data contained in <code>cycle_hire</code>. This is when a non-overlapping join is needed. The simplest method is to use the topological operator <code>st_within_distance()</code> shown in section <a href="spatial-data-operations.html#topological-relations">4.2.2</a>. Note that before performing the relation both datasets must be transformed into a projected CRS, saved as new objects denoted by the affix <code>P</code> (for projected) below, using a treshold distance of 20 m:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># factor -&gt; numeric: to be removed with later version of spData</span>
-cycle_hire_osm$capacity =<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">as.character</span>(cycle_hire_osm$capacity))
-x =<span class="st"> </span><span class="kw">st_transform</span>(cycle_hire, <span class="dv">27700</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="kw">st_transform</span>(cycle_hire, <span class="dv">27700</span>)
 y =<span class="st"> </span><span class="kw">st_transform</span>(cycle_hire_osm, <span class="dv">27700</span>)
 sel =<span class="st"> </span><span class="kw">st_is_within_distance</span>(x, y, <span class="dt">dist =</span> <span class="dv">20</span>)
 <span class="kw">summary</span>(<span class="kw">lengths</span>(sel) &gt;<span class="st"> </span><span class="dv">0</span>)
@@ -557,13 +555,18 @@ sel =<span class="st"> </span><span class="kw">st_is_within_distance</span>(x, y
 <div id="aggregating-or-dissolving" class="section level3">
 <h3><span class="header-section-number">4.2.5</span> Aggregating or dissolving</h3>
 <p>In the subsequent sections, we will present spatial operations that also act on and modify the underlying geometry, namely aggregating (dissolving) and clipping operations.</p>
-<p>Like attribute data aggregation, covered in section <a href="attr.html#vector-attribute-aggregation">3.2.2</a>, spatial data aggregation (also known as dissolving polygons) can be a way of <em>condensing</em> data. Aggregated data show some statistic about a variable (typically mean average or total) in relation to some kind of <em>grouping variable</em>. For attribute data aggregation the grouping variable is another variable, typically one with few unique values relative to the number of rows. The <code>REGION</code> variable in the <code>us_states</code> dataset is a good example: there are only four subregions but 49 states (excluding Hawaii and Alaska). In section <a href="attr.html#vector-attribute-aggregation">3.2.2</a> we have already seen how attribute aggregation process condensed the <code>world</code> dataset down into only eight rows. Spatial data aggregation is the same conceptually but in addition to aggregating the attribute data, it dissolves the underlying polygons. Here, we want to aggregate the state population into regions. This means that we not only end up with four rows but also with four polygons (out of 49 in the beginning). As with spatial subsetting, spatial aggregation operations work by extending existing functions:</p>
+<p>Like attribute data aggregation, covered in section <a href="attr.html#vector-attribute-aggregation">3.2.2</a>, spatial data aggregation (also known as dissolving polygons) can be a way of <em>condensing</em> data. Aggregated data show some statistic about a variable (typically mean average or total) in relation to some kind of <em>grouping variable</em>. For attribute data aggregation the grouping variable is another variable, typically one with few unique values relative to the number of rows. The <code>REGION</code> variable in the <code>us_states</code> dataset is a good example: there are only four subregions but 49 states (excluding Hawaii and Alaska). In section <a href="attr.html#vector-attribute-aggregation">3.2.2</a> we have already seen how attribute aggregation process condensed the <code>world</code> dataset down into only eight rows. Spatial data aggregation is the same conceptually but in addition to aggregating the attribute data, it dissolves the underlying polygons. Here, we want to aggregate the state population into regions. This means that we not only end up with four rows but also with four polygons (out of 49 in the beginning). As with spatial subsetting, spatial aggregation operations work by extending existing functions, as illustrated in the code chunk below which aggregates US states to create the right hand map in Figure <a href="spatial-data-operations.html#fig:us-regions">4.7</a>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">regions =<span class="st"> </span><span class="kw">aggregate</span>(<span class="dt">x =</span> us_states[, <span class="st">&quot;total_pop_15&quot;</span>], <span class="dt">by =</span> <span class="kw">list</span>(us_states$REGION),
                     <span class="dt">FUN =</span> sum, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)
 <span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
 <span class="kw">plot</span>(us_states[, <span class="st">&quot;total_pop_15&quot;</span>], <span class="dt">main =</span> <span class="st">&quot;US states&quot;</span>)
 <span class="kw">plot</span>(regions[, <span class="st">&quot;total_pop_15&quot;</span>], <span class="dt">main =</span> <span class="st">&quot;US regions&quot;</span>)</code></pre></div>
-<p><img src="figures/unnamed-chunk-41-1.png" width="576" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span id="fig:us-regions"></span>
+<img src="figures/us-regions-1.png" alt="Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions. Note the operation automatically dissolves boundaries between touching polygons in the same region." width="576" />
+<p class="caption">
+Figure 4.7: Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions. Note the operation automatically dissolves boundaries between touching polygons in the same region.
+</p>
+</div>
 <p>Spatial aggregation can also be done in the <strong>tidyverse</strong>, using <strong>dplyr</strong> functions as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">group_by</span>(us_states, REGION) %&gt;%
 <span class="st">  </span><span class="kw">summarize</span>(<span class="kw">sum</span>(<span class="dt">pop =</span> total_pop_15, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</code></pre></div>
@@ -586,29 +589,29 @@ st_join(buff, africa[, "pop"]) %>%
 # summarize(africa[buff, "pop"], pop = sum(pop, na.rm = TRUE))
 ```
 -->
-<p>The result, <code>buff_agg</code>, is a spatial object with the same geometry as <code>by</code> (the circular buffer in this case) but with an additional variable, <code>pop</code> reporting summary statistics for all features in <code>x</code> that intersect with <code>by</code> (the total population of the countries that touch the buffer in this case). Plotting the result (with <code>plot(buff_agg)</code>) shows that the operation does not really make sense: Figure <a href="spatial-data-operations.html#fig:buff-agg">4.7</a> shows a population of over half a billion people mostly located in a giant circle floating off the west coast of Africa!</p>
+<p>The result, <code>buff_agg</code>, is a spatial object with the same geometry as <code>by</code> (the circular buffer in this case) but with an additional variable, <code>pop</code> reporting summary statistics for all features in <code>x</code> that intersect with <code>by</code> (the total population of the countries that touch the buffer in this case). Plotting the result (with <code>plot(buff_agg)</code>) shows that the operation does not really make sense: Figure <a href="spatial-data-operations.html#fig:buff-agg">4.8</a> shows a population of over half a billion people mostly located in a giant circle floating off the west coast of Africa!</p>
 <div class="figure" style="text-align: center"><span id="fig:buff-agg"></span>
 <img src="figures/buff-agg-1.png" alt="Result of spatial aggregation showing the total population of countries that intersect with a large circle whose center lies at 0 degrees longitude and latitude." width="576" />
 <p class="caption">
-Figure 4.7: Result of spatial aggregation showing the total population of countries that intersect with a large circle whose center lies at 0 degrees longitude and latitude.
+Figure 4.8: Result of spatial aggregation showing the total population of countries that intersect with a large circle whose center lies at 0 degrees longitude and latitude.
 </p>
 </div>
-<p>The results of the spatial aggregation exercise presented in Figure <a href="spatial-data-operations.html#fig:buff-agg">4.7</a> are unrealistic for three reasons:</p>
+<p>The results of the spatial aggregation exercise presented in Figure <a href="spatial-data-operations.html#fig:buff-agg">4.8</a> are unrealistic for three reasons:</p>
 <ul>
 <li>People do not live in the sea (the geometry of the aggregating object is not appropriate for the geometry target object).</li>
 <li>This method would ‘double count’ countries whose borders cross aggregating polygons when multiple, spatially contiguous, features are used as the aggregating object.</li>
 <li>It is wrong to assume that all the people living in countries that <em>touch</em> the buffer reside <em>within</em> it (the default spatial operator <code>st_intersects()</code> is too ‘greedy’). The most extreme example of this is Algeria, the most northerly country selected: the spatial aggregation operation assumes that all 39 million Algerian citizens reside in the tiny southerly tip that is within the circular buffer.</li>
 </ul>
-<p>A number of methods can be used to overcome these issues, and generate a more realistic population attributed to the circular buffer illustrated in Figure <a href="spatial-data-operations.html#fig:buff-agg">4.7</a>. The simplest of these is to convert the country polygons into points representing their <em>geographic centroids</em> before aggregation, covered in section <a href="spatial-data-operations.html#modifying-geometry-data">4.2.6</a>. <!-- Todo: reference section where we demonstrate geographic centroid generation --> This would ensure that any spatially contiguous aggregating object covering the target object (the Earth in this case) would result in the same total: there would be no double counting. The estimated total population residing within the study area would be more realistic if geographic centroids were used. (The centroid of Algeria, for example, is far outside the aggregating buffer.)</p>
+<p>A number of methods can be used to overcome these issues, and generate a more realistic population attributed to the circular buffer illustrated in Figure <a href="spatial-data-operations.html#fig:buff-agg">4.8</a>. The simplest of these is to convert the country polygons into points representing their <em>geographic centroids</em> before aggregation, covered in section <a href="spatial-data-operations.html#modifying-geometry-data">4.2.6</a>. <!-- Todo: reference section where we demonstrate geographic centroid generation --> This would ensure that any spatially contiguous aggregating object covering the target object (the Earth in this case) would result in the same total: there would be no double counting. The estimated total population residing within the study area would be more realistic if geographic centroids were used. (The centroid of Algeria, for example, is far outside the aggregating buffer.)</p>
 <p>Except in cases where the number of target features per aggregating feature is very large, or where the aggregating object is <em>spatially congruent</em> with the target (covered in section <a href="spatial-data-operations.html#spatial-congruence-and-areal-interpolation">4.2.5.1</a>), using centroids can also lead to errors due to boundary effects: imagine a buffer that covers a large area but contains no centroids. These issues can be tackled when aggregating areal target data with areal interpolation.</p>
 <div id="spatial-congruence-and-areal-interpolation" class="section level4">
 <h4><span class="header-section-number">4.2.5.1</span> Spatial congruence and areal interpolation</h4>
 <p>Spatial congruence is an important concept related to spatial aggregation. An <em>aggregating object</em> object (which we will refer to as <code>y</code>, representing the buffer object in the previous section) is <em>congruent</em> with the target object (<code>x</code>, representing the countries in the previous section) if the two objects have shared borders. Often this is the case for administrative boundary data, whereby the larger units (e.g., Middle Layer Super Output Areas in the UK or districts in many other European countries) are composed of many smaller units (Output Areas in this case, see <a href="https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeography">ons.gov.uk</a> for further details or municipalities in many other European countries).</p>
-<p><em>Incongruent</em> aggregating objects, by contrast, do not share common borders with the target <span class="citation">(Qiu, Zhang, and Zhou <a href="#ref-qiu_development_2012">2012</a>)</span>. This is problematic for spatial aggregation (and other spatial operations) illustrated in Figure <a href="spatial-data-operations.html#fig:areal-example">4.8</a>. Areal interpolation can help to alleviate this issue. It helps to transfer data from one set of areal units to another. A number of algorithms have been developed for areal interpolation, including area weighted and pycnophylactic interpolation methods task <span class="citation">(Tobler <a href="#ref-tobler_smooth_1979">1979</a>)</span>.</p>
+<p><em>Incongruent</em> aggregating objects, by contrast, do not share common borders with the target <span class="citation">(Qiu, Zhang, and Zhou <a href="#ref-qiu_development_2012">2012</a>)</span>. This is problematic for spatial aggregation (and other spatial operations) illustrated in Figure <a href="spatial-data-operations.html#fig:areal-example">4.9</a>. Areal interpolation can help to alleviate this issue. It helps to transfer data from one set of areal units to another. A number of algorithms have been developed for areal interpolation, including area weighted and pycnophylactic interpolation methods task <span class="citation">(Tobler <a href="#ref-tobler_smooth_1979">1979</a>)</span>.</p>
 <div class="figure" style="text-align: center"><span id="fig:areal-example"></span>
 <img src="figures/areal-example-1.png" alt="Illustration of congruent (left) and incongruent (right) areal units." width="576" />
 <p class="caption">
-Figure 4.8: Illustration of congruent (left) and incongruent (right) areal units.
+Figure 4.9: Illustration of congruent (left) and incongruent (right) areal units.
 </p>
 </div>
 <p>The simplest useful method for spatial interpolation is <em>area weighted</em> spatial interpolation. This is implemented in <code>st_interpolate_aw()</code>, as demonstrated below: <!-- well, what you are doing here is weighting the inhabitants presumably on the basis of the area. The link between your congruent and incongruent example is somehow missing. One gets the impression, that the spatial interpolation takes care of incongruencies which is not the case. So I would suggest to clarify the weighting procedure.--></p>
@@ -633,7 +636,7 @@ l =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;x&q
 <div class="figure" style="text-align: center"><span id="fig:points"></span>
 <img src="figures/points-1.png" alt="Overlapping circles." width="576" />
 <p class="caption">
-Figure 4.9: Overlapping circles.
+Figure 4.10: Overlapping circles.
 </p>
 </div>
 <p>Imagine you want to select not one circle or the other, but the space covered by both <code>x</code> <em>and</em> <code>y</code>. This can be done using the function <code>st_intersection()</code>, illustrated using objects named <code>x</code> and <code>y</code> which represent the left and right-hand circles:</p>
@@ -642,16 +645,16 @@ y =<span class="st"> </span>b[<span class="dv">2</span>]
 x_and_y =<span class="st"> </span><span class="kw">st_intersection</span>(x, y)
 <span class="kw">plot</span>(b)
 <span class="kw">plot</span>(x_and_y, <span class="dt">col =</span> <span class="st">&quot;lightgrey&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>) <span class="co"># color intersecting area</span></code></pre></div>
-<p><img src="figures/unnamed-chunk-46-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-45-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>The subsequent code chunk demonstrate how this works for all combinations of the ‘Venn’ diagram representing <code>x</code> and <code>y</code>, inspired by <a href="http://r4ds.had.co.nz/transform.html#logical-operators">Figure 5.1</a> of the book R for Data Science <span class="citation">(Grolemund and Wickham <a href="#ref-grolemund_r_2016">2016</a>)</span>. <!-- Todo: reference r4ds --></p>
 <div class="figure" style="text-align: center"><span id="fig:venn-clip"></span>
 <img src="figures/venn-clip-1.png" alt="Spatial equivalents of logical operators." width="576" />
 <p class="caption">
-Figure 4.10: Spatial equivalents of logical operators.
+Figure 4.11: Spatial equivalents of logical operators.
 </p>
 </div>
-<p>To illustrate the relationship between subsetting and clipping spatial data, we will subset points that cover the bounding box of the circles <code>x</code> and <code>y</code> in Figure <a href="spatial-data-operations.html#fig:venn-clip">4.10</a>. Some points will be inside just one circle, some will be inside both and some will be inside neither. To generate the points will use a function not yet covered in this book, <code>st_sample()</code>.</p>
-<p>There are two different ways to subset points that fit into combinations of the circles: via clipping and logical operators. But first we must generate some points. We will use the <em>simple random</em> sampling strategy to sample from a box representing the extent of <code>x</code> and <code>y</code>, using the code below to generate the situation plotted in Figure <a href="spatial-data-operations.html#fig:venn-subset">4.11</a>:</p>
+<p>To illustrate the relationship between subsetting and clipping spatial data, we will subset points that cover the bounding box of the circles <code>x</code> and <code>y</code> in Figure <a href="spatial-data-operations.html#fig:venn-clip">4.11</a>. Some points will be inside just one circle, some will be inside both and some will be inside neither. To generate the points will use a function not yet covered in this book, <code>st_sample()</code>.</p>
+<p>There are two different ways to subset points that fit into combinations of the circles: via clipping and logical operators. But first we must generate some points. We will use the <em>simple random</em> sampling strategy to sample from a box representing the extent of <code>x</code> and <code>y</code>, using the code below to generate the situation plotted in Figure <a href="spatial-data-operations.html#fig:venn-subset">4.12</a>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bb =<span class="st"> </span><span class="kw">st_bbox</span>(<span class="kw">st_union</span>(x, y))
 pmat =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(bb[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">2</span>)]), <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)
 box =<span class="st"> </span><span class="kw">st_polygon</span>(<span class="kw">list</span>(pmat))
@@ -665,7 +668,7 @@ p =<span class="st"> </span><span class="kw">st_sample</span>(<span class="dt">x
 <div class="figure" style="text-align: center"><span id="fig:venn-subset"></span>
 <img src="figures/venn-subset-1.png" alt="Randomly distributed points within the bounding box enclosing circles x and y." width="576" />
 <p class="caption">
-Figure 4.11: Randomly distributed points within the bounding box enclosing circles x and y.
+Figure 4.12: Randomly distributed points within the bounding box enclosing circles x and y.
 </p>
 </div>
 </div>
@@ -684,7 +687,7 @@ Figure 4.11: Randomly distributed points within the bounding box enclosing circl
 elev[<span class="kw">cellFromXY</span>(elev, <span class="dt">xy =</span> <span class="kw">c</span>(-<span class="fl">1.5</span>, <span class="fl">1.5</span>))]
 <span class="co"># the same as</span>
 <span class="kw">extract</span>(elev, <span class="kw">data.frame</span>(<span class="dt">x =</span> -<span class="fl">1.5</span>, <span class="dt">y =</span> <span class="fl">1.5</span>))</code></pre></div>
-<p>The <code>cellFromXY()</code> and the <code>extract()</code> command accept also a <code>SpatialPoints</code> or <code>SpatialPointsDataFrame</code> object (though not an <strong>sf</strong> object). We can also use a raster object to subset another raster object (Figure <a href="spatial-data-operations.html#fig:raster-subset">4.12</a> left panel).</p>
+<p>The <code>cellFromXY()</code> and the <code>extract()</code> command accept also a <code>SpatialPoints</code> or <code>SpatialPointsDataFrame</code> object (though not an <strong>sf</strong> object). We can also use a raster object to subset another raster object (Figure <a href="spatial-data-operations.html#fig:raster-subset">4.13</a> left panel).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">clip =<span class="st"> </span><span class="kw">raster</span>(<span class="dt">nrow =</span> <span class="dv">3</span>, <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">res =</span> <span class="fl">0.3</span>, <span class="dt">xmn =</span> <span class="fl">0.9</span>, <span class="dt">xmx =</span> <span class="fl">1.8</span>, 
               <span class="dt">ymn =</span> -<span class="fl">0.45</span>, <span class="dt">ymx =</span> <span class="fl">0.45</span>, <span class="dt">vals =</span> <span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">9</span>))
 elev[clip]
@@ -705,10 +708,10 @@ elev[clip]
 <div class="figure" style="text-align: center"><span id="fig:raster-subset"></span>
 <img src="figures/04_raster_subset.png" alt="Subsetting raster values with the help of another raster (left). Raster mask (middle). Output of masking a raster." width="1125" />
 <p class="caption">
-Figure 4.12: Subsetting raster values with the help of another raster (left). Raster mask (middle). Output of masking a raster.
+Figure 4.13: Subsetting raster values with the help of another raster (left). Raster mask (middle). Output of masking a raster.
 </p>
 </div>
-<p>Frequently, however, we have two rasters with the same extent and resolution where one raster object serves as a mask (Figure <a href="spatial-data-operations.html#fig:raster-subset">4.12</a> middle and right panel). In these cases <code>intersect()</code> and <code>crop()</code> are of little use. Instead we can use the <code>[</code> again or the <code>mask()</code> and <code>overlay()</code> commands:</p>
+<p>Frequently, however, we have two rasters with the same extent and resolution where one raster object serves as a mask (Figure <a href="spatial-data-operations.html#fig:raster-subset">4.13</a> middle and right panel). In these cases <code>intersect()</code> and <code>crop()</code> are of little use. Instead we can use the <code>[</code> again or the <code>mask()</code> and <code>overlay()</code> commands:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rmask =<span class="st"> </span><span class="kw">raster</span>(<span class="dt">nrow =</span> <span class="dv">6</span>, <span class="dt">ncol =</span> <span class="dv">6</span>, <span class="dt">res =</span> <span class="fl">0.5</span>, 
                <span class="dt">xmn =</span> -<span class="fl">1.5</span>, <span class="dt">xmx =</span> <span class="fl">1.5</span>, <span class="dt">ymn =</span> -<span class="fl">1.5</span>, <span class="dt">ymx =</span> <span class="fl">1.5</span>,
                <span class="dt">vals =</span> <span class="kw">sample</span>(<span class="kw">c</span>(<span class="ot">FALSE</span>, <span class="ot">TRUE</span>), <span class="dv">36</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>))
@@ -755,13 +758,13 @@ NDVI&amp;= \frac{\text{NIR} - \text{Red}}{\text{NIR} + \text{Red}}\\
 </div>
 <div id="focal-operations" class="section level3">
 <h3><span class="header-section-number">4.3.4</span> Focal operations</h3>
-<p>While local functions operate on one cell, though possibly from multiple layers, <strong>focal</strong> operations take into account a central cell and its neighbors. The neighborhood (also named kernel, filter or moving window) under consideration is typically of size 3-by-3 cells (that is the central cell and its eight surrounding neighbors) but can take on any other (not necessarily rectangular) shape as defined by the user. A focal operation applies an aggregation function to all cells within the specified neighborhood, uses the corresponding output as the new value for the the central cell, and moves on to the next central cell (Figure <a href="spatial-data-operations.html#fig:focal-example">4.13</a>). Other names for this operation are spatial filtering and convolution <span class="citation">(Burrough, McDonnell, and Lloyd <a href="#ref-burrough_principles_2015">2015</a>)</span>.</p>
+<p>While local functions operate on one cell, though possibly from multiple layers, <strong>focal</strong> operations take into account a central cell and its neighbors. The neighborhood (also named kernel, filter or moving window) under consideration is typically of size 3-by-3 cells (that is the central cell and its eight surrounding neighbors) but can take on any other (not necessarily rectangular) shape as defined by the user. A focal operation applies an aggregation function to all cells within the specified neighborhood, uses the corresponding output as the new value for the the central cell, and moves on to the next central cell (Figure <a href="spatial-data-operations.html#fig:focal-example">4.14</a>). Other names for this operation are spatial filtering and convolution <span class="citation">(Burrough, McDonnell, and Lloyd <a href="#ref-burrough_principles_2015">2015</a>)</span>.</p>
 <p>In R, we can use the <code>focal()</code> function to perform spatial filtering. We define the shape of the moving window with a <code>matrix</code> whose values correspond to weights (see <code>w</code> parameter in the code chunk below). Secondly, the <code>fun</code> parameter lets us specify the function we wish to apply to this neighborhood. Here, we choose the minimum, but any other summary function, including <code>sum()</code>, <code>mean()</code>, or <code>var()</code> can be used.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">r_focal =<span class="st"> </span><span class="kw">focal</span>(elev, <span class="dt">w =</span> <span class="kw">matrix</span>(<span class="dv">1</span>, <span class="dt">nrow =</span> <span class="dv">3</span>, <span class="dt">ncol =</span> <span class="dv">3</span>), <span class="dt">fun =</span> min)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:focal-example"></span>
 <img src="figures/04_focal_example.png" alt="Input raster (left) and resulting output raster (right) due to a focal operation - summing up 3-by-3 windows." width="475" />
 <p class="caption">
-Figure 4.13: Input raster (left) and resulting output raster (right) due to a focal operation - summing up 3-by-3 windows.
+Figure 4.14: Input raster (left) and resulting output raster (right) due to a focal operation - summing up 3-by-3 windows.
 </p>
 </div>
 <p>We can quickly check if the output meets our expectations. In our example, the minimum value has to be always the upper left corner of the moving window (remember we have created the input raster by rowwise incrementing the cell values by one starting at the upper left corner). In this example, the weighting matrix consists only of 1s, meaning each cell has the same weight on the output, but this can be changed.</p>
@@ -784,7 +787,7 @@ z
 <div id="global-operations-and-distances" class="section level3">
 <h3><span class="header-section-number">4.3.6</span> Global operations and distances</h3>
 <p><em>Global</em> operations are a special case of zonal operations with the entire raster dataset representing a single zone. The most common global operations are descriptive statistics for the entire raster dataset such as the minimum or maximum (see previous chapter). Aside from that, global operations are also useful for the computation of distance and weight rasters. In the first case, one can calculate the distance from each cell to a specific target cell. For example, one might want to compute the distance to the nearest coast (see also <code>raster::distance()</code>). We might also want to consider topography, that means, we are not only interested in the pure distance but would like also to avoid the crossing of mountain ranges when going to the coast. To do so, we can weight the distance with elevation so that each additional altitudinal meter ‘prolongs’ the euclidean distance. Visibility and viewshed computations also belong to the family of global operations <!--(in the exercises of Chapter ?? you will compute a viewshed raster)-->. <!-- reference 13-gis chapter--></p>
-<p>Many map algebra operations have a counterpart in vector processing <span class="citation">(Liu and Mason <a href="#ref-liu_essential_2009">2009</a>)</span>. Computing a distance raster (zonal operation) while only considering a maximum distance (logical focal operation) is the equivalent to a vector buffer operation (section <a href="spatial-data-operations.html#modifying-geometry-data">4.2.6</a>). Reclassifying raster data (either local or zonal function depending on the input) is equivalent to dissolving vector data (section <a href="spatial-data-operations.html#spatial-joining-and-aggregation">4.2.3</a>). Overlaying two rasters (local operation), where one contains <code>NULL</code> or <code>NA</code> values representing a mask, is similar to vector clipping (section <a href="spatial-data-operations.html#modifying-geometry-data">4.2.6</a>). Quite similar to spatial clipping is intersecting two layers (section <a href="spatial-data-operations.html#spatial-subsetting">4.2.1</a>). The difference is that two these two layers (vector or raster) simply share an overlapping area (see Figure <a href="spatial-data-operations.html#fig:venn-clip">4.10</a> for an example). However, be careful with the wording. Sometimes the same words have slightly different meanings for raster and vector data models. Aggregating in the case of vector data refers to dissolving polygons while it means increasing the resolution in the case of raster data. In fact, one could see dissolving or aggregating polygons as decreasing the resolution. However, zonal operations might be the better raster equivalent compared to changing the cell resolution. Zonal operations can dissolve the cells of one raster in accordance with the zones (categories) of another raster using an aggregation function (see above).</p>
+<p>Many map algebra operations have a counterpart in vector processing <span class="citation">(Liu and Mason <a href="#ref-liu_essential_2009">2009</a>)</span>. Computing a distance raster (zonal operation) while only considering a maximum distance (logical focal operation) is the equivalent to a vector buffer operation (section <a href="spatial-data-operations.html#modifying-geometry-data">4.2.6</a>). Reclassifying raster data (either local or zonal function depending on the input) is equivalent to dissolving vector data (section <a href="spatial-data-operations.html#spatial-joining-and-aggregation">4.2.3</a>). Overlaying two rasters (local operation), where one contains <code>NULL</code> or <code>NA</code> values representing a mask, is similar to vector clipping (section <a href="spatial-data-operations.html#modifying-geometry-data">4.2.6</a>). Quite similar to spatial clipping is intersecting two layers (section <a href="spatial-data-operations.html#spatial-subsetting">4.2.1</a>). The difference is that two these two layers (vector or raster) simply share an overlapping area (see Figure <a href="spatial-data-operations.html#fig:venn-clip">4.11</a> for an example). However, be careful with the wording. Sometimes the same words have slightly different meanings for raster and vector data models. Aggregating in the case of vector data refers to dissolving polygons while it means increasing the resolution in the case of raster data. In fact, one could see dissolving or aggregating polygons as decreasing the resolution. However, zonal operations might be the better raster equivalent compared to changing the cell resolution. Zonal operations can dissolve the cells of one raster in accordance with the zones (categories) of another raster using an aggregation function (see above).</p>
 </div>
 <div id="merging-rasters" class="section level3">
 <h3><span class="header-section-number">4.3.7</span> Merging rasters</h3>
@@ -798,13 +801,13 @@ aut_ch =<span class="st"> </span><span class="kw">merge</span>(aut, ch)</code></
 <div id="aligning-rasters" class="section level3">
 <h3><span class="header-section-number">4.3.8</span> Aligning rasters</h3>
 <p>When merging or performing map algebra on rasters, their resolution, projection, origin and/or extent has to match. Otherwise, how should we add the values of one raster with a resolution of 0.2 decimal degrees to a second with a resolution of 1 decimal degree? The same problem arises when we would like to merge satellite imagery from different sensors with different projections and resolutions. We can deal with such mismatches by aligning the rasters.</p>
-<p>The <code>projectRaster()</code> function reprojects one raster to a desired projection, say from UTM to WGS84. Equally, map algebra operations require the same extent. Following code adds one row and two columns to each side of the raster while setting all new values to an elevation of 1000 meters (<a href="spatial-data-operations.html#fig:extend-example">4.14</a>).</p>
+<p>The <code>projectRaster()</code> function reprojects one raster to a desired projection, say from UTM to WGS84. Equally, map algebra operations require the same extent. Following code adds one row and two columns to each side of the raster while setting all new values to an elevation of 1000 meters (<a href="spatial-data-operations.html#fig:extend-example">4.15</a>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_2 =<span class="st"> </span><span class="kw">extend</span>(elev, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">value =</span> <span class="dv">1000</span>)
 <span class="kw">plot</span>(elev_2)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:extend-example"></span>
 <img src="figures/extend-example-1.png" alt="Original raster extended by 1 one row on each side (top, bottom) and two columns on each side (right, left)." width="576" />
 <p class="caption">
-Figure 4.14: Original raster extended by 1 one row on each side (top, bottom) and two columns on each side (right, left).
+Figure 4.15: Original raster extended by 1 one row on each side (top, bottom) and two columns on each side (right, left).
 </p>
 </div>
 <p>Performing an algebraic operation on two objects with differing extents in R, the <strong>raster</strong> package returns the result for the intersection, and says so in a warning.</p>
@@ -813,7 +816,7 @@ Figure 4.14: Original raster extended by 1 one row on each side (top, bottom) an
 <span class="co">#&gt; their intersection is returned</span></code></pre></div>
 <p>However, we can also align the extent of two rasters with the <code>extend()</code> command. Here, we extend the <code>elev</code> object to the extend of <code>elev_2</code>. The newly added rows and column receive the default value of the <code>value</code> parameter, i.e., <code>NA</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_4 =<span class="st"> </span><span class="kw">extend</span>(elev, elev_2)</code></pre></div>
-<p>The <code>aggregate()</code> and <code>disaggregate()</code> functions help to change the cell size resolution of a raster. For instance, let us aggregate <code>elev</code> from a resolution of 0.5 to a resolution of 1, that means we aggregate by a factor of 2 (Fig. <a href="spatial-data-operations.html#fig:aggregate-example">4.15</a>). Additionally, the output cell value should correspond to the mean of the input cells (but one could use other functions as well such as <code>median()</code>, <code>sum()</code>, etc.):</p>
+<p>The <code>aggregate()</code> and <code>disaggregate()</code> functions help to change the cell size resolution of a raster. For instance, let us aggregate <code>elev</code> from a resolution of 0.5 to a resolution of 1, that means we aggregate by a factor of 2 (Fig. <a href="spatial-data-operations.html#fig:aggregate-example">4.16</a>). Additionally, the output cell value should correspond to the mean of the input cells (but one could use other functions as well such as <code>median()</code>, <code>sum()</code>, etc.):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_agg =<span class="st"> </span><span class="kw">aggregate</span>(elev, <span class="dt">fact =</span> <span class="dv">2</span>, <span class="dt">fun =</span> mean)
 <span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
 <span class="kw">plot</span>(elev)
@@ -821,7 +824,7 @@ Figure 4.14: Original raster extended by 1 one row on each side (top, bottom) an
 <div class="figure" style="text-align: center"><span id="fig:aggregate-example"></span>
 <img src="figures/aggregate-example-1.png" alt="Original raster (left). Aggregated raster (right)." width="576" />
 <p class="caption">
-Figure 4.15: Original raster (left). Aggregated raster (right).
+Figure 4.16: Original raster (left). Aggregated raster (right).
 </p>
 </div>
 <p>Note that the origin of <code>elev_agg</code> has changed, too.</p>
@@ -829,7 +832,7 @@ Figure 4.15: Original raster (left). Aggregated raster (right).
 <span class="co">#&gt; [1] 0 0</span>
 <span class="kw">origin</span>(elev_agg)
 <span class="co">#&gt; [1] 0.5 0.5</span></code></pre></div>
-<p>The origin is the point closest to (0, 0) if you moved towards it in steps of x and y resolution. If two rasters have different origins, their cells do not overlap completely which would make map algebra impossible. To change the origin , use <code>origin()</code>.<a href="#fn19" class="footnoteRef" id="fnref19"><sup>19</sup></a> Looking at figure <a href="spatial-data-operations.html#fig:origin-example">4.16</a> reveals the effect of changing the origin.</p>
+<p>The origin is the point closest to (0, 0) if you moved towards it in steps of x and y resolution. If two rasters have different origins, their cells do not overlap completely which would make map algebra impossible. To change the origin , use <code>origin()</code>.<a href="#fn19" class="footnoteRef" id="fnref19"><sup>19</sup></a> Looking at figure <a href="spatial-data-operations.html#fig:origin-example">4.17</a> reveals the effect of changing the origin.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the aggregated raster</span>
 <span class="kw">plot</span>(elev_agg)
 <span class="co"># change the origin</span>
@@ -839,7 +842,7 @@ Figure 4.15: Original raster (left). Aggregated raster (right).
 <div class="figure" style="text-align: center"><span id="fig:origin-example"></span>
 <img src="figures/origin-example-1.png" alt="Plotting rasters with the same values but different origins." width="576" />
 <p class="caption">
-Figure 4.16: Plotting rasters with the same values but different origins.
+Figure 4.17: Plotting rasters with the same values but different origins.
 </p>
 </div>
 <p>The <code>resample()</code> command lets you align several raster properties in one go, namely origin, extent and resolution. Let us resample an extended <code>elev_agg</code> to the properties of <code>elev</code> again.</p>
@@ -885,7 +888,7 @@ elev_disagg =<span class="st"> </span><span class="kw">resample</span>(elev_agg,
 <div id="exercises-2" class="section level2">
 <h2><span class="header-section-number">4.4</span> Exercises</h2>
 <ol style="list-style-type: decimal">
-<li>Write code that subsets points that are contained within <code>x</code> <em>and</em> <code>y</code> (illustrated by the plot in the 2<sup>nd</sup> row and the 1<sup>st</sup> column in Figure <a href="spatial-data-operations.html#fig:venn-clip">4.10</a>).
+<li>Write code that subsets points that are contained within <code>x</code> <em>and</em> <code>y</code> (illustrated by the plot in the 2<sup>nd</sup> row and the 1<sup>st</sup> column in Figure <a href="spatial-data-operations.html#fig:venn-clip">4.11</a>).
 <ul>
 <li>Create a randomly located point with the command <code>st_point()</code> (refer back to section <a href="spatial-class.html#sfg">2.1.5.2</a> to see how to create spatial data ‘from scratch’).</li>
 </ul></li>
