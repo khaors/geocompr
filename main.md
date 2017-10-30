@@ -202,7 +202,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve4fd403dbfc237925
+preserved681266b1530877f
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2724,7 +2724,7 @@ plot(buff, add = TRUE)
 
 <!-- Todo: improve this figure, e.g. by creating a new hidden chunk - still show this one -->
 <div class="figure" style="text-align: center">
-preserve76eda54747c5fe52
+preserve4312a26469de63ca
 <p class="caption">(\#fig:africa-buff)Subset of the `africa` data selected based on their intersection with a circle 2000 km in radius with a center point at 0 degrees longitude and 0 degrees latitude.</p>
 </div>
 
@@ -3139,8 +3139,11 @@ plot(z["capacity"])
 
 
 <!--### Modifying geometry data; still need to change the corresponding cross-references-->
-### Aggregating or dissolving 
+
+The result of this join has used a spatial operation to change the attribute data associated with simple features but the geometry associated with each feature has remained unchanged.
 In the subsequent sections, we will present spatial operations that also act on and modify the underlying geometry, namely aggregating (dissolving) and clipping operations.
+
+### Dissolving and aggregating polygons
 
 Like attribute data aggregation, covered in section \@ref(vector-attribute-aggregation), spatial data aggregation (also known as dissolving polygons) can be a way of *condensing* data.
 Aggregated data show some statistic about a variable (typically mean average or total) in relation to some kind of *grouping variable*. 
@@ -3157,10 +3160,8 @@ As with spatial subsetting, spatial aggregation operations work by extending exi
 ```r
 regions = aggregate(x = us_states[, "total_pop_15"], by = list(us_states$REGION),
                     FUN = sum, na.rm = TRUE)
-par(mfrow = c(1, 2))
-plot(us_states[, "total_pop_15"], main = "US states")
-plot(regions[, "total_pop_15"], main = "US regions")
 ```
+
 
 <div class="figure" style="text-align: center">
 <img src="figures/us-regions-1.png" alt="Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions. Note the operation automatically dissolves boundaries between touching polygons in the same region." width="576" />
@@ -3299,7 +3300,7 @@ plot(b)
 plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
 ```
 
-<img src="figures/unnamed-chunk-45-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-46-1.png" width="576" style="display: block; margin: auto;" />
 
 The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
 <!-- Todo: reference r4ds -->
