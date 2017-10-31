@@ -91,7 +91,7 @@ People who have only used graphical user interface (GUI) based GIS software such
 However we are confident that, with practice, the command-line approach demonstrated in this book will become intuitive and, for many applications, faster than the point-and-click alternatives provided by mainstream desktop programs.
 For some applications such as Bayesian Spatial Statistics and applications where processes must be automated the command-line approach may be essential for getting the work done.
 
-As outlined in section \@ref(why-r-for-geocomputation) there are many reasons for using R for geocomputation.
+As outlined in section \@ref(why-geocomputation-with-r) there are many reasons for using R for geocomputation.
 Other languages can be used and for some applications Python, Java, C++ or something else may be more appropriate.
 We advocate learning one language in *depth* to gain an understanding of the concepts and to become proficient with one programming languages before dabbling with many, and R can solve the majority of day-to-day challenges that geocomputation skill can solve.
 However, there are excellent resources for learning geocomputation in other languages and we recommend checking-out alternatives outlined in section \@ref(software-for-geocomputation) if your interest is in the wider field of command-line geocomputation.
@@ -232,7 +232,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve0d83c8447c8d5850
+preserve1b52dc29f08aa8d8
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2759,7 +2759,7 @@ plot(buff, add = TRUE)
 
 <!-- Todo: improve this figure, e.g. by creating a new hidden chunk - still show this one -->
 <div class="figure" style="text-align: center">
-preserved84ed4d66c313081
+preserve97978945c6cb7f11
 <p class="caption">(\#fig:africa-buff)Subset of the `africa` data selected based on their intersection with a circle 2000 km in radius with a center point at 0 degrees longitude and 0 degrees latitude.</p>
 </div>
 
