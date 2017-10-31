@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2017-10-30'
+date: '2017-10-31'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -44,7 +44,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2017-10-30 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2017-10-31 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 **bookdown** makes editing a book as easy as editing a wiki, provided you have a GitHub account ([sign-up at github.com](https://github.com/)).
 Once logged-in to GitHub, clicking on the 'edit me' icon highlighted in the image below will take you to the source [R Markdown](http://rmarkdown.rstudio.com/) where you can make changes:
 
@@ -232,7 +232,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve3c621031607a704c
+preserve9341ed4694c538af
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -1673,6 +1673,11 @@ The main difference, comparing to vector data, is that raster objects accepts on
 projection(new_raster) = "+proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs" # set CRS
 ```
 
+<div class="figure" style="text-align: center">
+<img src="figures/02_raster_crs.png" alt="Examples of geographic (WGS 84; left) and projected (NAD83 / UTM zone 12N; right) and coordinate systems for a raster data type" width="475" />
+<p class="caption">(\#fig:raster-crs)Examples of geographic (WGS 84; left) and projected (NAD83 / UTM zone 12N; right) and coordinate systems for a raster data type</p>
+</div>
+
 More information on CRS and spatial tranformation is in chapter \@ref(transform).
 
 ## Units
@@ -2754,7 +2759,7 @@ plot(buff, add = TRUE)
 
 <!-- Todo: improve this figure, e.g. by creating a new hidden chunk - still show this one -->
 <div class="figure" style="text-align: center">
-preservea97ca7ec7ad06c1f
+preserve41ffc97c2499668c
 <p class="caption">(\#fig:africa-buff)Subset of the `africa` data selected based on their intersection with a circle 2000 km in radius with a center point at 0 degrees longitude and 0 degrees latitude.</p>
 </div>
 

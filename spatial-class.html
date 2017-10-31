@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2017-10-30">
+<meta name="date" content="2017-10-31">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -913,7 +913,7 @@ Operations on <code>RasterBrick</code> and <code>RasterStack</code> objects will
 </div>
 <div id="crs-intro" class="section level2">
 <h2><span class="header-section-number">3.3</span> Coordinate Reference Systems</h2>
-<p>Vector and raster spatial data types share concepts intrinsic to spatial data. Perhaps the most fundamental of these is the Coordinate Reference System (CRS), which defines how the spatial elements of the data relate to the surface of the Earth (or other bodies). <!-- Coordinates are meaningles without a CRS, as we don't know theirs units (meters, feets, degrees) or what's the origin --> <!-- (-12579102, 4439107) = (-113, 37) --> Coordinate system could be either geographic or projected (Figures <a href="spatial-class.html#fig:vector-crs">3.9</a> and <a href="#fig:raster-crs"><strong>??</strong></a>).</p>
+<p>Vector and raster spatial data types share concepts intrinsic to spatial data. Perhaps the most fundamental of these is the Coordinate Reference System (CRS), which defines how the spatial elements of the data relate to the surface of the Earth (or other bodies). <!-- Coordinates are meaningles without a CRS, as we don't know theirs units (meters, feets, degrees) or what's the origin --> <!-- (-12579102, 4439107) = (-113, 37) --> Coordinate system could be either geographic or projected (Figures <a href="spatial-class.html#fig:vector-crs">3.9</a> and <a href="spatial-class.html#fig:raster-crs">3.10</a>).</p>
 <div id="geographic-coordinate-systems" class="section level3">
 <h3><span class="header-section-number">3.3.1</span> Geographic coordinate systems</h3>
 <p>Geographic coordinate systems identify any location on the Earth’s surface using two values - longitude and latitude. The first one is an angle from the prime meridian plan and the second one is an angle from the equatorial plane to this location. Therefore, units of geographic coordinate systems are degrees. <!-- for example Los Angeles, Melbourne --></p>
@@ -955,6 +955,12 @@ Figure 3.9: Examples of geographic (WGS 84; left) and projected (NAD83 / UTM zon
 <span class="co">#&gt; [1] &quot;+proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs&quot;</span></code></pre></div>
 <p>The same function, <code>projection()</code>, is used to set a CRS for raster objects. The main difference, comparing to vector data, is that raster objects accepts only <code>proj4</code> definitions:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">projection</span>(new_raster) =<span class="st"> &quot;+proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs&quot;</span> <span class="co"># set CRS</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:raster-crs"></span>
+<img src="figures/02_raster_crs.png" alt="Examples of geographic (WGS 84; left) and projected (NAD83 / UTM zone 12N; right) and coordinate systems for a raster data type" width="475" />
+<p class="caption">
+Figure 3.10: Examples of geographic (WGS 84; left) and projected (NAD83 / UTM zone 12N; right) and coordinate systems for a raster data type
+</p>
+</div>
 <p>More information on CRS and spatial tranformation is in chapter <a href="transform.html#transform">7</a>.</p>
 </div>
 </div>
