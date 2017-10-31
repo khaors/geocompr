@@ -79,7 +79,7 @@ For further details see the book's GitHub page at [Robinlovelace/geocompr](https
 
 This book is aimed at people who are interest in doing spatial data analysis with a modern programming language (R) including:
 
-- People who have learned spatial analysis skills using a desktop Geographic Information System (GIS) such as [QGIS](http://qgis.org/en/site/), [ArcMap](http://desktop.arcgis.com/en/arcmap/) and [SAGA](http://www.saga-gis.org/en/index.html) wanting access to the benefits of a powerful command-line interface [@sherman_desktop_2008]:
+- People who have learned spatial analysis skills using a desktop Geographic Information System (GIS) such as [QGIS](http://qgis.org/en/site/), [ArcMap](http://desktop.arcgis.com/en/arcmap/) and [SAGA](http://www.saga-gis.org/en/index.html) wanting access to the benefits of R --- a powerful (geo)statistical and visualization programming language --- and an interface focussed on the command-line [@sherman_desktop_2008]:
 
 > With the advent of 'modern' GIS software, most people want to point and click their way through life. That’s good, but there is a tremendous amount of flexibility and power waiting for you with the command line. Many times you can do something on the command line in a fraction of the time you
 can do it with a GUI.
@@ -247,7 +247,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservee0ad46758586a183
+preserve6773c2e618d64eb6
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2774,7 +2774,7 @@ plot(buff, add = TRUE)
 
 <!-- Todo: improve this figure, e.g. by creating a new hidden chunk - still show this one -->
 <div class="figure" style="text-align: center">
-preserve75624d80771b3290
+preserve8b6c3284142495e8
 <p class="caption">(\#fig:africa-buff)Subset of the `africa` data selected based on their intersection with a circle 2000 km in radius with a center point at 0 degrees longitude and 0 degrees latitude.</p>
 </div>
 
