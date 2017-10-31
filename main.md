@@ -246,7 +246,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservef205d41520b3e008
+preservec7be2ca7415906ca
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2773,7 +2773,7 @@ plot(buff, add = TRUE)
 
 <!-- Todo: improve this figure, e.g. by creating a new hidden chunk - still show this one -->
 <div class="figure" style="text-align: center">
-preserve7705ef5dd51f503b
+preserve9eed5aeebd05e8b6
 <p class="caption">(\#fig:africa-buff)Subset of the `africa` data selected based on their intersection with a circle 2000 km in radius with a center point at 0 degrees longitude and 0 degrees latitude.</p>
 </div>
 
@@ -4503,7 +4503,7 @@ Let's use real-world examples to illustrate this.
 
 ### Vector data
 
-The dataset `cycle_hire_osm` represents all cycle hire locations across London, take from OpenStreetMap (OSM).
+The dataset `cycle_hire_osm` represents all cycle hire locations across London, taken from OpenStreetMap (OSM).
 It is automatically loaded by the **spData** package, meaning we do not have to load it, and its CRS can be queried as follows:
 
 
@@ -4518,6 +4518,21 @@ st_crs(cycle_hire_osm)
 #> attr(,"class")
 #> [1] "crs"
 ```
+
+<!-- intro about vector transformation (transformation of every point) -->
+<!-- example of using epsg (without "magic number") -->
+<!-- example of using proj4 (expain it and maybe modify) -->
+<!-- show the results (e.g. two/three panels) -->
+<!-- show calculations? e.g area/distance? -->
+<!-- comparing projections? == -->
+<!-- - st_as_sf(x, coords = c("x","y")) -->
+<!-- - st_crs(x) -->
+<!-- - st_transform(x, crs) -->
+<!-- - == -->
+<!-- - !st_is_longlat(x) -->
+<!-- - st_set_crs(x, crs) -->
+<!-- - st_bbox -->
+<!-- - st_wrap_dateline -->
 
 Let's create a new version of it in a projected CRS, using the 'magic number' (a value to be explained subsequently) of 27700:
 
@@ -4547,7 +4562,7 @@ dplyr::filter(crs_codes, code == 27700)
 ```
 
 The result shows that the EPSG code 27700 represents the British National Grid, a result that could have been found by searching online for "[CRS 27700](https://www.google.com/search?q=CRS+27700)".
-This projection is clearly inappropriate for the data: the coordinates represent degrees of longitude and latitude, and this can also be seen by plotting it over a basemap, e.g. with the **mapview** package: `mapview::mapview(sf_points)`.
+This projection is clearly inappropriate for the data: the coordinates represent degrees of longitude and latitude, and this can also be seen by plotting it over a basemap, e.g. with the **mapview** package: `mapview::mapview(cycle_hire_projected)`.
 
 The formula that converts a geographic point into a point on the surface of the Earth is provided by the `proj4string` element of the `crs` (see [proj4.org](http://proj4.org/) for further details):
 
@@ -4559,18 +4574,6 @@ st_crs(27700)$proj4string
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">The EPSG code can be found inside the `crs` attribute of the object's geometry.
 It is hidden from view for most of the time except when the object is printed but can be can identified and set using the `st_crs` function, for example `st_crs(cycle_hire_osm)$epsg`.</div>\EndKnitrBlock{rmdnote}
-
-<!--
-- st_as_sf(x, coords = c("x","y"))
-- st_crs(x)
-- st_transform(x, crs)
-- ==
-- !st_is_longlat(x)
-- st_set_crs(x, crs)
-- st_proj_info("proj");st_proj_info("ellps");st_proj_info("datum");st_proj_info("units")
-- st_bbox
-- st_wrap_dateline
--->
 
 ### Raster data
 
