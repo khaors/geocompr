@@ -232,7 +232,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve0ad761790705c93e
+preserve0d83c8447c8d5850
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2759,7 +2759,7 @@ plot(buff, add = TRUE)
 
 <!-- Todo: improve this figure, e.g. by creating a new hidden chunk - still show this one -->
 <div class="figure" style="text-align: center">
-preserve91a92055e4a7edb2
+preserved84ed4d66c313081
 <p class="caption">(\#fig:africa-buff)Subset of the `africa` data selected based on their intersection with a circle 2000 km in radius with a center point at 0 degrees longitude and 0 degrees latitude.</p>
 </div>
 
