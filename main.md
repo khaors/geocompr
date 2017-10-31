@@ -75,7 +75,7 @@ browseURL("_book/index.html") # to view it
 
 For further details see the book's GitHub page at [Robinlovelace/geocompr](https://github.com/Robinlovelace/geocompr#geocomputation-with-r).
 
-# Preface
+# Preface {-}
 
 This book is aimed at people who are interest in doing spatial data analysis with a modern programming language (R) including:
 
@@ -248,7 +248,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveb21da8e226cbca50
+preserve2e0d0aa7c0986e21
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2775,7 +2775,7 @@ plot(buff, add = TRUE)
 
 <!-- Todo: improve this figure, e.g. by creating a new hidden chunk - still show this one -->
 <div class="figure" style="text-align: center">
-preservee4ba13537f24c334
+preserve3d7477d793fbe201
 <p class="caption">(\#fig:africa-buff)Subset of the `africa` data selected based on their intersection with a circle 2000 km in radius with a center point at 0 degrees longitude and 0 degrees latitude.</p>
 </div>
 
