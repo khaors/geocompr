@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve680514bc17911339
+preserve12bb905308b10a44
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2786,7 +2786,7 @@ plot(buff, add = TRUE)
 
 <!-- Todo: improve this figure, e.g. by creating a new hidden chunk - still show this one -->
 <div class="figure" style="text-align: center">
-preserve1cd479bef52737bd
+preservee73e3f39339fb28c
 <p class="caption">(\#fig:africa-buff)Subset of the `africa` data selected based on their intersection with a circle 2000 km in radius with a center point at 0 degrees longitude and 0 degrees latitude.</p>
 </div>
 
@@ -3895,11 +3895,11 @@ Hence the title of this chapter.
 
 A prior step, before considering geographic data I/O, is to know which datasets are even *available*, where they can be *found*, and how to *retrieve* them.
 This is covered in section \@ref(retrieving-data).
-Having data, we need to know how we can import them in our software.
-<!-- so far, I haven't seen a discussion on the pros and cons -->
-Therefore, it is important to be aware of the most often used spatial file formats and their pros and cons (see section \@ref(file-formats)).
-For the same purposes knowing how to efficiently read and write spatial data is crucial (see sections \@ref(data-input) and \@ref(data-output)).
-We also include a section (\@ref(visual-outputs)) on visualization because outputting data in a human (not just computer) readable format enables non-programmers to benefit from your work.
+Geographic datasets come in many file formats.
+The most common of these, and their pros and cons, are covered in section \@ref(file-formats).
+Geographic data import and output are covered in sections \@ref(data-input) and \@ref(data-output) respectively, in which the emphasis is on maximising speed and minimising the disk space consumed.
+The final section (\@ref(visual-outputs)) briefly outlines methods for saving visual outputs (maps) in preparation for a subsequent chapter dedicated to visualization.
+<!-- Todo: Add reference to vis chapter (RL) -->
 
 I/O is short for "input/output" which means, in plain English, "reading and writing data".
 We use the acronym instead of plain English not to confuse you or to make chapter names short, but because that is the term used in computer science, and it is useful to think of data import and export from a computing perspective.^[
