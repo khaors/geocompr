@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve6c87c06f76aaa82b
+preserveaa2ef9d41f17eba2
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2786,7 +2786,7 @@ plot(buff, add = TRUE)
 
 <!-- Todo: improve this figure, e.g. by creating a new hidden chunk - still show this one -->
 <div class="figure" style="text-align: center">
-preserve1341f0b624c7a2f3
+preservec25e1145102bb741
 <p class="caption">(\#fig:africa-buff)Subset of the `africa` data selected based on their intersection with a circle 2000 km in radius with a center point at 0 degrees longitude and 0 degrees latitude.</p>
 </div>
 
@@ -3888,7 +3888,7 @@ library(raster)
 ## Introduction
 
 This chapter is about reading and writing geographic data.
-Geographic data *import* is a *sine qua non* for geocomputational software because without data real-world applications are impossible.
+Geographic data *import* is a [*sine qua non*](https://en.wikipedia.org/wiki/Sine_qua_non) for geocomputational software because without data real-world applications are impossible.
 The skills taught in this book will enable you to *add value* to data meaning that, for others to benefit from the results, data *output* is vital.
 These two processes go hand-in-hand are referred to as I/O --- short for input/output --- in Computer Science [@gillespie_efficient_2016].
 Hence the title of this chapter.
