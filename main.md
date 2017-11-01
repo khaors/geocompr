@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve6240654036e29b34
+preserve9798e935fa377e89
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2786,7 +2786,7 @@ plot(buff, add = TRUE)
 
 <!-- Todo: improve this figure, e.g. by creating a new hidden chunk - still show this one -->
 <div class="figure" style="text-align: center">
-preserve55b028630f6630c3
+preserve6ea7ccca6ad6bb9d
 <p class="caption">(\#fig:africa-buff)Subset of the `africa` data selected based on their intersection with a circle 2000 km in radius with a center point at 0 degrees longitude and 0 degrees latitude.</p>
 </div>
 
@@ -3899,7 +3899,7 @@ This section demonstrates how to access open access *geoportals* which collectiv
 There is a wide range of geographic file formats, each of which has pros and cons.
 These are described in section \@ref(file-formats).
 The process of actually reading and writing such file formats efficiently is not covered until sections \@ref(data-input) and \@ref(data-output) respectively.
-Finally in section (\@ref(visual-outputs)) we demonstrate methods for saving visual outputs (maps), in preparation for a subsequent chapter dedicated to visualization.
+The final section (\@ref(visual-outputs)) demonstrates methods for saving visual outputs (maps), in preparation for a subsequent chapter dedicated to visualization.
 <!-- Todo: Add reference to vis chapter (RL) -->
 
 I/O is short for "input/output" which means, in plain English, "reading and writing data".
