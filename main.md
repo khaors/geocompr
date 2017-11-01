@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve2ecf28aa12a2e7ae
+preserve6c87c06f76aaa82b
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2786,7 +2786,7 @@ plot(buff, add = TRUE)
 
 <!-- Todo: improve this figure, e.g. by creating a new hidden chunk - still show this one -->
 <div class="figure" style="text-align: center">
-preserve3ae6a40e7b16aaca
+preserve1341f0b624c7a2f3
 <p class="caption">(\#fig:africa-buff)Subset of the `africa` data selected based on their intersection with a circle 2000 km in radius with a center point at 0 degrees longitude and 0 degrees latitude.</p>
 </div>
 
@@ -3887,9 +3887,14 @@ library(raster)
 
 ## Introduction
 
-The previous chapters provided an overview of spatial data classes in R, with a focus on simple features and rasters.
-This chapter is about getting spatial data onto your computer and then, perhaps after processing it with techniques described in this book, back out to the world.
-Before we can even think about processing data, we need to retrieve it, i.e. we need to know which sources are at our disposal (section \@ref(retrieving-data)).
+This chapter is about reading and writing geographic data.
+Geographic data *import* is a *sine qua non* for geocomputational software because without data real-world applications are impossible.
+The skills taught in this book will enable you to *add value* to data meaning that, for others to benefit from the results, data *output* is vital.
+These two processes go hand-in-hand are referred to as I/O --- short for input/output --- in Computer Science [@gillespie_efficient_2016].
+Hence the title of this chapter.
+
+A prior step, before considering geographic data I/O, is to know which datasets are even *available*, where they can be *found*, and how to *retrieve* them.
+This is covered in section \@ref(retrieving-data).
 Having data, we need to know how we can import them in our software.
 <!-- so far, I haven't seen a discussion on the pros and cons -->
 Therefore, it is important to be aware of the most often used spatial file formats and their pros and cons (see section \@ref(file-formats)).
