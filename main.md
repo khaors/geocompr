@@ -85,11 +85,11 @@ There is no single target audience but we expect the book to be especially usefu
 - Applied researchers and analysts in public, private or third-sector organisations who need the reproducibility, speed and flexibility of a command-line language such as R in applications dealing with spatial data as diverse as Urban and Transport Planning, Logistics, Geo-marketing (store location analysis) and Emergency Planning <!-- please add further examples-->
 
 The book is designed to be accessible to a wide audience.
-We have made the chapters progress gradually in difficulty and exercises are provided at the end of each chapter to ensure understanding.
+The chapters progress gradually in difficulty and exercises are provided at the end of each chapter to ensure understanding.
 However, R novices may find the reproducible code chunks --- an integral part of the book --- difficult to understand and implement at first. 
 
-Tenacious and impatient readers are welcome to dive straight in to the first practical examples in Chapter \@ref(spatial-class).
-However we suggest most R beginners make use resouces to get up-to-speed with R before diving-in at the geocomputational deep end (unless you're just reading the book for an understanding of the concepts).
+Impatient readers are welcome to dive straight into the first practical examples in Chapter \@ref(spatial-class), especially if you're already an experienced R user.
+However we suggest R beginners make use of resources to get up-to-speed with R before diving-in.
 We recommend a free [Introduction to R](https://www.datacamp.com/courses/free-introduction-to-r) course on DataCamp and two freely available books: [R for Data Science](http://r4ds.had.co.nz/) [@grolemund_r_2016] and [Efficient R Programming](https://csgillespie.github.io/efficientR/) [@gillespie_efficient_2016], especially [Chapter 2](https://csgillespie.github.io/efficientR/set-up.html#r-version) (on installing and setting-up R/RStudio) and [Chapter 10](https://csgillespie.github.io/efficientR/learning.html) (on learning to learn).
 
 With reference to such material to hand we are confident that the command-line approach demonstrated in this book will be worth the learning curve within a few months for most people, including programming novices.
@@ -108,7 +108,7 @@ Proficiency with one programming language is preferable to the *breadth* of know
 
 We believe that *Geocomputation with R* will equip you with the knowledge and skills needed to solve the majority of challenges that geographic data pose.
 A logical question to ask if you've read this far may be: what *is* geocomputation anyway?
-The answer is provided in section \@ref(what-is-geocomputation) which, alongside the rest of Chapter \@ref(intro) explains the motivations behind this book.
+The answer is provided in section \@ref(what-is-geocomputation) which, alongside the rest of Chapter \@ref(intro), explains the motivations behind this book.
 
 <!-- to think about, not sure if needed but then this would be a good place to point out why our book might have advantages over other books. Compare with:
 - Bivand, R., Pebesma, E., Gomez-Rubio, V. (2013): Applied spatial data analysis with R.
@@ -248,7 +248,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve5d2b0f6b6569e4a9
+preserve422535c71239c64b
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2779,7 +2779,7 @@ plot(buff, add = TRUE)
 
 <!-- Todo: improve this figure, e.g. by creating a new hidden chunk - still show this one -->
 <div class="figure" style="text-align: center">
-preserveee007dda1c10d80a
+preserve0005b704101562a9
 <p class="caption">(\#fig:africa-buff)Subset of the `africa` data selected based on their intersection with a circle 2000 km in radius with a center point at 0 degrees longitude and 0 degrees latitude.</p>
 </div>
 
