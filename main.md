@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2017-10-31'
+date: '2017-11-01'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -20,31 +20,31 @@ url: 'http\://robinlovelace.net/geocompr'
 
 # Welcome {-}
 
-Welcome to **geocompr**, the [website](http://robinlovelace.net/geocompr) of our forthcoming book with [CRC Press](https://www.crcpress.com/Chapman--HallCRC-The-R-Series/book-series/CRCTHERSER).
+Welcome to the [online home](http://robinlovelace.net/geocompr) of *Geocomputation with R*, a forthcoming book with [CRC Press](https://www.crcpress.com/Chapman--HallCRC-The-R-Series/book-series/CRCTHERSER).
 
 ## Development {-}
 
-Inspired by the **bookdown** [R package](https://github.com/rstudio/bookdown) we are developing this book in the open.
-We decided to make the book open source.
+Inspired by [**bookdown**](https://github.com/rstudio/bookdown) and other open source projects we are developing this book in the open.
 Why?
 To encourage contributions, ensure reproducibility and provide access to the material as it evolves.
 
-We're developing the book in four main phases.
-We're in phase two and focused on the application chapters, which we aim to be complete by December.
-Drafts of other chapters will be added to this website as the project progresses.
+The book's development can be divided into four main phases:
 
 1. Foundations
 2. Basic applications
 3. Geocomputation methods
 4. Advanced applications
 
-Currently we're working primarily on the second part, which we aim to be complete by December.
+Currently the focus is on Part 2, which we aim to be complete by December.
 New chapters will be added to this website as the project progresses, hosted at [robinlovelace.net/geocompr](http://robinlovelace.net/geocompr) and kept up-to-date thanks to [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2017-10-31 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2017-11-01 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+
+## How to contribute? {-}
+
 **bookdown** makes editing a book as easy as editing a wiki, provided you have a GitHub account ([sign-up at github.com](https://github.com/)).
 Once logged-in to GitHub, clicking on the 'edit me' icon highlighted in the image below will take you to the source [R Markdown](http://rmarkdown.rstudio.com/) where you can make changes:
 
@@ -54,18 +54,14 @@ To raise an issue about the book's content (e.g. code not running) or make a fea
 
 ## Reproducibility {-}
 
-To reproduce the book, you need a recent version of [R](https://cran.r-project.org/) and up-to-date packages.
-The following code should install the required packages:
+To reproduce the book, you need a recent version of [R](https://cran.r-project.org/) and up-to-date packages, which can be installed with the following command (which requires [**devtools**](https://github.com/hadley/devtools)):
 
 
 ```r
-if(!require(devtools)) {
-  install.packages("devtools")
-}
 devtools::install_github("robinlovelace/geocompr")
 ```
 
-To build the book locally, clone or [download](https://github.com/Robinlovelace/geocompr/archive/master.zip) the [geocompr repo](https://github.com/Robinlovelace/geocompr/), open the [geocompr.Rproj project file](https://github.com/Robinlovelace/geocompr/blob/master/geocompr.Rproj) in RStudio and run the following lines:
+To build the book locally, clone or [download](https://github.com/Robinlovelace/geocompr/archive/master.zip) the [geocompr repo](https://github.com/Robinlovelace/geocompr/), load R in root directory (e.g. by opening [geocompr.Rproj](https://github.com/Robinlovelace/geocompr/blob/master/geocompr.Rproj) in RStudio) and run the following lines:
 
 
 ```r
@@ -73,42 +69,46 @@ bookdown::render_book("index.Rmd") # to build the book
 browseURL("_book/index.html") # to view it
 ```
 
-For further details see the book's GitHub page at [Robinlovelace/geocompr](https://github.com/Robinlovelace/geocompr#geocomputation-with-r).
+Further details can be found at [Robinlovelace/geocompr](https://github.com/Robinlovelace/geocompr#geocomputation-with-r).
 
 # Preface {-}
 
-This book is aimed at people who are interest in doing spatial data analysis with a modern programming language (R) including:
+This book is aimed at people who want to do spatial data analysis, visualisation and modelling with a modern programming language (R).
+There is no single target audience but we expect the book to be especially useful for:
 
-- People who have learned spatial analysis skills using a desktop Geographic Information System (GIS) such as [QGIS](http://qgis.org/en/site/), [ArcMap](http://desktop.arcgis.com/en/arcmap/) and [SAGA](http://www.saga-gis.org/en/index.html) who want to learn R --- a powerful (geo)statistical and visualization programming language --- and the benefits of an interface focussed on the command-line [@sherman_desktop_2008]:
+- People who have learned spatial analysis skills using a desktop Geographic Information System (GIS) such as [QGIS](http://qgis.org/en/site/), [ArcMap](http://desktop.arcgis.com/en/arcmap/) or [SAGA](http://www.saga-gis.org/en/index.html), who want access to a powerful (geo)statistical and visualization programming language and the benefits command-line approach [@sherman_desktop_2008]:
 
 > With the advent of 'modern' GIS software, most people want to point and click their way through life. That’s good, but there is a tremendous amount of flexibility and power waiting for you with the command line.
 
-- Graduate students and researchers from geography, remote sensing and GIS, Geographic Data Science and related fields
-- Academic researchers and post-graduate students in specific fields such as remote sensing, biogeosciences, ecology, forestry, transportation, and broadly defined 'data science' who would like to harness the power and flexibility of R for their work <!-- please add further fields-->
-- Applied researchers and analysts in public, private or third-sector organisations who need the reproducibility, speed and flexibility of a command-line language such as R in applications dealing with spatial data as divers as urban planning, transportation (including personal travel and logistics) and geo-marketing <!-- please add further examples-->
+- Graduate students and researchers from fields specialising in geographic data including Geography, Remote Sensing, Planning, GIS and Geographic Data Science
+- Academics and post-graduate students working on projects in fields including Geology, Regional Science, Biology and Ecology, Agricultural Sciences, Transport Modeling, and broadly defined Data Science which require the power and flexibility of R for their research <!-- please add further fields-->
+- Applied researchers and analysts in public, private or third-sector organisations who need the reproducibility, speed and flexibility of a command-line language such as R in applications dealing with spatial data as diverse as Urban and Transport Planning, Logistics, Geo-marketing (store location analysis) and Emergency Planning <!-- please add further examples-->
 
-This book will also be of use to people with a solid knowledge of GIS who enhance their skills with command-line methods, to enable automation and reproducibility in geographic data workflows.
+The book is designed to be accessible to a wide audience.
+We have made the chapters progress gradually in difficulty and exercises are provided at the end of each chapter to ensure understanding.
+However, R novices may find the reproducible code chunks --- an integral part of the book --- difficult to understand and implement at first. 
 
-We have taken care to make the contents as accessible as possible to a wide audience: the difficulty level of the chapters progresses gradually and exercises are provided at the end of each chapter to ensure understanding.
-However, R novices may find the reproducible code chunks --- an integral part of the book --- difficult to understand and implement on first reading. 
-People who have only used graphical user interfaces (GUIs) may find the focus on the code unnatural to begin with.
+Tenacious and impatient readers are welcome to dive straight in to the first practical examples in Chapter \@ref(spatial-class).
+However we suggest most R beginners make use resouces to get up-to-speed with R before diving-in at the geocomputational deep end (unless you're just reading the book for an understanding of the concepts).
+We recommend a free [Introduction to R](https://www.datacamp.com/courses/free-introduction-to-r) course on DataCamp and two freely available books: [R for Data Science](http://r4ds.had.co.nz/) [@grolemund_r_2016] and [Efficient R Programming](https://csgillespie.github.io/efficientR/) [@gillespie_efficient_2016], especially [Chapter 2](https://csgillespie.github.io/efficientR/set-up.html#r-version) (on installing and setting-up R/RStudio) and [Chapter 10](https://csgillespie.github.io/efficientR/learning.html) (on learning to learn).
 
-Fortunately there are many accessible resources that can get you up-to-speed.
-These include a free [Introduction to R](https://www.datacamp.com/courses/free-introduction-to-r) course on DataCamp and open source online resources including [R for Data Science](http://r4ds.had.co.nz/) [@grolemund_r_2016] and [Efficient R Programming](https://csgillespie.github.io/efficientR/) [@gillespie_efficient_2016], especially [Chapter 10](https://csgillespie.github.io/efficientR/learning.html) of that book.
+With reference to such material to hand we are confident that the command-line approach demonstrated in this book will be worth the learning curve within a few months for most people, including programming novices.
+Over time and with practice R will likely become the natural choice for many applications.
+We expect you will eventually find its command-line interface faster than the point-and-click interface emphasised in many desktop GISs.
+For some applications such as Spatial Statistics and modelling R may be the *only* realistic way to get the work done.
 
-With reference to such material we are confident that, with practice, the command-line approach demonstrated in this book will become more intuitive to programming novices.
-For many applications R will likely become faster than the point-and-click alternatives provided by mainstream desktop programs.
-For some applications such as Bayesian Spatial Statistics and applications where processes must be automated the command-line approach may be essential for getting the work done.
+As outlined in section \@ref(why-geocomputation-with-r) there are many reasons for using R for geocomputation:
+R is well-suited to the interactive use required in many geographic data analysis workflows compared with other languages.
+R excels in the rapidly growing fields of Data Science (which includes data carpentry, statistical learning techniques and data visualization) and (via efficient interfaces to databases and distributed computing systems) Big Data.
 
-As outlined in section \@ref(why-geocomputation-with-r) there are many additional reasons for using R for geocomputation:
-R is well-suited to the interactive use required in many geographic data analysis workflows.
-R excels in the rapidly growing fields of 'data science' (which includes data munging, statistical learning techniques and data visualization) and (via efficient interfaces to databases and distributed computing systems) Big Data.
-For some applications another language may be more appropriate, such as Python, Java and C++.
-There are excellent resources for learning geocomputation in these and other languages and we recommend checking these out in section \@ref(software-for-geocomputation).
+For some applications another language may be more appropriate, such as Python, Java or C++.
+There are excellent resources for learning geocomputation *without R*, as discussed in section \@ref(software-for-geocomputation).
 However we advocate learning one language (R) in *depth* to gain an understanding of the concepts.
 Proficiency with one programming language is preferable to the *breadth* of knowledge (and potential for confusion) attainable by dabbling with many.
 
 We believe that *Geocomputation with R* will equip you with the knowledge and skills needed to solve the majority of challenges that geographic data pose.
+A logical question to ask if you've read this far may be: what *is* geocomputation anyway?
+The answer is provided in section \@ref(what-is-geocomputation) which, alongside the rest of Chapter \@ref(intro) explains the motivations behind this book.
 
 <!-- to think about, not sure if needed but then this would be a good place to point out why our book might have advantages over other books. Compare with:
 - Bivand, R., Pebesma, E., Gomez-Rubio, V. (2013): Applied spatial data analysis with R.
@@ -248,7 +248,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve11bbe284bff4e523
+preserve5d2b0f6b6569e4a9
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -621,6 +621,11 @@ the follow command creates Figure \@ref(fig:world-all).
 plot(world)
 #> Warning: plotting the first 9 out of 10 attributes; use max.plot = 10 to
 #> plot all
+#> Warning in classInt::classIntervals(values, nbreaks, breaks): var has
+#> missing values, omitted in finding classes
+
+#> Warning in classInt::classIntervals(values, nbreaks, breaks): var has
+#> missing values, omitted in finding classes
 ```
 
 <div class="figure" style="text-align: center">
@@ -746,6 +751,8 @@ Note, however, that this only works if the initial plot has only one layer:
 
 ```r
 plot(world["pop"])
+#> Warning in classInt::classIntervals(values, nbreaks, breaks): var has
+#> missing values, omitted in finding classes
 plot(asia, add = TRUE, col = "red")
 ```
 
@@ -785,7 +792,7 @@ world_centroids = st_centroid(world)
 #> of_largest_polygon): st_centroid does not give correct centroids for
 #> longitude/latitude data
 sel_asia = st_intersects(world_centroids, asia, sparse = FALSE)
-#> although coordinates are longitude/latitude, it is assumed that they are planar
+#> although coordinates are longitude/latitude, st_intersects assumes that they are planar
 summary(sel_asia)
 #>      V1         
 #>  Mode :logical  
@@ -806,7 +813,7 @@ plot(world_centroids, add = TRUE, cex = sqrt(world$pop) / 10000)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/contpop-1.png" alt="Country continents (represented by fill colour) and 2015 populations (represented by points, with point area proportional to population) worldwide." width="576" />
+<img src="figures/contpop-1.png" alt="Country continents (represented by fill colour) and 2015 populations (represented by points, with point area proportional to population) worldwide." width="576" /><img src="figures/contpop-2.png" alt="Country continents (represented by fill colour) and 2015 populations (represented by points, with point area proportional to population) worldwide." width="576" />
 <p class="caption">(\#fig:contpop)Country continents (represented by fill colour) and 2015 populations (represented by points, with point area proportional to population) worldwide.</p>
 </div>
 
@@ -1418,6 +1425,8 @@ We can add the borders to the elevation map using the `add` argument of the `plo
 ```r
 plot(new_raster)
 plot(new_vector, add = TRUE)
+#> Warning in plot.sf(new_vector, add = TRUE): ignoring all but the first
+#> attribute
 ```
 
 <img src="figures/basic-new-raster-vector-plot-1.png" width="576" style="display: block; margin: auto;" />
@@ -1649,14 +1658,9 @@ In **sf** the CRS of an object can be retrieved using `st_crs()`:
 
 ```r
 st_crs(new_vector) # get CRS
-#> $epsg
-#> [1] NA
-#> 
-#> $proj4string
-#> [1] "+proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"
-#> 
-#> attr(,"class")
-#> [1] "crs"
+#> Coordinate Reference System:
+#>   No EPSG code
+#>   proj4string: "+proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"
 ```
 
 In cases when a coordinate reference system (CRS) is missing or the wrong CRS is set, the `st_set_crs()` function can be used:
@@ -2775,7 +2779,7 @@ plot(buff, add = TRUE)
 
 <!-- Todo: improve this figure, e.g. by creating a new hidden chunk - still show this one -->
 <div class="figure" style="text-align: center">
-preserve417ce2952c4f99ae
+preserveee007dda1c10d80a
 <p class="caption">(\#fig:africa-buff)Subset of the `africa` data selected based on their intersection with a circle 2000 km in radius with a center point at 0 degrees longitude and 0 degrees latitude.</p>
 </div>
 
@@ -2884,17 +2888,11 @@ It can also be answered by using the topological relation *intersects*, implemen
 
 ```r
 st_intersects(p, a)
-#> [[1]]
-#> [1] 1
-#> 
-#> [[2]]
-#> [1] 1
-#> 
-#> [[3]]
-#> integer(0)
-#> 
-#> [[4]]
-#> integer(0)
+#> Sparse geometry binary predicate list of length 4, where the predicate was `intersects'
+#>  1: 1
+#>  2: 1
+#>  3: (empty)
+#>  4: (empty)
 ```
 
 The contents of the result should be as you expected:
@@ -3093,7 +3091,7 @@ joined = st_join(x = asia, y = urb) %>%
 
 
 <div class="figure" style="text-align: center">
-<img src="figures/spatial-join-1.png" alt="Illustration of a spatial join: the populations of the world's 3 largest agglomerations joined onto their respective countries." width="576" />
+<img src="figures/spatial-join-1.png" alt="Illustration of a spatial join: the populations of the world's 3 largest agglomerations joined onto their respective countries." width="576" /><img src="figures/spatial-join-2.png" alt="Illustration of a spatial join: the populations of the world's 3 largest agglomerations joined onto their respective countries." width="576" /><img src="figures/spatial-join-3.png" alt="Illustration of a spatial join: the populations of the world's 3 largest agglomerations joined onto their respective countries." width="576" /><img src="figures/spatial-join-4.png" alt="Illustration of a spatial join: the populations of the world's 3 largest agglomerations joined onto their respective countries." width="576" />
 <p class="caption">(\#fig:spatial-join)Illustration of a spatial join: the populations of the world's 3 largest agglomerations joined onto their respective countries.</p>
 </div>
 
@@ -3215,7 +3213,7 @@ regions = aggregate(x = us_states[, "total_pop_15"], by = list(us_states$REGION)
 
 
 <div class="figure" style="text-align: center">
-<img src="figures/us-regions-1.png" alt="Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions. Note the operation automatically dissolves boundaries between touching polygons in the same region." width="576" />
+<img src="figures/us-regions-1.png" alt="Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions. Note the operation automatically dissolves boundaries between touching polygons in the same region." width="576" /><img src="figures/us-regions-2.png" alt="Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions. Note the operation automatically dissolves boundaries between touching polygons in the same region." width="576" />
 <p class="caption">(\#fig:us-regions)Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions. Note the operation automatically dissolves boundaries between touching polygons in the same region.</p>
 </div>
 
@@ -3832,9 +3830,9 @@ Additionally, check out the *Multi-core functions* section in `vignette("functio
 
 ```
 #> Warning in st_buffer.sfc(st_geometry(x), dist, nQuadSegs): st_buffer does
-#> not correctly buffer longitude/latitude data, dist needs to be in decimal
-#> degrees.
-#> although coordinates are longitude/latitude, it is assumed that they are planar
+#> not correctly buffer longitude/latitude data
+#> dist is assumed to be in decimal degrees (arc_degrees).
+#> although coordinates are longitude/latitude, st_intersects assumes that they are planar
 #> [1] 0.00998
 ```
 
@@ -3842,6 +3840,7 @@ Additionally, check out the *Multi-core functions* section in `vignette("functio
 
 
 ```
+#> although coordinates are longitude/latitude, st_intersection assumes that they are planar
 #> Warning in st_interpolate_aw(x = world["pop"], to = buff9, extensive =
 #> TRUE): st_interpolate_aw assumes attributes are constant over areas of x
 ```
@@ -4470,8 +4469,8 @@ st_is_longlat(greenwich_latlon)
 #> [1] TRUE
 greenwich_buff_latlon = st_buffer(greenwich_latlon, 10)
 #> Warning in st_buffer.sfc(st_geometry(x), dist, nQuadSegs): st_buffer does
-#> not correctly buffer longitude/latitude data, dist needs to be in decimal
-#> degrees.
+#> not correctly buffer longitude/latitude data
+#> dist is assumed to be in decimal degrees (arc_degrees).
 ```
 
 The results show that, as expected, `4326` is a geographic (lat/lon) CRS.
@@ -4511,14 +4510,9 @@ It is automatically loaded by the **spData** package, meaning we do not have to 
 
 ```r
 st_crs(cycle_hire_osm)
-#> $epsg
-#> [1] 4326
-#> 
-#> $proj4string
-#> [1] "+proj=longlat +datum=WGS84 +no_defs"
-#> 
-#> attr(,"class")
-#> [1] "crs"
+#> Coordinate Reference System:
+#>   EPSG: 4326 
+#>   proj4string: "+proj=longlat +datum=WGS84 +no_defs"
 ```
 
 <!-- intro about vector transformation (transformation of every point) -->
@@ -4542,14 +4536,9 @@ Let's create a new version of it in a projected CRS, using the 'magic number' (a
 ```r
 cycle_hire_projected = st_transform(cycle_hire_osm, 27700)
 st_crs(cycle_hire_projected)
-#> $epsg
-#> [1] 27700
-#> 
-#> $proj4string
-#> [1] "+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs"
-#> 
-#> attr(,"class")
-#> [1] "crs"
+#> Coordinate Reference System:
+#>   EPSG: 27700 
+#>   proj4string: "+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs"
 ```
 
 Note that the result shows that the `epsg` has been updated and that `proj4string` element of the CRS now contains, among other things `+proj=tmerc` (meaning it is a projected CRS using the [tranverse Mercator](https://en.wikipedia.org/wiki/Transverse_Mercator_projection) projection) and `+units=m` (meaning the units of the coordinates are meters).

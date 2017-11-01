@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2017-10-31">
+<meta name="date" content="2017-11-01">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -128,6 +128,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a><ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#development"><i class="fa fa-check"></i>Development</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-contribute"><i class="fa fa-check"></i>How to contribute?</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#reproducibility"><i class="fa fa-check"></i>Reproducibility</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a></li>
@@ -327,7 +328,12 @@ Figure 2.2: The subset of the Simple Features class hierarchy supported by sf.
 <p>It is the contents of this modest-looking <code>geom</code> column that gives <code>sf</code> objects their spatial powers, a ‘list-column’ that contains all the coordinates. The <strong>sf</strong> package provides a <code>plot()</code> method for vizualising geographic data: the follow command creates Figure <a href="spatial-class.html#fig:world-all">2.3</a>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(world)
 <span class="co">#&gt; Warning: plotting the first 9 out of 10 attributes; use max.plot = 10 to</span>
-<span class="co">#&gt; plot all</span></code></pre></div>
+<span class="co">#&gt; plot all</span>
+<span class="co">#&gt; Warning in classInt::classIntervals(values, nbreaks, breaks): var has</span>
+<span class="co">#&gt; missing values, omitted in finding classes</span>
+
+<span class="co">#&gt; Warning in classInt::classIntervals(values, nbreaks, breaks): var has</span>
+<span class="co">#&gt; missing values, omitted in finding classes</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:world-all"></span>
 <img src="figures/world-all-1.png" alt="A spatial plot of the world using the sf package, with a facet for each attribute." width="576" />
 <p class="caption">
@@ -401,6 +407,8 @@ Figure 2.4: Plotting with sf, with multiple variables (left) and a single variab
 asia =<span class="st"> </span><span class="kw">st_union</span>(asia)</code></pre></div>
 <p>We can now plot the Asian continent over a map of the world. Note, however, that this only works if the initial plot has only one layer:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(world[<span class="st">&quot;pop&quot;</span>])
+<span class="co">#&gt; Warning in classInt::classIntervals(values, nbreaks, breaks): var has</span>
+<span class="co">#&gt; missing values, omitted in finding classes</span>
 <span class="kw">plot</span>(asia, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:asia"></span>
 <img src="figures/asia-1.png" alt="A plot of Asia added as a layer on top of countries worldwide." width="50%" />
@@ -425,7 +433,7 @@ Sorry for commenting on this again but just to clarify africa[0] selects zero co
 <span class="co">#&gt; of_largest_polygon): st_centroid does not give correct centroids for</span>
 <span class="co">#&gt; longitude/latitude data</span>
 sel_asia =<span class="st"> </span><span class="kw">st_intersects</span>(world_centroids, asia, <span class="dt">sparse =</span> <span class="ot">FALSE</span>)
-<span class="co">#&gt; although coordinates are longitude/latitude, it is assumed that they are planar</span>
+<span class="co">#&gt; although coordinates are longitude/latitude, st_intersects assumes that they are planar</span>
 <span class="kw">summary</span>(sel_asia)
 <span class="co">#&gt;      V1         </span>
 <span class="co">#&gt;  Mode :logical  </span>
@@ -436,7 +444,7 @@ sel_asia =<span class="st"> </span><span class="kw">st_intersects</span>(world_c
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(world[<span class="st">&quot;continent&quot;</span>])
 <span class="kw">plot</span>(world_centroids, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">cex =</span> <span class="kw">sqrt</span>(world$pop) /<span class="st"> </span><span class="dv">10000</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:contpop"></span>
-<img src="figures/contpop-1.png" alt="Country continents (represented by fill colour) and 2015 populations (represented by points, with point area proportional to population) worldwide." width="576" />
+<img src="figures/contpop-1.png" alt="Country continents (represented by fill colour) and 2015 populations (represented by points, with point area proportional to population) worldwide." width="576" /><img src="figures/contpop-2.png" alt="Country continents (represented by fill colour) and 2015 populations (represented by points, with point area proportional to population) worldwide." width="576" />
 <p class="caption">
 Figure 2.6: Country continents (represented by fill colour) and 2015 populations (represented by points, with point area proportional to population) worldwide.
 </p>
@@ -829,7 +837,9 @@ The new vector, `new_raster_values`, can serve as input for subsequent statistic
 new_vector =<span class="st"> </span><span class="kw">st_read</span>(vector_filepath)</code></pre></div>
 <p>Our new object, <code>new_vector</code>, is a polygon representing the borders of Zion National Park (<code>?zion</code>). We can add the borders to the elevation map using the <code>add</code> argument of the <code>plot()</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(new_raster)
-<span class="kw">plot</span>(new_vector, <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<span class="kw">plot</span>(new_vector, <span class="dt">add =</span> <span class="ot">TRUE</span>)
+<span class="co">#&gt; Warning in plot.sf(new_vector, add = TRUE): ignoring all but the first</span>
+<span class="co">#&gt; attribute</span></code></pre></div>
 <p><img src="figures/basic-new-raster-vector-plot-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>There are several different approaches to plot raster data in R:</p>
 <ul>
@@ -933,14 +943,9 @@ Operations on <code>RasterBrick</code> and <code>RasterStack</code> objects will
 <span class="kw">View</span>(crs_data)</code></pre></div>
 <p>In <strong>sf</strong> the CRS of an object can be retrieved using <code>st_crs()</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">st_crs</span>(new_vector) <span class="co"># get CRS</span>
-<span class="co">#&gt; $epsg</span>
-<span class="co">#&gt; [1] NA</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $proj4string</span>
-<span class="co">#&gt; [1] &quot;+proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs&quot;</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; attr(,&quot;class&quot;)</span>
-<span class="co">#&gt; [1] &quot;crs&quot;</span></code></pre></div>
+<span class="co">#&gt; Coordinate Reference System:</span>
+<span class="co">#&gt;   No EPSG code</span>
+<span class="co">#&gt;   proj4string: &quot;+proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs&quot;</span></code></pre></div>
 <p>In cases when a coordinate reference system (CRS) is missing or the wrong CRS is set, the <code>st_set_crs()</code> function can be used:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">new_vector =<span class="st"> </span><span class="kw">st_set_crs</span>(new_vector, <span class="dv">26912</span>) <span class="co"># set CRS</span></code></pre></div>
 <p>The warning message informs that the <code>st_set_crs()</code> function do not transform data from one CRS to another.</p>

@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2017-10-31">
+<meta name="date" content="2017-11-01">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -128,6 +128,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a><ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#development"><i class="fa fa-check"></i>Development</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-contribute"><i class="fa fa-check"></i>How to contribute?</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#reproducibility"><i class="fa fa-check"></i>Reproducibility</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a></li>
@@ -392,17 +393,11 @@ Figure 4.4: Points (p 1 to 4), line and polygon objects arranged to demonstrate 
 </div>
 <p>A simple query is: which of the points in <code>p</code> intersect in some way with polygon <code>a</code>? The question can be answered by inspection (points 1 and 2 are over or touch the triangle). It can also be answered by using the topological relation <em>intersects</em>, implemented in <strong>sf</strong> as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">st_intersects</span>(p, a)
-<span class="co">#&gt; [[1]]</span>
-<span class="co">#&gt; [1] 1</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; [[2]]</span>
-<span class="co">#&gt; [1] 1</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; [[3]]</span>
-<span class="co">#&gt; integer(0)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; [[4]]</span>
-<span class="co">#&gt; integer(0)</span></code></pre></div>
+<span class="co">#&gt; Sparse geometry binary predicate list of length 4, where the predicate was `intersects&#39;</span>
+<span class="co">#&gt;  1: 1</span>
+<span class="co">#&gt;  2: 1</span>
+<span class="co">#&gt;  3: (empty)</span>
+<span class="co">#&gt;  4: (empty)</span></code></pre></div>
 <p>The contents of the result should be as you expected: the function returns a positive (<code>1</code>) result for the first two points, and a negative result (represented by an empty vector, <code>integer(0)</code>) for the last two. What may be unexpected is that the result comes in the form of a list. This is because topological operations in the <strong>sf</strong> return a sparse matrix by default, which is useful in that it reduces the memory requirements of the output from operations on multi-feature objects. To return the result as a logical vector, of the type that can be used for subsetting and other operations, the result must be returned as a <em>dense matrix</em>. This can be done by setting the <code>sparse</code> argument to <code>FALSE</code> as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">st_intersects</span>(p, a, <span class="dt">sparse =</span> <span class="ot">FALSE</span>)
 <span class="co">#&gt;       [,1]</span>
@@ -503,7 +498,7 @@ asia =<span class="st"> </span>world %&gt;%<span class="st"> </span>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">joined =<span class="st"> </span><span class="kw">st_join</span>(<span class="dt">x =</span> asia, <span class="dt">y =</span> urb) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">na.omit</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:spatial-join"></span>
-<img src="figures/spatial-join-1.png" alt="Illustration of a spatial join: the populations of the world's 3 largest agglomerations joined onto their respective countries." width="576" />
+<img src="figures/spatial-join-1.png" alt="Illustration of a spatial join: the populations of the world's 3 largest agglomerations joined onto their respective countries." width="576" /><img src="figures/spatial-join-2.png" alt="Illustration of a spatial join: the populations of the world's 3 largest agglomerations joined onto their respective countries." width="576" /><img src="figures/spatial-join-3.png" alt="Illustration of a spatial join: the populations of the world's 3 largest agglomerations joined onto their respective countries." width="576" /><img src="figures/spatial-join-4.png" alt="Illustration of a spatial join: the populations of the world's 3 largest agglomerations joined onto their respective countries." width="576" />
 <p class="caption">
 Figure 4.5: Illustration of a spatial join: the populations of the world’s 3 largest agglomerations joined onto their respective countries.
 </p>
@@ -560,7 +555,7 @@ sel =<span class="st"> </span><span class="kw">st_is_within_distance</span>(x, y
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">regions =<span class="st"> </span><span class="kw">aggregate</span>(<span class="dt">x =</span> us_states[, <span class="st">&quot;total_pop_15&quot;</span>], <span class="dt">by =</span> <span class="kw">list</span>(us_states$REGION),
                     <span class="dt">FUN =</span> sum, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:us-regions"></span>
-<img src="figures/us-regions-1.png" alt="Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions. Note the operation automatically dissolves boundaries between touching polygons in the same region." width="576" />
+<img src="figures/us-regions-1.png" alt="Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions. Note the operation automatically dissolves boundaries between touching polygons in the same region." width="576" /><img src="figures/us-regions-2.png" alt="Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions. Note the operation automatically dissolves boundaries between touching polygons in the same region." width="576" />
 <p class="caption">
 Figure 4.7: Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions. Note the operation automatically dissolves boundaries between touching polygons in the same region.
 </p>
@@ -893,14 +888,15 @@ elev_disagg =<span class="st"> </span><span class="kw">resample</span>(elev_agg,
 <li>Write code that uses functions <code>aggregate()</code> and <code>st_buffer()</code> to answers the following question: What proportion of the world’s population lives in countries that intersect a circle with a 10 degree radius of the intersection between the equator and the <a href="https://en.wikipedia.org/wiki/9th_meridian_east">9<sup>th</sup> meridian</a>? (Advanced challenge: find the point with the highest number of people within a 10 degree radius.)</li>
 </ol>
 <pre><code>#&gt; Warning in st_buffer.sfc(st_geometry(x), dist, nQuadSegs): st_buffer does
-#&gt; not correctly buffer longitude/latitude data, dist needs to be in decimal
-#&gt; degrees.
-#&gt; although coordinates are longitude/latitude, it is assumed that they are planar
+#&gt; not correctly buffer longitude/latitude data
+#&gt; dist is assumed to be in decimal degrees (arc_degrees).
+#&gt; although coordinates are longitude/latitude, st_intersects assumes that they are planar
 #&gt; [1] 0.00998</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>Assuming that people are evenly distributed across countries, estimate the population living <em>within</em> the circle created to answer the previous question.</li>
 </ol>
-<pre><code>#&gt; Warning in st_interpolate_aw(x = world[&quot;pop&quot;], to = buff9, extensive =
+<pre><code>#&gt; although coordinates are longitude/latitude, st_intersection assumes that they are planar
+#&gt; Warning in st_interpolate_aw(x = world[&quot;pop&quot;], to = buff9, extensive =
 #&gt; TRUE): st_interpolate_aw assumes attributes are constant over areas of x</code></pre>
 <!-- Raster exercises-->
 <ol start="4" style="list-style-type: decimal">

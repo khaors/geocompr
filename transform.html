@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2017-10-31">
+<meta name="date" content="2017-11-01">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -128,6 +128,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a><ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#development"><i class="fa fa-check"></i>Development</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-contribute"><i class="fa fa-check"></i>How to contribute?</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#reproducibility"><i class="fa fa-check"></i>Reproducibility</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a></li>
@@ -274,8 +275,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="co">#&gt; [1] TRUE</span>
 greenwich_buff_latlon =<span class="st"> </span><span class="kw">st_buffer</span>(greenwich_latlon, <span class="dv">10</span>)
 <span class="co">#&gt; Warning in st_buffer.sfc(st_geometry(x), dist, nQuadSegs): st_buffer does</span>
-<span class="co">#&gt; not correctly buffer longitude/latitude data, dist needs to be in decimal</span>
-<span class="co">#&gt; degrees.</span></code></pre></div>
+<span class="co">#&gt; not correctly buffer longitude/latitude data</span>
+<span class="co">#&gt; dist is assumed to be in decimal degrees (arc_degrees).</span></code></pre></div>
 <p>The results show that, as expected, <code>4326</code> is a geographic (lat/lon) CRS. As a result a warning message is emitted to warn the user that the operation may not work correctly and that, if the operation was intended, the distance should be in degrees (not meters or some other Euclidean distance measurement). The seemingly small difference in setting the CRS may seem inconsequential but it can have a huge impact. This is illustrated in Figure <a href="transform.html#fig:crs-buf">6.1</a>, which shows how the two buffers are plotted, with the (correctly) defined CRS of the latter object being dramatically elongated in the north-south direction due to the thinning of the vertical lines of longitude towards the Earth’s poles.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(greenwich_buff, <span class="dt">graticule =</span> <span class="kw">st_crs</span>(<span class="dv">4326</span>))
 <span class="kw">plot</span>(greenwich_buff_latlon, <span class="dt">graticule =</span> <span class="kw">st_crs</span>(<span class="dv">4326</span>))</code></pre></div>
@@ -293,14 +294,9 @@ Figure 6.1: Buffers on geographic data with undefined (top) and defined (bottom)
 <h3><span class="header-section-number">6.2.1</span> Vector data</h3>
 <p>The dataset <code>cycle_hire_osm</code> represents all cycle hire locations across London, taken from OpenStreetMap (OSM). It is automatically loaded by the <strong>spData</strong> package, meaning we do not have to load it, and its CRS can be queried as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">st_crs</span>(cycle_hire_osm)
-<span class="co">#&gt; $epsg</span>
-<span class="co">#&gt; [1] 4326</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $proj4string</span>
-<span class="co">#&gt; [1] &quot;+proj=longlat +datum=WGS84 +no_defs&quot;</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; attr(,&quot;class&quot;)</span>
-<span class="co">#&gt; [1] &quot;crs&quot;</span></code></pre></div>
+<span class="co">#&gt; Coordinate Reference System:</span>
+<span class="co">#&gt;   EPSG: 4326 </span>
+<span class="co">#&gt;   proj4string: &quot;+proj=longlat +datum=WGS84 +no_defs&quot;</span></code></pre></div>
 <!-- intro about vector transformation (transformation of every point) -->
 <!-- example of using epsg (without "magic number") -->
 <!-- example of using proj4 (expain it and maybe modify) -->
@@ -318,14 +314,9 @@ Figure 6.1: Buffers on geographic data with undefined (top) and defined (bottom)
 <p>Let’s create a new version of it in a projected CRS, using the ‘magic number’ (a value to be explained subsequently) of 27700:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cycle_hire_projected =<span class="st"> </span><span class="kw">st_transform</span>(cycle_hire_osm, <span class="dv">27700</span>)
 <span class="kw">st_crs</span>(cycle_hire_projected)
-<span class="co">#&gt; $epsg</span>
-<span class="co">#&gt; [1] 27700</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $proj4string</span>
-<span class="co">#&gt; [1] &quot;+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs&quot;</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; attr(,&quot;class&quot;)</span>
-<span class="co">#&gt; [1] &quot;crs&quot;</span></code></pre></div>
+<span class="co">#&gt; Coordinate Reference System:</span>
+<span class="co">#&gt;   EPSG: 27700 </span>
+<span class="co">#&gt;   proj4string: &quot;+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs&quot;</span></code></pre></div>
 <p>Note that the result shows that the <code>epsg</code> has been updated and that <code>proj4string</code> element of the CRS now contains, among other things <code>+proj=tmerc</code> (meaning it is a projected CRS using the <a href="https://en.wikipedia.org/wiki/Transverse_Mercator_projection">tranverse Mercator</a> projection) and <code>+units=m</code> (meaning the units of the coordinates are meters). Another function, from the <strong>rgdal</strong> library, provides a note about the CRS (its name):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">crs_codes =<span class="st"> </span>rgdal::<span class="kw">make_EPSG</span>()[<span class="dv">1</span>:<span class="dv">2</span>]
 dplyr::<span class="kw">filter</span>(crs_codes, code ==<span class="st"> </span><span class="dv">27700</span>)
