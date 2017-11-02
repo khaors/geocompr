@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve3a2d10cd432bed5c
+preserve95781887b8304ccb
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -4482,7 +4482,13 @@ Let's use real-world examples to illustrate this.
 <!-- how it works (transformation of every point?) -->
 Vector data on the most basic level is represented by individual points, and points create more complex objects, such as lines and polygons.
 Spatial reprojection of vectors is a mathematical transformation of coordinates of these point.
-<!-- Therefore, it is possible to change a projection of in this process  -->
+Depending on projections used, reprojection could be either lossy or lossless.
+<!-- Loss of precision/information could occurs, for example, when -->
+<!-- https://github.com/r-spatial/sf/issues/509 -->
+<!-- ```{r} -->
+<!-- world_tmerc = st_transform(world, "+proj=tmerc") -->
+<!-- plot(world_tmerc$geom) -->
+<!-- ``` -->
 
 The dataset `cycle_hire_osm` represents all cycle hire locations across London, taken from OpenStreetMap (OSM).
 It is automatically loaded by the **spData** package, meaning we do not have to load it, and its CRS can be queried as follows:
