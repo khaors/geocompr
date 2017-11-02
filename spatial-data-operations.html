@@ -285,9 +285,9 @@ It is important to note that spatial operations that use two spatial objects rel
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">canterbury =<span class="st"> </span>nz %&gt;%<span class="st"> </span><span class="kw">filter</span>(REGC2017_NAME ==<span class="st"> &quot;Canterbury Region&quot;</span>)
 canterbury_height =<span class="st"> </span>nz_height[canterbury, ]</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:nz-subset"></span>
-<img src="figures/nz-subset-1.png" alt="Illustration of spatial subsetting. The right-hand map was produced by subsetting the point data in the left hand map as follows: `nz_height[canterbury, ]`." width="576" />
+<img src="figures/nz-subset-1.png" alt="Illustration of spatial subsetting with red triangles representing heigh points in New Zealand. The right-hand map contains only points in the Canterbury region (highlighted in grey). The points were subset with `nz_height[canterbury, ]`." width="576" />
 <p class="caption">
-Figure 4.1: Illustration of spatial subsetting. The right-hand map was produced by subsetting the point data in the left hand map as follows: <code>nz_height[canterbury, ]</code>.
+Figure 4.1: Illustration of spatial subsetting with red triangles representing heigh points in New Zealand. The right-hand map contains only points in the Canterbury region (highlighted in grey). The points were subset with <code>nz_height[canterbury, ]</code>.
 </p>
 </div>
 <p>The preceding code chunk shows that, like attribute data, spatial data can be subset using the <code>[</code> operator: <code>x[y, ]</code> subsets features of target object <code>x</code> by <code>y</code>. Instead of <code>y</code> being of class <code>logical</code> (a vector of <code>TRUE</code> and <code>FALSE</code> values), it is another spatial (<code>sf</code>) object.</p>

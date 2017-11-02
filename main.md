@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve976913efd2b71271
+preserve0e17b065fbbec309
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2695,8 +2695,8 @@ canterbury_height = nz_height[canterbury, ]
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/nz-subset-1.png" alt="Illustration of spatial subsetting. The right-hand map was produced by subsetting the point data in the left hand map as follows: `nz_height[canterbury, ]`." width="576" />
-<p class="caption">(\#fig:nz-subset)Illustration of spatial subsetting. The right-hand map was produced by subsetting the point data in the left hand map as follows: `nz_height[canterbury, ]`.</p>
+<img src="figures/nz-subset-1.png" alt="Illustration of spatial subsetting with red triangles representing heigh points in New Zealand. The right-hand map contains only points in the Canterbury region (highlighted in grey). The points were subset with `nz_height[canterbury, ]`." width="576" />
+<p class="caption">(\#fig:nz-subset)Illustration of spatial subsetting with red triangles representing heigh points in New Zealand. The right-hand map contains only points in the Canterbury region (highlighted in grey). The points were subset with `nz_height[canterbury, ]`.</p>
 </div>
 
 The preceding code chunk shows that, like attribute data, spatial data can be subset using the `[` operator: `x[y, ]` subsets features of target object `x` by `y`.
