@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveab3c1414bdd3d65e
+preserve976913efd2b71271
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -4475,13 +4475,19 @@ plot(greenwich_buff_latlon, graticule = st_crs(4326))
 While CRSs can be set manually, it is more common in real world applications to *transform* a known CRS into another.
 CRS transformation could be vital to obtain proper results in many cases.
 A typical example is when geometry data is provided in a geographic CRS but you want to do spatial operations, which require it to be in a projected CRS.
-It include area calculations or distance measurements.
+It includes distance measurements or area calculations.
 CRS also represent spatial relationship between datasets.
-Therefore, spatial operations on multiply datasets can only be correctly performed when all the data have the same CRS.
+Therefore, spatial operations on many datasets can only be correctly performed when all the data have the same CRS.
 The most common reason to unify the CRS is to combine different datasets (e.g. merge two rasters) or apply methods which need at least two objects (e.g spatial subsetting or raster map algebra).
 Let's use real-world examples to illustrate this.
 
 ### Vector data
+
+<!-- intro about vector transformation  -->
+<!-- how it works (transformation of every point?) -->
+Vector data is represented on the most basic level by individual points, and these points create more complex objects, such as lines and polygons.
+Spatial reprojection of vectors is a mathematical transformation of coordinates of each point.
+<!-- Therefore, it is possible to change a projection of in this process  -->
 
 The dataset `cycle_hire_osm` represents all cycle hire locations across London, taken from OpenStreetMap (OSM).
 It is automatically loaded by the **spData** package, meaning we do not have to load it, and its CRS can be queried as follows:
@@ -4494,7 +4500,6 @@ st_crs(cycle_hire_osm)
 #>   proj4string: "+proj=longlat +datum=WGS84 +no_defs"
 ```
 
-<!-- intro about vector transformation (transformation of every point) -->
 <!-- example of using epsg (without "magic number") -->
 <!-- example of using proj4 (expain it and maybe modify) -->
 <!-- show the results (e.g. two/three panels) -->
@@ -4547,8 +4552,10 @@ It is hidden from view for most of the time except when the object is printed bu
 
 ### Raster data
 
-<!-- While the concept of CRS applies to both data types, conversion between coordinate rerefence systems differs between vector and raster. -->
-<!-- Tranformation from one CRS to another in vector data changes only coordinates of vertices, keeping the values intact. -->
+<!-- The basic concepts of CRS apply to both, vector and raster, data model, however projection transformation differ between them. -->
+<!-- However, representation of due to  -->
+<!-- While the concept of CRS applies to both data types, conversion between coordinate reference systems differs between vector and raster. -->
+<!-- Transformation from one CRS to another in vector data changes only coordinates of vertices, keeping the values intact. -->
 <!-- (for most of the case is better to reproject vector than raster) -->
 <!-- rasters: transformation means change of the coordinates of (special case of resampling) -->
 <!-- changes in dimensions, resolution, extent -->
