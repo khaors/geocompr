@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservee2295251e6b92746
+preserve3a2d10cd432bed5c
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -823,7 +823,6 @@ plot(world_centroids, add = TRUE, cex = sqrt(world$pop) / 10000)
 <img src="figures/contpop-1.png" alt="Country continents (represented by fill colour) and 2015 populations (represented by points, with point area proportional to population) worldwide." width="576" /><img src="figures/contpop-2.png" alt="Country continents (represented by fill colour) and 2015 populations (represented by points, with point area proportional to population) worldwide." width="576" />
 <p class="caption">(\#fig:contpop)Country continents (represented by fill colour) and 2015 populations (represented by points, with point area proportional to population) worldwide.</p>
 </div>
-
 
 <!-- More appropriate for subsequent chapters. -->
 <!-- This shows that there are 43 countries in Asia -->
