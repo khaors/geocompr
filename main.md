@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve66c304359289fc23
+preservee2295251e6b92746
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -4481,8 +4481,8 @@ Let's use real-world examples to illustrate this.
 
 <!-- intro about vector transformation  -->
 <!-- how it works (transformation of every point?) -->
-Vector data is represented on the most basic level by individual points, and these points create more complex objects, such as lines and polygons.
-Spatial reprojection of vectors is a mathematical transformation of coordinates of each point.
+Vector data on the most basic level is represented by individual points, and points create more complex objects, such as lines and polygons.
+Spatial reprojection of vectors is a mathematical transformation of coordinates of these point.
 <!-- Therefore, it is possible to change a projection of in this process  -->
 
 The dataset `cycle_hire_osm` represents all cycle hire locations across London, taken from OpenStreetMap (OSM).

@@ -294,7 +294,7 @@ Figure 6.1: Buffers on geographic data with undefined (top) and defined (bottom)
 <h3><span class="header-section-number">6.2.1</span> Vector data</h3>
 <!-- intro about vector transformation  -->
 <!-- how it works (transformation of every point?) -->
-<p>Vector data is represented on the most basic level by individual points, and these points create more complex objects, such as lines and polygons. Spatial reprojection of vectors is a mathematical transformation of coordinates of each point. <!-- Therefore, it is possible to change a projection of in this process  --></p>
+<p>Vector data on the most basic level is represented by individual points, and points create more complex objects, such as lines and polygons. Spatial reprojection of vectors is a mathematical transformation of coordinates of these point. <!-- Therefore, it is possible to change a projection of in this process  --></p>
 <p>The dataset <code>cycle_hire_osm</code> represents all cycle hire locations across London, taken from OpenStreetMap (OSM). It is automatically loaded by the <strong>spData</strong> package, meaning we do not have to load it, and its CRS can be queried as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">st_crs</span>(cycle_hire_osm)
 <span class="co">#&gt; Coordinate Reference System:</span>
