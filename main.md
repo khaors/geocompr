@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2017-11-01'
+date: '2017-11-02'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2017-11-01 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2017-11-02 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve621b4797833eb4df
+preserveab3c1414bdd3d65e
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2726,82 +2726,77 @@ Following the structure of section \@ref(vector-attribute-subsetting), we start 
 
 <!-- #### Spatial subsetting in base R -->
 
-Another spatial subsetting example will use an object representing the countries of Africa, created using attribute subsetting as follows:
+<!-- Another spatial subsetting example will use an object representing the countries of Africa, created using attribute subsetting as follows:^[Recall -->
+<!-- attribute subsetting can also be done in base R with `africa_wgs = world[world$continent == "Africa", ]`.] -->
 
-We will apply attribute subsetting to the `world` dataset (see previous chapter):^[Recall
-attribute subsetting can also be done in base R with `africa_wgs = world[world$continent == "Africa", ]`.]
+<!-- ```{r} -->
+<!-- africa_wgs = world %>% filter(continent == "Africa") -->
+<!-- ``` -->
 
+<!-- To further prepare the input data, we will reproject the data to the coordinate reference system (CRS) 32630, its EPSG code (explained in Chapter 6): -->
 
-```r
-africa_wgs = world %>% filter(continent == "Africa")
-```
+<!-- ```{r} -->
+<!-- africa = st_transform(africa_wgs, crs = 32630) -->
+<!-- ``` -->
 
-To further prepare the input data, we will reproject the data to the coordinate reference system (CRS) 32630, its EPSG code (explained in Chapter 6):
+<!-- We can also use the `[` operator for *Spatial* subsetting. -->
+<!-- The difference is that we use *another spatial object* inside the square brackets instead of an `integer` or `logical` vector. -->
+<!-- This is a concise and consistent syntax, as shown in the next code chunk. -->
+<!-- Let's test it with a hypothetical scenario: we want to subset all countries within 2000 km of the point where the equator (where latitude = 0 degrees) intersects the prime meridian (longitude = 0 degrees), as illustrated in Figure \@ref(fig:globe). -->
+<!-- The subsetting object is created below. -->
+<!-- Note that this must have the same CRS as the target object (set with the `crs` argument): -->
 
+<!-- ```{r, warning=FALSE} -->
+<!-- center_wgs = st_sf(geometry = st_sfc(st_point(c(0, 0)), crs = 4326)) -->
+<!-- center = st_transform(center_wgs, 32630) -->
+<!-- buff = st_buffer(center, dist = 2e6) -->
+<!-- ``` -->
 
-```r
-africa = st_transform(africa_wgs, crs = 32630)
-```
+<!-- ```{r globe, echo=FALSE, fig.cap="Subsetting scenario: which countries intersect with a circle of 2000 km in radius located at zero degrees longitude and zero degrees latitude? Figure created with the **[globe](https://cran.r-project.org/package=globe)** package."} -->
+<!-- knitr::include_graphics("figures/globe.png") -->
+<!-- ``` -->
 
-We can also use the `[` operator for *Spatial* subsetting.
-The difference is that we use *another spatial object* inside the square brackets instead of an `integer` or `logical` vector.
-This is a concise and consistent syntax, as shown in the next code chunk.
-Let's test it with a hypothetical scenario: we want to subset all countries within 2000 km of the point where the equator (where latitude = 0 degrees) intersects the prime meridian (longitude = 0 degrees), as illustrated in Figure \@ref(fig:globe).
-The subsetting object is created below.
-Note that this must have the same CRS as the target object (set with the `crs` argument):
+<!-- The data to be subset, or 'target layer', is the `africa` object created above, which has a projected CRS (`32630`). -->
+<!-- Subsequently, spatial subsetting can be done with a single, concise command: -->
 
+<!-- ```{r} -->
+<!-- africa_buf = africa[buff, ] -->
+<!-- ``` -->
 
-```r
-center_wgs = st_sf(geometry = st_sfc(st_point(c(0, 0)), crs = 4326))
-center = st_transform(center_wgs, 32630)
-buff = st_buffer(center, dist = 2e6)
-```
+<!-- ```{block2 type='rmdnote'} -->
+<!-- If we were using geographic ('lon/lat') data the previous command would have emitted a message warning about assuming `planar coordinates`. -->
+<!-- This is because spatial operations (especially distance and area calculations) cannot be assumed to be accurate in a geographic (longitude/latitude) CRS. -->
+<!-- In this case one could justify the use of a lon/lat CRS: the data is close to the equator where there is least distortion caused by the curvature of the earth. -->
+<!-- It is good practice to reproject spatial datasets before performing spatial operations on them. -->
+<!-- ``` -->
 
-<div class="figure" style="text-align: center">
-<img src="figures/globe.png" alt="Subsetting scenario: which countries intersect with a circle of 2000 km in radius located at zero degrees longitude and zero degrees latitude? Figure created with the **[globe](https://cran.r-project.org/package=globe)** package." width="250" />
-<p class="caption">(\#fig:globe)Subsetting scenario: which countries intersect with a circle of 2000 km in radius located at zero degrees longitude and zero degrees latitude? Figure created with the **[globe](https://cran.r-project.org/package=globe)** package.</p>
-</div>
+<!-- The spatial subsetting clearly worked: only countries intersecting with the giant circle are returned (Figure \@ref(fig:africa-buff)): -->
 
-The data to be subset, or 'target layer', is the `africa` object created above, which has a projected CRS (`32630`).
-Subsequently, spatial subsetting can be done with a single, concise command:
-
-
-```r
-africa_buf = africa[buff, ]
-```
-
-\BeginKnitrBlock{rmdnote}<div class="rmdnote">If we were using geographic ('lon/lat') data the previous command would have emitted a message warning about assuming `planar coordinates`.
-This is because spatial operations (especially distance and area calculations) cannot be assumed to be accurate in a geographic (longitude/latitude) CRS.
-In this case one could justify the use of a lon/lat CRS: the data is close to the equator where there is least distortion caused by the curvature of the earth.
-It is good practice to reproject spatial datasets before performing spatial operations on them.</div>\EndKnitrBlock{rmdnote}
-
-The spatial subsetting clearly worked: only countries intersecting with the giant circle are returned (Figure \@ref(fig:africa-buff)):
-
-
-```r
-plot(africa_buf["pop"])
-plot(buff, add = TRUE)
-```
+<!-- ```{r, eval=FALSE} -->
+<!-- plot(africa_buf["pop"]) -->
+<!-- plot(buff, add = TRUE) -->
+<!-- ``` -->
 
 
 <!-- Todo: improve this figure, e.g. by creating a new hidden chunk - still show this one -->
-<div class="figure" style="text-align: center">
-preserve0c4dc41e507ac18c
-<p class="caption">(\#fig:africa-buff)Subset of the `africa` data selected based on their intersection with a circle 2000 km in radius with a center point at 0 degrees longitude and 0 degrees latitude.</p>
-</div>
+<!-- ```{r africa-buff, fig.cap="Subset of the `africa` data selected based on their intersection with a circle 2000 km in radius with a center point at 0 degrees longitude and 0 degrees latitude.", echo=FALSE} -->
+<!-- library(leaflet) -->
+<!-- leaflet() %>%  -->
+<!--   addProviderTiles("OpenMapSurfer.Grayscale") %>%  -->
+<!--   addPolygons(data = st_transform(africa_buf, 4326)) %>%  -->
+<!--   addPolygons(data = st_transform(buff, 4326), color = "red") -->
+<!-- ``` -->
 
-Note that countries that just touch the giant circle are selected such as Chad (northeast of the circle).
-This is because the default subsetting operator is `st_intersects()`, which returns any type of spatial relation.
-Other spatial subsetting operations such as `st_within()` are more conservative, as shown in section \@ref(topological-relations).
+<!-- Note that countries that just touch the giant circle are selected such as Chad (northeast of the circle). -->
+<!-- This is because the default subsetting operator is `st_intersects()`, which returns any type of spatial relation. -->
+<!-- Other spatial subsetting operations such as `st_within()` are more conservative, as shown in section \@ref(topological-relations). -->
 
-Before we progress to explore the differences between different spatial subsetting operations, it is worth seeing alternative ways to achieve the same result,
-to deepen understanding of what is going on 'under the hood' (which in turn is vital for developing advanced geocomputation applications).
-The second way to reproduce the subsetting operation illustrated in Figure \@ref(fig:africa-buff) simply involves expanding the operation over 2 lines:
+Before we progress to the next section, it is worth seeing how subsetting can be done using *topological operators* directly.
+The result illustrated in Figure \@ref(fig:nz-subset) can be reproduced using the operator `st_intersects()` as follows:
 
 
 ```r
-sel_buff = st_intersects(x = africa, y = buff, sparse = FALSE)
-africa_buf2 = africa[sel_buff, ]
+sel = st_intersects(x = nz_height, y = canterbury, sparse = FALSE)
 ```
 
 The third way is essentially the same as the second, but uses the `filter()` function introduced in section \@ref(vector-attribute-subsetting), forming the foundations of a 'tidy' spatial data analysis workflow.
@@ -2809,7 +2804,7 @@ If you already use **dplyr** for data manipulation, this way should seem familia
 
 
 ```r
-africa_buf3 = filter(africa, sel_buff)
+# africa_buf3 = filter(africa, sel_buff)
 ```
 
 How can we be sure that the results are the same for the three subsetting operations?
@@ -2817,29 +2812,24 @@ We can test them as follows:
 
 
 ```r
-identical(x = africa_buf, y = africa_buf2)
-#> [1] TRUE
-identical(x = africa_buf, y = africa_buf3)
-#> [1] FALSE
+# identical(x = africa_buf, y = africa_buf2)
+# identical(x = africa_buf, y = africa_buf3)
 ```
 
 The reason that the third spatially subset object (`africa_buf3`) is not identical is that **dplyr** changes the row names:
 
 
 ```r
-head(row.names(africa_buf))
-#> [1] "1" "3" "4" "6" "7" "8"
-head(row.names(africa_buf3))
-#> [1] "1" "2" "3" "4" "5" "6"
+# head(row.names(africa_buf))
+# head(row.names(africa_buf3))
 ```
 
 If the row names are re-set, the objects become identical:
 
 
 ```r
-attr(africa_buf3, "row.names") = attr(x = africa_buf, "row.names")
-identical(africa_buf, africa_buf3)
-#> [1] TRUE
+# attr(africa_buf3, "row.names") = attr(x = africa_buf, "row.names")
+# identical(africa_buf, africa_buf3)
 ```
 
 <div class="rmdnote">
@@ -2848,10 +2838,8 @@ identical(africa_buf, africa_buf3)
 
 
 ```r
-row.names(africa[africa$subregion == "Northern Africa", ])
-#> [1] "12" "13" "24" "26" "36" "37" "46"
-row.names(filter(africa, subregion == "Northern Africa"))
-#> [1] "1" "2" "3" "4" "5" "6" "7"
+# row.names(africa[africa$subregion == "Northern Africa", ])
+# row.names(filter(africa, subregion == "Northern Africa"))
 ```
 
 ### Topological relations
@@ -3237,34 +3225,19 @@ group_by(us_states, REGION) %>%
 
 
 ```r
-buff_agg = aggregate(x = africa[, "pop"], by = buff, FUN = sum)
+# buff_agg = aggregate(x = africa[, "pop"], by = buff, FUN = sum)
 ```
 <!--
 show also tidyverse way, so what you are doing is basically a spatial join and a subsequent aggregation without a grouping variable. Didactically, it might be better to present a grouping variable.
-
-```r
-st_join(buff, africa[, "pop"]) %>%
-  summarize(pop = sum(pop, na.rm = TRUE))
-#> Simple feature collection with 1 feature and 1 field
-#> geometry type:  POLYGON
-#> dimension:      XY
-#> bbox:           xmin: -1166021 ymin: -2e+06 xmax: 2833979 ymax: 2e+06
-#> epsg (SRID):    32630
-#> proj4string:    +proj=utm +zone=30 +datum=WGS84 +units=m +no_defs
-#>        pop                       geometry
-#> 1 4.87e+08 POLYGON ((2833978.55690392 ...
-# summarize(africa[buff, "pop"], pop = sum(pop, na.rm = TRUE))
-```
 -->
+
+
 
 The result, `buff_agg`, is a spatial object with the same geometry as `by` (the circular buffer in this case) but with an additional variable, `pop` reporting summary statistics for all features in `x` that intersect with `by` (the total population of the countries that touch the buffer in this case).
 Plotting the result (with `plot(buff_agg)`) shows that the operation does not really make sense:
 Figure \@ref(fig:buff-agg) shows a population of over half a billion people mostly located in a giant circle floating off the west coast of Africa!  
 
-<div class="figure" style="text-align: center">
-<img src="figures/buff-agg-1.png" alt="Result of spatial aggregation showing the total population of countries that intersect with a large circle whose center lies at 0 degrees longitude and latitude." width="576" />
-<p class="caption">(\#fig:buff-agg)Result of spatial aggregation showing the total population of countries that intersect with a large circle whose center lies at 0 degrees longitude and latitude.</p>
-</div>
+
 
 The results of the spatial aggregation exercise presented in Figure \@ref(fig:buff-agg) are unrealistic for three reasons:
 
@@ -3305,10 +3278,9 @@ The simplest useful method for spatial interpolation is *area weighted* spatial 
 This is implemented in `st_interpolate_aw()`, as demonstrated below:
 <!-- well, what you are doing here is weighting the inhabitants presumably on the basis of the area. The link between your congruent and incongruent example is somehow missing. One gets the impression, that the spatial interpolation takes care of incongruencies which is not the case. So I would suggest to clarify the weighting procedure.-->
 
+
 ```r
-buff_agg_aw = st_interpolate_aw(x = africa["pop"], to = buff, extensive = TRUE)
-#> Warning in st_interpolate_aw(x = africa["pop"], to = buff, extensive =
-#> TRUE): st_interpolate_aw assumes attributes are constant over areas of x
+# buff_agg_aw = st_interpolate_aw(x = africa["pop"], to = buff, extensive = TRUE)
 ```
 
 Instead of simply aggregating, this procedure additionally applies a weight, in this case simply the area.
@@ -3356,7 +3328,7 @@ plot(b)
 plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
 ```
 
-<img src="figures/unnamed-chunk-46-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-40-1.png" width="576" style="display: block; margin: auto;" />
 
 The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
 <!-- Todo: reference r4ds -->
@@ -3888,7 +3860,7 @@ library(raster)
 ## Introduction
 
 This chapter is about reading and writing geographic data.
-Geographic data *import* is a [*sine qua non*](https://en.wikipedia.org/wiki/Sine_qua_non) for geocomputational software because without data real-world applications are impossible.
+Geographic data *import* is an essential part of geocomputational software because without data real-world applications are impossible.
 The skills taught in this book will enable you to *add value* to data meaning that, for others to benefit from the results, data *output* is also vital.
 These two processes go hand-in-hand and are referred to as I/O --- short for input/output --- in Computer Science [@gillespie_efficient_2016].
 Hence the title of this chapter.
@@ -4583,6 +4555,7 @@ It is hidden from view for most of the time except when the object is printed bu
 <!-- change shape and attributes) -->
 <!-- different methods of computing values after transformation, such as ngb or bilinear  -->
 <!--in most of the cases reproject vector, not raster-->
+<!-- merge two rasters with different projections, ref. to 4.3.7 Merging rasters -->
 
 <!--
 - data? one numerical and one categorical
@@ -4602,7 +4575,16 @@ It is hidden from view for most of the time except when the object is printed bu
 
 <!-- ### Shearing -->
 
-<!-- Todo: add content on simplifying using mapshaper and other packages (e.g. sf) -->
+<!-- ideas and questions -->
+<!-- 1. what's important for vector transformations? -->
+<!-- - simplifications -->
+<!-- - st_cast -->
+<!-- - do we really need - Affine transformations, Translating, Scaling, Rotating, Reflecting, Shearing - are they useful? -->
+<!-- 2. what's important for raster transformations? -->
+<!-- - should we move some content from ch4 here? such as aggregate() and disaggregate() from 3.3.8  -->
+<!-- 3. what's important for both? -->
+<!-- - raster to vector -->
+<!-- - vector to raster -->
 
 ### Exercises
 

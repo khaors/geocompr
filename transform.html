@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2017-11-01">
+<meta name="date" content="2017-11-02">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -342,6 +342,7 @@ The EPSG code can be found inside the <code>crs</code> attribute of the objectâ€
 <!-- change shape and attributes) -->
 <!-- different methods of computing values after transformation, such as ngb or bilinear  -->
 <!--in most of the cases reproject vector, not raster-->
+<!-- merge two rasters with different projections, ref. to 4.3.7 Merging rasters -->
 <!--
 - data? one numerical and one categorical
 - projectRaster
@@ -353,7 +354,16 @@ The EPSG code can be found inside the <code>crs</code> attribute of the objectâ€
 <!-- ### Rotating -->
 <!-- ### Reflecting -->
 <!-- ### Shearing -->
-<!-- Todo: add content on simplifying using mapshaper and other packages (e.g. sf) -->
+<!-- ideas and questions -->
+<!-- 1. what's important for vector transformations? -->
+<!-- - simplifications -->
+<!-- - st_cast -->
+<!-- - do we really need - Affine transformations, Translating, Scaling, Rotating, Reflecting, Shearing - are they useful? -->
+<!-- 2. what's important for raster transformations? -->
+<!-- - should we move some content from ch4 here? such as aggregate() and disaggregate() from 3.3.8  -->
+<!-- 3. what's important for both? -->
+<!-- - raster to vector -->
+<!-- - vector to raster -->
 </div>
 <div id="exercises-4" class="section level3">
 <h3><span class="header-section-number">6.2.3</span> Exercises</h3>
