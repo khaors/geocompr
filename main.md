@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservea23b1f2fc97e150a
+preservecec3b03a92ffc394
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -4591,7 +4591,7 @@ It is hidden from view for most of the time except when the object is printed bu
 
 ### Exercises
 
-<!-- 1. Test how tranformation of data into tranverse mercator change data. -->
+<!-- 1. Test how transformation of data into transverse Mercator change data. -->
 <!-- Why is that? -->
 <!-- Now try to inverse it back into WGS 84.  -->
 <!-- What happened? Why? -->
