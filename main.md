@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2017-11-02'
+date: '2017-11-03'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2017-11-02 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2017-11-03 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve95781887b8304ccb
+preservec20baf6229b84ffd
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -4488,6 +4488,8 @@ Depending on projections used, reprojection could be either lossy or lossless.
 <!-- ```{r} -->
 <!-- world_tmerc = st_transform(world, "+proj=tmerc") -->
 <!-- plot(world_tmerc$geom) -->
+<!-- world_4326 = st_transform(world_tmerc, 4326) -->
+<!-- plot(world_4326$geom) -->
 <!-- ``` -->
 
 The dataset `cycle_hire_osm` represents all cycle hire locations across London, taken from OpenStreetMap (OSM).
