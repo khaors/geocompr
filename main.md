@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservec8f5172097e9dad7
+preservea23b1f2fc97e150a
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -4481,16 +4481,9 @@ Let's use real-world examples to illustrate this.
 Vector data on the most basic level is represented by individual points, and points create more complex objects, such as lines and polygons.
 Spatial reprojection of vectors is a mathematical transformation of coordinates of these point.
 Depending on projections used, reprojection could be either lossy or lossless.
-<!-- For example, loss of information could occur when ... . -->
-The precision could be also lost when transformation is between projection of different datum.
-<!-- Loss of precision/information could occurs, for example, when -->
-<!-- https://github.com/r-spatial/sf/issues/509 -->
-<!-- ```{r} -->
-<!-- world_tmerc = st_transform(world, "+proj=tmerc") -->
-<!-- plot(world_tmerc$geom) -->
-<!-- world_4326 = st_transform(world_tmerc, 4326) -->
-<!-- plot(world_4326$geom) -->
-<!-- ``` -->
+For example, loss of spatial information could occur when the new CRS is only adequate for smaller area than input vector.
+The precision could be also lost when transformation is between coordinate systems that have different datum - in those situations approximations are used.
+However, in most cases CRS transformation is lossless.
 
 The dataset `cycle_hire_osm` represents all cycle hire locations across London, taken from OpenStreetMap (OSM).
 It is automatically loaded by the **spData** package, meaning we do not have to load it, and its CRS can be queried as follows:
@@ -4597,6 +4590,18 @@ It is hidden from view for most of the time except when the object is printed bu
 <!-- - vector to raster -->
 
 ### Exercises
+
+<!-- 1. Test how tranformation of data into tranverse mercator change data. -->
+<!-- Why is that? -->
+<!-- Now try to inverse it back into WGS 84.  -->
+<!-- What happened? Why? -->
+<!-- https://github.com/r-spatial/sf/issues/509 -->
+<!-- ```{r} -->
+<!-- world_tmerc = st_transform(world, "+proj=tmerc") -->
+<!-- plot(world_tmerc$geom) -->
+<!--  world_4326 = st_transform(world_tmerc, 4326) -->
+<!-- plot(world_4326$geom) -->
+<!-- ``` -->
 
 <!--chapter:end:06-transform.Rmd-->
 
