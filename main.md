@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve42263e5fa9658c78
+preserve64334e23066bf933
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -4561,17 +4561,25 @@ This entails that a new raster could have a different number of columns and rows
 <!-- change shape and attributes) -->
 As a result, values of these new cells needs to be estimated.
 <!-- (for most of the case is better to reproject vector than raster) -->
-Let's take a look at two examples of raster transformation -  using continuous and categorical data.
+Let's take a look at two examples of raster transformation -  using categorical and continuous data.
 
+<!-- intro to this object -->
+
+```r
+cat_raster = raster(system.file("raster/nlcd2011.tif", package="spDataLarge"))
+```
+
+<!-- intro to this object -->
 
 ```r
 con_raster = raster(system.file("raster/srtm.tif", package="spDataLarge"))
 ```
 
+When reprojecting categorical raster, we need to ensure that our new estimated values would still have values of our classes.
+<!-- For example -->
+the values are class data, the ‘nearest neighbor’ is commonly used.
 
-```r
-cat_raster = raster(system.file("raster/nlcd2011.tif", package="spDataLarge"))
-```
+<!-- Otherwise some sort of interpolation (e.g. ‘bilinear’). -->
 
 <!-- different methods of computing values after transformation, such as ngb or bilinear  -->
 <!--in most of the cases reproject vector, not raster-->
@@ -4579,7 +4587,7 @@ cat_raster = raster(system.file("raster/nlcd2011.tif", package="spDataLarge"))
 <!-- - data? one numerical and one categorical -->
 <!-- - projectRaster -->
 <!-- - an issue of resampling (comparision of old and new values) -->
-
+<!-- note: equal area projections are the best for raster calculations -->
 
 <!-- ## Affine transformations -->
 

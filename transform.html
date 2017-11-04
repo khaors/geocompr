@@ -336,15 +336,20 @@ The EPSG code can be found inside the <code>crs</code> attribute of the object�
 </div>
 <div id="raster-data-3" class="section level3">
 <h3><span class="header-section-number">6.2.2</span> Raster data</h3>
-<p>The basic concepts of CRS apply to both vector and raster data model. However, there are important differences in reprojection of vectors and rasters. Transformation of CRS in vector data changes coordinates of each vertex. This do not apply to raster data. Rasters are are composed of rectangular cells of the same size (expressed by map units, such as degrees or meters). To preserve this property, it is impossible to transform coordinates of cells separately. This entails that a new raster could have a different number of columns and rows, and therefore different number of cells that the original one. <!-- rasters: transformation means change of the coordinates of (special case of resampling) --> <!-- changes in dimensions, resolution, extent --> <!-- change shape and attributes) --> As a result, values of these new cells needs to be estimated. <!-- (for most of the case is better to reproject vector than raster) --> Let’s take a look at two examples of raster transformation - using continuous and categorical data.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">con_raster =<span class="st"> </span><span class="kw">raster</span>(<span class="kw">system.file</span>(<span class="st">&quot;raster/srtm.tif&quot;</span>, <span class="dt">package=</span><span class="st">&quot;spDataLarge&quot;</span>))</code></pre></div>
+<p>The basic concepts of CRS apply to both vector and raster data model. However, there are important differences in reprojection of vectors and rasters. Transformation of CRS in vector data changes coordinates of each vertex. This do not apply to raster data. Rasters are are composed of rectangular cells of the same size (expressed by map units, such as degrees or meters). To preserve this property, it is impossible to transform coordinates of cells separately. This entails that a new raster could have a different number of columns and rows, and therefore different number of cells that the original one. <!-- rasters: transformation means change of the coordinates of (special case of resampling) --> <!-- changes in dimensions, resolution, extent --> <!-- change shape and attributes) --> As a result, values of these new cells needs to be estimated. <!-- (for most of the case is better to reproject vector than raster) --> Let’s take a look at two examples of raster transformation - using categorical and continuous data.</p>
+<!-- intro to this object -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cat_raster =<span class="st"> </span><span class="kw">raster</span>(<span class="kw">system.file</span>(<span class="st">&quot;raster/nlcd2011.tif&quot;</span>, <span class="dt">package=</span><span class="st">&quot;spDataLarge&quot;</span>))</code></pre></div>
+<!-- intro to this object -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">con_raster =<span class="st"> </span><span class="kw">raster</span>(<span class="kw">system.file</span>(<span class="st">&quot;raster/srtm.tif&quot;</span>, <span class="dt">package=</span><span class="st">&quot;spDataLarge&quot;</span>))</code></pre></div>
+<p>When reprojecting categorical raster, we need to ensure that our new estimated values would still have values of our classes. <!-- For example --> the values are class data, the ‘nearest neighbor’ is commonly used.</p>
+<!-- Otherwise some sort of interpolation (e.g. ‘bilinear’). -->
 <!-- different methods of computing values after transformation, such as ngb or bilinear  -->
 <!--in most of the cases reproject vector, not raster-->
 <!-- merge two rasters with different projections, ref. to 4.3.7 Merging rasters -->
 <!-- - data? one numerical and one categorical -->
 <!-- - projectRaster -->
 <!-- - an issue of resampling (comparision of old and new values) -->
+<!-- note: equal area projections are the best for raster calculations -->
 <!-- ## Affine transformations -->
 <!-- ### Translating -->
 <!-- ### Scaling -->
