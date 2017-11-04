@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2017-11-03'
+date: '2017-11-04'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2017-11-03 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2017-11-04 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveead84322d3111046
+preservec6b6f0bfc31c3ac4
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -4548,10 +4548,13 @@ It is hidden from view for most of the time except when the object is printed bu
 
 ### Raster data
 
-<!-- The basic concepts of CRS apply to both, vector and raster, data model, however projection transformation differ between them. -->
-<!-- However, representation of due to  -->
-<!-- While the concept of CRS applies to both data types, conversion between coordinate reference systems differs between vector and raster. -->
-<!-- Transformation from one CRS to another in vector data changes only coordinates of vertices, keeping the values intact. -->
+The basic concepts of CRS apply to both vector and raster data model.
+However, there are important differences in reprojection of vectors and rasters.
+Transformation of CRS in vector data changes coordinates of each vertex. This do not apply to raster data.
+Rasters are are composed of rectangular cells of the same size (expressed by map units, such as degrees or meters).
+To preserve this property, it is impossible to transform coordinates of cells separately.
+This entails that a new raster could have a different number of columns and rows, and therefore different number of cells that the original one.
+As a result, values of these new cells needs to be estimated.
 <!-- (for most of the case is better to reproject vector than raster) -->
 <!-- rasters: transformation means change of the coordinates of (special case of resampling) -->
 <!-- changes in dimensions, resolution, extent -->

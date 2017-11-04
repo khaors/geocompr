@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2017-11-03">
+<meta name="date" content="2017-11-04">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -334,17 +334,7 @@ The EPSG code can be found inside the <code>crs</code> attribute of the objectâ€
 </div>
 <div id="raster-data-3" class="section level3">
 <h3><span class="header-section-number">6.2.2</span> Raster data</h3>
-<!-- The basic concepts of CRS apply to both, vector and raster, data model, however projection transformation differ between them. -->
-<!-- However, representation of due to  -->
-<!-- While the concept of CRS applies to both data types, conversion between coordinate reference systems differs between vector and raster. -->
-<!-- Transformation from one CRS to another in vector data changes only coordinates of vertices, keeping the values intact. -->
-<!-- (for most of the case is better to reproject vector than raster) -->
-<!-- rasters: transformation means change of the coordinates of (special case of resampling) -->
-<!-- changes in dimensions, resolution, extent -->
-<!-- change shape and attributes) -->
-<!-- different methods of computing values after transformation, such as ngb or bilinear  -->
-<!--in most of the cases reproject vector, not raster-->
-<!-- merge two rasters with different projections, ref. to 4.3.7 Merging rasters -->
+<p>The basic concepts of CRS apply to both vector and raster data model. However, there are important differences in reprojection of vectors and rasters. Transformation of CRS in vector data changes coordinates of each vertex. This do not apply to raster data. Rasters are are composed of rectangular cells of the same size (expressed by map units, such as degrees or meters). To preserve this property, it is impossible to transform coordinates of cells separately. This entails that a new raster could have a different number of columns and rows, and therefore different number of cells that the original one. As a result, values of these new cells needs to be estimated. <!-- (for most of the case is better to reproject vector than raster) --> <!-- rasters: transformation means change of the coordinates of (special case of resampling) --> <!-- changes in dimensions, resolution, extent --> <!-- change shape and attributes) --> <!-- different methods of computing values after transformation, such as ngb or bilinear  --> <!--in most of the cases reproject vector, not raster--> <!-- merge two rasters with different projections, ref. to 4.3.7 Merging rasters --></p>
 <!--
 - data? one numerical and one categorical
 - projectRaster
