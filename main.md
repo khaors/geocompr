@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve64334e23066bf933
+preserve153dbe0938f72f86
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -4567,19 +4567,73 @@ Let's take a look at two examples of raster transformation -  using categorical 
 
 ```r
 cat_raster = raster(system.file("raster/nlcd2011.tif", package="spDataLarge"))
+cat_raster
+#> class       : RasterLayer 
+#> dimensions  : 1359, 1073, 1458207  (nrow, ncol, ncell)
+#> resolution  : 31.5, 31.5  (x, y)
+#> extent      : 301903, 335735, 4111244, 4154086  (xmin, xmax, ymin, ymax)
+#> coord. ref. : +proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
+#> data source : /home/travis/R/Library/spDataLarge/raster/nlcd2011.tif 
+#> names       : nlcd2011 
+#> values      : 11, 95  (min, max)
 ```
 
 <!-- intro to this object -->
 
 ```r
 con_raster = raster(system.file("raster/srtm.tif", package="spDataLarge"))
+con_raster
+#> class       : RasterLayer 
+#> dimensions  : 463, 459, 212517  (nrow, ncol, ncell)
+#> resolution  : 73.7, 92.5  (x, y)
+#> extent      : 301929, 335757, 4111262, 4154089  (xmin, xmax, ymin, ymax)
+#> coord. ref. : +proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
+#> data source : /home/travis/R/Library/spDataLarge/raster/srtm.tif 
+#> names       : srtm 
+#> values      : 1050, 2895  (min, max)
 ```
 
-When reprojecting categorical raster, we need to ensure that our new estimated values would still have values of our classes.
-<!-- For example -->
-the values are class data, the ‘nearest neighbor’ is commonly used.
+<!-- intro to projectRaster -->
 
-<!-- Otherwise some sort of interpolation (e.g. ‘bilinear’). -->
+```r
+?projectRaster()
+```
+
+When reprojecting categorical raster, we need to ensure that our new estimated values would still have values of our original classes.
+This could be done using the nearest neighbor method.
+<!-- For example -->
+
+
+```r
+wgs84 = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+cat_raster_wgs84 = projectRaster(cat_raster, crs = wgs84, method = "ngb")
+cat_raster_wgs84
+#> class       : RasterLayer 
+#> dimensions  : 1394, 1111, 1548734  (nrow, ncol, ncell)
+#> resolution  : 0.000356, 0.000284  (x, y)
+#> extent      : -113, -113, 37.1, 37.5  (xmin, xmax, ymin, ymax)
+#> coord. ref. : +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0 
+#> data source : in memory
+#> names       : nlcd2011 
+#> values      : 11, 95  (min, max)
+```
+
+On the other hand, the nearest neighbor method should not be used for continuous raster data, as we want to preserve gradual changes in values.
+Continuous data could be reprojected using the bilinear method. 
+
+
+```r
+con_raster_wgs84 = projectRaster(con_raster, crs = wgs84, method = "bilinear")
+con_raster
+#> class       : RasterLayer 
+#> dimensions  : 463, 459, 212517  (nrow, ncol, ncell)
+#> resolution  : 73.7, 92.5  (x, y)
+#> extent      : 301929, 335757, 4111262, 4154089  (xmin, xmax, ymin, ymax)
+#> coord. ref. : +proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
+#> data source : /home/travis/R/Library/spDataLarge/raster/srtm.tif 
+#> names       : srtm 
+#> values      : 1050, 2895  (min, max)
+```
 
 <!-- different methods of computing values after transformation, such as ngb or bilinear  -->
 <!--in most of the cases reproject vector, not raster-->
@@ -4588,6 +4642,7 @@ the values are class data, the ‘nearest neighbor’ is commonly used.
 <!-- - projectRaster -->
 <!-- - an issue of resampling (comparision of old and new values) -->
 <!-- note: equal area projections are the best for raster calculations -->
+<!-- should we mentioned gdal_transform? -->
 
 <!-- ## Affine transformations -->
 
@@ -4624,6 +4679,12 @@ the values are class data, the ‘nearest neighbor’ is commonly used.
 <!-- plot(world_tmerc$geom) -->
 <!--  world_4326 = st_transform(world_tmerc, 4326) -->
 <!-- plot(world_4326$geom) -->
+<!-- ``` -->
+<!-- 2. Try to reproject categorical data using a bilinear interpolation method. What's wrong? -->
+<!-- ```{r} -->
+<!-- wgs84 = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs" -->
+<!-- cat_raster_wgs84 = projectRaster(cat_raster, crs = wgs84, method = "bilinear") -->
+<!-- cat_raster_wgs84 -->
 <!-- ``` -->
 
 <!--chapter:end:06-transform.Rmd-->
