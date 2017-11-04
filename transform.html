@@ -255,11 +255,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="prerequisites-4" class="section level2 unnumbered">
 <h2>Prerequisites</h2>
 <ul>
-<li>This chapter requires the packages <strong>tidyverse</strong>, <strong>sf</strong>, and <strong>spData</strong>:</li>
+<li>This chapter requires the packages <strong>tidyverse</strong>, <strong>sf</strong>, <strong>raster</strong>, <strong>spData</strong>, and <strong>spDataLarge</strong>:</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
 <span class="kw">library</span>(sf)
-<span class="kw">library</span>(spData)</code></pre></div>
+<span class="kw">library</span>(raster)
+<span class="kw">library</span>(spData)
+<span class="kw">library</span>(spDataLarge)</code></pre></div>
 </div>
 <div id="introduction-3" class="section level2">
 <h2><span class="header-section-number">6.1</span> Introduction</h2>
@@ -334,12 +336,15 @@ The EPSG code can be found inside the <code>crs</code> attribute of the objectâ€
 </div>
 <div id="raster-data-3" class="section level3">
 <h3><span class="header-section-number">6.2.2</span> Raster data</h3>
-<p>The basic concepts of CRS apply to both vector and raster data model. However, there are important differences in reprojection of vectors and rasters. Transformation of CRS in vector data changes coordinates of each vertex. This do not apply to raster data. Rasters are are composed of rectangular cells of the same size (expressed by map units, such as degrees or meters). To preserve this property, it is impossible to transform coordinates of cells separately. This entails that a new raster could have a different number of columns and rows, and therefore different number of cells that the original one. As a result, values of these new cells needs to be estimated. <!-- (for most of the case is better to reproject vector than raster) --> <!-- rasters: transformation means change of the coordinates of (special case of resampling) --> <!-- changes in dimensions, resolution, extent --> <!-- change shape and attributes) --> <!-- different methods of computing values after transformation, such as ngb or bilinear  --> <!--in most of the cases reproject vector, not raster--> <!-- merge two rasters with different projections, ref. to 4.3.7 Merging rasters --></p>
-<!--
-- data? one numerical and one categorical
-- projectRaster
-- an issue of resampling (comparision of old and new values)
--->
+<p>The basic concepts of CRS apply to both vector and raster data model. However, there are important differences in reprojection of vectors and rasters. Transformation of CRS in vector data changes coordinates of each vertex. This do not apply to raster data. Rasters are are composed of rectangular cells of the same size (expressed by map units, such as degrees or meters). To preserve this property, it is impossible to transform coordinates of cells separately. This entails that a new raster could have a different number of columns and rows, and therefore different number of cells that the original one. <!-- rasters: transformation means change of the coordinates of (special case of resampling) --> <!-- changes in dimensions, resolution, extent --> <!-- change shape and attributes) --> As a result, values of these new cells needs to be estimated. <!-- (for most of the case is better to reproject vector than raster) --> Letâ€™s take a look at two examples of raster transformation - using continuous and categorical data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">con_raster =<span class="st"> </span><span class="kw">raster</span>(<span class="kw">system.file</span>(<span class="st">&quot;raster/srtm.tif&quot;</span>, <span class="dt">package=</span><span class="st">&quot;spDataLarge&quot;</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cat_raster =<span class="st"> </span><span class="kw">raster</span>(<span class="kw">system.file</span>(<span class="st">&quot;raster/nlcd2011.tif&quot;</span>, <span class="dt">package=</span><span class="st">&quot;spDataLarge&quot;</span>))</code></pre></div>
+<!-- different methods of computing values after transformation, such as ngb or bilinear  -->
+<!--in most of the cases reproject vector, not raster-->
+<!-- merge two rasters with different projections, ref. to 4.3.7 Merging rasters -->
+<!-- - data? one numerical and one categorical -->
+<!-- - projectRaster -->
+<!-- - an issue of resampling (comparision of old and new values) -->
 <!-- ## Affine transformations -->
 <!-- ### Translating -->
 <!-- ### Scaling -->
