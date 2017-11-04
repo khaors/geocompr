@@ -359,8 +359,7 @@ con_raster
 <span class="co">#&gt; data source : /home/travis/R/Library/spDataLarge/raster/srtm.tif </span>
 <span class="co">#&gt; names       : srtm </span>
 <span class="co">#&gt; values      : 1050, 2895  (min, max)</span></code></pre></div>
-<!-- intro to projectRaster -->
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">?<span class="kw">projectRaster</span>()</code></pre></div>
+<p>The <code>projectRaster()</code> function’s role is to reproject <code>Raster*</code> objects into a new object with another coordinate reference system. <!-- ? --></p>
 <p>When reprojecting categorical raster, we need to ensure that our new estimated values would still have values of our original classes. This could be done using the nearest neighbor method. <!-- For example --></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wgs84 =<span class="st"> &quot;+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs&quot;</span>
 cat_raster_wgs84 =<span class="st"> </span><span class="kw">projectRaster</span>(cat_raster, <span class="dt">crs =</span> wgs84, <span class="dt">method =</span> <span class="st">&quot;ngb&quot;</span>)
@@ -392,6 +391,7 @@ con_raster
 <!-- - an issue of resampling (comparision of old and new values) -->
 <!-- note: equal area projections are the best for raster calculations -->
 <!-- should we mentioned gdal_transform? -->
+<!-- res option in projectRaster? -->
 <!-- ## Affine transformations -->
 <!-- ### Translating -->
 <!-- ### Scaling -->

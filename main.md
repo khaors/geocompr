@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve153dbe0938f72f86
+preserve439139dc7beaf182
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -4593,11 +4593,8 @@ con_raster
 #> values      : 1050, 2895  (min, max)
 ```
 
-<!-- intro to projectRaster -->
-
-```r
-?projectRaster()
-```
+The `projectRaster()` function's role is to reproject `Raster*` objects into a new object with another coordinate reference system. 
+<!-- ? -->
 
 When reprojecting categorical raster, we need to ensure that our new estimated values would still have values of our original classes.
 This could be done using the nearest neighbor method.
@@ -4643,6 +4640,7 @@ con_raster
 <!-- - an issue of resampling (comparision of old and new values) -->
 <!-- note: equal area projections are the best for raster calculations -->
 <!-- should we mentioned gdal_transform? -->
+<!-- res option in projectRaster? -->
 
 <!-- ## Affine transformations -->
 
