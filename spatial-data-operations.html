@@ -298,7 +298,7 @@ Figure 4.1: Illustration of spatial subsetting with red triangles representing h
 Interested readers can see this default value of <code>op</code> set in the first line of the function call by entering its long-form name into the console <code>sf:::`[.sf`</code>. The <code>?sf</code> help page documents this also.
 </div>
 <p></p>
-<p>In general terms, spatial subsetting is simply the spatial equivalent of <em>attribute subsetting</em>. As with attribute subsetting, spatial subsetting is a <em>binary operation</em>: an object is either selected or not. Following the structure of section <a href="attr.html#vector-attribute-subsetting">3.2.1</a>, we start with base methods before describing how to do it in the <strong>tidyverse</strong>. <!-- todo: link to non-binary links, e.g. area-weighted spatial interpolation --></p>
+<p>Spatial subsetting is analogous to <em>attribute subsetting</em> (covered in section <a href="attr.html#vector-attribute-subsetting">3.2.1</a>): it is a <em>binary operation</em> (an object is either selected or not) and can be done using base methods (demonstrated above) or with the <strong>tidyverse</strong>. <!-- todo: link to non-binary links, e.g. area-weighted spatial interpolation --></p>
 <!-- #### Spatial subsetting in base R -->
 <!-- Another spatial subsetting example will use an object representing the countries of Africa, created using attribute subsetting as follows:^[Recall -->
 <!-- attribute subsetting can also be done in base R with `africa_wgs = world[world$continent == "Africa", ]`.] -->

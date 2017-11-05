@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve2baf5988f70351b1
+preserve07d547b62cbad255
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2714,9 +2714,8 @@ nz_height[canterbury, , op = st_disjoint]
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">Interested readers can see this default value of `op` set in the first line of the function call by entering its long-form name into the console `` sf:::`[.sf` ``.
 The `?sf` help page documents this also.</div>\EndKnitrBlock{rmdnote}
 
-In general terms, spatial subsetting is simply the spatial equivalent of *attribute subsetting*.
-As with attribute subsetting, spatial subsetting is a *binary operation*: an object is either selected or not.
-Following the structure of section \@ref(vector-attribute-subsetting), we start with base methods before describing how to do it in the **tidyverse**.
+Spatial subsetting is analogous to *attribute subsetting* (covered in section \@ref(vector-attribute-subsetting)):
+it is a *binary operation* (an object is either selected or not) and can be done using base methods (demonstrated above) or with the **tidyverse**.
 <!-- todo: link to non-binary links, e.g. area-weighted spatial interpolation -->
 
 <!-- #### Spatial subsetting in base R -->
