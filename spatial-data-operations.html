@@ -299,8 +299,21 @@ Figure 4.1: Illustration of spatial subsetting with red triangles representing h
 Interested readers can see this default value of <code>op</code> set in the first line of the function call by entering its long-form name into the console <code>sf:::`[.sf`</code>. The <code>?sf</code> help page documents this also.
 </div>
 <p></p>
-<p>Before we progress to the next section, it is worth seeing how subsetting can be done using <em>topological operators</em> directly. The result illustrated in Figure <a href="spatial-data-operations.html#fig:nz-subset">4.1</a> can be reproduced using the operator <code>st_intersects()</code> as follows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sel =<span class="st"> </span><span class="kw">st_intersects</span>(<span class="dt">x =</span> nz_height, <span class="dt">y =</span> canterbury, <span class="dt">sparse =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<p>Before we progress to the next section it is worth seeing another way of doing spatial subsetting. This relies on <em>topological operators</em>’s ability to return <code>logical</code> objects — when the argument <code>sparse</code> is set to <code>FALSE</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sel =<span class="st"> </span><span class="kw">st_intersects</span>(<span class="dt">x =</span> nz_height, <span class="dt">y =</span> canterbury, <span class="dt">sparse =</span> <span class="ot">FALSE</span>)
+canterbury_height2 =<span class="st"> </span>nz_height[sel, ]</code></pre></div>
+<p>The preceding code chunk created an intermediary object named <code>sel</code>, short for selection, containing only <code>TRUE</code> and <code>FALSE</code> values. <code>sel</code> is a matrix with a row per feature in the target object and a column per feature in the source object (<code>nz_height</code> with 101 features and <code>canterbury</code> with <code>feature respectively in this case). If there is more than 1 feature in</code>y<code>the resulting selection</code>matrix<code>must be converted into a</code>vector` before it is used for subsetting:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y =<span class="st"> </span>nz %&gt;%<span class="st"> </span><span class="kw">filter</span>(<span class="kw">grepl</span>(<span class="st">&quot;Cant|Otag&quot;</span>, REGC2017_NAME))
+sel_matrix =<span class="st"> </span><span class="kw">st_intersects</span>(nz_height, y, <span class="dt">sparse =</span> <span class="ot">FALSE</span>)
+sel_vector =<span class="st"> </span><span class="kw">rowSums</span>(sel_matrix) &gt;<span class="st"> </span><span class="dv">0</span>
+heights_y =<span class="st"> </span>nz_height[sel_vector, ]</code></pre></div>
+<p>The above code chunk results in an object, <code>heights_y</code>, that represent the high points that intersect with either Canterbury <em>or</em> Otago region. It did this in four stages:</p>
+<ol style="list-style-type: decimal">
+<li>Subset the regions of <code>nz</code> containing “Cant” or “Ortago” in their names. This was done using the pattern matching function <code>grepl()</code> in combination with the <code>|</code> character, which means ‘or’, resulting in the subsetting object <code>y</code>.</li>
+<li>Create a selection matrix representing which features of <code>nz_height</code> intersect with the regions in <code>y</code>.</li>
+<li>Convert the selection matrix into a <code>logical</code> ‘selection vector’ by using <code>rowSums()</code> to find which features matched <em>any</em> features in <code>y</code>.</li>
+<li>Use the result to subset <code>nz_heights</code>, creating a new object <code>heights_y</code>.</li>
+</ol>
 <p>The third way is essentially the same as the second, but uses the <code>filter()</code> function introduced in section <a href="attr.html#vector-attribute-subsetting">3.2.1</a>, forming the foundations of a ‘tidy’ spatial data analysis workflow. If you already use <strong>dplyr</strong> for data manipulation, this way should seem familiar:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># africa_buf3 = filter(africa, sel_buff)</span></code></pre></div>
 <p>How can we be sure that the results are the same for the three subsetting operations? We can test them as follows:</p>
@@ -572,7 +585,7 @@ y =<span class="st"> </span>b[<span class="dv">2</span>]
 x_and_y =<span class="st"> </span><span class="kw">st_intersection</span>(x, y)
 <span class="kw">plot</span>(b)
 <span class="kw">plot</span>(x_and_y, <span class="dt">col =</span> <span class="st">&quot;lightgrey&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>) <span class="co"># color intersecting area</span></code></pre></div>
-<p><img src="figures/unnamed-chunk-40-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-41-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>The subsequent code chunk demonstrate how this works for all combinations of the ‘Venn’ diagram representing <code>x</code> and <code>y</code>, inspired by <a href="http://r4ds.had.co.nz/transform.html#logical-operators">Figure 5.1</a> of the book R for Data Science <span class="citation">(Grolemund and Wickham <a href="#ref-grolemund_r_2016">2016</a>)</span>. <!-- Todo: reference r4ds --></p>
 <div class="figure" style="text-align: center"><span id="fig:venn-clip"></span>
 <img src="figures/venn-clip-1.png" alt="Spatial equivalents of logical operators." width="576" />
