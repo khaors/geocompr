@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservea2495d02f987301d
+preservec96b893517e849b6
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2701,13 +2701,14 @@ canterbury_height = nz_height[canterbury, ]
 <p class="caption">(\#fig:nz-subset)Illustration of spatial subsetting with red triangles representing heigh points in New Zealand. The right-hand map contains only points in the Canterbury region (highlighted in grey). The points were subset with `nz_height[canterbury, ]`.</p>
 </div>
 
-Like attribute subsetting `x[y, ]` subsets features of target object `x` using the contents of `y`.
+Like attribute subsetting `x[y, ]` subsets features of *target* object `x` using the contents of a *source* object `y`.
 With spatial subsetting however, instead of `y` being `logical` --- a vector of `TRUE` and `FALSE` values --- it is another spatial (`sf`) object.
 
-Various *topological relations*, which determine the type of spatial relationship used for subsetting, can be used for spatial subsetting.
-As we'll see in section \@ref(topological-relations), these include features that *touch*, *cross* or are *within* the source object (`y`).
-*Intersects* is the default for subsetting (and other spatial operations) because it is a useful 'catch all' that identifies all types of spatial relations.
-Alternative operators can be specified using the `op =` argument, as illustrated in the code below, which selects all `nz_height` points that do *not* intersect with Canterbury (result not shown):
+Various *topological relations* can be used for spatial subsetting.
+These determine the type of spatial relationship that features in the target object must have with the source object to be selected, including *touches*, *crosses* or *within* (see section \@ref(topological-relations)). 
+*Intersects* is the default spatial subsetting operator, a sensible default that identifies all types of spatial relations.
+Alternative operators can be specified using the `op =` argument.
+This is illustrated in the command below which selects all features in `nz_height` that do *not* intersect with Canterbury (result not shown):
 
 
 ```r
@@ -2716,75 +2717,6 @@ nz_height[canterbury, , op = st_disjoint]
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">Interested readers can see this default value of `op` set in the first line of the function call by entering its long-form name into the console `` sf:::`[.sf` ``.
 The `?sf` help page documents this also.</div>\EndKnitrBlock{rmdnote}
-
-<!-- todo: link to non-binary links, e.g. area-weighted spatial interpolation -->
-
-<!-- #### Spatial subsetting in base R -->
-
-<!-- Another spatial subsetting example will use an object representing the countries of Africa, created using attribute subsetting as follows:^[Recall -->
-<!-- attribute subsetting can also be done in base R with `africa_wgs = world[world$continent == "Africa", ]`.] -->
-
-<!-- ```{r} -->
-<!-- africa_wgs = world %>% filter(continent == "Africa") -->
-<!-- ``` -->
-
-<!-- To further prepare the input data, we will reproject the data to the coordinate reference system (CRS) 32630, its EPSG code (explained in Chapter 6): -->
-
-<!-- ```{r} -->
-<!-- africa = st_transform(africa_wgs, crs = 32630) -->
-<!-- ``` -->
-
-<!-- We can also use the `[` operator for *Spatial* subsetting. -->
-<!-- The difference is that we use *another spatial object* inside the square brackets instead of an `integer` or `logical` vector. -->
-<!-- This is a concise and consistent syntax, as shown in the next code chunk. -->
-<!-- Let's test it with a hypothetical scenario: we want to subset all countries within 2000 km of the point where the equator (where latitude = 0 degrees) intersects the prime meridian (longitude = 0 degrees), as illustrated in Figure \@ref(fig:globe). -->
-<!-- The subsetting object is created below. -->
-<!-- Note that this must have the same CRS as the target object (set with the `crs` argument): -->
-
-<!-- ```{r, warning=FALSE} -->
-<!-- center_wgs = st_sf(geometry = st_sfc(st_point(c(0, 0)), crs = 4326)) -->
-<!-- center = st_transform(center_wgs, 32630) -->
-<!-- buff = st_buffer(center, dist = 2e6) -->
-<!-- ``` -->
-
-<!-- ```{r globe, echo=FALSE, fig.cap="Subsetting scenario: which countries intersect with a circle of 2000 km in radius located at zero degrees longitude and zero degrees latitude? Figure created with the **[globe](https://cran.r-project.org/package=globe)** package."} -->
-<!-- knitr::include_graphics("figures/globe.png") -->
-<!-- ``` -->
-
-<!-- The data to be subset, or 'target layer', is the `africa` object created above, which has a projected CRS (`32630`). -->
-<!-- Subsequently, spatial subsetting can be done with a single, concise command: -->
-
-<!-- ```{r} -->
-<!-- africa_buf = africa[buff, ] -->
-<!-- ``` -->
-
-<!-- ```{block2 type='rmdnote'} -->
-<!-- If we were using geographic ('lon/lat') data the previous command would have emitted a message warning about assuming `planar coordinates`. -->
-<!-- This is because spatial operations (especially distance and area calculations) cannot be assumed to be accurate in a geographic (longitude/latitude) CRS. -->
-<!-- In this case one could justify the use of a lon/lat CRS: the data is close to the equator where there is least distortion caused by the curvature of the earth. -->
-<!-- It is good practice to reproject spatial datasets before performing spatial operations on them. -->
-<!-- ``` -->
-
-<!-- The spatial subsetting clearly worked: only countries intersecting with the giant circle are returned (Figure \@ref(fig:africa-buff)): -->
-
-<!-- ```{r, eval=FALSE} -->
-<!-- plot(africa_buf["pop"]) -->
-<!-- plot(buff, add = TRUE) -->
-<!-- ``` -->
-
-
-<!-- Todo: improve this figure, e.g. by creating a new hidden chunk - still show this one -->
-<!-- ```{r africa-buff, fig.cap="Subset of the `africa` data selected based on their intersection with a circle 2000 km in radius with a center point at 0 degrees longitude and 0 degrees latitude.", echo=FALSE} -->
-<!-- library(leaflet) -->
-<!-- leaflet() %>%  -->
-<!--   addProviderTiles("OpenMapSurfer.Grayscale") %>%  -->
-<!--   addPolygons(data = st_transform(africa_buf, 4326)) %>%  -->
-<!--   addPolygons(data = st_transform(buff, 4326), color = "red") -->
-<!-- ``` -->
-
-<!-- Note that countries that just touch the giant circle are selected such as Chad (northeast of the circle). -->
-<!-- This is because the default subsetting operator is `st_intersects()`, which returns any type of spatial relation. -->
-<!-- Other spatial subsetting operations such as `st_within()` are more conservative, as shown in section \@ref(topological-relations). -->
 
 Before we progress to the next section, it is worth seeing how subsetting can be done using *topological operators* directly.
 The result illustrated in Figure \@ref(fig:nz-subset) can be reproduced using the operator `st_intersects()` as follows:
