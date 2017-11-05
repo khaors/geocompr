@@ -295,11 +295,6 @@ Figure 6.1: Buffers on geographic data with undefined (top) and defined (bottom)
 <div id="vector-data-3" class="section level3">
 <h3><span class="header-section-number">6.2.1</span> Vector data</h3>
 <p>Vector data on the most basic level is represented by individual points, and points create more complex objects, such as lines and polygons. Spatial reprojection of vectors is a mathematical transformation of coordinates of these point. Depending on projections used, reprojection could be either lossy or lossless. For example, loss of spatial information could occur when the new CRS is only adequate for smaller area than input vector. The precision could be also lost when transformation is between coordinate systems that have different datum - in those situations approximations are used. However, in most cases CRS vector transformation is lossless.</p>
-<p>The dataset <code>cycle_hire_osm</code> represents all cycle hire locations across London, taken from OpenStreetMap (OSM). It is automatically loaded by the <strong>spData</strong> package, meaning we do not have to load it, and its CRS can be queried as follows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">st_crs</span>(cycle_hire_osm)
-<span class="co">#&gt; Coordinate Reference System:</span>
-<span class="co">#&gt;   EPSG: 4326 </span>
-<span class="co">#&gt;   proj4string: &quot;+proj=longlat +datum=WGS84 +no_defs&quot;</span></code></pre></div>
 <!-- example of using epsg (without "magic number") -->
 <!-- example of using proj4 (expain it and maybe modify) -->
 <!-- show the results (e.g. two/three panels) -->
@@ -313,19 +308,23 @@ Figure 6.1: Buffers on geographic data with undefined (top) and defined (bottom)
 <!-- - st_set_crs(x, crs) -->
 <!-- - st_bbox -->
 <!-- - st_wrap_dateline -->
-<p>Let’s create a new version of it in a projected CRS, using the ‘magic number’ (a value to be explained subsequently) of 27700 <a href="spatial-class.html#crs-in-r">2.3.3</a>:</p>
+<p>The dataset <code>cycle_hire_osm</code> represents all cycle hire locations across London, taken from OpenStreetMap (OSM). It is automatically loaded by the <strong>spData</strong> package, meaning we do not have to load it, and its CRS can be queried as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">st_crs</span>(cycle_hire_osm)
+<span class="co">#&gt; Coordinate Reference System:</span>
+<span class="co">#&gt;   EPSG: 4326 </span>
+<span class="co">#&gt;   proj4string: &quot;+proj=longlat +datum=WGS84 +no_defs&quot;</span></code></pre></div>
+<p>CRS in R can be described as an <code>epsg</code> code or a <code>proj4string</code> definition as described in section <a href="spatial-class.html#crs-in-r">2.3.3</a>. Let’s create a new version of it in a projected CRS, using the <code>epsg</code> number of 27700:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cycle_hire_projected =<span class="st"> </span><span class="kw">st_transform</span>(cycle_hire_osm, <span class="dv">27700</span>)
 <span class="kw">st_crs</span>(cycle_hire_projected)
 <span class="co">#&gt; Coordinate Reference System:</span>
 <span class="co">#&gt;   EPSG: 27700 </span>
 <span class="co">#&gt;   proj4string: &quot;+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs&quot;</span></code></pre></div>
-<p>Note that the result shows that the <code>epsg</code> has been updated and that <code>proj4string</code> element of the CRS now contains, among other things <code>+proj=tmerc</code> (meaning it is a projected CRS using the <a href="https://en.wikipedia.org/wiki/Transverse_Mercator_projection">tranverse Mercator</a> projection) and <code>+units=m</code> (meaning the units of the coordinates are meters). Another function, from the <strong>rgdal</strong> library, provides a note about the CRS (its name):</p>
+<p>Note that the result shows that the <code>epsg</code> has been updated and that <code>proj4string</code> element of the CRS now contains, among other things <code>+proj=tmerc</code> (meaning it is a projected CRS using the <a href="https://en.wikipedia.org/wiki/Transverse_Mercator_projection">tranverse Mercator</a> projection) and <code>+units=m</code> (meaning the units of the coordinates are meters). Another function, from the <strong>rgdal</strong> library, provides a note containing the name of the CRS:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">crs_codes =<span class="st"> </span>rgdal::<span class="kw">make_EPSG</span>()[<span class="dv">1</span>:<span class="dv">2</span>]
 dplyr::<span class="kw">filter</span>(crs_codes, code ==<span class="st"> </span><span class="dv">27700</span>)
 <span class="co">#&gt;    code                                note</span>
 <span class="co">#&gt; 1 27700 # OSGB 1936 / British National Grid</span></code></pre></div>
-<p>The result shows that the EPSG code 27700 represents the British National Grid, a result that could have been found by searching online for “<a href="https://www.google.com/search?q=CRS+27700">CRS 27700</a>”. This projection is clearly inappropriate for the data: the coordinates represent degrees of longitude and latitude, and this can also be seen by plotting it over a basemap, e.g. with the <strong>mapview</strong> package: <code>mapview::mapview(cycle_hire_projected)</code>.</p>
-<p>The formula that converts a geographic point into a point on the surface of the Earth is provided by the <code>proj4string</code> element of the <code>crs</code> (see <a href="http://proj4.org/">proj4.org</a> for further details):</p>
+<p>The result shows that the EPSG code 27700 represents the British National Grid, a result that could have been found by searching online for “<a href="https://www.google.com/search?q=CRS+27700">CRS 27700</a>”. <!-- This projection is clearly inappropriate for the data: the coordinates represent degrees of longitude and latitude, and this can also be seen by plotting it over a basemap, e.g. with the **mapview** package: `mapview::mapview(cycle_hire)`. --> The formula that converts a geographic point into a point on the surface of the Earth is provided by the <code>proj4string</code> element of the <code>crs</code> (see <a href="http://proj4.org/">proj4.org</a> for further details):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">st_crs</span>(<span class="dv">27700</span>)$proj4string
 <span class="co">#&gt; [1] &quot;+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs&quot;</span></code></pre></div>
 
