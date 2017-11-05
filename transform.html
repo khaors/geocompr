@@ -358,8 +358,7 @@ cat_raster_wgs84
 <span class="co">#&gt; data source : in memory</span>
 <span class="co">#&gt; names       : nlcd2011 </span>
 <span class="co">#&gt; values      : 11, 95  (min, max)</span></code></pre></div>
-<p>On the other hand, the nearest neighbor method should not be used for continuous raster data, as we want to preserve gradual changes in values. Continuous data could be reprojected using the bilinear method.</p>
-<!-- intro to this object -->
+<p>On the other hand, the nearest neighbor method should not be used for continuous raster data, as we want to preserve gradual changes in values. Continuous data could be reprojected using the bilinear method. <!-- more info about bilinear --> <!-- intro to this object --></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">con_raster =<span class="st"> </span><span class="kw">raster</span>(<span class="kw">system.file</span>(<span class="st">&quot;raster/srtm.tif&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;spDataLarge&quot;</span>))
 con_raster
 <span class="co">#&gt; class       : RasterLayer </span>
@@ -401,7 +400,7 @@ con_raster_wgs84
 <!-- 3. what's important for both? -->
 <!-- - raster to vector -->
 <!-- - vector to raster -->
-<!-- 4. should the intro example have buffor in latlon? -->
+<!-- 4. should the intro example have buffer in latlon? -->
 </div>
 <div id="exercises-4" class="section level3">
 <h3><span class="header-section-number">6.2.3</span> Exercises</h3>
@@ -422,7 +421,7 @@ con_raster_wgs84
 <!-- cat_raster_wgs84 = projectRaster(cat_raster, crs = wgs84, method = "bilinear") -->
 <!-- cat_raster_wgs84 -->
 <!-- ``` -->
-<!-- Try to reproject continous data using a ngb interpolation method. What's wrong? -->
+<!-- Try to reproject continuous data using a ngb interpolation method. What's wrong? -->
 <!-- ```{r} -->
 <!-- con_raster = raster(system.file("raster/srtm.tif", package="spDataLarge")) -->
 <!-- con_raster_wgs84 = projectRaster(con_raster, crs = wgs84, method = "ngb") -->

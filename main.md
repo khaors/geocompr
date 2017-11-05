@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve1eb4aceffffed42d
+preserveffb8fb8aafcec4dc
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -4388,8 +4388,7 @@ This can be seen by creating a huge buffer of 10 degrees around the `greenwich` 
 greenwich_buff = st_buffer(greenwich, dist = 10)
 ```
 
-Brief consideration of what has happened should set alarm bells ringing:
-the buffer will be highly distorted when projected onto the surface of the Earth.
+Brief consideration of what has happened should set alarm bells ringing: the buffer will be highly distorted when projected onto the surface of the Earth.
 For this reason, when **sf** (and other spatial packages) know that geometries are in lat/long coordinates they emit a warning.
 This is illustrated in the code below which sets the CRS of `greenwich` to a lat/lon CRS (the commonly used EPSG 4326 in this case), checks to ensure that R thinks it's a geographic CRS, and then re-applies the buffer:
 
@@ -4555,7 +4554,7 @@ cat_raster_wgs84
 
 On the other hand, the nearest neighbor method should not be used for continuous raster data, as we want to preserve gradual changes in values.
 Continuous data could be reprojected using the bilinear method. 
-
+<!-- more info about bilinear -->
 <!-- intro to this object -->
 
 ```r
@@ -4613,7 +4612,7 @@ con_raster_wgs84
 <!-- 3. what's important for both? -->
 <!-- - raster to vector -->
 <!-- - vector to raster -->
-<!-- 4. should the intro example have buffor in latlon? -->
+<!-- 4. should the intro example have buffer in latlon? -->
 
 ### Exercises
 
@@ -4634,7 +4633,7 @@ con_raster_wgs84
 <!-- cat_raster_wgs84 = projectRaster(cat_raster, crs = wgs84, method = "bilinear") -->
 <!-- cat_raster_wgs84 -->
 <!-- ``` -->
-<!-- Try to reproject continous data using a ngb interpolation method. What's wrong? -->
+<!-- Try to reproject continuous data using a ngb interpolation method. What's wrong? -->
 <!-- ```{r} -->
 <!-- con_raster = raster(system.file("raster/srtm.tif", package="spDataLarge")) -->
 <!-- con_raster_wgs84 = projectRaster(con_raster, crs = wgs84, method = "ngb") -->
