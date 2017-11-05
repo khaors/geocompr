@@ -283,7 +283,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Many of these functions, including <code>rbind()</code> (for binding rows of data together) and <code>$&lt;-</code> (for creating new columns) were developed for data frames. A key feature of <code>sf</code> objects is that they store spatial and non-spatial data in the same way, as columns in a <code>data.frame</code> (the geometry column is typically called <code>geometry</code>).</p>
 
 <div class="rmdnote">
-The geometry column of <code>sf</code> objects is typically called <code>geometry</code> but any name can be used. The following command, for example, creates a geometry column named <code>g</code>: <code>st_sf(data.frame(n = world$name_long), g = world$geom)</code>. This enables geometries imported from spatial databases to have a variety of names such as <code>wkb_geometry</code> and <code>the_geom</code>.
+<p>The geometry column of <code>sf</code> objects is typically called <code>geometry</code> but any name can be used. The following command, for example, creates a geometry column named g:</p>
+<p><code>st_sf(data.frame(n = world$name_long), g = world$geom)</code></p>
+This enables geometries imported from spatial databases to have a variety of names such as <code>wkb_geometry</code> and <code>the_geom</code>.
 </div>
 <p></p>
 <p><code>sf</code> objects also support <code>tibble</code> and <code>tbl</code> classes used in the tidyverse, allowing ‘tidy’ data analysis workflows for spatial data. Thus <strong>sf</strong> enables the full power of R’s data analysis capabilities to be unleashed on geographic data. Before using these capabilities it’s worth re-capping how to discover the basic properties of vector data objects. Let’s start by using base R functions for to get a measure of the <code>world</code> dataset:</p>

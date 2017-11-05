@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservec96b893517e849b6
+preserve4bcc32b96d254afc
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -1894,8 +1894,10 @@ Many of these functions, including `rbind()` (for binding rows of data together)
 A key feature of `sf` objects is that they store spatial and non-spatial data in the same way, as columns in a `data.frame` (the geometry column is typically called `geometry`).
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">The geometry column of `sf` objects is typically called `geometry` but any name can be used.
-The following command, for example, creates a geometry column named `g`:
-`st_sf(data.frame(n = world$name_long), g = world$geom)`.
+The following command, for example, creates a geometry column named g:
+  
+`st_sf(data.frame(n = world$name_long), g = world$geom)`
+
 This enables geometries imported from spatial databases to have a variety of names such as `wkb_geometry` and `the_geom`.</div>\EndKnitrBlock{rmdnote}
 
 `sf` objects also support `tibble` and `tbl` classes used in the tidyverse, allowing 'tidy' data analysis workflows for spatial data.
