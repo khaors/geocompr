@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveb6282cedd1569802
+preserve1eb4aceffffed42d
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -4467,8 +4467,8 @@ st_crs(cycle_hire_osm)
 #>   proj4string: "+proj=longlat +datum=WGS84 +no_defs"
 ```
 
-CRS in R can be described as an `epsg` code or a `proj4string` definition as described in section \@ref(crs-in-r).
-Let's create a new version of it in a projected CRS, using the `epsg` number of 27700:
+CRS in R can be described as an `epsg` code or a `proj4string` definition, as described in section \@ref(crs-in-r).
+Let's create a new version of `cycle_hire_osm` in a projected CRS, using the `epsg` number of 27700:
 
 
 ```r
@@ -4517,17 +4517,16 @@ This entails that a new raster could have a different number of columns and rows
 As a result, values of these new cells needs to be estimated.
 <!-- (for most of the case is better to reproject vector than raster) -->
 The `projectRaster()` function's role is to reproject `Raster*` objects into a new object with another coordinate reference system. 
-<!-- ? -->
-Let's take a look at two examples of raster transformation -  using categorical and continuous data.
+Compared to `st_tranform()`, `projectRaster()` only accepts `proj4string` definitions.
+Let's take a look at two examples of raster transformation - using categorical and continuous data.
 
 When reprojecting categorical raster, we need to ensure that our new estimated values would still have values of our original classes.
 This could be done using the nearest neighbor method.
-<!-- For example -->
-
+<!-- more info about ngb -->
 <!-- intro to this object -->
 
 ```r
-cat_raster = raster(system.file("raster/nlcd2011.tif", package="spDataLarge"))
+cat_raster = raster(system.file("raster/nlcd2011.tif", package = "spDataLarge"))
 cat_raster
 #> class       : RasterLayer 
 #> dimensions  : 1359, 1073, 1458207  (nrow, ncol, ncell)
@@ -4560,7 +4559,7 @@ Continuous data could be reprojected using the bilinear method.
 <!-- intro to this object -->
 
 ```r
-con_raster = raster(system.file("raster/srtm.tif", package="spDataLarge"))
+con_raster = raster(system.file("raster/srtm.tif", package = "spDataLarge"))
 con_raster
 #> class       : RasterLayer 
 #> dimensions  : 463, 459, 212517  (nrow, ncol, ncell)
@@ -4586,15 +4585,11 @@ con_raster_wgs84
 #> values      : 1052, 2898  (min, max)
 ```
 
-<!-- different methods of computing values after transformation, such as ngb or bilinear  -->
-<!--in most of the cases reproject vector, not raster-->
-<!-- merge two rasters with different projections, ref. to 4.3.7 Merging rasters -->
-<!-- - data? one numerical and one categorical -->
-<!-- - projectRaster -->
 <!-- - an issue of resampling (comparision of old and new values) -->
-<!-- note: equal area projections are the best for raster calculations -->
-<!-- should we mentioned gdal_transform? -->
 <!-- res option in projectRaster? -->
+<!-- note1: in most of the cases reproject vector, not raster-->
+<!-- note2: equal area projections are the best for raster calculations -->
+<!-- q: should we mentioned gdal_transform? -->
 
 <!-- ## Affine transformations -->
 
@@ -4639,7 +4634,7 @@ con_raster_wgs84
 <!-- cat_raster_wgs84 = projectRaster(cat_raster, crs = wgs84, method = "bilinear") -->
 <!-- cat_raster_wgs84 -->
 <!-- ``` -->
-<!-- Try to reproject continous data using a ngb interpolation method. What's wrong? --> -->
+<!-- Try to reproject continous data using a ngb interpolation method. What's wrong? -->
 <!-- ```{r} -->
 <!-- con_raster = raster(system.file("raster/srtm.tif", package="spDataLarge")) -->
 <!-- con_raster_wgs84 = projectRaster(con_raster, crs = wgs84, method = "ngb") -->
