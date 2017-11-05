@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve07d547b62cbad255
+preservea2495d02f987301d
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2684,8 +2684,11 @@ This section provides an overview of spatial operations on vector geographic dat
 ### Spatial subsetting
 
 Spatial subsetting is the process of selecting features of a spatial object based on whether or not they in some way *relate* in space to another object.
-An example of spatial subsetting is provided by the `nz` and `nz_height` datasets in **spData**, which provide projected data on the 16 main regions and 101 highest points in New Zealand (Figure \@ref(fig:nz-subset)).
-The following code subsets all the high points in the Canterbury region:
+It is analogous to *attribute subsetting* (covered in section \@ref(vector-attribute-subsetting)) and can be done with the base R square bracket (`[`) operator or with the `filter()` function from the **tidyverse**.
+
+An example of spatial subsetting is provided by the `nz` and `nz_height` datasets in **spData**.
+These contain projected data on the 16 main regions and 101 highest points in New Zealand respectively (Figure \@ref(fig:nz-subset)).
+The following code chunk first creates an object representing Canterbury, then uses spatial subsetting to return all high points in the region:
 
 
 ```r
@@ -2698,8 +2701,8 @@ canterbury_height = nz_height[canterbury, ]
 <p class="caption">(\#fig:nz-subset)Illustration of spatial subsetting with red triangles representing heigh points in New Zealand. The right-hand map contains only points in the Canterbury region (highlighted in grey). The points were subset with `nz_height[canterbury, ]`.</p>
 </div>
 
-The preceding code chunk shows that, like attribute data, spatial data can be subset using the `[` operator: `x[y, ]` subsets features of target object `x` by `y`.
-Instead of `y` being of class `logical` (a vector of `TRUE` and `FALSE` values), it is another spatial (`sf`) object.
+Like attribute subsetting `x[y, ]` subsets features of target object `x` using the contents of `y`.
+With spatial subsetting however, instead of `y` being `logical` --- a vector of `TRUE` and `FALSE` values --- it is another spatial (`sf`) object.
 
 Various *topological relations*, which determine the type of spatial relationship used for subsetting, can be used for spatial subsetting.
 As we'll see in section \@ref(topological-relations), these include features that *touch*, *cross* or are *within* the source object (`y`).
@@ -2714,8 +2717,6 @@ nz_height[canterbury, , op = st_disjoint]
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">Interested readers can see this default value of `op` set in the first line of the function call by entering its long-form name into the console `` sf:::`[.sf` ``.
 The `?sf` help page documents this also.</div>\EndKnitrBlock{rmdnote}
 
-Spatial subsetting is analogous to *attribute subsetting* (covered in section \@ref(vector-attribute-subsetting)):
-it is a *binary operation* (an object is either selected or not) and can be done using base methods (demonstrated above) or with the **tidyverse**.
 <!-- todo: link to non-binary links, e.g. area-weighted spatial interpolation -->
 
 <!-- #### Spatial subsetting in base R -->
