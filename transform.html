@@ -294,7 +294,7 @@ Figure 6.1: Buffers on geographic data with undefined (top) and defined (bottom)
 <p>While CRSs can be set manually, it is more common in real world applications to <em>transform</em> a known CRS into another. CRS transformation could be vital to obtain proper results in many cases. A typical example is when geometry data is provided in a geographic CRS but you want to do spatial operations, which require it to be in a projected CRS. It includes distance measurements or area calculations. CRS also represent spatial relationship between datasets. Therefore, spatial operations on many datasets can only be correctly performed when all the data have the same CRS. The most common reason to unify the CRS is to combine different datasets (e.g. merge two rasters) or apply methods which need at least two objects (e.g spatial subsetting or raster map algebra). Let’s use real-world examples to illustrate this.</p>
 <div id="vector-data-3" class="section level3">
 <h3><span class="header-section-number">6.2.1</span> Vector data</h3>
-<p>Vector data on the most basic level is represented by individual points, and points create more complex objects, such as lines and polygons. Spatial reprojection of vectors is a mathematical transformation of coordinates of these point. Depending on projections used, reprojection could be either lossy or lossless. For example, loss of spatial information could occur when the new CRS is only adequate for smaller area than input vector. The precision could be also lost when transformation is between coordinate systems that have different datum - in those situations approximations are used. However, in most cases CRS transformation is lossless.</p>
+<p>Vector data on the most basic level is represented by individual points, and points create more complex objects, such as lines and polygons. Spatial reprojection of vectors is a mathematical transformation of coordinates of these point. Depending on projections used, reprojection could be either lossy or lossless. For example, loss of spatial information could occur when the new CRS is only adequate for smaller area than input vector. The precision could be also lost when transformation is between coordinate systems that have different datum - in those situations approximations are used. However, in most cases CRS vector transformation is lossless.</p>
 <p>The dataset <code>cycle_hire_osm</code> represents all cycle hire locations across London, taken from OpenStreetMap (OSM). It is automatically loaded by the <strong>spData</strong> package, meaning we do not have to load it, and its CRS can be queried as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">st_crs</span>(cycle_hire_osm)
 <span class="co">#&gt; Coordinate Reference System:</span>
@@ -313,7 +313,7 @@ Figure 6.1: Buffers on geographic data with undefined (top) and defined (bottom)
 <!-- - st_set_crs(x, crs) -->
 <!-- - st_bbox -->
 <!-- - st_wrap_dateline -->
-<p>Let’s create a new version of it in a projected CRS, using the ‘magic number’ (a value to be explained subsequently) of 27700:</p>
+<p>Let’s create a new version of it in a projected CRS, using the ‘magic number’ (a value to be explained subsequently) of 27700 <a href="spatial-class.html#crs-in-r">2.3.3</a>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cycle_hire_projected =<span class="st"> </span><span class="kw">st_transform</span>(cycle_hire_osm, <span class="dv">27700</span>)
 <span class="kw">st_crs</span>(cycle_hire_projected)
 <span class="co">#&gt; Coordinate Reference System:</span>
@@ -336,7 +336,8 @@ The EPSG code can be found inside the <code>crs</code> attribute of the object�
 </div>
 <div id="raster-data-3" class="section level3">
 <h3><span class="header-section-number">6.2.2</span> Raster data</h3>
-<p>The basic concepts of CRS apply to both vector and raster data model. However, there are important differences in reprojection of vectors and rasters. Transformation of CRS in vector data changes coordinates of each vertex. This do not apply to raster data. Rasters are are composed of rectangular cells of the same size (expressed by map units, such as degrees or meters). To preserve this property, it is impossible to transform coordinates of cells separately. This entails that a new raster could have a different number of columns and rows, and therefore different number of cells that the original one. <!-- rasters: transformation means change of the coordinates of (special case of resampling) --> <!-- changes in dimensions, resolution, extent --> <!-- change shape and attributes) --> As a result, values of these new cells needs to be estimated. <!-- (for most of the case is better to reproject vector than raster) --> Let’s take a look at two examples of raster transformation - using categorical and continuous data.</p>
+<p>The basic concepts of CRS apply to both vector and raster data model. However, there are important differences in reprojection of vectors and rasters. Transformation of CRS in vector data changes coordinates of each vertex. This do not apply to raster data. Rasters are are composed of rectangular cells of the same size (expressed by map units, such as degrees or meters). To preserve this property, it is impossible to transform coordinates of cells separately. This entails that a new raster could have a different number of columns and rows, and therefore different number of cells that the original one. <!-- rasters: transformation means change of the coordinates of (special case of resampling) --> <!-- changes in dimensions, resolution, extent --> <!-- change shape and attributes) --> As a result, values of these new cells needs to be estimated. <!-- (for most of the case is better to reproject vector than raster) --> The <code>projectRaster()</code> function’s role is to reproject <code>Raster*</code> objects into a new object with another coordinate reference system. <!-- ? --> Let’s take a look at two examples of raster transformation - using categorical and continuous data.</p>
+<p>When reprojecting categorical raster, we need to ensure that our new estimated values would still have values of our original classes. This could be done using the nearest neighbor method. <!-- For example --></p>
 <!-- intro to this object -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cat_raster =<span class="st"> </span><span class="kw">raster</span>(<span class="kw">system.file</span>(<span class="st">&quot;raster/nlcd2011.tif&quot;</span>, <span class="dt">package=</span><span class="st">&quot;spDataLarge&quot;</span>))
 cat_raster
@@ -348,19 +349,6 @@ cat_raster
 <span class="co">#&gt; data source : /home/travis/R/Library/spDataLarge/raster/nlcd2011.tif </span>
 <span class="co">#&gt; names       : nlcd2011 </span>
 <span class="co">#&gt; values      : 11, 95  (min, max)</span></code></pre></div>
-<!-- intro to this object -->
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">con_raster =<span class="st"> </span><span class="kw">raster</span>(<span class="kw">system.file</span>(<span class="st">&quot;raster/srtm.tif&quot;</span>, <span class="dt">package=</span><span class="st">&quot;spDataLarge&quot;</span>))
-con_raster
-<span class="co">#&gt; class       : RasterLayer </span>
-<span class="co">#&gt; dimensions  : 463, 459, 212517  (nrow, ncol, ncell)</span>
-<span class="co">#&gt; resolution  : 73.7, 92.5  (x, y)</span>
-<span class="co">#&gt; extent      : 301929, 335757, 4111262, 4154089  (xmin, xmax, ymin, ymax)</span>
-<span class="co">#&gt; coord. ref. : +proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs </span>
-<span class="co">#&gt; data source : /home/travis/R/Library/spDataLarge/raster/srtm.tif </span>
-<span class="co">#&gt; names       : srtm </span>
-<span class="co">#&gt; values      : 1050, 2895  (min, max)</span></code></pre></div>
-<p>The <code>projectRaster()</code> function’s role is to reproject <code>Raster*</code> objects into a new object with another coordinate reference system. <!-- ? --></p>
-<p>When reprojecting categorical raster, we need to ensure that our new estimated values would still have values of our original classes. This could be done using the nearest neighbor method. <!-- For example --></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wgs84 =<span class="st"> &quot;+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs&quot;</span>
 cat_raster_wgs84 =<span class="st"> </span><span class="kw">projectRaster</span>(cat_raster, <span class="dt">crs =</span> wgs84, <span class="dt">method =</span> <span class="st">&quot;ngb&quot;</span>)
 cat_raster_wgs84
@@ -373,7 +361,8 @@ cat_raster_wgs84
 <span class="co">#&gt; names       : nlcd2011 </span>
 <span class="co">#&gt; values      : 11, 95  (min, max)</span></code></pre></div>
 <p>On the other hand, the nearest neighbor method should not be used for continuous raster data, as we want to preserve gradual changes in values. Continuous data could be reprojected using the bilinear method.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">con_raster_wgs84 =<span class="st"> </span><span class="kw">projectRaster</span>(con_raster, <span class="dt">crs =</span> wgs84, <span class="dt">method =</span> <span class="st">&quot;bilinear&quot;</span>)
+<!-- intro to this object -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">con_raster =<span class="st"> </span><span class="kw">raster</span>(<span class="kw">system.file</span>(<span class="st">&quot;raster/srtm.tif&quot;</span>, <span class="dt">package=</span><span class="st">&quot;spDataLarge&quot;</span>))
 con_raster
 <span class="co">#&gt; class       : RasterLayer </span>
 <span class="co">#&gt; dimensions  : 463, 459, 212517  (nrow, ncol, ncell)</span>
@@ -383,6 +372,16 @@ con_raster
 <span class="co">#&gt; data source : /home/travis/R/Library/spDataLarge/raster/srtm.tif </span>
 <span class="co">#&gt; names       : srtm </span>
 <span class="co">#&gt; values      : 1050, 2895  (min, max)</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">con_raster_wgs84 =<span class="st"> </span><span class="kw">projectRaster</span>(con_raster, <span class="dt">crs =</span> wgs84, <span class="dt">method =</span> <span class="st">&quot;bilinear&quot;</span>)
+con_raster_wgs84
+<span class="co">#&gt; class       : RasterLayer </span>
+<span class="co">#&gt; dimensions  : 481, 482, 231842  (nrow, ncol, ncell)</span>
+<span class="co">#&gt; resolution  : 0.000831, 0.000833  (x, y)</span>
+<span class="co">#&gt; extent      : -113, -113, 37.1, 37.5  (xmin, xmax, ymin, ymax)</span>
+<span class="co">#&gt; coord. ref. : +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0 </span>
+<span class="co">#&gt; data source : in memory</span>
+<span class="co">#&gt; names       : srtm </span>
+<span class="co">#&gt; values      : 1052, 2898  (min, max)</span></code></pre></div>
 <!-- different methods of computing values after transformation, such as ngb or bilinear  -->
 <!--in most of the cases reproject vector, not raster-->
 <!-- merge two rasters with different projections, ref. to 4.3.7 Merging rasters -->
@@ -408,6 +407,7 @@ con_raster
 <!-- 3. what's important for both? -->
 <!-- - raster to vector -->
 <!-- - vector to raster -->
+<!-- 4. should the intro example have buffor in latlon? -->
 </div>
 <div id="exercises-4" class="section level3">
 <h3><span class="header-section-number">6.2.3</span> Exercises</h3>
@@ -428,6 +428,8 @@ con_raster
 <!-- cat_raster_wgs84 = projectRaster(cat_raster, crs = wgs84, method = "bilinear") -->
 <!-- cat_raster_wgs84 -->
 <!-- ``` -->
+<!-- Try to reproject continous data using a ngb interpolation method. What's wrong? -->
+<p>–&gt; <!-- ```{r} --> <!-- con_raster = raster(system.file("raster/srtm.tif", package="spDataLarge")) --> <!-- con_raster_wgs84 = projectRaster(con_raster, crs = wgs84, method = "ngb") --> <!-- con_raster_wgs84 --> <!-- ``` --></p>
 
 </div>
 </div>

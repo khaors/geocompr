@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve95769a9da17f8d80
+preserve3c93305a0bef45ef
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -4440,7 +4440,7 @@ Spatial reprojection of vectors is a mathematical transformation of coordinates 
 Depending on projections used, reprojection could be either lossy or lossless.
 For example, loss of spatial information could occur when the new CRS is only adequate for smaller area than input vector.
 The precision could be also lost when transformation is between coordinate systems that have different datum - in those situations approximations are used.
-However, in most cases CRS transformation is lossless.
+However, in most cases CRS vector transformation is lossless.
 
 The dataset `cycle_hire_osm` represents all cycle hire locations across London, taken from OpenStreetMap (OSM).
 It is automatically loaded by the **spData** package, meaning we do not have to load it, and its CRS can be queried as follows:
@@ -4467,7 +4467,7 @@ st_crs(cycle_hire_osm)
 <!-- - st_bbox -->
 <!-- - st_wrap_dateline -->
 
-Let's create a new version of it in a projected CRS, using the 'magic number' (a value to be explained subsequently) of 27700:
+Let's create a new version of it in a projected CRS, using the 'magic number' (a value to be explained subsequently) of 27700 \@ref(crs-in-r):
 
 
 ```r
@@ -4516,7 +4516,13 @@ This entails that a new raster could have a different number of columns and rows
 <!-- change shape and attributes) -->
 As a result, values of these new cells needs to be estimated.
 <!-- (for most of the case is better to reproject vector than raster) -->
+The `projectRaster()` function's role is to reproject `Raster*` objects into a new object with another coordinate reference system. 
+<!-- ? -->
 Let's take a look at two examples of raster transformation -  using categorical and continuous data.
+
+When reprojecting categorical raster, we need to ensure that our new estimated values would still have values of our original classes.
+This could be done using the nearest neighbor method.
+<!-- For example -->
 
 <!-- intro to this object -->
 
@@ -4532,28 +4538,6 @@ cat_raster
 #> names       : nlcd2011 
 #> values      : 11, 95  (min, max)
 ```
-
-<!-- intro to this object -->
-
-```r
-con_raster = raster(system.file("raster/srtm.tif", package="spDataLarge"))
-con_raster
-#> class       : RasterLayer 
-#> dimensions  : 463, 459, 212517  (nrow, ncol, ncell)
-#> resolution  : 73.7, 92.5  (x, y)
-#> extent      : 301929, 335757, 4111262, 4154089  (xmin, xmax, ymin, ymax)
-#> coord. ref. : +proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
-#> data source : /home/travis/R/Library/spDataLarge/raster/srtm.tif 
-#> names       : srtm 
-#> values      : 1050, 2895  (min, max)
-```
-
-The `projectRaster()` function's role is to reproject `Raster*` objects into a new object with another coordinate reference system. 
-<!-- ? -->
-
-When reprojecting categorical raster, we need to ensure that our new estimated values would still have values of our original classes.
-This could be done using the nearest neighbor method.
-<!-- For example -->
 
 
 ```r
@@ -4573,9 +4557,10 @@ cat_raster_wgs84
 On the other hand, the nearest neighbor method should not be used for continuous raster data, as we want to preserve gradual changes in values.
 Continuous data could be reprojected using the bilinear method. 
 
+<!-- intro to this object -->
 
 ```r
-con_raster_wgs84 = projectRaster(con_raster, crs = wgs84, method = "bilinear")
+con_raster = raster(system.file("raster/srtm.tif", package="spDataLarge"))
 con_raster
 #> class       : RasterLayer 
 #> dimensions  : 463, 459, 212517  (nrow, ncol, ncell)
@@ -4585,6 +4570,20 @@ con_raster
 #> data source : /home/travis/R/Library/spDataLarge/raster/srtm.tif 
 #> names       : srtm 
 #> values      : 1050, 2895  (min, max)
+```
+
+
+```r
+con_raster_wgs84 = projectRaster(con_raster, crs = wgs84, method = "bilinear")
+con_raster_wgs84
+#> class       : RasterLayer 
+#> dimensions  : 481, 482, 231842  (nrow, ncol, ncell)
+#> resolution  : 0.000831, 0.000833  (x, y)
+#> extent      : -113, -113, 37.1, 37.5  (xmin, xmax, ymin, ymax)
+#> coord. ref. : +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0 
+#> data source : in memory
+#> names       : srtm 
+#> values      : 1052, 2898  (min, max)
 ```
 
 <!-- different methods of computing values after transformation, such as ngb or bilinear  -->
@@ -4619,6 +4618,7 @@ con_raster
 <!-- 3. what's important for both? -->
 <!-- - raster to vector -->
 <!-- - vector to raster -->
+<!-- 4. should the intro example have buffor in latlon? -->
 
 ### Exercises
 
@@ -4638,6 +4638,12 @@ con_raster
 <!-- wgs84 = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs" -->
 <!-- cat_raster_wgs84 = projectRaster(cat_raster, crs = wgs84, method = "bilinear") -->
 <!-- cat_raster_wgs84 -->
+<!-- ``` -->
+<!-- Try to reproject continous data using a ngb interpolation method. What's wrong? --> -->
+<!-- ```{r} -->
+<!-- con_raster = raster(system.file("raster/srtm.tif", package="spDataLarge")) -->
+<!-- con_raster_wgs84 = projectRaster(con_raster, crs = wgs84, method = "ngb") -->
+<!-- con_raster_wgs84 -->
 <!-- ``` -->
 
 <!--chapter:end:06-transform.Rmd-->
