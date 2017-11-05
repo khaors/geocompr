@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2017-11-04'
+date: '2017-11-05'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2017-11-04 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2017-11-05 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve439139dc7beaf182
+preserve2baf5988f70351b1
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2679,7 +2679,7 @@ Distance operations are covered in sections \@ref(distance-relations) and \@ref(
 
 ## Spatial operations on vector data
 
-This section provides an overview of spatial operations in the **sf** package.
+This section provides an overview of spatial operations on vector geographic data represented as simple features in the **sf** package before section \@ref(spatial-operations-on-raster-data), which presents spatial methods using the **raster** package.
 
 ### Spatial subsetting
 
