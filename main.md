@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve2f1a5cf8c5b3a395
+preserveed0bc0969bce9559
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -4534,28 +4534,26 @@ This entails that a new raster could have a different number of columns and rows
 <!-- rasters: transformation means change of the coordinates of (special case of resampling) -->
 <!-- changes in dimensions, resolution, extent -->
 <!-- change shape and attributes) -->
-As a result, values of these new cells need to be estimated.
+Therefore, values of these new cells need to be estimated after a geometric operation is completed.
 The `projectRaster()` function's role is to reproject `Raster*` objects into a new object with another coordinate reference system. 
-Compared to `st_tranform()`, `projectRaster()` only accepts `proj4string` definitions.
+Compared to `st_tranform()`, `projectRaster()` only accepts the `proj4string` definitions.
 Let's take a look at two examples of raster transformation - using categorical and continuous data.
 
-When reprojecting categorical raster, we need to ensure that our new estimated values would still have values of our original classes.
-This could be done using the nearest neighbor method.
-<!-- more info about ngb -->
-<!-- intro to this object -->
+Land cover data are usually represented by categorical maps.
+The `nlcd2011.tif` file provides information for a small area in Utah, USA obtained from [National Land Cover Database 2011](https://www.mrlc.gov/nlcd2011.php). 
+In this region, 14 land cover classes were distinguished^[Full list of NLCD2011 land cover classes can be found at https://www.mrlc.gov/nlcd11_leg.php]:
+
 
 ```r
 cat_raster = raster(system.file("raster/nlcd2011.tif", package = "spDataLarge"))
-cat_raster
-#> class       : RasterLayer 
-#> dimensions  : 1359, 1073, 1458207  (nrow, ncol, ncell)
-#> resolution  : 31.5, 31.5  (x, y)
-#> extent      : 301903, 335735, 4111244, 4154086  (xmin, xmax, ymin, ymax)
-#> coord. ref. : +proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
-#> data source : /home/travis/R/Library/spDataLarge/raster/nlcd2011.tif 
-#> names       : nlcd2011 
-#> values      : 11, 95  (min, max)
+unique(cat_raster)
+#>  [1] 11 21 22 23 31 41 42 43 52 71 81 82 90 95
 ```
+
+When reprojecting categorical raster, we need to ensure that our new estimated values would still have values of our original classes.
+This could be done using the nearest neighbor method (`ngb`).
+In this method, value of the output cell is calculated based on the nearest cell center of the input raster.
+<!-- explain code below -->
 
 
 ```r
