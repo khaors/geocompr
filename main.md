@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2017-11-05'
+date: '2017-11-06'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2017-11-05 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2017-11-06 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveffb8fb8aafcec4dc
+preservef6d1ad2e32135ce4
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -4513,8 +4513,7 @@ This entails that a new raster could have a different number of columns and rows
 <!-- rasters: transformation means change of the coordinates of (special case of resampling) -->
 <!-- changes in dimensions, resolution, extent -->
 <!-- change shape and attributes) -->
-As a result, values of these new cells needs to be estimated.
-<!-- (for most of the case is better to reproject vector than raster) -->
+As a result, values of these new cells need to be estimated.
 The `projectRaster()` function's role is to reproject `Raster*` objects into a new object with another coordinate reference system. 
 Compared to `st_tranform()`, `projectRaster()` only accepts `proj4string` definitions.
 Let's take a look at two examples of raster transformation - using categorical and continuous data.
