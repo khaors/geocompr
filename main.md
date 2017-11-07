@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve61dbbf8e3c765c5c
+preserve7cbca2d19118dc8c
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3082,7 +3082,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservee74a23ba331e1e5e
+preserve331b7f295582feba
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4561,7 +4561,7 @@ Compared to `st_tranform()`, `projectRaster()` only accepts the `proj4string` de
 Let's take a look at two examples of raster transformation - using categorical and continuous data.
 
 Land cover data are usually represented by categorical maps.
-The `nlcd2011.tif` file provides information for a small area in Utah, USA obtained from [National Land Cover Database 2011](https://www.mrlc.gov/nlcd2011.php). 
+The `nlcd2011.tif` file provides information for a small area in Utah, USA obtained from [National Land Cover Database 2011](https://www.mrlc.gov/nlcd2011.php) in the NAD83 / UTM zone 12N CRS.
 
 
 ```r
@@ -4588,7 +4588,11 @@ unique(cat_raster)
 When reprojecting categorical raster, we need to ensure that our new estimated values would still have values of our original classes.
 This could be done using the nearest neighbor method (`ngb`).
 In this method, value of the output cell is calculated based on the nearest cell center of the input raster.
-<!-- explain code below -->
+
+For example, we want to change the CRS to WGS 84.  
+<!-- when can it be useful? maybe when all other data is in this projection -->
+The first step to do so is to obtain the proj4 definition of this CRS, which can be done using the [http://spatialreference.org](http://spatialreference.org/ref/epsg/wgs-84/) webpage. 
+The second and last step is to define the reprojection method in the `projectRaster()` function, which in case of categorical data is the nearest neighbor method (`ngb`):
 
 
 ```r
@@ -4605,10 +4609,12 @@ cat_raster_wgs84
 #> values      : 11, 95  (min, max)
 ```
 
-On the other hand, the nearest neighbor method should not be used for continuous raster data, as we want to preserve gradual changes in values.
-Continuous data could be reprojected using the bilinear method. 
-<!-- more info about bilinear -->
-<!-- intro to this object -->
+<!-- summary of changes: ncell, extent, values -->
+
+This process of reprojection is almost identical for continuous data.
+The `srtm.tif` file contains digital elevation model for the same area in Utah from [the Shuttle Radar Topography Mission (SRTM)](https://www2.jpl.nasa.gov/srtm/).
+Each value in this raster represents elevation measured in meters.
+
 
 ```r
 con_raster = raster(system.file("raster/srtm.tif", package = "spDataLarge"))
@@ -4623,6 +4629,11 @@ con_raster
 #> values      : 1050, 2895  (min, max)
 ```
 
+The nearest neighbor method should not be used for continuous raster data, as we want to preserve gradual changes in values.
+Alternatively, continuous data could be reprojected in the **raster** package using the bilinear method. 
+In this technique, value of the output cell is calculated based on four nearest cells in the original raster. 
+The new value is a weighted average of values from these four cells, adjusted for their distance from the center of the output cell. 
+
 
 ```r
 con_raster_wgs84 = projectRaster(con_raster, crs = wgs84, method = "bilinear")
@@ -4636,6 +4647,8 @@ con_raster_wgs84
 #> names       : srtm 
 #> values      : 1052, 2898  (min, max)
 ```
+
+<!-- summary of changes: ncell, extent, values -->
 
 <!-- - an issue of resampling (comparision of old and new values) -->
 <!-- res option in projectRaster? -->
