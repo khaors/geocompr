@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservef4ae507976074687
+preservea36ffac6775f14c1
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2786,19 +2786,19 @@ If there is more than 1 feature in `y` the resulting selection `matrix` must be 
 
 
 ```r
-y = nz %>% filter(grepl("Cant|Otag", REGC2017_NAME))
-sel_matrix = st_intersects(nz_height, y, sparse = FALSE)
+co = nz %>% filter(grepl("Cant|Otag", REGC2017_NAME))
+sel_matrix = st_intersects(nz_height, co, sparse = FALSE)
 sel_vector = rowSums(sel_matrix) > 0
-heights_y = nz_height[sel_vector, ]
+heights_co = nz_height[sel_vector, ]
 ```
 
-The above code chunk results in an object, `heights_y`, that represent the high points that intersect with either Canterbury *or* Otago region.
+The above code chunk results in an object, `heights_co`, that represent the high points that intersect with either Canterbury *or* Otago region (hence the object name `co`).
 It did this in four stages:
 
-1. Subset the regions of `nz` containing "Cant" or "Ortago" in their names. This was done using the pattern matching function `grepl()` in combination with the `|` character, which means 'or', resulting in the subsetting object `y`.
-2. Create a selection matrix representing which features of `nz_height` intersect with the regions in `y`.
-3. Convert the selection matrix into a `logical` 'selection vector' by using `rowSums()` to find which features matched *any* features in `y`.
-4. Use the result to subset `nz_heights`, creating a new object `heights_y`. 
+1. Subset the regions of `nz` containing "Cant" or "Otago" in their names. This was done using the pattern matching function `grepl()` in combination with the `|` character, which means 'or', resulting in the subsetting object `co`.
+2. Create a selection matrix representing which features of `nz_height` intersect with the regions in `co`.
+3. Convert the selection matrix into a `logical` 'selection vector' by using `rowSums()` to find which features matched *any* features in `co`.
+4. Use the result to subset `nz_heights`, creating a new object `heights_co`. 
 
 The nature of `sel_matrix` is verified below:
 
@@ -3082,7 +3082,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservea6f1cb9f08adf9f9
+preserve91bd01b60d22f98a
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3251,8 +3251,6 @@ For instance, if the intersection of our buffer and a country is 100 000 km^^2^^
 <!-- - ? generalization **rmapsharper** - https://github.com/ateucher/rmapshaper -->
 <!-- `st_union` -->
 
-### Modifying geometry data
-
 ### Clipping
 
 Spatial clipping is a form of spatial subsetting that involves changes to the `geometry` columns of at least some of the affected features.
@@ -3329,10 +3327,44 @@ text(x = c(-0.5, 1.5), y = 1, labels = l)
 
 ### Distance relations
 
+While topological relations are binary --- a feature either intersects with another or does not --- distance relations are continuous.
+The distance between two objects is calculated with the **sf** function `st_distance()` function.
+This is illustrated in the code chunk below, which finds the distance between the highest point in New Zealand and the geographic centroid of the Canterbury region, created in section \@ref(spatial-subsetting):
+
 
 ```r
-st_distance(a, b)
+nz_heighest = nz_height %>% top_n(n = 1, wt = elevation)
+canterbury_centroid = st_centroid(canterbury)
+st_distance(nz_heighest, canterbury_centroid)
+#> Units: m
+#>        [,1]
+#> [1,] 115566
 ```
+
+There are two potentially surprising things about the result: 1) it comes with a `units` attribute, so you know that it's just over 100 km (not 100,000 inches, or any other measure of distance!); and 2) it is returned as a matrix, even though the result only contains a single value.
+This second feature hints at another useful feature of `st_distance()`, its ability to return *distance matrices* between all combinations of features in objects `x` and `y`.
+This is illustrated in the command below, which finds the distances between the first three features in `nz_height` and the Otago and Canterbury regions of New Zealand represented by the object `co`.
+
+
+```r
+st_distance(nz_height[1:3, ], co)
+#> Units: m
+#>        [,1]  [,2]
+#> [1,] 123537 15498
+#> [2,]  94283     0
+#> [3,]  93019     0
+```
+
+Note that the distance between the second and third feature in `nz_height` and the second feature in `co` is zero.
+This demonstrates the fact that distances between points and polygons refer to the distance to *any part of the polygon*:
+The second and third points in `nz_height` are *in* Otago, which can be verified by plotting them (result not shown):
+
+
+```r
+plot(co$geometry[2])
+plot(nz_height$geometry[2:3], add = TRUE)
+```
+
 
 ## Spatial operations on raster data
 
@@ -3719,7 +3751,7 @@ Nevertheless, you may also use **raster** with very large datasets.
 This is because **raster**:
 
 1. lets you work with raster datasets that are too large to fit into the main memory (RAM) by only processing chunks of it.
-2. tries to fascilitate parallel processing.
+2. tries to facilitate parallel processing.
 For more information have a look at the help pages of `beginCluster()` and `clusteR()`.
 Additionally, check out the *Multi-core functions* section in `vignette("functions", package = "raster")`.
 
@@ -4596,18 +4628,6 @@ con_raster_wgs84
 <!-- note1: in most of the cases reproject vector, not raster-->
 <!-- note2: equal area projections are the best for raster calculations -->
 <!-- q: should we mentioned gdal_transform? -->
-
-<!-- ## Affine transformations -->
-
-<!-- ### Translating -->
-
-<!-- ### Scaling -->
-
-<!-- ### Rotating -->
-
-<!-- ### Reflecting -->
-
-<!-- ### Shearing -->
 
 <!-- ideas and questions -->
 <!-- 1. what's important for vector transformations? -->
