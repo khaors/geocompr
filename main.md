@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2017-11-06'
+date: '2017-11-07'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2017-11-06 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2017-11-07 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveed0bc0969bce9559
+preserve2081d60cb3945fd3
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2824,10 +2824,9 @@ dim(sel_matrix)
 <!-- ?geos_binary_pred -->
 <!-- Distance relations -->
 <!-- Subset (1) points in polygons <-> (2) -->
-
-To understand topological relations, it helps to have some simple test data to work with.
-Figure \@ref(fig:relation-objects) illustrates a polygon (`a`), a line (`l`) and some points (`p`).
-These objects are created in the code below.
+Topological relations define the spatial relationships between objects.
+To understand them, it helps to have some simple test data to work with.
+Figure \@ref(fig:relation-objects) contains a polygon (`a`), a line (`l`) and some points (`p`), which are created in the code below.
 
 
 ```r
@@ -2862,11 +2861,10 @@ st_intersects(p, a)
 ```
 
 The contents of the result should be as you expected:
-the function returns a positive (`1`) result for the first two points, and a negative result (represented by an empty vector, `integer(0)`) for the last two.
-What may be unexpected is that the result comes in the form of a list.
-This is because topological operations in the **sf** return a sparse matrix by default, which is useful in that it reduces the memory requirements of the output from operations on multi-feature objects.
-To return the result as a logical vector, of the type that can be used for subsetting and other operations, the result must be returned as a *dense matrix*.
-This can be done by setting the `sparse` argument to `FALSE` as follows:
+the function returns a positive (`1`) result for the first two points, and a negative result (represented by an empty vector) for the last two.
+What may be unexpected is that the result comes in the form of a list of vectors.
+This *sparse matrix* output only registers a relation if one exists, reducing the memory requirements of topological operations on multi-feature objects.
+As we saw in the previous section a *dense matrix* consisting of `TRUE` or `FALSE` values for each combination of features can also be returned when `sparse = FALSE`:
 
 
 ```r
@@ -2878,23 +2876,15 @@ st_intersects(p, a, sparse = FALSE)
 #> [4,] FALSE
 ```
 
-The output is an matrix with the four rows representing the four features in the target object `p`.
-The rows represent features in the selecting object: the first two features in `p` intersect with `a` (There is only one feature in `a` so the result has only one column).
-The result can be used to subset the features of `p` in a two-stage operation that is equivalent of `p[a, ]`:
+The output is a matrix in which each row represents a feature in the target object and each column represents a feature in in the selecting object.
+In this case only the first two features in `p` intersect with `a` and there is only one feature in `a` so the result has only one column.
+The result can be used for subsetting as we saw in section \@ref(spatial-subsetting).
 
-
-```r
-sel = st_intersects(p, a, sparse = FALSE)[, 1]
-p[sel, ]
-```
-
-Note the use of `[, 1]` to select only the first column --- we'll use this to return only a vector instead of matrix in subsequent code chunks.
-This operator ensures that the intermediary object `sel` is a `logical` vector (rather than a matrix).
-
-`st_intersects()` returns `TRUE` for the second feature in the object `p` even though it just touches the polygon `a`.
+Note that `st_intersects()` returns `TRUE` for the second feature in the object `p` even though it just touches the polygon `a`.
 This is because *intersects* is a catch-all topological operation that covers any type of spatial relation.
-There are many other topological operations that you can use, some of which we'll demonstrate below.
-The opposite of `st_intersects()` is `st_disjoint()`, which returns only objects that do not spatially relate in any way to the selecting object:
+Other topological operations are demonstrated below.
+
+The opposite of `st_intersects()` is `st_disjoint()`, which returns only objects that do not spatially relate in any way to the selecting object (`[, 1]` ensures the output is a vector consumin 1 rather than 4 lines when printed):
 
 
 ```r
@@ -2902,8 +2892,7 @@ st_disjoint(p, a, sparse = FALSE)[, 1]
 #> [1] FALSE FALSE  TRUE  TRUE
 ```
 
-Other topological operators are more specific.
-`st_within()`, for example, returns `TRUE` only for objects that are completely within the selecting object.
+`st_within()` returns `TRUE` only for objects that are completely within the selecting object.
 This applies only to the second object, which is inside the triangular polygon, as illustrated below:
 
 
@@ -3299,7 +3288,7 @@ plot(b)
 plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
 ```
 
-<img src="figures/unnamed-chunk-41-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-40-1.png" width="576" style="display: block; margin: auto;" />
 
 The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
 <!-- Todo: reference r4ds -->
