@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservea36ffac6775f14c1
+preserve61dbbf8e3c765c5c
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3082,7 +3082,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve91bd01b60d22f98a
+preservee74a23ba331e1e5e
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4562,11 +4562,25 @@ Let's take a look at two examples of raster transformation - using categorical a
 
 Land cover data are usually represented by categorical maps.
 The `nlcd2011.tif` file provides information for a small area in Utah, USA obtained from [National Land Cover Database 2011](https://www.mrlc.gov/nlcd2011.php). 
-In this region, 14 land cover classes were distinguished^[Full list of NLCD2011 land cover classes can be found at https://www.mrlc.gov/nlcd11_leg.php]:
 
 
 ```r
 cat_raster = raster(system.file("raster/nlcd2011.tif", package = "spDataLarge"))
+cat_raster
+#> class       : RasterLayer 
+#> dimensions  : 1359, 1073, 1458207  (nrow, ncol, ncell)
+#> resolution  : 31.5, 31.5  (x, y)
+#> extent      : 301903, 335735, 4111244, 4154086  (xmin, xmax, ymin, ymax)
+#> coord. ref. : +proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
+#> data source : /home/travis/R/Library/spDataLarge/raster/nlcd2011.tif 
+#> names       : nlcd2011 
+#> values      : 11, 95  (min, max)
+```
+
+In this region, 14 land cover classes were distinguished^[Full list of NLCD2011 land cover classes can be found at https://www.mrlc.gov/nlcd11_leg.php]:
+
+
+```r
 unique(cat_raster)
 #>  [1] 11 21 22 23 31 41 42 43 52 71 81 82 90 95
 ```

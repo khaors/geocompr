@@ -335,9 +335,19 @@ The EPSG code can be found inside the <code>crs</code> attribute of the object�
 <div id="raster-data-3" class="section level3">
 <h3><span class="header-section-number">6.2.2</span> Raster data</h3>
 <p>The basic concepts of CRS apply to both vector and raster data model. However, there are important differences in reprojection of vectors and rasters. Transformation of CRS in vector data changes coordinates of each vertex. This do not apply to raster data. Rasters are are composed of rectangular cells of the same size (expressed by map units, such as degrees or meters). To preserve this property, it is impossible to transform coordinates of cells separately. This entails that a new raster could have a different number of columns and rows, and therefore different number of cells that the original one. <!-- rasters: transformation means change of the coordinates of (special case of resampling) --> <!-- changes in dimensions, resolution, extent --> <!-- change shape and attributes) --> Therefore, values of these new cells need to be estimated after a geometric operation is completed. The <code>projectRaster()</code> function’s role is to reproject <code>Raster*</code> objects into a new object with another coordinate reference system. Compared to <code>st_tranform()</code>, <code>projectRaster()</code> only accepts the <code>proj4string</code> definitions. Let’s take a look at two examples of raster transformation - using categorical and continuous data.</p>
-<p>Land cover data are usually represented by categorical maps. The <code>nlcd2011.tif</code> file provides information for a small area in Utah, USA obtained from <a href="https://www.mrlc.gov/nlcd2011.php">National Land Cover Database 2011</a>. In this region, 14 land cover classes were distinguished<a href="#fn27" class="footnoteRef" id="fnref27"><sup>27</sup></a>:</p>
+<p>Land cover data are usually represented by categorical maps. The <code>nlcd2011.tif</code> file provides information for a small area in Utah, USA obtained from <a href="https://www.mrlc.gov/nlcd2011.php">National Land Cover Database 2011</a>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cat_raster =<span class="st"> </span><span class="kw">raster</span>(<span class="kw">system.file</span>(<span class="st">&quot;raster/nlcd2011.tif&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;spDataLarge&quot;</span>))
-<span class="kw">unique</span>(cat_raster)
+cat_raster
+<span class="co">#&gt; class       : RasterLayer </span>
+<span class="co">#&gt; dimensions  : 1359, 1073, 1458207  (nrow, ncol, ncell)</span>
+<span class="co">#&gt; resolution  : 31.5, 31.5  (x, y)</span>
+<span class="co">#&gt; extent      : 301903, 335735, 4111244, 4154086  (xmin, xmax, ymin, ymax)</span>
+<span class="co">#&gt; coord. ref. : +proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs </span>
+<span class="co">#&gt; data source : /home/travis/R/Library/spDataLarge/raster/nlcd2011.tif </span>
+<span class="co">#&gt; names       : nlcd2011 </span>
+<span class="co">#&gt; values      : 11, 95  (min, max)</span></code></pre></div>
+<p>In this region, 14 land cover classes were distinguished<a href="#fn27" class="footnoteRef" id="fnref27"><sup>27</sup></a>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">unique</span>(cat_raster)
 <span class="co">#&gt;  [1] 11 21 22 23 31 41 42 43 52 71 81 82 90 95</span></code></pre></div>
 <p>When reprojecting categorical raster, we need to ensure that our new estimated values would still have values of our original classes. This could be done using the nearest neighbor method (<code>ngb</code>). In this method, value of the output cell is calculated based on the nearest cell center of the input raster. <!-- explain code below --></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wgs84 =<span class="st"> &quot;+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs&quot;</span>
