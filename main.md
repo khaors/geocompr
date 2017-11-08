@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve0303ee44f452899f
+preserveed95d5ec622a9451
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3081,7 +3081,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservee8ece61484153081
+preserve4279608d2016e9f0
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4608,7 +4608,10 @@ cat_raster_wgs84
 #> values      : 11, 95  (min, max)
 ```
 
-<!-- summary of changes: ncell, extent, values -->
+Many properties of the new object differs from the previous one, which include the number of columns and rows (and therefore number of cells), resolution (transformed from meters into degrees), and extent.
+In the same time, it keeps the same land cover classes - `unique(cat_raster_wgs84)`.
+<!-- freq(cat_raster_wgs84) -->
+<!-- freq(cat_raster) -->
 
 This process of reprojection is almost identical for continuous data.
 The `srtm.tif` file contains digital elevation model for the same area in Utah from [the Shuttle Radar Topography Mission (SRTM)](https://www2.jpl.nasa.gov/srtm/).
@@ -4647,7 +4650,16 @@ con_raster_wgs84
 #> values      : 1052, 2898  (min, max)
 ```
 
-<!-- summary of changes: ncell, extent, values -->
+Reprojection of continuous rasters also change spatial properties, such as the number of cells, resolution, and extent.
+It also slightly modifies values in the new raster, which can be seen by comparing the outputs of the `summary()` function between `con_raster` and `con_raster_wgs84`.
+
+
+```r
+summary(con_raster)
+summary(con_raster_wgs84)
+```
+
+<!-- why new na? -->
 
 <!-- - an issue of resampling (comparision of old and new values) -->
 <!-- res option in projectRaster? -->

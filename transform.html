@@ -363,7 +363,7 @@ cat_raster_wgs84
 <span class="co">#&gt; data source : in memory</span>
 <span class="co">#&gt; names       : nlcd2011 </span>
 <span class="co">#&gt; values      : 11, 95  (min, max)</span></code></pre></div>
-<!-- summary of changes: ncell, extent, values -->
+<p>Many properties of the new object differs from the previous one, which include the number of columns and rows (and therefore number of cells), resolution (transformed from meters into degrees), and extent. In the same time, it keeps the same land cover classes - <code>unique(cat_raster_wgs84)</code>. <!-- freq(cat_raster_wgs84) --> <!-- freq(cat_raster) --></p>
 <p>This process of reprojection is almost identical for continuous data. The <code>srtm.tif</code> file contains digital elevation model for the same area in Utah from <a href="https://www2.jpl.nasa.gov/srtm/">the Shuttle Radar Topography Mission (SRTM)</a>. Each value in this raster represents elevation measured in meters.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">con_raster =<span class="st"> </span><span class="kw">raster</span>(<span class="kw">system.file</span>(<span class="st">&quot;raster/srtm.tif&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;spDataLarge&quot;</span>))
 con_raster
@@ -386,7 +386,10 @@ con_raster_wgs84
 <span class="co">#&gt; data source : in memory</span>
 <span class="co">#&gt; names       : srtm </span>
 <span class="co">#&gt; values      : 1052, 2898  (min, max)</span></code></pre></div>
-<!-- summary of changes: ncell, extent, values -->
+<p>Reprojection of continuous rasters also change spatial properties, such as the number of cells, resolution, and extent. It also slightly modifies values in the new raster, which can be seen by comparing the outputs of the <code>summary()</code> function between <code>con_raster</code> and <code>con_raster_wgs84</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(con_raster)
+<span class="kw">summary</span>(con_raster_wgs84)</code></pre></div>
+<!-- why new na? -->
 <!-- - an issue of resampling (comparision of old and new values) -->
 <!-- res option in projectRaster? -->
 <!-- note1: in most of the cases reproject vector, not raster-->
