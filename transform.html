@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2017-11-07">
+<meta name="date" content="2017-11-08">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -264,7 +264,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="introduction-3" class="section level2">
 <h2><span class="header-section-number">6.1</span> Introduction</h2>
-<p>As stated in Chapter <a href="spatial-class.html#crs-intro">2.3</a>, it is important to understand which CRS you are working in when undertaking spatial operations. Many spatial operations assume that you are using a <em>projected</em> CRS (on a Euclidean grid with units of meters rather than a geographic ‘lat/lon’ grid with units of degrees). The GEOS engine underlying most spatial operations in <strong>sf</strong>, for example, assume your data is in a projected CRS. For this reason <strong>sf</strong> contains a function for checking if geometries have a geographic or projected CRS. This is illustrated below using the example of the <em>Greenwich point</em> which came to define 0 degrees longitude:</p>
+<p>As stated in Chapter <a href="spatial-class.html#crs-intro">2.3</a>, it is important to understand which CRS you are working in when undertaking spatial operations. Many spatial operations assume that you are using a <em>projected</em> CRS (on a Euclidean grid with units of meters rather than a geographic ‘lat/lon’ grid with units of degrees). The GEOS engine underlying most spatial operations in <strong>sf</strong>, for example, assumes your data is in a projected CRS. For this reason <strong>sf</strong> contains a function for checking if geometries have a geographic or projected CRS. This is illustrated below using the example of the <em>Greenwich point</em> which came to define 0 degrees longitude:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">greenwich =<span class="st"> </span><span class="kw">st_sf</span>(<span class="dt">geometry =</span> <span class="kw">st_sfc</span>(<span class="kw">st_point</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">51.5</span>))))
 <span class="kw">st_is_longlat</span>(greenwich)
 <span class="co">#&gt; [1] NA</span></code></pre></div>

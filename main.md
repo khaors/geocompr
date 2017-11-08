@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2017-11-07'
+date: '2017-11-08'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2017-11-07 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2017-11-08 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveb54876b1ac99783d
+preserve0303ee44f452899f
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3081,7 +3081,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserved7f10e2a8cc98801
+preservee8ece61484153081
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4409,7 +4409,7 @@ library(spDataLarge)
 
 As stated in Chapter \@ref(crs-intro), it is important to understand which CRS you are working in when undertaking spatial operations.
 Many spatial operations assume that you are using a *projected* CRS (on a Euclidean grid with units of meters rather than a geographic 'lat/lon' grid with units of degrees).
-The GEOS engine underlying most spatial operations in **sf**, for example, assume your data is in a projected CRS.
+The GEOS engine underlying most spatial operations in **sf**, for example, assumes your data is in a projected CRS.
 For this reason **sf** contains a function for checking if geometries have a geographic or projected CRS.
 This is illustrated below using the example of the *Greenwich point* which came to define 0 degrees longitude:
 
