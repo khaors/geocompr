@@ -794,7 +794,7 @@ Figure 4.13: Original raster (left). Aggregated raster (right).
 <span class="co">#&gt; [1] 0 0</span>
 <span class="kw">origin</span>(elev_agg)
 <span class="co">#&gt; [1] 0.5 0.5</span></code></pre></div>
-<p>The origin is the point closest to (0, 0) if you moved towards it in steps of x and y resolution. If two rasters have different origins, their cells do not overlap completely which would make map algebra impossible. To change the origin , use <code>origin()</code>.<a href="#fn18" class="footnoteRef" id="fnref18"><sup>18</sup></a> Looking at figure <a href="spatial-data-operations.html#fig:origin-example">4.14</a> reveals the effect of changing the origin.</p>
+<p>The origin is the point closest to (0, 0) if you moved towards it in steps of x and y resolution. If two rasters have different origins, their cells do not overlap completely which would make map algebra impossible. To change the origin , use <code>origin()</code>.<a href="#fn19" class="footnoteRef" id="fnref19"><sup>19</sup></a> Looking at figure <a href="spatial-data-operations.html#fig:origin-example">4.14</a> reveals the effect of changing the origin.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the aggregated raster</span>
 <span class="kw">plot</span>(elev_agg)
 <span class="co"># change the origin</span>
@@ -903,8 +903,8 @@ elev_disagg =<span class="st"> </span><span class="kw">resample</span>(elev_agg,
 </div>
 <div class="footnotes">
 <hr />
-<ol start="18">
-<li id="fn18"><p>If the origins of two raster datasets are just marginally apart, it sometimes is sufficient to simply increase the <code>tolerance</code> argument of <code>raster::rasterOptions()</code>.<a href="spatial-data-operations.html#fnref18">↩</a></p></li>
+<ol start="19">
+<li id="fn19"><p>If the origins of two raster datasets are just marginally apart, it sometimes is sufficient to simply increase the <code>tolerance</code> argument of <code>raster::rasterOptions()</code>.<a href="spatial-data-operations.html#fnref19">↩</a></p></li>
 </ol>
 </div>
             </section>

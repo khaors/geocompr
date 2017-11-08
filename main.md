@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveed95d5ec622a9451
+preserve492f12b597886bc6
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -483,11 +483,12 @@ Naturally, this is the reason why we will describe **sf** in detail in Chapter \
 This is the first practical chapter of the book, and therefore it comes with some software requirements.
 We assume that you have installed on your computer a recent version of R and that you are comfortable using it at the command line, e.g., via an integrated development environment (IDE) such as RStudio (recommended).
 R/RStudio works on all major operating systems.
-You can install and set up both in a few minutes on most modern computers, as described in [section 2.3](https://csgillespie.github.io/efficientR/set-up.html#r-version) and [section 2.5](https://csgillespie.github.io/efficientR/set-up.html#rstudio) of @gillespie_efficient_2016 (other guides are available).
+You can install and set up both in a few minutes on most modern computers, as described in [section 2.3](https://csgillespie.github.io/efficientR/set-up.html#r-version) and [section 2.5](https://csgillespie.github.io/efficientR/set-up.html#rstudio) of @gillespie_efficient_2016.
 
 If you are not a regular R user, we recommend that you familiarize yourself with the language before proceeding with this chapter.
 You can do so using resources such as @gillespie_efficient_2016, @grolemund_r_2016 as well as online interactive guides such as [DataCamp](https://www.datacamp.com/courses/free-introduction-to-r).
 We recommend organising your work as you learn, for example with the help of an RStudio '[project](https://csgillespie.github.io/efficientR/set-up.html#project-management)' called `geocomp-learning` or similar and a new script for each chapter.
+
 The code you type to help learn the content of this chapter, for example, could be placed in a script called `chapter-02.R`.
 Everyone learns in a different way so it is important that you structure your code in a way that makes sense to you and that you avoid copy-pasting to get used to typing code.
 <!-- Another option is to use the RStudio project provided in the root directory of the [`geocompr`](https://github.com/Robinlovelace/geocompr) GitHub repository. -->
@@ -495,15 +496,34 @@ Everyone learns in a different way so it is important that you structure your co
 
 * * *
 
-After testing your up-to-date R/RStudio set-up the next step is to load the spatial packages used in this chapter (these must be installed and should be up-to-date):
+After R/RStudio are installed and up-to-date --- use `update.packages()` to update packages --- the next step is to install and load the packages used in this chapter.
+This can be done with `install.packages("package_name")` (not shown) and `library(package_name)` functions:
 
 
 ```r
 library(raster)      # classes and functions for raster data
-library(spData)      # geographic data
-library(spDataLarge) # geographic data
 library(sf)          # classes and functions for vector data
 ```
+
+The chapter also relies on two data packages: **spData** and **spDataLarge**, the latter of which must be installed after **spData** is loaded:^[**spDataLarge** can also be installed with the following command: `install.packages("spDataLarge", repos = "https://nowosad.github.io/drat/", type = "source")`]
+
+
+
+```r
+library(spData)        # load geographic data
+```
+
+
+```r
+install.packages("spDataLarge") # after loading spData
+```
+
+
+```r
+library(spDataLarge)   # load geographic data
+```
+
+
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">On Mac and Linux a few requirements must be met to install **sf**.
 These are described in the package's README at [github.com/r-spatial/sf](https://github.com/r-spatial/sf).</div>\EndKnitrBlock{rmdnote}
@@ -3081,7 +3101,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve4279608d2016e9f0
+preserve5ef2b8c43da16d60
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
