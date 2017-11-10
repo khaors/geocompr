@@ -290,7 +290,7 @@ Figure 6.1: Buffer on data with geographic CRS.
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london_proj =<span class="st"> </span><span class="kw">st_sf</span>(<span class="dt">geometry =</span> <span class="kw">st_sfc</span>(<span class="kw">st_point</span>(<span class="kw">c</span>(<span class="dv">530000</span>, <span class="dv">180000</span>))), <span class="dt">crs =</span> <span class="dv">27700</span>)</code></pre></div>
 <p>This projected CRS has units in meters. One degree at the equator represents 111,319.9 meters and we can use this value to create our buffer:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london_proj_buff =<span class="st"> </span><span class="kw">st_buffer</span>(london_proj, <span class="fl">111319.9</span>)</code></pre></div>
-<p>The result in Figure <a href="transform.html#fig:crs-buf-proj">6.2</a> shows that buffers based on a projected CRS are not distorted and we can expect the same distance from our point to the buffer’s border.</p>
+<p>The result in Figure <a href="transform.html#fig:crs-buf-proj">6.2</a> shows that buffers based on a projected CRS are not distorted and we can expect the same distance from our point to every part of the buffer’s border.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(london_proj_buff, <span class="dt">graticule =</span> <span class="kw">st_crs</span>(<span class="dv">27700</span>), <span class="dt">axes =</span> <span class="ot">TRUE</span>)
 <span class="kw">plot</span>(london_proj, <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:crs-buf-proj"></span>
