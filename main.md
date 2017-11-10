@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2017-11-09'
+date: '2017-11-10'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2017-11-09 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2017-11-10 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve78b35bcf43f56608
+preserve5a12abc7487f1b43
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3101,7 +3101,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve1678c30a18396967
+preserve44cde3310e101b02
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4431,55 +4431,80 @@ As stated in Chapter \@ref(crs-intro), it is important to understand which CRS y
 Many spatial operations assume that you are using a *projected* CRS (on a Euclidean grid with units of meters rather than a geographic 'lat/lon' grid with units of degrees).
 The GEOS engine underlying most spatial operations in **sf**, for example, assumes your data is in a projected CRS.
 For this reason **sf** contains a function for checking if geometries have a geographic or projected CRS.
-This is illustrated below using the example of the *Greenwich point* which came to define 0 degrees longitude:
+This is illustrated below using the example of *London*:
 
 
 ```r
-greenwich = st_sf(geometry = st_sfc(st_point(c(0, 51.5))))
-st_is_longlat(greenwich)
+london = st_sf(geometry = st_sfc(st_point(c(-0.1, 51.5))))
+st_is_longlat(london)
 #> [1] NA
 ```
 
 The results show that when geographic data is created from scratch, or is loaded from a source that has no CRS metadata, the CRS is unspecified by default.
-Spatial operations on objects without a CRS run on the implicit assumption that they are projected, even when in reality they are not.
-This can be seen by creating a huge buffer of 10 degrees around the `greenwich` point:
+CRS can be set with the `st_set_crs` function:^[CRS could be also added when creating the object with the following command: `st_sf(geometry = st_sfc(st_point(c(-0.1, 51.5))), crs = 4326)`]
 
 
 ```r
-greenwich_buff = st_buffer(greenwich, dist = 10)
+london = st_set_crs(london, 4326)
+st_is_longlat(london)
+#> [1] TRUE
 ```
 
-Brief consideration of what has happened should set alarm bells ringing: the buffer will be highly distorted when projected onto the surface of the Earth.
-For this reason, when **sf** (and other spatial packages) know that geometries are in lat/long coordinates they emit a warning.
-This is illustrated in the code below which sets the CRS of `greenwich` to a lat/lon CRS (the commonly used EPSG 4326 in this case), checks to ensure that R thinks it's a geographic CRS, and then re-applies the buffer:
+Spatial operations on objects without a CRS run on the implicit assumption that they are projected, even when in reality they are not.
+This can be seen by creating a buffer of one degree around the `london` point:
 
 
 ```r
-greenwich_latlon = st_set_crs(greenwich, 4326)
-st_is_longlat(greenwich_latlon)
-#> [1] TRUE
-greenwich_buff_latlon = st_buffer(greenwich_latlon, 10)
+london_buff = st_buffer(london, dist = 1)
 #> Warning in st_buffer.sfc(st_geometry(x), dist, nQuadSegs): st_buffer does
 #> not correctly buffer longitude/latitude data
 #> dist is assumed to be in decimal degrees (arc_degrees).
 ```
 
-The results show that, as expected, `4326` is a geographic (lat/lon) CRS.
 As a result a warning message is emitted to warn the user that the operation may not work correctly and that, if the operation was intended, the distance should be in degrees (not meters or some other Euclidean distance measurement).
 The seemingly small difference in setting the CRS may seem inconsequential but it can have a huge impact.
-This is illustrated in Figure \@ref(fig:crs-buf), which shows how the two buffers are plotted, with the (correctly) defined CRS of the latter object being dramatically elongated in the north-south direction due to the thinning of the vertical lines of longitude towards the Earth's poles.  
+This is illustrated in Figure \@ref(fig:crs-buf), which shows how the buffer created in the geographic CRS is dramatically elongated in the north-south direction due to the thinning of the vertical lines of longitude towards the Earth's poles.  
+
+
+```r
+plot(london_buff, graticule = st_crs(4326), axes = TRUE)
+plot(london, add = TRUE)
+```
+
+<div class="figure" style="text-align: center">
+<img src="figures/crs-buf-1.png" alt="Buffer on data with geographic CRS." width="576" />
+<p class="caption">(\#fig:crs-buf)Buffer on data with geographic CRS.</p>
+</div>
+
+To prevent this, we need to create a buffer based on a point in a projected CRS.
+For example, London has coordinates of `c(530000, 180000)` in British National Grid CRS (EPSG:27700):
+
+
+```r
+london_proj = st_sf(geometry = st_sfc(st_point(c(530000, 180000))), crs = 27700)
+```
+
+This projected CRS has units in meters. 
+One degree at the equator represents 111,319.9 meters and we can use this value to create our buffer:
+
+
+```r
+london_proj_buff = st_buffer(london_proj, 111319.9)
+```
+
+The result in Figure \@ref(fig:crs-buf-proj) shows that buffers based on a projected CRS are not distorted and we can expect the same distance from our point to the buffer's border.
 
 
 
 
 ```r
-plot(greenwich_buff, graticule = st_crs(4326))
-plot(greenwich_buff_latlon, graticule = st_crs(4326))
+plot(london_proj_buff, graticule = st_crs(27700), axes = TRUE)
+plot(london_proj, add = TRUE)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/crs-buf-1.png" alt="Buffers on geographic data with undefined (top) and defined (bottom) CRSs." width="576" /><img src="figures/crs-buf-2.png" alt="Buffers on geographic data with undefined (top) and defined (bottom) CRSs." width="576" />
-<p class="caption">(\#fig:crs-buf)Buffers on geographic data with undefined (top) and defined (bottom) CRSs.</p>
+<img src="figures/crs-buf-proj-1.png" alt="Buffer on data with projected CRS." width="576" />
+<p class="caption">(\#fig:crs-buf-proj)Buffer on data with projected CRS.</p>
 </div>
 
 ## CRS transformation

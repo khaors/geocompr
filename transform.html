@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2017-11-09">
+<meta name="date" content="2017-11-10">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -264,27 +264,39 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="introduction-3" class="section level2">
 <h2><span class="header-section-number">6.1</span> Introduction</h2>
-<p>As stated in Chapter <a href="spatial-class.html#crs-intro">2.3</a>, it is important to understand which CRS you are working in when undertaking spatial operations. Many spatial operations assume that you are using a <em>projected</em> CRS (on a Euclidean grid with units of meters rather than a geographic ‘lat/lon’ grid with units of degrees). The GEOS engine underlying most spatial operations in <strong>sf</strong>, for example, assumes your data is in a projected CRS. For this reason <strong>sf</strong> contains a function for checking if geometries have a geographic or projected CRS. This is illustrated below using the example of the <em>Greenwich point</em> which came to define 0 degrees longitude:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">greenwich =<span class="st"> </span><span class="kw">st_sf</span>(<span class="dt">geometry =</span> <span class="kw">st_sfc</span>(<span class="kw">st_point</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">51.5</span>))))
-<span class="kw">st_is_longlat</span>(greenwich)
+<p>As stated in Chapter <a href="spatial-class.html#crs-intro">2.3</a>, it is important to understand which CRS you are working in when undertaking spatial operations. Many spatial operations assume that you are using a <em>projected</em> CRS (on a Euclidean grid with units of meters rather than a geographic ‘lat/lon’ grid with units of degrees). The GEOS engine underlying most spatial operations in <strong>sf</strong>, for example, assumes your data is in a projected CRS. For this reason <strong>sf</strong> contains a function for checking if geometries have a geographic or projected CRS. This is illustrated below using the example of <em>London</em>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london =<span class="st"> </span><span class="kw">st_sf</span>(<span class="dt">geometry =</span> <span class="kw">st_sfc</span>(<span class="kw">st_point</span>(<span class="kw">c</span>(-<span class="fl">0.1</span>, <span class="fl">51.5</span>))))
+<span class="kw">st_is_longlat</span>(london)
 <span class="co">#&gt; [1] NA</span></code></pre></div>
-<p>The results show that when geographic data is created from scratch, or is loaded from a source that has no CRS metadata, the CRS is unspecified by default. Spatial operations on objects without a CRS run on the implicit assumption that they are projected, even when in reality they are not. This can be seen by creating a huge buffer of 10 degrees around the <code>greenwich</code> point:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">greenwich_buff =<span class="st"> </span><span class="kw">st_buffer</span>(greenwich, <span class="dt">dist =</span> <span class="dv">10</span>)</code></pre></div>
-<p>Brief consideration of what has happened should set alarm bells ringing: the buffer will be highly distorted when projected onto the surface of the Earth. For this reason, when <strong>sf</strong> (and other spatial packages) know that geometries are in lat/long coordinates they emit a warning. This is illustrated in the code below which sets the CRS of <code>greenwich</code> to a lat/lon CRS (the commonly used EPSG 4326 in this case), checks to ensure that R thinks it’s a geographic CRS, and then re-applies the buffer:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">greenwich_latlon =<span class="st"> </span><span class="kw">st_set_crs</span>(greenwich, <span class="dv">4326</span>)
-<span class="kw">st_is_longlat</span>(greenwich_latlon)
-<span class="co">#&gt; [1] TRUE</span>
-greenwich_buff_latlon =<span class="st"> </span><span class="kw">st_buffer</span>(greenwich_latlon, <span class="dv">10</span>)
+<p>The results show that when geographic data is created from scratch, or is loaded from a source that has no CRS metadata, the CRS is unspecified by default. CRS can be set with the <code>st_set_crs</code> function:<a href="#fn28" class="footnoteRef" id="fnref28"><sup>28</sup></a></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london =<span class="st"> </span><span class="kw">st_set_crs</span>(london, <span class="dv">4326</span>)
+<span class="kw">st_is_longlat</span>(london)
+<span class="co">#&gt; [1] TRUE</span></code></pre></div>
+<p>Spatial operations on objects without a CRS run on the implicit assumption that they are projected, even when in reality they are not. This can be seen by creating a buffer of one degree around the <code>london</code> point:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london_buff =<span class="st"> </span><span class="kw">st_buffer</span>(london, <span class="dt">dist =</span> <span class="dv">1</span>)
 <span class="co">#&gt; Warning in st_buffer.sfc(st_geometry(x), dist, nQuadSegs): st_buffer does</span>
 <span class="co">#&gt; not correctly buffer longitude/latitude data</span>
 <span class="co">#&gt; dist is assumed to be in decimal degrees (arc_degrees).</span></code></pre></div>
-<p>The results show that, as expected, <code>4326</code> is a geographic (lat/lon) CRS. As a result a warning message is emitted to warn the user that the operation may not work correctly and that, if the operation was intended, the distance should be in degrees (not meters or some other Euclidean distance measurement). The seemingly small difference in setting the CRS may seem inconsequential but it can have a huge impact. This is illustrated in Figure <a href="transform.html#fig:crs-buf">6.1</a>, which shows how the two buffers are plotted, with the (correctly) defined CRS of the latter object being dramatically elongated in the north-south direction due to the thinning of the vertical lines of longitude towards the Earth’s poles.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(greenwich_buff, <span class="dt">graticule =</span> <span class="kw">st_crs</span>(<span class="dv">4326</span>))
-<span class="kw">plot</span>(greenwich_buff_latlon, <span class="dt">graticule =</span> <span class="kw">st_crs</span>(<span class="dv">4326</span>))</code></pre></div>
+<p>As a result a warning message is emitted to warn the user that the operation may not work correctly and that, if the operation was intended, the distance should be in degrees (not meters or some other Euclidean distance measurement). The seemingly small difference in setting the CRS may seem inconsequential but it can have a huge impact. This is illustrated in Figure <a href="transform.html#fig:crs-buf">6.1</a>, which shows how the buffer created in the geographic CRS is dramatically elongated in the north-south direction due to the thinning of the vertical lines of longitude towards the Earth’s poles.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(london_buff, <span class="dt">graticule =</span> <span class="kw">st_crs</span>(<span class="dv">4326</span>), <span class="dt">axes =</span> <span class="ot">TRUE</span>)
+<span class="kw">plot</span>(london, <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:crs-buf"></span>
-<img src="figures/crs-buf-1.png" alt="Buffers on geographic data with undefined (top) and defined (bottom) CRSs." width="576" /><img src="figures/crs-buf-2.png" alt="Buffers on geographic data with undefined (top) and defined (bottom) CRSs." width="576" />
+<img src="figures/crs-buf-1.png" alt="Buffer on data with geographic CRS." width="576" />
 <p class="caption">
-Figure 6.1: Buffers on geographic data with undefined (top) and defined (bottom) CRSs.
+Figure 6.1: Buffer on data with geographic CRS.
+</p>
+</div>
+<p>To prevent this, we need to create a buffer based on a point in a projected CRS. For example, London has coordinates of <code>c(530000, 180000)</code> in British National Grid CRS (EPSG:27700):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london_proj =<span class="st"> </span><span class="kw">st_sf</span>(<span class="dt">geometry =</span> <span class="kw">st_sfc</span>(<span class="kw">st_point</span>(<span class="kw">c</span>(<span class="dv">530000</span>, <span class="dv">180000</span>))), <span class="dt">crs =</span> <span class="dv">27700</span>)</code></pre></div>
+<p>This projected CRS has units in meters. One degree at the equator represents 111,319.9 meters and we can use this value to create our buffer:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london_proj_buff =<span class="st"> </span><span class="kw">st_buffer</span>(london_proj, <span class="fl">111319.9</span>)</code></pre></div>
+<p>The result in Figure <a href="transform.html#fig:crs-buf-proj">6.2</a> shows that buffers based on a projected CRS are not distorted and we can expect the same distance from our point to the buffer’s border.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(london_proj_buff, <span class="dt">graticule =</span> <span class="kw">st_crs</span>(<span class="dv">27700</span>), <span class="dt">axes =</span> <span class="ot">TRUE</span>)
+<span class="kw">plot</span>(london_proj, <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:crs-buf-proj"></span>
+<img src="figures/crs-buf-proj-1.png" alt="Buffer on data with projected CRS." width="576" />
+<p class="caption">
+Figure 6.2: Buffer on data with projected CRS.
 </p>
 </div>
 </div>
@@ -346,7 +358,7 @@ cat_raster
 <span class="co">#&gt; data source : /home/travis/R/Library/spDataLarge/raster/nlcd2011.tif </span>
 <span class="co">#&gt; names       : nlcd2011 </span>
 <span class="co">#&gt; values      : 11, 95  (min, max)</span></code></pre></div>
-<p>In this region, 14 land cover classes were distinguished<a href="#fn28" class="footnoteRef" id="fnref28"><sup>28</sup></a>:</p>
+<p>In this region, 14 land cover classes were distinguished<a href="#fn29" class="footnoteRef" id="fnref29"><sup>29</sup></a>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">unique</span>(cat_raster)
 <span class="co">#&gt;  [1] 11 21 22 23 31 41 42 43 52 71 81 82 90 95</span></code></pre></div>
 <p>When reprojecting categorical raster, we need to ensure that our new estimated values would still have values of our original classes. This could be done using the nearest neighbor method (<code>ngb</code>). In this method, value of the output cell is calculated based on the nearest cell center of the input raster.</p>
@@ -439,7 +451,8 @@ con_raster_wgs84
 <div class="footnotes">
 <hr />
 <ol start="28">
-<li id="fn28"><p>Full list of NLCD2011 land cover classes can be found at <a href="https://www.mrlc.gov/nlcd11_leg.php" class="uri">https://www.mrlc.gov/nlcd11_leg.php</a><a href="transform.html#fnref28">↩</a></p></li>
+<li id="fn28"><p>CRS could be also added when creating the object with the following command: <code>st_sf(geometry = st_sfc(st_point(c(-0.1, 51.5))), crs = 4326)</code><a href="transform.html#fnref28">↩</a></p></li>
+<li id="fn29"><p>Full list of NLCD2011 land cover classes can be found at <a href="https://www.mrlc.gov/nlcd11_leg.php" class="uri">https://www.mrlc.gov/nlcd11_leg.php</a><a href="transform.html#fnref29">↩</a></p></li>
 </ol>
 </div>
             </section>
