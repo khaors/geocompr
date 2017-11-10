@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservece0a893d34db8ec4
+preserved84e011980e089e2
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -1664,7 +1664,7 @@ Two main ways to describe CRS in R are an `epsg` code or a `proj4string` definit
 Both of these approaches have advantages and disadvantages. 
 An `epsg` code is usually shorter, and therefore easier to remember. 
 The code also refers to only one, well-defined coordinate reference system. 
-On the other hand, a `proj4string` definition allows you more flexibility when it comes to specifying different parameters such as the projection type, the datum and the ellipsoid.^[Complete list of the `proj4string` parameters can be found at http://proj4.org/parameters.html.] 
+On the other hand, a `proj4string` definition allows you more flexibility when it comes to specifying different parameters such as the projection type, the datum and the ellipsoid.^[Complete list of the `proj4string` parameters can be found at http://proj4.org/parameters.html#parameter-list.] 
 This way you can specify many different projections, and modify existing ones.
 This makes the `proj4string` approach also more complicated.
 <!-- ^[In the background, `sf` and `raster` use the [PROJ.4](http://proj4.org/) software, which enables transformations between different projections]. -->
@@ -3101,7 +3101,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve25cf026f4e30b171
+preserve7e90cb565e23a90b
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4525,20 +4525,6 @@ For example, loss of spatial information could occur when the new CRS is only ad
 The precision could be also lost when transformation is between coordinate systems that have different datum - in those situations approximations are used.
 However, in most cases CRS vector transformation is lossless.
 
-<!-- example of using epsg (without "magic number") -->
-<!-- example of using proj4 (expain it and maybe modify) -->
-<!-- show the results (e.g. two/three panels) -->
-<!-- show calculations? e.g area/distance? -->
-<!-- comparing projections? == -->
-<!-- - st_as_sf(x, coords = c("x","y")) -->
-<!-- - st_crs(x) -->
-<!-- - st_transform(x, crs) -->
-<!-- - == -->
-<!-- - !st_is_longlat(x) -->
-<!-- - st_set_crs(x, crs) -->
-<!-- - st_bbox -->
-<!-- - st_wrap_dateline -->
-
 The dataset `cycle_hire_osm` represents all cycle hire locations across London, taken from OpenStreetMap (OSM).
 It is automatically loaded by the **spData** package, meaning we do not have to load it, and its CRS can be queried as follows:
 
@@ -4586,6 +4572,20 @@ st_crs(27700)$proj4string
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">The EPSG code can be found inside the `crs` attribute of the object's geometry.
 It is hidden from view for most of the time except when the object is printed but can be can identified and set using the `st_crs` function, for example `st_crs(cycle_hire_osm)$epsg`.</div>\EndKnitrBlock{rmdnote}
 
+<!-- example of using epsg (without "magic number") -->
+<!-- example of using proj4 (expain it and maybe modify) -->
+<!-- show the results (e.g. two/three panels) -->
+<!-- show calculations? e.g area/distance? -->
+<!-- comparing projections? == -->
+<!-- - st_as_sf(x, coords = c("x","y")) -->
+<!-- - st_crs(x) -->
+<!-- - st_transform(x, crs) -->
+<!-- - == -->
+<!-- - !st_is_longlat(x) -->
+<!-- - st_set_crs(x, crs) -->
+<!-- - st_bbox -->
+<!-- - st_wrap_dateline -->
+
 ### Raster data
 
 The basic concepts of CRS apply to both vector and raster data model.
@@ -4600,8 +4600,12 @@ This entails that a new raster could have a different number of columns and rows
 Therefore, values of these new cells need to be estimated after a geometric operation is completed.
 The `projectRaster()` function's role is to reproject `Raster*` objects into a new object with another coordinate reference system. 
 Compared to `st_tranform()`, `projectRaster()` only accepts the `proj4string` definitions.
-Let's take a look at two examples of raster transformation - using categorical and continuous data.
 
+\BeginKnitrBlock{rmdnote}<div class="rmdnote">It is possible to use a EPSG code in a `proj4string` definition with `"+init=epsg:MY_NUMBER"`.
+For example, one can use the `"+init=epsg:4326"` definition to set CRS to WGS84 (EPSG code of 4326).
+The PROJ.4 library automaticaly adds the rest of parameters and converts it into `"+init=epsg:4326 +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"`,</div>\EndKnitrBlock{rmdnote}
+
+Let's take a look at two examples of raster transformation - using categorical and continuous data.
 Land cover data are usually represented by categorical maps.
 The `nlcd2011.tif` file provides information for a small area in Utah, USA obtained from [National Land Cover Database 2011](https://www.mrlc.gov/nlcd2011.php) in the NAD83 / UTM zone 12N CRS.
 
