@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve21ab41fc19e7f286
+preserve9859076ddecbb9e0
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3101,7 +3101,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservedf2630617f091a8a
+preserve7fe2000a7979ab4b
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4583,11 +4583,6 @@ It is hidden from view for most of the time except when the object is printed bu
 <!-- show calculations? e.g area/distance? -->
 <!-- comparing projections? == -->
 <!-- - st_as_sf(x, coords = c("x","y")) -->
-<!-- - st_crs(x) -->
-<!-- - st_transform(x, crs) -->
-<!-- - == -->
-<!-- - !st_is_longlat(x) -->
-<!-- - st_set_crs(x, crs) -->
 <!-- - st_bbox -->
 <!-- - st_wrap_dateline -->
 
