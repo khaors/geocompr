@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservebd1f2f6e613fb7ac
+preservecf2b60d5a91e7ccd
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -1286,7 +1286,7 @@ However, in contrast to vector data, a raster cell can only hold a single value.
 The value might be numeric or categorical (Figure  \@ref(fig:raster-intro-plot):C).
 
 <div class="figure" style="text-align: center">
-<img src="figures/02_raster_intro_plot.png" alt="Raster data: A - a grid representation; B - numbers of the cells; C - values of the cells; D - a final raster map." width="750" />
+<img src="figures/02_raster_intro_plot.png" alt="Raster data: A - a grid representation; B - numbers of the cells; C - values of the cells; D - a final raster map." width="1125" />
 <p class="caption">(\#fig:raster-intro-plot)Raster data: A - a grid representation; B - numbers of the cells; C - values of the cells; D - a final raster map.</p>
 </div>
 
@@ -3098,7 +3098,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservef3187c84030c1d1e
+preserve137ba1ee0353012e
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
