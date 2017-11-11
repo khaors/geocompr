@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve2e11e2e2e5f4ee15
+preserve02fe3aa5ff549023
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -840,7 +840,7 @@ plot(world_centroids, add = TRUE, cex = sqrt(world$pop) / 10000)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/contpop-1.png" alt="Country continents (represented by fill colour) and 2015 populations (represented by points, with point area proportional to population) worldwide." width="576" /><img src="figures/contpop-2.png" alt="Country continents (represented by fill colour) and 2015 populations (represented by points, with point area proportional to population) worldwide." width="576" />
+<img src="figures/contpop-1.png" alt="Country continents (represented by fill colour) and 2015 populations (represented by points, with point area proportional to population) worldwide." width="576" />
 <p class="caption">(\#fig:contpop)Country continents (represented by fill colour) and 2015 populations (represented by points, with point area proportional to population) worldwide.</p>
 </div>
 
@@ -3098,7 +3098,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve9f0fb1c6c26e1e6b
+preserve320136b4cd5c9b89
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
