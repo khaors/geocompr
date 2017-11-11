@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve9859076ddecbb9e0
+preserve2e11e2e2e5f4ee15
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2691,7 +2691,7 @@ These topics may sound daunting, but they have already been covered, in section 
 Spatial operations on *rasters* include merging and subsetting, covered in section \@ref(spatial-operations-on-raster-data).
 
 The chapter also introduces new concepts that are unique to spatial data.
-A variety of *topological relations* can be used to subset/join vector geometries (by default **sf** uses the catch-all *intersects* but other relations such as *within* can be very useful), a topic that is explored in section \@ref(topological-relations).
+A variety of *topological relations* can be used to subset/join vector geometries, a topic that is explored in section \@ref(topological-relations).
 New geometry data can be created by modifying existing spatial objects, using operations such as 'buffer' and 'clip', described in sections \@ref(modifying-geometry-data) and \@ref(clipping).
 Spatial operations on raster datasets involve *map algebra* (covered in sections \@ref(map-algebra) to \@ref(global-operations-and-distances)) and combining and aligning them (covered in sections \@ref(merging-rasters) and \@ref(aligning-rasters)).
 
@@ -2730,9 +2730,8 @@ With spatial subsetting however, instead of `y` being `logical` --- a vector of 
 
 Various *topological relations* can be used for spatial subsetting.
 These determine the type of spatial relationship that features in the target object must have with the subsetting object to be selected, including *touches*, *crosses* or *within* (see section \@ref(topological-relations)). 
-*Intersects* is the default spatial subsetting operator, a sensible default that identifies all types of spatial relations.
-Alternative operators can be specified using the `op =` argument.
-This is illustrated in the command below which selects all features in `nz_height` that do *not* intersect with Canterbury (result not shown):
+*Intersects* is the default spatial subsetting operator, a default that returns `TRUE` for many types of spatial relations, including *touches*, *crosses* and *is within*.
+These alternative spatial operators can be specified with the `op =` argument, as illustrated below (try plotting the result or skip to section \@ref(topological-relations) to find out what this does):
 
 
 ```r
@@ -2899,9 +2898,7 @@ The output is a matrix in which each row represents a feature in the target obje
 In this case only the first two features in `p` intersect with `a` and there is only one feature in `a` so the result has only one column.
 The result can be used for subsetting as we saw in section \@ref(spatial-subsetting).
 
-Note that `st_intersects()` returns `TRUE` for the second feature in the object `p` even though it just touches the polygon `a`.
-This is because *intersects* is a catch-all topological operation that covers any type of spatial relation.
-Other topological operations are demonstrated below.
+Note that `st_intersects()` returns `TRUE` for the second feature in the object `p` even though it just touches the polygon `a`: *intersects* is a 'catch-all' topological operation which identifies many types of spatial relation.
 
 The opposite of `st_intersects()` is `st_disjoint()`, which returns only objects that do not spatially relate in any way to the selecting object (`[, 1]` ensures the output is a vector consuming one rather than four lines when printed):
 
@@ -3065,7 +3062,7 @@ joined = st_join(x = asia, y = urb) %>%
 
 
 <div class="figure" style="text-align: center">
-<img src="figures/spatial-join-1.png" alt="Illustration of a spatial join: the populations of the world's 3 largest agglomerations joined onto their respective countries." width="576" /><img src="figures/spatial-join-2.png" alt="Illustration of a spatial join: the populations of the world's 3 largest agglomerations joined onto their respective countries." width="576" /><img src="figures/spatial-join-3.png" alt="Illustration of a spatial join: the populations of the world's 3 largest agglomerations joined onto their respective countries." width="576" /><img src="figures/spatial-join-4.png" alt="Illustration of a spatial join: the populations of the world's 3 largest agglomerations joined onto their respective countries." width="576" />
+<img src="figures/spatial-join-1.png" alt="Illustration of a spatial join: the populations of the world's 3 largest agglomerations joined onto their respective countries." width="576" />
 <p class="caption">(\#fig:spatial-join)Illustration of a spatial join: the populations of the world's 3 largest agglomerations joined onto their respective countries.</p>
 </div>
 
@@ -3101,7 +3098,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve7fe2000a7979ab4b
+preserve9f0fb1c6c26e1e6b
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3169,7 +3166,7 @@ In the subsequent sections, we will present spatial operations that also act on 
 ### Dissolving and aggregating polygons
 
 Like attribute data aggregation, covered in section \@ref(vector-attribute-aggregation), spatial data aggregation (also known as dissolving polygons) can be a way of *condensing* data.
-Aggregated data show some statistic about a variable (typically mean average or total) in relation to some kind of *grouping variable*. 
+Aggregated data show some statistic about a variable (typically average or total) in relation to some kind of *grouping variable*. 
 For attribute data aggregation the grouping variable is another variable, typically one with few unique values relative to the number of rows.
 The `REGION` variable in the `us_states` dataset is a good example:
 there are only four subregions but 49 states (excluding Hawaii and Alaska).
