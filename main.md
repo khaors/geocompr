@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve3d939e6e5609e3b8
+preserve1edb9ec61bed9cb7
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2721,8 +2721,8 @@ canterbury_height = nz_height[canterbury, ]
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/nz-subset-1.png" alt="Illustration of spatial subsetting with red triangles representing heigh points in New Zealand. The right-hand map contains only points in the Canterbury region (highlighted in grey). The points were subset with `nz_height[canterbury, ]`." width="576" />
-<p class="caption">(\#fig:nz-subset)Illustration of spatial subsetting with red triangles representing heigh points in New Zealand. The right-hand map contains only points in the Canterbury region (highlighted in grey). The points were subset with `nz_height[canterbury, ]`.</p>
+<img src="figures/nz-subset-1.png" alt="Illustration of spatial subsetting with red triangles representing height points in New Zealand. The right-hand map contains only points in the Canterbury region (highlighted in grey). The points were subset with `nz_height[canterbury, ]`." width="576" />
+<p class="caption">(\#fig:nz-subset)Illustration of spatial subsetting with red triangles representing height points in New Zealand. The right-hand map contains only points in the Canterbury region (highlighted in grey). The points were subset with `nz_height[canterbury, ]`.</p>
 </div>
 
 Like attribute subsetting `x[y, ]` subsets features of *target* object `x` using the contents of a *source* object `y`.
@@ -2903,7 +2903,7 @@ Note that `st_intersects()` returns `TRUE` for the second feature in the object 
 This is because *intersects* is a catch-all topological operation that covers any type of spatial relation.
 Other topological operations are demonstrated below.
 
-The opposite of `st_intersects()` is `st_disjoint()`, which returns only objects that do not spatially relate in any way to the selecting object (`[, 1]` ensures the output is a vector consumin 1 rather than 4 lines when printed):
+The opposite of `st_intersects()` is `st_disjoint()`, which returns only objects that do not spatially relate in any way to the selecting object (`[, 1]` ensures the output is a vector consuming one rather than four lines when printed):
 
 
 ```r
@@ -2920,7 +2920,7 @@ st_within(p, a, sparse = FALSE)[, 1]
 #> [1]  TRUE FALSE FALSE FALSE
 ```
 
-Note that although point 1 is *within* the triangle, it does not *touch* any part of its border.
+Note that although the first point is *within* the triangle, it does not *touch* any part of its border.
 For this reason `st_touches()` only returns `TRUE` for the second point:
 
 
@@ -3044,17 +3044,17 @@ Joining two non-spatial datasets relies on a shared 'key' variable, as described
 Spatial data joining applies the same concept, but instead relies on shared areas of geographic space.
 As with attribute data joining adds a new column to the target object (the argument `x` in joining functions) from a source object (`y`).
 
-The process is illustrated in Figure \@ref(fig:spatial-join), which shows a target object (the `world` dataset, left) being joined to a source dataset (the three most populous cities of the world), resulting in a new attribute being added to the `world` dataset (right).
+The process is illustrated in Figure \@ref(fig:spatial-join), which shows a target object (the `asia` dataset, left) being joined to a source dataset (the three most populous cities of the world), resulting in a new attribute being added to the `joined` dataset (right).
 <!-- Idea: use random points over Earth's surface to allocate data to world countries. -->
 <!-- I'm not sure this is a good starting example to show how st_join works - thoughts? -->
 
 
 ```r
+asia = world %>% 
+  filter(continent == "Asia")
 urb = urban_agglomerations %>% 
   filter(year == 2020) %>% 
   top_n(n = 3, wt = population_millions)
-asia = world %>% 
-  filter(continent == "Asia")
 ```
 
 
@@ -3082,12 +3082,12 @@ In our example we would have ended up with two polygons representing China.
 
 Sometimes two geographic datasets do not touch but still have a strong geographic relationship enabling joins.
 The datasets `cycle_hire` and `cycle_hire_osm`, already loaded in the **spData** package, provide a good example.
-Plotting them shows that they are closely related but they do not touch, as shown in Figure \@ref(fig:cycle-hire), a base version of which is created with the following code below:
+Plotting them shows that they are often closely related but they do not touch, as shown in Figure \@ref(fig:cycle-hire), a base version of which is created with the following code below:
 
 
 ```r
 plot(cycle_hire$geometry, col = "blue")
-plot(cycle_hire_osm$geometry, add = T, pch = 3, col = "red")
+plot(cycle_hire_osm$geometry, add = TRUE, pch = 3, col = "red")
 ```
 
 We can check if any points are the same `st_intersects()` as show below:
@@ -3101,32 +3101,32 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservefbe8a7299c8f3a71
+preservebad930d7ebdcb623
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
 Imagine that we need to join the `capacity` variable in `cycle_hire_osm` onto the official 'target' data contained in `cycle_hire`.
 This is when a non-overlapping join is needed.
-The simplest method is to use the topological operator `st_within_distance()` shown in section \@ref(topological-relations).
-Note that before performing the relation both datasets must be transformed into a projected CRS, saved as new objects denoted by the affix `P` (for projected) below, using a treshold distance of 20 m:
+The simplest method is to use the topological operator `st_within_distance()` shown in section \@ref(topological-relations), using a treshold distance of 20 m.
+Note that before performing the relation both datasets must be transformed into a projected CRS, saved as new objects denoted by the affix `P` (for projected) below:
 
 
 ```r
-x = st_transform(cycle_hire, 27700)
-y = st_transform(cycle_hire_osm, 27700)
-sel = st_is_within_distance(x, y, dist = 20)
+cycle_hire_P = st_transform(cycle_hire, 27700)
+cycle_hire_osm_P = st_transform(cycle_hire_osm, 27700)
+sel = st_is_within_distance(cycle_hire_P, cycle_hire_osm_P, dist = 20)
 summary(lengths(sel) > 0)
 #>    Mode   FALSE    TRUE 
 #> logical     304     438
 ```
 
-This shows that there are 436 points in the target object `cycle_hire` within the threshold distance.
-How to retrieve the *values* associated with the respective `cycle_hire_osm` points though?
+This shows that there are 438 points in the target object `cycle_hire_P` within the threshold distance of `cycle_hire_osm_P`.
+How to retrieve the *values* associated with the respective `cycle_hire_osm_P` points?
 The solution is again with `st_join()` although the additional dist argument must be specified:
 
 
 ```r
-z = st_join(x, y, st_is_within_distance, dist = 20)
+z = st_join(cycle_hire_P, cycle_hire_osm_P, st_is_within_distance, dist = 20)
 nrow(cycle_hire)
 #> [1] 742
 nrow(z)
@@ -3134,12 +3134,13 @@ nrow(z)
 ```
 
 Note that the number of rows in the joined result is greater than the target.
-This is because some cycle hire stations in `x` have multiple matches in `y`.
-To aggregate the values for the overlapping points and return the mean, we can use the aggregation methods learned in Chapter 3, resulting in an object with the same number of rows as the target:
+This is because some cycle hire stations in `cycle_hire_P` have multiple matches in `cycle_hire_osm_P`.
+To aggregate the values for the overlapping points and return the mean, we can use the aggregation methods learned in Chapter \@ref(attr), resulting in an object with the same number of rows as the target:
 
 
 ```r
-z = z %>% group_by(id) %>% 
+z = z %>% 
+  group_by(id) %>% 
   summarize(capacity = mean(capacity))
 nrow(z) == nrow(cycle_hire)
 #> [1] TRUE
@@ -3160,11 +3161,10 @@ plot(z["capacity"])
 <!-- joining different types (e.g. points + polygons = geometry) -> save as GPKG? -->
 <!-- `merge()`; `st_interpolate_aw()` -->
 
-
 <!--### Modifying geometry data; still need to change the corresponding cross-references-->
 
 The result of this join has used a spatial operation to change the attribute data associated with simple features but the geometry associated with each feature has remained unchanged.
-In the subsequent sections, we will present spatial operations that also act on and modify the underlying geometry, namely aggregating (dissolving) and clipping operations.
+In the subsequent sections, we will present spatial operations that also act on and modify the underlying geometry, namely dissolving, aggregating and clipping operations.
 
 ### Dissolving and aggregating polygons
 
@@ -3177,7 +3177,7 @@ In section \@ref(vector-attribute-aggregation) we have already seen how attribut
 Spatial data aggregation is the same conceptually but in addition to aggregating the attribute data, it dissolves the underlying polygons.
 Here, we want to aggregate the state population into regions.
 This means that we not only end up with four rows but also with four polygons (out of 49 in the beginning).
-As with spatial subsetting, spatial aggregation operations work by extending existing functions, as illustrated in the code chunk below which aggregates US states to create the right hand map in Figure \@ref(fig:us-regions).
+As with spatial subsetting, spatial aggregation operations work by extending existing functions, as illustrated in the code chunk below which aggregates US states to create the bottom map in Figure \@ref(fig:us-regions).
 
 
 ```r
@@ -3200,7 +3200,6 @@ group_by(us_states, REGION) %>%
 ```
 
 <!--Not sure how to elegantly include your circle buffer intersection example -->
-
 
 
 ```r
@@ -3277,7 +3276,7 @@ Spatial clipping is a form of spatial subsetting that involves changes to the `g
 Clipping can only apply to features more complex than points: 
 lines, polygons and their 'multi' equivalents.
 To illustrate the concept we will start with a simple example:
-two overlapping circles with a centerpoint 1 unit away from each other and radius of 1:
+two overlapping circles with a center point one unit away from each other and radius of one:
 
 
 ```r
@@ -3317,11 +3316,12 @@ The subsequent code chunk demonstrate how this works for all combinations of the
 
 To illustrate the relationship between subsetting and clipping spatial data, we will subset points that cover the bounding box of the circles `x` and `y` in Figure \@ref(fig:venn-clip).
 Some points will be inside just one circle, some will be inside both and some will be inside neither.
-To generate the points will use a function not yet covered in this book, `st_sample()`.
 
 There are two different ways to subset points that fit into combinations of the circles: via clipping and logical operators.
 But first we must generate some points.
-We will use the *simple random* sampling strategy to sample from a box representing the extent of `x` and `y`, using the code below to generate the situation plotted in Figure \@ref(fig:venn-subset):
+We will use the *simple random* sampling strategy to sample from a box representing the extent of `x` and `y`.
+To generate this points will use a function not yet covered in this book, `st_sample()`.
+Next we will generate the situation plotted in Figure \@ref(fig:venn-subset):
 
 
 ```r
@@ -3347,7 +3347,7 @@ text(x = c(-0.5, 1.5), y = 1, labels = l)
 ### Distance relations
 
 While topological relations are binary --- a feature either intersects with another or does not --- distance relations are continuous.
-The distance between two objects is calculated with the **sf** function `st_distance()` function.
+The distance between two objects is calculated with the `st_distance()` function.
 This is illustrated in the code chunk below, which finds the distance between the highest point in New Zealand and the geographic centroid of the Canterbury region, created in section \@ref(spatial-subsetting):
 
 
@@ -3360,7 +3360,7 @@ st_distance(nz_heighest, canterbury_centroid)
 #> [1,] 115566
 ```
 
-There are two potentially surprising things about the result: 1) it comes with a `units` attribute, so you know that it's just over 100 km (not 100,000 inches, or any other measure of distance!); and 2) it is returned as a matrix, even though the result only contains a single value.
+There are two potentially surprising things about the result: 1) it comes with a `units` attribute, so you know that it's just over 100,000 m (not 100,000 inches, or any other measure of distance!); and 2) it is returned as a matrix, even though the result only contains a single value.
 This second feature hints at another useful feature of `st_distance()`, its ability to return *distance matrices* between all combinations of features in objects `x` and `y`.
 This is illustrated in the command below, which finds the distances between the first three features in `nz_height` and the Otago and Canterbury regions of New Zealand represented by the object `co`.
 
@@ -3383,7 +3383,6 @@ The second and third points in `nz_height` are *in* Otago, which can be verified
 plot(co$geometry[2])
 plot(nz_height$geometry[2:3], add = TRUE)
 ```
-
 
 ## Spatial operations on raster data
 
