@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve1edb9ec61bed9cb7
+preserve21ab41fc19e7f286
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3101,7 +3101,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservebad930d7ebdcb623
+preservedf2630617f091a8a
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4413,7 +4413,7 @@ Export this map to a file called `cycle_hire.html`.
 
 ## Prerequisites {-}
 
-- This chapter requires the packages **tidyverse**, **sf**, **raster**, **spData**, and **spDataLarge**:
+- This chapter requires the packages **tidyverse**, **sf**, **raster**:
 
 
 ```r
@@ -4422,7 +4422,7 @@ library(sf)
 library(raster)
 ```
 
-- It also relies on spData, which loads `cycle_hire_osm` dataset:
+- It also relies on **spData** and **spDataLarge**, which load `cycle_hire_osm` dataset and provide external files:
 
 
 ```r
