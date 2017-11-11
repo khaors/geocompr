@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservecf2b60d5a91e7ccd
+preserve707bd11969d991b8
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2692,7 +2692,7 @@ Spatial operations on *rasters* include merging and subsetting, covered in secti
 
 The chapter also introduces new concepts that are unique to spatial data.
 A variety of *topological relations* can be used to subset/join vector geometries, a topic that is explored in section \@ref(topological-relations).
-New geometry data can be created by modifying existing spatial objects, using operations such as 'buffer' and 'clip', described in sections \@ref(modifying-geometry-data) and \@ref(clipping).
+New geometry data can be created by modifying existing spatial objects, using operations such as 'buffer' and 'clip', described in section \@ref(clipping).
 Spatial operations on raster datasets involve *map algebra* (covered in sections \@ref(map-algebra) to \@ref(global-operations-and-distances)) and combining and aligning them (covered in sections \@ref(merging-rasters) and \@ref(aligning-rasters)).
 
 Another unique aspect of spatial objects is distance.
@@ -3098,7 +3098,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve137ba1ee0353012e
+preserve5543cb998f16ebce
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
