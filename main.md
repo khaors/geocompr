@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2017-11-11'
+date: '2017-11-12'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2017-11-11 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2017-11-12 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve707bd11969d991b8
+preserve236adeb2a3e8e1b8
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3098,7 +3098,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve5543cb998f16ebce
+preserve22c4f641b914de94
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4200,6 +4200,9 @@ multilayer_stack = stack(multilayer_filepath)
 
 Please refer to section \@ref(raster-classes) for information on the difference between raster stacks and bricks.
 
+<!-- ### Databases -->
+<!-- postgis input example -->
+
 ## Data output (O) {#data-output}
 
 <!--maybe we can come up with an intro which is a bit more compelling-->
@@ -4336,6 +4339,9 @@ writeRaster(x = single_layer,
 ```
 
 Note that `writeFormats()` returns a list with all supported file formats on your computer.
+
+<!-- ### Databases -->
+<!-- postgis output example -->
 
 ## Visual outputs
 
