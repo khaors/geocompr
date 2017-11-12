@@ -220,7 +220,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6" data-path="transform.html"><a href="transform.html"><i class="fa fa-check"></i><b>6</b> Reprojections and Transformations</a><ul>
 <li class="chapter" data-level="" data-path="transform.html"><a href="transform.html#prerequisites-4"><i class="fa fa-check"></i>Prerequisites</a></li>
 <li class="chapter" data-level="6.1" data-path="transform.html"><a href="transform.html#introduction-3"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
-<li class="chapter" data-level="6.2" data-path="transform.html"><a href="transform.html#crs-reprojection"><i class="fa fa-check"></i><b>6.2</b> CRS reprojection</a><ul>
+<li class="chapter" data-level="6.2" data-path="transform.html"><a href="transform.html#crs-conversion"><i class="fa fa-check"></i><b>6.2</b> CRS conversion</a><ul>
 <li class="chapter" data-level="6.2.1" data-path="transform.html"><a href="transform.html#vector-data-3"><i class="fa fa-check"></i><b>6.2.1</b> Vector data</a></li>
 <li class="chapter" data-level="6.2.2" data-path="transform.html"><a href="transform.html#raster-data-3"><i class="fa fa-check"></i><b>6.2.2</b> Raster data</a></li>
 </ul></li>
@@ -303,8 +303,8 @@ Figure 6.2: Buffer on data with projected CRS.
 </p>
 </div>
 </div>
-<div id="crs-reprojection" class="section level2">
-<h2><span class="header-section-number">6.2</span> CRS reprojection</h2>
+<div id="crs-conversion" class="section level2">
+<h2><span class="header-section-number">6.2</span> CRS conversion</h2>
 <p>While CRSs can be set manually, it is more common in real world applications to <em>transform</em> a known CRS into another. CRS transformation could be vital to obtain proper results in many cases. A typical example is when geometry data is provided in a geographic CRS but you want to do spatial operations, which require it to be in a projected CRS. It includes distance measurements or area calculations. CRS also represent spatial relationship between datasets. Therefore, spatial operations on many datasets can only be correctly performed when all the data have the same CRS. The most common reason to unify the CRS is to combine different datasets (e.g. merge two rasters) or apply methods which need at least two objects (e.g spatial subsetting or raster map algebra). Let’s use real-world examples to illustrate this.</p>
 <div id="vector-data-3" class="section level3">
 <h3><span class="header-section-number">6.2.1</span> Vector data</h3>
@@ -404,25 +404,31 @@ con_raster_wgs84
 <!-- note1: in most of the cases reproject vector, not raster-->
 <!-- note2: equal area projections are the best for raster calculations -->
 <!-- q: should we mentioned gdal_transform? -->
-<!-- ## Transformation -->
-<!-- ideas and questions -->
+<!-- ## Type transformations -->
 <!-- 1. what's important for vector transformations? -->
-<!-- - simplifications -->
 <!-- - st_cast -->
+<!-- st_point_on_surface -->
+<!-- st_centroid -->
+<!-- st_polygonize -->
 <!-- - do we really need - Affine transformations, Translating, Scaling, Rotating, Reflecting, Shearing - are they useful? -->
 <!-- 2. what's important for raster transformations? -->
-<!-- - should we move some content from ch4 here? such as aggregate() and disaggregate() from 3.3.8  -->
 <!-- 3. what's important for both? -->
 <!-- - raster to vector -->
 <!-- - vector to raster -->
-<!-- 4. should the intro example have buffer in latlon? -->
+<!-- ## The rest -->
+<!-- - simplifications -->
+<!-- st_simplify -->
+<!-- rmapshaper -->
+<!-- - should we move some content from ch4 here? such as aggregate() and disaggregate() from 3.3.8  -->
 </div>
 </div>
 <div id="exercises-4" class="section level2">
 <h2><span class="header-section-number">6.3</span> Exercises</h2>
-<!-- 1. Test how transformation of data into transverse Mercator change data. -->
+<!-- 1. vector reprojection exercise (e.g. modification of proj4) -->
+<!-- 2. Transform the `world` dataset  -->
+<!-- Test how transformation of data into transverse Mercator change data. -->
 <!-- Why is that? -->
-<!-- Now try to inverse it back into WGS 84.  -->
+<!-- Now try to inverse it back into WGS 84. -->
 <!-- What happened? Why? -->
 <!-- https://github.com/r-spatial/sf/issues/509 -->
 <!-- ```{r} -->

@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservee895fcaafac470fd
+preserve691fee44979a52ae
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3101,7 +3101,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve8f9519a5a96a5ff2
+preservef7524a2acd02a74f
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4516,7 +4516,7 @@ plot(london_proj, add = TRUE)
 <p class="caption">(\#fig:crs-buf-proj)Buffer on data with projected CRS.</p>
 </div>
 
-## CRS reprojection
+## CRS conversion
 
 While CRSs can be set manually, it is more common in real world applications to *transform* a known CRS into another.
 CRS transformation could be vital to obtain proper results in many cases.
@@ -4710,24 +4710,31 @@ summary(con_raster_wgs84)
 <!-- note2: equal area projections are the best for raster calculations -->
 <!-- q: should we mentioned gdal_transform? -->
 
-<!-- ## Transformation -->
-<!-- ideas and questions -->
+<!-- ## Type transformations -->
 <!-- 1. what's important for vector transformations? -->
-<!-- - simplifications -->
 <!-- - st_cast -->
+<!-- st_point_on_surface -->
+<!-- st_centroid -->
+<!-- st_polygonize -->
 <!-- - do we really need - Affine transformations, Translating, Scaling, Rotating, Reflecting, Shearing - are they useful? -->
 <!-- 2. what's important for raster transformations? -->
-<!-- - should we move some content from ch4 here? such as aggregate() and disaggregate() from 3.3.8  -->
 <!-- 3. what's important for both? -->
 <!-- - raster to vector -->
 <!-- - vector to raster -->
-<!-- 4. should the intro example have buffer in latlon? -->
+
+<!-- ## The rest -->
+<!-- - simplifications -->
+<!-- st_simplify -->
+<!-- rmapshaper -->
+<!-- - should we move some content from ch4 here? such as aggregate() and disaggregate() from 3.3.8  -->
 
 ## Exercises
 
-<!-- 1. Test how transformation of data into transverse Mercator change data. -->
+<!-- 1. vector reprojection exercise (e.g. modification of proj4) -->
+<!-- 2. Transform the `world` dataset  -->
+<!-- Test how transformation of data into transverse Mercator change data. -->
 <!-- Why is that? -->
-<!-- Now try to inverse it back into WGS 84.  -->
+<!-- Now try to inverse it back into WGS 84. -->
 <!-- What happened? Why? -->
 <!-- https://github.com/r-spatial/sf/issues/509 -->
 <!-- ```{r} -->
