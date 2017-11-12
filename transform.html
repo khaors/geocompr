@@ -220,7 +220,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6" data-path="transform.html"><a href="transform.html"><i class="fa fa-check"></i><b>6</b> Reprojections and Transformations</a><ul>
 <li class="chapter" data-level="" data-path="transform.html"><a href="transform.html#prerequisites-4"><i class="fa fa-check"></i>Prerequisites</a></li>
 <li class="chapter" data-level="6.1" data-path="transform.html"><a href="transform.html#introduction-3"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
-<li class="chapter" data-level="6.2" data-path="transform.html"><a href="transform.html#crs-transformation"><i class="fa fa-check"></i><b>6.2</b> CRS transformation</a><ul>
+<li class="chapter" data-level="6.2" data-path="transform.html"><a href="transform.html#crs-reprojection"><i class="fa fa-check"></i><b>6.2</b> CRS reprojection</a><ul>
 <li class="chapter" data-level="6.2.1" data-path="transform.html"><a href="transform.html#vector-data-3"><i class="fa fa-check"></i><b>6.2.1</b> Vector data</a></li>
 <li class="chapter" data-level="6.2.2" data-path="transform.html"><a href="transform.html#raster-data-3"><i class="fa fa-check"></i><b>6.2.2</b> Raster data</a></li>
 <li class="chapter" data-level="6.2.3" data-path="transform.html"><a href="transform.html#exercises-4"><i class="fa fa-check"></i><b>6.2.3</b> Exercises</a></li>
@@ -303,8 +303,8 @@ Figure 6.2: Buffer on data with projected CRS.
 </p>
 </div>
 </div>
-<div id="crs-transformation" class="section level2">
-<h2><span class="header-section-number">6.2</span> CRS transformation</h2>
+<div id="crs-reprojection" class="section level2">
+<h2><span class="header-section-number">6.2</span> CRS reprojection</h2>
 <p>While CRSs can be set manually, it is more common in real world applications to <em>transform</em> a known CRS into another. CRS transformation could be vital to obtain proper results in many cases. A typical example is when geometry data is provided in a geographic CRS but you want to do spatial operations, which require it to be in a projected CRS. It includes distance measurements or area calculations. CRS also represent spatial relationship between datasets. Therefore, spatial operations on many datasets can only be correctly performed when all the data have the same CRS. The most common reason to unify the CRS is to combine different datasets (e.g. merge two rasters) or apply methods which need at least two objects (e.g spatial subsetting or raster map algebra). Let’s use real-world examples to illustrate this.</p>
 <div id="vector-data-3" class="section level3">
 <h3><span class="header-section-number">6.2.1</span> Vector data</h3>
@@ -315,8 +315,8 @@ Figure 6.2: Buffer on data with projected CRS.
 <span class="co">#&gt;   EPSG: 4326 </span>
 <span class="co">#&gt;   proj4string: &quot;+proj=longlat +datum=WGS84 +no_defs&quot;</span></code></pre></div>
 <p>CRS in R can be described as an <code>epsg</code> code or a <code>proj4string</code> definition, as described in section <a href="spatial-class.html#crs-in-r">2.3.3</a>. Let’s create a new version of <code>cycle_hire_osm</code> in a projected CRS, using the <code>epsg</code> number of 27700:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cycle_hire_projected =<span class="st"> </span><span class="kw">st_transform</span>(cycle_hire_osm, <span class="dv">27700</span>)
-<span class="kw">st_crs</span>(cycle_hire_projected)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cycle_hire_osm_projected =<span class="st"> </span><span class="kw">st_transform</span>(cycle_hire_osm, <span class="dv">27700</span>)
+<span class="kw">st_crs</span>(cycle_hire_osm_projected)
 <span class="co">#&gt; Coordinate Reference System:</span>
 <span class="co">#&gt;   EPSG: 27700 </span>
 <span class="co">#&gt;   proj4string: &quot;+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs&quot;</span></code></pre></div>
@@ -325,7 +325,7 @@ Figure 6.2: Buffer on data with projected CRS.
 dplyr::<span class="kw">filter</span>(crs_codes, code ==<span class="st"> </span><span class="dv">27700</span>)
 <span class="co">#&gt;    code                                note</span>
 <span class="co">#&gt; 1 27700 # OSGB 1936 / British National Grid</span></code></pre></div>
-<p>The result shows that the EPSG code 27700 represents the British National Grid, a result that could have been found by searching online for “<a href="https://www.google.com/search?q=CRS+27700">CRS 27700</a>”. <!-- This projection is clearly inappropriate for the data: the coordinates represent degrees of longitude and latitude, and this can also be seen by plotting it over a basemap, e.g. with the **mapview** package: `mapview::mapview(cycle_hire)`. --> The formula that converts a geographic point into a point on the surface of the Earth is provided by the <code>proj4string</code> element of the <code>crs</code> (see <a href="http://proj4.org/">proj4.org</a> for further details):</p>
+<p>The result shows that the EPSG code 27700 represents the British National Grid, a result that could have been found by searching online for “<a href="https://www.google.com/search?q=CRS+27700">CRS 27700</a>”. The formula that converts a geographic point into a point on the surface of the Earth is provided by the <code>proj4string</code> element of the <code>crs</code> (see <a href="http://proj4.org/">proj4.org</a> for further details):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">st_crs</span>(<span class="dv">27700</span>)$proj4string
 <span class="co">#&gt; [1] &quot;+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs&quot;</span></code></pre></div>
 
@@ -333,18 +333,13 @@ dplyr::<span class="kw">filter</span>(crs_codes, code ==<span class="st"> </span
 The EPSG code can be found inside the <code>crs</code> attribute of the object’s geometry. It is hidden from view for most of the time except when the object is printed but can be can identified and set using the <code>st_crs</code> function, for example <code>st_crs(cycle_hire_osm)$epsg</code>.
 </div>
 <p></p>
-<!-- example of using epsg (without "magic number") -->
-<!-- example of using proj4 (expain it and maybe modify) -->
+<!-- example of using proj4 (expain it and maybe modify); ref to ch2-->
 <!-- show the results (e.g. two/three panels) -->
 <!-- show calculations? e.g area/distance? -->
-<!-- comparing projections? == -->
-<!-- - st_as_sf(x, coords = c("x","y")) -->
-<!-- - st_bbox -->
-<!-- - st_wrap_dateline -->
 </div>
 <div id="raster-data-3" class="section level3">
 <h3><span class="header-section-number">6.2.2</span> Raster data</h3>
-<p>The basic concepts of CRS apply to both vector and raster data model. However, there are important differences in reprojection of vectors and rasters. Transformation of CRS in vector data changes coordinates of each vertex. This do not apply to raster data. Rasters are are composed of rectangular cells of the same size (expressed by map units, such as degrees or meters). To preserve this property, it is impossible to transform coordinates of cells separately. This entails that a new raster could have a different number of columns and rows, and therefore different number of cells that the original one. <!-- rasters: transformation means change of the coordinates of (special case of resampling) --> <!-- changes in dimensions, resolution, extent --> <!-- change shape and attributes) --> Therefore, values of these new cells need to be estimated after a geometric operation is completed. The <code>projectRaster()</code> function’s role is to reproject <code>Raster*</code> objects into a new object with another coordinate reference system. Compared to <code>st_tranform()</code>, <code>projectRaster()</code> only accepts the <code>proj4string</code> definitions.</p>
+<p>The basic concepts of CRS apply to both vector and raster data model. However, there are important differences in reprojection of vectors and rasters. Transformation of CRS in vector data changes coordinates of each vertex. This do not apply to raster data. Rasters are are composed of rectangular cells of the same size (expressed by map units, such as degrees or meters). To preserve this property, it is impossible to transform coordinates of cells separately. This entails that a new raster could have a different number of columns and rows, and therefore different number of cells that the original one. Therefore, values of these new cells need to be estimated after a geometric operation is completed. The <code>projectRaster()</code> function’s role is to reproject <code>Raster*</code> objects into a new object with another coordinate reference system. Compared to <code>st_tranform()</code>, <code>projectRaster()</code> only accepts the <code>proj4string</code> definitions.</p>
 
 <div class="rmdnote">
 It is possible to use a EPSG code in a <code>proj4string</code> definition with <code>&quot;+init=epsg:MY_NUMBER&quot;</code>. For example, one can use the <code>&quot;+init=epsg:4326&quot;</code> definition to set CRS to WGS84 (EPSG code of 4326). The PROJ.4 library automaticaly adds the rest of parameters and converts it into <code>&quot;+init=epsg:4326 +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0&quot;</code>,
