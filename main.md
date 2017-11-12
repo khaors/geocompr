@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve397dfc92e7b335cb
+preservee895fcaafac470fd
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3101,7 +3101,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservef2c3aca79413fe99
+preserve8f9519a5a96a5ff2
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4705,14 +4705,12 @@ summary(con_raster_wgs84)
 
 <!-- why new na? -->
 
-<!-- - an issue of resampling (comparision of old and new values) -->
 <!-- res option in projectRaster? -->
 <!-- note1: in most of the cases reproject vector, not raster-->
 <!-- note2: equal area projections are the best for raster calculations -->
 <!-- q: should we mentioned gdal_transform? -->
 
-
-
+<!-- ## Transformation -->
 <!-- ideas and questions -->
 <!-- 1. what's important for vector transformations? -->
 <!-- - simplifications -->
@@ -4725,7 +4723,7 @@ summary(con_raster_wgs84)
 <!-- - vector to raster -->
 <!-- 4. should the intro example have buffer in latlon? -->
 
-### Exercises
+## Exercises
 
 <!-- 1. Test how transformation of data into transverse Mercator change data. -->
 <!-- Why is that? -->

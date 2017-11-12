@@ -223,8 +223,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.2" data-path="transform.html"><a href="transform.html#crs-reprojection"><i class="fa fa-check"></i><b>6.2</b> CRS reprojection</a><ul>
 <li class="chapter" data-level="6.2.1" data-path="transform.html"><a href="transform.html#vector-data-3"><i class="fa fa-check"></i><b>6.2.1</b> Vector data</a></li>
 <li class="chapter" data-level="6.2.2" data-path="transform.html"><a href="transform.html#raster-data-3"><i class="fa fa-check"></i><b>6.2.2</b> Raster data</a></li>
-<li class="chapter" data-level="6.2.3" data-path="transform.html"><a href="transform.html#exercises-4"><i class="fa fa-check"></i><b>6.2.3</b> Exercises</a></li>
 </ul></li>
+<li class="chapter" data-level="6.3" data-path="transform.html"><a href="transform.html#exercises-4"><i class="fa fa-check"></i><b>6.3</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>7</b> References</a></li>
 <li class="divider"></li>
@@ -400,11 +400,11 @@ con_raster_wgs84
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(con_raster)
 <span class="kw">summary</span>(con_raster_wgs84)</code></pre></div>
 <!-- why new na? -->
-<!-- - an issue of resampling (comparision of old and new values) -->
 <!-- res option in projectRaster? -->
 <!-- note1: in most of the cases reproject vector, not raster-->
 <!-- note2: equal area projections are the best for raster calculations -->
 <!-- q: should we mentioned gdal_transform? -->
+<!-- ## Transformation -->
 <!-- ideas and questions -->
 <!-- 1. what's important for vector transformations? -->
 <!-- - simplifications -->
@@ -417,8 +417,9 @@ con_raster_wgs84
 <!-- - vector to raster -->
 <!-- 4. should the intro example have buffer in latlon? -->
 </div>
-<div id="exercises-4" class="section level3">
-<h3><span class="header-section-number">6.2.3</span> Exercises</h3>
+</div>
+<div id="exercises-4" class="section level2">
+<h2><span class="header-section-number">6.3</span> Exercises</h2>
 <!-- 1. Test how transformation of data into transverse Mercator change data. -->
 <!-- Why is that? -->
 <!-- Now try to inverse it back into WGS 84.  -->
@@ -443,7 +444,6 @@ con_raster_wgs84
 <!-- con_raster_wgs84 -->
 <!-- ``` -->
 
-</div>
 </div>
 </div>
 <div class="footnotes">
