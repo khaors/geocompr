@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve691fee44979a52ae
+preserve25589db4e92439dd
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -1837,7 +1837,7 @@ What kind of information can you get about the properties of this file?
 Assign random values between 0 and 10 to the new raster and plot it.
 <!-- crs exercises -->
 <!-- 1. pros and cons of the projection types -->
-<!-- 1. what's the difference between vector and raster transformation -->
+<!-- 1. pros and cons of epsg/proj4 -->
 <!-- units exercises -->
 <!-- 1. ?? -->
 
@@ -2622,9 +2622,9 @@ What is the class of the new object? <!--why there is a "sf" part? -->
 Obtain the same result using a different command (bonus: try to find three ways of obtaining the same result).
 Hint: try to use helper functions, such as `contains` or `starts_with` from **dplyr** (see `?contains`).
 3. Find all states with the following characteristics (bonus find *and* plot them):
-    - belong to the Midwest region.
-    - belong to the West region, have an area below 250,000 km^2^ *and* in 2015 a population greater than 5,000,000 residents (hint: you may need to use the function `units::set_units()` or `as.numeric()`).
-    - belong to the South region, had an area larger than 150,000 km^2^ or a total population in 2015 larger than 7,000,000 residents.
+    - Belong to the Midwest region.
+    - Belong to the West region, have an area below 250,000 km^2^ *and* in 2015 a population greater than 5,000,000 residents (hint: you may need to use the function `units::set_units()` or `as.numeric()`).
+    - Belong to the South region, had an area larger than 150,000 km^2^ or a total population in 2015 larger than 7,000,000 residents.
 <!-- Attribute aggregation -->
 4. What was the total population in 2015 in the `us_states` dataset?
 What was the minimum and maximum total population in 2015?
@@ -3101,7 +3101,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservef7524a2acd02a74f
+preserve82aec9cfcd7bc2e8
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4731,11 +4731,10 @@ summary(con_raster_wgs84)
 ## Exercises
 
 <!-- 1. vector reprojection exercise (e.g. modification of proj4) -->
-<!-- 2. Transform the `world` dataset  -->
-<!-- Test how transformation of data into transverse Mercator change data. -->
-<!-- Why is that? -->
-<!-- Now try to inverse it back into WGS 84. -->
-<!-- What happened? Why? -->
+1. Transform the `world` dataset to the transverse Mercator projection (`"+proj=tmerc"`) and plot the result.
+What has changed and why?
+Try to transform it back into WGS 84 and plot the new object.
+Why the new object differs from the original one?
 <!-- https://github.com/r-spatial/sf/issues/509 -->
 <!-- ```{r} -->
 <!-- world_tmerc = st_transform(world, "+proj=tmerc") -->
@@ -4743,13 +4742,17 @@ summary(con_raster_wgs84)
 <!--  world_4326 = st_transform(world_tmerc, 4326) -->
 <!-- plot(world_4326$geom) -->
 <!-- ``` -->
-<!-- 2. Try to reproject categorical data using a bilinear interpolation method. What's wrong? -->
+1. Try to transform the categorical raster (`cat_raster`) into WGS 84 using the bilinear interpolation method. 
+What has changed?
+How it influences the results?
 <!-- ```{r} -->
 <!-- wgs84 = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs" -->
 <!-- cat_raster_wgs84 = projectRaster(cat_raster, crs = wgs84, method = "bilinear") -->
 <!-- cat_raster_wgs84 -->
 <!-- ``` -->
-<!-- Try to reproject continuous data using a ngb interpolation method. What's wrong? -->
+1. Try to transform the continuous raster (`cat_raster`) into WGS 84 using the nearest neighbor interpolation method. 
+What has changed?
+How it influences the results?
 <!-- ```{r} -->
 <!-- con_raster = raster(system.file("raster/srtm.tif", package="spDataLarge")) -->
 <!-- con_raster_wgs84 = projectRaster(con_raster, crs = wgs84, method = "ngb") -->
