@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve8a951af0017c0a74
+preserveed02e2308059dcfc
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3100,7 +3100,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve978845e7ad4b4cbc
+preservebaa924f4181afc46
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3168,7 +3168,28 @@ In the subsequent sections, we will present spatial operations that also act on 
 ### Dissolving and aggregating polygons
 
 Like attribute data aggregation, covered in section \@ref(vector-attribute-aggregation), spatial data aggregation (also known as dissolving polygons) can be a way of *condensing* data.
-Aggregated data show some statistic about a variable (typically average or total) in relation to some kind of *grouping variable*. 
+Aggregated data show some statistic about a variable (typically average or total) in relation to some kind of *grouping variable*.
+Section \@ref(vector-attribute-aggregation) demonstrated how `aggregate()` and `group_by() %>% summarize()` condense data based on attribute variables.
+This section demonstrates how the same functions work using spatial grouping variables.
+
+Returning to the example of New Zealand, imagine you want to find out the average height of high points in each region.
+This is a good example of spatial aggregation: it is the geometry of the source (`y` or `nz` in this case) that defines how values in the target object (`x` or `nz_height`) are grouped.
+This is illustrated using the base `aggregate()` function below:
+
+
+```r
+nz_avheight = aggregate(nz_height, nz, FUN = mean)
+```
+
+The result of the previous command is an `sf` object with the same geometry as the (spatial) aggregating object (`nz`).^[This can be verified with `identical(nz$geometry, nz_avheight$geometry)`.]
+The input data and the result of the previous operation are illustrated in Figure \@ref(fig:spatial-aggregation).
+
+<div class="figure" style="text-align: center">
+<img src="figures/spatial-aggregation-1.png" alt="Illustration of spatial aggregation. The right map represents the average value of points in the left map, aggregated to the regional level in New Zealand." width="576" />
+<p class="caption">(\#fig:spatial-aggregation)Illustration of spatial aggregation. The right map represents the average value of points in the left map, aggregated to the regional level in New Zealand.</p>
+</div>
+
+
 For attribute data aggregation the grouping variable is another variable, typically one with few unique values relative to the number of rows.
 The `REGION` variable in the `us_states` dataset is a good example:
 there are only four subregions but 49 states (excluding Hawaii and Alaska).
@@ -3190,11 +3211,12 @@ regions = aggregate(x = us_states[, "total_pop_15"], by = list(us_states$REGION)
 <p class="caption">(\#fig:us-regions)Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions, with population represented by color. Note the operation automatically dissolves boundaries between states.</p>
 </div>
 
-Spatial aggregation can also be done in the **tidyverse**, using **dplyr** functions as follows:
+Spatial aggregation can also be done in the **tidyverse**, using **dplyr** functions as follows (result not shown):
 
 
 ```r
-group_by(us_states, REGION) %>%
+us_states %>% 
+  group_by(REGION) %>%
   summarize(sum(pop = total_pop_15, na.rm = TRUE))
 ```
 
@@ -3207,6 +3229,8 @@ group_by(us_states, REGION) %>%
 <!--
 show also tidyverse way, so what you are doing is basically a spatial join and a subsequent aggregation without a grouping variable. Didactically, it might be better to present a grouping variable.
 -->
+
+The above 
 
 
 
@@ -3303,7 +3327,7 @@ plot(b)
 plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
 ```
 
-<img src="figures/unnamed-chunk-40-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-41-1.png" width="576" style="display: block; margin: auto;" />
 
 The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
 <!-- Todo: reference r4ds -->
