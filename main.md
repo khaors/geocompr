@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveed02e2308059dcfc
+preserve7b8cd55bc5a3369d
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3100,7 +3100,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservebaa924f4181afc46
+preserve4b014421fa175d75
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3189,15 +3189,11 @@ The input data and the result of the previous operation are illustrated in Figur
 <p class="caption">(\#fig:spatial-aggregation)Illustration of spatial aggregation. The right map represents the average value of points in the left map, aggregated to the regional level in New Zealand.</p>
 </div>
 
-
-For attribute data aggregation the grouping variable is another variable, typically one with few unique values relative to the number of rows.
+For attribute data aggregation the grouping variable is another variable, typically one with few unique values relative to the number of rows (see section \@ref(vector-attribute-aggregation)).
+What we did not cover in that section was that attribute data aggregation dissolves the geometries of touching poligons.
 The `REGION` variable in the `us_states` dataset is a good example:
-there are only four subregions but 49 states (excluding Hawaii and Alaska).
-In section \@ref(vector-attribute-aggregation) we have already seen how attribute aggregation process condensed the `world` dataset down into only eight rows.
-Spatial data aggregation is the same conceptually but in addition to aggregating the attribute data, it dissolves the underlying polygons.
-Here, we want to aggregate the state population into regions.
-This means that we not only end up with four rows but also with four polygons (out of 49 in the beginning).
-As with spatial subsetting, spatial aggregation operations work by extending existing functions, as illustrated in the code chunk below which aggregates US states to create the bottom map in Figure \@ref(fig:us-regions).
+there are 49 states (excluding Hawaii and Alaska) which can be aggregated into four regions.
+This is demonstrated in the code chunk below, the results of which are illustrated in Figure \@ref(fig:us-regions):
 
 
 ```r
