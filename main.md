@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservec4a34616b6b72de3
+preserveebd7d80147317dd5
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3100,7 +3100,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve542b94b94ee41234
+preserveeb377b18c8ec51b1
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3165,7 +3165,7 @@ plot(z["capacity"])
 The result of this join has used a spatial operation to change the attribute data associated with simple features but the geometry associated with each feature has remained unchanged.
 In the subsequent sections, we will present spatial operations that also act on and modify the underlying geometry, namely dissolving, aggregating and clipping operations.
 
-### Dissolving and aggregating polygons
+### Spatial data aggregation
 
 Like attribute data aggregation, covered in section \@ref(vector-attribute-aggregation), spatial data aggregation (also known as dissolving polygons) can be a way of *condensing* data.
 Aggregated data show some statistic about a variable (typically average or total) in relation to some kind of *grouping variable*.
