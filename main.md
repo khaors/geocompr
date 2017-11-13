@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve7b8cd55bc5a3369d
+preservea60f73d7c2e48cb2
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3100,7 +3100,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve4b014421fa175d75
+preserve7aebd5d4c4717fb7
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3182,7 +3182,16 @@ nz_avheight = aggregate(nz_height, nz, FUN = mean)
 ```
 
 The result of the previous command is an `sf` object with the same geometry as the (spatial) aggregating object (`nz`).^[This can be verified with `identical(nz$geometry, nz_avheight$geometry)`.]
-The input data and the result of the previous operation are illustrated in Figure \@ref(fig:spatial-aggregation).
+The result of the previous operation is illustrated in Figure \@ref(fig:spatial-aggregation).
+The same result can also be generated using the 'tidy' functions `group_by()` and `summarize()` (used in combination with `st_join()`):
+
+
+```r
+nz_avheight2 = st_join(nz, nz_height) %>%
+  group_by(REGC2017_NAME) %>%
+  summarize(elevation = mean(elevation, na.rm = TRUE))
+```
+
 
 <div class="figure" style="text-align: center">
 <img src="figures/spatial-aggregation-1.png" alt="Illustration of spatial aggregation. The right map represents the average value of points in the left map, aggregated to the regional level in New Zealand." width="576" />
@@ -3323,7 +3332,7 @@ plot(b)
 plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
 ```
 
-<img src="figures/unnamed-chunk-41-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-42-1.png" width="576" style="display: block; margin: auto;" />
 
 The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
 <!-- Todo: reference r4ds -->
