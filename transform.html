@@ -186,8 +186,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.2.3" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#spatial-joining"><i class="fa fa-check"></i><b>4.2.3</b> Spatial joining</a></li>
 <li class="chapter" data-level="4.2.4" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#non-overlapping-joins"><i class="fa fa-check"></i><b>4.2.4</b> Non-overlapping joins</a></li>
 <li class="chapter" data-level="4.2.5" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#spatial-data-aggregation"><i class="fa fa-check"></i><b>4.2.5</b> Spatial data aggregation</a></li>
-<li class="chapter" data-level="4.2.6" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#clipping"><i class="fa fa-check"></i><b>4.2.6</b> Clipping</a></li>
-<li class="chapter" data-level="4.2.7" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#distance-relations"><i class="fa fa-check"></i><b>4.2.7</b> Distance relations</a></li>
+<li class="chapter" data-level="4.2.6" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#distance-relations"><i class="fa fa-check"></i><b>4.2.6</b> Distance relations</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#spatial-operations-on-raster-data"><i class="fa fa-check"></i><b>4.3</b> Spatial operations on raster data</a><ul>
 <li class="chapter" data-level="4.3.1" data-path="attr.html"><a href="attr.html#raster-subsetting"><i class="fa fa-check"></i><b>4.3.1</b> Spatial subsetting</a></li>
@@ -224,7 +223,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.2.1" data-path="transform.html"><a href="transform.html#vector-data-3"><i class="fa fa-check"></i><b>6.2.1</b> Vector data</a></li>
 <li class="chapter" data-level="6.2.2" data-path="transform.html"><a href="transform.html#raster-data-3"><i class="fa fa-check"></i><b>6.2.2</b> Raster data</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="transform.html"><a href="transform.html#exercises-4"><i class="fa fa-check"></i><b>6.3</b> Exercises</a></li>
+<li class="chapter" data-level="6.3" data-path="transform.html"><a href="transform.html#geometry-transformations"><i class="fa fa-check"></i><b>6.3</b> Geometry transformations</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="transform.html"><a href="transform.html#clipping"><i class="fa fa-check"></i><b>6.3.1</b> Clipping</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="transform.html"><a href="transform.html#exercises-4"><i class="fa fa-check"></i><b>6.4</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>7</b> References</a></li>
 <li class="divider"></li>
@@ -424,8 +426,59 @@ con_raster_utm
 <!-- - should we move some content from ch4 here? such as aggregate() and disaggregate() from 3.3.8  -->
 </div>
 </div>
+<div id="geometry-transformations" class="section level2">
+<h2><span class="header-section-number">6.3</span> Geometry transformations</h2>
+<div id="clipping" class="section level3">
+<h3><span class="header-section-number">6.3.1</span> Clipping</h3>
+<p>Spatial clipping is a form of spatial subsetting that involves changes to the <code>geometry</code> columns of at least some of the affected features.</p>
+<p>Clipping can only apply to features more complex than points: lines, polygons and their ‘multi’ equivalents. To illustrate the concept we will start with a simple example: two overlapping circles with a center point one unit away from each other and radius of one:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">b =<span class="st"> </span><span class="kw">st_sfc</span>(<span class="kw">st_point</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)), <span class="kw">st_point</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))) <span class="co"># create 2 points</span>
+b =<span class="st"> </span><span class="kw">st_buffer</span>(b, <span class="dt">dist =</span> <span class="dv">1</span>) <span class="co"># convert points to circles</span>
+l =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>)
+<span class="kw">plot</span>(b)
+<span class="kw">text</span>(<span class="dt">x =</span> <span class="kw">c</span>(-<span class="fl">0.5</span>, <span class="fl">1.5</span>), <span class="dt">y =</span> <span class="dv">1</span>, <span class="dt">labels =</span> l) <span class="co"># add text</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:points"></span>
+<img src="figures/points-1.png" alt="Overlapping circles." width="576" />
+<p class="caption">
+Figure 6.3: Overlapping circles.
+</p>
+</div>
+<p>Imagine you want to select not one circle or the other, but the space covered by both <code>x</code> <em>and</em> <code>y</code>. This can be done using the function <code>st_intersection()</code>, illustrated using objects named <code>x</code> and <code>y</code> which represent the left and right-hand circles:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span>b[<span class="dv">1</span>]
+y =<span class="st"> </span>b[<span class="dv">2</span>]
+x_and_y =<span class="st"> </span><span class="kw">st_intersection</span>(x, y)
+<span class="kw">plot</span>(b)
+<span class="kw">plot</span>(x_and_y, <span class="dt">col =</span> <span class="st">&quot;lightgrey&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>) <span class="co"># color intersecting area</span></code></pre></div>
+<p><img src="figures/unnamed-chunk-21-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>The subsequent code chunk demonstrate how this works for all combinations of the ‘Venn’ diagram representing <code>x</code> and <code>y</code>, inspired by <a href="http://r4ds.had.co.nz/transform.html#logical-operators">Figure 5.1</a> of the book R for Data Science <span class="citation">(Grolemund and Wickham <a href="#ref-grolemund_r_2016">2016</a>)</span>. <!-- Todo: reference r4ds --></p>
+<div class="figure" style="text-align: center"><span id="fig:venn-clip"></span>
+<img src="figures/venn-clip-1.png" alt="Spatial equivalents of logical operators." width="576" />
+<p class="caption">
+Figure 6.4: Spatial equivalents of logical operators.
+</p>
+</div>
+<p>To illustrate the relationship between subsetting and clipping spatial data, we will subset points that cover the bounding box of the circles <code>x</code> and <code>y</code> in Figure <a href="transform.html#fig:venn-clip">6.4</a>. Some points will be inside just one circle, some will be inside both and some will be inside neither.</p>
+<p>There are two different ways to subset points that fit into combinations of the circles: via clipping and logical operators. But first we must generate some points. We will use the <em>simple random</em> sampling strategy to sample from a box representing the extent of <code>x</code> and <code>y</code>. To generate this points will use a function not yet covered in this book, <code>st_sample()</code>. Next we will generate the situation plotted in Figure <a href="transform.html#fig:venn-subset">6.5</a>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bb =<span class="st"> </span><span class="kw">st_bbox</span>(<span class="kw">st_union</span>(x, y))
+pmat =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(bb[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">2</span>)]), <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)
+box =<span class="st"> </span><span class="kw">st_polygon</span>(<span class="kw">list</span>(pmat))
+<span class="kw">set.seed</span>(<span class="dv">2017</span>)
+p =<span class="st"> </span><span class="kw">st_sample</span>(<span class="dt">x =</span> box, <span class="dt">size =</span> <span class="dv">10</span>)
+<span class="kw">plot</span>(box)
+<span class="kw">plot</span>(x, <span class="dt">add =</span> <span class="ot">TRUE</span>)
+<span class="kw">plot</span>(y, <span class="dt">add =</span> <span class="ot">TRUE</span>)
+<span class="kw">plot</span>(p, <span class="dt">add =</span> <span class="ot">TRUE</span>)
+<span class="kw">text</span>(<span class="dt">x =</span> <span class="kw">c</span>(-<span class="fl">0.5</span>, <span class="fl">1.5</span>), <span class="dt">y =</span> <span class="dv">1</span>, <span class="dt">labels =</span> l)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:venn-subset"></span>
+<img src="figures/venn-subset-1.png" alt="Randomly distributed points within the bounding box enclosing circles x and y." width="576" />
+<p class="caption">
+Figure 6.5: Randomly distributed points within the bounding box enclosing circles x and y.
+</p>
+</div>
+</div>
+</div>
 <div id="exercises-4" class="section level2">
-<h2><span class="header-section-number">6.3</span> Exercises</h2>
+<h2><span class="header-section-number">6.4</span> Exercises</h2>
 <!-- 1. vector reprojection exercise (e.g. modification of proj4) -->
 <ol style="list-style-type: decimal">
 <li>Transform the <code>world</code> dataset to the transverse Mercator projection (<code>&quot;+proj=tmerc&quot;</code>) and plot the result. What has changed and why? Try to transform it back into WGS 84 and plot the new object. Why the new object differs from the original one? <!-- https://github.com/r-spatial/sf/issues/509 --> <!-- ```{r} --> <!-- world_tmerc = st_transform(world, "+proj=tmerc") --> <!-- plot(world_tmerc$geom) --> <!--  world_4326 = st_transform(world_tmerc, 4326) --> <!-- plot(world_4326$geom) --> <!-- ``` --></li>
@@ -433,6 +486,12 @@ con_raster_utm
 <li>Try to transform the continuous raster (<code>cat_raster</code>) into WGS 84 using the nearest neighbor interpolation method. What has changed? How it influences the results? <!-- ```{r} --> <!-- con_raster = raster(system.file("raster/srtm.tif", package="spDataLarge")) --> <!-- con_raster_wgs84 = projectRaster(con_raster, crs = wgs84, method = "ngb") --> <!-- con_raster_wgs84 --> <!-- ``` --></li>
 </ol>
 
+</div>
+</div>
+<h3> References</h3>
+<div id="refs" class="references">
+<div id="ref-grolemund_r_2016">
+<p>Grolemund, Garrett, and Hadley Wickham. 2016. <em>R for Data Science</em>. 1 edition. O’Reilly Media.</p>
 </div>
 </div>
 <div class="footnotes">
