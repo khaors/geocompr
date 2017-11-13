@@ -552,25 +552,10 @@ Figure 4.5: Illustration of spatial aggregation. The right map represents the av
 Figure 4.6: Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions, with population represented by color. Note the operation automatically dissolves boundaries between states.
 </p>
 </div>
-<p>Spatial aggregation can also be done in the <strong>tidyverse</strong>, using <strong>dplyr</strong> functions as follows (result not shown):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">us_states %&gt;%<span class="st"> </span>
+<p>The equivalent result can be achieved using <strong>tidyverse</strong> functions as follows (result not shown):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">regions2 =<span class="st"> </span>us_states %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">group_by</span>(REGION) %&gt;%
 <span class="st">  </span><span class="kw">summarize</span>(<span class="kw">sum</span>(<span class="dt">pop =</span> total_pop_15, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</code></pre></div>
-<!--Not sure how to elegantly include your circle buffer intersection example -->
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># buff_agg = aggregate(x = africa[, &quot;pop&quot;], by = buff, FUN = sum)</span></code></pre></div>
-<!--
-show also tidyverse way, so what you are doing is basically a spatial join and a subsequent aggregation without a grouping variable. Didactically, it might be better to present a grouping variable.
--->
-<p>The above</p>
-<p>The result, <code>buff_agg</code>, is a spatial object with the same geometry as <code>by</code> (the circular buffer in this case) but with an additional variable, <code>pop</code> reporting summary statistics for all features in <code>x</code> that intersect with <code>by</code> (the total population of the countries that touch the buffer in this case). Plotting the result (with <code>plot(buff_agg)</code>) shows that the operation does not really make sense: Figure <a href="#fig:buff-agg"><strong>??</strong></a> shows a population of over half a billion people mostly located in a giant circle floating off the west coast of Africa!</p>
-<p>The results of the spatial aggregation exercise presented in Figure <a href="#fig:buff-agg"><strong>??</strong></a> are unrealistic for three reasons:</p>
-<ul>
-<li>People do not live in the sea (the geometry of the aggregating object is not appropriate for the geometry target object).</li>
-<li>This method would ‘double count’ countries whose borders cross aggregating polygons when multiple, spatially contiguous, features are used as the aggregating object.</li>
-<li>It is wrong to assume that all the people living in countries that <em>touch</em> the buffer reside <em>within</em> it (the default spatial operator <code>st_intersects()</code> is too ‘greedy’). The most extreme example of this is Algeria, the most northerly country selected: the spatial aggregation operation assumes that all 39 million Algerian citizens reside in the tiny southerly tip that is within the circular buffer.</li>
-</ul>
-<p>A number of methods can be used to overcome these issues, and generate a more realistic population attributed to the circular buffer illustrated in Figure <a href="#fig:buff-agg"><strong>??</strong></a>. The simplest of these is to convert the country polygons into points representing their <em>geographic centroids</em> before aggregation, covered in section <a href="#modifying-geometry-data"><strong>??</strong></a>. <!-- Todo: reference section where we demonstrate geographic centroid generation --> This would ensure that any spatially contiguous aggregating object covering the target object (the Earth in this case) would result in the same total: there would be no double counting. The estimated total population residing within the study area would be more realistic if geographic centroids were used. (The centroid of Algeria, for example, is far outside the aggregating buffer.)</p>
-<p>Except in cases where the number of target features per aggregating feature is very large, or where the aggregating object is <em>spatially congruent</em> with the target (covered in section <a href="spatial-data-operations.html#spatial-congruence-and-areal-interpolation">4.2.5.1</a>), using centroids can also lead to errors due to boundary effects: imagine a buffer that covers a large area but contains no centroids. These issues can be tackled when aggregating areal target data with areal interpolation.</p>
 <div id="spatial-congruence-and-areal-interpolation" class="section level4">
 <h4><span class="header-section-number">4.2.5.1</span> Spatial congruence and areal interpolation</h4>
 <p>Spatial congruence is an important concept related to spatial aggregation. An <em>aggregating object</em> object (which we will refer to as <code>y</code>, representing the buffer object in the previous section) is <em>congruent</em> with the target object (<code>x</code>, representing the countries in the previous section) if the two objects have shared borders. Often this is the case for administrative boundary data, whereby the larger units (e.g., Middle Layer Super Output Areas in the UK or districts in many other European countries) are composed of many smaller units (Output Areas in this case, see <a href="https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeography">ons.gov.uk</a> for further details or municipalities in many other European countries).</p>
@@ -607,7 +592,7 @@ y =<span class="st"> </span>b[<span class="dv">2</span>]
 x_and_y =<span class="st"> </span><span class="kw">st_intersection</span>(x, y)
 <span class="kw">plot</span>(b)
 <span class="kw">plot</span>(x_and_y, <span class="dt">col =</span> <span class="st">&quot;lightgrey&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>) <span class="co"># color intersecting area</span></code></pre></div>
-<p><img src="figures/unnamed-chunk-42-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-40-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>The subsequent code chunk demonstrate how this works for all combinations of the ‘Venn’ diagram representing <code>x</code> and <code>y</code>, inspired by <a href="http://r4ds.had.co.nz/transform.html#logical-operators">Figure 5.1</a> of the book R for Data Science <span class="citation">(Grolemund and Wickham <a href="#ref-grolemund_r_2016">2016</a>)</span>. <!-- Todo: reference r4ds --></p>
 <div class="figure" style="text-align: center"><span id="fig:venn-clip"></span>
 <img src="figures/venn-clip-1.png" alt="Spatial equivalents of logical operators." width="576" />

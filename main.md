@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservea60f73d7c2e48cb2
+preserveb6bf11220c6bf15b
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3100,7 +3100,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve7aebd5d4c4717fb7
+preserve5d972e4abfe09b09
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3216,52 +3216,14 @@ regions = aggregate(x = us_states[, "total_pop_15"], by = list(us_states$REGION)
 <p class="caption">(\#fig:us-regions)Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions, with population represented by color. Note the operation automatically dissolves boundaries between states.</p>
 </div>
 
-Spatial aggregation can also be done in the **tidyverse**, using **dplyr** functions as follows (result not shown):
+The equivalent result can be achieved using **tidyverse** functions as follows (result not shown):
 
 
 ```r
-us_states %>% 
+regions2 = us_states %>% 
   group_by(REGION) %>%
   summarize(sum(pop = total_pop_15, na.rm = TRUE))
 ```
-
-<!--Not sure how to elegantly include your circle buffer intersection example -->
-
-
-```r
-# buff_agg = aggregate(x = africa[, "pop"], by = buff, FUN = sum)
-```
-<!--
-show also tidyverse way, so what you are doing is basically a spatial join and a subsequent aggregation without a grouping variable. Didactically, it might be better to present a grouping variable.
--->
-
-The above 
-
-
-
-The result, `buff_agg`, is a spatial object with the same geometry as `by` (the circular buffer in this case) but with an additional variable, `pop` reporting summary statistics for all features in `x` that intersect with `by` (the total population of the countries that touch the buffer in this case).
-Plotting the result (with `plot(buff_agg)`) shows that the operation does not really make sense:
-Figure \@ref(fig:buff-agg) shows a population of over half a billion people mostly located in a giant circle floating off the west coast of Africa!  
-
-
-
-The results of the spatial aggregation exercise presented in Figure \@ref(fig:buff-agg) are unrealistic for three reasons:
-
-- People do not live in the sea (the geometry of the aggregating object is not appropriate for the geometry target object).
-- This method would 'double count' countries whose borders cross aggregating polygons when multiple, spatially contiguous, features are used as the aggregating object.
-- It is wrong to assume that all the people living in countries that *touch* the buffer reside *within* it (the default spatial operator `st_intersects()` is too 'greedy'). The most extreme example of this is Algeria, the most northerly country selected:
-the spatial aggregation operation assumes that all 39 million Algerian citizens reside in the tiny southerly tip that is within the circular buffer.
-
-A number of methods can be used to overcome these issues, and generate a more realistic population attributed to the circular buffer illustrated in Figure \@ref(fig:buff-agg).
-The simplest of these is to convert the country polygons into points representing their *geographic centroids* before aggregation, covered in section \@ref(modifying-geometry-data).
-<!-- Todo: reference section where we demonstrate geographic centroid generation -->
-This would ensure that any spatially contiguous aggregating object covering the target object (the Earth in this case) would result in the same total: there would be no double counting.
-The estimated total population residing within the study area would be more realistic if geographic centroids were used.
-(The centroid of Algeria, for example, is far outside the aggregating buffer.)
-
-Except in cases where the number of target features per aggregating feature is very large, or where the aggregating object is *spatially congruent* with the target (covered in section \@ref(spatial-congruence-and-areal-interpolation)), using centroids can also lead to errors due to boundary effects:
-imagine a buffer that covers a large area but contains no centroids.
-These issues can be tackled when aggregating areal target data with areal interpolation.
 
 #### Spatial congruence and areal interpolation
 
@@ -3332,7 +3294,7 @@ plot(b)
 plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
 ```
 
-<img src="figures/unnamed-chunk-42-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-40-1.png" width="576" style="display: block; margin: auto;" />
 
 The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
 <!-- Todo: reference r4ds -->
