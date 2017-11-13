@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveb6bf11220c6bf15b
+preservec4a34616b6b72de3
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2688,7 +2688,7 @@ library(spData)
 Spatial operations are a vital part of geocomputation.
 This chapter shows how spatial objects can be modified in a multitude of ways based on their location and shape.
 The content clearly builds on the previous chapter because many spatial operations have a non-spatial (attribute) equivalent.
-Spatial operations on *vector* objects include spatial subsetting (covered in section \@ref(spatial-subsetting)), joining and aggregation (section \@ref(spatial-joining-and-aggregation)).
+Spatial operations on *vector* objects include spatial subsetting (covered in section \@ref(spatial-subsetting)), joining and aggregation (section \@ref(spatial-joining)).
 These topics may sound daunting, but they have already been covered, in section \@ref(vector-attribute-manipulation).
 Spatial operations on *rasters* include merging and subsetting, covered in section \@ref(spatial-operations-on-raster-data).
 
@@ -3037,7 +3037,7 @@ lengths(sel) > 0
 <!-- plot(blobs) -->
 
 
-### Spatial joining and aggregation 
+### Spatial joining 
 
 Joining two non-spatial datasets relies on a shared 'key' variable, as described in section \@ref(vector-attribute-joining).
 Spatial data joining applies the same concept, but instead relies on shared areas of geographic space.
@@ -3100,7 +3100,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve5d972e4abfe09b09
+preserve542b94b94ee41234
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3609,7 +3609,7 @@ Visibility and viewshed computations also belong to the family of global operati
 
 Many map algebra operations have a counterpart in vector processing [@liu_essential_2009].
 Computing a distance raster (zonal operation) while only considering a maximum distance (logical focal operation) is the equivalent to a vector buffer operation (section \@ref(clipping)).
-Reclassifying raster data (either local or zonal function depending on the input) is equivalent to dissolving vector data (section \@ref(spatial-joining-and-aggregation)). 
+Reclassifying raster data (either local or zonal function depending on the input) is equivalent to dissolving vector data (section \@ref(spatial-joining)). 
 Overlaying two rasters (local operation), where one contains `NULL` or `NA` values representing a mask, is similar to vector clipping (section \@ref(clipping)).
 Quite similar to spatial clipping is intersecting two layers (section \@ref(spatial-subsetting)). 
 The difference is that two these two layers (vector or raster) simply share an overlapping area (see Figure \@ref(fig:venn-clip) for an example).
