@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve92508544a9548c05
+preserve8a951af0017c0a74
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3100,7 +3100,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservec8f795b20c08f3bb
+preserve978845e7ad4b4cbc
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3186,8 +3186,8 @@ regions = aggregate(x = us_states[, "total_pop_15"], by = list(us_states$REGION)
 
 
 <div class="figure" style="text-align: center">
-<img src="figures/us-regions-1.png" alt="Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions. Note the operation automatically dissolves boundaries between touching polygons in the same region." width="576" /><img src="figures/us-regions-2.png" alt="Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions. Note the operation automatically dissolves boundaries between touching polygons in the same region." width="576" />
-<p class="caption">(\#fig:us-regions)Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions. Note the operation automatically dissolves boundaries between touching polygons in the same region.</p>
+<img src="figures/us-regions-1.png" alt="Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions, with population represented by color. Note the operation automatically dissolves boundaries between states." width="576" />
+<p class="caption">(\#fig:us-regions)Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions, with population represented by color. Note the operation automatically dissolves boundaries between states.</p>
 </div>
 
 Spatial aggregation can also be done in the **tidyverse**, using **dplyr** functions as follows:

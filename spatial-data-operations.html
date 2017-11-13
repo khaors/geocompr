@@ -534,9 +534,9 @@ sel =<span class="st"> </span><span class="kw">st_is_within_distance</span>(cycl
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">regions =<span class="st"> </span><span class="kw">aggregate</span>(<span class="dt">x =</span> us_states[, <span class="st">&quot;total_pop_15&quot;</span>], <span class="dt">by =</span> <span class="kw">list</span>(us_states$REGION),
                     <span class="dt">FUN =</span> sum, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:us-regions"></span>
-<img src="figures/us-regions-1.png" alt="Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions. Note the operation automatically dissolves boundaries between touching polygons in the same region." width="576" /><img src="figures/us-regions-2.png" alt="Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions. Note the operation automatically dissolves boundaries between touching polygons in the same region." width="576" />
+<img src="figures/us-regions-1.png" alt="Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions, with population represented by color. Note the operation automatically dissolves boundaries between states." width="576" />
 <p class="caption">
-Figure 4.5: Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions. Note the operation automatically dissolves boundaries between touching polygons in the same region.
+Figure 4.5: Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions, with population represented by color. Note the operation automatically dissolves boundaries between states.
 </p>
 </div>
 <p>Spatial aggregation can also be done in the <strong>tidyverse</strong>, using <strong>dplyr</strong> functions as follows:</p>
