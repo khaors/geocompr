@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveda238c5c7c302a97
+preserveca25eb4997ba0ea9
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -1324,13 +1324,13 @@ Typing the name of the raster into the console, will print out the raster header
 ```r
 new_raster
 #> class       : RasterLayer 
-#> dimensions  : 463, 459, 212517  (nrow, ncol, ncell)
-#> resolution  : 73.7, 92.5  (x, y)
-#> extent      : 301929, 335757, 4111262, 4154089  (xmin, xmax, ymin, ymax)
-#> coord. ref. : +proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
+#> dimensions  : 457, 465, 212505  (nrow, ncol, ncell)
+#> resolution  : 0.000833, 0.000833  (x, y)
+#> extent      : -113, -113, 37.1, 37.5  (xmin, xmax, ymin, ymax)
+#> coord. ref. : +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 
 #> data source : /home/travis/R/Library/spDataLarge/raster/srtm.tif 
 #> names       : srtm 
-#> values      : 1050, 2895  (min, max)
+#> values      : 1024, 2892  (min, max)
 ```
 
 To access individual header information, you can use following commands:
@@ -1339,14 +1339,14 @@ To access individual header information, you can use following commands:
 ```r
 # dimensions (number of rows, number of columns, number of cells)
 dim(new_raster)
-#> [1] 463 459   1
+#> [1] 457 465   1
 ```
 
 
 ```r
 # spatial resolution
 res(new_raster)
-#> [1] 73.7 92.5
+#> [1] 0.000833 0.000833
 ```
 
 
@@ -1354,10 +1354,10 @@ res(new_raster)
 # spatial extent
 extent(new_raster)
 #> class       : Extent 
-#> xmin        : 301929 
-#> xmax        : 335757 
-#> ymin        : 4111262 
-#> ymax        : 4154089
+#> xmin        : -113 
+#> xmax        : -113 
+#> ymin        : 37.1 
+#> ymax        : 37.5
 ```
 
 
@@ -1365,8 +1365,7 @@ extent(new_raster)
 # coordinate reference system
 crs(new_raster)
 #> CRS arguments:
-#>  +proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m
-#> +no_defs
+#>  +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0
 ```
 
 <!--CRSargs(CRS("+init=epsg:4326"))-->
@@ -1381,11 +1380,11 @@ You can also summarize and plot raster cell values in a non-spatial fashion usin
 summary(new_raster)
 #> Warning in .local(object, ...): summary is an estimate based on a sample of 1e+05 cells (47.06% of all cells)
 #>         srtm
-#> Min.    1050
-#> 1st Qu. 1544
-#> Median  1840
-#> 3rd Qu. 2121
-#> Max.    2895
+#> Min.    1024
+#> 1st Qu. 1535
+#> Median  1836
+#> 3rd Qu. 2111
+#> Max.    2892
 #> NA's       0
 ```
 
@@ -1406,7 +1405,7 @@ To only select specific rows, use the `row` parameter.
 ```r
 new_raster_values = getValues(new_raster)
 head(new_raster_values)
-#> [1] 1743 1739 1730 1721 1715 1709
+#> [1] 1728 1718 1715 1710 1703 1701
 ```
 
 The new vector, `new_raster_values`, can serve as input for subsequent statistical operations.
@@ -1710,7 +1709,7 @@ The `projection()` function can be use to access a CRS information from the `Ras
 
 ```r
 projection(new_raster) # get CRS
-#> [1] "+proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"
+#> [1] "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
 ```
 
 The same function, `projection()`, is used to set a CRS for raster objects.
@@ -1785,7 +1784,7 @@ Consequently, its resolution is also given in meters but you have to know it, si
 
 ```r
 res(new_raster)
-#> [1] 73.7 92.5
+#> [1] 0.000833 0.000833
 ```
 
 If we used the WGS84 projection, the units would change.
@@ -1794,7 +1793,7 @@ If we used the WGS84 projection, the units would change.
 ```r
 repr = projectRaster(new_raster, crs = "+init=epsg:4326")
 res(repr)
-#> [1] 0.000831 0.000833
+#> [1] 7.47e-09 7.52e-09
 ```
 
 Again, the `res()` command gives back a numeric vector without any unit, forcing us to know that the unit of the WGS84 projection is decimal degrees.
@@ -3101,7 +3100,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveae95949bcf834dc2
+preserve4cd0e91292106d04
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4667,13 +4666,13 @@ Each value in this raster represents elevation measured in meters.
 con_raster = raster(system.file("raster/srtm.tif", package = "spDataLarge"))
 con_raster
 #> class       : RasterLayer 
-#> dimensions  : 463, 459, 212517  (nrow, ncol, ncell)
-#> resolution  : 73.7, 92.5  (x, y)
-#> extent      : 301929, 335757, 4111262, 4154089  (xmin, xmax, ymin, ymax)
-#> coord. ref. : +proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
+#> dimensions  : 457, 465, 212505  (nrow, ncol, ncell)
+#> resolution  : 0.000833, 0.000833  (x, y)
+#> extent      : -113, -113, 37.1, 37.5  (xmin, xmax, ymin, ymax)
+#> coord. ref. : +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 
 #> data source : /home/travis/R/Library/spDataLarge/raster/srtm.tif 
 #> names       : srtm 
-#> values      : 1050, 2895  (min, max)
+#> values      : 1024, 2892  (min, max)
 ```
 
 The nearest neighbor method should not be used for continuous raster data, as we want to preserve gradual changes in values.
@@ -4683,16 +4682,17 @@ The new value is a weighted average of values from these four cells, adjusted fo
 
 
 ```r
-con_raster_wgs84 = projectRaster(con_raster, crs = wgs84, method = "bilinear")
-con_raster_wgs84
+utm_zone12 = "+proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"
+con_raster_utm = projectRaster(con_raster, crs = utm_zone12, method = "bilinear")
+con_raster_utm
 #> class       : RasterLayer 
-#> dimensions  : 481, 482, 231842  (nrow, ncol, ncell)
-#> resolution  : 0.000831, 0.000833  (x, y)
-#> extent      : -113, -113, 37.1, 37.5  (xmin, xmax, ymin, ymax)
-#> coord. ref. : +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0 
+#> dimensions  : 475, 490, 232750  (nrow, ncol, ncell)
+#> resolution  : 73.8, 92.5  (x, y)
+#> extent      : 300619, 336781, 4110656, 4154593  (xmin, xmax, ymin, ymax)
+#> coord. ref. : +proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
 #> data source : in memory
 #> names       : srtm 
-#> values      : 1052, 2898  (min, max)
+#> values      : 1029, 2891  (min, max)
 ```
 
 Reprojection of continuous rasters also change spatial properties, such as the number of cells, resolution, and extent.
@@ -4701,7 +4701,7 @@ It also slightly modifies values in the new raster, which can be seen by compari
 
 ```r
 summary(con_raster)
-summary(con_raster_wgs84)
+summary(con_raster_utm)
 ```
 
 <!-- why new na? -->

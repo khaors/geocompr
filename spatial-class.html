@@ -757,32 +757,31 @@ new_raster =<span class="st"> </span><span class="kw">raster</span>(raster_filep
 <p>Typing the name of the raster into the console, will print out the raster header (extent, dimensions, resolution, CRS) and some additional information (class, data source name, summary of the raster values):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">new_raster
 <span class="co">#&gt; class       : RasterLayer </span>
-<span class="co">#&gt; dimensions  : 463, 459, 212517  (nrow, ncol, ncell)</span>
-<span class="co">#&gt; resolution  : 73.7, 92.5  (x, y)</span>
-<span class="co">#&gt; extent      : 301929, 335757, 4111262, 4154089  (xmin, xmax, ymin, ymax)</span>
-<span class="co">#&gt; coord. ref. : +proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs </span>
+<span class="co">#&gt; dimensions  : 457, 465, 212505  (nrow, ncol, ncell)</span>
+<span class="co">#&gt; resolution  : 0.000833, 0.000833  (x, y)</span>
+<span class="co">#&gt; extent      : -113, -113, 37.1, 37.5  (xmin, xmax, ymin, ymax)</span>
+<span class="co">#&gt; coord. ref. : +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 </span>
 <span class="co">#&gt; data source : /home/travis/R/Library/spDataLarge/raster/srtm.tif </span>
 <span class="co">#&gt; names       : srtm </span>
-<span class="co">#&gt; values      : 1050, 2895  (min, max)</span></code></pre></div>
+<span class="co">#&gt; values      : 1024, 2892  (min, max)</span></code></pre></div>
 <p>To access individual header information, you can use following commands:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># dimensions (number of rows, number of columns, number of cells)</span>
 <span class="kw">dim</span>(new_raster)
-<span class="co">#&gt; [1] 463 459   1</span></code></pre></div>
+<span class="co">#&gt; [1] 457 465   1</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># spatial resolution</span>
 <span class="kw">res</span>(new_raster)
-<span class="co">#&gt; [1] 73.7 92.5</span></code></pre></div>
+<span class="co">#&gt; [1] 0.000833 0.000833</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># spatial extent</span>
 <span class="kw">extent</span>(new_raster)
 <span class="co">#&gt; class       : Extent </span>
-<span class="co">#&gt; xmin        : 301929 </span>
-<span class="co">#&gt; xmax        : 335757 </span>
-<span class="co">#&gt; ymin        : 4111262 </span>
-<span class="co">#&gt; ymax        : 4154089</span></code></pre></div>
+<span class="co">#&gt; xmin        : -113 </span>
+<span class="co">#&gt; xmax        : -113 </span>
+<span class="co">#&gt; ymin        : 37.1 </span>
+<span class="co">#&gt; ymax        : 37.5</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># coordinate reference system</span>
 <span class="kw">crs</span>(new_raster)
 <span class="co">#&gt; CRS arguments:</span>
-<span class="co">#&gt;  +proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m</span>
-<span class="co">#&gt; +no_defs</span></code></pre></div>
+<span class="co">#&gt;  +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0</span></code></pre></div>
 <!--CRSargs(CRS("+init=epsg:4326"))-->
 <p>Note that in contrast to the <strong>sf</strong> package, <strong>raster</strong> only accepts the <code>proj4string</code> representation of the coordinate reference system.</p>
 <!--
@@ -794,11 +793,11 @@ You can also summarize and plot raster cell values in a non-spatial fashion usin
 summary(new_raster)
 #> Warning in .local(object, ...): summary is an estimate based on a sample of 1e+05 cells (47.06% of all cells)
 #>         srtm
-#> Min.    1050
-#> 1st Qu. 1544
-#> Median  1840
-#> 3rd Qu. 2121
-#> Max.    2895
+#> Min.    1024
+#> 1st Qu. 1535
+#> Median  1836
+#> 3rd Qu. 2111
+#> Max.    2892
 #> NA's       0
 ```
 
@@ -819,7 +818,7 @@ To only select specific rows, use the `row` parameter.
 ```r
 new_raster_values = getValues(new_raster)
 head(new_raster_values)
-#> [1] 1743 1739 1730 1721 1715 1709
+#> [1] 1728 1718 1715 1710 1703 1701
 ```
 
 The new vector, `new_raster_values`, can serve as input for subsequent statistical operations.
@@ -961,7 +960,7 @@ Figure 2.9: Examples of geographic (WGS 84; left) and projected (NAD83 / UTM zon
 </div>
 <p>The <code>projection()</code> function can be use to access a CRS information from the <code>Raster*</code> object:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">projection</span>(new_raster) <span class="co"># get CRS</span>
-<span class="co">#&gt; [1] &quot;+proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs&quot;</span></code></pre></div>
+<span class="co">#&gt; [1] &quot;+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0&quot;</span></code></pre></div>
 <p>The same function, <code>projection()</code>, is used to set a CRS for raster objects. The main difference, comparing to vector data, is that raster objects accepts only <code>proj4</code> definitions:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">projection</span>(new_raster) =<span class="st"> &quot;+proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs&quot;</span> <span class="co"># set CRS</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:raster-crs"></span>
@@ -990,11 +989,11 @@ Figure 2.10: Examples of geographic (WGS 84; left) and projected (NAD83 / UTM zo
 <!-- Is that right? I mean, the units DESCRIPTION says "Support for measurement units in R vectors, matrices and arrays". Since raster datasets are just matrices, units might be easily used with them?-->
 <p>Units are of equal importance in the case of raster data. However, so far <strong>sf</strong> is the only spatial package that supports units, meaning that people working on raster data should approach changes in the units of analysis (e.g., converting pixel widths from imperial to decimal units) with care. The <code>new_raster</code> object (see above) uses a UTM projection with meters as units. Consequently, its resolution is also given in meters but you have to know it, since the <code>res()</code> function simply returns a numeric vector.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">res</span>(new_raster)
-<span class="co">#&gt; [1] 73.7 92.5</span></code></pre></div>
+<span class="co">#&gt; [1] 0.000833 0.000833</span></code></pre></div>
 <p>If we used the WGS84 projection, the units would change.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">repr =<span class="st"> </span><span class="kw">projectRaster</span>(new_raster, <span class="dt">crs =</span> <span class="st">&quot;+init=epsg:4326&quot;</span>)
 <span class="kw">res</span>(repr)
-<span class="co">#&gt; [1] 0.000831 0.000833</span></code></pre></div>
+<span class="co">#&gt; [1] 7.47e-09 7.52e-09</span></code></pre></div>
 <p>Again, the <code>res()</code> command gives back a numeric vector without any unit, forcing us to know that the unit of the WGS84 projection is decimal degrees.</p>
 <!-- Something about when units are not set: -->
 <!-- ```{r} -->
