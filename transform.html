@@ -398,7 +398,7 @@ con_raster_utm
 <span class="co">#&gt; data source : in memory</span>
 <span class="co">#&gt; names       : srtm </span>
 <span class="co">#&gt; values      : 1029, 2891  (min, max)</span></code></pre></div>
-<p>Reprojection of continuous rasters also change spatial properties, such as the number of cells, resolution, and extent. It also slightly modifies values in the new raster, which can be seen by comparing the outputs of the <code>summary()</code> function between <code>con_raster</code> and <code>con_raster_wgs84</code>.</p>
+<p>Reprojection of continuous rasters also change spatial properties, such as the number of cells, resolution, and extent. It also slightly modifies values in the new raster, which can be seen by comparing the outputs of the <code>summary()</code> function between <code>con_raster</code> and <code>con_raster_utm</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(con_raster)
 <span class="kw">summary</span>(con_raster_utm)</code></pre></div>
 <!-- why new na? -->
