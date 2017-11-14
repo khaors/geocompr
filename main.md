@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveac2b4ad786c49505
+preserve67a114eb163c5511
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3100,7 +3100,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservecd83be30104a515e
+preserve9d3cf5292395a897
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4611,7 +4611,7 @@ con_raster_utm
 #> values      : 1029, 2891  (min, max)
 ```
 
-Reprojection of continuous rasters also change spatial properties, such as the number of cells, resolution, and extent.
+Reprojection of continuous rasters changes spatial properties, such as the number of cells, resolution, and extent.
 It also slightly modifies values in the new raster, which can be seen by comparing the outputs of the `summary()` function between `con_raster` and `con_raster_utm`.
 
 
