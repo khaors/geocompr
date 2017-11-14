@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve67a114eb163c5511
+preserve4f7a8fb0bc7a2200
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3100,7 +3100,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve9d3cf5292395a897
+preserve7f76228fb4c1ff4e
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3529,7 +3529,7 @@ In the first case, one can calculate the distance from each cell to a specific t
 For example, one might want to compute the distance to the nearest coast (see also `raster::distance()`).
 We might also want to consider topography, that means, we are not only interested in the pure distance but would like also to avoid the crossing of mountain ranges when going to the coast.
 To do so, we can weight the distance with elevation so that each additional altitudinal meter 'prolongs' the euclidean distance.
-Visibility and viewshed computations also belong to the family of global operations <!--(in the exercises of Chapter ?? you will compute a viewshed raster)-->.
+Visibility and viewshed computations also belong to the family of global operations<!--(in the exercises of Chapter ?? you will compute a viewshed raster)-->.
 <!-- reference 13-gis chapter-->
 
 Many map algebra operations have a counterpart in vector processing [@liu_essential_2009].
@@ -4575,6 +4575,14 @@ In the same time, it keeps the same land cover classes - `unique(cat_raster_wgs8
 
 This process of reprojection is almost identical for continuous data.
 The `srtm.tif` file contains digital elevation model for the same area in Utah from [the Shuttle Radar Topography Mission (SRTM)](https://www2.jpl.nasa.gov/srtm/).
+The important difference is that this dataset's CRS is geographic CRS and we want to transform it to projected CRS.
+
+\BeginKnitrBlock{rmdnote}<div class="rmdnote">All the grid cells in equal-area projections have the same size.
+Therefore, these projections are recommended when performing many raster operations, such as distance calculation.</div>\EndKnitrBlock{rmdnote}
+
+<!-- http://projectionwizard.org/ -->
+<!-- It can be desired when we want to visualize a raster data on top of a web basemaps, such as the Google or OpenStreetMap map tiles. -->
+
 Each value in this raster represents elevation measured in meters.
 
 
@@ -4598,26 +4606,26 @@ The new value is a weighted average of values from these four cells, adjusted fo
 
 
 ```r
-utm_zone12 = "+proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"
-con_raster_utm = projectRaster(con_raster, crs = utm_zone12, method = "bilinear")
-con_raster_utm
+equalarea = "+proj=laea +lat_0=37.32243222222222 +lon_0=-113.04597222222222"
+con_raster_ea = projectRaster(con_raster, crs = equalarea, method = "bilinear")
+con_raster_ea
 #> class       : RasterLayer 
-#> dimensions  : 475, 490, 232750  (nrow, ncol, ncell)
-#> resolution  : 73.8, 92.5  (x, y)
-#> extent      : 300619, 336781, 4110656, 4154593  (xmin, xmax, ymin, ymax)
-#> coord. ref. : +proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
+#> dimensions  : 467, 478, 223226  (nrow, ncol, ncell)
+#> resolution  : 73.9, 92.5  (x, y)
+#> extent      : -17647, 17677, -21576, 21621  (xmin, xmax, ymin, ymax)
+#> coord. ref. : +proj=laea +lat_0=37.32243222222222 +lon_0=-113.04597222222222 +ellps=WGS84 
 #> data source : in memory
 #> names       : srtm 
-#> values      : 1029, 2891  (min, max)
+#> values      : 1027, 2891  (min, max)
 ```
 
 Reprojection of continuous rasters changes spatial properties, such as the number of cells, resolution, and extent.
-It also slightly modifies values in the new raster, which can be seen by comparing the outputs of the `summary()` function between `con_raster` and `con_raster_utm`.
+It also slightly modifies values in the new raster, which can be seen by comparing the outputs of the `summary()` function between `con_raster` and `con_raster_ea`.
 
 
 ```r
 summary(con_raster)
-summary(con_raster_utm)
+summary(con_raster_ea)
 ```
 
 <!-- why new na? -->
@@ -4669,7 +4677,7 @@ plot(b)
 plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
 ```
 
-<img src="figures/unnamed-chunk-21-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-22-1.png" width="576" style="display: block; margin: auto;" />
 
 The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
 <!-- Todo: reference r4ds -->

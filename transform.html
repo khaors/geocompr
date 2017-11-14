@@ -379,7 +379,15 @@ cat_raster_wgs84
 <span class="co">#&gt; names       : nlcd2011 </span>
 <span class="co">#&gt; values      : 11, 95  (min, max)</span></code></pre></div>
 <p>Many properties of the new object differs from the previous one, which include the number of columns and rows (and therefore number of cells), resolution (transformed from meters into degrees), and extent. In the same time, it keeps the same land cover classes - <code>unique(cat_raster_wgs84)</code>. <!-- freq(cat_raster_wgs84) --> <!-- freq(cat_raster) --></p>
-<p>This process of reprojection is almost identical for continuous data. The <code>srtm.tif</code> file contains digital elevation model for the same area in Utah from <a href="https://www2.jpl.nasa.gov/srtm/">the Shuttle Radar Topography Mission (SRTM)</a>. Each value in this raster represents elevation measured in meters.</p>
+<p>This process of reprojection is almost identical for continuous data. The <code>srtm.tif</code> file contains digital elevation model for the same area in Utah from <a href="https://www2.jpl.nasa.gov/srtm/">the Shuttle Radar Topography Mission (SRTM)</a>. The important difference is that this dataset’s CRS is geographic CRS and we want to transform it to projected CRS.</p>
+
+<div class="rmdnote">
+All the grid cells in equal-area projections have the same size. Therefore, these projections are recommended when performing many raster operations, such as distance calculation.
+</div>
+<p></p>
+<!-- http://projectionwizard.org/ -->
+<!-- It can be desired when we want to visualize a raster data on top of a web basemaps, such as the Google or OpenStreetMap map tiles. -->
+<p>Each value in this raster represents elevation measured in meters.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">con_raster =<span class="st"> </span><span class="kw">raster</span>(<span class="kw">system.file</span>(<span class="st">&quot;raster/srtm.tif&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;spDataLarge&quot;</span>))
 con_raster
 <span class="co">#&gt; class       : RasterLayer </span>
@@ -391,20 +399,20 @@ con_raster
 <span class="co">#&gt; names       : srtm </span>
 <span class="co">#&gt; values      : 1024, 2892  (min, max)</span></code></pre></div>
 <p>The nearest neighbor method should not be used for continuous raster data, as we want to preserve gradual changes in values. Alternatively, continuous data could be reprojected in the <strong>raster</strong> package using the bilinear method. In this technique, value of the output cell is calculated based on four nearest cells in the original raster. The new value is a weighted average of values from these four cells, adjusted for their distance from the center of the output cell.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">utm_zone12 =<span class="st"> &quot;+proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs&quot;</span>
-con_raster_utm =<span class="st"> </span><span class="kw">projectRaster</span>(con_raster, <span class="dt">crs =</span> utm_zone12, <span class="dt">method =</span> <span class="st">&quot;bilinear&quot;</span>)
-con_raster_utm
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">equalarea =<span class="st"> &quot;+proj=laea +lat_0=37.32243222222222 +lon_0=-113.04597222222222&quot;</span>
+con_raster_ea =<span class="st"> </span><span class="kw">projectRaster</span>(con_raster, <span class="dt">crs =</span> equalarea, <span class="dt">method =</span> <span class="st">&quot;bilinear&quot;</span>)
+con_raster_ea
 <span class="co">#&gt; class       : RasterLayer </span>
-<span class="co">#&gt; dimensions  : 475, 490, 232750  (nrow, ncol, ncell)</span>
-<span class="co">#&gt; resolution  : 73.8, 92.5  (x, y)</span>
-<span class="co">#&gt; extent      : 300619, 336781, 4110656, 4154593  (xmin, xmax, ymin, ymax)</span>
-<span class="co">#&gt; coord. ref. : +proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs </span>
+<span class="co">#&gt; dimensions  : 467, 478, 223226  (nrow, ncol, ncell)</span>
+<span class="co">#&gt; resolution  : 73.9, 92.5  (x, y)</span>
+<span class="co">#&gt; extent      : -17647, 17677, -21576, 21621  (xmin, xmax, ymin, ymax)</span>
+<span class="co">#&gt; coord. ref. : +proj=laea +lat_0=37.32243222222222 +lon_0=-113.04597222222222 +ellps=WGS84 </span>
 <span class="co">#&gt; data source : in memory</span>
 <span class="co">#&gt; names       : srtm </span>
-<span class="co">#&gt; values      : 1029, 2891  (min, max)</span></code></pre></div>
-<p>Reprojection of continuous rasters changes spatial properties, such as the number of cells, resolution, and extent. It also slightly modifies values in the new raster, which can be seen by comparing the outputs of the <code>summary()</code> function between <code>con_raster</code> and <code>con_raster_utm</code>.</p>
+<span class="co">#&gt; values      : 1027, 2891  (min, max)</span></code></pre></div>
+<p>Reprojection of continuous rasters changes spatial properties, such as the number of cells, resolution, and extent. It also slightly modifies values in the new raster, which can be seen by comparing the outputs of the <code>summary()</code> function between <code>con_raster</code> and <code>con_raster_ea</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(con_raster)
-<span class="kw">summary</span>(con_raster_utm)</code></pre></div>
+<span class="kw">summary</span>(con_raster_ea)</code></pre></div>
 <!-- why new na? -->
 <!-- res option in projectRaster? -->
 <!-- note1: in most of the cases reproject vector, not raster-->
@@ -440,7 +448,7 @@ y =<span class="st"> </span>b[<span class="dv">2</span>]
 x_and_y =<span class="st"> </span><span class="kw">st_intersection</span>(x, y)
 <span class="kw">plot</span>(b)
 <span class="kw">plot</span>(x_and_y, <span class="dt">col =</span> <span class="st">&quot;lightgrey&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>) <span class="co"># color intersecting area</span></code></pre></div>
-<p><img src="figures/unnamed-chunk-21-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-22-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>The subsequent code chunk demonstrate how this works for all combinations of the ‘Venn’ diagram representing <code>x</code> and <code>y</code>, inspired by <a href="http://r4ds.had.co.nz/transform.html#logical-operators">Figure 5.1</a> of the book R for Data Science <span class="citation">(Grolemund and Wickham <a href="#ref-grolemund_r_2016">2016</a>)</span>. <!-- Todo: reference r4ds --></p>
 <div class="figure" style="text-align: center"><span id="fig:venn-clip"></span>
 <img src="figures/venn-clip-1.png" alt="Spatial equivalents of logical operators." width="576" />
