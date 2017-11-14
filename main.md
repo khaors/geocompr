@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve20a5118b4beeb73c
+preserved22964f1e3a313db
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3100,7 +3100,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveda6ab897bb2204a4
+preserve853605d9b54513b4
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4431,7 +4431,7 @@ plot(london_proj, add = TRUE)
 <p class="caption">(\#fig:crs-buf-proj)Buffer on data with projected CRS.</p>
 </div>
 
-## CRS conversion {#crs-transform}
+## Transforming the CRS {#crs-transform}
 
 While CRSs can be set manually, it is more common in real world applications to *transform* a known CRS into another.
 CRS transformation could be vital to obtain proper results in many cases.
@@ -4646,6 +4646,8 @@ summary(con_raster_utm)
 <!-- - should we move some content from ch4 here? such as aggregate() and disaggregate() from 3.3.8  -->
 
 ## Geometry transformations
+<!-- Geometry transformations (e.g. clipping, buffers, centroids) -->
+<!-- (within which could go a small example showing affine transformations) -->
 
 ### Clipping 
 
@@ -4722,9 +4724,14 @@ text(x = c(-0.5, 1.5), y = 1, labels = l)
 
 
 
+# Type transformation
+<!-- Changing the geometry type while the fundamental data remains unchanged ('casting') -->
+<!-- I think vector/raster conversion could either be part of point 1 or something else -->
+<!-- I think the brick-raster-stack could be part of 1 - a type transformation... -->
 
 ## Exercises
 
+<!-- CRS CONVERSION -->
 <!-- 1. vector reprojection exercise (e.g. modification of proj4) -->
 1. Transform the `world` dataset to the transverse Mercator projection (`"+proj=tmerc"`) and plot the result.
 What has changed and why?
@@ -4753,6 +4760,7 @@ How it influences the results?
 <!-- con_raster_wgs84 = projectRaster(con_raster, crs = wgs84, method = "ngb") -->
 <!-- con_raster_wgs84 -->
 <!-- ``` -->
+<!-- GEOMETRY TRANSFORMATION -->
 
 <!--chapter:end:06-transform.Rmd-->
 

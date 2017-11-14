@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="read-write.html">
-<link rel="next" href="references.html">
+<link rel="next" href="type-transformation.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -219,16 +219,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6" data-path="transform.html"><a href="transform.html"><i class="fa fa-check"></i><b>6</b> Reprojections and Transformations</a><ul>
 <li class="chapter" data-level="" data-path="transform.html"><a href="transform.html#prerequisites-4"><i class="fa fa-check"></i>Prerequisites</a></li>
 <li class="chapter" data-level="6.1" data-path="transform.html"><a href="transform.html#introduction-3"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
-<li class="chapter" data-level="6.2" data-path="transform.html"><a href="transform.html#crs-transform"><i class="fa fa-check"></i><b>6.2</b> CRS conversion</a><ul>
+<li class="chapter" data-level="6.2" data-path="transform.html"><a href="transform.html#crs-transform"><i class="fa fa-check"></i><b>6.2</b> Transforming the CRS</a><ul>
 <li class="chapter" data-level="6.2.1" data-path="transform.html"><a href="transform.html#vector-data-3"><i class="fa fa-check"></i><b>6.2.1</b> Vector data</a></li>
 <li class="chapter" data-level="6.2.2" data-path="transform.html"><a href="transform.html#raster-data-3"><i class="fa fa-check"></i><b>6.2.2</b> Raster data</a></li>
 </ul></li>
 <li class="chapter" data-level="6.3" data-path="transform.html"><a href="transform.html#geometry-transformations"><i class="fa fa-check"></i><b>6.3</b> Geometry transformations</a><ul>
 <li class="chapter" data-level="6.3.1" data-path="transform.html"><a href="transform.html#clipping"><i class="fa fa-check"></i><b>6.3.1</b> Clipping</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="transform.html"><a href="transform.html#exercises-4"><i class="fa fa-check"></i><b>6.4</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>7</b> References</a></li>
+<li class="chapter" data-level="7" data-path="type-transformation.html"><a href="type-transformation.html"><i class="fa fa-check"></i><b>7</b> Type transformation</a><ul>
+<li class="chapter" data-level="7.1" data-path="type-transformation.html"><a href="type-transformation.html#exercises-4"><i class="fa fa-check"></i><b>7.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>8</b> References</a></li>
 <li class="divider"></li>
 <li><a href="http://robinlovelace.net/">Robin Lovelace</a></li>
 <li><a href="https://nowosad.github.io/">Jakub Nowosad</a></li>
@@ -306,7 +308,7 @@ Figure 6.2: Buffer on data with projected CRS.
 </div>
 </div>
 <div id="crs-transform" class="section level2">
-<h2><span class="header-section-number">6.2</span> CRS conversion</h2>
+<h2><span class="header-section-number">6.2</span> Transforming the CRS</h2>
 <p>While CRSs can be set manually, it is more common in real world applications to <em>transform</em> a known CRS into another. CRS transformation could be vital to obtain proper results in many cases. A typical example is when geometry data is provided in a geographic CRS but you want to do spatial operations, which require it to be in a projected CRS. It includes distance measurements or area calculations. CRS also represent spatial relationship between datasets. Therefore, spatial operations on many datasets can only be correctly performed when all the data have the same CRS. The most common reason to unify the CRS is to combine different datasets (e.g. merge two rasters) or apply methods which need at least two objects (e.g spatial subsetting or raster map algebra). Let’s use real-world examples to illustrate this.</p>
 <div id="vector-data-3" class="section level3">
 <h3><span class="header-section-number">6.2.1</span> Vector data</h3>
@@ -428,6 +430,8 @@ con_raster_utm
 </div>
 <div id="geometry-transformations" class="section level2">
 <h2><span class="header-section-number">6.3</span> Geometry transformations</h2>
+<!-- Geometry transformations (e.g. clipping, buffers, centroids) -->
+<!-- (within which could go a small example showing affine transformations) -->
 <div id="clipping" class="section level3">
 <h3><span class="header-section-number">6.3.1</span> Clipping</h3>
 <p>Spatial clipping is a form of spatial subsetting that involves changes to the <code>geometry</code> columns of at least some of the affected features.</p>
@@ -477,16 +481,6 @@ Figure 6.5: Randomly distributed points within the bounding box enclosing circle
 </div>
 </div>
 </div>
-<div id="exercises-4" class="section level2">
-<h2><span class="header-section-number">6.4</span> Exercises</h2>
-<!-- 1. vector reprojection exercise (e.g. modification of proj4) -->
-<ol style="list-style-type: decimal">
-<li>Transform the <code>world</code> dataset to the transverse Mercator projection (<code>&quot;+proj=tmerc&quot;</code>) and plot the result. What has changed and why? Try to transform it back into WGS 84 and plot the new object. Why the new object differs from the original one? <!-- https://github.com/r-spatial/sf/issues/509 --> <!-- ```{r} --> <!-- world_tmerc = st_transform(world, "+proj=tmerc") --> <!-- plot(world_tmerc$geom) --> <!--  world_4326 = st_transform(world_tmerc, 4326) --> <!-- plot(world_4326$geom) --> <!-- ``` --></li>
-<li>Try to transform the categorical raster (<code>cat_raster</code>) into WGS 84 using the bilinear interpolation method. What has changed? How it influences the results? <!-- ```{r} --> <!-- wgs84 = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs" --> <!-- cat_raster_wgs84 = projectRaster(cat_raster, crs = wgs84, method = "bilinear") --> <!-- cat_raster_wgs84 --> <!-- ``` --></li>
-<li>Try to transform the continuous raster (<code>cat_raster</code>) into WGS 84 using the nearest neighbor interpolation method. What has changed? How it influences the results? <!-- ```{r} --> <!-- con_raster = raster(system.file("raster/srtm.tif", package="spDataLarge")) --> <!-- con_raster_wgs84 = projectRaster(con_raster, crs = wgs84, method = "ngb") --> <!-- con_raster_wgs84 --> <!-- ``` --></li>
-</ol>
-
-</div>
 </div>
 <h3> References</h3>
 <div id="refs" class="references">
@@ -507,7 +501,7 @@ Figure 6.5: Randomly distributed points within the bounding box enclosing circle
         </div>
       </div>
 <a href="read-write.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="type-transformation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

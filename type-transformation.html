@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-
-<link rel="next" href="preface.html">
+<link rel="prev" href="transform.html">
+<link rel="next" href="references.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -253,42 +253,21 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Geocomputation with R</h1>
-<h4 class="author"><em>Robin Lovelace, Jakub Nowosad, Jannes Muenchow</em></h4>
-<h4 class="date"><em>2017-11-14</em></h4>
-</div>
-<div id="welcome" class="section level1 unnumbered">
-<h1>Welcome</h1>
-<p>Welcome to the <a href="http://robinlovelace.net/geocompr">online home</a> of <em>Geocomputation with R</em>, a forthcoming book with <a href="https://www.crcpress.com/Chapman--HallCRC-The-R-Series/book-series/CRCTHERSER">CRC Press</a>.</p>
-<div id="development" class="section level2 unnumbered">
-<h2>Development</h2>
-<p>Inspired by <a href="https://github.com/rstudio/bookdown"><strong>bookdown</strong></a> and other open source projects we are developing this book in the open. Why? To encourage contributions, ensure reproducibility and provide access to the material as it evolves.</p>
-<p>The book’s development can be divided into four main phases:</p>
+<div id="type-transformation" class="section level1">
+<h1><span class="header-section-number">7</span> Type transformation</h1>
+<!-- Changing the geometry type while the fundamental data remains unchanged ('casting') -->
+<!-- I think vector/raster conversion could either be part of point 1 or something else -->
+<!-- I think the brick-raster-stack could be part of 1 - a type transformation... -->
+<div id="exercises-4" class="section level2">
+<h2><span class="header-section-number">7.1</span> Exercises</h2>
+<!-- CRS CONVERSION -->
+<!-- 1. vector reprojection exercise (e.g. modification of proj4) -->
 <ol style="list-style-type: decimal">
-<li>Foundations</li>
-<li>Basic applications</li>
-<li>Geocomputation methods</li>
-<li>Advanced applications</li>
+<li>Transform the <code>world</code> dataset to the transverse Mercator projection (<code>&quot;+proj=tmerc&quot;</code>) and plot the result. What has changed and why? Try to transform it back into WGS 84 and plot the new object. Why the new object differs from the original one? <!-- https://github.com/r-spatial/sf/issues/509 --> <!-- ```{r} --> <!-- world_tmerc = st_transform(world, "+proj=tmerc") --> <!-- plot(world_tmerc$geom) --> <!--  world_4326 = st_transform(world_tmerc, 4326) --> <!-- plot(world_4326$geom) --> <!-- ``` --></li>
+<li>Try to transform the categorical raster (<code>cat_raster</code>) into WGS 84 using the bilinear interpolation method. What has changed? How it influences the results? <!-- ```{r} --> <!-- wgs84 = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs" --> <!-- cat_raster_wgs84 = projectRaster(cat_raster, crs = wgs84, method = "bilinear") --> <!-- cat_raster_wgs84 --> <!-- ``` --></li>
+<li>Try to transform the continuous raster (<code>cat_raster</code>) into WGS 84 using the nearest neighbor interpolation method. What has changed? How it influences the results? <!-- ```{r} --> <!-- con_raster = raster(system.file("raster/srtm.tif", package="spDataLarge")) --> <!-- con_raster_wgs84 = projectRaster(con_raster, crs = wgs84, method = "ngb") --> <!-- con_raster_wgs84 --> <!-- ``` --> <!-- GEOMETRY TRANSFORMATION --></li>
 </ol>
-<p>Currently the focus is on Part 2, which we aim to be complete by December. New chapters will be added to this website as the project progresses, hosted at <a href="http://robinlovelace.net/geocompr">robinlovelace.net/geocompr</a> and kept up-to-date thanks to <a href="https://travis-ci.org/Robinlovelace/geocompr">Travis</a>. Currently the build is:</p>
-<p><a href="https://travis-ci.org/Robinlovelace/geocompr"><img src="https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master" alt="Build Status" /></a></p>
-<p>The version of the book you are reading now was built on 2017-11-14 and was built on <a href="https://travis-ci.org/Robinlovelace/geocompr">Travis</a>.</p>
-</div>
-<div id="how-to-contribute" class="section level2 unnumbered">
-<h2>How to contribute?</h2>
-<p><strong>bookdown</strong> makes editing a book as easy as editing a wiki, provided you have a GitHub account (<a href="https://github.com/">sign-up at github.com</a>). Once logged-in to GitHub, clicking on the ‘edit me’ icon highlighted in the image below will take you to the source <a href="http://rmarkdown.rstudio.com/">R Markdown</a> where you can make changes:</p>
-<p><a href="https://github.com/Robinlovelace/geocompr/edit/master/index.Rmd"><img src="figures/editme.png" alt="" /></a></p>
-<p>To raise an issue about the book’s content (e.g. code not running) or make a feature request, check-out the <a href="https://github.com/Robinlovelace/geocompr/issues">issue tracker</a>.</p>
-</div>
-<div id="reproducibility" class="section level2 unnumbered">
-<h2>Reproducibility</h2>
-<p>To reproduce the book, you need a recent version of <a href="https://cran.r-project.org/">R</a> and up-to-date packages, which can be installed with the following command (which requires <a href="https://github.com/hadley/devtools"><strong>devtools</strong></a>):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_github</span>(<span class="st">&quot;robinlovelace/geocompr&quot;</span>)</code></pre></div>
-<p>To build the book locally, clone or <a href="https://github.com/Robinlovelace/geocompr/archive/master.zip">download</a> the <a href="https://github.com/Robinlovelace/geocompr/">geocompr repo</a>, load R in root directory (e.g. by opening <a href="https://github.com/Robinlovelace/geocompr/blob/master/geocompr.Rproj">geocompr.Rproj</a> in RStudio) and run the following lines:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bookdown::<span class="kw">render_book</span>(<span class="st">&quot;index.Rmd&quot;</span>) <span class="co"># to build the book</span>
-<span class="kw">browseURL</span>(<span class="st">&quot;_book/index.html&quot;</span>) <span class="co"># to view it</span></code></pre></div>
-<p>Further details can be found at <a href="https://github.com/Robinlovelace/geocompr#geocomputation-with-r">Robinlovelace/geocompr</a>.</p>
+
 </div>
 </div>
             </section>
@@ -296,8 +275,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-
-<a href="preface.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="transform.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -326,7 +305,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Robinlovelace/geocompr/edit/master/index.Rmd",
+"link": "https://github.com/Robinlovelace/geocompr/edit/master/06-transform.Rmd",
 "text": "Edit"
 },
 "download": null,
