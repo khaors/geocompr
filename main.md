@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserved22964f1e3a313db
+preserveac2b4ad786c49505
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3100,7 +3100,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve853605d9b54513b4
+preservecd83be30104a515e
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4627,27 +4627,12 @@ summary(con_raster_utm)
 <!-- note2: equal area projections are the best for raster calculations -->
 <!-- q: should we mentioned gdal_transform? -->
 
-<!-- ## Type transformations -->
-<!-- 1. what's important for vector transformations? -->
-<!-- - st_cast -->
-<!-- st_point_on_surface -->
-<!-- st_centroid -->
-<!-- st_polygonize -->
-<!-- - do we really need - Affine transformations, Translating, Scaling, Rotating, Reflecting, Shearing - are they useful? -->
-<!-- 2. what's important for raster transformations? -->
-<!-- 3. what's important for both? -->
-<!-- - raster to vector -->
-<!-- - vector to raster -->
-
-<!-- ## The rest -->
-<!-- - simplifications -->
-<!-- st_simplify -->
-<!-- rmapshaper -->
-<!-- - should we move some content from ch4 here? such as aggregate() and disaggregate() from 3.3.8  -->
-
 ## Geometry transformations
 <!-- Geometry transformations (e.g. clipping, buffers, centroids) -->
 <!-- (within which could go a small example showing affine transformations) -->
+<!-- - simplifications -->
+<!-- st_simplify -->
+<!-- rmapshaper -->
 
 ### Clipping 
 
@@ -4728,6 +4713,13 @@ text(x = c(-0.5, 1.5), y = 1, labels = l)
 <!-- Changing the geometry type while the fundamental data remains unchanged ('casting') -->
 <!-- I think vector/raster conversion could either be part of point 1 or something else -->
 <!-- I think the brick-raster-stack could be part of 1 - a type transformation... -->
+<!-- - raster to vector -->
+<!-- - vector to raster -->
+<!-- - st_cast -->
+<!-- st_point_on_surface -->
+<!-- st_centroid -->
+<!-- st_polygonize -->
+
 
 ## Exercises
 

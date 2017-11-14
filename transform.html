@@ -410,28 +410,15 @@ con_raster_utm
 <!-- note1: in most of the cases reproject vector, not raster-->
 <!-- note2: equal area projections are the best for raster calculations -->
 <!-- q: should we mentioned gdal_transform? -->
-<!-- ## Type transformations -->
-<!-- 1. what's important for vector transformations? -->
-<!-- - st_cast -->
-<!-- st_point_on_surface -->
-<!-- st_centroid -->
-<!-- st_polygonize -->
-<!-- - do we really need - Affine transformations, Translating, Scaling, Rotating, Reflecting, Shearing - are they useful? -->
-<!-- 2. what's important for raster transformations? -->
-<!-- 3. what's important for both? -->
-<!-- - raster to vector -->
-<!-- - vector to raster -->
-<!-- ## The rest -->
-<!-- - simplifications -->
-<!-- st_simplify -->
-<!-- rmapshaper -->
-<!-- - should we move some content from ch4 here? such as aggregate() and disaggregate() from 3.3.8  -->
 </div>
 </div>
 <div id="geometry-transformations" class="section level2">
 <h2><span class="header-section-number">6.3</span> Geometry transformations</h2>
 <!-- Geometry transformations (e.g. clipping, buffers, centroids) -->
 <!-- (within which could go a small example showing affine transformations) -->
+<!-- - simplifications -->
+<!-- st_simplify -->
+<!-- rmapshaper -->
 <div id="clipping" class="section level3">
 <h3><span class="header-section-number">6.3.1</span> Clipping</h3>
 <p>Spatial clipping is a form of spatial subsetting that involves changes to the <code>geometry</code> columns of at least some of the affected features.</p>
