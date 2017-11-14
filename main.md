@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservef56818b7a4d5bccf
+preservea3f9a699ee37f367
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2686,7 +2686,7 @@ library(spData)
 ## Introduction
 
 Spatial operations are a vital part of geocomputation.
-This chapter shows how spatial datasets can be modified in a multitude of ways based on the the location and shape of the features they contain (for vector data) and the relative locations and values of pixes (for raster data).
+This chapter shows how spatial datasets can be modified in a multitude of ways based on the the location and shape of the features they contain (for vector data) and the relative locations and values of pixels (for raster data).
 
 The content clearly builds on the previous chapter because many spatial operations have a non-spatial (attribute) equivalent.
 Spatial operations on *vector* objects include spatial subsetting (covered in section \@ref(spatial-subsetting)), joining and non-overlapping joins (covered in \@ref(spatial-joining) and \@ref(non-overlapping-joins)) and aggregation (section \@ref(spatial-data-aggregation)).
@@ -2701,7 +2701,7 @@ Another unique aspect of spatial objects is distance.
 All spatial objects are related through space and distance calculations can be used to find the strength of this relationship between spatial entities.
 Distance operations are covered in sections \@ref(distance-relations) and \@ref(global-operations-and-distances) for vector and raster datasets respectively.
 
-\BeginKnitrBlock{rmdnote}<div class="rmdnote">It is important to note that spatial operations that use two spatial objects rely on both objects having the same coordinate reference system, a topic that was introduced in \@ref(crs-intro) and which will be covered in more depth in Chapter 6.</div>\EndKnitrBlock{rmdnote}
+\BeginKnitrBlock{rmdnote}<div class="rmdnote">It is important to note that spatial operations that use two spatial objects rely on both objects having the same coordinate reference system, a topic that was introduced in \@ref(crs-intro) and which will be covered in more depth in Chapter \@ref(transform).</div>\EndKnitrBlock{rmdnote}
 
 ## Spatial operations on vector data
 
@@ -3100,7 +3100,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservee42b6c343caafd94
+preserve8128c2ca4afc7aaa
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4431,7 +4431,7 @@ plot(london_proj, add = TRUE)
 <p class="caption">(\#fig:crs-buf-proj)Buffer on data with projected CRS.</p>
 </div>
 
-## CRS conversion
+## CRS conversion {#crs-transform}
 
 While CRSs can be set manually, it is more common in real world applications to *transform* a known CRS into another.
 CRS transformation could be vital to obtain proper results in many cases.

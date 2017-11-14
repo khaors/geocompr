@@ -219,7 +219,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6" data-path="transform.html"><a href="transform.html"><i class="fa fa-check"></i><b>6</b> Reprojections and Transformations</a><ul>
 <li class="chapter" data-level="" data-path="transform.html"><a href="transform.html#prerequisites-4"><i class="fa fa-check"></i>Prerequisites</a></li>
 <li class="chapter" data-level="6.1" data-path="transform.html"><a href="transform.html#introduction-3"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
-<li class="chapter" data-level="6.2" data-path="transform.html"><a href="transform.html#crs-conversion"><i class="fa fa-check"></i><b>6.2</b> CRS conversion</a><ul>
+<li class="chapter" data-level="6.2" data-path="transform.html"><a href="transform.html#crs-transform"><i class="fa fa-check"></i><b>6.2</b> CRS conversion</a><ul>
 <li class="chapter" data-level="6.2.1" data-path="transform.html"><a href="transform.html#vector-data-3"><i class="fa fa-check"></i><b>6.2.1</b> Vector data</a></li>
 <li class="chapter" data-level="6.2.2" data-path="transform.html"><a href="transform.html#raster-data-3"><i class="fa fa-check"></i><b>6.2.2</b> Raster data</a></li>
 </ul></li>
@@ -268,13 +268,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="introduction-1" class="section level2">
 <h2><span class="header-section-number">4.1</span> Introduction</h2>
-<p>Spatial operations are a vital part of geocomputation. This chapter shows how spatial datasets can be modified in a multitude of ways based on the the location and shape of the features they contain (for vector data) and the relative locations and values of pixes (for raster data).</p>
+<p>Spatial operations are a vital part of geocomputation. This chapter shows how spatial datasets can be modified in a multitude of ways based on the the location and shape of the features they contain (for vector data) and the relative locations and values of pixels (for raster data).</p>
 <p>The content clearly builds on the previous chapter because many spatial operations have a non-spatial (attribute) equivalent. Spatial operations on <em>vector</em> objects include spatial subsetting (covered in section <a href="spatial-data-operations.html#spatial-subsetting">4.2.1</a>), joining and non-overlapping joins (covered in <a href="spatial-data-operations.html#spatial-joining">4.2.3</a> and <a href="spatial-data-operations.html#non-overlapping-joins">4.2.4</a>) and aggregation (section <a href="spatial-data-operations.html#spatial-data-aggregation">4.2.5</a>). These topics may sound daunting, but they have already been covered, in section <a href="attr.html#vector-attribute-manipulation">3.2</a>. Spatial operations on <em>rasters</em> include merging and subsetting, covered in section <a href="spatial-data-operations.html#spatial-operations-on-raster-data">4.3</a>.</p>
 <p>The chapter also introduces new concepts that are unique to spatial data. A variety of <em>topological relations</em> can be used to subset/join vector geometries, a topic that is explored in section <a href="spatial-data-operations.html#topological-relations">4.2.2</a>. Spatial operations on raster datasets involve <em>map algebra</em> (covered in sections <a href="spatial-data-operations.html#map-algebra">4.3.2</a> to <a href="spatial-data-operations.html#global-operations-and-distances">4.3.6</a>) and combining and aligning them (covered in sections <a href="spatial-data-operations.html#merging-rasters">4.3.7</a> and <a href="spatial-data-operations.html#aligning-rasters">4.3.8</a>).</p>
 <p>Another unique aspect of spatial objects is distance. All spatial objects are related through space and distance calculations can be used to find the strength of this relationship between spatial entities. Distance operations are covered in sections <a href="spatial-data-operations.html#distance-relations">4.2.6</a> and <a href="spatial-data-operations.html#global-operations-and-distances">4.3.6</a> for vector and raster datasets respectively.</p>
 
 <div class="rmdnote">
-It is important to note that spatial operations that use two spatial objects rely on both objects having the same coordinate reference system, a topic that was introduced in <a href="spatial-class.html#crs-intro">2.3</a> and which will be covered in more depth in Chapter 6.
+It is important to note that spatial operations that use two spatial objects rely on both objects having the same coordinate reference system, a topic that was introduced in <a href="spatial-class.html#crs-intro">2.3</a> and which will be covered in more depth in Chapter <a href="transform.html#transform">6</a>.
 </div>
 <p></p>
 </div>

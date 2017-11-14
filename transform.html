@@ -219,7 +219,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6" data-path="transform.html"><a href="transform.html"><i class="fa fa-check"></i><b>6</b> Reprojections and Transformations</a><ul>
 <li class="chapter" data-level="" data-path="transform.html"><a href="transform.html#prerequisites-4"><i class="fa fa-check"></i>Prerequisites</a></li>
 <li class="chapter" data-level="6.1" data-path="transform.html"><a href="transform.html#introduction-3"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
-<li class="chapter" data-level="6.2" data-path="transform.html"><a href="transform.html#crs-conversion"><i class="fa fa-check"></i><b>6.2</b> CRS conversion</a><ul>
+<li class="chapter" data-level="6.2" data-path="transform.html"><a href="transform.html#crs-transform"><i class="fa fa-check"></i><b>6.2</b> CRS conversion</a><ul>
 <li class="chapter" data-level="6.2.1" data-path="transform.html"><a href="transform.html#vector-data-3"><i class="fa fa-check"></i><b>6.2.1</b> Vector data</a></li>
 <li class="chapter" data-level="6.2.2" data-path="transform.html"><a href="transform.html#raster-data-3"><i class="fa fa-check"></i><b>6.2.2</b> Raster data</a></li>
 </ul></li>
@@ -305,7 +305,7 @@ Figure 6.2: Buffer on data with projected CRS.
 </p>
 </div>
 </div>
-<div id="crs-conversion" class="section level2">
+<div id="crs-transform" class="section level2">
 <h2><span class="header-section-number">6.2</span> CRS conversion</h2>
 <p>While CRSs can be set manually, it is more common in real world applications to <em>transform</em> a known CRS into another. CRS transformation could be vital to obtain proper results in many cases. A typical example is when geometry data is provided in a geographic CRS but you want to do spatial operations, which require it to be in a projected CRS. It includes distance measurements or area calculations. CRS also represent spatial relationship between datasets. Therefore, spatial operations on many datasets can only be correctly performed when all the data have the same CRS. The most common reason to unify the CRS is to combine different datasets (e.g. merge two rasters) or apply methods which need at least two objects (e.g spatial subsetting or raster map algebra). Let’s use real-world examples to illustrate this.</p>
 <div id="vector-data-3" class="section level3">
