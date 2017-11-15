@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2017-11-14">
+<meta name="date" content="2017-11-15">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -366,7 +366,7 @@ cat_raster
 <span class="co">#&gt;  [1] 11 21 22 23 31 41 42 43 52 71 81 82 90 95</span></code></pre></div>
 <p>When reprojecting categorical raster, we need to ensure that our new estimated values would still have values of our original classes. This could be done using the nearest neighbor method (<code>ngb</code>). In this method, value of the output cell is calculated based on the nearest cell center of the input raster.</p>
 <p>For example, we want to change the CRS to WGS 84.<br />
-It can be desired when we want to visualize a raster data on top of a web basemaps, such as the Google or OpenStreetMap map tiles. The first step to do so is to obtain the proj4 definition of this CRS, which can be done using the <a href="http://spatialreference.org/ref/epsg/wgs-84/">http://spatialreference.org</a> webpage. The second and last step is to define the reprojection method in the <code>projectRaster()</code> function, which in case of categorical data is the nearest neighbor method (<code>ngb</code>):</p>
+It can be desired when we want to visualize a raster data on top of a web basemaps, such as the Google or OpenStreetMap map tiles. The first step is to obtain the proj4 definition of this CRS, which can be done using the <a href="http://spatialreference.org/ref/epsg/wgs-84/">http://spatialreference.org</a> webpage. The second and last step is to define the reprojection method in the <code>projectRaster()</code> function, which in case of categorical data is the nearest neighbor method (<code>ngb</code>):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wgs84 =<span class="st"> &quot;+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs&quot;</span>
 cat_raster_wgs84 =<span class="st"> </span><span class="kw">projectRaster</span>(cat_raster, <span class="dt">crs =</span> wgs84, <span class="dt">method =</span> <span class="st">&quot;ngb&quot;</span>)
 cat_raster_wgs84
@@ -379,15 +379,7 @@ cat_raster_wgs84
 <span class="co">#&gt; names       : nlcd2011 </span>
 <span class="co">#&gt; values      : 11, 95  (min, max)</span></code></pre></div>
 <p>Many properties of the new object differs from the previous one, which include the number of columns and rows (and therefore number of cells), resolution (transformed from meters into degrees), and extent. In the same time, it keeps the same land cover classes - <code>unique(cat_raster_wgs84)</code>. <!-- freq(cat_raster_wgs84) --> <!-- freq(cat_raster) --></p>
-<p>This process of reprojection is almost identical for continuous data. The <code>srtm.tif</code> file contains digital elevation model for the same area in Utah from <a href="https://www2.jpl.nasa.gov/srtm/">the Shuttle Radar Topography Mission (SRTM)</a>. The important difference is that this dataset’s CRS is geographic CRS and we want to transform it to projected CRS.</p>
-
-<div class="rmdnote">
-All the grid cells in equal-area projections have the same size. Therefore, these projections are recommended when performing many raster operations, such as distance calculation.
-</div>
-<p></p>
-<!-- http://projectionwizard.org/ -->
-<!-- It can be desired when we want to visualize a raster data on top of a web basemaps, such as the Google or OpenStreetMap map tiles. -->
-<p>Each value in this raster represents elevation measured in meters.</p>
+<p>This process of reprojection is almost identical for continuous data. The <code>srtm.tif</code> file contains digital elevation model for the same area in Utah from <a href="https://www2.jpl.nasa.gov/srtm/">the Shuttle Radar Topography Mission (SRTM)</a>. Each value in this raster represents elevation measured in meters.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">con_raster =<span class="st"> </span><span class="kw">raster</span>(<span class="kw">system.file</span>(<span class="st">&quot;raster/srtm.tif&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;spDataLarge&quot;</span>))
 con_raster
 <span class="co">#&gt; class       : RasterLayer </span>
@@ -398,19 +390,25 @@ con_raster
 <span class="co">#&gt; data source : /home/travis/R/Library/spDataLarge/raster/srtm.tif </span>
 <span class="co">#&gt; names       : srtm </span>
 <span class="co">#&gt; values      : 1024, 2892  (min, max)</span></code></pre></div>
-<p>The nearest neighbor method should not be used for continuous raster data, as we want to preserve gradual changes in values. Alternatively, continuous data could be reprojected in the <strong>raster</strong> package using the bilinear method. In this technique, value of the output cell is calculated based on four nearest cells in the original raster. The new value is a weighted average of values from these four cells, adjusted for their distance from the center of the output cell.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">equalarea =<span class="st"> &quot;+proj=laea +lat_0=37.32243222222222 +lon_0=-113.04597222222222&quot;</span>
+<p>The nearest neighbor method should not be used for continuous raster data, as we want to preserve gradual changes in values. Alternatively, continuous data could be reprojected in the <strong>raster</strong> package using the bilinear method. In this technique, value of the output cell is calculated based on four nearest cells in the original raster. The new value is a weighted average of values from these four cells, adjusted for their distance from the center of the output cell. This dataset has geographic CRS and we want to transform it into projected CRS.</p>
+
+<div class="rmdnote">
+All the grid cells in equal-area projections have the same size. Therefore, these projections are recommended when performing many raster operations, such as distance calculation.
+</div>
+<p></p>
+<p>In the fist step we need to obtain the proj4 definition of the existing projected CRS appropriate for this area or create a new one using the <a href="http://projectionwizard.org/">Projection Wizard</a> online tool <span class="citation">(Šavrič, Jenny, and Jenny <a href="#ref-savric_projection_2016">2016</a>)</span>. For this example, we used the Oblique Lambert azimuthal equal-area projection. The second step is to define the <code>bilinear</code> reprojection method:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">equalarea =<span class="st"> &quot;+proj=laea +lat_0=37.32 +lon_0=-113.04&quot;</span>
 con_raster_ea =<span class="st"> </span><span class="kw">projectRaster</span>(con_raster, <span class="dt">crs =</span> equalarea, <span class="dt">method =</span> <span class="st">&quot;bilinear&quot;</span>)
 con_raster_ea
 <span class="co">#&gt; class       : RasterLayer </span>
 <span class="co">#&gt; dimensions  : 467, 478, 223226  (nrow, ncol, ncell)</span>
 <span class="co">#&gt; resolution  : 73.9, 92.5  (x, y)</span>
-<span class="co">#&gt; extent      : -17647, 17677, -21576, 21621  (xmin, xmax, ymin, ymax)</span>
-<span class="co">#&gt; coord. ref. : +proj=laea +lat_0=37.32243222222222 +lon_0=-113.04597222222222 +ellps=WGS84 </span>
+<span class="co">#&gt; extent      : -18178, 17146, -21306, 21892  (xmin, xmax, ymin, ymax)</span>
+<span class="co">#&gt; coord. ref. : +proj=laea +lat_0=37.32 +lon_0=-113.04 +ellps=WGS84 </span>
 <span class="co">#&gt; data source : in memory</span>
 <span class="co">#&gt; names       : srtm </span>
 <span class="co">#&gt; values      : 1027, 2891  (min, max)</span></code></pre></div>
-<p>Reprojection of continuous rasters changes spatial properties, such as the number of cells, resolution, and extent. It also slightly modifies values in the new raster, which can be seen by comparing the outputs of the <code>summary()</code> function between <code>con_raster</code> and <code>con_raster_ea</code>.</p>
+<p>Reprojection of continuous rasters also changes spatial properties, such as the number of cells, resolution, and extent. Moreover, it slightly modifies values in the new raster, which can be seen by comparing the outputs of the <code>summary()</code> function between <code>con_raster</code> and <code>con_raster_ea</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(con_raster)
 <span class="kw">summary</span>(con_raster_ea)</code></pre></div>
 <!-- why new na? -->
@@ -479,6 +477,9 @@ Figure 6.5: Randomly distributed points within the bounding box enclosing circle
 </div>
 <h3> References</h3>
 <div id="refs" class="references">
+<div id="ref-savric_projection_2016">
+<p>Šavrič, Bojan, Bernhard Jenny, and Helen Jenny. 2016. “Projection Wizard – An Online Map Projection Selection Tool.” <em>The Cartographic Journal</em> 53 (2): 177–85. doi:<a href="https://doi.org/10.1080/00087041.2015.1131938">10.1080/00087041.2015.1131938</a>.</p>
+</div>
 <div id="ref-grolemund_r_2016">
 <p>Grolemund, Garrett, and Hadley Wickham. 2016. <em>R for Data Science</em>. 1 edition. O’Reilly Media.</p>
 </div>

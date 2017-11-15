@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2017-11-14'
+date: '2017-11-15'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2017-11-14 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2017-11-15 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve4f7a8fb0bc7a2200
+preservea29eab5331b0a5c7
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3100,7 +3100,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve7f76228fb4c1ff4e
+preservef0452278c2f33af0
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3400,7 +3400,7 @@ Map algebra (or cartographic modeling) divides raster operations into four subcl
 2. *Focal* or neighborhood operations.
 Most often the output cell value is the result of a 3 x 3 input cell block.
 3. *Zonal* operations are similar to focal operations but instead of a predefined neighborhood, classes, which can take on any, i.e., also an irregular size and shape, are the basis for calculations.
-4. *Global* or per-raster operations, that means the output cell derives its value potentially from one or several entire rasters
+4. *Global* or per-raster operations, that means the output cell derives its value potentially from one or several entire rasters.
 
 This classification scheme uses basically the number of cells involved in a processing step as distinguishing feature.
 Raster operations can also be classified by discipline, for example terrain, hydrological analysis or image classifications.
@@ -4550,7 +4550,7 @@ In this method, value of the output cell is calculated based on the nearest cell
 
 For example, we want to change the CRS to WGS 84.  
 It can be desired when we want to visualize a raster data on top of a web basemaps, such as the Google or OpenStreetMap map tiles.
-The first step to do so is to obtain the proj4 definition of this CRS, which can be done using the [http://spatialreference.org](http://spatialreference.org/ref/epsg/wgs-84/) webpage. 
+The first step is to obtain the proj4 definition of this CRS, which can be done using the [http://spatialreference.org](http://spatialreference.org/ref/epsg/wgs-84/) webpage. 
 The second and last step is to define the reprojection method in the `projectRaster()` function, which in case of categorical data is the nearest neighbor method (`ngb`):
 
 
@@ -4575,14 +4575,6 @@ In the same time, it keeps the same land cover classes - `unique(cat_raster_wgs8
 
 This process of reprojection is almost identical for continuous data.
 The `srtm.tif` file contains digital elevation model for the same area in Utah from [the Shuttle Radar Topography Mission (SRTM)](https://www2.jpl.nasa.gov/srtm/).
-The important difference is that this dataset's CRS is geographic CRS and we want to transform it to projected CRS.
-
-\BeginKnitrBlock{rmdnote}<div class="rmdnote">All the grid cells in equal-area projections have the same size.
-Therefore, these projections are recommended when performing many raster operations, such as distance calculation.</div>\EndKnitrBlock{rmdnote}
-
-<!-- http://projectionwizard.org/ -->
-<!-- It can be desired when we want to visualize a raster data on top of a web basemaps, such as the Google or OpenStreetMap map tiles. -->
-
 Each value in this raster represents elevation measured in meters.
 
 
@@ -4603,24 +4595,32 @@ The nearest neighbor method should not be used for continuous raster data, as we
 Alternatively, continuous data could be reprojected in the **raster** package using the bilinear method. 
 In this technique, value of the output cell is calculated based on four nearest cells in the original raster. 
 The new value is a weighted average of values from these four cells, adjusted for their distance from the center of the output cell. 
+This dataset has geographic CRS and we want to transform it into projected CRS.
+
+\BeginKnitrBlock{rmdnote}<div class="rmdnote">All the grid cells in equal-area projections have the same size.
+Therefore, these projections are recommended when performing many raster operations, such as distance calculation.</div>\EndKnitrBlock{rmdnote}
+
+In the fist step we need to obtain the proj4 definition of the existing projected CRS appropriate for this area or create a new one using the [Projection Wizard](http://projectionwizard.org/) online tool [@savric_projection_2016].
+For this example, we used the Oblique Lambert azimuthal equal-area projection.
+The second step is to define the `bilinear` reprojection method:
 
 
 ```r
-equalarea = "+proj=laea +lat_0=37.32243222222222 +lon_0=-113.04597222222222"
+equalarea = "+proj=laea +lat_0=37.32 +lon_0=-113.04"
 con_raster_ea = projectRaster(con_raster, crs = equalarea, method = "bilinear")
 con_raster_ea
 #> class       : RasterLayer 
 #> dimensions  : 467, 478, 223226  (nrow, ncol, ncell)
 #> resolution  : 73.9, 92.5  (x, y)
-#> extent      : -17647, 17677, -21576, 21621  (xmin, xmax, ymin, ymax)
-#> coord. ref. : +proj=laea +lat_0=37.32243222222222 +lon_0=-113.04597222222222 +ellps=WGS84 
+#> extent      : -18178, 17146, -21306, 21892  (xmin, xmax, ymin, ymax)
+#> coord. ref. : +proj=laea +lat_0=37.32 +lon_0=-113.04 +ellps=WGS84 
 #> data source : in memory
 #> names       : srtm 
 #> values      : 1027, 2891  (min, max)
 ```
 
-Reprojection of continuous rasters changes spatial properties, such as the number of cells, resolution, and extent.
-It also slightly modifies values in the new raster, which can be seen by comparing the outputs of the `summary()` function between `con_raster` and `con_raster_ea`.
+Reprojection of continuous rasters also changes spatial properties, such as the number of cells, resolution, and extent.
+Moreover, it slightly modifies values in the new raster, which can be seen by comparing the outputs of the `summary()` function between `con_raster` and `con_raster_ea`.
 
 
 ```r
