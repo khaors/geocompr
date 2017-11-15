@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve0ad5bfe19af78dfc
+preserve763d203e7a5fe410
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3100,7 +3100,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservec0a9754dfbcb9c75
+preserve7a02382eef3a0770
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4352,6 +4352,13 @@ library(spDataLarge)
 ```
 
 ## Introduction
+
+<!-- Maybe the solution could be to have three chapters: -->
+
+<!-- - attribute operations -->
+<!-- - spatial operations -->
+<!-- - geometric operations -->
+<!-- - This is also basically what Jakub was proposing, right?. Geometric operations also include reprojections. Then we could split the chapter again into vector and raster subsections. And the raster sections would include raster alignment, aggregations (change of resolution) and reprojections. -->
 
 As stated in Chapter \@ref(crs-intro), it is important to understand which CRS you are working in when undertaking spatial operations.
 Many spatial operations assume that you are using a *projected* CRS (on a Euclidean grid with units of meters rather than a geographic 'lat/lon' grid with units of degrees).

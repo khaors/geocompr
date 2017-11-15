@@ -271,6 +271,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="introduction-3" class="section level2">
 <h2><span class="header-section-number">6.1</span> Introduction</h2>
+<!-- Maybe the solution could be to have three chapters: -->
+<!-- - attribute operations -->
+<!-- - spatial operations -->
+<!-- - geometric operations -->
+<!-- - This is also basically what Jakub was proposing, right?. Geometric operations also include reprojections. Then we could split the chapter again into vector and raster subsections. And the raster sections would include raster alignment, aggregations (change of resolution) and reprojections. -->
 <p>As stated in Chapter <a href="spatial-class.html#crs-intro">2.3</a>, it is important to understand which CRS you are working in when undertaking spatial operations. Many spatial operations assume that you are using a <em>projected</em> CRS (on a Euclidean grid with units of meters rather than a geographic ‘lat/lon’ grid with units of degrees). The GEOS engine underlying most spatial operations in <strong>sf</strong>, for example, assumes your data is in a projected CRS. For this reason <strong>sf</strong> contains a function for checking if geometries have a geographic or projected CRS. This is illustrated below using the example of <em>London</em>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london =<span class="st"> </span><span class="kw">st_sf</span>(<span class="dt">geometry =</span> <span class="kw">st_sfc</span>(<span class="kw">st_point</span>(<span class="kw">c</span>(-<span class="fl">0.1</span>, <span class="fl">51.5</span>))))
 <span class="kw">st_is_longlat</span>(london)
