@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservea29eab5331b0a5c7
+preservee7f93adcaf62986d
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3100,7 +3100,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservef0452278c2f33af0
+preservebdb8be93884759cc
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3400,7 +3400,7 @@ Map algebra (or cartographic modeling) divides raster operations into four subcl
 2. *Focal* or neighborhood operations.
 Most often the output cell value is the result of a 3 x 3 input cell block.
 3. *Zonal* operations are similar to focal operations but instead of a predefined neighborhood, classes, which can take on any, i.e., also an irregular size and shape, are the basis for calculations.
-4. *Global* or per-raster operations, that means the output cell derives its value potentially from one or several entire rasters.
+4. *Global* or per-raster operations, that means the output cell derives its value potentially from one or several entire rasters
 
 This classification scheme uses basically the number of cells involved in a processing step as distinguishing feature.
 Raster operations can also be classified by discipline, for example terrain, hydrological analysis or image classifications.
@@ -4600,7 +4600,7 @@ This dataset has geographic CRS and we want to transform it into projected CRS.
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">All the grid cells in equal-area projections have the same size.
 Therefore, these projections are recommended when performing many raster operations, such as distance calculation.</div>\EndKnitrBlock{rmdnote}
 
-In the fist step we need to obtain the proj4 definition of the existing projected CRS appropriate for this area or create a new one using the [Projection Wizard](http://projectionwizard.org/) online tool [@savric_projection_2016].
+In the fist step we need to obtain the proj4 definition of the existing projected CRS appropariate for this area or create a new one using the [Projection Wizard](http://projectionwizard.org/) online tool [@savric_projection_2016].
 For this example, we used the Oblique Lambert azimuthal equal-area projection.
 The second step is to define the `bilinear` reprojection method:
 

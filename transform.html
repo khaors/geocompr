@@ -396,7 +396,7 @@ con_raster
 All the grid cells in equal-area projections have the same size. Therefore, these projections are recommended when performing many raster operations, such as distance calculation.
 </div>
 <p></p>
-<p>In the fist step we need to obtain the proj4 definition of the existing projected CRS appropriate for this area or create a new one using the <a href="http://projectionwizard.org/">Projection Wizard</a> online tool <span class="citation">(Šavrič, Jenny, and Jenny <a href="#ref-savric_projection_2016">2016</a>)</span>. For this example, we used the Oblique Lambert azimuthal equal-area projection. The second step is to define the <code>bilinear</code> reprojection method:</p>
+<p>In the fist step we need to obtain the proj4 definition of the existing projected CRS appropariate for this area or create a new one using the <a href="http://projectionwizard.org/">Projection Wizard</a> online tool <span class="citation">(Šavrič, Jenny, and Jenny <a href="#ref-savric_projection_2016">2016</a>)</span>. For this example, we used the Oblique Lambert azimuthal equal-area projection. The second step is to define the <code>bilinear</code> reprojection method:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">equalarea =<span class="st"> &quot;+proj=laea +lat_0=37.32 +lon_0=-113.04&quot;</span>
 con_raster_ea =<span class="st"> </span><span class="kw">projectRaster</span>(con_raster, <span class="dt">crs =</span> equalarea, <span class="dt">method =</span> <span class="st">&quot;bilinear&quot;</span>)
 con_raster_ea
