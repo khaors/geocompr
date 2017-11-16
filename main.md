@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve2e9634a30e822505
+preserve3a2a9b43f11c4151
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -1433,27 +1433,21 @@ plot(new_raster)
 
 <img src="figures/basic-new-raster-plot-1.png" width="576" style="display: block; margin: auto;" />
 
-Moreover, it is possible to plot a raster and overlay it with vector data.
-For this purpose, we need to read-in a vector dataset:
+<!-- Moreover, it is possible to plot a raster and overlay it with vector data. -->
+<!-- For this purpose, we need to read-in a vector dataset: -->
 
+<!-- ```{r, message=FALSE, results='hide'} -->
+<!-- vector_filepath = system.file("vector/zion.gpkg", package="spDataLarge") -->
+<!-- new_vector = st_read(vector_filepath) -->
+<!-- ``` -->
 
-```r
-vector_filepath = system.file("vector/zion.gpkg", package="spDataLarge")
-new_vector = st_read(vector_filepath)
-```
+<!-- Our new object, `new_vector`, is a polygon representing the borders of Zion National Park (`?zion`). -->
+<!-- We can add the borders to the elevation map using the `add` argument of the `plot()`: -->
 
-Our new object, `new_vector`, is a polygon representing the borders of Zion National Park (`?zion`).
-We can add the borders to the elevation map using the `add` argument of the `plot()`:
-
-
-```r
-plot(new_raster)
-plot(new_vector, add = TRUE)
-#> Warning in plot.sf(new_vector, add = TRUE): ignoring all but the first
-#> attribute
-```
-
-<img src="figures/basic-new-raster-vector-plot-1.png" width="576" style="display: block; margin: auto;" />
+<!-- ```{r basic-new-raster-vector-plot} -->
+<!-- plot(new_raster) -->
+<!-- plot(new_vector$geom, add = TRUE) -->
+<!-- ``` -->
 
 There are several different approaches to plot raster data in R:
 
@@ -1680,7 +1674,16 @@ crs_data = rgdal::make_EPSG()
 View(crs_data)
 ```
 
-In **sf** the CRS of an object can be retrieved using `st_crs()`:
+In **sf** the CRS of an object can be retrieved using `st_crs()`.
+For this purpose, we need to read-in a vector dataset:
+
+
+```r
+vector_filepath = system.file("vector/zion.gpkg", package="spDataLarge")
+new_vector = st_read(vector_filepath)
+```
+
+Our new object, `new_vector`, is a polygon representing the borders of Zion National Park (`?zion`).
 
 
 ```r
@@ -3100,7 +3103,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve3c92b4b9d4d5c0bf
+preserve03861dd7c8fcc761
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4509,6 +4512,25 @@ It is hidden from view for most of the time except when the object is printed bu
 <!-- show the results (e.g. two/three panels) -->
 <!-- show calculations? e.g area/distance? -->
 
+<!-- http://proj4.org/usage/index.html# -->
+<!-- ```{r} -->
+<!-- plot(world$geom) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- world_2 = st_transform(world, crs = "+proj=robin") -->
+<!-- plot(world_2$geom) -->
+<!-- ``` -->
+
+<!-- https://github.com/r-spatial/lwgeom/issues/6 -->
+<!-- ```{r} -->
+<!-- # devtools::install_github("r-spatial/lwgeom") -->
+<!-- library(lwgeom) -->
+<!-- world_3 = st_transform_proj(world, crs = "+proj=wintri") -->
+<!-- st_crs(world_3) = NA -->
+<!-- plot(world_3$geom) -->
+<!-- ``` -->
+
 ### Raster data
 
 The basic concepts of CRS apply to both vector and raster data model.
@@ -4649,6 +4671,27 @@ summary(con_raster_ea)
 <!-- st_simplify -->
 <!-- rmapshaper -->
 
+### Centroids
+
+
+```r
+nz_centroid = st_centroid(nz)
+```
+
+
+```r
+nz_pos = st_point_on_surface(nz)
+```
+
+
+```r
+plot(nz$geometry)
+plot(nz_centroid$geometry, add = TRUE)
+plot(nz_pos$geometry, add = TRUE, col = "red")
+```
+
+<img src="figures/unnamed-chunk-24-1.png" width="576" style="display: block; margin: auto;" />
+
 ### Clipping 
 
 Spatial clipping is a form of spatial subsetting that involves changes to the `geometry` columns of at least some of the affected features.
@@ -4684,7 +4727,7 @@ plot(b)
 plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
 ```
 
-<img src="figures/unnamed-chunk-22-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-25-1.png" width="576" style="display: block; margin: auto;" />
 
 The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
 <!-- Todo: reference r4ds -->
@@ -4735,6 +4778,20 @@ text(x = c(-0.5, 1.5), y = 1, labels = l)
 <!-- st_centroid -->
 <!-- st_polygonize -->
 
+### Geometry cast
+
+
+```r
+nz_points = st_cast(nz, "MULTIPOINT")
+```
+
+
+```r
+plot(nz$geometry)
+plot(nz_points$geometry, add = TRUE)
+```
+
+<img src="figures/unnamed-chunk-28-1.png" width="576" style="display: block; margin: auto;" />
 
 ## Exercises
 

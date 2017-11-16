@@ -224,9 +224,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.2.2" data-path="transform.html"><a href="transform.html#raster-data-3"><i class="fa fa-check"></i><b>6.2.2</b> Raster data</a></li>
 </ul></li>
 <li class="chapter" data-level="6.3" data-path="transform.html"><a href="transform.html#geometry-transformations"><i class="fa fa-check"></i><b>6.3</b> Geometry transformations</a><ul>
-<li class="chapter" data-level="6.3.1" data-path="transform.html"><a href="transform.html#clipping"><i class="fa fa-check"></i><b>6.3.1</b> Clipping</a></li>
+<li class="chapter" data-level="6.3.1" data-path="transform.html"><a href="transform.html#centroids"><i class="fa fa-check"></i><b>6.3.1</b> Centroids</a></li>
+<li class="chapter" data-level="6.3.2" data-path="transform.html"><a href="transform.html#clipping"><i class="fa fa-check"></i><b>6.3.2</b> Clipping</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="transform.html"><a href="transform.html#type-transformation"><i class="fa fa-check"></i><b>6.4</b> Type transformation</a></li>
+<li class="chapter" data-level="6.4" data-path="transform.html"><a href="transform.html#type-transformation"><i class="fa fa-check"></i><b>6.4</b> Type transformation</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="transform.html"><a href="transform.html#geometry-cast"><i class="fa fa-check"></i><b>6.4.1</b> Geometry cast</a></li>
+</ul></li>
 <li class="chapter" data-level="6.5" data-path="transform.html"><a href="transform.html#exercises-4"><i class="fa fa-check"></i><b>6.5</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>7</b> References</a></li>
@@ -836,15 +839,18 @@ The new vector, `new_raster_values`, can serve as input for subsequent statistic
 <p>Similar to the <strong>sf</strong> package, <strong>raster</strong> also provides <code>plot()</code> methods for its own classes.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(new_raster)</code></pre></div>
 <p><img src="figures/basic-new-raster-plot-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>Moreover, it is possible to plot a raster and overlay it with vector data. For this purpose, we need to read-in a vector dataset:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vector_filepath =<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;vector/zion.gpkg&quot;</span>, <span class="dt">package=</span><span class="st">&quot;spDataLarge&quot;</span>)
-new_vector =<span class="st"> </span><span class="kw">st_read</span>(vector_filepath)</code></pre></div>
-<p>Our new object, <code>new_vector</code>, is a polygon representing the borders of Zion National Park (<code>?zion</code>). We can add the borders to the elevation map using the <code>add</code> argument of the <code>plot()</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(new_raster)
-<span class="kw">plot</span>(new_vector, <span class="dt">add =</span> <span class="ot">TRUE</span>)
-<span class="co">#&gt; Warning in plot.sf(new_vector, add = TRUE): ignoring all but the first</span>
-<span class="co">#&gt; attribute</span></code></pre></div>
-<p><img src="figures/basic-new-raster-vector-plot-1.png" width="576" style="display: block; margin: auto;" /></p>
+<!-- Moreover, it is possible to plot a raster and overlay it with vector data. -->
+<!-- For this purpose, we need to read-in a vector dataset: -->
+<!-- ```{r, message=FALSE, results='hide'} -->
+<!-- vector_filepath = system.file("vector/zion.gpkg", package="spDataLarge") -->
+<!-- new_vector = st_read(vector_filepath) -->
+<!-- ``` -->
+<!-- Our new object, `new_vector`, is a polygon representing the borders of Zion National Park (`?zion`). -->
+<!-- We can add the borders to the elevation map using the `add` argument of the `plot()`: -->
+<!-- ```{r basic-new-raster-vector-plot} -->
+<!-- plot(new_raster) -->
+<!-- plot(new_vector$geom, add = TRUE) -->
+<!-- ``` -->
 <p>There are several different approaches to plot raster data in R:</p>
 <ul>
 <li>You can use <code>spplot()</code> to visualize several (such as spatiotemporal) layers at once. You can also do so with the <strong>rasterVis</strong> package which provides more advanced methods for plotting raster objects.</li>
@@ -947,7 +953,10 @@ Operations on <code>RasterBrick</code> and <code>RasterStack</code> objects will
 <p>Spatial R packages support a wide range of CRSs they use long-establish <a href="http://proj4.org/">proj4</a> library. Other than searching for EPSG codes on-line, another quick way to find-out about available CRSs is via the <code>rgdal::make_EPSG()</code> function, which outputs a data frame of available projections. Before going into more detail into these, it’s worth learning how to view and filter them inside R, as this could save time trawling the internet. The following code will show available CRSs interactively, allowing filtering of ones of interest (try filtering for the OSGB CRSs for example):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">crs_data =<span class="st"> </span>rgdal::<span class="kw">make_EPSG</span>()
 <span class="kw">View</span>(crs_data)</code></pre></div>
-<p>In <strong>sf</strong> the CRS of an object can be retrieved using <code>st_crs()</code>:</p>
+<p>In <strong>sf</strong> the CRS of an object can be retrieved using <code>st_crs()</code>. For this purpose, we need to read-in a vector dataset:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vector_filepath =<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;vector/zion.gpkg&quot;</span>, <span class="dt">package=</span><span class="st">&quot;spDataLarge&quot;</span>)
+new_vector =<span class="st"> </span><span class="kw">st_read</span>(vector_filepath)</code></pre></div>
+<p>Our new object, <code>new_vector</code>, is a polygon representing the borders of Zion National Park (<code>?zion</code>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">st_crs</span>(new_vector) <span class="co"># get CRS</span>
 <span class="co">#&gt; Coordinate Reference System:</span>
 <span class="co">#&gt;   No EPSG code</span>

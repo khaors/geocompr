@@ -224,9 +224,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.2.2" data-path="transform.html"><a href="transform.html#raster-data-3"><i class="fa fa-check"></i><b>6.2.2</b> Raster data</a></li>
 </ul></li>
 <li class="chapter" data-level="6.3" data-path="transform.html"><a href="transform.html#geometry-transformations"><i class="fa fa-check"></i><b>6.3</b> Geometry transformations</a><ul>
-<li class="chapter" data-level="6.3.1" data-path="transform.html"><a href="transform.html#clipping"><i class="fa fa-check"></i><b>6.3.1</b> Clipping</a></li>
+<li class="chapter" data-level="6.3.1" data-path="transform.html"><a href="transform.html#centroids"><i class="fa fa-check"></i><b>6.3.1</b> Centroids</a></li>
+<li class="chapter" data-level="6.3.2" data-path="transform.html"><a href="transform.html#clipping"><i class="fa fa-check"></i><b>6.3.2</b> Clipping</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="transform.html"><a href="transform.html#type-transformation"><i class="fa fa-check"></i><b>6.4</b> Type transformation</a></li>
+<li class="chapter" data-level="6.4" data-path="transform.html"><a href="transform.html#type-transformation"><i class="fa fa-check"></i><b>6.4</b> Type transformation</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="transform.html"><a href="transform.html#geometry-cast"><i class="fa fa-check"></i><b>6.4.1</b> Geometry cast</a></li>
+</ul></li>
 <li class="chapter" data-level="6.5" data-path="transform.html"><a href="transform.html#exercises-4"><i class="fa fa-check"></i><b>6.5</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>7</b> References</a></li>
@@ -345,6 +348,22 @@ The EPSG code can be found inside the <code>crs</code> attribute of the object�
 <!-- http://bl.ocks.org/vlandham/raw/9216751/ -->
 <!-- show the results (e.g. two/three panels) -->
 <!-- show calculations? e.g area/distance? -->
+<!-- http://proj4.org/usage/index.html# -->
+<!-- ```{r} -->
+<!-- plot(world$geom) -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- world_2 = st_transform(world, crs = "+proj=robin") -->
+<!-- plot(world_2$geom) -->
+<!-- ``` -->
+<!-- https://github.com/r-spatial/lwgeom/issues/6 -->
+<!-- ```{r} -->
+<!-- # devtools::install_github("r-spatial/lwgeom") -->
+<!-- library(lwgeom) -->
+<!-- world_3 = st_transform_proj(world, crs = "+proj=wintri") -->
+<!-- st_crs(world_3) = NA -->
+<!-- plot(world_3$geom) -->
+<!-- ``` -->
 </div>
 <div id="raster-data-3" class="section level3">
 <h3><span class="header-section-number">6.2.2</span> Raster data</h3>
@@ -429,8 +448,17 @@ con_raster_ea
 <!-- - simplifications -->
 <!-- st_simplify -->
 <!-- rmapshaper -->
+<div id="centroids" class="section level3">
+<h3><span class="header-section-number">6.3.1</span> Centroids</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_centroid =<span class="st"> </span><span class="kw">st_centroid</span>(nz)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_pos =<span class="st"> </span><span class="kw">st_point_on_surface</span>(nz)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(nz$geometry)
+<span class="kw">plot</span>(nz_centroid$geometry, <span class="dt">add =</span> <span class="ot">TRUE</span>)
+<span class="kw">plot</span>(nz_pos$geometry, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
+<p><img src="figures/unnamed-chunk-24-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
 <div id="clipping" class="section level3">
-<h3><span class="header-section-number">6.3.1</span> Clipping</h3>
+<h3><span class="header-section-number">6.3.2</span> Clipping</h3>
 <p>Spatial clipping is a form of spatial subsetting that involves changes to the <code>geometry</code> columns of at least some of the affected features.</p>
 <p>Clipping can only apply to features more complex than points: lines, polygons and their ‘multi’ equivalents. To illustrate the concept we will start with a simple example: two overlapping circles with a center point one unit away from each other and radius of one:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">b =<span class="st"> </span><span class="kw">st_sfc</span>(<span class="kw">st_point</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)), <span class="kw">st_point</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))) <span class="co"># create 2 points</span>
@@ -450,7 +478,7 @@ y =<span class="st"> </span>b[<span class="dv">2</span>]
 x_and_y =<span class="st"> </span><span class="kw">st_intersection</span>(x, y)
 <span class="kw">plot</span>(b)
 <span class="kw">plot</span>(x_and_y, <span class="dt">col =</span> <span class="st">&quot;lightgrey&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>) <span class="co"># color intersecting area</span></code></pre></div>
-<p><img src="figures/unnamed-chunk-22-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-25-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>The subsequent code chunk demonstrate how this works for all combinations of the ‘Venn’ diagram representing <code>x</code> and <code>y</code>, inspired by <a href="http://r4ds.had.co.nz/transform.html#logical-operators">Figure 5.1</a> of the book R for Data Science <span class="citation">(Grolemund and Wickham <a href="#ref-grolemund_r_2016">2016</a>)</span>. <!-- Todo: reference r4ds --></p>
 <div class="figure" style="text-align: center"><span id="fig:venn-clip"></span>
 <img src="figures/venn-clip-1.png" alt="Spatial equivalents of logical operators." width="576" />
@@ -489,6 +517,13 @@ Figure 6.5: Randomly distributed points within the bounding box enclosing circle
 <!-- st_point_on_surface -->
 <!-- st_centroid -->
 <!-- st_polygonize -->
+<div id="geometry-cast" class="section level3">
+<h3><span class="header-section-number">6.4.1</span> Geometry cast</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_points =<span class="st"> </span><span class="kw">st_cast</span>(nz, <span class="st">&quot;MULTIPOINT&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(nz$geometry)
+<span class="kw">plot</span>(nz_points$geometry, <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p><img src="figures/unnamed-chunk-28-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
 </div>
 <div id="exercises-4" class="section level2">
 <h2><span class="header-section-number">6.5</span> Exercises</h2>
