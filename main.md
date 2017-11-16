@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve0cf8d39227082555
+preserve2e9634a30e822505
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3100,7 +3100,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve6e5a21c28718dced
+preserve3c92b4b9d4d5c0bf
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
