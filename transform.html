@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2017-11-15">
+<meta name="date" content="2017-11-16">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="read-write.html">
-<link rel="next" href="type-transformation.html">
+<link rel="next" href="references.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -226,11 +226,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.3" data-path="transform.html"><a href="transform.html#geometry-transformations"><i class="fa fa-check"></i><b>6.3</b> Geometry transformations</a><ul>
 <li class="chapter" data-level="6.3.1" data-path="transform.html"><a href="transform.html#clipping"><i class="fa fa-check"></i><b>6.3.1</b> Clipping</a></li>
 </ul></li>
+<li class="chapter" data-level="6.4" data-path="transform.html"><a href="transform.html#type-transformation"><i class="fa fa-check"></i><b>6.4</b> Type transformation</a></li>
+<li class="chapter" data-level="6.5" data-path="transform.html"><a href="transform.html#exercises-4"><i class="fa fa-check"></i><b>6.5</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="type-transformation.html"><a href="type-transformation.html"><i class="fa fa-check"></i><b>7</b> Type transformation</a><ul>
-<li class="chapter" data-level="7.1" data-path="type-transformation.html"><a href="type-transformation.html#exercises-4"><i class="fa fa-check"></i><b>7.1</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="8" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>8</b> References</a></li>
+<li class="chapter" data-level="7" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>7</b> References</a></li>
 <li class="divider"></li>
 <li><a href="http://robinlovelace.net/">Robin Lovelace</a></li>
 <li><a href="https://nowosad.github.io/">Jakub Nowosad</a></li>
@@ -479,6 +478,29 @@ Figure 6.5: Randomly distributed points within the bounding box enclosing circle
 </div>
 </div>
 </div>
+<div id="type-transformation" class="section level2">
+<h2><span class="header-section-number">6.4</span> Type transformation</h2>
+<!-- Changing the geometry type while the fundamental data remains unchanged ('casting') -->
+<!-- I think vector/raster conversion could either be part of point 1 or something else -->
+<!-- I think the brick-raster-stack could be part of 1 - a type transformation... -->
+<!-- - raster to vector -->
+<!-- - vector to raster -->
+<!-- - st_cast -->
+<!-- st_point_on_surface -->
+<!-- st_centroid -->
+<!-- st_polygonize -->
+</div>
+<div id="exercises-4" class="section level2">
+<h2><span class="header-section-number">6.5</span> Exercises</h2>
+<!-- CRS CONVERSION -->
+<!-- 1. vector reprojection exercise (e.g. modification of proj4) -->
+<ol style="list-style-type: decimal">
+<li>Transform the <code>world</code> dataset to the transverse Mercator projection (<code>&quot;+proj=tmerc&quot;</code>) and plot the result. What has changed and why? Try to transform it back into WGS 84 and plot the new object. Why the new object differs from the original one? <!-- https://github.com/r-spatial/sf/issues/509 --> <!-- ```{r} --> <!-- world_tmerc = st_transform(world, "+proj=tmerc") --> <!-- plot(world_tmerc$geom) --> <!--  world_4326 = st_transform(world_tmerc, 4326) --> <!-- plot(world_4326$geom) --> <!-- ``` --></li>
+<li>Try to transform the categorical raster (<code>cat_raster</code>) into WGS 84 using the bilinear interpolation method. What has changed? How it influences the results? <!-- ```{r} --> <!-- wgs84 = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs" --> <!-- cat_raster_wgs84 = projectRaster(cat_raster, crs = wgs84, method = "bilinear") --> <!-- cat_raster_wgs84 --> <!-- ``` --></li>
+<li>Try to transform the continuous raster (<code>cat_raster</code>) into WGS 84 using the nearest neighbor interpolation method. What has changed? How it influences the results? <!-- ```{r} --> <!-- con_raster = raster(system.file("raster/srtm.tif", package="spDataLarge")) --> <!-- con_raster_wgs84 = projectRaster(con_raster, crs = wgs84, method = "ngb") --> <!-- con_raster_wgs84 --> <!-- ``` --> <!-- GEOMETRY TRANSFORMATION --></li>
+</ol>
+
+</div>
 </div>
 <h3> References</h3>
 <div id="refs" class="references">
@@ -502,7 +524,7 @@ Figure 6.5: Randomly distributed points within the bounding box enclosing circle
         </div>
       </div>
 <a href="read-write.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="type-transformation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
