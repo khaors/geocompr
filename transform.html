@@ -344,6 +344,7 @@ dplyr::<span class="kw">filter</span>(crs_codes, code ==<span class="st"> </span
 The EPSG code can be found inside the <code>crs</code> attribute of the object’s geometry. It is hidden from view for most of the time except when the object is printed but can be can identified and set using the <code>st_crs</code> function, for example <code>st_crs(cycle_hire_osm)$epsg</code>.
 </div>
 <p></p>
+<!-- As we mentioned in section \@ref(crs-in-r), `proj4string` definitions are highly modifiable. -->
 <!-- example of using proj4 (expain it and maybe modify); ref to ch2-->
 <!-- http://bl.ocks.org/vlandham/raw/9216751/ -->
 <!-- show the results (e.g. two/three panels) -->
@@ -363,6 +364,11 @@ The EPSG code can be found inside the <code>crs</code> attribute of the object�
 <!-- world_3 = st_transform_proj(world, crs = "+proj=wintri") -->
 <!-- plot(world_3$geom) -->
 <!-- ``` -->
+
+<div class="rmdnote">
+There are two main functions for transformation of simple features coordinates - <code>sf::st_transfrom</code> and <code>lwgeom::st_transform_proj</code>. The <code>st_transfrom</code> function uses the GDAL interface to PROJ.4, while <code>st_transfrom_proj</code> uses the PROJ.4 API directly.
+</div>
+<p></p>
 </div>
 <div id="raster-data-3" class="section level3">
 <h3><span class="header-section-number">6.2.2</span> Raster data</h3>
@@ -454,7 +460,7 @@ con_raster_ea
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(nz$geometry)
 <span class="kw">plot</span>(nz_centroid$geometry, <span class="dt">add =</span> <span class="ot">TRUE</span>)
 <span class="kw">plot</span>(nz_pos$geometry, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
-<p><img src="figures/unnamed-chunk-24-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-25-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="clipping" class="section level3">
 <h3><span class="header-section-number">6.3.2</span> Clipping</h3>
@@ -477,7 +483,7 @@ y =<span class="st"> </span>b[<span class="dv">2</span>]
 x_and_y =<span class="st"> </span><span class="kw">st_intersection</span>(x, y)
 <span class="kw">plot</span>(b)
 <span class="kw">plot</span>(x_and_y, <span class="dt">col =</span> <span class="st">&quot;lightgrey&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>) <span class="co"># color intersecting area</span></code></pre></div>
-<p><img src="figures/unnamed-chunk-25-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-26-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>The subsequent code chunk demonstrate how this works for all combinations of the ‘Venn’ diagram representing <code>x</code> and <code>y</code>, inspired by <a href="http://r4ds.had.co.nz/transform.html#logical-operators">Figure 5.1</a> of the book R for Data Science <span class="citation">(Grolemund and Wickham <a href="#ref-grolemund_r_2016">2016</a>)</span>. <!-- Todo: reference r4ds --></p>
 <div class="figure" style="text-align: center"><span id="fig:venn-clip"></span>
 <img src="figures/venn-clip-1.png" alt="Spatial equivalents of logical operators." width="576" />
@@ -521,7 +527,7 @@ Figure 6.5: Randomly distributed points within the bounding box enclosing circle
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_points =<span class="st"> </span><span class="kw">st_cast</span>(nz, <span class="st">&quot;MULTIPOINT&quot;</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(nz$geometry)
 <span class="kw">plot</span>(nz_points$geometry, <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<p><img src="figures/unnamed-chunk-28-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-29-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="exercises-4" class="section level2">

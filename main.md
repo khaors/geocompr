@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve03ced4c180e2a72b
+preservea7b20897659cc463
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3103,7 +3103,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve3dcf262a8e2d838a
+preserved5a28e63a3c1952d
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4507,6 +4507,7 @@ st_crs(27700)$proj4string
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">The EPSG code can be found inside the `crs` attribute of the object's geometry.
 It is hidden from view for most of the time except when the object is printed but can be can identified and set using the `st_crs` function, for example `st_crs(cycle_hire_osm)$epsg`.</div>\EndKnitrBlock{rmdnote}
 
+<!-- As we mentioned in section \@ref(crs-in-r), `proj4string` definitions are highly modifiable. -->
 <!-- example of using proj4 (expain it and maybe modify); ref to ch2-->
 <!-- http://bl.ocks.org/vlandham/raw/9216751/ -->
 <!-- show the results (e.g. two/three panels) -->
@@ -4529,6 +4530,9 @@ It is hidden from view for most of the time except when the object is printed bu
 <!-- world_3 = st_transform_proj(world, crs = "+proj=wintri") -->
 <!-- plot(world_3$geom) -->
 <!-- ``` -->
+
+\BeginKnitrBlock{rmdnote}<div class="rmdnote">There are two main functions for transformation of simple features coordinates - `sf::st_transfrom` and `lwgeom::st_transform_proj`. 
+The `st_transfrom` function uses the GDAL interface to PROJ.4, while `st_transfrom_proj` uses the PROJ.4 API directly.</div>\EndKnitrBlock{rmdnote}
 
 ### Raster data
 
@@ -4689,7 +4693,7 @@ plot(nz_centroid$geometry, add = TRUE)
 plot(nz_pos$geometry, add = TRUE, col = "red")
 ```
 
-<img src="figures/unnamed-chunk-24-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-25-1.png" width="576" style="display: block; margin: auto;" />
 
 ### Clipping 
 
@@ -4726,7 +4730,7 @@ plot(b)
 plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
 ```
 
-<img src="figures/unnamed-chunk-25-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-26-1.png" width="576" style="display: block; margin: auto;" />
 
 The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
 <!-- Todo: reference r4ds -->
@@ -4790,7 +4794,7 @@ plot(nz$geometry)
 plot(nz_points$geometry, add = TRUE)
 ```
 
-<img src="figures/unnamed-chunk-28-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-29-1.png" width="576" style="display: block; margin: auto;" />
 
 ## Exercises
 
