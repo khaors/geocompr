@@ -369,6 +369,8 @@ The EPSG code can be found inside the <code>crs</code> attribute of the objectâ€
 There are two main functions for transformation of simple features coordinates - <code>sf::st_transfrom</code> and <code>lwgeom::st_transform_proj</code>. The <code>st_transfrom</code> function uses the GDAL interface to PROJ.4, while <code>st_transfrom_proj</code> uses the PROJ.4 API directly.
 </div>
 <p></p>
+<!-- 1. allows for partial projection and sanity check -->
+<!-- 2. allows for more parameters (+over) and some projections without inverse transformation -->
 </div>
 <div id="raster-data-3" class="section level3">
 <h3><span class="header-section-number">6.2.2</span> Raster data</h3>

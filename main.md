@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservea7b20897659cc463
+preserve0cc89bafec16d206
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3103,7 +3103,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserved5a28e63a3c1952d
+preserveb8a8ce1eae41b334
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4533,6 +4533,9 @@ It is hidden from view for most of the time except when the object is printed bu
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">There are two main functions for transformation of simple features coordinates - `sf::st_transfrom` and `lwgeom::st_transform_proj`. 
 The `st_transfrom` function uses the GDAL interface to PROJ.4, while `st_transfrom_proj` uses the PROJ.4 API directly.</div>\EndKnitrBlock{rmdnote}
+
+<!-- 1. allows for partial projection and sanity check -->
+<!-- 2. allows for more parameters (+over) and some projections without inverse transformation -->
 
 ### Raster data
 
