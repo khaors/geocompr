@@ -366,7 +366,7 @@ The EPSG code can be found inside the <code>crs</code> attribute of the objectâ€
 <!-- ``` -->
 
 <div class="rmdnote">
-There are two main functions for transformation of simple features coordinates - <code>sf::st_transfrom</code> and <code>lwgeom::st_transform_proj</code>. The <code>st_transfrom</code> function uses the GDAL interface to PROJ.4, while <code>st_transfrom_proj</code> uses the PROJ.4 API directly. The first one is appropriate in most situations, and provides a set of the most often used parameters and well defined transformations. The second one allows for a greater customization of a projection, which includes cases when some of the PROJ.4 parameters (e.g. <code>+over</code>) or projection (<code>+proj=wintri</code>) is not available in <code>st_transform</code>.
+There are two main functions for transformation of simple features coordinates - <code>sf::st_transfrom()</code> and <code>lwgeom::st_transform_proj()</code>. The <code>st_transfrom</code> function uses the GDAL interface to PROJ.4, while <code>st_transfrom_proj()</code> uses the PROJ.4 API directly. The first one is appropriate in most situations, and provides a set of the most often used parameters and well defined transformations. The second one allows for a greater customization of a projection, which includes cases when some of the PROJ.4 parameters (e.g. <code>+over</code>) or projection (<code>+proj=wintri</code>) is not available in <code>st_transform()</code>.
 </div>
 <p></p>
 </div>

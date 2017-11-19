@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve286d379c65dd6d1d
+preservef65562dcef394a5e
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3103,7 +3103,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve22a337516e4adf2c
+preserve7e9464beb484dc08
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4531,10 +4531,10 @@ It is hidden from view for most of the time except when the object is printed bu
 <!-- plot(world_3$geom) -->
 <!-- ``` -->
 
-\BeginKnitrBlock{rmdnote}<div class="rmdnote">There are two main functions for transformation of simple features coordinates - `sf::st_transfrom` and `lwgeom::st_transform_proj`. 
-The `st_transfrom` function uses the GDAL interface to PROJ.4, while `st_transfrom_proj` uses the PROJ.4 API directly.
+\BeginKnitrBlock{rmdnote}<div class="rmdnote">There are two main functions for transformation of simple features coordinates - `sf::st_transfrom()` and `lwgeom::st_transform_proj()`. 
+The `st_transfrom` function uses the GDAL interface to PROJ.4, while `st_transfrom_proj()` uses the PROJ.4 API directly.
 The first one is appropriate in most situations, and provides a set of the most often used parameters and well defined transformations.
-The second one allows for a greater customization of a projection, which includes cases when some of the PROJ.4 parameters (e.g. `+over`) or projection (`+proj=wintri`) is not available in `st_transform`.</div>\EndKnitrBlock{rmdnote}
+The second one allows for a greater customization of a projection, which includes cases when some of the PROJ.4 parameters (e.g. `+over`) or projection (`+proj=wintri`) is not available in `st_transform()`.</div>\EndKnitrBlock{rmdnote}
 
 ### Raster data
 
