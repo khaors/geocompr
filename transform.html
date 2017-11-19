@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2017-11-17">
+<meta name="date" content="2017-11-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -366,11 +366,9 @@ The EPSG code can be found inside the <code>crs</code> attribute of the objectâ€
 <!-- ``` -->
 
 <div class="rmdnote">
-There are two main functions for transformation of simple features coordinates - <code>sf::st_transfrom</code> and <code>lwgeom::st_transform_proj</code>. The <code>st_transfrom</code> function uses the GDAL interface to PROJ.4, while <code>st_transfrom_proj</code> uses the PROJ.4 API directly.
+There are two main functions for transformation of simple features coordinates - <code>sf::st_transfrom</code> and <code>lwgeom::st_transform_proj</code>. The <code>st_transfrom</code> function uses the GDAL interface to PROJ.4, while <code>st_transfrom_proj</code> uses the PROJ.4 API directly. The first one is appropriate in most situations, and provides a set of the most often used parameters and well defined transformations. The second one allows for a greater customization of a projection, which includes cases when some of the PROJ.4 parameters (e.g. <code>+over</code>) or projection (<code>+proj=wintri</code>) is not available in <code>st_transform</code>.
 </div>
 <p></p>
-<!-- 1. allows for partial projection and sanity check -->
-<!-- 2. allows for more parameters (+over) and some projections without inverse transformation -->
 </div>
 <div id="raster-data-3" class="section level3">
 <h3><span class="header-section-number">6.2.2</span> Raster data</h3>

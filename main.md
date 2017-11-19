@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2017-11-17'
+date: '2017-11-19'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2017-11-17 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2017-11-19 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve0cc89bafec16d206
+preserve286d379c65dd6d1d
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3103,7 +3103,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveb8a8ce1eae41b334
+preserve22a337516e4adf2c
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4532,10 +4532,9 @@ It is hidden from view for most of the time except when the object is printed bu
 <!-- ``` -->
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">There are two main functions for transformation of simple features coordinates - `sf::st_transfrom` and `lwgeom::st_transform_proj`. 
-The `st_transfrom` function uses the GDAL interface to PROJ.4, while `st_transfrom_proj` uses the PROJ.4 API directly.</div>\EndKnitrBlock{rmdnote}
-
-<!-- 1. allows for partial projection and sanity check -->
-<!-- 2. allows for more parameters (+over) and some projections without inverse transformation -->
+The `st_transfrom` function uses the GDAL interface to PROJ.4, while `st_transfrom_proj` uses the PROJ.4 API directly.
+The first one is appropriate in most situations, and provides a set of the most often used parameters and well defined transformations.
+The second one allows for a greater customization of a projection, which includes cases when some of the PROJ.4 parameters (e.g. `+over`) or projection (`+proj=wintri`) is not available in `st_transform`.</div>\EndKnitrBlock{rmdnote}
 
 ### Raster data
 
