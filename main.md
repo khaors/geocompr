@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservef65562dcef394a5e
+preserve651450c4a44076d4
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3103,7 +3103,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve7e9464beb484dc08
+preserve455b721dcf880555
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4363,6 +4363,8 @@ library(spDataLarge)
 <!-- - geometric operations -->
 <!-- - This is also basically what Jakub was proposing, right?. Geometric operations also include reprojections. Then we could split the chapter again into vector and raster subsections. And the raster sections would include raster alignment, aggregations (change of resolution) and reprojections. -->
 
+
+
 As stated in Chapter \@ref(crs-intro), it is important to understand which CRS you are working in when undertaking spatial operations.
 Many spatial operations assume that you are using a *projected* CRS (on a Euclidean grid with units of meters rather than a geographic 'lat/lon' grid with units of degrees).
 The GEOS engine underlying most spatial operations in **sf**, for example, assumes your data is in a projected CRS.
@@ -4397,9 +4399,9 @@ london_buff = st_buffer(london, dist = 1)
 #> dist is assumed to be in decimal degrees (arc_degrees).
 ```
 
-As a result a warning message is emitted to warn the user that the operation may not work correctly and that, if the operation was intended, the distance should be in degrees (not meters or some other Euclidean distance measurement).
-The seemingly small difference in setting the CRS may seem inconsequential but it can have a huge impact.
-This is illustrated in Figure \@ref(fig:crs-buf), which shows how the buffer created in the geographic CRS is dramatically elongated in the north-south direction due to the thinning of the vertical lines of longitude towards the Earth's poles.  
+Note the message warning users that the operation may not work correctly and because the distance is degrees (which is not really a measure of distance, unlike meters).
+The small step of setting the CRS may seem inconsequential but has important consequences, illustrated in Figure \@ref(fig:crs-buf).
+This shows how the buffer created in the geographic CRS is dramatically elongated in the north-south direction due to the thinning of the vertical lines of longitude towards the Earth's poles.  
 
 
 ```r
@@ -4412,12 +4414,12 @@ plot(london, add = TRUE)
 <p class="caption">(\#fig:crs-buf)Buffer on data with geographic CRS.</p>
 </div>
 
-To prevent this, we need to create a buffer based on a point in a projected CRS.
-For example, London has coordinates of `c(530000, 180000)` in British National Grid CRS (EPSG:27700):
+This example does not mean that the CRS should not be set (it almost always should!) but that many spatial operations should be undertaken on projected geographic data.
+The following command creates a version of the `london` reprodected onto the British National Grid CRS (EPSG:27700):
 
 
 ```r
-london_proj = st_sf(geometry = st_sfc(st_point(c(530000, 180000))), crs = 27700)
+london_proj = st_transform(london, crs = 27700)
 ```
 
 This projected CRS has units in meters. 
