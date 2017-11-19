@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve651450c4a44076d4
+preserved6321d61bb06cc94
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3103,7 +3103,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve455b721dcf880555
+preserveacf8f46695830c49
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4362,6 +4362,7 @@ library(spDataLarge)
 <!-- - spatial operations -->
 <!-- - geometric operations -->
 <!-- - This is also basically what Jakub was proposing, right?. Geometric operations also include reprojections. Then we could split the chapter again into vector and raster subsections. And the raster sections would include raster alignment, aggregations (change of resolution) and reprojections. -->
+<!-- geocoding? -->
 
 
 
@@ -4415,7 +4416,7 @@ plot(london, add = TRUE)
 </div>
 
 This example does not mean that the CRS should not be set (it almost always should!) but that many spatial operations should be undertaken on projected geographic data.
-The following command creates a version of the `london` reprodected onto the British National Grid CRS (EPSG:27700):
+The following command creates a version of the `london` reprojected onto the British National Grid CRS (EPSG:27700):
 
 
 ```r
@@ -4509,9 +4510,13 @@ st_crs(27700)$proj4string
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">The EPSG code can be found inside the `crs` attribute of the object's geometry.
 It is hidden from view for most of the time except when the object is printed but can be can identified and set using the `st_crs` function, for example `st_crs(cycle_hire_osm)$epsg`.</div>\EndKnitrBlock{rmdnote}
 
-<!-- As we mentioned in section \@ref(crs-in-r), `proj4string` definitions are highly modifiable. -->
-<!-- example of using proj4 (expain it and maybe modify); ref to ch2-->
+Existing CRS are well suited for most purposes.
+<!-- examples -->
+In the same time, `proj4string` definitions are highly modifiable and allow for CRS customization.
+<!-- as we mentioned in section \@ref(crs-in-r). -->
+
 <!-- http://bl.ocks.org/vlandham/raw/9216751/ -->
+
 <!-- show the results (e.g. two/three panels) -->
 <!-- show calculations? e.g area/distance? -->
 

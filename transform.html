@@ -278,6 +278,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <!-- - spatial operations -->
 <!-- - geometric operations -->
 <!-- - This is also basically what Jakub was proposing, right?. Geometric operations also include reprojections. Then we could split the chapter again into vector and raster subsections. And the raster sections would include raster alignment, aggregations (change of resolution) and reprojections. -->
+<!-- geocoding? -->
 <p>As stated in Chapter <a href="spatial-class.html#crs-intro">2.3</a>, it is important to understand which CRS you are working in when undertaking spatial operations. Many spatial operations assume that you are using a <em>projected</em> CRS (on a Euclidean grid with units of meters rather than a geographic ‘lat/lon’ grid with units of degrees). The GEOS engine underlying most spatial operations in <strong>sf</strong>, for example, assumes your data is in a projected CRS. For this reason <strong>sf</strong> contains a function for checking if geometries have a geographic or projected CRS. This is illustrated below using the example of <em>London</em>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london =<span class="st"> </span><span class="kw">st_sf</span>(<span class="dt">geometry =</span> <span class="kw">st_sfc</span>(<span class="kw">st_point</span>(<span class="kw">c</span>(-<span class="fl">0.1</span>, <span class="fl">51.5</span>))))
 <span class="kw">st_is_longlat</span>(london)
@@ -300,7 +301,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 Figure 6.1: Buffer on data with geographic CRS.
 </p>
 </div>
-<p>This example does not mean that the CRS should not be set (it almost always should!) but that many spatial operations should be undertaken on projected geographic data. The following command creates a version of the <code>london</code> reprodected onto the British National Grid CRS (EPSG:27700):</p>
+<p>This example does not mean that the CRS should not be set (it almost always should!) but that many spatial operations should be undertaken on projected geographic data. The following command creates a version of the <code>london</code> reprojected onto the British National Grid CRS (EPSG:27700):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london_proj =<span class="st"> </span><span class="kw">st_transform</span>(london, <span class="dt">crs =</span> <span class="dv">27700</span>)</code></pre></div>
 <p>This projected CRS has units in meters. One degree at the equator represents 111,319.9 meters and we can use this value to create our buffer:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london_proj_buff =<span class="st"> </span><span class="kw">st_buffer</span>(london_proj, <span class="fl">111319.9</span>)</code></pre></div>
@@ -344,8 +345,7 @@ dplyr::<span class="kw">filter</span>(crs_codes, code ==<span class="st"> </span
 The EPSG code can be found inside the <code>crs</code> attribute of the object’s geometry. It is hidden from view for most of the time except when the object is printed but can be can identified and set using the <code>st_crs</code> function, for example <code>st_crs(cycle_hire_osm)$epsg</code>.
 </div>
 <p></p>
-<!-- As we mentioned in section \@ref(crs-in-r), `proj4string` definitions are highly modifiable. -->
-<!-- example of using proj4 (expain it and maybe modify); ref to ch2-->
+<p>Existing CRS are well suited for most purposes. <!-- examples --> In the same time, <code>proj4string</code> definitions are highly modifiable and allow for CRS customization. <!-- as we mentioned in section \@ref(crs-in-r). --></p>
 <!-- http://bl.ocks.org/vlandham/raw/9216751/ -->
 <!-- show the results (e.g. two/three panels) -->
 <!-- show calculations? e.g area/distance? -->
