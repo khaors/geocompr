@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserved6321d61bb06cc94
+preserve744bab0889f8a4d2
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -648,11 +648,6 @@ the follow command creates Figure \@ref(fig:world-all).
 plot(world)
 #> Warning: plotting the first 9 out of 10 attributes; use max.plot = 10 to
 #> plot all
-#> Warning in classInt::classIntervals(values, nbreaks, breaks): var has
-#> missing values, omitted in finding classes
-
-#> Warning in classInt::classIntervals(values, nbreaks, breaks): var has
-#> missing values, omitted in finding classes
 ```
 
 <div class="figure" style="text-align: center">
@@ -778,8 +773,6 @@ Note, however, that this only works if the initial plot has only one layer:
 
 ```r
 plot(world["pop"])
-#> Warning in classInt::classIntervals(values, nbreaks, breaks): var has
-#> missing values, omitted in finding classes
 plot(asia, add = TRUE, col = "red")
 ```
 
@@ -3103,7 +3096,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveacf8f46695830c49
+preserve4eb1e0788e4b3440
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4343,6 +4336,7 @@ Export this map to a file called `cycle_hire.html`.
 ```r
 library(tidyverse)
 library(sf)
+library(lwgeom)
 library(raster)
 ```
 
@@ -4363,8 +4357,6 @@ library(spDataLarge)
 <!-- - geometric operations -->
 <!-- - This is also basically what Jakub was proposing, right?. Geometric operations also include reprojections. Then we could split the chapter again into vector and raster subsections. And the raster sections would include raster alignment, aggregations (change of resolution) and reprojections. -->
 <!-- geocoding? -->
-
-
 
 As stated in Chapter \@ref(crs-intro), it is important to understand which CRS you are working in when undertaking spatial operations.
 Many spatial operations assume that you are using a *projected* CRS (on a Euclidean grid with units of meters rather than a geographic 'lat/lon' grid with units of degrees).
@@ -4514,21 +4506,62 @@ Existing CRS are well suited for most purposes.
 <!-- examples -->
 In the same time, `proj4string` definitions are highly modifiable and allow for CRS customization.
 <!-- as we mentioned in section \@ref(crs-in-r). -->
+We can present that using selected world projections.
+The Mollweide projection is recommended when it is important to preserve areas [@jenny_guide_2017].
+To use this projection, we need to specify it using the `proj4string` element, `"+proj=moll"`, in the `st_transform` function:
 
-<!-- http://bl.ocks.org/vlandham/raw/9216751/ -->
 
-<!-- show the results (e.g. two/three panels) -->
-<!-- show calculations? e.g area/distance? -->
+```r
+world_mollweide = st_transform(world, crs = "+proj=moll")
+plot(world_mollweide$geom)
+```
 
-<!-- http://proj4.org/usage/index.html# -->
-<!-- ```{r} -->
-<!-- plot(world$geom) -->
-<!-- ``` -->
+<img src="figures/unnamed-chunk-14-1.png" width="576" style="display: block; margin: auto;" />
+<!-- plot(world_mollweide$geom, graticule = TRUE) -->
 
-<!-- ```{r} -->
-<!-- world_2 = st_transform(world, crs = "+proj=robin") -->
-<!-- plot(world_2$geom) -->
-<!-- ``` -->
+On the other hand, the goal for many visualization purposes is to have a map with minimized area, direction, and distance distortions.
+One of the most popular projection to achieve that is Winkel tripel.^[This projection is used, among others, by the National Geographic Society.]
+The `st_transform_proj` function allows for coordinates transformations to the Winkel tripel projection: 
+
+
+```r
+world_wintri = st_transform_proj(world, crs = "+proj=wintri")
+plot(world_wintri$geom)
+```
+
+<img src="figures/unnamed-chunk-15-1.png" width="576" style="display: block; margin: auto;" />
+<!-- plot(world_wintri$geom, graticule = TRUE) -->
+
+\BeginKnitrBlock{rmdnote}<div class="rmdnote">Two main functions for transformation of simple features coordinates are `sf::st_transform()` and `lwgeom::st_transform_proj()`. 
+The `st_transform` function uses the GDAL interface to PROJ.4, while `st_transform_proj()` uses the PROJ.4 API directly.
+The first one is appropriate in most situations, and provides a set of the most often used parameters and well defined transformations.
+The second one allows for a greater customization of a projection, which includes cases when some of the PROJ.4 parameters (e.g. `+over`) or projection (`+proj=wintri`) is not available in `st_transform()`.</div>\EndKnitrBlock{rmdnote}
+
+Moreover, PROJ.4 parameters can be modified in most CRS definitions.
+The below code transforms the coordinates to the Lambert azimuthal equal-area projection centered on longitude and latitude of `0`:
+
+
+```r
+world_laea1 = st_transform(world, crs = "+proj=laea +x_0=0 +y_0=0 +lon_0=0 +lat_0=0")
+plot(world_laea1$geom)
+```
+
+<img src="figures/unnamed-chunk-17-1.png" width="576" style="display: block; margin: auto;" />
+<!-- plot(world_laea1$geom, graticule = TRUE) -->
+
+We can change the center of the projection using the `+lon_0` and `+lat_0` parameters. 
+For example, the code below gives the map centered on New York City:
+
+
+```r
+world_laea2 = st_transform(world, crs = "+proj=laea +x_0=0 +y_0=0 +lon_0=-74 +lat_0=40")
+plot(world_laea2$geom)
+```
+
+<img src="figures/unnamed-chunk-18-1.png" width="576" style="display: block; margin: auto;" />
+<!-- plot(world_laea2$geom, graticule = TRUE) -->
+
+More information about CRS modification can be found in the [Using PROJ.4](http://proj4.org/usage/index.html) documentation.
 
 <!-- https://github.com/r-spatial/lwgeom/issues/6 -->
 <!-- ```{r} -->
@@ -4537,11 +4570,7 @@ In the same time, `proj4string` definitions are highly modifiable and allow for 
 <!-- world_3 = st_transform_proj(world, crs = "+proj=wintri") -->
 <!-- plot(world_3$geom) -->
 <!-- ``` -->
-
-\BeginKnitrBlock{rmdnote}<div class="rmdnote">There are two main functions for transformation of simple features coordinates - `sf::st_transfrom()` and `lwgeom::st_transform_proj()`. 
-The `st_transfrom` function uses the GDAL interface to PROJ.4, while `st_transfrom_proj()` uses the PROJ.4 API directly.
-The first one is appropriate in most situations, and provides a set of the most often used parameters and well defined transformations.
-The second one allows for a greater customization of a projection, which includes cases when some of the PROJ.4 parameters (e.g. `+over`) or projection (`+proj=wintri`) is not available in `st_transform()`.</div>\EndKnitrBlock{rmdnote}
+<!-- http://bl.ocks.org/vlandham/raw/9216751/ -->
 
 ### Raster data
 
@@ -4702,7 +4731,7 @@ plot(nz_centroid$geometry, add = TRUE)
 plot(nz_pos$geometry, add = TRUE, col = "red")
 ```
 
-<img src="figures/unnamed-chunk-25-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-29-1.png" width="576" style="display: block; margin: auto;" />
 
 ### Clipping 
 
@@ -4739,7 +4768,7 @@ plot(b)
 plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
 ```
 
-<img src="figures/unnamed-chunk-26-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-30-1.png" width="576" style="display: block; margin: auto;" />
 
 The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
 <!-- Todo: reference r4ds -->
@@ -4803,7 +4832,7 @@ plot(nz$geometry)
 plot(nz_points$geometry, add = TRUE)
 ```
 
-<img src="figures/unnamed-chunk-29-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-33-1.png" width="576" style="display: block; margin: auto;" />
 
 ## Exercises
 

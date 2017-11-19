@@ -336,12 +336,7 @@ Figure 2.2: The subset of the Simple Features class hierarchy supported by sf.
 <p>It is the contents of this modest-looking <code>geom</code> column that gives <code>sf</code> objects their spatial powers, a ‘list-column’ that contains all the coordinates. The <strong>sf</strong> package provides a <code>plot()</code> method for vizualising geographic data: the follow command creates Figure <a href="spatial-class.html#fig:world-all">2.3</a>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(world)
 <span class="co">#&gt; Warning: plotting the first 9 out of 10 attributes; use max.plot = 10 to</span>
-<span class="co">#&gt; plot all</span>
-<span class="co">#&gt; Warning in classInt::classIntervals(values, nbreaks, breaks): var has</span>
-<span class="co">#&gt; missing values, omitted in finding classes</span>
-
-<span class="co">#&gt; Warning in classInt::classIntervals(values, nbreaks, breaks): var has</span>
-<span class="co">#&gt; missing values, omitted in finding classes</span></code></pre></div>
+<span class="co">#&gt; plot all</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:world-all"></span>
 <img src="figures/world-all-1.png" alt="A spatial plot of the world using the sf package, with a facet for each attribute." width="576" />
 <p class="caption">
@@ -415,8 +410,6 @@ Figure 2.4: Plotting with sf, with multiple variables (left) and a single variab
 asia =<span class="st"> </span><span class="kw">st_union</span>(asia)</code></pre></div>
 <p>We can now plot the Asian continent over a map of the world. Note, however, that this only works if the initial plot has only one layer:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(world[<span class="st">&quot;pop&quot;</span>])
-<span class="co">#&gt; Warning in classInt::classIntervals(values, nbreaks, breaks): var has</span>
-<span class="co">#&gt; missing values, omitted in finding classes</span>
 <span class="kw">plot</span>(asia, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:asia"></span>
 <img src="figures/asia-1.png" alt="A plot of Asia added as a layer on top of countries worldwide." width="50%" />
