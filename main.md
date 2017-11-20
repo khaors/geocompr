@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2017-11-19'
+date: '2017-11-20'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2017-11-19 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2017-11-20 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve744bab0889f8a4d2
+preserve12763695dec4d229
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3096,7 +3096,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve4eb1e0788e4b3440
+preserve115c68eb7fb56ff5
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4513,11 +4513,28 @@ To use this projection, we need to specify it using the `proj4string` element, `
 
 ```r
 world_mollweide = st_transform(world, crs = "+proj=moll")
-plot(world_mollweide$geom)
+```
+<!-- plot(world_mollweide$geom) -->
+<!-- plot(world_mollweide$geom, graticule = TRUE) -->
+
+
+```r
+world_mollweide_gr = st_graticule(lat = c(-89.9, seq(-80, 80, 20), 89.9)) %>% 
+  st_transform(crs = "+proj=moll")
+par_old = par()
+par(mar = c(0, 0, 1, 0))
+plot(world_mollweide_gr$geometry)
+plot(world_mollweide$geom, add = TRUE)
+par(par_old)
+#> Warning in par(par_old): graphical parameter "cin" cannot be set
+#> Warning in par(par_old): graphical parameter "cra" cannot be set
+#> Warning in par(par_old): graphical parameter "csi" cannot be set
+#> Warning in par(par_old): graphical parameter "cxy" cannot be set
+#> Warning in par(par_old): graphical parameter "din" cannot be set
+#> Warning in par(par_old): graphical parameter "page" cannot be set
 ```
 
-<img src="figures/unnamed-chunk-14-1.png" width="576" style="display: block; margin: auto;" />
-<!-- plot(world_mollweide$geom, graticule = TRUE) -->
+<img src="figures/unnamed-chunk-15-1.png" width="576" style="display: block; margin: auto;" />
 
 On the other hand, the goal for many visualization purposes is to have a map with minimized area, direction, and distance distortions.
 One of the most popular projection to achieve that is Winkel tripel.^[This projection is used, among others, by the National Geographic Society.]
@@ -4529,7 +4546,7 @@ world_wintri = st_transform_proj(world, crs = "+proj=wintri")
 plot(world_wintri$geom)
 ```
 
-<img src="figures/unnamed-chunk-15-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-16-1.png" width="576" style="display: block; margin: auto;" />
 <!-- plot(world_wintri$geom, graticule = TRUE) -->
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">Two main functions for transformation of simple features coordinates are `sf::st_transform()` and `lwgeom::st_transform_proj()`. 
@@ -4546,7 +4563,7 @@ world_laea1 = st_transform(world, crs = "+proj=laea +x_0=0 +y_0=0 +lon_0=0 +lat_
 plot(world_laea1$geom)
 ```
 
-<img src="figures/unnamed-chunk-17-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-18-1.png" width="576" style="display: block; margin: auto;" />
 <!-- plot(world_laea1$geom, graticule = TRUE) -->
 
 We can change the center of the projection using the `+lon_0` and `+lat_0` parameters. 
@@ -4558,7 +4575,7 @@ world_laea2 = st_transform(world, crs = "+proj=laea +x_0=0 +y_0=0 +lon_0=-74 +la
 plot(world_laea2$geom)
 ```
 
-<img src="figures/unnamed-chunk-18-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-19-1.png" width="576" style="display: block; margin: auto;" />
 <!-- plot(world_laea2$geom, graticule = TRUE) -->
 
 More information about CRS modification can be found in the [Using PROJ.4](http://proj4.org/usage/index.html) documentation.
@@ -4731,7 +4748,7 @@ plot(nz_centroid$geometry, add = TRUE)
 plot(nz_pos$geometry, add = TRUE, col = "red")
 ```
 
-<img src="figures/unnamed-chunk-29-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-30-1.png" width="576" style="display: block; margin: auto;" />
 
 ### Clipping 
 
@@ -4768,7 +4785,7 @@ plot(b)
 plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
 ```
 
-<img src="figures/unnamed-chunk-30-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-31-1.png" width="576" style="display: block; margin: auto;" />
 
 The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
 <!-- Todo: reference r4ds -->
@@ -4832,7 +4849,7 @@ plot(nz$geometry)
 plot(nz_points$geometry, add = TRUE)
 ```
 
-<img src="figures/unnamed-chunk-33-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-34-1.png" width="576" style="display: block; margin: auto;" />
 
 ## Exercises
 

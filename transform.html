@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2017-11-19">
+<meta name="date" content="2017-11-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -347,13 +347,27 @@ The EPSG code can be found inside the <code>crs</code> attribute of the object�
 </div>
 <p></p>
 <p>Existing CRS are well suited for most purposes. <!-- examples --> In the same time, <code>proj4string</code> definitions are highly modifiable and allow for CRS customization. <!-- as we mentioned in section \@ref(crs-in-r). --> We can present that using selected world projections. The Mollweide projection is recommended when it is important to preserve areas <span class="citation">(Jenny et al. <a href="#ref-jenny_guide_2017">2017</a>)</span>. To use this projection, we need to specify it using the <code>proj4string</code> element, <code>&quot;+proj=moll&quot;</code>, in the <code>st_transform</code> function:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_mollweide =<span class="st"> </span><span class="kw">st_transform</span>(world, <span class="dt">crs =</span> <span class="st">&quot;+proj=moll&quot;</span>)
-<span class="kw">plot</span>(world_mollweide$geom)</code></pre></div>
-<p><img src="figures/unnamed-chunk-14-1.png" width="576" style="display: block; margin: auto;" /> <!-- plot(world_mollweide$geom, graticule = TRUE) --></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_mollweide =<span class="st"> </span><span class="kw">st_transform</span>(world, <span class="dt">crs =</span> <span class="st">&quot;+proj=moll&quot;</span>)</code></pre></div>
+<!-- plot(world_mollweide$geom) -->
+<!-- plot(world_mollweide$geom, graticule = TRUE) -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_mollweide_gr =<span class="st"> </span><span class="kw">st_graticule</span>(<span class="dt">lat =</span> <span class="kw">c</span>(-<span class="fl">89.9</span>, <span class="kw">seq</span>(-<span class="dv">80</span>, <span class="dv">80</span>, <span class="dv">20</span>), <span class="fl">89.9</span>)) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">st_transform</span>(<span class="dt">crs =</span> <span class="st">&quot;+proj=moll&quot;</span>)
+par_old =<span class="st"> </span><span class="kw">par</span>()
+<span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>))
+<span class="kw">plot</span>(world_mollweide_gr$geometry)
+<span class="kw">plot</span>(world_mollweide$geom, <span class="dt">add =</span> <span class="ot">TRUE</span>)
+<span class="kw">par</span>(par_old)
+<span class="co">#&gt; Warning in par(par_old): graphical parameter &quot;cin&quot; cannot be set</span>
+<span class="co">#&gt; Warning in par(par_old): graphical parameter &quot;cra&quot; cannot be set</span>
+<span class="co">#&gt; Warning in par(par_old): graphical parameter &quot;csi&quot; cannot be set</span>
+<span class="co">#&gt; Warning in par(par_old): graphical parameter &quot;cxy&quot; cannot be set</span>
+<span class="co">#&gt; Warning in par(par_old): graphical parameter &quot;din&quot; cannot be set</span>
+<span class="co">#&gt; Warning in par(par_old): graphical parameter &quot;page&quot; cannot be set</span></code></pre></div>
+<p><img src="figures/unnamed-chunk-15-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>On the other hand, the goal for many visualization purposes is to have a map with minimized area, direction, and distance distortions. One of the most popular projection to achieve that is Winkel tripel.<a href="#fn31" class="footnoteRef" id="fnref31"><sup>31</sup></a> The <code>st_transform_proj</code> function allows for coordinates transformations to the Winkel tripel projection:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_wintri =<span class="st"> </span><span class="kw">st_transform_proj</span>(world, <span class="dt">crs =</span> <span class="st">&quot;+proj=wintri&quot;</span>)
 <span class="kw">plot</span>(world_wintri$geom)</code></pre></div>
-<p><img src="figures/unnamed-chunk-15-1.png" width="576" style="display: block; margin: auto;" /> <!-- plot(world_wintri$geom, graticule = TRUE) --></p>
+<p><img src="figures/unnamed-chunk-16-1.png" width="576" style="display: block; margin: auto;" /> <!-- plot(world_wintri$geom, graticule = TRUE) --></p>
 
 <div class="rmdnote">
 Two main functions for transformation of simple features coordinates are <code>sf::st_transform()</code> and <code>lwgeom::st_transform_proj()</code>. The <code>st_transform</code> function uses the GDAL interface to PROJ.4, while <code>st_transform_proj()</code> uses the PROJ.4 API directly. The first one is appropriate in most situations, and provides a set of the most often used parameters and well defined transformations. The second one allows for a greater customization of a projection, which includes cases when some of the PROJ.4 parameters (e.g. <code>+over</code>) or projection (<code>+proj=wintri</code>) is not available in <code>st_transform()</code>.
@@ -362,11 +376,11 @@ Two main functions for transformation of simple features coordinates are <code>s
 <p>Moreover, PROJ.4 parameters can be modified in most CRS definitions. The below code transforms the coordinates to the Lambert azimuthal equal-area projection centered on longitude and latitude of <code>0</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_laea1 =<span class="st"> </span><span class="kw">st_transform</span>(world, <span class="dt">crs =</span> <span class="st">&quot;+proj=laea +x_0=0 +y_0=0 +lon_0=0 +lat_0=0&quot;</span>)
 <span class="kw">plot</span>(world_laea1$geom)</code></pre></div>
-<p><img src="figures/unnamed-chunk-17-1.png" width="576" style="display: block; margin: auto;" /> <!-- plot(world_laea1$geom, graticule = TRUE) --></p>
+<p><img src="figures/unnamed-chunk-18-1.png" width="576" style="display: block; margin: auto;" /> <!-- plot(world_laea1$geom, graticule = TRUE) --></p>
 <p>We can change the center of the projection using the <code>+lon_0</code> and <code>+lat_0</code> parameters. For example, the code below gives the map centered on New York City:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_laea2 =<span class="st"> </span><span class="kw">st_transform</span>(world, <span class="dt">crs =</span> <span class="st">&quot;+proj=laea +x_0=0 +y_0=0 +lon_0=-74 +lat_0=40&quot;</span>)
 <span class="kw">plot</span>(world_laea2$geom)</code></pre></div>
-<p><img src="figures/unnamed-chunk-18-1.png" width="576" style="display: block; margin: auto;" /> <!-- plot(world_laea2$geom, graticule = TRUE) --></p>
+<p><img src="figures/unnamed-chunk-19-1.png" width="576" style="display: block; margin: auto;" /> <!-- plot(world_laea2$geom, graticule = TRUE) --></p>
 <p>More information about CRS modification can be found in the <a href="http://proj4.org/usage/index.html">Using PROJ.4</a> documentation.</p>
 <!-- https://github.com/r-spatial/lwgeom/issues/6 -->
 <!-- ```{r} -->
@@ -467,7 +481,7 @@ con_raster_ea
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(nz$geometry)
 <span class="kw">plot</span>(nz_centroid$geometry, <span class="dt">add =</span> <span class="ot">TRUE</span>)
 <span class="kw">plot</span>(nz_pos$geometry, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
-<p><img src="figures/unnamed-chunk-29-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-30-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="clipping" class="section level3">
 <h3><span class="header-section-number">6.3.2</span> Clipping</h3>
@@ -490,7 +504,7 @@ y =<span class="st"> </span>b[<span class="dv">2</span>]
 x_and_y =<span class="st"> </span><span class="kw">st_intersection</span>(x, y)
 <span class="kw">plot</span>(b)
 <span class="kw">plot</span>(x_and_y, <span class="dt">col =</span> <span class="st">&quot;lightgrey&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>) <span class="co"># color intersecting area</span></code></pre></div>
-<p><img src="figures/unnamed-chunk-30-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-31-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>The subsequent code chunk demonstrate how this works for all combinations of the ‘Venn’ diagram representing <code>x</code> and <code>y</code>, inspired by <a href="http://r4ds.had.co.nz/transform.html#logical-operators">Figure 5.1</a> of the book R for Data Science <span class="citation">(Grolemund and Wickham <a href="#ref-grolemund_r_2016">2016</a>)</span>. <!-- Todo: reference r4ds --></p>
 <div class="figure" style="text-align: center"><span id="fig:venn-clip"></span>
 <img src="figures/venn-clip-1.png" alt="Spatial equivalents of logical operators." width="576" />
@@ -534,7 +548,7 @@ Figure 6.5: Randomly distributed points within the bounding box enclosing circle
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_points =<span class="st"> </span><span class="kw">st_cast</span>(nz, <span class="st">&quot;MULTIPOINT&quot;</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(nz$geometry)
 <span class="kw">plot</span>(nz_points$geometry, <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<p><img src="figures/unnamed-chunk-33-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-34-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="exercises-4" class="section level2">
