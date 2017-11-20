@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve9b52f754d259b28c
+preserve3781901c177afeb9
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3094,7 +3094,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve57f12ea5f83f05ce
+preserve878823bfeeed7332
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4505,7 +4505,7 @@ Existing CRS are well suited for most purposes.
 In the same time, `proj4string` definitions are highly modifiable and allow for CRS customization.
 <!-- as we mentioned in section \@ref(crs-in-r). -->
 We can present that using selected world projections.
-The Mollweide projection is recommended when it is important to preserve areas [@jenny_guide_2017].
+The Mollweide projection is recommended when it is important to preserve areas [@jenny_guide_2017] (Figure \@ref(fig:mollproj).
 To use this projection, we need to specify it using the `proj4string` element, `"+proj=moll"`, in the `st_transform` function:
 
 
@@ -4515,23 +4515,13 @@ world_mollweide = st_transform(world, crs = "+proj=moll")
 <!-- plot(world_mollweide$geom) -->
 <!-- plot(world_mollweide$geom, graticule = TRUE) -->
 
-
-```
-#> Warning in par(par_old): graphical parameter "cin" cannot be set
-#> Warning in par(par_old): graphical parameter "cra" cannot be set
-#> Warning in par(par_old): graphical parameter "csi" cannot be set
-#> Warning in par(par_old): graphical parameter "cxy" cannot be set
-#> Warning in par(par_old): graphical parameter "din" cannot be set
-#> Warning in par(par_old): graphical parameter "page" cannot be set
-```
-
 <div class="figure" style="text-align: center">
-<img src="figures/unnamed-chunk-15-1.png" alt="Mollweide projection of the world" width="576" />
-<p class="caption">(\#fig:unnamed-chunk-15)Mollweide projection of the world</p>
+<img src="figures/mollproj-1.png" alt="Mollweide projection of the world" width="576" />
+<p class="caption">(\#fig:mollproj)Mollweide projection of the world</p>
 </div>
 
 On the other hand, the goal for many visualization purposes is to have a map with minimized area, direction, and distance distortions.
-One of the most popular projection to achieve that is Winkel tripel.^[This projection is used, among others, by the National Geographic Society.]
+One of the most popular projection to achieve that is Winkel tripel (Figure \@ref(fig:wintriproj).^[This projection is used, among others, by the National Geographic Society.]
 The `st_transform_proj` function allows for coordinates transformations to the Winkel tripel projection: 
 
 
@@ -4541,19 +4531,9 @@ world_wintri = st_transform_proj(world, crs = "+proj=wintri")
 <!-- plot(world_wintri$geom) -->
 <!-- plot(world_wintri$geom, graticule = TRUE) -->
 
-
-```
-#> Warning in par(par_old): graphical parameter "cin" cannot be set
-#> Warning in par(par_old): graphical parameter "cra" cannot be set
-#> Warning in par(par_old): graphical parameter "csi" cannot be set
-#> Warning in par(par_old): graphical parameter "cxy" cannot be set
-#> Warning in par(par_old): graphical parameter "din" cannot be set
-#> Warning in par(par_old): graphical parameter "page" cannot be set
-```
-
 <div class="figure" style="text-align: center">
-<img src="figures/unnamed-chunk-17-1.png" alt="Winkel tripel projection of the world" width="576" />
-<p class="caption">(\#fig:unnamed-chunk-17)Winkel tripel projection of the world</p>
+<img src="figures/wintirproj-1.png" alt="Winkel tripel projection of the world" width="576" />
+<p class="caption">(\#fig:wintirproj)Winkel tripel projection of the world</p>
 </div>
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">Two main functions for transformation of simple features coordinates are `sf::st_transform()` and `lwgeom::st_transform_proj()`. 
@@ -4562,7 +4542,7 @@ The first one is appropriate in most situations, and provides a set of the most 
 The second one allows for a greater customization of a projection, which includes cases when some of the PROJ.4 parameters (e.g. `+over`) or projection (`+proj=wintri`) is not available in `st_transform()`.</div>\EndKnitrBlock{rmdnote}
 
 Moreover, PROJ.4 parameters can be modified in most CRS definitions.
-The below code transforms the coordinates to the Lambert azimuthal equal-area projection centered on longitude and latitude of `0`:
+The below code transforms the coordinates to the Lambert azimuthal equal-area projection centered on longitude and latitude of `0` (Figure \@ref(fig:laeaproj1).
 
 
 ```r
@@ -4571,23 +4551,13 @@ world_laea1 = st_transform(world, crs = "+proj=laea +x_0=0 +y_0=0 +lon_0=0 +lat_
 <!-- plot(world_laea1$geom) -->
 <!-- plot(world_laea1$geom, graticule = TRUE) -->
 
-
-```
-#> Warning in par(par_old): graphical parameter "cin" cannot be set
-#> Warning in par(par_old): graphical parameter "cra" cannot be set
-#> Warning in par(par_old): graphical parameter "csi" cannot be set
-#> Warning in par(par_old): graphical parameter "cxy" cannot be set
-#> Warning in par(par_old): graphical parameter "din" cannot be set
-#> Warning in par(par_old): graphical parameter "page" cannot be set
-```
-
 <div class="figure" style="text-align: center">
-<img src="figures/unnamed-chunk-20-1.png" alt="Lambert azimuthal equal-area projection of the world centered on longitude and latitude of 0" width="576" />
-<p class="caption">(\#fig:unnamed-chunk-20)Lambert azimuthal equal-area projection of the world centered on longitude and latitude of 0</p>
+<img src="figures/laeaproj1-1.png" alt="Lambert azimuthal equal-area projection of the world centered on longitude and latitude of 0" width="576" />
+<p class="caption">(\#fig:laeaproj1)Lambert azimuthal equal-area projection of the world centered on longitude and latitude of 0</p>
 </div>
 
-We can change the center of the projection using the `+lon_0` and `+lat_0` parameters. 
-For example, the code below gives the map centered on New York City:
+We can change the PROJ.4 parameters, for example the center of the projection using the `+lon_0` and `+lat_0` parameters. 
+The code below gives the map centered on New York City (Figure \@ref(fig:laeaproj2).
 
 
 ```r
@@ -4596,19 +4566,9 @@ world_laea2 = st_transform(world, crs = "+proj=laea +x_0=0 +y_0=0 +lon_0=-74 +la
 <!-- plot(world_laea2$geom) -->
 <!-- plot(world_laea2$geom, graticule = TRUE) -->
 
-
-```
-#> Warning in par(par_old): graphical parameter "cin" cannot be set
-#> Warning in par(par_old): graphical parameter "cra" cannot be set
-#> Warning in par(par_old): graphical parameter "csi" cannot be set
-#> Warning in par(par_old): graphical parameter "cxy" cannot be set
-#> Warning in par(par_old): graphical parameter "din" cannot be set
-#> Warning in par(par_old): graphical parameter "page" cannot be set
-```
-
 <div class="figure" style="text-align: center">
-<img src="figures/unnamed-chunk-22-1.png" alt="Lambert azimuthal equal-area projection of the world centered on New York City" width="576" />
-<p class="caption">(\#fig:unnamed-chunk-22)Lambert azimuthal equal-area projection of the world centered on New York City</p>
+<img src="figures/laeaproj2-1.png" alt="Lambert azimuthal equal-area projection of the world centered on New York City" width="576" />
+<p class="caption">(\#fig:laeaproj2)Lambert azimuthal equal-area projection of the world centered on New York City</p>
 </div>
 
 More information about CRS modification can be found in the [Using PROJ.4](http://proj4.org/usage/index.html) documentation.
@@ -4781,7 +4741,7 @@ plot(nz_centroid$geometry, add = TRUE)
 plot(nz_pos$geometry, add = TRUE, col = "red")
 ```
 
-<img src="figures/unnamed-chunk-33-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-29-1.png" width="576" style="display: block; margin: auto;" />
 
 ### Clipping 
 
@@ -4818,7 +4778,7 @@ plot(b)
 plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
 ```
 
-<img src="figures/unnamed-chunk-34-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-30-1.png" width="576" style="display: block; margin: auto;" />
 
 The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
 <!-- Todo: reference r4ds -->
@@ -4882,7 +4842,7 @@ plot(nz$geometry)
 plot(nz_points$geometry, add = TRUE)
 ```
 
-<img src="figures/unnamed-chunk-37-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-33-1.png" width="576" style="display: block; margin: auto;" />
 
 ## Exercises
 
