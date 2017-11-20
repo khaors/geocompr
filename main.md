@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve1ec06296fdc61c43
+preserve9b52f754d259b28c
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3094,7 +3094,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve79c9e8ef2481b019
+preserve57f12ea5f83f05ce
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4525,7 +4525,10 @@ world_mollweide = st_transform(world, crs = "+proj=moll")
 #> Warning in par(par_old): graphical parameter "page" cannot be set
 ```
 
-<img src="figures/unnamed-chunk-15-1.png" width="576" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures/unnamed-chunk-15-1.png" alt="Mollweide projection of the world" width="576" />
+<p class="caption">(\#fig:unnamed-chunk-15)Mollweide projection of the world</p>
+</div>
 
 On the other hand, the goal for many visualization purposes is to have a map with minimized area, direction, and distance distortions.
 One of the most popular projection to achieve that is Winkel tripel.^[This projection is used, among others, by the National Geographic Society.]
@@ -4548,7 +4551,10 @@ world_wintri = st_transform_proj(world, crs = "+proj=wintri")
 #> Warning in par(par_old): graphical parameter "page" cannot be set
 ```
 
-<img src="figures/unnamed-chunk-17-1.png" width="576" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures/unnamed-chunk-17-1.png" alt="Winkel tripel projection of the world" width="576" />
+<p class="caption">(\#fig:unnamed-chunk-17)Winkel tripel projection of the world</p>
+</div>
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">Two main functions for transformation of simple features coordinates are `sf::st_transform()` and `lwgeom::st_transform_proj()`. 
 The `st_transform` function uses the GDAL interface to PROJ.4, while `st_transform_proj()` uses the PROJ.4 API directly.
@@ -4575,7 +4581,10 @@ world_laea1 = st_transform(world, crs = "+proj=laea +x_0=0 +y_0=0 +lon_0=0 +lat_
 #> Warning in par(par_old): graphical parameter "page" cannot be set
 ```
 
-<img src="figures/unnamed-chunk-20-1.png" width="576" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures/unnamed-chunk-20-1.png" alt="Lambert azimuthal equal-area projection of the world centered on longitude and latitude of 0" width="576" />
+<p class="caption">(\#fig:unnamed-chunk-20)Lambert azimuthal equal-area projection of the world centered on longitude and latitude of 0</p>
+</div>
 
 We can change the center of the projection using the `+lon_0` and `+lat_0` parameters. 
 For example, the code below gives the map centered on New York City:
@@ -4597,7 +4606,10 @@ world_laea2 = st_transform(world, crs = "+proj=laea +x_0=0 +y_0=0 +lon_0=-74 +la
 #> Warning in par(par_old): graphical parameter "page" cannot be set
 ```
 
-<img src="figures/unnamed-chunk-22-1.png" width="576" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures/unnamed-chunk-22-1.png" alt="Lambert azimuthal equal-area projection of the world centered on New York City" width="576" />
+<p class="caption">(\#fig:unnamed-chunk-22)Lambert azimuthal equal-area projection of the world centered on New York City</p>
+</div>
 
 More information about CRS modification can be found in the [Using PROJ.4](http://proj4.org/usage/index.html) documentation.
 

@@ -356,7 +356,12 @@ The EPSG code can be found inside the <code>crs</code> attribute of the objectâ€
 #&gt; Warning in par(par_old): graphical parameter &quot;cxy&quot; cannot be set
 #&gt; Warning in par(par_old): graphical parameter &quot;din&quot; cannot be set
 #&gt; Warning in par(par_old): graphical parameter &quot;page&quot; cannot be set</code></pre>
-<p><img src="figures/unnamed-chunk-15-1.png" width="576" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-15"></span>
+<img src="figures/unnamed-chunk-15-1.png" alt="Mollweide projection of the world" width="576" />
+<p class="caption">
+Figure 6.3: Mollweide projection of the world
+</p>
+</div>
 <p>On the other hand, the goal for many visualization purposes is to have a map with minimized area, direction, and distance distortions. One of the most popular projection to achieve that is Winkel tripel.<a href="#fn31" class="footnoteRef" id="fnref31"><sup>31</sup></a> The <code>st_transform_proj</code> function allows for coordinates transformations to the Winkel tripel projection:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_wintri =<span class="st"> </span><span class="kw">st_transform_proj</span>(world, <span class="dt">crs =</span> <span class="st">&quot;+proj=wintri&quot;</span>)</code></pre></div>
 <!-- plot(world_wintri$geom) -->
@@ -367,7 +372,12 @@ The EPSG code can be found inside the <code>crs</code> attribute of the objectâ€
 #&gt; Warning in par(par_old): graphical parameter &quot;cxy&quot; cannot be set
 #&gt; Warning in par(par_old): graphical parameter &quot;din&quot; cannot be set
 #&gt; Warning in par(par_old): graphical parameter &quot;page&quot; cannot be set</code></pre>
-<p><img src="figures/unnamed-chunk-17-1.png" width="576" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-17"></span>
+<img src="figures/unnamed-chunk-17-1.png" alt="Winkel tripel projection of the world" width="576" />
+<p class="caption">
+Figure 6.4: Winkel tripel projection of the world
+</p>
+</div>
 
 <div class="rmdnote">
 Two main functions for transformation of simple features coordinates are <code>sf::st_transform()</code> and <code>lwgeom::st_transform_proj()</code>. The <code>st_transform</code> function uses the GDAL interface to PROJ.4, while <code>st_transform_proj()</code> uses the PROJ.4 API directly. The first one is appropriate in most situations, and provides a set of the most often used parameters and well defined transformations. The second one allows for a greater customization of a projection, which includes cases when some of the PROJ.4 parameters (e.g. <code>+over</code>) or projection (<code>+proj=wintri</code>) is not available in <code>st_transform()</code>.
@@ -383,7 +393,12 @@ Two main functions for transformation of simple features coordinates are <code>s
 #&gt; Warning in par(par_old): graphical parameter &quot;cxy&quot; cannot be set
 #&gt; Warning in par(par_old): graphical parameter &quot;din&quot; cannot be set
 #&gt; Warning in par(par_old): graphical parameter &quot;page&quot; cannot be set</code></pre>
-<p><img src="figures/unnamed-chunk-20-1.png" width="576" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-20"></span>
+<img src="figures/unnamed-chunk-20-1.png" alt="Lambert azimuthal equal-area projection of the world centered on longitude and latitude of 0" width="576" />
+<p class="caption">
+Figure 6.5: Lambert azimuthal equal-area projection of the world centered on longitude and latitude of 0
+</p>
+</div>
 <p>We can change the center of the projection using the <code>+lon_0</code> and <code>+lat_0</code> parameters. For example, the code below gives the map centered on New York City:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_laea2 =<span class="st"> </span><span class="kw">st_transform</span>(world, <span class="dt">crs =</span> <span class="st">&quot;+proj=laea +x_0=0 +y_0=0 +lon_0=-74 +lat_0=40&quot;</span>)</code></pre></div>
 <!-- plot(world_laea2$geom) -->
@@ -394,7 +409,12 @@ Two main functions for transformation of simple features coordinates are <code>s
 #&gt; Warning in par(par_old): graphical parameter &quot;cxy&quot; cannot be set
 #&gt; Warning in par(par_old): graphical parameter &quot;din&quot; cannot be set
 #&gt; Warning in par(par_old): graphical parameter &quot;page&quot; cannot be set</code></pre>
-<p><img src="figures/unnamed-chunk-22-1.png" width="576" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-22"></span>
+<img src="figures/unnamed-chunk-22-1.png" alt="Lambert azimuthal equal-area projection of the world centered on New York City" width="576" />
+<p class="caption">
+Figure 6.6: Lambert azimuthal equal-area projection of the world centered on New York City
+</p>
+</div>
 <p>More information about CRS modification can be found in the <a href="http://proj4.org/usage/index.html">Using PROJ.4</a> documentation.</p>
 <!-- https://github.com/r-spatial/lwgeom/issues/6 -->
 <!-- ```{r} -->
@@ -509,7 +529,7 @@ l =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;x&q
 <div class="figure" style="text-align: center"><span id="fig:points"></span>
 <img src="figures/points-1.png" alt="Overlapping circles." width="576" />
 <p class="caption">
-Figure 6.3: Overlapping circles.
+Figure 6.7: Overlapping circles.
 </p>
 </div>
 <p>Imagine you want to select not one circle or the other, but the space covered by both <code>x</code> <em>and</em> <code>y</code>. This can be done using the function <code>st_intersection()</code>, illustrated using objects named <code>x</code> and <code>y</code> which represent the left and right-hand circles:</p>
@@ -523,11 +543,11 @@ x_and_y =<span class="st"> </span><span class="kw">st_intersection</span>(x, y)
 <div class="figure" style="text-align: center"><span id="fig:venn-clip"></span>
 <img src="figures/venn-clip-1.png" alt="Spatial equivalents of logical operators." width="576" />
 <p class="caption">
-Figure 6.4: Spatial equivalents of logical operators.
+Figure 6.8: Spatial equivalents of logical operators.
 </p>
 </div>
-<p>To illustrate the relationship between subsetting and clipping spatial data, we will subset points that cover the bounding box of the circles <code>x</code> and <code>y</code> in Figure <a href="transform.html#fig:venn-clip">6.4</a>. Some points will be inside just one circle, some will be inside both and some will be inside neither.</p>
-<p>There are two different ways to subset points that fit into combinations of the circles: via clipping and logical operators. But first we must generate some points. We will use the <em>simple random</em> sampling strategy to sample from a box representing the extent of <code>x</code> and <code>y</code>. To generate this points will use a function not yet covered in this book, <code>st_sample()</code>. Next we will generate the situation plotted in Figure <a href="transform.html#fig:venn-subset">6.5</a>:</p>
+<p>To illustrate the relationship between subsetting and clipping spatial data, we will subset points that cover the bounding box of the circles <code>x</code> and <code>y</code> in Figure <a href="transform.html#fig:venn-clip">6.8</a>. Some points will be inside just one circle, some will be inside both and some will be inside neither.</p>
+<p>There are two different ways to subset points that fit into combinations of the circles: via clipping and logical operators. But first we must generate some points. We will use the <em>simple random</em> sampling strategy to sample from a box representing the extent of <code>x</code> and <code>y</code>. To generate this points will use a function not yet covered in this book, <code>st_sample()</code>. Next we will generate the situation plotted in Figure <a href="transform.html#fig:venn-subset">6.9</a>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bb =<span class="st"> </span><span class="kw">st_bbox</span>(<span class="kw">st_union</span>(x, y))
 pmat =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(bb[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">2</span>)]), <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)
 box =<span class="st"> </span><span class="kw">st_polygon</span>(<span class="kw">list</span>(pmat))
@@ -541,7 +561,7 @@ p =<span class="st"> </span><span class="kw">st_sample</span>(<span class="dt">x
 <div class="figure" style="text-align: center"><span id="fig:venn-subset"></span>
 <img src="figures/venn-subset-1.png" alt="Randomly distributed points within the bounding box enclosing circles x and y." width="576" />
 <p class="caption">
-Figure 6.5: Randomly distributed points within the bounding box enclosing circles x and y.
+Figure 6.9: Randomly distributed points within the bounding box enclosing circles x and y.
 </p>
 </div>
 </div>
