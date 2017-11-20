@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve12763695dec4d229
+preserve1ec06296fdc61c43
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -522,8 +522,6 @@ install.packages("spDataLarge") # after loading spData
 ```r
 library(spDataLarge)   # load geographic data
 ```
-
-
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">On Mac and Linux a few requirements must be met to install **sf**.
 These are described in the package's README at [github.com/r-spatial/sf](https://github.com/r-spatial/sf).</div>\EndKnitrBlock{rmdnote}
@@ -3096,7 +3094,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve115c68eb7fb56ff5
+preserve79c9e8ef2481b019
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4518,14 +4516,7 @@ world_mollweide = st_transform(world, crs = "+proj=moll")
 <!-- plot(world_mollweide$geom, graticule = TRUE) -->
 
 
-```r
-world_mollweide_gr = st_graticule(lat = c(-89.9, seq(-80, 80, 20), 89.9)) %>% 
-  st_transform(crs = "+proj=moll")
-par_old = par()
-par(mar = c(0, 0, 1, 0))
-plot(world_mollweide_gr$geometry)
-plot(world_mollweide$geom, add = TRUE)
-par(par_old)
+```
 #> Warning in par(par_old): graphical parameter "cin" cannot be set
 #> Warning in par(par_old): graphical parameter "cra" cannot be set
 #> Warning in par(par_old): graphical parameter "csi" cannot be set
@@ -4543,11 +4534,21 @@ The `st_transform_proj` function allows for coordinates transformations to the W
 
 ```r
 world_wintri = st_transform_proj(world, crs = "+proj=wintri")
-plot(world_wintri$geom)
+```
+<!-- plot(world_wintri$geom) -->
+<!-- plot(world_wintri$geom, graticule = TRUE) -->
+
+
+```
+#> Warning in par(par_old): graphical parameter "cin" cannot be set
+#> Warning in par(par_old): graphical parameter "cra" cannot be set
+#> Warning in par(par_old): graphical parameter "csi" cannot be set
+#> Warning in par(par_old): graphical parameter "cxy" cannot be set
+#> Warning in par(par_old): graphical parameter "din" cannot be set
+#> Warning in par(par_old): graphical parameter "page" cannot be set
 ```
 
-<img src="figures/unnamed-chunk-16-1.png" width="576" style="display: block; margin: auto;" />
-<!-- plot(world_wintri$geom, graticule = TRUE) -->
+<img src="figures/unnamed-chunk-17-1.png" width="576" style="display: block; margin: auto;" />
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">Two main functions for transformation of simple features coordinates are `sf::st_transform()` and `lwgeom::st_transform_proj()`. 
 The `st_transform` function uses the GDAL interface to PROJ.4, while `st_transform_proj()` uses the PROJ.4 API directly.
@@ -4560,11 +4561,21 @@ The below code transforms the coordinates to the Lambert azimuthal equal-area pr
 
 ```r
 world_laea1 = st_transform(world, crs = "+proj=laea +x_0=0 +y_0=0 +lon_0=0 +lat_0=0")
-plot(world_laea1$geom)
+```
+<!-- plot(world_laea1$geom) -->
+<!-- plot(world_laea1$geom, graticule = TRUE) -->
+
+
+```
+#> Warning in par(par_old): graphical parameter "cin" cannot be set
+#> Warning in par(par_old): graphical parameter "cra" cannot be set
+#> Warning in par(par_old): graphical parameter "csi" cannot be set
+#> Warning in par(par_old): graphical parameter "cxy" cannot be set
+#> Warning in par(par_old): graphical parameter "din" cannot be set
+#> Warning in par(par_old): graphical parameter "page" cannot be set
 ```
 
-<img src="figures/unnamed-chunk-18-1.png" width="576" style="display: block; margin: auto;" />
-<!-- plot(world_laea1$geom, graticule = TRUE) -->
+<img src="figures/unnamed-chunk-20-1.png" width="576" style="display: block; margin: auto;" />
 
 We can change the center of the projection using the `+lon_0` and `+lat_0` parameters. 
 For example, the code below gives the map centered on New York City:
@@ -4572,11 +4583,21 @@ For example, the code below gives the map centered on New York City:
 
 ```r
 world_laea2 = st_transform(world, crs = "+proj=laea +x_0=0 +y_0=0 +lon_0=-74 +lat_0=40")
-plot(world_laea2$geom)
+```
+<!-- plot(world_laea2$geom) -->
+<!-- plot(world_laea2$geom, graticule = TRUE) -->
+
+
+```
+#> Warning in par(par_old): graphical parameter "cin" cannot be set
+#> Warning in par(par_old): graphical parameter "cra" cannot be set
+#> Warning in par(par_old): graphical parameter "csi" cannot be set
+#> Warning in par(par_old): graphical parameter "cxy" cannot be set
+#> Warning in par(par_old): graphical parameter "din" cannot be set
+#> Warning in par(par_old): graphical parameter "page" cannot be set
 ```
 
-<img src="figures/unnamed-chunk-19-1.png" width="576" style="display: block; margin: auto;" />
-<!-- plot(world_laea2$geom, graticule = TRUE) -->
+<img src="figures/unnamed-chunk-22-1.png" width="576" style="display: block; margin: auto;" />
 
 More information about CRS modification can be found in the [Using PROJ.4](http://proj4.org/usage/index.html) documentation.
 
@@ -4748,7 +4769,7 @@ plot(nz_centroid$geometry, add = TRUE)
 plot(nz_pos$geometry, add = TRUE, col = "red")
 ```
 
-<img src="figures/unnamed-chunk-30-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-33-1.png" width="576" style="display: block; margin: auto;" />
 
 ### Clipping 
 
@@ -4785,7 +4806,7 @@ plot(b)
 plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
 ```
 
-<img src="figures/unnamed-chunk-31-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-34-1.png" width="576" style="display: block; margin: auto;" />
 
 The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
 <!-- Todo: reference r4ds -->
@@ -4849,7 +4870,7 @@ plot(nz$geometry)
 plot(nz_points$geometry, add = TRUE)
 ```
 
-<img src="figures/unnamed-chunk-34-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-37-1.png" width="576" style="display: block; margin: auto;" />
 
 ## Exercises
 
