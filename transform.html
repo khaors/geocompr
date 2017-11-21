@@ -333,6 +333,14 @@ Figure 6.2: Buffer on data with projected CRS.
 <span class="co">#&gt; Coordinate Reference System:</span>
 <span class="co">#&gt;   EPSG: 27700 </span>
 <span class="co">#&gt;   proj4string: &quot;+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs&quot;</span></code></pre></div>
+<!-- plot -->
+<!-- ```{r} -->
+<!-- par_old = par() -->
+<!-- par(mfrow = c(1, 2)) -->
+<!-- plot(cycle_hire_osm$geometry, axes = TRUE) -->
+<!-- plot(cycle_hire_osm_projected$geometry, axes = TRUE) -->
+<!-- par(par_old) -->
+<!-- ``` -->
 <p>Note that the result shows that the <code>epsg</code> has been updated and that <code>proj4string</code> element of the CRS now contains, among other things <code>+proj=tmerc</code> (meaning it is a projected CRS using the <a href="https://en.wikipedia.org/wiki/Transverse_Mercator_projection">tranverse Mercator</a> projection) and <code>+units=m</code> (meaning the units of the coordinates are meters). Another function, from the <strong>rgdal</strong> library, provides a note containing the name of the CRS:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">crs_codes =<span class="st"> </span>rgdal::<span class="kw">make_EPSG</span>()[<span class="dv">1</span>:<span class="dv">2</span>]
 dplyr::<span class="kw">filter</span>(crs_codes, code ==<span class="st"> </span><span class="dv">27700</span>)
@@ -488,9 +496,18 @@ con_raster_ea
 <h3><span class="header-section-number">6.3.1</span> Centroids</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_centroid =<span class="st"> </span><span class="kw">st_centroid</span>(nz)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_pos =<span class="st"> </span><span class="kw">st_point_on_surface</span>(nz)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(nz$geometry)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">par_old =<span class="st"> </span><span class="kw">par</span>()
+<span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>))
+<span class="kw">plot</span>(nz$geometry)
 <span class="kw">plot</span>(nz_centroid$geometry, <span class="dt">add =</span> <span class="ot">TRUE</span>)
-<span class="kw">plot</span>(nz_pos$geometry, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
+<span class="kw">plot</span>(nz_pos$geometry, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)
+<span class="kw">par</span>(par_old)
+<span class="co">#&gt; Warning in par(par_old): graphical parameter &quot;cin&quot; cannot be set</span>
+<span class="co">#&gt; Warning in par(par_old): graphical parameter &quot;cra&quot; cannot be set</span>
+<span class="co">#&gt; Warning in par(par_old): graphical parameter &quot;csi&quot; cannot be set</span>
+<span class="co">#&gt; Warning in par(par_old): graphical parameter &quot;cxy&quot; cannot be set</span>
+<span class="co">#&gt; Warning in par(par_old): graphical parameter &quot;din&quot; cannot be set</span>
+<span class="co">#&gt; Warning in par(par_old): graphical parameter &quot;page&quot; cannot be set</span></code></pre></div>
 <p><img src="figures/unnamed-chunk-29-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="clipping" class="section level3">
@@ -556,8 +573,17 @@ Figure 6.9: Randomly distributed points within the bounding box enclosing circle
 <div id="geometry-cast" class="section level3">
 <h3><span class="header-section-number">6.4.1</span> Geometry cast</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_points =<span class="st"> </span><span class="kw">st_cast</span>(nz, <span class="st">&quot;MULTIPOINT&quot;</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(nz$geometry)
-<span class="kw">plot</span>(nz_points$geometry, <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">par_old =<span class="st"> </span><span class="kw">par</span>()
+<span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>))
+<span class="kw">plot</span>(nz$geometry)
+<span class="kw">plot</span>(nz_points$geometry, <span class="dt">add =</span> <span class="ot">TRUE</span>)
+<span class="kw">par</span>(par_old)
+<span class="co">#&gt; Warning in par(par_old): graphical parameter &quot;cin&quot; cannot be set</span>
+<span class="co">#&gt; Warning in par(par_old): graphical parameter &quot;cra&quot; cannot be set</span>
+<span class="co">#&gt; Warning in par(par_old): graphical parameter &quot;csi&quot; cannot be set</span>
+<span class="co">#&gt; Warning in par(par_old): graphical parameter &quot;cxy&quot; cannot be set</span>
+<span class="co">#&gt; Warning in par(par_old): graphical parameter &quot;din&quot; cannot be set</span>
+<span class="co">#&gt; Warning in par(par_old): graphical parameter &quot;page&quot; cannot be set</span></code></pre></div>
 <p><img src="figures/unnamed-chunk-33-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 </div>

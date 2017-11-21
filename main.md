@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservec4e028fe734b7e48
+preserveca13f7971098fd03
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3094,7 +3094,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve06f1a62336067c03
+preserveb40793445af7df53
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4477,6 +4477,15 @@ st_crs(cycle_hire_osm_projected)
 #>   proj4string: "+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs"
 ```
 
+<!-- plot -->
+<!-- ```{r} -->
+<!-- par_old = par() -->
+<!-- par(mfrow = c(1, 2)) -->
+<!-- plot(cycle_hire_osm$geometry, axes = TRUE) -->
+<!-- plot(cycle_hire_osm_projected$geometry, axes = TRUE) -->
+<!-- par(par_old) -->
+<!-- ``` -->
+
 Note that the result shows that the `epsg` has been updated and that `proj4string` element of the CRS now contains, among other things `+proj=tmerc` (meaning it is a projected CRS using the [tranverse Mercator](https://en.wikipedia.org/wiki/Transverse_Mercator_projection) projection) and `+units=m` (meaning the units of the coordinates are meters).
 Another function, from the **rgdal** library, provides a note containing the name of the CRS:
 
@@ -4736,9 +4745,18 @@ nz_pos = st_point_on_surface(nz)
 
 
 ```r
+par_old = par()
+par(mar = c(0, 0, 1, 0))
 plot(nz$geometry)
 plot(nz_centroid$geometry, add = TRUE)
 plot(nz_pos$geometry, add = TRUE, col = "red")
+par(par_old)
+#> Warning in par(par_old): graphical parameter "cin" cannot be set
+#> Warning in par(par_old): graphical parameter "cra" cannot be set
+#> Warning in par(par_old): graphical parameter "csi" cannot be set
+#> Warning in par(par_old): graphical parameter "cxy" cannot be set
+#> Warning in par(par_old): graphical parameter "din" cannot be set
+#> Warning in par(par_old): graphical parameter "page" cannot be set
 ```
 
 <img src="figures/unnamed-chunk-29-1.png" width="576" style="display: block; margin: auto;" />
@@ -4838,8 +4856,17 @@ nz_points = st_cast(nz, "MULTIPOINT")
 
 
 ```r
+par_old = par()
+par(mar = c(0, 0, 1, 0))
 plot(nz$geometry)
 plot(nz_points$geometry, add = TRUE)
+par(par_old)
+#> Warning in par(par_old): graphical parameter "cin" cannot be set
+#> Warning in par(par_old): graphical parameter "cra" cannot be set
+#> Warning in par(par_old): graphical parameter "csi" cannot be set
+#> Warning in par(par_old): graphical parameter "cxy" cannot be set
+#> Warning in par(par_old): graphical parameter "din" cannot be set
+#> Warning in par(par_old): graphical parameter "page" cannot be set
 ```
 
 <img src="figures/unnamed-chunk-33-1.png" width="576" style="display: block; margin: auto;" />
