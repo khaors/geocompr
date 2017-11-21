@@ -224,8 +224,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.2.2" data-path="transform.html"><a href="transform.html#raster-data-3"><i class="fa fa-check"></i><b>6.2.2</b> Raster data</a></li>
 </ul></li>
 <li class="chapter" data-level="6.3" data-path="transform.html"><a href="transform.html#geometry-transformations"><i class="fa fa-check"></i><b>6.3</b> Geometry transformations</a><ul>
-<li class="chapter" data-level="6.3.1" data-path="transform.html"><a href="transform.html#centroids"><i class="fa fa-check"></i><b>6.3.1</b> Centroids</a></li>
-<li class="chapter" data-level="6.3.2" data-path="transform.html"><a href="transform.html#clipping"><i class="fa fa-check"></i><b>6.3.2</b> Clipping</a></li>
+<li class="chapter" data-level="6.3.1" data-path="transform.html"><a href="transform.html#simplification"><i class="fa fa-check"></i><b>6.3.1</b> Simplification</a></li>
+<li class="chapter" data-level="6.3.2" data-path="transform.html"><a href="transform.html#centroids"><i class="fa fa-check"></i><b>6.3.2</b> Centroids</a></li>
+<li class="chapter" data-level="6.3.3" data-path="transform.html"><a href="transform.html#clipping"><i class="fa fa-check"></i><b>6.3.3</b> Clipping</a></li>
 </ul></li>
 <li class="chapter" data-level="6.4" data-path="transform.html"><a href="transform.html#type-transformation"><i class="fa fa-check"></i><b>6.4</b> Type transformation</a><ul>
 <li class="chapter" data-level="6.4.1" data-path="transform.html"><a href="transform.html#geometry-cast"><i class="fa fa-check"></i><b>6.4.1</b> Geometry cast</a></li>
@@ -487,13 +488,19 @@ con_raster_ea
 </div>
 <div id="geometry-transformations" class="section level2">
 <h2><span class="header-section-number">6.3</span> Geometry transformations</h2>
+<!-- or ## Geometry processing -->
 <!-- Geometry transformations (e.g. clipping, buffers, centroids) -->
 <!-- (within which could go a small example showing affine transformations) -->
+<div id="simplification" class="section level3">
+<h3><span class="header-section-number">6.3.1</span> Simplification</h3>
 <!-- - simplifications -->
 <!-- st_simplify -->
+<!-- line example -->
 <!-- rmapshaper -->
+<!-- polygon example -->
+</div>
 <div id="centroids" class="section level3">
-<h3><span class="header-section-number">6.3.1</span> Centroids</h3>
+<h3><span class="header-section-number">6.3.2</span> Centroids</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_centroid =<span class="st"> </span><span class="kw">st_centroid</span>(nz)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_pos =<span class="st"> </span><span class="kw">st_point_on_surface</span>(nz)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">par_old =<span class="st"> </span><span class="kw">par</span>()
@@ -511,7 +518,7 @@ con_raster_ea
 <p><img src="figures/unnamed-chunk-29-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="clipping" class="section level3">
-<h3><span class="header-section-number">6.3.2</span> Clipping</h3>
+<h3><span class="header-section-number">6.3.3</span> Clipping</h3>
 <p>Spatial clipping is a form of spatial subsetting that involves changes to the <code>geometry</code> columns of at least some of the affected features.</p>
 <p>Clipping can only apply to features more complex than points: lines, polygons and their ‘multi’ equivalents. To illustrate the concept we will start with a simple example: two overlapping circles with a center point one unit away from each other and radius of one:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">b =<span class="st"> </span><span class="kw">st_sfc</span>(<span class="kw">st_point</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)), <span class="kw">st_point</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))) <span class="co"># create 2 points</span>
@@ -585,6 +592,11 @@ Figure 6.9: Randomly distributed points within the bounding box enclosing circle
 <span class="co">#&gt; Warning in par(par_old): graphical parameter &quot;din&quot; cannot be set</span>
 <span class="co">#&gt; Warning in par(par_old): graphical parameter &quot;page&quot; cannot be set</span></code></pre></div>
 <p><img src="figures/unnamed-chunk-33-1.png" width="576" style="display: block; margin: auto;" /></p>
+<!-- ### Class conversion -->
+<!-- placeholder for: -->
+<!-- sf -> sp -->
+<!-- sp -> sf -->
+<!-- stars; https://github.com/r-spatial/stars/blob/master/vignettes/blog1.Rmd -->
 </div>
 </div>
 <div id="exercises-4" class="section level2">

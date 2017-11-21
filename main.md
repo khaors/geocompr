@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveca13f7971098fd03
+preserve006a563f6433f7b6
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3094,7 +3094,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveb40793445af7df53
+preserve68b80cf2dec06f3d
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4725,11 +4725,17 @@ summary(con_raster_ea)
 <!-- q: should we mentioned gdal_transform? -->
 
 ## Geometry transformations
+<!-- or ## Geometry processing -->
 <!-- Geometry transformations (e.g. clipping, buffers, centroids) -->
 <!-- (within which could go a small example showing affine transformations) -->
+
+### Simplification
+
 <!-- - simplifications -->
 <!-- st_simplify -->
+<!-- line example -->
 <!-- rmapshaper -->
+<!-- polygon example -->
 
 ### Centroids
 
@@ -4870,6 +4876,12 @@ par(par_old)
 ```
 
 <img src="figures/unnamed-chunk-33-1.png" width="576" style="display: block; margin: auto;" />
+
+<!-- ### Class conversion -->
+<!-- placeholder for: -->
+<!-- sf -> sp -->
+<!-- sp -> sf -->
+<!-- stars; https://github.com/r-spatial/stars/blob/master/vignettes/blog1.Rmd -->
 
 ## Exercises
 
