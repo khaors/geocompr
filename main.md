@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve006a563f6433f7b6
+preserve9e4524e15ae06782
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3094,7 +3094,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve68b80cf2dec06f3d
+preserve64dafb0e62693a21
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4750,22 +4750,6 @@ nz_pos = st_point_on_surface(nz)
 ```
 
 
-```r
-par_old = par()
-par(mar = c(0, 0, 1, 0))
-plot(nz$geometry)
-plot(nz_centroid$geometry, add = TRUE)
-plot(nz_pos$geometry, add = TRUE, col = "red")
-par(par_old)
-#> Warning in par(par_old): graphical parameter "cin" cannot be set
-#> Warning in par(par_old): graphical parameter "cra" cannot be set
-#> Warning in par(par_old): graphical parameter "csi" cannot be set
-#> Warning in par(par_old): graphical parameter "cxy" cannot be set
-#> Warning in par(par_old): graphical parameter "din" cannot be set
-#> Warning in par(par_old): graphical parameter "page" cannot be set
-```
-
-<img src="figures/unnamed-chunk-29-1.png" width="576" style="display: block; margin: auto;" />
 
 ### Clipping 
 
@@ -4861,21 +4845,6 @@ nz_points = st_cast(nz, "MULTIPOINT")
 ```
 
 
-```r
-par_old = par()
-par(mar = c(0, 0, 1, 0))
-plot(nz$geometry)
-plot(nz_points$geometry, add = TRUE)
-par(par_old)
-#> Warning in par(par_old): graphical parameter "cin" cannot be set
-#> Warning in par(par_old): graphical parameter "cra" cannot be set
-#> Warning in par(par_old): graphical parameter "csi" cannot be set
-#> Warning in par(par_old): graphical parameter "cxy" cannot be set
-#> Warning in par(par_old): graphical parameter "din" cannot be set
-#> Warning in par(par_old): graphical parameter "page" cannot be set
-```
-
-<img src="figures/unnamed-chunk-33-1.png" width="576" style="display: block; margin: auto;" />
 
 <!-- ### Class conversion -->
 <!-- placeholder for: -->

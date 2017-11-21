@@ -503,19 +503,6 @@ con_raster_ea
 <h3><span class="header-section-number">6.3.2</span> Centroids</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_centroid =<span class="st"> </span><span class="kw">st_centroid</span>(nz)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_pos =<span class="st"> </span><span class="kw">st_point_on_surface</span>(nz)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">par_old =<span class="st"> </span><span class="kw">par</span>()
-<span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>))
-<span class="kw">plot</span>(nz$geometry)
-<span class="kw">plot</span>(nz_centroid$geometry, <span class="dt">add =</span> <span class="ot">TRUE</span>)
-<span class="kw">plot</span>(nz_pos$geometry, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)
-<span class="kw">par</span>(par_old)
-<span class="co">#&gt; Warning in par(par_old): graphical parameter &quot;cin&quot; cannot be set</span>
-<span class="co">#&gt; Warning in par(par_old): graphical parameter &quot;cra&quot; cannot be set</span>
-<span class="co">#&gt; Warning in par(par_old): graphical parameter &quot;csi&quot; cannot be set</span>
-<span class="co">#&gt; Warning in par(par_old): graphical parameter &quot;cxy&quot; cannot be set</span>
-<span class="co">#&gt; Warning in par(par_old): graphical parameter &quot;din&quot; cannot be set</span>
-<span class="co">#&gt; Warning in par(par_old): graphical parameter &quot;page&quot; cannot be set</span></code></pre></div>
-<p><img src="figures/unnamed-chunk-29-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="clipping" class="section level3">
 <h3><span class="header-section-number">6.3.3</span> Clipping</h3>
@@ -580,18 +567,6 @@ Figure 6.9: Randomly distributed points within the bounding box enclosing circle
 <div id="geometry-cast" class="section level3">
 <h3><span class="header-section-number">6.4.1</span> Geometry cast</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_points =<span class="st"> </span><span class="kw">st_cast</span>(nz, <span class="st">&quot;MULTIPOINT&quot;</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">par_old =<span class="st"> </span><span class="kw">par</span>()
-<span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>))
-<span class="kw">plot</span>(nz$geometry)
-<span class="kw">plot</span>(nz_points$geometry, <span class="dt">add =</span> <span class="ot">TRUE</span>)
-<span class="kw">par</span>(par_old)
-<span class="co">#&gt; Warning in par(par_old): graphical parameter &quot;cin&quot; cannot be set</span>
-<span class="co">#&gt; Warning in par(par_old): graphical parameter &quot;cra&quot; cannot be set</span>
-<span class="co">#&gt; Warning in par(par_old): graphical parameter &quot;csi&quot; cannot be set</span>
-<span class="co">#&gt; Warning in par(par_old): graphical parameter &quot;cxy&quot; cannot be set</span>
-<span class="co">#&gt; Warning in par(par_old): graphical parameter &quot;din&quot; cannot be set</span>
-<span class="co">#&gt; Warning in par(par_old): graphical parameter &quot;page&quot; cannot be set</span></code></pre></div>
-<p><img src="figures/unnamed-chunk-33-1.png" width="576" style="display: block; margin: auto;" /></p>
 <!-- ### Class conversion -->
 <!-- placeholder for: -->
 <!-- sf -> sp -->
