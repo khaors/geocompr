@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2017-11-20'
+date: '2017-11-21'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2017-11-20 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2017-11-21 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve63fb2694cb0447ed
+preservec4e028fe734b7e48
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3094,7 +3094,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve37dc8c7b124be21f
+preserve06f1a62336067c03
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4414,11 +4414,11 @@ london_proj = st_transform(london, crs = 27700)
 ```
 
 This projected CRS has units in meters. 
-One degree at the equator represents 111,319.9 meters and we can use this value to create our buffer:
+One degree at the equator represents 111,320 meters and we can use this value to create our buffer:
 
 
 ```r
-london_proj_buff = st_buffer(london_proj, 111319.9)
+london_proj_buff = st_buffer(london_proj, 111320)
 ```
 
 The result in Figure \@ref(fig:crs-buf-proj) shows that buffers based on a projected CRS are not distorted and we can expect the same distance from our point to every part of the buffer's border.

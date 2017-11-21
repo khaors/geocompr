@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2017-11-20">
+<meta name="date" content="2017-11-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -304,8 +304,8 @@ Figure 6.1: Buffer on data with geographic CRS.
 </div>
 <p>This example does not mean that the CRS should not be set (it almost always should!) but that many spatial operations should be undertaken on projected geographic data. The following command creates a version of the <code>london</code> reprojected onto the British National Grid CRS (EPSG:27700):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london_proj =<span class="st"> </span><span class="kw">st_transform</span>(london, <span class="dt">crs =</span> <span class="dv">27700</span>)</code></pre></div>
-<p>This projected CRS has units in meters. One degree at the equator represents 111,319.9 meters and we can use this value to create our buffer:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london_proj_buff =<span class="st"> </span><span class="kw">st_buffer</span>(london_proj, <span class="fl">111319.9</span>)</code></pre></div>
+<p>This projected CRS has units in meters. One degree at the equator represents 111,320 meters and we can use this value to create our buffer:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london_proj_buff =<span class="st"> </span><span class="kw">st_buffer</span>(london_proj, <span class="dv">111320</span>)</code></pre></div>
 <p>The result in Figure <a href="transform.html#fig:crs-buf-proj">6.2</a> shows that buffers based on a projected CRS are not distorted and we can expect the same distance from our point to every part of the buffer’s border.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(london_proj_buff, <span class="dt">graticule =</span> <span class="kw">st_crs</span>(<span class="dv">27700</span>), <span class="dt">axes =</span> <span class="ot">TRUE</span>)
 <span class="kw">plot</span>(london_proj, <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
