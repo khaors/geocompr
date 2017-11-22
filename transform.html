@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2017-11-21">
+<meta name="date" content="2017-11-22">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -503,6 +503,7 @@ con_raster_ea
 <h3><span class="header-section-number">6.3.2</span> Centroids</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_centroid =<span class="st"> </span><span class="kw">st_centroid</span>(nz)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_pos =<span class="st"> </span><span class="kw">st_point_on_surface</span>(nz)</code></pre></div>
+<p><img src="figures/unnamed-chunk-29-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="clipping" class="section level3">
 <h3><span class="header-section-number">6.3.3</span> Clipping</h3>
@@ -567,6 +568,7 @@ Figure 6.9: Randomly distributed points within the bounding box enclosing circle
 <div id="geometry-cast" class="section level3">
 <h3><span class="header-section-number">6.4.1</span> Geometry cast</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_points =<span class="st"> </span><span class="kw">st_cast</span>(nz, <span class="st">&quot;MULTIPOINT&quot;</span>)</code></pre></div>
+<p><img src="figures/unnamed-chunk-33-1.png" width="576" style="display: block; margin: auto;" /></p>
 <!-- ### Class conversion -->
 <!-- placeholder for: -->
 <!-- sf -> sp -->
