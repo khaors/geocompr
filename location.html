@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Geocomputation with R</title>
+  <meta name="description" content="Forthcoming book on geographic data with R.">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Geocomputation with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="http://robinlovelace.net/geocompr" />
+  
+  <meta property="og:description" content="Forthcoming book on geographic data with R." />
+  <meta name="github-repo" content="Robinlovelace/geocompr" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Geocomputation with R" />
+  
+  <meta name="twitter:description" content="Forthcoming book on geographic data with R." />
+  
+
+<meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
+
+
+<meta name="date" content="2017-11-23">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="read-write.html">
+<link rel="next" href="references.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-0.9/htmlwidgets.js"></script>
+<link href="libs/leaflet-0.7.7/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-0.7.7/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<link href="libs/leaflet-label-0.2.2/leaflet.label.css" rel="stylesheet" />
+<script src="libs/leaflet-label-0.2.2/leaflet.label.js"></script>
+<script src="libs/Proj4Leaflet-0.7.2/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-0.7.2/proj4leaflet.js"></script>
+<script src="libs/leaflet-binding-1.1.0/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.0.27/leaflet-providers.js"></script>
+<script src="libs/leaflet-providers-plugin-1.1.0/leaflet-providers-plugin.js"></script>
+<link href="libs/leaflet-awesomemarkers-2.0.3/leaflet.awesome-markers.css" rel="stylesheet" />
+<script src="libs/leaflet-awesomemarkers-2.0.3/leaflet.awesome-markers.min.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-99618359-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Geocomputation with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#development"><i class="fa fa-check"></i>Development</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-contribute"><i class="fa fa-check"></i>How to contribute?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#reproducibility"><i class="fa fa-check"></i>Reproducibility</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#what-is-geocomputation"><i class="fa fa-check"></i><b>1.1</b> What is geocomputation?</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#why-geocomputation-with-r"><i class="fa fa-check"></i><b>1.2</b> Why Geocomputation with R?</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#software-for-geocomputation"><i class="fa fa-check"></i><b>1.3</b> Software for geocomputation</a></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#rs-spatial-ecosystem"><i class="fa fa-check"></i><b>1.4</b> R’s spatial ecosystem</a></li>
+<li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#the-history-of-r-spatial"><i class="fa fa-check"></i><b>1.5</b> The history of R-spatial</a></li>
+<li class="chapter" data-level="1.6" data-path="intro.html"><a href="intro.html#exercises"><i class="fa fa-check"></i><b>1.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="spatial-class.html"><a href="spatial-class.html"><i class="fa fa-check"></i><b>2</b> Geographic data in R</a><ul>
+<li class="chapter" data-level="" data-path="spatial-class.html"><a href="spatial-class.html#prerequisites"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="2.1" data-path="spatial-class.html"><a href="spatial-class.html#vector-data"><i class="fa fa-check"></i><b>2.1</b> Vector data</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="spatial-class.html"><a href="spatial-class.html#intro-sf"><i class="fa fa-check"></i><b>2.1.1</b> An introduction to simple features</a></li>
+<li class="chapter" data-level="2.1.2" data-path="spatial-class.html"><a href="spatial-class.html#why-simple-features"><i class="fa fa-check"></i><b>2.1.2</b> Why simple features?</a></li>
+<li class="chapter" data-level="2.1.3" data-path="spatial-class.html"><a href="spatial-class.html#basic-map"><i class="fa fa-check"></i><b>2.1.3</b> Basic map making</a></li>
+<li class="chapter" data-level="2.1.4" data-path="spatial-class.html"><a href="spatial-class.html#base-args"><i class="fa fa-check"></i><b>2.1.4</b> Base plot arguments</a></li>
+<li class="chapter" data-level="2.1.5" data-path="spatial-class.html"><a href="spatial-class.html#sf-classes"><i class="fa fa-check"></i><b>2.1.5</b> Simple feature classes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="spatial-class.html"><a href="spatial-class.html#raster-data"><i class="fa fa-check"></i><b>2.2</b> Raster data</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="spatial-class.html"><a href="spatial-class.html#an-introduction-to-raster"><i class="fa fa-check"></i><b>2.2.1</b> An introduction to raster</a></li>
+<li class="chapter" data-level="2.2.2" data-path="spatial-class.html"><a href="spatial-class.html#basic-map-making"><i class="fa fa-check"></i><b>2.2.2</b> Basic map making</a></li>
+<li class="chapter" data-level="2.2.3" data-path="spatial-class.html"><a href="spatial-class.html#raster-classes"><i class="fa fa-check"></i><b>2.2.3</b> Raster classes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="spatial-class.html"><a href="spatial-class.html#crs-intro"><i class="fa fa-check"></i><b>2.3</b> Coordinate Reference Systems</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="spatial-class.html"><a href="spatial-class.html#geographic-coordinate-systems"><i class="fa fa-check"></i><b>2.3.1</b> Geographic coordinate systems</a></li>
+<li class="chapter" data-level="2.3.2" data-path="spatial-class.html"><a href="spatial-class.html#projected-coordinate-systems"><i class="fa fa-check"></i><b>2.3.2</b> Projected coordinate systems</a></li>
+<li class="chapter" data-level="2.3.3" data-path="spatial-class.html"><a href="spatial-class.html#crs-in-r"><i class="fa fa-check"></i><b>2.3.3</b> CRS in R</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="spatial-class.html"><a href="spatial-class.html#units"><i class="fa fa-check"></i><b>2.4</b> Units</a></li>
+<li class="chapter" data-level="2.5" data-path="spatial-class.html"><a href="spatial-class.html#ex2"><i class="fa fa-check"></i><b>2.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="attr.html"><a href="attr.html"><i class="fa fa-check"></i><b>3</b> Attribute data operations</a><ul>
+<li class="chapter" data-level="" data-path="attr.html"><a href="attr.html#prerequisites-1"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="3.1" data-path="attr.html"><a href="attr.html#introduction"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="attr.html"><a href="attr.html#vector-attribute-manipulation"><i class="fa fa-check"></i><b>3.2</b> Vector attribute manipulation</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="attr.html"><a href="attr.html#vector-attribute-subsetting"><i class="fa fa-check"></i><b>3.2.1</b> Vector attribute subsetting</a></li>
+<li class="chapter" data-level="3.2.2" data-path="attr.html"><a href="attr.html#vector-attribute-aggregation"><i class="fa fa-check"></i><b>3.2.2</b> Vector attribute aggregation</a></li>
+<li class="chapter" data-level="3.2.3" data-path="attr.html"><a href="attr.html#vector-attribute-joining"><i class="fa fa-check"></i><b>3.2.3</b> Vector attribute joining</a></li>
+<li class="chapter" data-level="3.2.4" data-path="attr.html"><a href="attr.html#creating-attributes-and-removing-spatial-information"><i class="fa fa-check"></i><b>3.2.4</b> Creating attributes and removing spatial information</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="attr.html"><a href="attr.html#manipulating-raster-objects"><i class="fa fa-check"></i><b>3.3</b> Manipulating raster objects</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="attr.html"><a href="attr.html#raster-subsetting"><i class="fa fa-check"></i><b>3.3.1</b> Raster subsetting</a></li>
+<li class="chapter" data-level="3.3.2" data-path="attr.html"><a href="attr.html#summarizing-raster-objects"><i class="fa fa-check"></i><b>3.3.2</b> Summarizing raster objects</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="attr.html"><a href="attr.html#exercises-1"><i class="fa fa-check"></i><b>3.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html"><i class="fa fa-check"></i><b>4</b> Spatial data operations</a><ul>
+<li class="chapter" data-level="" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#prerequisites-2"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="4.1" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#spatial-operations-on-vector-data"><i class="fa fa-check"></i><b>4.2</b> Spatial operations on vector data</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#spatial-subsetting"><i class="fa fa-check"></i><b>4.2.1</b> Spatial subsetting</a></li>
+<li class="chapter" data-level="4.2.2" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#topological-relations"><i class="fa fa-check"></i><b>4.2.2</b> Topological relations</a></li>
+<li class="chapter" data-level="4.2.3" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#spatial-joining"><i class="fa fa-check"></i><b>4.2.3</b> Spatial joining</a></li>
+<li class="chapter" data-level="4.2.4" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#non-overlapping-joins"><i class="fa fa-check"></i><b>4.2.4</b> Non-overlapping joins</a></li>
+<li class="chapter" data-level="4.2.5" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#spatial-data-aggregation"><i class="fa fa-check"></i><b>4.2.5</b> Spatial data aggregation</a></li>
+<li class="chapter" data-level="4.2.6" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#clipping"><i class="fa fa-check"></i><b>4.2.6</b> Clipping</a></li>
+<li class="chapter" data-level="4.2.7" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#distance-relations"><i class="fa fa-check"></i><b>4.2.7</b> Distance relations</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#spatial-operations-on-raster-data"><i class="fa fa-check"></i><b>4.3</b> Spatial operations on raster data</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="attr.html"><a href="attr.html#raster-subsetting"><i class="fa fa-check"></i><b>4.3.1</b> Spatial subsetting</a></li>
+<li class="chapter" data-level="4.3.2" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#map-algebra"><i class="fa fa-check"></i><b>4.3.2</b> Map algebra</a></li>
+<li class="chapter" data-level="4.3.3" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#local-operations"><i class="fa fa-check"></i><b>4.3.3</b> Local operations</a></li>
+<li class="chapter" data-level="4.3.4" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#focal-operations"><i class="fa fa-check"></i><b>4.3.4</b> Focal operations</a></li>
+<li class="chapter" data-level="4.3.5" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#zonal-operations"><i class="fa fa-check"></i><b>4.3.5</b> Zonal operations</a></li>
+<li class="chapter" data-level="4.3.6" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#global-operations-and-distances"><i class="fa fa-check"></i><b>4.3.6</b> Global operations and distances</a></li>
+<li class="chapter" data-level="4.3.7" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#merging-rasters"><i class="fa fa-check"></i><b>4.3.7</b> Merging rasters</a></li>
+<li class="chapter" data-level="4.3.8" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#aligning-rasters"><i class="fa fa-check"></i><b>4.3.8</b> Aligning rasters</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#exercises-2"><i class="fa fa-check"></i><b>4.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="transform.html"><a href="transform.html"><i class="fa fa-check"></i><b>5</b> Geometric operations</a><ul>
+<li class="chapter" data-level="" data-path="transform.html"><a href="transform.html#prerequisites-3"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="5.1" data-path="transform.html"><a href="transform.html#introduction-2"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
+<li class="chapter" data-level="5.2" data-path="transform.html"><a href="transform.html#geometric-operations-on-vector-data"><i class="fa fa-check"></i><b>5.2</b> Geometric operations on vector data</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="transform.html"><a href="transform.html#reprojecting"><i class="fa fa-check"></i><b>5.2.1</b> Reprojecting</a></li>
+<li class="chapter" data-level="5.2.2" data-path="transform.html"><a href="transform.html#geometry-transformation"><i class="fa fa-check"></i><b>5.2.2</b> Geometry transformation</a></li>
+<li class="chapter" data-level="5.2.3" data-path="transform.html"><a href="transform.html#type-transformation"><i class="fa fa-check"></i><b>5.2.3</b> Type transformation</a></li>
+<li class="chapter" data-level="5.2.4" data-path="transform.html"><a href="transform.html#simplification"><i class="fa fa-check"></i><b>5.2.4</b> Simplification</a></li>
+<li class="chapter" data-level="5.2.5" data-path="transform.html"><a href="transform.html#rasterization"><i class="fa fa-check"></i><b>5.2.5</b> Rasterization</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="transform.html"><a href="transform.html#geometric-operations-on-raster-data"><i class="fa fa-check"></i><b>5.3</b> Geometric operations on raster data</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="transform.html"><a href="transform.html#reprojecting-1"><i class="fa fa-check"></i><b>5.3.1</b> Reprojecting</a></li>
+<li class="chapter" data-level="5.3.2" data-path="transform.html"><a href="transform.html#raster-alignment"><i class="fa fa-check"></i><b>5.3.2</b> Raster alignment</a></li>
+<li class="chapter" data-level="5.3.3" data-path="transform.html"><a href="transform.html#aggregation"><i class="fa fa-check"></i><b>5.3.3</b> Aggregation</a></li>
+<li class="chapter" data-level="5.3.4" data-path="transform.html"><a href="transform.html#polygonization"><i class="fa fa-check"></i><b>5.3.4</b> Polygonization</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="transform.html"><a href="transform.html#exercises-3"><i class="fa fa-check"></i><b>5.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="read-write.html"><a href="read-write.html"><i class="fa fa-check"></i><b>6</b> Geographic data I/O</a><ul>
+<li class="chapter" data-level="" data-path="read-write.html"><a href="read-write.html#prerequisites-4"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="6.1" data-path="read-write.html"><a href="read-write.html#introduction-3"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
+<li class="chapter" data-level="6.2" data-path="read-write.html"><a href="read-write.html#retrieving-data"><i class="fa fa-check"></i><b>6.2</b> Retrieving open data</a></li>
+<li class="chapter" data-level="6.3" data-path="read-write.html"><a href="read-write.html#file-formats"><i class="fa fa-check"></i><b>6.3</b> File formats</a></li>
+<li class="chapter" data-level="6.4" data-path="read-write.html"><a href="read-write.html#data-input"><i class="fa fa-check"></i><b>6.4</b> Data Input (I)</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="read-write.html"><a href="read-write.html#vector-data-1"><i class="fa fa-check"></i><b>6.4.1</b> Vector data</a></li>
+<li class="chapter" data-level="6.4.2" data-path="read-write.html"><a href="read-write.html#raster-data-1"><i class="fa fa-check"></i><b>6.4.2</b> Raster data</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="read-write.html"><a href="read-write.html#data-output"><i class="fa fa-check"></i><b>6.5</b> Data output (O)</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="read-write.html"><a href="read-write.html#vector-data-2"><i class="fa fa-check"></i><b>6.5.1</b> Vector data</a></li>
+<li class="chapter" data-level="6.5.2" data-path="read-write.html"><a href="read-write.html#raster-data-2"><i class="fa fa-check"></i><b>6.5.2</b> Raster data</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="read-write.html"><a href="read-write.html#visual-outputs"><i class="fa fa-check"></i><b>6.6</b> Visual outputs</a></li>
+<li class="chapter" data-level="6.7" data-path="read-write.html"><a href="read-write.html#exercises-4"><i class="fa fa-check"></i><b>6.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="location.html"><a href="location.html"><i class="fa fa-check"></i><b>7</b> Location analysis</a><ul>
+<li class="chapter" data-level="7.1" data-path="location.html"><a href="location.html#prerequisites-5"><i class="fa fa-check"></i><b>7.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="7.2" data-path="location.html"><a href="location.html#introduction-4"><i class="fa fa-check"></i><b>7.2</b> Introduction</a></li>
+<li class="chapter" data-level="7.3" data-path="location.html"><a href="location.html#a-case-study"><i class="fa fa-check"></i><b>7.3</b> A case study</a></li>
+<li class="chapter" data-level="7.4" data-path="location.html"><a href="location.html#create-census-rasters"><i class="fa fa-check"></i><b>7.4</b> Create census rasters</a></li>
+<li class="chapter" data-level="7.5" data-path="location.html"><a href="location.html#define-metropolitan-areas"><i class="fa fa-check"></i><b>7.5</b> Define metropolitan areas</a></li>
+<li class="chapter" data-level="7.6" data-path="location.html"><a href="location.html#points-of-interest"><i class="fa fa-check"></i><b>7.6</b> Points of interest</a></li>
+<li class="chapter" data-level="7.7" data-path="location.html"><a href="location.html#identifying-suitable-locations"><i class="fa fa-check"></i><b>7.7</b> Identifying suitable locations</a></li>
+<li class="chapter" data-level="7.8" data-path="location.html"><a href="location.html#discussion-and-next-steps"><i class="fa fa-check"></i><b>7.8</b> Discussion and next steps</a></li>
+<li class="chapter" data-level="7.9" data-path="location.html"><a href="location.html#exercises-5"><i class="fa fa-check"></i><b>7.9</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>8</b> References</a></li>
+<li class="divider"></li>
+<li><a href="http://robinlovelace.net/">Robin Lovelace</a></li>
+<li><a href="https://nowosad.github.io/">Jakub Nowosad</a></li>
+<li><a href="http://www.geographie.uni-jena.de/en/Muenchow.html">Jannes Muenchow</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Geocomputation with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="location" class="section level1">
+<h1><span class="header-section-number">7</span> Location analysis</h1>
+<div id="prerequisites-5" class="section level2">
+<h2><span class="header-section-number">7.1</span> Prerequisites</h2>
+<ul>
+<li>This chapter requires following packages:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(classInt)
+<span class="kw">library</span>(ggmap)
+<span class="kw">library</span>(osmdata)
+<span class="kw">library</span>(raster)
+<span class="kw">library</span>(sf)
+<span class="kw">library</span>(sp)
+<span class="kw">library</span>(tidyverse)</code></pre></div>
+<ul>
+<li>Required data will be downloaded in due course.</li>
+</ul>
+</div>
+<div id="introduction-4" class="section level2">
+<h2><span class="header-section-number">7.2</span> Introduction</h2>
+<p>This chapter demonstrates how the skills learned in the previous chapters can be applied to location analysis. Geomarketing (also called location analysis) is a broad field of research and (largely) commercial application, the aim of which is usually to decide the optimal location for new services. A typical example is where to locate a new shop: there are typically hundreds of possible locations in a city and location analysis can be used to decide where the shop will attract most visitors and, ultimately, make most profit. There are also many non-commercial applications that can use the technique for public benefit. A good example is where to locate new health services <span class="citation">(Tomintz, Clarke, and Rigby <a href="#ref-tomintz_geography_2008">2008</a>)</span>.</p>
+<p>Geomarketing is focused on people and where they are likely to spend their time and other resources. However, it has several links with ecology: animals and plants have needs which can be best met in optimal locations based on variables that change over space (called gradients in the ecological literature — see e.g., <span class="citation">(<span class="citeproc-not-found" data-reference-id="Muenchow_review_2017"><strong>???</strong></span>)</span> and chapter xx). <!-- add reference!! --></p>
+<p>Polar bears, for example, prefer northern latitudes where temperatures are lower and food (seals and sea lions) is plentiful. Similarly, humans tend to congregate certain places, creating economic niches (and high land prices) analogous to the ecological niche of the Arctic. The main task of geomarketing is to find out where such ‘optimal locations’ are for specific services, based on available data. Typical research questions in geomarketing include:</p>
+<ul>
+<li>Where are the service users (or clients), specific target groups and competitors?</li>
+<li>How many people can easily reach my stores?</li>
+<li>Do existing services over or under-exploit the market potential?</li>
+<li>How big is my market share and turnovers, and are there spatial differences?</li>
+</ul>
+<p>To demonstrate how geocomputation can answer these questions the next section creates a scenario where geomarketing is vital to make informed real-world decisions.</p>
+</div>
+<div id="a-case-study" class="section level2">
+<h2><span class="header-section-number">7.3</span> A case study</h2>
+<p>Imagine your are launching a cycling company and would like to open shops across urban areas of Germany. Survey data reveals the target audience: males between 20-40 years old who live alone or with just one person (single households, not families), and there is sufficient capital to open a number of shops. But where should they be placed?</p>
+<p>Many store location analysis consultancies have developed to help people answer such questions, and they would happily charge high rates for their expertise. It is testament to the rate of technological development that this questions can now be answered by informed citizens using free and open source software. The here presented analysis will demonstrate a number of geo-computational techniques learned during the first chapters of the book. Additionally, this chapter will demonstrate common steps in geomarketing to find suitable locations for a specific shop type (here: cycle stores). The analysis includes following steps:</p>
+<ul>
+<li>Retrieval of socio-demographic data by downloading download gridded German census data (section <a href="location.html#create-census-rasters">7.4</a>).</li>
+<li>Identification of areas of high population density (metropolitan areas; section <a href="location.html#define-metropolitan-areas">7.5</a>).</li>
+<li>Download detailed geographic data (OSM data) for these areas (section <a href="location.html#points-of-interest">7.6</a>).</li>
+<li>Make input rasters comparable by means of reclassifaction, and use map algebra to compute a final score where higher scores naturally indicate more favorable locations (section (identifying-suitable-locations)).</li>
+</ul>
+<p>Note that although we have applied these steps to a specific case study, they could be generalized to many scenarios of store location or public service provision.</p>
+</div>
+<div id="create-census-rasters" class="section level2">
+<h2><span class="header-section-number">7.4</span> Create census rasters</h2>
+<p>The German government provides a csv-file containing gridded census data of 2011 for Germany. One can either download a 1 km or a 100 m resolution. Here, we download the 1 km data, unzip it and read it into R.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">url =<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;https://www.zensus2011.de/SharedDocs/Downloads/DE/&quot;</span>, 
+             <span class="st">&quot;Pressemitteilung/DemografischeGrunddaten/csv_Zensusatlas_&quot;</span>, 
+             <span class="st">&quot;klassierte_Werte_1km_Gitter.zip?__blob=publicationFile&amp;v=8&quot;</span>)
+<span class="kw">download.file</span>(<span class="dt">url =</span> url, <span class="dt">destfile =</span> <span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">&quot;census.zip&quot;</span>),
+              <span class="dt">method =</span> <span class="st">&quot;auto&quot;</span>, <span class="dt">mode =</span> <span class="st">&quot;wb&quot;</span>)
+<span class="co"># list the file names</span>
+nms =<span class="st"> </span><span class="kw">unzip</span>(<span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">&quot;census.zip&quot;</span>), <span class="dt">list =</span> <span class="ot">TRUE</span>)
+<span class="co"># unzip only the csv file</span>
+base_name =<span class="st"> </span><span class="kw">grep</span>(<span class="st">&quot;.csv$&quot;</span>, nms$Name, <span class="dt">value =</span> <span class="ot">TRUE</span>)
+<span class="kw">unzip</span>(<span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">&quot;census.zip&quot;</span>), <span class="dt">files =</span> base_name, <span class="dt">exdir =</span> <span class="kw">tempdir</span>())
+<span class="co"># read in the csv file</span>
+input =<span class="st"> </span>readr::<span class="kw">read_csv2</span>(<span class="kw">file.path</span>(<span class="kw">tempdir</span>(), base_name))</code></pre></div>
+<p>Next we select the variables we need: x and y coordinates, the number of inhabitants (population), mean age, portion of women and the household size (Table <a href="location.html#tab:census-desc">7.1</a>).</p>
+<table>
+<caption>
+<span id="tab:census-desc">Table 7.1: </span>Excerpt from the data description ‘Datensatzbeschreibung_klassierte_Werte_1km-Gitter.xlsx’ located in the downloaded file census.zip describing the classes of the retained variables. The classes -1 and -9 refer to uninhabited areas or are areas which have to be kept secret for example due to anonymization reasons.
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+class
+</th>
+<th style="text-align:center;">
+population<br />
+(number of persons)
+</th>
+<th style="text-align:center;">
+women<br />
+(%)
+</th>
+<th style="text-align:center;">
+mean age<br />
+(years)
+</th>
+<th style="text-align:center;">
+household size<br />
+(number of persons)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+3-250
+</td>
+<td style="text-align:center;">
+0-40
+</td>
+<td style="text-align:center;">
+0-40
+</td>
+<td style="text-align:center;">
+1-2
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+250-500
+</td>
+<td style="text-align:center;">
+40-47
+</td>
+<td style="text-align:center;">
+40-42
+</td>
+<td style="text-align:center;">
+2-2.5
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+500-2000
+</td>
+<td style="text-align:center;">
+47-53
+</td>
+<td style="text-align:center;">
+42-44
+</td>
+<td style="text-align:center;">
+2.5-3
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+2000-4000
+</td>
+<td style="text-align:center;">
+53-60
+</td>
+<td style="text-align:center;">
+44-47
+</td>
+<td style="text-align:center;">
+3-3.5
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+4000-8000
+</td>
+<td style="text-align:center;">
+&gt;60
+</td>
+<td style="text-align:center;">
+&gt;47
+</td>
+<td style="text-align:center;">
+&gt;3.5
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+&gt;8000
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+</tbody>
+</table>
+<p>Additionally, we set the values -1 and -9 to <code>NA</code> since these values are unknown.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># pop = population, hh_size = household size</span>
+input =<span class="st"> </span>dplyr::<span class="kw">select</span>(input, <span class="dt">x =</span> x_mp_1km, <span class="dt">y =</span> y_mp_1km, <span class="dt">pop =</span> Einwohner,
+                      <span class="dt">women =</span> Frauen_A, <span class="dt">mean_age =</span> Alter_D,
+                      <span class="dt">hh_size =</span> HHGroesse_D)
+<span class="co"># set -1 and -9 to NA</span>
+input =<span class="st"> </span><span class="kw">mutate_all</span>(input, <span class="kw">funs</span>(<span class="kw">ifelse</span>(. %in%<span class="st"> </span><span class="kw">c</span>(-<span class="dv">1</span>, -<span class="dv">9</span>), <span class="ot">NA</span>, .)))</code></pre></div>
+<p>After the data preprocessing, we convert the table into a raster stack. First, we use the x- and y-coordinates to convert the <code>data.frame</code> into a <code>SpatialPolygonsDataFrame</code> (we do not use sf-objects here, since the <strong>raster</strong> package does not support <code>sf</code>). <code>gridded()</code> converts a <code>SpatialPolygonsDataFrame</code> into a <code>SpatialPixelsDataFrame</code> which in turn can be used as an input for <strong>raster</strong>’s <code>stack()</code> function. The final raster stack consists of four layers: inhabitants, mean age, portion of women and household size (Fig. <a href="location.html#fig:census-stack">7.1</a>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># convert table into a raster (x and y are cell midpoints)</span>
+<span class="kw">coordinates</span>(input) =<span class="er">~</span><span class="st"> </span>x +<span class="st"> </span>y
+<span class="co"># use the correct projection (see data description)</span>
+<span class="kw">proj4string</span>(input) =<span class="st"> </span><span class="kw">CRS</span>(<span class="st">&quot;+init=epsg:3035&quot;</span>)
+<span class="kw">gridded</span>(input) =<span class="st"> </span><span class="ot">TRUE</span>
+<span class="co"># convert into a raster stack</span>
+input =<span class="st"> </span><span class="kw">stack</span>(input)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:census-stack"></span>
+<img src="figures/08_census_stack.png" alt="Gridded German census data of 2011. See Table \@ref(tab:census-desc) for a description of the classes." width="765" />
+<p class="caption">
+Figure 7.1: Gridded German census data of 2011. See Table <a href="location.html#tab:census-desc">7.1</a> for a description of the classes.
+</p>
+</div>
+<!-- find out about new lines in headings + blank cells-->
+<p>We <code>reclassify()</code> the ordinal-scaled rasters in accordance with our survey (see section <a href="#use-case"><strong>??</strong></a>). In the case of the population data we convert the classes into a numeric data type using class means. This means we use 127 for class 1 (ranging from 3 to 250 inhabitants), 375 for class 2 (ranging from 250 to 500 inhabitants), etc. (Table <a href="location.html#tab:census-desc">7.1</a>). We arbitrarily chose 8000 inhabitants for class 6 since it represents cells where more than 8000 persons live. Of course, this is only a simple approximation of the true population number (in the exercises you can explore the introduced error in more detail), however, for our purpose of delineating metropolitan areas the level of detail is good enough (see next section). By contrast, we convert the remaining input rasters into weight rasters whereas the highest weights are in correspondence with our survey. For instance, the women class 1 (0-40%) receives a weight of 3 since our clientele is predominantly male. Equally, the mean age class containing the youngest people receives the highest weight as well as the single households class.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rcl_pop =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">127</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">375</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">1250</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">3000</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">6000</span>,
+                   <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">8000</span>), <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)
+rcl_women =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">0</span>), 
+                   <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)
+rcl_age =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">0</span>),
+                 <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)
+rcl_hh =<span class="st"> </span>rcl_women
+rcl =<span class="st"> </span><span class="kw">list</span>(rcl_pop, rcl_women, rcl_age, rcl_hh)
+reclass =<span class="st"> </span>input
+for (i in <span class="kw">seq_len</span>(<span class="kw">nlayers</span>(reclass))) {
+  reclass[[i]] =<span class="st"> </span><span class="kw">reclassify</span>(reclass[[i]], <span class="dt">rcl =</span> rcl[[i]], <span class="dt">right =</span> <span class="ot">NA</span>) 
+}
+<span class="kw">names</span>(reclass) =<span class="st"> </span><span class="kw">names</span>(input)</code></pre></div>
+</div>
+<div id="define-metropolitan-areas" class="section level2">
+<h2><span class="header-section-number">7.5</span> Define metropolitan areas</h2>
+<p>We arbitrarily define a pixel of 20 sq-km as metropolitan if more than half a million people lives in it. The <code>aggregate()</code> command helps to change the resolution from 1 to 20 sq-km while each output cell represents the sum of all 1 sq-km input cells (see section <a href="spatial-data-operations.html#aligning-rasters">4.3.8</a>). Next, we only keep cells with more than half a million inhabitants using a Boolean operation, and convert the resulting cells into spatial polygons of class <code>sf</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pop_agg =<span class="st"> </span><span class="kw">aggregate</span>(reclass$pop, <span class="dt">fact =</span> <span class="dv">20000</span> /<span class="st"> </span><span class="kw">res</span>(input)[<span class="dv">1</span>], <span class="dt">fun =</span> sum)
+polys =<span class="st"> </span><span class="kw">rasterToPolygons</span>(pop_agg[pop_agg &gt;<span class="st"> </span><span class="dv">500000</span>, <span class="dt">drop =</span> <span class="ot">FALSE</span>])
+polys =<span class="st"> </span><span class="kw">st_as_sf</span>(polys)</code></pre></div>
+<p>Plotting these polygons reveals eight metropolitan regions (Fig. <a href="location.html#fig:metro-areas">7.2</a>). Each region consists of one ore more polygons (raster cells). It would be nice if we could join all polygons belonging to one region. One approach is to dissolve all polygons (see section <a href="spatial-data-operations.html#spatial-data-aggregation">4.2.5</a>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">polys =<span class="st"> </span><span class="kw">summarize</span>(polys, <span class="dt">pop =</span> <span class="kw">sum</span>(layer))</code></pre></div>
+<p>This returns one multipolygon feature with its elements corresponding to the metropolitan regions. To extract these polygons from the multipolygon, we can use <code>st_cast()</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">metros =<span class="st"> </span><span class="kw">st_cast</span>(polys, <span class="st">&quot;POLYGON&quot;</span>)</code></pre></div>
+<p>The warning message tells us that the attributes are repeated for all sub-geometries. Here, this means that each region receives the total population of all metropolitan areas combined. Clearly this is wrong but here we can safely ignore this since we are merely interested in the geometry.</p>
+<!-- maybe a good if advanced exercise
+This requires finding the nearest neighbors (`st_intersects()`), and some additional processing.
+Do not worry too much about the following code.
+There is probably a better way to do it. 
+Nevertheless, it finds all pixels belonging to one region in a generic way.
+We use this information to assign each polygon (pixel) to a region.
+Subsequently, we can use the region information to dissolve the pixels into region polygons.
+
+
+```r
+# dissolve on spatial neighborhood
+nbs = st_intersects(polys, polys)
+# nbs = over(polys, polys, returnList = TRUE)
+
+fun = function(x, y) {
+  tmp = lapply(y, function(i) {
+  if (any(x %in% i)) {
+   union(x, i)
+  } else {
+   x
+    }
+  })
+  Reduce(union, tmp)
+}
+# call function recursively
+fun_2 = function(x, y) {
+  out = fun(x, y)
+  while (length(out) < length(fun(out, y))) {
+    out = fun(out, y)
+  }
+  out
+}
+
+cluster = map(nbs, ~ fun_2(., nbs) %>% sort)
+# just keep unique clusters
+cluster = cluster[!duplicated(cluster)]
+# assign the cluster classes to each pixel
+for (i in seq_along(cluster)) {
+  polys[cluster[[i]], "region_id"] = i
+}
+# dissolve pixels based on the the region id
+polys = group_by(polys, region_id) %>%
+  summarize(pop = sum(layer, na.rm = TRUE))
+# polys_2 = aggregate(polys, list(polys$region_id), sum)
+plot(polys[, "region_id"])
+
+# Another approach, can be also be part of an excercise
+
+coords = st_coordinates(polys_3) %>% 
+  as.data.frame
+ls = split(coords, f = coords$L2)
+ls = lapply(ls, function(x) {
+  dplyr::select(x, X, Y) %>%
+    as.matrix %>%
+    list %>%
+    st_polygon
+})
+metros = do.call(st_sfc, ls)
+metros = st_set_crs(metros, 3035)
+metros = st_sf(data.frame(region_id = 1:9), geometry = metros)
+st_intersects(metros, metros)
+plot(metros[-5,])
+st_centroid(metros) %>%
+  st_coordinates
+```
+-->
+<p>However, visual inspection reveals eight metropolitan areas whereas the dissolving comes up with nine. This is because one polygon just touches the corner of another polygon (western Germany, Cologne/Düsseldorf area; Fig. <a href="location.html#fig:metro-areas">7.2</a>).</p>
+<div class="figure" style="text-align: center"><span id="fig:metro-areas"></span>
+<img src="figures/08_metro_areas.png" alt="The aggregated population raster (resolution: 20 km) with the identified metropolitan areas (golden polygons) and the corresponding names." width="450" />
+<p class="caption">
+Figure 7.2: The aggregated population raster (resolution: 20 km) with the identified metropolitan areas (golden polygons) and the corresponding names.
+</p>
+</div>
+<p>One could assign it to the neighboring region using another dissolving procedure, however, we leave this as an exercise to the reader, and simply delete the offending polygon.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># find out about the offending polygon</span>
+int =<span class="st"> </span><span class="kw">st_intersects</span>(metros, metros)
+<span class="co"># polygons 5 and 9 share one border, delete polygon number 5</span>
+metros_2 =<span class="st"> </span>metros[-<span class="dv">5</span>, ]</code></pre></div>
+<p>The defined metropolitan areas suitable for bike shops are still missing a name. A reverse geocoding approach can settle this problem. Given a coordinate, reverse geocoding finds the corresponding address. Consequently, extracting the centroid coordinate of each metropolitan area can serve as an input for a reverse geocoding API. The <strong>ggmap</strong> package makes use of the one provided by Google.<a href="#fn33" class="footnoteRef" id="fnref33"><sup>33</sup></a> <code>ggmap::revgeocode()</code> only accepts geographical coordinates (latitude/longitude), therefore, the first requirement is to bring the metropolitan polygons into an appropriate coordinate reference system (chapter <a href="transform.html#transform">5</a>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># reverse geocoding to find out the names of the metropolitan areas</span>
+metros_wgs =<span class="st"> </span><span class="kw">st_transform</span>(metros_2, <span class="dv">4326</span>)
+coords =<span class="st"> </span><span class="kw">st_centroid</span>(metros_wgs) %&gt;%
+<span class="st">  </span>st_coordinates %&gt;%
+<span class="st">  </span><span class="kw">round</span>(., <span class="dv">4</span>)</code></pre></div>
+<p>Additionally, <code>ggmap::revgeocode()</code> only accepts one coordinate at a time, which is why we iterate over each coordinate of <code>coords</code> via a loop (<code>map_dfr()</code>). <code>map_dfr()</code> does exactly the same as <code>lapply()</code> except for returning a <code>data.frame</code> instead of a <code>list</code>.<a href="#fn34" class="footnoteRef" id="fnref34"><sup>34</sup></a> Sometimes, the reverse geocoding API of Google is unable to find an address returning <code>NA</code>. Often enough trying the same coordinate again, returns an address at the second or third attempt (see <code>while()-loop</code>). However, if three attempts have already failed, this is a good indication that the requested information is indeed unavailable. Since it is our interest to be a good cyberspace citizen, we try not to overburden the server with too many queries within a short amount of time. Instead we let the loop sleep between one and four seconds after each iteration before accessing the reverse geocoding API again.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">metro_names =<span class="st"> </span><span class="kw">map_dfr</span>(<span class="dv">1</span>:<span class="kw">nrow</span>(coords), function(i) {
+  add =<span class="st"> </span>ggmap::<span class="kw">revgeocode</span>(coords[i, ], <span class="dt">output =</span> <span class="st">&quot;more&quot;</span>)
+  x =<span class="st"> </span><span class="dv">2</span>
+  while (<span class="kw">is.na</span>(add$address) &amp;<span class="st"> </span>x &gt;<span class="st"> </span><span class="dv">0</span>) {
+    add =<span class="st"> </span>ggmap::<span class="kw">revgeocode</span>(coords[i, ], <span class="dt">output =</span> <span class="st">&quot;more&quot;</span>)
+    <span class="co"># just try three times</span>
+    x =<span class="st"> </span>x -<span class="st"> </span><span class="dv">1</span>
+  }
+  <span class="co"># give the server a bit time</span>
+  <span class="kw">Sys.sleep</span>(<span class="kw">sample</span>(<span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="fl">0.1</span>), <span class="dv">1</span>))
+  <span class="co"># return the result</span>
+  add
+})</code></pre></div>
+<p>Choosing <code>more</code> as <code>revgeocode()</code>’s <code>output</code> option will give back a <code>data.frame</code> with several columns referring to the location including the address, locality and various administrative levels. Overall, we are satisfied with the <code>locality</code> column serving as metropolitan names (München, Nürnberg, Stuttgart, Frankfurt, Hamburg, Berlin, Leipzig) bar one exception, namely Velbert. Hence, we replace Velbert with the corresponding name in the <code>administrative_area_level_2</code> column, that is Düsseldorf (Fig. <a href="location.html#fig:metro-areas">7.2</a>). Umlauts like <code>ü</code> might lead to trouble further on, for example when determing the bounding box of a metropolitan area with <code>opq()</code> (see further below), which is why we replace them.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">metro_names =<span class="st"> </span>
+<span class="st">  </span>dplyr::<span class="kw">select</span>(metro_names, locality, administrative_area_level_2) %&gt;%
+<span class="st">  </span><span class="kw">mutate</span>(<span class="co"># replace Velbert</span>
+         <span class="dt">locality =</span> <span class="kw">ifelse</span>(locality ==<span class="st"> &quot;Velbert&quot;</span>, administrative_area_level_2, 
+                           locality),
+         <span class="co"># replace umlaut ü</span>
+         <span class="dt">locality =</span> <span class="kw">gsub</span>(<span class="st">&quot;ü&quot;</span>, <span class="st">&quot;ue&quot;</span>, locality)) %&gt;%
+<span class="st">  </span>dplyr::<span class="kw">select</span>(locality) %&gt;%
+<span class="st">  </span>pull</code></pre></div>
+</div>
+<div id="points-of-interest" class="section level2">
+<h2><span class="header-section-number">7.6</span> Points of interest</h2>
+<p>The <strong>osmdata</strong> package provides a fantastic and easy-to-use interface to download OSM data (see also section <a href="read-write.html#retrieving-data">6.2</a>). Instead of downloading all shops for the whole of Germany, we restrict the download to the defined metropolitan areas. This relieves the OSM server resources, reduces download time and above all only gives back the shop locations we are interested in. The <code>map()</code> loop, the <code>lapply()</code> equivalent of <strong>purrr</strong>, runs through all eight metropolitan names which subsequently define the bounding box in the <code>opq()</code> function (see section <a href="read-write.html#retrieving-data">6.2</a>). Alternatively, we could have provided the bounding box in the form of coordinates ourselves. Next, we indicate that we only would like to download <code>shop</code> features (see this <a href="http://wiki.openstreetmap.org/wiki/Map_Features">page</a> for a full list of OpenStreetMap map features). <code>osmdata_sf()</code> returns a list with several spatial objects (points, lines, polygons, etc.). Here, we will only keep the point objects. As with Google’s reverse geocode API, the OSM-download will once in a while not work at the first attempt. The <code>while</code>-loop increases the number of download trials to three. If then still no features can be downloaded, most likely there are none. Or it is an indication that another error has ocurred before. For instance, the <code>opq()</code> function has retrieved a wrong bounding box.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(osmdata)
+shops =<span class="st"> </span><span class="kw">map</span>(metro_names, function(x) {
+  <span class="kw">message</span>(<span class="st">&quot;Downloading shops of:&quot;</span>, x, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
+  <span class="co"># give the server a bit time</span>
+  <span class="kw">Sys.sleep</span>(<span class="kw">sample</span>(<span class="kw">seq</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="fl">0.1</span>), <span class="dv">1</span>))
+  query =<span class="st"> </span><span class="kw">opq</span>(x) %&gt;%
+<span class="st">    </span><span class="kw">add_osm_feature</span>(<span class="dt">key =</span> <span class="st">&quot;shop&quot;</span>)
+  points =<span class="st"> </span><span class="kw">osmdata_sf</span>(query)
+  <span class="co"># request the same data again if nothing has been downloaded</span>
+  iter =<span class="st"> </span><span class="dv">2</span>
+  while (<span class="kw">nrow</span>(points$osm_points) ==<span class="st"> </span><span class="dv">0</span> &amp;<span class="st"> </span>iter &gt;<span class="st"> </span><span class="dv">0</span>) {
+    points =<span class="st"> </span><span class="kw">osmdata_sf</span>(query)
+    iter =<span class="st"> </span>iter -<span class="st"> </span><span class="dv">1</span>
+  }
+  points =<span class="st"> </span>points$osm_points
+  points =<span class="st"> </span><span class="kw">st_set_crs</span>(points, <span class="dv">4326</span>)
+  })</code></pre></div>
+<p>It is highly unlikely that there are no shops in any of our defined metropolitan areas. The following <code>if</code>-condition simply checks if there is at least one shop for each region. If not, we would try to download again the shops for this/these specific region/s.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># checking if we have downloaded shops for each metropolitan area</span>
+ind =<span class="st"> </span><span class="kw">sapply</span>(shops, nrow) ==<span class="st"> </span><span class="dv">0</span>
+if (<span class="kw">any</span>(ind)) {
+  <span class="kw">message</span>(<span class="st">&quot;There are/is still (a) metropolitan area/s without any features:</span><span class="ch">\n</span><span class="st">&quot;</span>,
+          <span class="kw">paste</span>(metro_names[ind], <span class="dt">collapse =</span> <span class="st">&quot;, &quot;</span>), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">Please fix!&quot;</span>)
+}</code></pre></div>
+<p>To make sure that each list element (an <code>sf</code>- data frame) comes with the same columns, we only keep the <code>osm_id</code> and the <code>shop</code> columns with the help of another <code>map</code>-loop. This is not a given since OSM contributors are not equally meticulous when collecting data. Finally, we <code>rbind</code> all shops into one large <code>sf</code>-object.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># select only specific columns and rbind all list elements</span>
+shops =<span class="st"> </span><span class="kw">map</span>(shops, dplyr::select, osm_id, shop) %&gt;%
+<span class="st">  </span><span class="kw">reduce</span>(rbind)</code></pre></div>
+<p>It would have been easier to simply use <code>map_dfr()</code>. Unfortunately, so far it does not work in harmony with <code>sf</code> objects but it will most likely in the future.</p>
+<p>The only thing left to do is to convert the spatial point object into a raster. The <code>rasterize()</code> function does exactly this. As input it expects an <code>sp</code> vector object, here we use the spatial point object <code>shops</code>, and a raster object, here we use the population raster whose original values have been replaced by <code>NA</code>’s. A function defines how the values from the spatial vector object are transferred to the raster object. <code>count</code> simply counts the number of spatial objects, here the shop points, falling into one raster cell, and returns this value as the output cell value. Hence, we end up with a shop density, namely the number of shops per square kilometer. But one has too be careful: had we used the <code>shop</code> instead of the <code>osm_id</code> column, we would have retrieved fewer shops per grid cell. This is because the <code>shop</code> column contains <code>NA</code> values, which the <code>count()</code> function omits when rasterizing vector objects. Naturally, the projection of the input raster and the input vector object have to match which is why we first have to reproject our shops to the CRS of the raster object.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">shops =<span class="st"> </span><span class="kw">st_transform</span>(shops, <span class="kw">proj4string</span>(input$pop))
+shops =<span class="st"> </span><span class="kw">as</span>(shops, <span class="st">&quot;Spatial&quot;</span>)
+<span class="co"># create poi raster</span>
+poi =<span class="st"> </span>input$pop
+poi[] =<span class="st"> </span><span class="ot">NA</span>
+poi =<span class="st"> </span><span class="kw">rasterize</span>(<span class="dt">x =</span> shops, <span class="dt">y =</span> poi, <span class="dt">field =</span> <span class="st">&quot;osm_id&quot;</span>, <span class="dt">fun =</span> <span class="st">&quot;count&quot;</span>)</code></pre></div>
+<p>As with the other rasters (population, women, mean age, household size) we would like to classify the <code>poi</code> raster into four classes (see section <a href="location.html#create-census-rasters">7.4</a>). Defining class intervals is an arbitrary undertaking to a certain degree . One can use equal breaks, quantile breaks, fixed values and many more. Here, we choose the Fisher-Jenks natural breaks approach which tries to minimize the within-class variance. Naturally, the identified breaks serve as input for the reclassification matrix.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(classInt)
+<span class="co"># construct reclassification matrix</span>
+int =<span class="st"> </span>classInt::<span class="kw">classIntervals</span>(<span class="kw">values</span>(poi), <span class="dt">n =</span> <span class="dv">3</span>, <span class="dt">style =</span> <span class="st">&quot;fisher&quot;</span>)
+int =<span class="st"> </span><span class="kw">round</span>(int$brks)
+rcl_poi =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(int[<span class="dv">1</span>], <span class="kw">rep</span>(int[-<span class="kw">c</span>(<span class="dv">1</span>, <span class="kw">length</span>(int))], <span class="dt">each =</span> <span class="dv">2</span>), 
+                   int[<span class="kw">length</span>(int)] +<span class="st"> </span><span class="dv">1</span>), <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)
+rcl_poi =<span class="st"> </span><span class="kw">cbind</span>(rcl_poi, <span class="dv">0</span>:<span class="dv">3</span>)  
+<span class="co"># reclassify</span>
+poi =<span class="st"> </span><span class="kw">reclassify</span>(poi, <span class="dt">rcl =</span> rcl_poi, <span class="dt">right =</span> <span class="ot">NA</span>) 
+<span class="kw">names</span>(poi) =<span class="st"> &quot;poi&quot;</span></code></pre></div>
+</div>
+<div id="identifying-suitable-locations" class="section level2">
+<h2><span class="header-section-number">7.7</span> Identifying suitable locations</h2>
+<p>As usual in (geo-)data science, the data retrieval and preprocessing represented the lion’s share of the overall workload. The final workstep, the calculation of a final score by summing up all prepared rasters, is a simple one-liner. Before doing that, we add the POI raster to and delete the population raster from the raster stack. The reasoning for the latter is twofold. First of all, we already have delineated metropolitan areas, that is areas where the population density is above average compared to the rest of Germany. Secondly, though it is advantageous to have many potential customers within a specific catchment area, the sheer number alone might not actually represent the desired target group. For instance, residential tower blocks are areas with a high population density but not necessarily with a high purchasing power for luxurious bike components.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># add poi raster</span>
+reclass =<span class="st"> </span><span class="kw">addLayer</span>(reclass, poi)
+<span class="co"># delete population raster</span>
+reclass =<span class="st"> </span><span class="kw">dropLayer</span>(reclass, <span class="st">&quot;pop&quot;</span>)
+<span class="co"># calculate the total score</span>
+result =<span class="st"> </span><span class="kw">sum</span>(reclass)</code></pre></div>
+<p>The result is a score summing up the values of all input rasters. For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure <a href="location.html#fig:bikeshop-berlin">7.3</a>).</p>
+<div class="figure" style="text-align: center"><span id="fig:bikeshop-berlin"></span>
+<iframe src="figures/08_bikeshops_berlin.html" width="576" height="400px">
+</iframe>
+<p class="caption">
+Figure 7.3: Suitable areas (i.e., raster cells with a score &gt; 10) in accordance with our hypothetical survey for bike stores in Berlin.
+</p>
+</div>
+</div>
+<div id="discussion-and-next-steps" class="section level2">
+<h2><span class="header-section-number">7.8</span> Discussion and next steps</h2>
+<p>The here presented approach is a typical example of the normative usage of a GIS <span class="citation">(Longley <a href="#ref-longley_geographic_2015">2015</a>)</span>. We combined survey data with expert-based knowledge and assumptions (definition of metroplitan areas, defining class intervals, definition of a final score threshold). It should be clear that this approach is not suitable for scientific knowledge advancement but is a very applied way of information extraction. This is to say, we can only suspect based on common sense that we have identified areas suitable for bike shops. However, we have no proof that this is in fact the case.</p>
+<p>A few other things remained unconsidered but might improve the analysis:</p>
+<ul>
+<li>We used equal weights when calculating the final scores. But is, for example, the household size as important as the portion of men or the mean age?</li>
+<li>We used all points of interest. Maybe it would be wiser to use only those which might be interesting for bike shops such as Do-it-yourself, hardware, bicycle, fishing, hunting, motorcycles, outdoor, sports shops, etc. (see all the other columns of the osmdata simple features and <a href="http://wiki.openstreetmap.org/wiki/Map_Features#Shop">Map_Features#Shop</a>).</li>
+<li>Maybe data at a better resolution changes and improves the output. For example, there is also population data at a finer resolution (100 m; see exercises).</li>
+<li>We have used only a limited set of variables. The <a href="http://inspire-geoportal.ec.europa.eu/discovery/">INSPIRE geoportal</a> might contain much more data of possible interest to our analysis. The bike paths density might be another interesting variable as well as the purchasing power or even better the retail purchasing power for bikes.</li>
+<li>Interactions remained unconsidered such as a possible interaction between the portion of men and single households. However, to find out about such an interaction we would need customer data.</li>
+</ul>
+<p>In short, the presented analysis is far from perfect. Nevertheless, it should have given you a first impression and understanding of how to obtain, and deal with spatial data in R within a geomarketing context.</p>
+<p>Finally, we have to point out that the presented analysis would be mereley the first step of finding suitable locations. So far we have identified areas, 1 by 1 km in size, potentially suitable for a bike shop in accordance with our survey. We could continue the analysis as follows:</p>
+<ul>
+<li>Find an optimal location based on number of inhabitants within a specific catchment area. For example, the shop should be reachable for as much people as possible within 15 minutes of traveling bike distance (catchment area routing). Thereby, we should account for the fact that the farther away the people are from the shop, the more unlikely it becomes that they actually visit it (distance decay function).</li>
+<li>Also it would be a good idea to take into account competitors. That is, if there already is a bike shop in the vicinity of the chosen location, one has to distribute possible customers (or sales potential) between the competitors <span class="citation">(Huff <a href="#ref-huff_probabilistic_1963">1963</a>; Wieland <a href="#ref-wieland_market_2017">2017</a>)</span>.</li>
+<li>We need to find suitable and affordable real estate (accessible, parking spots, frequency of passers-by, big windows, friendly staff, etc.).</li>
+</ul>
+</div>
+<div id="exercises-5" class="section level2">
+<h2><span class="header-section-number">7.9</span> Exercises</h2>
+<ol style="list-style-type: decimal">
+<li>Download the csv file containing inhabitant information for a 100 m cell resolution ( <a href="https://www.zensus2011.de/SharedDocs/Downloads/DE/Pressemitteilung/DemografischeGrunddaten/csv_Bevoelkerung_100m_Gitter.zip?__blob=publicationFile&amp;v=3" class="uri">https://www.zensus2011.de/SharedDocs/Downloads/DE/Pressemitteilung/DemografischeGrunddaten/csv_Bevoelkerung_100m_Gitter.zip?__blob=publicationFile&amp;v=3</a>). Please note that the unzipped file has a size of 1.23 GB. To read it into R you can use <code>readr::read_csv</code>. This takes 30 seconds on my machine (16 GB RAM) <code>data.table::fread()</code> might be even faster, and returns an object of class <code>data.table()</code>. Use <code>as.tibble()</code> to convert it into a tibble. Build an inhabitant raster, aggregate it to a cell resolution of 1 km, and compare the difference with the inhabitant raster (<code>inh</code>) we have created using class mean values.</li>
+<li>In the text we have deleted one polygon of the <code>metros</code> object (polygon number 5) since it only touches the border of another polygon. Recreate the <code>metros</code> object and instead of deleting polygon number 5, make it part of the Cologne/Düsseldorf metropolitan region (hint: create a column named region_id, add polygon number 5 to the Cologne/Düsseldorf area and dissolve).</li>
+<li>Suppose our bike shop predominantly sold E-bikes to older people. Change the age raster accordingly, repeat the remaining analyses and compare the changes with our original result.</li>
+</ol>
+
+</div>
+</div>
+<h3> References</h3>
+<div id="refs" class="references">
+<div id="ref-tomintz_geography_2008">
+<p>Tomintz, Melanie N M.N., Graham P Clarke, and Janette E J.E. Rigby. 2008. “The Geography of Smoking in Leeds: Estimating Individual Smoking Rates and the Implications for the Location of Stop Smoking Services.” <em>Area</em> 40 (3): 341–53. <a href="http://onlinelibrary.wiley.com/doi/10.1111/j.1475-4762.2008.00837.x/full" class="uri">http://onlinelibrary.wiley.com/doi/10.1111/j.1475-4762.2008.00837.x/full</a>.</p>
+</div>
+<div id="ref-longley_geographic_2015">
+<p>Longley, Paul. 2015. <em>Geographic Information Science &amp; Systems</em>. Fourth edition. Hoboken, NJ: Wiley.</p>
+</div>
+<div id="ref-huff_probabilistic_1963">
+<p>Huff, David L. 1963. “A Probabilistic Analysis of Shopping Center Trade Areas.” <em>Land Economics</em> 39 (1): 81–90. doi:<a href="https://doi.org/10.2307/3144521">10.2307/3144521</a>.</p>
+</div>
+<div id="ref-wieland_market_2017">
+<p>Wieland, Thomas. 2017. “Market Area Analysis for Retail and Service Locations with MCI.” <em>The R Journal</em> 9 (1): 298–323. <a href="https://journal.r-project.org/archive/2017/RJ-2017-020/index.html" class="uri">https://journal.r-project.org/archive/2017/RJ-2017-020/index.html</a>.</p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="33">
+<li id="fn33"><p>Note that Google allows each user to access its services on a free basis for a maximum of 2500 queries a day.<a href="location.html#fnref33">↩</a></p></li>
+<li id="fn34"><p>To learn more about the split-apply-combine strategy for data analysis, we refer the reader to <span class="citation">Wickham (<a href="#ref-wickham_split-apply-combine_2011">2011</a>)</span>.<a href="location.html#fnref34">↩</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="read-write.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/Robinlovelace/geocompr/edit/master/08-location.Rmd",
+"text": "Edit"
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

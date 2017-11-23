@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="transform.html">
-<link rel="next" href="references.html">
+<link rel="next" href="location.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -235,7 +235,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.6" data-path="read-write.html"><a href="read-write.html#visual-outputs"><i class="fa fa-check"></i><b>6.6</b> Visual outputs</a></li>
 <li class="chapter" data-level="6.7" data-path="read-write.html"><a href="read-write.html#exercises-4"><i class="fa fa-check"></i><b>6.7</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>7</b> References</a></li>
+<li class="chapter" data-level="7" data-path="location.html"><a href="location.html"><i class="fa fa-check"></i><b>7</b> Location analysis</a><ul>
+<li class="chapter" data-level="7.1" data-path="location.html"><a href="location.html#prerequisites-5"><i class="fa fa-check"></i><b>7.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="7.2" data-path="location.html"><a href="location.html#introduction-4"><i class="fa fa-check"></i><b>7.2</b> Introduction</a></li>
+<li class="chapter" data-level="7.3" data-path="location.html"><a href="location.html#a-case-study"><i class="fa fa-check"></i><b>7.3</b> A case study</a></li>
+<li class="chapter" data-level="7.4" data-path="location.html"><a href="location.html#create-census-rasters"><i class="fa fa-check"></i><b>7.4</b> Create census rasters</a></li>
+<li class="chapter" data-level="7.5" data-path="location.html"><a href="location.html#define-metropolitan-areas"><i class="fa fa-check"></i><b>7.5</b> Define metropolitan areas</a></li>
+<li class="chapter" data-level="7.6" data-path="location.html"><a href="location.html#points-of-interest"><i class="fa fa-check"></i><b>7.6</b> Points of interest</a></li>
+<li class="chapter" data-level="7.7" data-path="location.html"><a href="location.html#identifying-suitable-locations"><i class="fa fa-check"></i><b>7.7</b> Identifying suitable locations</a></li>
+<li class="chapter" data-level="7.8" data-path="location.html"><a href="location.html#discussion-and-next-steps"><i class="fa fa-check"></i><b>7.8</b> Discussion and next steps</a></li>
+<li class="chapter" data-level="7.9" data-path="location.html"><a href="location.html#exercises-5"><i class="fa fa-check"></i><b>7.9</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>8</b> References</a></li>
 <li class="divider"></li>
 <li><a href="http://robinlovelace.net/">Robin Lovelace</a></li>
 <li><a href="https://nowosad.github.io/">Jakub Nowosad</a></li>
@@ -349,7 +360,7 @@ worldclim_prec =<span class="st"> </span><span class="kw">getData</span>(<span c
 parks =<span class="st"> </span><span class="kw">opq</span>(<span class="dt">bbox =</span> <span class="st">&quot;leeds uk&quot;</span>) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">add_osm_feature</span>(<span class="dt">key =</span> <span class="st">&quot;leisure&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;park&quot;</span>) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">osmdata_sf</span>()</code></pre></div>
-<p>OpenStreetMap is a vast global database of crowd-sourced data and it is growing by the minute. Although the quality is not as spatially consistent as many official datasets, OSM data have many advantages: they are globally available free of charge and using crowd-source data can encourage ‘citizen science’ and contributions back to the digital commons.</p>
+<p>OpenStreetMap is a vast global database of crowd-sourced data and it is growing by the minute. Although the quality is not as spatially consistent as many official datasets, OSM data have many advantages: they are globally available free of charge and using crowd-source data can encourage ‘citizen science’ and contributions back to the digital commons. Have a look at sections <a href="location.html#location">7</a> and <a href="#gis"><strong>??</strong></a> for further examples of how to use <strong>osmdata</strong> in applied research.</p>
 <p>Finally, R packages might contain or just consist of spatial data (e.g., package <strong>spData</strong>). You can access such data with the <code>data()</code> function. For example, you can get a list of dataset in a package, <code>data(package = &quot;spData&quot;)</code>. To attach the dataset to the global environment specify the name of a dataset (<code>data(&quot;cycle_hire&quot;, package = &quot;spData&quot;)</code>). Sometimes, packages come also with the original files.<a href="#fn25" class="footnoteRef" id="fnref25"><sup>25</sup></a>. To load such a file from the package, you need to specify the package name and the relative path to the dataset, for example:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_raw_filepath =<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;shapes/world.gpkg&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;spData&quot;</span>)
 world_raw =<span class="st"> </span><span class="kw">st_read</span>(world_raw_filepath)
@@ -763,7 +774,7 @@ mapview_obj =<span class="st"> </span><span class="kw">mapview</span>(world, <sp
         </div>
       </div>
 <a href="transform.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="location.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
