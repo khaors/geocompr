@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve8ddc3ea258d0dab0
+preserve6f70e17f6e1f1379
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3094,7 +3094,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve069eea23608917a9
+preserve09c804b550927fd5
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3958,6 +3958,15 @@ plot(london_proj, add = TRUE)
 
 ### Reprojecting
 
+While CRSs can be set manually, it is more common in real world applications to *transform* a known CRS into another.
+CRS transformation could be vital to obtain proper results in many cases.
+A typical example is when geometry data is provided in a geographic CRS but you want to do spatial operations, which require it to be in a projected CRS.
+It includes distance measurements or area calculations.
+CRS also represent spatial relationship between datasets.
+Therefore, spatial operations on many datasets can only be correctly performed when all the data have the same CRS.
+The most common reason to unify the CRS is to combine different datasets or apply methods which need at least two objects.
+Let's use real-world examples to illustrate this.
+
 Vector data on the most basic level is represented by individual points, and points create more complex objects, such as lines and polygons.
 Spatial reprojection of vectors is a mathematical transformation of coordinates of these point.
 Depending on projections used, reprojection could be either lossy or lossless.
@@ -4236,7 +4245,8 @@ nz_points = st_cast(nz, "MULTIPOINT")
 
 The basic concepts of CRS apply to both vector and raster data model.
 However, there are important differences in reprojection of vectors and rasters.
-Transformation of CRS in vector data changes coordinates of each vertex. This do not apply to raster data.
+Transformation of CRS in vector data changes coordinates of each vertex. 
+This do not apply to raster data.
 Rasters are are composed of rectangular cells of the same size (expressed by map units, such as degrees or meters).
 To preserve this property, it is impossible to transform coordinates of cells separately.
 This entails that a new raster could have a different number of columns and rows, and therefore different number of cells that the original one.
