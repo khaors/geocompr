@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve8d63eba50ca5ee06
+preservec9c01f5b6bbfe4bf
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3094,7 +3094,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve93d8d2cefb357e29
+preserve5c61736f92aa7b8f
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3844,7 +3844,7 @@ A more advanced approach might instead weight by flow direction, i.e. favor the 
 <!--chapter:end:04-spatial-operations.Rmd-->
 
 
-# Reprojections and Transformations {#transform}
+# Geometric operations {#transform}
 
 ## Prerequisites {-}
 
@@ -3954,18 +3954,9 @@ plot(london_proj, add = TRUE)
 <p class="caption">(\#fig:crs-buf-proj)Buffer on data with projected CRS.</p>
 </div>
 
-## Transforming the CRS {#crs-transform}
+## Geometric operations on vector data
 
-While CRSs can be set manually, it is more common in real world applications to *transform* a known CRS into another.
-CRS transformation could be vital to obtain proper results in many cases.
-A typical example is when geometry data is provided in a geographic CRS but you want to do spatial operations, which require it to be in a projected CRS.
-It includes distance measurements or area calculations.
-CRS also represent spatial relationship between datasets.
-Therefore, spatial operations on many datasets can only be correctly performed when all the data have the same CRS.
-The most common reason to unify the CRS is to combine different datasets (e.g. merge two rasters) or apply methods which need at least two objects (e.g spatial subsetting or raster map algebra).
-Let's use real-world examples to illustrate this.
-
-### Vector data
+### Reprojecting
 
 Vector data on the most basic level is represented by individual points, and points create more complex objects, such as lines and polygons.
 Spatial reprojection of vectors is a mathematical transformation of coordinates of these point.
@@ -4111,7 +4102,137 @@ More information about CRS modification can be found in the [Using PROJ.4](http:
 <!-- ``` -->
 <!-- http://bl.ocks.org/vlandham/raw/9216751/ -->
 
-### Raster data
+### Geometry transformation
+<!-- or ## Geometry processing -->
+<!-- Geometry transformations (e.g. clipping, buffers, centroids) -->
+<!-- (within which could go a small example showing affine transformations) -->
+
+#### Clipping 
+
+Spatial clipping is a form of spatial subsetting that involves changes to the `geometry` columns of at least some of the affected features.
+
+Clipping can only apply to features more complex than points: 
+lines, polygons and their 'multi' equivalents.
+To illustrate the concept we will start with a simple example:
+two overlapping circles with a center point one unit away from each other and radius of one:
+
+
+```r
+b = st_sfc(st_point(c(0, 1)), st_point(c(1, 1))) # create 2 points
+b = st_buffer(b, dist = 1) # convert points to circles
+l = c("x", "y")
+plot(b)
+text(x = c(-0.5, 1.5), y = 1, labels = l) # add text
+```
+
+<div class="figure" style="text-align: center">
+<img src="figures/points-1.png" alt="Overlapping circles." width="576" />
+<p class="caption">(\#fig:points)Overlapping circles.</p>
+</div>
+
+Imagine you want to select not one circle or the other, but the space covered by both `x` *and* `y`.
+This can be done using the function `st_intersection()`, illustrated using objects named `x` and `y` which represent the left and right-hand circles:
+
+
+```r
+x = b[1]
+y = b[2]
+x_and_y = st_intersection(x, y)
+plot(b)
+plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
+```
+
+<img src="figures/unnamed-chunk-19-1.png" width="576" style="display: block; margin: auto;" />
+
+The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
+<!-- Todo: reference r4ds -->
+
+<div class="figure" style="text-align: center">
+<img src="figures/venn-clip-1.png" alt="Spatial equivalents of logical operators." width="576" />
+<p class="caption">(\#fig:venn-clip)Spatial equivalents of logical operators.</p>
+</div>
+
+To illustrate the relationship between subsetting and clipping spatial data, we will subset points that cover the bounding box of the circles `x` and `y` in Figure \@ref(fig:venn-clip).
+Some points will be inside just one circle, some will be inside both and some will be inside neither.
+
+There are two different ways to subset points that fit into combinations of the circles: via clipping and logical operators.
+But first we must generate some points.
+We will use the *simple random* sampling strategy to sample from a box representing the extent of `x` and `y`.
+To generate this points will use a function not yet covered in this book, `st_sample()`.
+Next we will generate the situation plotted in Figure \@ref(fig:venn-subset):
+
+
+```r
+bb = st_bbox(st_union(x, y))
+pmat = matrix(c(bb[c(1, 2, 3, 2, 3, 4, 1, 4, 1, 2)]), ncol = 2, byrow = TRUE)
+box = st_polygon(list(pmat))
+set.seed(2017)
+p = st_sample(x = box, size = 10)
+plot(box)
+plot(x, add = TRUE)
+plot(y, add = TRUE)
+plot(p, add = TRUE)
+text(x = c(-0.5, 1.5), y = 1, labels = l)
+```
+
+<div class="figure" style="text-align: center">
+<img src="figures/venn-subset-1.png" alt="Randomly distributed points within the bounding box enclosing circles x and y." width="576" />
+<p class="caption">(\#fig:venn-subset)Randomly distributed points within the bounding box enclosing circles x and y.</p>
+</div>
+
+
+
+#### Centroids
+
+
+```r
+nz_centroid = st_centroid(nz)
+```
+
+
+```r
+nz_pos = st_point_on_surface(nz)
+```
+
+<img src="figures/unnamed-chunk-23-1.png" width="576" style="display: block; margin: auto;" />
+
+### Type transformation
+<!-- or Geometry cast -->
+<!-- Changing the geometry type while the fundamental data remains unchanged ('casting') -->
+<!-- I think vector/raster conversion could either be part of point 1 or something else -->
+<!-- I think the brick-raster-stack could be part of 1 - a type transformation... -->
+<!-- - raster to vector -->
+<!-- - vector to raster -->
+<!-- - st_cast -->
+<!-- st_point_on_surface -->
+<!-- st_centroid -->
+<!-- st_polygonize -->
+
+
+```r
+nz_points = st_cast(nz, "MULTIPOINT")
+```
+
+<img src="figures/unnamed-chunk-25-1.png" width="576" style="display: block; margin: auto;" />
+
+<!-- ### Class conversion -->
+<!-- placeholder for: -->
+<!-- sf -> sp -->
+<!-- sp -> sf -->
+<!-- stars; https://github.com/r-spatial/stars/blob/master/vignettes/blog1.Rmd -->
+
+### Simplification
+<!-- - simplifications -->
+<!-- st_simplify -->
+<!-- line example -->
+<!-- rmapshaper -->
+<!-- polygon example -->
+
+### Rasterization
+
+## Geometric operations on raster data
+
+### Reprojecting
 
 The basic concepts of CRS apply to both vector and raster data model.
 However, there are important differences in reprojection of vectors and rasters.
@@ -4244,133 +4365,11 @@ summary(con_raster_ea)
 <!-- note2: equal area projections are the best for raster calculations -->
 <!-- q: should we mentioned gdal_transform? -->
 
-## Geometry transformations
-<!-- or ## Geometry processing -->
-<!-- Geometry transformations (e.g. clipping, buffers, centroids) -->
-<!-- (within which could go a small example showing affine transformations) -->
+### Raster alignment
 
-### Simplification
+### Aggregation
 
-<!-- - simplifications -->
-<!-- st_simplify -->
-<!-- line example -->
-<!-- rmapshaper -->
-<!-- polygon example -->
-
-### Centroids
-
-
-```r
-nz_centroid = st_centroid(nz)
-```
-
-
-```r
-nz_pos = st_point_on_surface(nz)
-```
-
-<img src="figures/unnamed-chunk-29-1.png" width="576" style="display: block; margin: auto;" />
-
-### Clipping 
-
-Spatial clipping is a form of spatial subsetting that involves changes to the `geometry` columns of at least some of the affected features.
-
-Clipping can only apply to features more complex than points: 
-lines, polygons and their 'multi' equivalents.
-To illustrate the concept we will start with a simple example:
-two overlapping circles with a center point one unit away from each other and radius of one:
-
-
-```r
-b = st_sfc(st_point(c(0, 1)), st_point(c(1, 1))) # create 2 points
-b = st_buffer(b, dist = 1) # convert points to circles
-l = c("x", "y")
-plot(b)
-text(x = c(-0.5, 1.5), y = 1, labels = l) # add text
-```
-
-<div class="figure" style="text-align: center">
-<img src="figures/points-1.png" alt="Overlapping circles." width="576" />
-<p class="caption">(\#fig:points)Overlapping circles.</p>
-</div>
-
-Imagine you want to select not one circle or the other, but the space covered by both `x` *and* `y`.
-This can be done using the function `st_intersection()`, illustrated using objects named `x` and `y` which represent the left and right-hand circles:
-
-
-```r
-x = b[1]
-y = b[2]
-x_and_y = st_intersection(x, y)
-plot(b)
-plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
-```
-
-<img src="figures/unnamed-chunk-30-1.png" width="576" style="display: block; margin: auto;" />
-
-The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
-<!-- Todo: reference r4ds -->
-
-<div class="figure" style="text-align: center">
-<img src="figures/venn-clip-1.png" alt="Spatial equivalents of logical operators." width="576" />
-<p class="caption">(\#fig:venn-clip)Spatial equivalents of logical operators.</p>
-</div>
-
-To illustrate the relationship between subsetting and clipping spatial data, we will subset points that cover the bounding box of the circles `x` and `y` in Figure \@ref(fig:venn-clip).
-Some points will be inside just one circle, some will be inside both and some will be inside neither.
-
-There are two different ways to subset points that fit into combinations of the circles: via clipping and logical operators.
-But first we must generate some points.
-We will use the *simple random* sampling strategy to sample from a box representing the extent of `x` and `y`.
-To generate this points will use a function not yet covered in this book, `st_sample()`.
-Next we will generate the situation plotted in Figure \@ref(fig:venn-subset):
-
-
-```r
-bb = st_bbox(st_union(x, y))
-pmat = matrix(c(bb[c(1, 2, 3, 2, 3, 4, 1, 4, 1, 2)]), ncol = 2, byrow = TRUE)
-box = st_polygon(list(pmat))
-set.seed(2017)
-p = st_sample(x = box, size = 10)
-plot(box)
-plot(x, add = TRUE)
-plot(y, add = TRUE)
-plot(p, add = TRUE)
-text(x = c(-0.5, 1.5), y = 1, labels = l)
-```
-
-<div class="figure" style="text-align: center">
-<img src="figures/venn-subset-1.png" alt="Randomly distributed points within the bounding box enclosing circles x and y." width="576" />
-<p class="caption">(\#fig:venn-subset)Randomly distributed points within the bounding box enclosing circles x and y.</p>
-</div>
-
-
-
-## Type transformation
-<!-- Changing the geometry type while the fundamental data remains unchanged ('casting') -->
-<!-- I think vector/raster conversion could either be part of point 1 or something else -->
-<!-- I think the brick-raster-stack could be part of 1 - a type transformation... -->
-<!-- - raster to vector -->
-<!-- - vector to raster -->
-<!-- - st_cast -->
-<!-- st_point_on_surface -->
-<!-- st_centroid -->
-<!-- st_polygonize -->
-
-### Geometry cast
-
-
-```r
-nz_points = st_cast(nz, "MULTIPOINT")
-```
-
-<img src="figures/unnamed-chunk-33-1.png" width="576" style="display: block; margin: auto;" />
-
-<!-- ### Class conversion -->
-<!-- placeholder for: -->
-<!-- sf -> sp -->
-<!-- sp -> sf -->
-<!-- stars; https://github.com/r-spatial/stars/blob/master/vignettes/blog1.Rmd -->
+### Polygonization
 
 ## Exercises
 
