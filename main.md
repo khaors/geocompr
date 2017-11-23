@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve6f70e17f6e1f1379
+preserveccab5a193fa2a737
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3094,7 +3094,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve09c804b550927fd5
+preserve6d468bbcf5c0ffee
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5036,10 +5036,10 @@ The here presented analysis will demonstrate a number of geo-computational techn
 Additionally, this chapter will demonstrate common steps in geomarketing to find suitable locations for a specific shop type (here: cycle stores).
 The analysis includes following steps:
 
-- Retrieval of socio-demographic data by downloading download gridded German census data (section \@ref(create-census-rasters)).
-- Identification of areas of high population density (metropolitan areas; section \@ref(define-metropolitan-areas)).
-- Download detailed geographic data (OSM data) for these areas (section \@ref(points-of-interest)).
-- Make input rasters comparable by means of reclassifaction, and use map algebra to compute a final score where higher scores naturally indicate more favorable locations (section \ref(identifying-suitable-locations)).
+- The retrieval of socio-demographic data by downloading download gridded German census data (section \@ref(create-census-rasters)).
+- The identification of areas of high population density (metropolitan areas; section \@ref(define-metropolitan-areas)).
+- The download of detailed geographic data (OSM data) for these areas (section \@ref(points-of-interest)).
+- Making input rasters comparable by means of reclassifaction, and using map algebra to compute a final score where higher scores indicate more favorable locations (section \ref(identifying-suitable-locations)).
 
 Note that although we have applied these steps to a specific case study, they could be generalized to many scenarios of store location or public service provision.
 
@@ -5549,6 +5549,87 @@ Recreate the `metros` object and instead of deleting polygon number 5, make it p
 Change the age raster accordingly, repeat the remaining analyses and compare the changes with our original result.
 
 <!--chapter:end:08-location.Rmd-->
+
+
+# Predictive mapping of species distributions
+
+## Prerequisites {-}
+
+This chapter assumes you have a strong grasp of spatial data analysis and processing, covered in chapters 2-5.
+In it you will make use of R's interfaces to dedicated GIS software, and spatial cross validation, topics covered in chapters xx and xx respectively.
+
+## Introduction
+
+keywords: species distribution modeling, floristic modeling, spatial cross-validation, spatial autocorrelation, ordination (NMDS, Isomap), predictive mapping
+
+
+structure:
+1. intro ecological modeling and related applications beyond ecology
+2. introduce research question, shortly the dataset and the planned approach
+3. ordination
+4. retrieving predictors and quick data exploration
+5. modeling ordination scores most likely using machine-learning since we are mostly interested in spatial predictions, and because the mlr spatial cv approach is new, and finally because Alain Zuur's books cover statistical inference broadly
+6. predictive mapping of floristic composition including spatial cross-validation
+7. discussion: what could be done better or alternatives and again emphasizing that the methods shown
+finally, point to books on ecological modeling especially emphasizing Alain Zuur's books
+
+
+## Background
+
+Fog oases are one of the most fascinating vegetation formations I have ever encountered. 
+These formations, locally termed *lomas*, develop on mountains along the coastal deserts of Peru and Chile.
+The desert's extreme conditions and remoteness provide the habitat for a unique ecosystem, including species endemic to the fog oases.
+Despite the arid conditions and low levels of precipitation of around 30-50 mm per year, plants can survive, by 'combing out' fog.
+This fog, which develops below the temperature inversion caused by the cold Humboldt current in austral winter, provides the name for this habitat.
+Every few years, the El Niño weather pattern brings torrential rainfall to this sun-baked environment.
+This causes the desert to bloom, and provides tree seedlings a chance to develop roots long enough to survive the arid conditions until the next rainfall.
+
+Unfortunately fog oases are heavily endangered.
+This is mostly due to human activity (agriculture and climate change).
+To effectively protect the last remnants of this unique vegetation ecosystem, evidence is needed on the composition and spatial distribution of the native flora.
+*Lomas* mountains have economic value as a tourist destination (although most Peruvians live in the coastal desert, and seldomly have the opportunity to visit them) and can contribute to the wellbeing of local people via recreation.
+
+In this chapter we will demonstrate ecological applications of some of the techniques learned in the previous chpaters.
+This case study will involve analyzing composition and spatial distribution of flora on the southen slope of Mt. Mongón, a *lomas* mountain near Casma on the central northern coast of Peru.
+
+<div class="figure" style="text-align: center">
+<img src="figures/stuy_area_mongon.png" alt="The Mt. Mongón study area (taken from @Muenchow_rqgis_2013; Landsat image: path 9, row 67, acquisition date 09/22/2000; @usgs_u.s._2016)."  />
+<p class="caption">(\#fig:study_area_mongon)The Mt. Mongón study area (taken from @Muenchow_rqgis_2013; Landsat image: path 9, row 67, acquisition date 09/22/2000; @usgs_u.s._2016).</p>
+</div>
+
+<!-- compile the document and check if references are converted, maybe you have to use nocite-->
+
+During a field study to Mt. Mongón we recorded the plants living in 100 randomly sampled 4x4 m^2^ plots in the austral winter of 2011 [@muenchow_predictive_2013], which coincided with a strong La Niña weather pattern that year.
+This led to even higher levels of aridity than usual in the coastal desert, while also increasing fog activity on the *lomas* mountains of northern Peru.
+
+Ordination techniques are ... and will allow us to extract the floristic gradient developing along the southern mountain slope.
+The first hypothesis is that four plant belts will be found along the altitudinal gradient: a low-elevation *Tillandsia* belt, a herbaceous belt, a bromeliad belt, and an uppermost succulent belt [@muenchow_soil_2013].
+The second is that the first 'ordination axis' is related to environmental predictors such as slope, catchment area, altitude and NDVI.
+The result will be a catchment model, which can be used to make spatial predictions of about the composition of plants anywhere in the study area based on a relatively small sample.
+Further, we will account for spatial autocorrelation using spatial cross-validation.
+
+## Reducing dimensionality
+
+Ordinations are a popular tool in vegetation science to extract the main information, frequently corresponding to ecological gradients, from large species-plot matrices mostly filled with 0s. 
+However, they are also used in remote sensing (spectral bands + hyperspectral), the soil sciences, geomarketing, etc..
+
+Principal component analysis (PCA) is probably the most famous ordination technique. 
+It is a great tool to reduce dimensionality if one can expect linear relationships between variables, and if the joint absence of a variable (for example calcium) in two plots (observations) can be considered a similarity.
+This is barely the case with vegetation data.
+
+For one, relationships are usually non-linear along environmental gradients.
+That means the presence of a plant usually follows a unimodal relationship along a gradient (e.g., humidity, temperature or salinity) with a peak at the most favorable conditions and declining ends towards the unfavarable conditions. 
+
+Secondly, the joint absence of a species in two plots is often hardly an indication for similarity.
+Suppose a plant species is absent from the driest (e.g., an extreme desert) and the most moist locations (e.g., a tree savannah) of our sampling.
+Then we really should refrain from counting this as a simlilarity because it is very likely that the only thing these two completely different environmental settings have in common in terms of floristic composition is the shared absence of species (except for rare ubiquist species). 
+
+
+
+
+
+
+<!--chapter:end:eco.Rmd-->
 
 
 # References

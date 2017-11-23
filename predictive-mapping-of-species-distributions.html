@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-
-<link rel="next" href="preface.html">
+<link rel="prev" href="location.html">
+<link rel="next" href="references.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -275,42 +275,51 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Geocomputation with R</h1>
-<h4 class="author"><em>Robin Lovelace, Jakub Nowosad, Jannes Muenchow</em></h4>
-<h4 class="date"><em>2017-11-23</em></h4>
+<div id="predictive-mapping-of-species-distributions" class="section level1">
+<h1><span class="header-section-number">8</span> Predictive mapping of species distributions</h1>
+<div id="prerequisites-6" class="section level2 unnumbered">
+<h2>Prerequisites</h2>
+<p>This chapter assumes you have a strong grasp of spatial data analysis and processing, covered in chapters 2-5. In it you will make use of R’s interfaces to dedicated GIS software, and spatial cross validation, topics covered in chapters xx and xx respectively.</p>
 </div>
-<div id="welcome" class="section level1 unnumbered">
-<h1>Welcome</h1>
-<p>Welcome to the <a href="http://robinlovelace.net/geocompr">online home</a> of <em>Geocomputation with R</em>, a forthcoming book with <a href="https://www.crcpress.com/Chapman--HallCRC-The-R-Series/book-series/CRCTHERSER">CRC Press</a>.</p>
-<div id="development" class="section level2 unnumbered">
-<h2>Development</h2>
-<p>Inspired by <a href="https://github.com/rstudio/bookdown"><strong>bookdown</strong></a> and other open source projects we are developing this book in the open. Why? To encourage contributions, ensure reproducibility and provide access to the material as it evolves.</p>
-<p>The book’s development can be divided into four main phases:</p>
-<ol style="list-style-type: decimal">
-<li>Foundations</li>
-<li>Basic applications</li>
-<li>Geocomputation methods</li>
-<li>Advanced applications</li>
-</ol>
-<p>Currently the focus is on Part 2, which we aim to be complete by December. New chapters will be added to this website as the project progresses, hosted at <a href="http://robinlovelace.net/geocompr">robinlovelace.net/geocompr</a> and kept up-to-date thanks to <a href="https://travis-ci.org/Robinlovelace/geocompr">Travis</a>. Currently the build is:</p>
-<p><a href="https://travis-ci.org/Robinlovelace/geocompr"><img src="https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master" alt="Build Status" /></a></p>
-<p>The version of the book you are reading now was built on 2017-11-23 and was built on <a href="https://travis-ci.org/Robinlovelace/geocompr">Travis</a>.</p>
+<div id="introduction-5" class="section level2">
+<h2><span class="header-section-number">8.1</span> Introduction</h2>
+<p>keywords: species distribution modeling, floristic modeling, spatial cross-validation, spatial autocorrelation, ordination (NMDS, Isomap), predictive mapping</p>
+<p>structure: 1. intro ecological modeling and related applications beyond ecology 2. introduce research question, shortly the dataset and the planned approach 3. ordination 4. retrieving predictors and quick data exploration 5. modeling ordination scores most likely using machine-learning since we are mostly interested in spatial predictions, and because the mlr spatial cv approach is new, and finally because Alain Zuur’s books cover statistical inference broadly 6. predictive mapping of floristic composition including spatial cross-validation 7. discussion: what could be done better or alternatives and again emphasizing that the methods shown finally, point to books on ecological modeling especially emphasizing Alain Zuur’s books</p>
 </div>
-<div id="how-to-contribute" class="section level2 unnumbered">
-<h2>How to contribute?</h2>
-<p><strong>bookdown</strong> makes editing a book as easy as editing a wiki, provided you have a GitHub account (<a href="https://github.com/">sign-up at github.com</a>). Once logged-in to GitHub, clicking on the ‘edit me’ icon highlighted in the image below will take you to the source <a href="http://rmarkdown.rstudio.com/">R Markdown</a> where you can make changes:</p>
-<p><a href="https://github.com/Robinlovelace/geocompr/edit/master/index.Rmd"><img src="figures/editme.png" alt="" /></a></p>
-<p>To raise an issue about the book’s content (e.g. code not running) or make a feature request, check-out the <a href="https://github.com/Robinlovelace/geocompr/issues">issue tracker</a>.</p>
+<div id="background" class="section level2">
+<h2><span class="header-section-number">8.2</span> Background</h2>
+<p>Fog oases are one of the most fascinating vegetation formations I have ever encountered. These formations, locally termed <em>lomas</em>, develop on mountains along the coastal deserts of Peru and Chile. The desert’s extreme conditions and remoteness provide the habitat for a unique ecosystem, including species endemic to the fog oases. Despite the arid conditions and low levels of precipitation of around 30-50 mm per year, plants can survive, by ‘combing out’ fog. This fog, which develops below the temperature inversion caused by the cold Humboldt current in austral winter, provides the name for this habitat. Every few years, the El Niño weather pattern brings torrential rainfall to this sun-baked environment. This causes the desert to bloom, and provides tree seedlings a chance to develop roots long enough to survive the arid conditions until the next rainfall.</p>
+<p>Unfortunately fog oases are heavily endangered. This is mostly due to human activity (agriculture and climate change). To effectively protect the last remnants of this unique vegetation ecosystem, evidence is needed on the composition and spatial distribution of the native flora. <em>Lomas</em> mountains have economic value as a tourist destination (although most Peruvians live in the coastal desert, and seldomly have the opportunity to visit them) and can contribute to the wellbeing of local people via recreation.</p>
+<p>In this chapter we will demonstrate ecological applications of some of the techniques learned in the previous chpaters. This case study will involve analyzing composition and spatial distribution of flora on the southen slope of Mt. Mongón, a <em>lomas</em> mountain near Casma on the central northern coast of Peru.</p>
+<div class="figure" style="text-align: center">
+<img src="figures/stuy_area_mongon.png" alt="The Mt. Mongón study area (taken from @Muenchow_rqgis_2013; Landsat image: path 9, row 67, acquisition date 09/22/2000; @usgs_u.s._2016)."  />
+<p class="caption">
+(#fig:study_area_mongon)The Mt. Mongón study area (taken from <span class="citation">(<span class="citeproc-not-found" data-reference-id="Muenchow_rqgis_2013"><strong>???</strong></span>)</span>; Landsat image: path 9, row 67, acquisition date 09/22/2000; <span class="citation">USGS (<a href="#ref-usgs_u.s._2016">2016</a>)</span>).
+</p>
 </div>
-<div id="reproducibility" class="section level2 unnumbered">
-<h2>Reproducibility</h2>
-<p>To reproduce the book, you need a recent version of <a href="https://cran.r-project.org/">R</a> and up-to-date packages, which can be installed with the following command (which requires <a href="https://github.com/hadley/devtools"><strong>devtools</strong></a>):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_github</span>(<span class="st">&quot;robinlovelace/geocompr&quot;</span>)</code></pre></div>
-<p>To build the book locally, clone or <a href="https://github.com/Robinlovelace/geocompr/archive/master.zip">download</a> the <a href="https://github.com/Robinlovelace/geocompr/">geocompr repo</a>, load R in root directory (e.g. by opening <a href="https://github.com/Robinlovelace/geocompr/blob/master/geocompr.Rproj">geocompr.Rproj</a> in RStudio) and run the following lines:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bookdown::<span class="kw">render_book</span>(<span class="st">&quot;index.Rmd&quot;</span>) <span class="co"># to build the book</span>
-<span class="kw">browseURL</span>(<span class="st">&quot;_book/index.html&quot;</span>) <span class="co"># to view it</span></code></pre></div>
-<p>Further details can be found at <a href="https://github.com/Robinlovelace/geocompr#geocomputation-with-r">Robinlovelace/geocompr</a>.</p>
+<!-- compile the document and check if references are converted, maybe you have to use nocite-->
+<p>During a field study to Mt. Mongón we recorded the plants living in 100 randomly sampled 4x4 m<sup>2</sup> plots in the austral winter of 2011 <span class="citation">(Muenchow, Bräuning, et al. <a href="#ref-muenchow_predictive_2013">2013</a>)</span>, which coincided with a strong La Niña weather pattern that year. This led to even higher levels of aridity than usual in the coastal desert, while also increasing fog activity on the <em>lomas</em> mountains of northern Peru.</p>
+<p>Ordination techniques are … and will allow us to extract the floristic gradient developing along the southern mountain slope. The first hypothesis is that four plant belts will be found along the altitudinal gradient: a low-elevation <em>Tillandsia</em> belt, a herbaceous belt, a bromeliad belt, and an uppermost succulent belt <span class="citation">(Muenchow, Hauenstein, et al. <a href="#ref-muenchow_soil_2013">2013</a>)</span>. The second is that the first ‘ordination axis’ is related to environmental predictors such as slope, catchment area, altitude and NDVI. The result will be a catchment model, which can be used to make spatial predictions of about the composition of plants anywhere in the study area based on a relatively small sample. Further, we will account for spatial autocorrelation using spatial cross-validation.</p>
+</div>
+<div id="reducing-dimensionality" class="section level2">
+<h2><span class="header-section-number">8.3</span> Reducing dimensionality</h2>
+<p>Ordinations are a popular tool in vegetation science to extract the main information, frequently corresponding to ecological gradients, from large species-plot matrices mostly filled with 0s. However, they are also used in remote sensing (spectral bands + hyperspectral), the soil sciences, geomarketing, etc..</p>
+<p>Principal component analysis (PCA) is probably the most famous ordination technique. It is a great tool to reduce dimensionality if one can expect linear relationships between variables, and if the joint absence of a variable (for example calcium) in two plots (observations) can be considered a similarity. This is barely the case with vegetation data.</p>
+<p>For one, relationships are usually non-linear along environmental gradients. That means the presence of a plant usually follows a unimodal relationship along a gradient (e.g., humidity, temperature or salinity) with a peak at the most favorable conditions and declining ends towards the unfavarable conditions.</p>
+<p>Secondly, the joint absence of a species in two plots is often hardly an indication for similarity. Suppose a plant species is absent from the driest (e.g., an extreme desert) and the most moist locations (e.g., a tree savannah) of our sampling. Then we really should refrain from counting this as a simlilarity because it is very likely that the only thing these two completely different environmental settings have in common in terms of floristic composition is the shared absence of species (except for rare ubiquist species).</p>
+
+</div>
+</div>
+<h3> References</h3>
+<div id="refs" class="references">
+<div id="ref-usgs_u.s._2016">
+<p>USGS. 2016. <em>U.S. Geological Survey (USGS) Earth Resources Observation and Science (EROS) Center</em>. <a href="http://earthexplorer.usgs.gov/" class="uri">http://earthexplorer.usgs.gov/</a>.</p>
+</div>
+<div id="ref-muenchow_predictive_2013">
+<p>Muenchow, Jannes, Achim Bräuning, Eric Frank Rodríguez, and Henrik von Wehrden. 2013. “Predictive Mapping of Species Richness and Plant Species’ Distributions of a Peruvian Fog Oasis Along an Altitudinal Gradient.” <em>Biotropica</em> 45 (5): 557–66. doi:<a href="https://doi.org/10.1111/btp.12049">10.1111/btp.12049</a>.</p>
+</div>
+<div id="ref-muenchow_soil_2013">
+<p>Muenchow, Jannes, Simon Hauenstein, Achim Bräuning, Rupert Bäumler, Eric Frank Rodríguez, and Henrik von Wehrden. 2013. “Soil Texture and Altitude, Respectively, Largely Determine the Floristic Gradient of the Most Diverse Fog Oasis in the Peruvian Desert.” <em>Journal of Tropical Ecology</em> 29 (05): 427–38. doi:<a href="https://doi.org/10.1017/S0266467413000436">10.1017/S0266467413000436</a>.</p>
 </div>
 </div>
             </section>
@@ -318,8 +327,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-
-<a href="preface.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="location.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -348,7 +357,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Robinlovelace/geocompr/edit/master/index.Rmd",
+"link": "https://github.com/Robinlovelace/geocompr/edit/master/eco.Rmd",
 "text": "Edit"
 },
 "download": null,

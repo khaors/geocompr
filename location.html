@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="read-write.html">
-<link rel="next" href="references.html">
+<link rel="next" href="predictive-mapping-of-species-distributions.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -246,7 +246,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7.8" data-path="location.html"><a href="location.html#discussion-and-next-steps"><i class="fa fa-check"></i><b>7.8</b> Discussion and next steps</a></li>
 <li class="chapter" data-level="7.9" data-path="location.html"><a href="location.html#exercises-5"><i class="fa fa-check"></i><b>7.9</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>8</b> References</a></li>
+<li class="chapter" data-level="8" data-path="predictive-mapping-of-species-distributions.html"><a href="predictive-mapping-of-species-distributions.html"><i class="fa fa-check"></i><b>8</b> Predictive mapping of species distributions</a><ul>
+<li class="chapter" data-level="" data-path="predictive-mapping-of-species-distributions.html"><a href="predictive-mapping-of-species-distributions.html#prerequisites-6"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="8.1" data-path="predictive-mapping-of-species-distributions.html"><a href="predictive-mapping-of-species-distributions.html#introduction-5"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="predictive-mapping-of-species-distributions.html"><a href="predictive-mapping-of-species-distributions.html#background"><i class="fa fa-check"></i><b>8.2</b> Background</a></li>
+<li class="chapter" data-level="8.3" data-path="predictive-mapping-of-species-distributions.html"><a href="predictive-mapping-of-species-distributions.html#reducing-dimensionality"><i class="fa fa-check"></i><b>8.3</b> Reducing dimensionality</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>9</b> References</a></li>
 <li class="divider"></li>
 <li><a href="http://robinlovelace.net/">Robin Lovelace</a></li>
 <li><a href="https://nowosad.github.io/">Jakub Nowosad</a></li>
@@ -305,10 +311,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Imagine your are launching a cycling company and would like to open shops across urban areas of Germany. Survey data reveals the target audience: males between 20-40 years old who live alone or with just one person (single households, not families), and there is sufficient capital to open a number of shops. But where should they be placed?</p>
 <p>Many store location analysis consultancies have developed to help people answer such questions, and they would happily charge high rates for their expertise. It is testament to the rate of technological development that this questions can now be answered by informed citizens using free and open source software. The here presented analysis will demonstrate a number of geo-computational techniques learned during the first chapters of the book. Additionally, this chapter will demonstrate common steps in geomarketing to find suitable locations for a specific shop type (here: cycle stores). The analysis includes following steps:</p>
 <ul>
-<li>Retrieval of socio-demographic data by downloading download gridded German census data (section <a href="location.html#create-census-rasters">7.4</a>).</li>
-<li>Identification of areas of high population density (metropolitan areas; section <a href="location.html#define-metropolitan-areas">7.5</a>).</li>
-<li>Download detailed geographic data (OSM data) for these areas (section <a href="location.html#points-of-interest">7.6</a>).</li>
-<li>Make input rasters comparable by means of reclassifaction, and use map algebra to compute a final score where higher scores naturally indicate more favorable locations (section (identifying-suitable-locations)).</li>
+<li>The retrieval of socio-demographic data by downloading download gridded German census data (section <a href="location.html#create-census-rasters">7.4</a>).</li>
+<li>The identification of areas of high population density (metropolitan areas; section <a href="location.html#define-metropolitan-areas">7.5</a>).</li>
+<li>The download of detailed geographic data (OSM data) for these areas (section <a href="location.html#points-of-interest">7.6</a>).</li>
+<li>Making input rasters comparable by means of reclassifaction, and using map algebra to compute a final score where higher scores indicate more favorable locations (section (identifying-suitable-locations)).</li>
 </ul>
 <p>Note that although we have applied these steps to a specific case study, they could be generalized to many scenarios of store location or public service provision.</p>
 </div>
@@ -740,7 +746,7 @@ Figure 7.3: Suitable areas (i.e., raster cells with a score &gt; 10) in accordan
         </div>
       </div>
 <a href="read-write.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="predictive-mapping-of-species-distributions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
