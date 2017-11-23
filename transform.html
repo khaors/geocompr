@@ -183,9 +183,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.2" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#spatial-operations-on-vector-data"><i class="fa fa-check"></i><b>4.2</b> Spatial operations on vector data</a><ul>
 <li class="chapter" data-level="4.2.1" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#spatial-subsetting"><i class="fa fa-check"></i><b>4.2.1</b> Spatial subsetting</a></li>
 <li class="chapter" data-level="4.2.2" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#topological-relations"><i class="fa fa-check"></i><b>4.2.2</b> Topological relations</a></li>
-<li class="chapter" data-level="4.2.3" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#spatial-joining-and-aggregation"><i class="fa fa-check"></i><b>4.2.3</b> Spatial joining and aggregation</a></li>
+<li class="chapter" data-level="4.2.3" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#spatial-joining"><i class="fa fa-check"></i><b>4.2.3</b> Spatial joining</a></li>
 <li class="chapter" data-level="4.2.4" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#non-overlapping-joins"><i class="fa fa-check"></i><b>4.2.4</b> Non-overlapping joins</a></li>
-<li class="chapter" data-level="4.2.5" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#dissolving-and-aggregating-polygons"><i class="fa fa-check"></i><b>4.2.5</b> Dissolving and aggregating polygons</a></li>
+<li class="chapter" data-level="4.2.5" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#spatial-data-aggregation"><i class="fa fa-check"></i><b>4.2.5</b> Spatial data aggregation</a></li>
 <li class="chapter" data-level="4.2.6" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#clipping"><i class="fa fa-check"></i><b>4.2.6</b> Clipping</a></li>
 <li class="chapter" data-level="4.2.7" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#distance-relations"><i class="fa fa-check"></i><b>4.2.7</b> Distance relations</a></li>
 </ul></li>
@@ -286,7 +286,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london =<span class="st"> </span><span class="kw">st_sf</span>(<span class="dt">geometry =</span> <span class="kw">st_sfc</span>(<span class="kw">st_point</span>(<span class="kw">c</span>(-<span class="fl">0.1</span>, <span class="fl">51.5</span>))))
 <span class="kw">st_is_longlat</span>(london)
 <span class="co">#&gt; [1] NA</span></code></pre></div>
-<p>The results show that when geographic data is created from scratch, or is loaded from a source that has no CRS metadata, the CRS is unspecified by default. CRS can be set with the <code>st_set_crs</code> function:<a href="#fn29" class="footnoteRef" id="fnref29"><sup>29</sup></a></p>
+<p>The results show that when geographic data is created from scratch, or is loaded from a source that has no CRS metadata, the CRS is unspecified by default. CRS can be set with the <code>st_set_crs</code> function:<a href="#fn30" class="footnoteRef" id="fnref30"><sup>30</sup></a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london =<span class="st"> </span><span class="kw">st_set_crs</span>(london, <span class="dv">4326</span>)
 <span class="kw">st_is_longlat</span>(london)
 <span class="co">#&gt; [1] TRUE</span></code></pre></div>
@@ -366,7 +366,7 @@ The EPSG code can be found inside the <code>crs</code> attribute of the object�
 Figure 6.3: Mollweide projection of the world
 </p>
 </div>
-<p>On the other hand, the goal for many visualization purposes is to have a map with minimized area, direction, and distance distortions. One of the most popular projection to achieve that is Winkel tripel (Figure <a href="transform.html#fig:wintriproj">6.4</a>).<a href="#fn30" class="footnoteRef" id="fnref30"><sup>30</sup></a> The <code>st_transform_proj</code> function allows for coordinates transformations to the Winkel tripel projection:</p>
+<p>On the other hand, the goal for many visualization purposes is to have a map with minimized area, direction, and distance distortions. One of the most popular projection to achieve that is Winkel tripel (Figure <a href="transform.html#fig:wintriproj">6.4</a>).<a href="#fn31" class="footnoteRef" id="fnref31"><sup>31</sup></a> The <code>st_transform_proj</code> function allows for coordinates transformations to the Winkel tripel projection:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_wintri =<span class="st"> </span><span class="kw">st_transform_proj</span>(world, <span class="dt">crs =</span> <span class="st">&quot;+proj=wintri&quot;</span>)</code></pre></div>
 <!-- plot(world_wintri$geom) -->
 <!-- plot(world_wintri$geom, graticule = TRUE) -->
@@ -430,7 +430,7 @@ cat_raster
 <span class="co">#&gt; data source : /home/travis/R/Library/spDataLarge/raster/nlcd2011.tif </span>
 <span class="co">#&gt; names       : nlcd2011 </span>
 <span class="co">#&gt; values      : 11, 95  (min, max)</span></code></pre></div>
-<p>In this region, 14 land cover classes were distinguished<a href="#fn31" class="footnoteRef" id="fnref31"><sup>31</sup></a>:</p>
+<p>In this region, 14 land cover classes were distinguished<a href="#fn32" class="footnoteRef" id="fnref32"><sup>32</sup></a>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">unique</span>(cat_raster)
 <span class="co">#&gt;  [1] 11 21 22 23 31 41 42 43 52 71 81 82 90 95</span></code></pre></div>
 <p>When reprojecting categorical raster, we need to ensure that our new estimated values would still have values of our original classes. This could be done using the nearest neighbor method (<code>ngb</code>). In this method, value of the output cell is calculated based on the nearest cell center of the input raster.</p>
@@ -603,10 +603,10 @@ Figure 4.9: Randomly distributed points within the bounding box enclosing circle
 </div>
 <div class="footnotes">
 <hr />
-<ol start="29">
-<li id="fn29"><p>CRS could be also added when creating the object with the following command: <code>st_sf(geometry = st_sfc(st_point(c(-0.1, 51.5))), crs = 4326)</code><a href="transform.html#fnref29">↩</a></p></li>
-<li id="fn30"><p>This projection is used, among others, by the National Geographic Society.<a href="transform.html#fnref30">↩</a></p></li>
-<li id="fn31"><p>Full list of NLCD2011 land cover classes can be found at <a href="https://www.mrlc.gov/nlcd11_leg.php" class="uri">https://www.mrlc.gov/nlcd11_leg.php</a><a href="transform.html#fnref31">↩</a></p></li>
+<ol start="30">
+<li id="fn30"><p>CRS could be also added when creating the object with the following command: <code>st_sf(geometry = st_sfc(st_point(c(-0.1, 51.5))), crs = 4326)</code><a href="transform.html#fnref30">↩</a></p></li>
+<li id="fn31"><p>This projection is used, among others, by the National Geographic Society.<a href="transform.html#fnref31">↩</a></p></li>
+<li id="fn32"><p>Full list of NLCD2011 land cover classes can be found at <a href="https://www.mrlc.gov/nlcd11_leg.php" class="uri">https://www.mrlc.gov/nlcd11_leg.php</a><a href="transform.html#fnref32">↩</a></p></li>
 </ol>
 </div>
             </section>
