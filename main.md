@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservedff8aca83c288fe1
+preserve1f824167563fed09
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3061,7 +3061,7 @@ joined = st_join(x = asia, y = urb) %>%
 
 
 <div class="figure" style="text-align: center">
-<img src="figures/spatial-join-1.png" alt="Illustration of a spatial join: the populations of the world's 3 largest agglomerations joined onto their respective countries." width="576" /><img src="figures/spatial-join-2.png" alt="Illustration of a spatial join: the populations of the world's 3 largest agglomerations joined onto their respective countries." width="576" /><img src="figures/spatial-join-3.png" alt="Illustration of a spatial join: the populations of the world's 3 largest agglomerations joined onto their respective countries." width="576" /><img src="figures/spatial-join-4.png" alt="Illustration of a spatial join: the populations of the world's 3 largest agglomerations joined onto their respective countries." width="576" />
+<img src="figures/spatial-join-1.png" alt="Illustration of a spatial join: the populations of the world's 3 largest agglomerations joined onto their respective countries." width="576" />
 <p class="caption">(\#fig:spatial-join)Illustration of a spatial join: the populations of the world's 3 largest agglomerations joined onto their respective countries.</p>
 </div>
 
@@ -3083,7 +3083,7 @@ Plotting them shows that they are closely related but they do not touch, as show
 
 ```r
 plot(cycle_hire$geometry, col = "blue")
-plot(cycle_hire_osm$geometry, add = T, pch = 3, col = "red")
+plot(cycle_hire_osm$geometry, add = TRUE, pch = 3, col = "red")
 ```
 
 We can check if any points are the same `st_intersects()` as show below:
@@ -3097,7 +3097,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservefb0a9682c08f428e
+preserve7e41deac6069af6d
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 

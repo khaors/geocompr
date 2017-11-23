@@ -483,7 +483,7 @@ asia =<span class="st"> </span>world %&gt;%<span class="st"> </span>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">joined =<span class="st"> </span><span class="kw">st_join</span>(<span class="dt">x =</span> asia, <span class="dt">y =</span> urb) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">na.omit</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:spatial-join"></span>
-<img src="figures/spatial-join-1.png" alt="Illustration of a spatial join: the populations of the world's 3 largest agglomerations joined onto their respective countries." width="576" /><img src="figures/spatial-join-2.png" alt="Illustration of a spatial join: the populations of the world's 3 largest agglomerations joined onto their respective countries." width="576" /><img src="figures/spatial-join-3.png" alt="Illustration of a spatial join: the populations of the world's 3 largest agglomerations joined onto their respective countries." width="576" /><img src="figures/spatial-join-4.png" alt="Illustration of a spatial join: the populations of the world's 3 largest agglomerations joined onto their respective countries." width="576" />
+<img src="figures/spatial-join-1.png" alt="Illustration of a spatial join: the populations of the world's 3 largest agglomerations joined onto their respective countries." width="576" />
 <p class="caption">
 Figure 4.3: Illustration of a spatial join: the populations of the world’s 3 largest agglomerations joined onto their respective countries.
 </p>
@@ -494,7 +494,7 @@ Figure 4.3: Illustration of a spatial join: the populations of the world’s 3 l
 <h3><span class="header-section-number">4.2.4</span> Non-overlapping joins</h3>
 <p>Sometimes two geographic datasets do not touch but still have a strong geographic relationship enabling joins. The datasets <code>cycle_hire</code> and <code>cycle_hire_osm</code>, already loaded in the <strong>spData</strong> package, provide a good example. Plotting them shows that they are closely related but they do not touch, as shown in Figure <a href="spatial-data-operations.html#fig:cycle-hire">4.4</a>, a base version of which is created with the following code below:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(cycle_hire$geometry, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)
-<span class="kw">plot</span>(cycle_hire_osm$geometry, <span class="dt">add =</span> T, <span class="dt">pch =</span> <span class="dv">3</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
+<span class="kw">plot</span>(cycle_hire_osm$geometry, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">pch =</span> <span class="dv">3</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
 <p>We can check if any points are the same <code>st_intersects()</code> as show below:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">any</span>(<span class="kw">st_touches</span>(cycle_hire, cycle_hire_osm, <span class="dt">sparse =</span> <span class="ot">FALSE</span>))
 <span class="co">#&gt; [1] FALSE</span></code></pre></div>
