@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserved927395f9681a3e6
+preservedff8aca83c288fe1
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3097,7 +3097,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve04e662451e2935d5
+preservefb0a9682c08f428e
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3245,7 +3245,7 @@ It helps to transfer data from one set of areal units to another.
 A number of algorithms have been developed for areal interpolation, including area weighted and pycnophylactic interpolation methods task [@tobler_smooth_1979].
 
 <div class="figure" style="text-align: center">
-<img src="figures/04-congruence.png" alt="Illustration of congruent (left) and incongruent (right) areal units." width="474" />
+<img src="figures/04-congruence.png" alt="Illustration of congruent (left) and incongruent (right) areal units." width="100%" />
 <p class="caption">(\#fig:areal-example)Illustration of congruent (left) and incongruent (right) areal units.</p>
 </div>
 
