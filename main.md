@@ -255,7 +255,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservee0184233668f527f
+preserve05bb0ef25822c27b
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3094,7 +3094,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve5513b5f8b15e6623
+preserve6f78020a0cbd6365
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5352,7 +5352,7 @@ metro_names = map_dfr(1:nrow(coords), function(i) {
 Choosing `more` as `revgeocode()`'s `output` option will give back a `data.frame` with several columns referring to the location including the address, locality and various administrative levels.
 Overall, we are satisfied with the `locality` column serving as metropolitan names (München, Nürnberg, Stuttgart, Frankfurt, Hamburg, Berlin, Leipzig) bar one exception, namely Velbert.
 Hence, we replace Velbert with the corresponding name in the `administrative_area_level_2` column, that is Düsseldorf (Fig. \@ref(fig:metro-areas)).
-Umlauts like `ü` might lead to trouble further on, for example when determing the bounding box of a metropolitan area with `opq()` (see further below), which is why we replace them.
+Umlauts like `ü` might lead to trouble further on, for example when determining the bounding box of a metropolitan area with `opq()` (see further below), which is why we replace them.
 
 
 ```r
@@ -5380,7 +5380,7 @@ Here, we will only keep the point objects.
 As with Google's reverse geocode API, the OSM-download will once in a while not work at the first attempt.
 The `while`-loop increases the number of download trials to three. 
 If then still no features can be downloaded, most likely there are none.
-Or it is an indication that another error has ocurred before. 
+Or it is an indication that another error has occurred before. 
 For instance, the `opq()` function has retrieved a wrong bounding box.
 
 
@@ -5497,14 +5497,14 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve69b074bdc2f06aa6
+preserve56d0f2e61edc3ce5
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
 ## Discussion and next steps
 
 The here presented approach is a typical example of the normative usage of a GIS [@longley_geographic_2015].
-We combined survey data with expert-based knowledge and assumptions (definition of metroplitan areas, defining class intervals, definition of a final score threshold).
+We combined survey data with expert-based knowledge and assumptions (definition of metropolitan areas, defining class intervals, definition of a final score threshold).
 It should be clear that this approach is not suitable for scientific knowledge advancement but is a very applied way of information extraction.
 This is to say, we can only suspect based on common sense that we have identified areas suitable for bike shops.
 However, we have no proof that this is in fact the case.
@@ -5525,7 +5525,7 @@ However, to find out about such an interaction we would need customer data.
 In short, the presented analysis is far from perfect.
 Nevertheless, it should have given you a first impression and understanding of how to obtain, and deal with spatial data in R within a geomarketing context.
 
-Finally, we have to point out that the presented analysis would be mereley the first step of finding suitable locations.
+Finally, we have to point out that the presented analysis would be merely the first step of finding suitable locations.
 So far we have identified areas, 1 by 1 km in size, potentially suitable for a bike shop in accordance with our survey.
 We could continue the analysis as follows:
 
@@ -5538,7 +5538,7 @@ That is, if there already is a bike shop in the vicinity of the chosen location,
 
 ## Exercises
 
-1. Download the csv file containing inhabitant information for a 100 m cell resolution ( https://www.zensus2011.de/SharedDocs/Downloads/DE/Pressemitteilung/DemografischeGrunddaten/csv_Bevoelkerung_100m_Gitter.zip?__blob=publicationFile&v=3).
+1. Download the csv file containing inhabitant information for a 100 m cell resolution (https://www.zensus2011.de/SharedDocs/Downloads/DE/Pressemitteilung/DemografischeGrunddaten/csv_Bevoelkerung_100m_Gitter.zip?__blob=publicationFile&v=3).
 Please note that the unzipped file has a size of 1.23 GB.
 To read it into R you can use `readr::read_csv`.
 This takes 30 seconds on my machine (16 GB RAM)
