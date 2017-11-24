@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve18f36df8c7de1907
+preserveda95af71e5e596a2
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3096,7 +3096,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve388f0dfaa8ecf4c1
+preserveb2156bf5b675c47c
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4982,6 +4982,8 @@ Export this map to a file called `cycle_hire.html`.
 <!--chapter:end:06-read-write-plot.Rmd-->
 
 
+# (PART) Basic applications {-}
+
 # Location analysis {#location}
 
 ## Prerequisites
@@ -5507,7 +5509,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve384e3b05cd6910e1
+preserve2e521187b7baeed7
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -5560,7 +5562,7 @@ Recreate the `metros` object and instead of deleting polygon number 5, make it p
 1. Suppose our bike shop predominantly sold  electric bikes to older people. 
 Change the age raster accordingly, repeat the remaining analyses and compare the changes with our original result.
 
-<!--chapter:end:08-location.Rmd-->
+<!--chapter:end:07-location.Rmd-->
 
 
 # References
