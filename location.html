@@ -238,13 +238,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7" data-path="location.html"><a href="location.html"><i class="fa fa-check"></i><b>7</b> Location analysis</a><ul>
 <li class="chapter" data-level="7.1" data-path="location.html"><a href="location.html#prerequisites-5"><i class="fa fa-check"></i><b>7.1</b> Prerequisites</a></li>
 <li class="chapter" data-level="7.2" data-path="location.html"><a href="location.html#introduction-4"><i class="fa fa-check"></i><b>7.2</b> Introduction</a></li>
-<li class="chapter" data-level="7.3" data-path="location.html"><a href="location.html#case-study"><i class="fa fa-check"></i><b>7.3</b> Case study</a></li>
-<li class="chapter" data-level="7.4" data-path="location.html"><a href="location.html#create-census-rasters"><i class="fa fa-check"></i><b>7.4</b> Create census rasters</a></li>
-<li class="chapter" data-level="7.5" data-path="location.html"><a href="location.html#define-metropolitan-areas"><i class="fa fa-check"></i><b>7.5</b> Define metropolitan areas</a></li>
-<li class="chapter" data-level="7.6" data-path="location.html"><a href="location.html#points-of-interest"><i class="fa fa-check"></i><b>7.6</b> Points of interest</a></li>
-<li class="chapter" data-level="7.7" data-path="location.html"><a href="location.html#identifying-suitable-locations"><i class="fa fa-check"></i><b>7.7</b> Identifying suitable locations</a></li>
-<li class="chapter" data-level="7.8" data-path="location.html"><a href="location.html#discussion-and-next-steps"><i class="fa fa-check"></i><b>7.8</b> Discussion and next steps</a></li>
-<li class="chapter" data-level="7.9" data-path="location.html"><a href="location.html#exercises-5"><i class="fa fa-check"></i><b>7.9</b> Exercises</a></li>
+<li class="chapter" data-level="7.3" data-path="location.html"><a href="location.html#case-study"><i class="fa fa-check"></i><b>7.3</b> Case study</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="location.html"><a href="location.html#create-census-rasters"><i class="fa fa-check"></i><b>7.3.1</b> Create census rasters</a></li>
+<li class="chapter" data-level="7.3.2" data-path="location.html"><a href="location.html#define-metropolitan-areas"><i class="fa fa-check"></i><b>7.3.2</b> Define metropolitan areas</a></li>
+<li class="chapter" data-level="7.3.3" data-path="location.html"><a href="location.html#points-of-interest"><i class="fa fa-check"></i><b>7.3.3</b> Points of interest</a></li>
+<li class="chapter" data-level="7.3.4" data-path="location.html"><a href="location.html#identifying-suitable-locations"><i class="fa fa-check"></i><b>7.3.4</b> Identifying suitable locations</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="location.html"><a href="location.html#discussion-and-next-steps"><i class="fa fa-check"></i><b>7.4</b> Discussion and next steps</a></li>
+<li class="chapter" data-level="7.5" data-path="location.html"><a href="location.html#exercises-5"><i class="fa fa-check"></i><b>7.5</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>8</b> References</a></li>
 <li class="divider"></li>
@@ -289,31 +290,29 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="introduction-4" class="section level2">
 <h2><span class="header-section-number">7.2</span> Introduction</h2>
-<p>This chapter demonstrates how the skills learned in the previous chapters can be applied to location analysis. Geomarketing (also called location analysis) is a broad field of research and (largely) commercial application, the aim of which is usually to decide the optimal location for new services. A typical example is where to locate a new shop: there are typically hundreds of possible locations in a city and location analysis can be used to decide where the shop will attract most visitors and, ultimately, make most profit. There are also many non-commercial applications that can use the technique for public benefit. A good example is where to locate new health services <span class="citation">(Tomintz, Clarke, and Rigby <a href="#ref-tomintz_geography_2008">2008</a>)</span>.</p>
-<p>Geomarketing is focused on people and where they are likely to spend their time and other resources. However, it has several links with ecology: animals and plants have needs which can be best met in optimal locations based on variables that change over space (called gradients in the ecological literature — see e.g., <span class="citation">Muenchow et al. (<a href="#ref-muenchow_review_2017">2017</a>)</span> and chapter xx). <!-- add reference!! --></p>
-<p>Polar bears, for example, prefer northern latitudes where temperatures are lower and food (seals and sea lions) is plentiful. Similarly, humans tend to congregate certain places, creating economic niches (and high land prices) analogous to the ecological niche of the Arctic. The main task of geomarketing is to find out where such ‘optimal locations’ are for specific services, based on available data. Typical research questions in geomarketing include:</p>
+<p>This chapter demonstrates how the skills learned in the previous chapters can be applied to location analysis. Geomarketing (also called location analysis) is a broad field of research and commercial application, the aim of which is to decide the optimal location for new services. A standard example is where to locate a new shop: there are typically hundreds of possible locations in a city and location analysis can be used to decide where the shop will attract most visitors and, ultimately, make most profit. There are also many non-commercial applications that can use the technique for public benefit. A good example is where to locate new health services <span class="citation">(Tomintz, Clarke, and Rigby <a href="#ref-tomintz_geography_2008">2008</a>)</span>.</p>
+<p>Geomarketing is focused on people and where they are likely to spend their time and other resources. However, it has several links with ecology: animals and plants have needs which can be best met in optimal locations based on variables that change over space (called gradients in the ecological literature — see e.g., <span class="citation">Muenchow et al. (<a href="#ref-muenchow_review_2017">2017</a>)</span><!--and chapter xx-->). <!-- add reference!! --> Polar bears, for example, prefer northern latitudes where temperatures are lower and food (seals and sea lions) is plentiful. Similarly, humans tend to congregate certain places, creating economic niches (and high land prices) analogous to the ecological niche of the Arctic. The main task of geomarketing is to find out where such ‘optimal locations’ are for specific services, based on available data. Typical research questions in geomarketing include:</p>
 <ul>
 <li>Where are the service users (or clients), specific target groups and competitors?</li>
 <li>How many people can easily reach my stores?</li>
 <li>Do existing services over or under-exploit the market potential?</li>
-<li>How big is my market share and turnovers, and are there spatial differences?</li>
+<li>How big is my market share and turnovers, and are spatial differences exist?</li>
 </ul>
-<p>To demonstrate how geocomputation can answer these questions the next section creates a scenario where geomarketing is vital to make informed real-world decisions.</p>
+<p>To demonstrate how geocomputation can answer these questions, the next section creates a scenario where geomarketing is vital to make informed real-world decisions.</p>
 </div>
 <div id="case-study" class="section level2">
 <h2><span class="header-section-number">7.3</span> Case study</h2>
 <p>Imagine your are launching a cycling company and would like to open shops across urban areas of Germany. Survey data reveals the target audience: males between 20-40 years old who live alone or with just one person (single households, not families), and there is sufficient capital to open a number of shops. But where should they be placed?</p>
-<p>Many store location analysis consultancies have developed to help people answer such questions, and they would happily charge high rates for their expertise. It is testament to the rate of technological development that this questions can now be answered by informed citizens using free and open source software. The here presented analysis will demonstrate a number of geo-computational techniques learned during the first chapters of the book. Additionally, this chapter will demonstrate common steps in geomarketing to find suitable locations for a specific shop type (here: cycle stores). The analysis includes following steps:</p>
+<p>Many store location analysis consultancies have been developed to help people answer such questions, and they would happily charge high rates for their expertise. It is testament to the rate of technological development that this questions can now be answered by informed citizens using free and open source software. The here presented analysis will demonstrate a number of geocomputational techniques learned during the first chapters of the book. Additionally, this chapter will illustrate common steps in geomarketing to find suitable locations for a specific shop type (here: cycle stores). The analysis includes following steps:</p>
 <ul>
-<li>The retrieval of socio-demographic data by downloading download gridded German census data (section <a href="location.html#create-census-rasters">7.4</a>).</li>
-<li>The identification of areas of high population density (metropolitan areas; section <a href="location.html#define-metropolitan-areas">7.5</a>).</li>
-<li>The download of detailed geographic data (OSM data) for these areas (section <a href="location.html#points-of-interest">7.6</a>).</li>
-<li>Making input rasters comparable by means of reclassifaction, and using map algebra to compute a final score where higher scores indicate more favorable locations (section <a href="location.html#identifying-suitable-locations">7.7</a>).</li>
+<li>The retrieval of socio-demographic data by downloading gridded German census data (section <a href="location.html#create-census-rasters">7.3.1</a>).</li>
+<li>The identification of areas of high population density (metropolitan areas; section <a href="location.html#define-metropolitan-areas">7.3.2</a>).</li>
+<li>The download of detailed geographic data (OSM data) for these areas (section <a href="location.html#points-of-interest">7.3.3</a>).</li>
+<li>Creating input rasters comparable by means of reclassifaction, and using map algebra to compute a final score where higher scores indicate more favorable locations (section <a href="location.html#identifying-suitable-locations">7.3.4</a>).</li>
 </ul>
 <p>Note that although we have applied these steps to a specific case study, they could be generalized to many scenarios of store location or public service provision.</p>
-</div>
-<div id="create-census-rasters" class="section level2">
-<h2><span class="header-section-number">7.4</span> Create census rasters</h2>
+<div id="create-census-rasters" class="section level3">
+<h3><span class="header-section-number">7.3.1</span> Create census rasters</h3>
 <p>The German government provides a csv-file containing gridded census data of 2011 for Germany. One can either download a 1 km or a 100 m resolution. Here, we download the 1 km data, unzip it and read it into R.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">url =<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;https://www.zensus2011.de/SharedDocs/Downloads/DE/&quot;</span>, 
              <span class="st">&quot;Pressemitteilung/DemografischeGrunddaten/csv_Zensusatlas_&quot;</span>, 
@@ -327,10 +326,10 @@ base_name =<span class="st"> </span><span class="kw">grep</span>(<span class="st
 <span class="kw">unzip</span>(<span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">&quot;census.zip&quot;</span>), <span class="dt">files =</span> base_name, <span class="dt">exdir =</span> <span class="kw">tempdir</span>())
 <span class="co"># read in the csv file</span>
 input =<span class="st"> </span>readr::<span class="kw">read_csv2</span>(<span class="kw">file.path</span>(<span class="kw">tempdir</span>(), base_name))</code></pre></div>
-<p>Next we select the variables we need: x and y coordinates, the number of inhabitants (population), mean age, portion of women and the household size (Table <a href="location.html#tab:census-desc">7.1</a>).</p>
+<p>Next we select the variables we need: x and y coordinates, the number of inhabitants (population), mean age, proportion of women and the household size (Table <a href="location.html#tab:census-desc">7.1</a>).</p>
 <table>
 <caption>
-<span id="tab:census-desc">Table 7.1: </span>Excerpt from the data description ‘Datensatzbeschreibung_klassierte_Werte_1km-Gitter.xlsx’ located in the downloaded file census.zip describing the classes of the retained variables. The classes -1 and -9 refer to uninhabited areas or are areas which have to be kept secret for example due to anonymization reasons.
+<span id="tab:census-desc">Table 7.1: </span>Excerpt from the data description ‘Datensatzbeschreibung_klassierte_Werte_1km-Gitter.xlsx’ located in the downloaded file census.zip describing the classes of the retained variables. The classes -1 and -9 refer to uninhabited areas or areas which have to be kept secret, for example due to anonymization reasons.
 </caption>
 <thead>
 <tr>
@@ -339,7 +338,7 @@ class
 </th>
 <th style="text-align:center;">
 population<br />
-(number of persons)
+(number of people)
 </th>
 <th style="text-align:center;">
 women<br />
@@ -351,7 +350,7 @@ mean age<br />
 </th>
 <th style="text-align:center;">
 household size<br />
-(number of persons)
+(number of people)
 </th>
 </tr>
 </thead>
@@ -479,28 +478,35 @@ Figure 7.1: Gridded German census data of 2011. See Table <a href="location.html
 </p>
 </div>
 <!-- find out about new lines in headings + blank cells-->
-<p>We <code>reclassify()</code> the ordinal-scaled rasters in accordance with our survey (see section <a href="location.html#case-study">7.3</a>). In the case of the population data we convert the classes into a numeric data type using class means. This means we use 127 for class 1 (ranging from 3 to 250 inhabitants), 375 for class 2 (ranging from 250 to 500 inhabitants), etc. (Table <a href="location.html#tab:census-desc">7.1</a>). We arbitrarily chose 8000 inhabitants for class 6 since it represents cells where more than 8000 persons live. Of course, this is only a simple approximation of the true population number (in the exercises you can explore the introduced error in more detail), however, for our purpose of delineating metropolitan areas the level of detail is good enough (see next section). By contrast, we convert the remaining input rasters into weight rasters whereas the highest weights are in correspondence with our survey. For instance, the women class 1 (0-40%) receives a weight of 3 since our clientele is predominantly male. Equally, the mean age class containing the youngest people receives the highest weight as well as the single households class.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rcl_pop =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">127</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">375</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">1250</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">3000</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">6000</span>,
-                   <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">8000</span>), <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)
+<p>We <code>reclassify()</code> the ordinal-scaled rasters in accordance with our survey (see section <a href="location.html#case-study">7.3</a>). In the case of the population data we convert the classes into a numeric data type using class means. This means we use 127 for class 1 (ranging from 3 to 250 inhabitants), 375 for class 2 (ranging from 250 to 500 inhabitants), etc. (Table <a href="location.html#tab:census-desc">7.1</a>). We arbitrarily chose 8000 inhabitants for class 6 since it represents cells where more than 8000 people live. Of course, this is only a simple approximation of the true population number<a href="#fn33" class="footnoteRef" id="fnref33"><sup>33</sup></a>, however, the level of detail is good enough for the purpose of delineating metropolitan areas (see next section). By contrast, we convert the remaining input rasters into weight rasters whereas the highest weights are in correspondence with our survey. For instance, the women class 1 (0-40%) receives a weight of 3 since our clientele is predominantly male. Equally, the mean age class containing the youngest people receives the highest weight as well as the single households class.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rcl_pop =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">127</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">375</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">1250</span>, 
+                   <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">3000</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">6000</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">8000</span>), 
+                 <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)
 rcl_women =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">0</span>), 
                    <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)
 rcl_age =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">0</span>),
                  <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)
 rcl_hh =<span class="st"> </span>rcl_women
-rcl =<span class="st"> </span><span class="kw">list</span>(rcl_pop, rcl_women, rcl_age, rcl_hh)
-reclass =<span class="st"> </span>input
+rcl =<span class="st"> </span><span class="kw">list</span>(rcl_pop, rcl_women, rcl_age, rcl_hh)</code></pre></div>
+<!-- maybe a sentence or two of explanations could be important here -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">reclass =<span class="st"> </span>input
 for (i in <span class="kw">seq_len</span>(<span class="kw">nlayers</span>(reclass))) {
   reclass[[i]] =<span class="st"> </span><span class="kw">reclassify</span>(reclass[[i]], <span class="dt">rcl =</span> rcl[[i]], <span class="dt">right =</span> <span class="ot">NA</span>) 
 }
 <span class="kw">names</span>(reclass) =<span class="st"> </span><span class="kw">names</span>(input)</code></pre></div>
+<!-- alternative code (more purrr) -->
 </div>
-<div id="define-metropolitan-areas" class="section level2">
-<h2><span class="header-section-number">7.5</span> Define metropolitan areas</h2>
+<div id="define-metropolitan-areas" class="section level3">
+<h3><span class="header-section-number">7.3.2</span> Define metropolitan areas</h3>
 <p>We arbitrarily define a pixel of 20 sq-km as metropolitan if more than half a million people lives in it. The <code>aggregate()</code> command helps to change the resolution from 1 to 20 sq-km while each output cell represents the sum of all 1 sq-km input cells (see section <a href="spatial-data-operations.html#aligning-rasters">4.3.8</a>). Next, we only keep cells with more than half a million inhabitants using a Boolean operation, and convert the resulting cells into spatial polygons of class <code>sf</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pop_agg =<span class="st"> </span><span class="kw">aggregate</span>(reclass$pop, <span class="dt">fact =</span> <span class="dv">20000</span> /<span class="st"> </span><span class="kw">res</span>(input)[<span class="dv">1</span>], <span class="dt">fun =</span> sum)
 polys =<span class="st"> </span><span class="kw">rasterToPolygons</span>(pop_agg[pop_agg &gt;<span class="st"> </span><span class="dv">500000</span>, <span class="dt">drop =</span> <span class="ot">FALSE</span>])
 polys =<span class="st"> </span><span class="kw">st_as_sf</span>(polys)</code></pre></div>
-<p>Plotting these polygons reveals eight metropolitan regions (Fig. <a href="location.html#fig:metro-areas">7.2</a>). Each region consists of one ore more polygons (raster cells). It would be nice if we could join all polygons belonging to one region. One approach is to dissolve all polygons (see section <a href="spatial-data-operations.html#spatial-data-aggregation">4.2.5</a>).</p>
+<p>Plotting these polygons reveals eight metropolitan regions (Fig. <a href="location.html#fig:metro-areas">7.2</a>). Each region consists of one ore more polygons (raster cells). It would be nice if we could join all polygons belonging to one region. One approach is to union the polygons. <!-- add reference (see section \@ref(spatial-data-aggregation)). --></p>
+<!-- ```{r} -->
+<!-- metros = st_union(polys) %>%  -->
+<!--   st_cast("POLYGON")  -->
+<!-- ``` -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">polys =<span class="st"> </span><span class="kw">summarize</span>(polys, <span class="dt">pop =</span> <span class="kw">sum</span>(layer))</code></pre></div>
 <p>This returns one multipolygon feature with its elements corresponding to the metropolitan regions. To extract these polygons from the multipolygon, we can use <code>st_cast()</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">metros =<span class="st"> </span><span class="kw">st_cast</span>(polys, <span class="st">&quot;POLYGON&quot;</span>)</code></pre></div>
@@ -582,14 +588,14 @@ Figure 7.2: The aggregated population raster (resolution: 20 km) with the identi
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># find out about the offending polygon</span>
 int =<span class="st"> </span><span class="kw">st_intersects</span>(metros, metros)
 <span class="co"># polygons 5 and 9 share one border, delete polygon number 5</span>
-metros_2 =<span class="st"> </span>metros[-<span class="dv">5</span>, ]</code></pre></div>
-<p>The defined metropolitan areas suitable for bike shops are still missing a name. A reverse geocoding approach can settle this problem. Given a coordinate, reverse geocoding finds the corresponding address. Consequently, extracting the centroid coordinate of each metropolitan area can serve as an input for a reverse geocoding API. The <strong>ggmap</strong> package makes use of the one provided by Google.<a href="#fn33" class="footnoteRef" id="fnref33"><sup>33</sup></a> <code>ggmap::revgeocode()</code> only accepts geographical coordinates (latitude/longitude), therefore, the first requirement is to bring the metropolitan polygons into an appropriate coordinate reference system (chapter <a href="transform.html#transform">5</a>).</p>
+metros_2 =<span class="st"> </span>metros[-<span class="dv">5</span>]</code></pre></div>
+<p>The defined metropolitan areas suitable for bike shops are still missing a name. A reverse geocoding approach can settle this problem. Given a coordinate, reverse geocoding finds the corresponding address. Consequently, extracting the centroid coordinate of each metropolitan area can serve as an input for a reverse geocoding API. The <strong>ggmap</strong> package makes use of the one provided by Google.<a href="#fn34" class="footnoteRef" id="fnref34"><sup>34</sup></a> <code>ggmap::revgeocode()</code> only accepts geographical coordinates (latitude/longitude), therefore, the first requirement is to bring the metropolitan polygons into an appropriate coordinate reference system (chapter <a href="transform.html#transform">5</a>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># reverse geocoding to find out the names of the metropolitan areas</span>
 metros_wgs =<span class="st"> </span><span class="kw">st_transform</span>(metros_2, <span class="dv">4326</span>)
 coords =<span class="st"> </span><span class="kw">st_centroid</span>(metros_wgs) %&gt;%
-<span class="st">  </span>st_coordinates %&gt;%
+<span class="st">  </span><span class="kw">st_coordinates</span>() %&gt;%
 <span class="st">  </span><span class="kw">round</span>(., <span class="dv">4</span>)</code></pre></div>
-<p>Additionally, <code>ggmap::revgeocode()</code> only accepts one coordinate at a time, which is why we iterate over each coordinate of <code>coords</code> via a loop (<code>map_dfr()</code>). <code>map_dfr()</code> does exactly the same as <code>lapply()</code> except for returning a <code>data.frame</code> instead of a <code>list</code>.<a href="#fn34" class="footnoteRef" id="fnref34"><sup>34</sup></a> Sometimes, the reverse geocoding API of Google is unable to find an address returning <code>NA</code>. Often enough trying the same coordinate again, returns an address at the second or third attempt (see <code>while()-loop</code>). However, if three attempts have already failed, this is a good indication that the requested information is indeed unavailable. Since it is our interest to be a good cyberspace citizen, we try not to overburden the server with too many queries within a short amount of time. Instead we let the loop sleep between one and four seconds after each iteration before accessing the reverse geocoding API again.</p>
+<p>Additionally, <code>ggmap::revgeocode()</code> only accepts one coordinate at a time, which is why we iterate over each coordinate of <code>coords</code> via a loop (<code>map_dfr()</code>). <code>map_dfr()</code> does exactly the same as <code>lapply()</code> except for returning a <code>data.frame</code> instead of a <code>list</code>.<a href="#fn35" class="footnoteRef" id="fnref35"><sup>35</sup></a> Sometimes, the reverse geocoding API of Google is unable to find an address returning <code>NA</code>. Often enough trying the same coordinate again, returns an address at the second or third attempt (see <code>while()-loop</code>). However, if three attempts have already failed, this is a good indication that the requested information is indeed unavailable. Since it is our interest to be a good cyberspace citizen, we try not to overburden the server with too many queries within a short amount of time. Instead we let the loop sleep between one and four seconds after each iteration before accessing the reverse geocoding API again.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">metro_names =<span class="st"> </span><span class="kw">map_dfr</span>(<span class="dv">1</span>:<span class="kw">nrow</span>(coords), function(i) {
   add =<span class="st"> </span>ggmap::<span class="kw">revgeocode</span>(coords[i, ], <span class="dt">output =</span> <span class="st">&quot;more&quot;</span>)
   x =<span class="st"> </span><span class="dv">2</span>
@@ -603,23 +609,20 @@ coords =<span class="st"> </span><span class="kw">st_centroid</span>(metros_wgs)
   <span class="co"># return the result</span>
   add
 })</code></pre></div>
-<p>Choosing <code>more</code> as <code>revgeocode()</code>’s <code>output</code> option will give back a <code>data.frame</code> with several columns referring to the location including the address, locality and various administrative levels. Overall, we are satisfied with the <code>locality</code> column serving as metropolitan names (München, Nürnberg, Stuttgart, Frankfurt, Hamburg, Berlin, Leipzig) bar one exception, namely Velbert. Hence, we replace Velbert with the corresponding name in the <code>administrative_area_level_2</code> column, that is Düsseldorf (Fig. <a href="location.html#fig:metro-areas">7.2</a>). Umlauts like <code>ü</code> might lead to trouble further on, for example when determining the bounding box of a metropolitan area with <code>opq()</code> (see further below), which is why we replace them.</p>
+<p>Choosing <code>more</code> as <code>revgeocode()</code>’s <code>output</code> option will give back a <code>data.frame</code> with several columns referring to the location including the address, locality and various administrative levels. Overall, we are satisfied with the <code>locality</code> column serving as metropolitan names (München, Nürnberg, Stuttgart, Frankfurt, Hamburg, Berlin, Leipzig) apart from one exception, namely Velbert. Hence, we replace Velbert with the corresponding name in the <code>administrative_area_level_2</code> column, that is Düsseldorf (Fig. <a href="location.html#fig:metro-areas">7.2</a>). Umlauts like <code>ü</code> might lead to trouble further on, for example when determining the bounding box of a metropolitan area with <code>opq()</code> (see further below), which is why we replace them.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">metro_names =<span class="st"> </span>
 <span class="st">  </span>dplyr::<span class="kw">select</span>(metro_names, locality, administrative_area_level_2) %&gt;%
-<span class="st">  </span><span class="kw">mutate</span>(<span class="co"># replace Velbert</span>
-         <span class="dt">locality =</span> <span class="kw">ifelse</span>(locality ==<span class="st"> &quot;Velbert&quot;</span>, administrative_area_level_2, 
+<span class="st">  </span><span class="co"># replace Velbert and umlaut ü</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">locality =</span> <span class="kw">ifelse</span>(locality ==<span class="st"> &quot;Velbert&quot;</span>, administrative_area_level_2, 
                            locality),
-         <span class="co"># replace umlaut ü</span>
          <span class="dt">locality =</span> <span class="kw">gsub</span>(<span class="st">&quot;ü&quot;</span>, <span class="st">&quot;ue&quot;</span>, locality)) %&gt;%
-<span class="st">  </span>dplyr::<span class="kw">select</span>(locality) %&gt;%
-<span class="st">  </span>pull</code></pre></div>
+<span class="st">  </span><span class="kw">pull</span>(locality)</code></pre></div>
 </div>
-<div id="points-of-interest" class="section level2">
-<h2><span class="header-section-number">7.6</span> Points of interest</h2>
-<p>The <strong>osmdata</strong> package provides a fantastic and easy-to-use interface to download OSM data (see also section <a href="read-write.html#retrieving-data">6.2</a>). Instead of downloading all shops for the whole of Germany, we restrict the download to the defined metropolitan areas. This relieves the OSM server resources, reduces download time and above all only gives back the shop locations we are interested in. The <code>map()</code> loop, the <code>lapply()</code> equivalent of <strong>purrr</strong>, runs through all eight metropolitan names which subsequently define the bounding box in the <code>opq()</code> function (see section <a href="read-write.html#retrieving-data">6.2</a>). Alternatively, we could have provided the bounding box in the form of coordinates ourselves. Next, we indicate that we only would like to download <code>shop</code> features (see this <a href="http://wiki.openstreetmap.org/wiki/Map_Features">page</a> for a full list of OpenStreetMap map features). <code>osmdata_sf()</code> returns a list with several spatial objects (points, lines, polygons, etc.). Here, we will only keep the point objects. As with Google’s reverse geocode API, the OSM-download will once in a while not work at the first attempt. The <code>while</code>-loop increases the number of download trials to three. If then still no features can be downloaded, most likely there are none. Or it is an indication that another error has occurred before. For instance, the <code>opq()</code> function has retrieved a wrong bounding box.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(osmdata)
-shops =<span class="st"> </span><span class="kw">map</span>(metro_names, function(x) {
-  <span class="kw">message</span>(<span class="st">&quot;Downloading shops of:&quot;</span>, x, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
+<div id="points-of-interest" class="section level3">
+<h3><span class="header-section-number">7.3.3</span> Points of interest</h3>
+<p>The <strong>osmdata</strong> package provides a fantastic and easy-to-use interface to download OSM data (see also section <a href="read-write.html#retrieving-data">6.2</a>). Instead of downloading all shops for the whole of Germany, we restrict the download to the defined metropolitan areas. This relieves the OSM server resources, reduces download time and above all only gives back the shop locations we are interested in. The <code>map()</code> loop, the <code>lapply()</code> equivalent of <strong>purrr</strong>, runs through all eight metropolitan names which subsequently define the bounding box in the <code>opq()</code> function (see section <a href="read-write.html#retrieving-data">6.2</a>). Alternatively, we could have provided the bounding box in the form of coordinates ourselves. Next, we indicate that we only would like to download <code>shop</code> features (see this <a href="http://wiki.openstreetmap.org/wiki/Map_Features">page</a> for a full list of OpenStreetMap map features). <code>osmdata_sf()</code> returns a list with several spatial objects (points, lines, polygons, etc.). Here, we will only keep the point objects. As with Google’s reverse geocode API, the OSM-download will once in a while not work at the first attempt. The <code>while</code> loop increases the number of download trials to three. If then still no features can be downloaded, most likely there are none. Or it is an indication that another error has occurred before. For instance, the <code>opq()</code> function has retrieved a wrong bounding box.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">shop_download_osm =<span class="st"> </span>function(x){
+  <span class="kw">message</span>(<span class="st">&quot;Downloading shops of: &quot;</span>, x, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
   <span class="co"># give the server a bit time</span>
   <span class="kw">Sys.sleep</span>(<span class="kw">sample</span>(<span class="kw">seq</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="fl">0.1</span>), <span class="dv">1</span>))
   query =<span class="st"> </span><span class="kw">opq</span>(x) %&gt;%
@@ -631,31 +634,28 @@ shops =<span class="st"> </span><span class="kw">map</span>(metro_names, functio
     points =<span class="st"> </span><span class="kw">osmdata_sf</span>(query)
     iter =<span class="st"> </span>iter -<span class="st"> </span><span class="dv">1</span>
   }
-  points =<span class="st"> </span>points$osm_points
-  points =<span class="st"> </span><span class="kw">st_set_crs</span>(points, <span class="dv">4326</span>)
-  })</code></pre></div>
-<p>It is highly unlikely that there are no shops in any of our defined metropolitan areas. The following <code>if</code>-condition simply checks if there is at least one shop for each region. If not, we would try to download again the shops for this/these specific region/s.</p>
+  points =<span class="st"> </span><span class="kw">st_set_crs</span>(points$osm_points, <span class="dv">4326</span>)
+}
+shops =<span class="st"> </span><span class="kw">map</span>(metro_names, shop_download_osm)</code></pre></div>
+<p>It is highly unlikely that there are no shops in any of our defined metropolitan areas. The following <code>if</code> condition simply checks if there is at least one shop for each region. If not, we would try to download again the shops for this/these specific region/s.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># checking if we have downloaded shops for each metropolitan area</span>
-ind =<span class="st"> </span><span class="kw">sapply</span>(shops, nrow) ==<span class="st"> </span><span class="dv">0</span>
+ind =<span class="st"> </span><span class="kw">map</span>(shops, nrow) ==<span class="st"> </span><span class="dv">0</span>
 if (<span class="kw">any</span>(ind)) {
   <span class="kw">message</span>(<span class="st">&quot;There are/is still (a) metropolitan area/s without any features:</span><span class="ch">\n</span><span class="st">&quot;</span>,
-          <span class="kw">paste</span>(metro_names[ind], <span class="dt">collapse =</span> <span class="st">&quot;, &quot;</span>), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">Please fix!&quot;</span>)
+          <span class="kw">paste</span>(metro_names[ind], <span class="dt">collapse =</span> <span class="st">&quot;, &quot;</span>), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">Please fix it!&quot;</span>)
 }</code></pre></div>
-<p>To make sure that each list element (an <code>sf</code>- data frame) comes with the same columns, we only keep the <code>osm_id</code> and the <code>shop</code> columns with the help of another <code>map</code>-loop. This is not a given since OSM contributors are not equally meticulous when collecting data. Finally, we <code>rbind</code> all shops into one large <code>sf</code>-object.</p>
+<p>To make sure that each list element (an <code>sf</code>- data frame) comes with the same columns, we only keep the <code>osm_id</code> and the <code>shop</code> columns with the help of another <code>map</code> loop. This is not a given since OSM contributors are not equally meticulous when collecting data. Finally, we <code>rbind</code> all shops into one large <code>sf</code> object.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># select only specific columns and rbind all list elements</span>
 shops =<span class="st"> </span><span class="kw">map</span>(shops, dplyr::select, osm_id, shop) %&gt;%
 <span class="st">  </span><span class="kw">reduce</span>(rbind)</code></pre></div>
 <p>It would have been easier to simply use <code>map_dfr()</code>. Unfortunately, so far it does not work in harmony with <code>sf</code> objects but it will most likely in the future.</p>
-<p>The only thing left to do is to convert the spatial point object into a raster. The <code>rasterize()</code> function does exactly this. As input it expects an <code>sp</code> vector object, here we use the spatial point object <code>shops</code>, and a raster object, here we use the population raster whose original values have been replaced by <code>NA</code>’s. A function defines how the values from the spatial vector object are transferred to the raster object. <code>count</code> simply counts the number of spatial objects, here the shop points, falling into one raster cell, and returns this value as the output cell value. Hence, we end up with a shop density, namely the number of shops per square kilometer. But one has too be careful: had we used the <code>shop</code> instead of the <code>osm_id</code> column, we would have retrieved fewer shops per grid cell. This is because the <code>shop</code> column contains <code>NA</code> values, which the <code>count()</code> function omits when rasterizing vector objects. Naturally, the projection of the input raster and the input vector object have to match which is why we first have to reproject our shops to the CRS of the raster object.</p>
+<p>The only thing left to do is to convert the spatial point object into a raster. The <code>rasterize()</code> function does exactly this. As input it expects an <code>sp</code> vector object (here we use the spatial point object <code>shops</code>), and a raster object (here we use the population raster whose original values have been replaced by <code>NA</code>’s). A function defines how the values from the spatial vector object are transferred to the raster object. <code>count</code> simply counts the number of spatial objects falling into one raster cell, in this example the shop points, and returns this value as the output cell value. Hence, we end up with a shop density, namely the number of shops per square kilometer. But one has too be careful: had we used the <code>shop</code> instead of the <code>osm_id</code> column, we would have retrieved fewer shops per grid cell. This is because the <code>shop</code> column contains <code>NA</code> values, which the <code>count()</code> function omits when rasterizing vector objects. Naturally, the projection of the input raster and the input vector object have to match which is why we first have to reproject our shops to the CRS of the raster object.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">shops =<span class="st"> </span><span class="kw">st_transform</span>(shops, <span class="kw">proj4string</span>(input$pop))
 shops =<span class="st"> </span><span class="kw">as</span>(shops, <span class="st">&quot;Spatial&quot;</span>)
 <span class="co"># create poi raster</span>
-poi =<span class="st"> </span>input$pop
-poi[] =<span class="st"> </span><span class="ot">NA</span>
-poi =<span class="st"> </span><span class="kw">rasterize</span>(<span class="dt">x =</span> shops, <span class="dt">y =</span> poi, <span class="dt">field =</span> <span class="st">&quot;osm_id&quot;</span>, <span class="dt">fun =</span> <span class="st">&quot;count&quot;</span>)</code></pre></div>
-<p>As with the other rasters (population, women, mean age, household size) we would like to classify the <code>poi</code> raster into four classes (see section <a href="location.html#create-census-rasters">7.4</a>). Defining class intervals is an arbitrary undertaking to a certain degree . One can use equal breaks, quantile breaks, fixed values and many more. Here, we choose the Fisher-Jenks natural breaks approach which tries to minimize the within-class variance. Naturally, the identified breaks serve as input for the reclassification matrix.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(classInt)
-<span class="co"># construct reclassification matrix</span>
+poi =<span class="st"> </span><span class="kw">rasterize</span>(<span class="dt">x =</span> shops, <span class="dt">y =</span> input$pop, <span class="dt">field =</span> <span class="st">&quot;osm_id&quot;</span>, <span class="dt">fun =</span> <span class="st">&quot;count&quot;</span>)</code></pre></div>
+<p>As with the other rasters (population, women, mean age, household size) we would like to classify the <code>poi</code> raster into four classes (see section <a href="location.html#create-census-rasters">7.3.1</a>). Defining class intervals is an arbitrary undertaking to a certain degree. One can use equal breaks, quantile breaks, fixed values and many more. Here, we choose the Fisher-Jenks natural breaks approach which tries to minimize the within-class variance. Naturally, the identified breaks serve as input for the reclassification matrix.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># construct reclassification matrix</span>
 int =<span class="st"> </span>classInt::<span class="kw">classIntervals</span>(<span class="kw">values</span>(poi), <span class="dt">n =</span> <span class="dv">3</span>, <span class="dt">style =</span> <span class="st">&quot;fisher&quot;</span>)
 int =<span class="st"> </span><span class="kw">round</span>(int$brks)
 rcl_poi =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(int[<span class="dv">1</span>], <span class="kw">rep</span>(int[-<span class="kw">c</span>(<span class="dv">1</span>, <span class="kw">length</span>(int))], <span class="dt">each =</span> <span class="dv">2</span>), 
@@ -665,9 +665,9 @@ rcl_poi =<span class="st"> </span><span class="kw">cbind</span>(rcl_poi, <span c
 poi =<span class="st"> </span><span class="kw">reclassify</span>(poi, <span class="dt">rcl =</span> rcl_poi, <span class="dt">right =</span> <span class="ot">NA</span>) 
 <span class="kw">names</span>(poi) =<span class="st"> &quot;poi&quot;</span></code></pre></div>
 </div>
-<div id="identifying-suitable-locations" class="section level2">
-<h2><span class="header-section-number">7.7</span> Identifying suitable locations</h2>
-<p>As usual in (geo-)data science, the data retrieval and preprocessing represented the lion’s share of the overall workload. The final workstep, the calculation of a final score by summing up all prepared rasters, is a simple one-liner. Before doing that, we add the POI raster to and delete the population raster from the raster stack. The reasoning for the latter is twofold. First of all, we already have delineated metropolitan areas, that is areas where the population density is above average compared to the rest of Germany. Secondly, though it is advantageous to have many potential customers within a specific catchment area, the sheer number alone might not actually represent the desired target group. For instance, residential tower blocks are areas with a high population density but not necessarily with a high purchasing power for luxurious bike components.</p>
+<div id="identifying-suitable-locations" class="section level3">
+<h3><span class="header-section-number">7.3.4</span> Identifying suitable locations</h3>
+<p>As usual in (geo-)data science, the data retrieval and preprocessing represented the lion’s share of the overall workload. The final step, the calculation of a final score by summing up all prepared rasters, is a simple one-liner. Before doing that, we add the POI raster to and delete the population raster from the raster stack. The reasoning for the latter is twofold. First of all, we already have delineated metropolitan areas, that is areas where the population density is above average compared to the rest of Germany. Secondly, though it is advantageous to have many potential customers within a specific catchment area, the sheer number alone might not actually represent the desired target group. For instance, residential tower blocks are areas with a high population density but not necessarily with a high purchasing power for luxurious bike components.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># add poi raster</span>
 reclass =<span class="st"> </span><span class="kw">addLayer</span>(reclass, poi)
 <span class="co"># delete population raster</span>
@@ -683,13 +683,14 @@ Figure 7.3: Suitable areas (i.e., raster cells with a score &gt; 10) in accordan
 </p>
 </div>
 </div>
+</div>
 <div id="discussion-and-next-steps" class="section level2">
-<h2><span class="header-section-number">7.8</span> Discussion and next steps</h2>
-<p>The here presented approach is a typical example of the normative usage of a GIS <span class="citation">(Longley <a href="#ref-longley_geographic_2015">2015</a>)</span>. We combined survey data with expert-based knowledge and assumptions (definition of metropolitan areas, defining class intervals, definition of a final score threshold). It should be clear that this approach is not suitable for scientific knowledge advancement but is a very applied way of information extraction. This is to say, we can only suspect based on common sense that we have identified areas suitable for bike shops. However, we have no proof that this is in fact the case.</p>
+<h2><span class="header-section-number">7.4</span> Discussion and next steps</h2>
+<p>The presented approach is a typical example of the normative usage of a GIS <span class="citation">(Longley <a href="#ref-longley_geographic_2015">2015</a>)</span>. We combined survey data with expert-based knowledge and assumptions (definition of metropolitan areas, defining class intervals, definition of a final score threshold). It should be clear that this approach is not suitable for scientific knowledge advancement but is a very applied way of information extraction. This is to say, we can only suspect based on common sense that we have identified areas suitable for bike shops. However, we have no proof that this is in fact the case.</p>
 <p>A few other things remained unconsidered but might improve the analysis:</p>
 <ul>
 <li>We used equal weights when calculating the final scores. But is, for example, the household size as important as the portion of men or the mean age?</li>
-<li>We used all points of interest. Maybe it would be wiser to use only those which might be interesting for bike shops such as Do-it-yourself, hardware, bicycle, fishing, hunting, motorcycles, outdoor, sports shops, etc. (see all the other columns of the osmdata simple features and <a href="http://wiki.openstreetmap.org/wiki/Map_Features#Shop">Map_Features#Shop</a>).</li>
+<li>We used all points of interest. Maybe it would be wiser to use only those which might be interesting for bike shops such as do-it-yourself, hardware, bicycle, fishing, hunting, motorcycles, outdoor, sports shops, etc. (see all the other columns of the osmdata simple features and <a href="http://wiki.openstreetmap.org/wiki/Map_Features#Shop">Map_Features#Shop</a>).</li>
 <li>Maybe data at a better resolution changes and improves the output. For example, there is also population data at a finer resolution (100 m; see exercises).</li>
 <li>We have used only a limited set of variables. The <a href="http://inspire-geoportal.ec.europa.eu/discovery/">INSPIRE geoportal</a> might contain much more data of possible interest to our analysis. The bike paths density might be another interesting variable as well as the purchasing power or even better the retail purchasing power for bikes.</li>
 <li>Interactions remained unconsidered such as a possible interaction between the portion of men and single households. However, to find out about such an interaction we would need customer data.</li>
@@ -699,15 +700,15 @@ Figure 7.3: Suitable areas (i.e., raster cells with a score &gt; 10) in accordan
 <ul>
 <li>Find an optimal location based on number of inhabitants within a specific catchment area. For example, the shop should be reachable for as much people as possible within 15 minutes of traveling bike distance (catchment area routing). Thereby, we should account for the fact that the farther away the people are from the shop, the more unlikely it becomes that they actually visit it (distance decay function).</li>
 <li>Also it would be a good idea to take into account competitors. That is, if there already is a bike shop in the vicinity of the chosen location, one has to distribute possible customers (or sales potential) between the competitors <span class="citation">(Huff <a href="#ref-huff_probabilistic_1963">1963</a>; Wieland <a href="#ref-wieland_market_2017">2017</a>)</span>.</li>
-<li>We need to find suitable and affordable real estate (accessible, parking spots, frequency of passers-by, big windows, friendly staff, etc.).</li>
+<li>We need to find suitable and affordable real estate (accessible, parking spots, frequency of passers-by, big windows, etc.).</li>
 </ul>
 </div>
 <div id="exercises-5" class="section level2">
-<h2><span class="header-section-number">7.9</span> Exercises</h2>
+<h2><span class="header-section-number">7.5</span> Exercises</h2>
 <ol style="list-style-type: decimal">
 <li>Download the csv file containing inhabitant information for a 100 m cell resolution (<a href="https://www.zensus2011.de/SharedDocs/Downloads/DE/Pressemitteilung/DemografischeGrunddaten/csv_Bevoelkerung_100m_Gitter.zip?__blob=publicationFile&amp;v=3" class="uri">https://www.zensus2011.de/SharedDocs/Downloads/DE/Pressemitteilung/DemografischeGrunddaten/csv_Bevoelkerung_100m_Gitter.zip?__blob=publicationFile&amp;v=3</a>). Please note that the unzipped file has a size of 1.23 GB. To read it into R you can use <code>readr::read_csv</code>. This takes 30 seconds on my machine (16 GB RAM) <code>data.table::fread()</code> might be even faster, and returns an object of class <code>data.table()</code>. Use <code>as.tibble()</code> to convert it into a tibble. Build an inhabitant raster, aggregate it to a cell resolution of 1 km, and compare the difference with the inhabitant raster (<code>inh</code>) we have created using class mean values.</li>
 <li>In the text we have deleted one polygon of the <code>metros</code> object (polygon number 5) since it only touches the border of another polygon. Recreate the <code>metros</code> object and instead of deleting polygon number 5, make it part of the Cologne/Düsseldorf metropolitan region (hint: create a column named region_id, add polygon number 5 to the Cologne/Düsseldorf area and dissolve).</li>
-<li>Suppose our bike shop predominantly sold E-bikes to older people. Change the age raster accordingly, repeat the remaining analyses and compare the changes with our original result.</li>
+<li>Suppose our bike shop predominantly sold electric bikes to older people. Change the age raster accordingly, repeat the remaining analyses and compare the changes with our original result.</li>
 </ol>
 
 </div>
@@ -733,8 +734,9 @@ Figure 7.3: Suitable areas (i.e., raster cells with a score &gt; 10) in accordan
 <div class="footnotes">
 <hr />
 <ol start="33">
-<li id="fn33"><p>Note that Google allows each user to access its services on a free basis for a maximum of 2500 queries a day.<a href="location.html#fnref33">↩</a></p></li>
-<li id="fn34"><p>To learn more about the split-apply-combine strategy for data analysis, we refer the reader to <span class="citation">Wickham (<a href="#ref-wickham_split-apply-combine_2011">2011</a>)</span>.<a href="location.html#fnref34">↩</a></p></li>
+<li id="fn33"><p>You can explore the introduced error in more detail in the exercises.<a href="location.html#fnref33">↩</a></p></li>
+<li id="fn34"><p>Note that Google allows each user to access its services on a free basis for a maximum of 2500 queries a day.<a href="location.html#fnref34">↩</a></p></li>
+<li id="fn35"><p>To learn more about the split-apply-combine strategy for data analysis, we refer the reader to <span class="citation">Wickham (<a href="#ref-wickham_split-apply-combine_2011">2011</a>)</span>.<a href="location.html#fnref35">↩</a></p></li>
 </ol>
 </div>
             </section>
