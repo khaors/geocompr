@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2017-11-23">
+<meta name="date" content="2017-11-24">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -682,8 +682,8 @@ reclass =<span class="st"> </span><span class="kw">dropLayer</span>(reclass, <sp
 result =<span class="st"> </span><span class="kw">sum</span>(reclass)</code></pre></div>
 <p>The result is a score summing up the values of all input rasters. For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure <a href="location.html#fig:bikeshop-berlin">7.3</a>).</p>
 <div class="figure" style="text-align: center"><span id="fig:bikeshop-berlin"></span>
-<iframe src="figures/08_bikeshops_berlin.html" width="576" height="400px">
-</iframe>
+<div id="htmlwidget-ec897849c5c50a6f7846" style="width:576px;height:355.968px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ec897849c5c50a6f7846">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addRasterImage","args":["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAAOUlEQVRYhe3SsQ0AIAhFQYZl/xWwVUsLg+auoX35IQIAgGdk1HLbaBfETRnV5zf3gDmOE9YDAOB3A6YHDd+xCWEEAAAAAElFTkSuQmCC",[[52.696600856383,13.0820026147986],[52.3210740877061,13.6981591380976]],0.8,null,null,null]}],"limits":{"lat":[52.3210740877061,52.696600856383],"lng":[13.0820026147986,13.6981591380976]}},"evals":[],"jsHooks":[]}</script>
 <p class="caption">
 Figure 7.3: Suitable areas (i.e., raster cells with a score &gt; 10) in accordance with our hypothetical survey for bike stores in Berlin.
 </p>
