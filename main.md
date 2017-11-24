@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserved8af02e7122aaf41
+preserve37f33addcd37a8ac
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3096,7 +3096,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve2fa7245cb9cb6b3e
+preservee3cca6f25708f21c
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5373,15 +5373,6 @@ metro_names = map_dfr(1:nrow(coords), function(i) {
   # return the result
   add
 })
-#> Information from URL : http://maps.googleapis.com/maps/api/geocode/json?latlng=48.1397,11.6117&sensor=false
-#> Information from URL : http://maps.googleapis.com/maps/api/geocode/json?latlng=49.4055,11.1021&sensor=false
-#> Information from URL : http://maps.googleapis.com/maps/api/geocode/json?latlng=48.7784,9.1839&sensor=false
-#> Information from URL : http://maps.googleapis.com/maps/api/geocode/json?latlng=50.1232,8.7415&sensor=false
-#> Information from URL : http://maps.googleapis.com/maps/api/geocode/json?latlng=50.8146,7.1615&sensor=false
-#> Information from URL : http://maps.googleapis.com/maps/api/geocode/json?latlng=53.5457,10&sensor=false
-#> Information from URL : http://maps.googleapis.com/maps/api/geocode/json?latlng=52.5091,13.3889&sensor=false
-#> Information from URL : http://maps.googleapis.com/maps/api/geocode/json?latlng=51.3662,12.2978&sensor=false
-#> Information from URL : http://maps.googleapis.com/maps/api/geocode/json?latlng=51.3289,7.0227&sensor=false
 ```
 
 Choosing `more` as `revgeocode()`'s `output` option will give back a `data.frame` with several columns referring to the location including the address, locality and various administrative levels.
@@ -5535,7 +5526,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservea9f0c93dd3e559f1
+preserve4d60b46bf5fdc194
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 

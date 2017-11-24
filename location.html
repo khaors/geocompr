@@ -615,16 +615,7 @@ coords =<span class="st"> </span><span class="kw">st_centroid</span>(metros_wgs)
   <span class="kw">Sys.sleep</span>(<span class="kw">sample</span>(<span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="fl">0.1</span>), <span class="dv">1</span>))
   <span class="co"># return the result</span>
   add
-})
-<span class="co">#&gt; Information from URL : http://maps.googleapis.com/maps/api/geocode/json?latlng=48.1397,11.6117&amp;sensor=false</span>
-<span class="co">#&gt; Information from URL : http://maps.googleapis.com/maps/api/geocode/json?latlng=49.4055,11.1021&amp;sensor=false</span>
-<span class="co">#&gt; Information from URL : http://maps.googleapis.com/maps/api/geocode/json?latlng=48.7784,9.1839&amp;sensor=false</span>
-<span class="co">#&gt; Information from URL : http://maps.googleapis.com/maps/api/geocode/json?latlng=50.1232,8.7415&amp;sensor=false</span>
-<span class="co">#&gt; Information from URL : http://maps.googleapis.com/maps/api/geocode/json?latlng=50.8146,7.1615&amp;sensor=false</span>
-<span class="co">#&gt; Information from URL : http://maps.googleapis.com/maps/api/geocode/json?latlng=53.5457,10&amp;sensor=false</span>
-<span class="co">#&gt; Information from URL : http://maps.googleapis.com/maps/api/geocode/json?latlng=52.5091,13.3889&amp;sensor=false</span>
-<span class="co">#&gt; Information from URL : http://maps.googleapis.com/maps/api/geocode/json?latlng=51.3662,12.2978&amp;sensor=false</span>
-<span class="co">#&gt; Information from URL : http://maps.googleapis.com/maps/api/geocode/json?latlng=51.3289,7.0227&amp;sensor=false</span></code></pre></div>
+})</code></pre></div>
 <p>Choosing <code>more</code> as <code>revgeocode()</code>’s <code>output</code> option will give back a <code>data.frame</code> with several columns referring to the location including the address, locality and various administrative levels. Overall, we are satisfied with the <code>locality</code> column serving as metropolitan names (München, Nürnberg, Stuttgart, Frankfurt, Hamburg, Berlin, Leipzig) apart from one exception, namely Velbert. Hence, we replace Velbert with the corresponding name in the <code>administrative_area_level_2</code> column, that is Düsseldorf (Fig. <a href="location.html#fig:metro-areas">7.2</a>). Umlauts like <code>ü</code> might lead to trouble further on, for example when determining the bounding box of a metropolitan area with <code>opq()</code> (see further below), which is why we replace them.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">metro_names =<span class="st"> </span>
 <span class="st">  </span>dplyr::<span class="kw">select</span>(metro_names, locality, administrative_area_level_2) %&gt;%
