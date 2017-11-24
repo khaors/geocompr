@@ -238,7 +238,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7" data-path="location.html"><a href="location.html"><i class="fa fa-check"></i><b>7</b> Location analysis</a><ul>
 <li class="chapter" data-level="7.1" data-path="location.html"><a href="location.html#prerequisites-5"><i class="fa fa-check"></i><b>7.1</b> Prerequisites</a></li>
 <li class="chapter" data-level="7.2" data-path="location.html"><a href="location.html#introduction-4"><i class="fa fa-check"></i><b>7.2</b> Introduction</a></li>
-<li class="chapter" data-level="7.3" data-path="location.html"><a href="location.html#a-case-study"><i class="fa fa-check"></i><b>7.3</b> A case study</a></li>
+<li class="chapter" data-level="7.3" data-path="location.html"><a href="location.html#case-study"><i class="fa fa-check"></i><b>7.3</b> Case study</a></li>
 <li class="chapter" data-level="7.4" data-path="location.html"><a href="location.html#create-census-rasters"><i class="fa fa-check"></i><b>7.4</b> Create census rasters</a></li>
 <li class="chapter" data-level="7.5" data-path="location.html"><a href="location.html#define-metropolitan-areas"><i class="fa fa-check"></i><b>7.5</b> Define metropolitan areas</a></li>
 <li class="chapter" data-level="7.6" data-path="location.html"><a href="location.html#points-of-interest"><i class="fa fa-check"></i><b>7.6</b> Points of interest</a></li>
@@ -246,13 +246,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7.8" data-path="location.html"><a href="location.html#discussion-and-next-steps"><i class="fa fa-check"></i><b>7.8</b> Discussion and next steps</a></li>
 <li class="chapter" data-level="7.9" data-path="location.html"><a href="location.html#exercises-5"><i class="fa fa-check"></i><b>7.9</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="predictive-mapping-of-species-distributions.html"><a href="predictive-mapping-of-species-distributions.html"><i class="fa fa-check"></i><b>8</b> Predictive mapping of species distributions</a><ul>
-<li class="chapter" data-level="" data-path="predictive-mapping-of-species-distributions.html"><a href="predictive-mapping-of-species-distributions.html#prerequisites-6"><i class="fa fa-check"></i>Prerequisites</a></li>
-<li class="chapter" data-level="8.1" data-path="predictive-mapping-of-species-distributions.html"><a href="predictive-mapping-of-species-distributions.html#introduction-5"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
-<li class="chapter" data-level="8.2" data-path="predictive-mapping-of-species-distributions.html"><a href="predictive-mapping-of-species-distributions.html#background"><i class="fa fa-check"></i><b>8.2</b> Background</a></li>
-<li class="chapter" data-level="8.3" data-path="predictive-mapping-of-species-distributions.html"><a href="predictive-mapping-of-species-distributions.html#reducing-dimensionality"><i class="fa fa-check"></i><b>8.3</b> Reducing dimensionality</a></li>
-</ul></li>
-<li class="chapter" data-level="9" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>9</b> References</a></li>
+<li class="chapter" data-level="8" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>8</b> References</a></li>
 <li class="divider"></li>
 <li><a href="http://robinlovelace.net/">Robin Lovelace</a></li>
 <li><a href="https://nowosad.github.io/">Jakub Nowosad</a></li>
@@ -743,7 +737,7 @@ elev &gt;<span class="st"> </span><span class="dv">5</span></code></pre></div>
 NDVI&amp;= \frac{\text{NIR} - \text{Red}}{\text{NIR} + \text{Red}}\\
 \end{split}
 \]</span> where NIR = near infrared channel Red = red channel</p>
-<p>Predictive mapping is another interesting application of local raster operations. The response variable correspond to measured or observed points in space, for example, species richness, the presence of landslides, tree disease or crop yield. Consequently, we can easily retrieve space- or airborne predictor variables from various rasters (elevation, pH, precipitation, temperature, landcover, soil class, etc.). Subsequently, we model our response as a function of our predictors using <code>lm</code>, <code>glm</code>, <code>gam</code> or a machine-learning technique. To make a spatial prediction, all we have to do, is to apply the estimated coefficients to the predictor rasters, and summing up the resulting output rasters (<!--Chapter ??; -->see also <span class="citation">Muenchow, Bräuning, et al. (<a href="#ref-muenchow_predictive_2013">2013</a>)</span>). <!-- add reference to chapter ecological modeling --></p>
+<p>Predictive mapping is another interesting application of local raster operations. The response variable correspond to measured or observed points in space, for example, species richness, the presence of landslides, tree disease or crop yield. Consequently, we can easily retrieve space- or airborne predictor variables from various rasters (elevation, pH, precipitation, temperature, landcover, soil class, etc.). Subsequently, we model our response as a function of our predictors using <code>lm</code>, <code>glm</code>, <code>gam</code> or a machine-learning technique. To make a spatial prediction, all we have to do, is to apply the estimated coefficients to the predictor rasters, and summing up the resulting output rasters (<!--Chapter ??; -->see also <span class="citation">Muenchow et al. (<a href="#ref-muenchow_predictive_2013">2013</a>)</span>). <!-- add reference to chapter ecological modeling --></p>
 </div>
 <div id="focal-operations" class="section level3">
 <h3><span class="header-section-number">4.3.4</span> Focal operations</h3>

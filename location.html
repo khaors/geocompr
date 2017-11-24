@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="read-write.html">
-<link rel="next" href="predictive-mapping-of-species-distributions.html">
+<link rel="next" href="references.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -238,7 +238,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7" data-path="location.html"><a href="location.html"><i class="fa fa-check"></i><b>7</b> Location analysis</a><ul>
 <li class="chapter" data-level="7.1" data-path="location.html"><a href="location.html#prerequisites-5"><i class="fa fa-check"></i><b>7.1</b> Prerequisites</a></li>
 <li class="chapter" data-level="7.2" data-path="location.html"><a href="location.html#introduction-4"><i class="fa fa-check"></i><b>7.2</b> Introduction</a></li>
-<li class="chapter" data-level="7.3" data-path="location.html"><a href="location.html#a-case-study"><i class="fa fa-check"></i><b>7.3</b> A case study</a></li>
+<li class="chapter" data-level="7.3" data-path="location.html"><a href="location.html#case-study"><i class="fa fa-check"></i><b>7.3</b> Case study</a></li>
 <li class="chapter" data-level="7.4" data-path="location.html"><a href="location.html#create-census-rasters"><i class="fa fa-check"></i><b>7.4</b> Create census rasters</a></li>
 <li class="chapter" data-level="7.5" data-path="location.html"><a href="location.html#define-metropolitan-areas"><i class="fa fa-check"></i><b>7.5</b> Define metropolitan areas</a></li>
 <li class="chapter" data-level="7.6" data-path="location.html"><a href="location.html#points-of-interest"><i class="fa fa-check"></i><b>7.6</b> Points of interest</a></li>
@@ -246,13 +246,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7.8" data-path="location.html"><a href="location.html#discussion-and-next-steps"><i class="fa fa-check"></i><b>7.8</b> Discussion and next steps</a></li>
 <li class="chapter" data-level="7.9" data-path="location.html"><a href="location.html#exercises-5"><i class="fa fa-check"></i><b>7.9</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="predictive-mapping-of-species-distributions.html"><a href="predictive-mapping-of-species-distributions.html"><i class="fa fa-check"></i><b>8</b> Predictive mapping of species distributions</a><ul>
-<li class="chapter" data-level="" data-path="predictive-mapping-of-species-distributions.html"><a href="predictive-mapping-of-species-distributions.html#prerequisites-6"><i class="fa fa-check"></i>Prerequisites</a></li>
-<li class="chapter" data-level="8.1" data-path="predictive-mapping-of-species-distributions.html"><a href="predictive-mapping-of-species-distributions.html#introduction-5"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
-<li class="chapter" data-level="8.2" data-path="predictive-mapping-of-species-distributions.html"><a href="predictive-mapping-of-species-distributions.html#background"><i class="fa fa-check"></i><b>8.2</b> Background</a></li>
-<li class="chapter" data-level="8.3" data-path="predictive-mapping-of-species-distributions.html"><a href="predictive-mapping-of-species-distributions.html#reducing-dimensionality"><i class="fa fa-check"></i><b>8.3</b> Reducing dimensionality</a></li>
-</ul></li>
-<li class="chapter" data-level="9" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>9</b> References</a></li>
+<li class="chapter" data-level="8" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>8</b> References</a></li>
 <li class="divider"></li>
 <li><a href="http://robinlovelace.net/">Robin Lovelace</a></li>
 <li><a href="https://nowosad.github.io/">Jakub Nowosad</a></li>
@@ -296,7 +290,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="introduction-4" class="section level2">
 <h2><span class="header-section-number">7.2</span> Introduction</h2>
 <p>This chapter demonstrates how the skills learned in the previous chapters can be applied to location analysis. Geomarketing (also called location analysis) is a broad field of research and (largely) commercial application, the aim of which is usually to decide the optimal location for new services. A typical example is where to locate a new shop: there are typically hundreds of possible locations in a city and location analysis can be used to decide where the shop will attract most visitors and, ultimately, make most profit. There are also many non-commercial applications that can use the technique for public benefit. A good example is where to locate new health services <span class="citation">(Tomintz, Clarke, and Rigby <a href="#ref-tomintz_geography_2008">2008</a>)</span>.</p>
-<p>Geomarketing is focused on people and where they are likely to spend their time and other resources. However, it has several links with ecology: animals and plants have needs which can be best met in optimal locations based on variables that change over space (called gradients in the ecological literature — see e.g., <span class="citation">(<span class="citeproc-not-found" data-reference-id="Muenchow_review_2017"><strong>???</strong></span>)</span> and chapter xx). <!-- add reference!! --></p>
+<p>Geomarketing is focused on people and where they are likely to spend their time and other resources. However, it has several links with ecology: animals and plants have needs which can be best met in optimal locations based on variables that change over space (called gradients in the ecological literature — see e.g., <span class="citation">Muenchow et al. (<a href="#ref-muenchow_review_2017">2017</a>)</span> and chapter xx). <!-- add reference!! --></p>
 <p>Polar bears, for example, prefer northern latitudes where temperatures are lower and food (seals and sea lions) is plentiful. Similarly, humans tend to congregate certain places, creating economic niches (and high land prices) analogous to the ecological niche of the Arctic. The main task of geomarketing is to find out where such ‘optimal locations’ are for specific services, based on available data. Typical research questions in geomarketing include:</p>
 <ul>
 <li>Where are the service users (or clients), specific target groups and competitors?</li>
@@ -306,15 +300,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul>
 <p>To demonstrate how geocomputation can answer these questions the next section creates a scenario where geomarketing is vital to make informed real-world decisions.</p>
 </div>
-<div id="a-case-study" class="section level2">
-<h2><span class="header-section-number">7.3</span> A case study</h2>
+<div id="case-study" class="section level2">
+<h2><span class="header-section-number">7.3</span> Case study</h2>
 <p>Imagine your are launching a cycling company and would like to open shops across urban areas of Germany. Survey data reveals the target audience: males between 20-40 years old who live alone or with just one person (single households, not families), and there is sufficient capital to open a number of shops. But where should they be placed?</p>
 <p>Many store location analysis consultancies have developed to help people answer such questions, and they would happily charge high rates for their expertise. It is testament to the rate of technological development that this questions can now be answered by informed citizens using free and open source software. The here presented analysis will demonstrate a number of geo-computational techniques learned during the first chapters of the book. Additionally, this chapter will demonstrate common steps in geomarketing to find suitable locations for a specific shop type (here: cycle stores). The analysis includes following steps:</p>
 <ul>
 <li>The retrieval of socio-demographic data by downloading download gridded German census data (section <a href="location.html#create-census-rasters">7.4</a>).</li>
 <li>The identification of areas of high population density (metropolitan areas; section <a href="location.html#define-metropolitan-areas">7.5</a>).</li>
 <li>The download of detailed geographic data (OSM data) for these areas (section <a href="location.html#points-of-interest">7.6</a>).</li>
-<li>Making input rasters comparable by means of reclassifaction, and using map algebra to compute a final score where higher scores indicate more favorable locations (section (identifying-suitable-locations)).</li>
+<li>Making input rasters comparable by means of reclassifaction, and using map algebra to compute a final score where higher scores indicate more favorable locations (section <a href="location.html#identifying-suitable-locations">7.7</a>).</li>
 </ul>
 <p>Note that although we have applied these steps to a specific case study, they could be generalized to many scenarios of store location or public service provision.</p>
 </div>
@@ -485,7 +479,7 @@ Figure 7.1: Gridded German census data of 2011. See Table <a href="location.html
 </p>
 </div>
 <!-- find out about new lines in headings + blank cells-->
-<p>We <code>reclassify()</code> the ordinal-scaled rasters in accordance with our survey (see section <a href="#use-case"><strong>??</strong></a>). In the case of the population data we convert the classes into a numeric data type using class means. This means we use 127 for class 1 (ranging from 3 to 250 inhabitants), 375 for class 2 (ranging from 250 to 500 inhabitants), etc. (Table <a href="location.html#tab:census-desc">7.1</a>). We arbitrarily chose 8000 inhabitants for class 6 since it represents cells where more than 8000 persons live. Of course, this is only a simple approximation of the true population number (in the exercises you can explore the introduced error in more detail), however, for our purpose of delineating metropolitan areas the level of detail is good enough (see next section). By contrast, we convert the remaining input rasters into weight rasters whereas the highest weights are in correspondence with our survey. For instance, the women class 1 (0-40%) receives a weight of 3 since our clientele is predominantly male. Equally, the mean age class containing the youngest people receives the highest weight as well as the single households class.</p>
+<p>We <code>reclassify()</code> the ordinal-scaled rasters in accordance with our survey (see section <a href="location.html#case-study">7.3</a>). In the case of the population data we convert the classes into a numeric data type using class means. This means we use 127 for class 1 (ranging from 3 to 250 inhabitants), 375 for class 2 (ranging from 250 to 500 inhabitants), etc. (Table <a href="location.html#tab:census-desc">7.1</a>). We arbitrarily chose 8000 inhabitants for class 6 since it represents cells where more than 8000 persons live. Of course, this is only a simple approximation of the true population number (in the exercises you can explore the introduced error in more detail), however, for our purpose of delineating metropolitan areas the level of detail is good enough (see next section). By contrast, we convert the remaining input rasters into weight rasters whereas the highest weights are in correspondence with our survey. For instance, the women class 1 (0-40%) receives a weight of 3 since our clientele is predominantly male. Equally, the mean age class containing the youngest people receives the highest weight as well as the single households class.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rcl_pop =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">127</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">375</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">1250</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">3000</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">6000</span>,
                    <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">8000</span>), <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)
 rcl_women =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">0</span>), 
@@ -723,6 +717,9 @@ Figure 7.3: Suitable areas (i.e., raster cells with a score &gt; 10) in accordan
 <div id="ref-tomintz_geography_2008">
 <p>Tomintz, Melanie N M.N., Graham P Clarke, and Janette E J.E. Rigby. 2008. “The Geography of Smoking in Leeds: Estimating Individual Smoking Rates and the Implications for the Location of Stop Smoking Services.” <em>Area</em> 40 (3): 341–53. <a href="http://onlinelibrary.wiley.com/doi/10.1111/j.1475-4762.2008.00837.x/full" class="uri">http://onlinelibrary.wiley.com/doi/10.1111/j.1475-4762.2008.00837.x/full</a>.</p>
 </div>
+<div id="ref-muenchow_review_2017">
+<p>Muenchow, Jannes, Petra Dieker, Jürgen Kluge, Michael Kessler, and Henrik von Wehrden. 2017. “A Review of Ecological Gradient Research in the Tropics: Identifying Research Gaps, Future Directions, and Conservation Priorities.” <em>Biodiversity and Conservation</em>, November. doi:<a href="https://doi.org/10.1007/s10531-017-1465-y">10.1007/s10531-017-1465-y</a>.</p>
+</div>
 <div id="ref-longley_geographic_2015">
 <p>Longley, Paul. 2015. <em>Geographic Information Science &amp; Systems</em>. Fourth edition. Hoboken, NJ: Wiley.</p>
 </div>
@@ -746,7 +743,7 @@ Figure 7.3: Suitable areas (i.e., raster cells with a score &gt; 10) in accordan
         </div>
       </div>
 <a href="read-write.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="predictive-mapping-of-species-distributions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
