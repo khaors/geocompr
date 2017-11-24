@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve3f544e2d9a4c70a9
+preservee511ff323ce135bd
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3096,7 +3096,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve540987dd73044004
+preserve80ef7bcdbec99734
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5064,8 +5064,12 @@ nms = unzip(file.path(tempdir(), "census.zip"), list = TRUE)
 base_name = grep(".csv$", nms$Name, value = TRUE)
 unzip(file.path(tempdir(), "census.zip"), files = base_name, exdir = tempdir())
 # read in the csv file
-input = readr::read_csv2(file.path(tempdir(), base_name))
+census = readr::read_csv2(file.path(tempdir(), base_name))
 ```
+
+
+
+
 
 Next we select the variables we need: x and y coordinates, the number of inhabitants (population), mean age, proportion of women and the household size (Table \@ref(tab:census-desc)). 
 
@@ -5135,7 +5139,7 @@ Additionally, we set the values -1 and -9 to `NA` since these values are unknown
 
 ```r
 # pop = population, hh_size = household size
-input = dplyr::select(input, x = x_mp_1km, y = y_mp_1km, pop = Einwohner,
+input = dplyr::select(census, x = x_mp_1km, y = y_mp_1km, pop = Einwohner,
                       women = Frauen_A, mean_age = Alter_D,
                       hh_size = HHGroesse_D)
 # set -1 and -9 to NA
@@ -5234,6 +5238,8 @@ To extract these polygons from the multipolygon, we can use `st_cast()`.
 
 ```r
 metros = st_cast(polys, "POLYGON")
+#> Warning in st_cast.sf(polys, "POLYGON"): repeating attributes for all sub-
+#> geometries for which they may not be constant
 ```
 
 The warning message tells us that the attributes are repeated for all sub-geometries.
@@ -5339,6 +5345,9 @@ metros_wgs = st_transform(metros_2, 4326)
 coords = st_centroid(metros_wgs) %>%
   st_coordinates() %>%
   round(., 4)
+#> Warning in st_centroid.sfc(st_geometry(x), of_largest_polygon =
+#> of_largest_polygon): st_centroid does not give correct centroids for
+#> longitude/latitude data
 ```
 
 Additionally, `ggmap::revgeocode()` only accepts one coordinate at a time, which is why we iterate over each coordinate of `coords` via a loop (`map_dfr()`).
@@ -5364,6 +5373,15 @@ metro_names = map_dfr(1:nrow(coords), function(i) {
   # return the result
   add
 })
+#> Information from URL : http://maps.googleapis.com/maps/api/geocode/json?latlng=48.1397,11.6117&sensor=false
+#> Information from URL : http://maps.googleapis.com/maps/api/geocode/json?latlng=49.4055,11.1021&sensor=false
+#> Information from URL : http://maps.googleapis.com/maps/api/geocode/json?latlng=48.7784,9.1839&sensor=false
+#> Information from URL : http://maps.googleapis.com/maps/api/geocode/json?latlng=50.1232,8.7415&sensor=false
+#> Information from URL : http://maps.googleapis.com/maps/api/geocode/json?latlng=50.8146,7.1615&sensor=false
+#> Information from URL : http://maps.googleapis.com/maps/api/geocode/json?latlng=53.5457,10&sensor=false
+#> Information from URL : http://maps.googleapis.com/maps/api/geocode/json?latlng=52.5091,13.3889&sensor=false
+#> Information from URL : http://maps.googleapis.com/maps/api/geocode/json?latlng=51.3662,12.2978&sensor=false
+#> Information from URL : http://maps.googleapis.com/maps/api/geocode/json?latlng=51.3289,7.0227&sensor=false
 ```
 
 Choosing `more` as `revgeocode()`'s `output` option will give back a `data.frame` with several columns referring to the location including the address, locality and various administrative levels.
@@ -5443,6 +5461,10 @@ shops = map(shops, dplyr::select, osm_id, shop) %>%
   reduce(rbind)
 ```
 
+
+
+
+
 It would have been easier to simply use `map_dfr()`. 
 Unfortunately, so far it does not work in harmony with `sf` objects but it will most likely in the future.
 
@@ -5474,10 +5496,14 @@ Naturally, the identified breaks serve as input for the reclassification matrix.
 ```r
 # construct reclassification matrix
 int = classInt::classIntervals(values(poi), n = 3, style = "fisher")
+#> Warning in classInt::classIntervals(values(poi), n = 3, style = "fisher"):
+#> var has missing values, omitted in finding classes
 int = round(int$brks)
 rcl_poi = matrix(c(int[1], rep(int[-c(1, length(int))], each = 2), 
                    int[length(int)] + 1), ncol = 2, byrow = TRUE)
 rcl_poi = cbind(rcl_poi, 0:3)  
+#> Warning in cbind(rcl_poi, 0:3): number of rows of result is not a multiple
+#> of vector length (arg 2)
 # reclassify
 poi = reclassify(poi, rcl = rcl_poi, right = NA) 
 names(poi) = "poi"
@@ -5509,7 +5535,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservefdd292bef79bad42
+preservefec1e0cdeeeafada
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
