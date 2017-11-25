@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservec92318e470358d1b
+preserve7ff5313edf14970e
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3096,7 +3096,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve34f72ba8de78b051
+preserve4341f264fda423bc
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5522,7 +5522,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve13f31fe4b1f2b695
+preserve4f3c011656efa20a
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -5584,10 +5584,11 @@ Change the age raster accordingly, repeat the remaining analyses and compare the
 
 
 ```r
+library(dplyr)
 library(osmdata)
 library(stplanr)
-library(dplyr)
 library(sf)
+library(tmap)
 ```
 
 
@@ -5653,6 +5654,41 @@ Before we make use of these datasets we need to load and take a look at one more
 </div>
 
 ## Transport zones
+
+Although transport systems are inherently based on linear features and nodes --- the nodes and edges of the transport network --- it often makes sense to start with areal data.
+Three types of zone will typically be of particular interest: the study region, origin zones (typically residential areas), and destination zones (which are often the same as the origin zones).
+
+The simplest definition of the study area is typically the first matching boundary returned by OpenStreetMap, which can be obtained using the **osmdata** package as follows:
+
+
+```r
+region = getbb("Bristol", format_out = "polygon")[1]
+```
+
+OSM will will often contain valid depiction of the case study city or region of interest (in this case the result is the same as the officially defined area of the Local Authority District).
+However the approach is problematic because OSM data may not correspond to the most recent administrative areas over which transport planning authorities have control, meaning the analysis may be of limited interest to local transport planners.
+More importantly, official administrative zones often do not relate to 'travel watersheds', areas that can are defined not by (often arbitrary) political decisions but by data on where people actually travel to.
+
+To overcome this issue for transport data analysis in the UK, the Travel to Work Areas (TTWAs) were created.
+TTWAs are contiguous zones defined roughly as areas in which 75% of the population both live and work.
+Because Bristol is a major employer attracting travel from surrounding towns, its TTWA is substantially larger than its administratively defined area, as illustrated in Figure \@ref(ttwa-bristol).
+
+
+
+
+```r
+region = readRDS("extdata/bristol-region.Rds")
+qtm(region)
+#> Warning: Currect projection of shape region unknown. Long-lat (WGS84) is
+#> assumed.
+```
+
+<div class="figure" style="text-align: center">
+<img src="figures/ttwa-bristo-1.png" alt="Region definitions in Bristol" width="576" />
+<p class="caption">(\#fig:ttwa-bristo)Region definitions in Bristol</p>
+</div>
+
+
 
 ## Nodes on the transport system
 
