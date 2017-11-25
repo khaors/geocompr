@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservef807cfa826ebb287
+preserve9b4c5e9c1149b18d
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3096,7 +3096,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserved5b824454fa21945
+preserve45388f975bd569a8
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5522,7 +5522,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve4439b0767530d752
+preservea444299e47de103f
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -5576,6 +5576,102 @@ Recreate the `metros` object and instead of deleting polygon number 5, make it p
 Change the age raster accordingly, repeat the remaining analyses and compare the changes with our original result.
 
 <!--chapter:end:07-location.Rmd-->
+
+
+# Transport applications
+
+## Prerequisites {-}
+
+
+```r
+library(osmdata)
+library(stplanr)
+library(dplyr)
+library(sf)
+```
+
+
+In no other sector is geographic space more tangible than transport.
+It is the effort of moving, particularly between places that are far apart, that led to the 'first law' of geography defined by Waldo Tobler in 1970 as follows [@miller_toblers_2004]: 
+
+> Everything  is related  to  everything  else,  but  near  things  are more  related  than  distant  things
+
+This 'law' applies to phenomena as diverse as friendship networks and ecological diversity and can be explained by the costs of transport --- in terms of time, energy and money.
+These costs are known as the 'friction of distance'.
+Thus transport technologies disrupt geographic relationships from the perspective of mobile humans and goods: "the purpose of transportation is to overcome space" [@rodrigue_geography_2013].
+
+Transport is an inherently geospatial activity.
+It involves traversing continuous geographic space between A and B, and infinite localities in between.
+It is therefore unsurprising that transport researchers have long turned to geocomputational methods to understand movement patterns and that transport problems are a motivator of geocomputational methods.
+
+This chapter provides an introduction to geographic analysis of transport systems.
+We will explore how movement patterns can be understood at multiple geographic levels, including:
+
+- Areal units: transport can be understood simply in terms of zonal aggregates such as the main mode and average distance of trips made people living in a particular zone.
+- Nodes: these are points in the transport system that can represent common origins and destinations (e.g. with one centroid per zone) and public transport stations such as bus stops and rail stations.
+- Desire lines: straight lines that represent 'origin-destination' data that records how many people travel (or could travel) between places (points or zones) in geographic space.
+- Routes: these are cirquitous (non-straight) routes, typically representing the 'optimal' path along the route network between origins and destinations along the desire lines defined in the previous bullet point.
+- Route networks: these represent the system of roads, paths and other linear features in an area. They can be represented as purely geographic entities or as a graph.
+Their features are segments which can be assigned values representing 'flow', the number of people expected to use a particular street or path.
+- Agents: these are the lowest-level but hardest to model entities in transport systems --- mobile entities like you and me.
+
+These six levels of analysis show that transport systems are highly complex, even before accounting for the innevitable fact that all of them are constantly evolving in continuous time.
+The purpose of geographic transport modelling can be interpretted as simplifying this complexity in a way that captures the essence of transport problems.
+
+Typically models are designed to solve a particular problem.
+For this reason this chapter is based around a policy scenario that asks:
+how to increase walking and cycling?
+We will use input data from Bristol, a coastal city in the West of England, described in the next section.
+
+## Input data: a case study of Bristol
+
+The case study used for this chapter is a diverse city on the west of England, 30 km east of the Welsh capital Cardiff.
+As with any case study it is worth taking some time to consider the local geography of the area, e.g. as dispayed in Figure 7.0 below.
+This shows the diversity of the city's transport network, with railways, motorways and cycle paths plotted.
+
+
+
+The data used in this section was downloaded using **osmdata**.
+To avoid having to request the data from OSM repeadetly, we'll use a locally saved version of the data, which contains point and line data for the case study area:
+
+
+```r
+ways = readRDS("extdata/ways.Rds")
+summary(ways)[4:5, ]
+#>            Length Class Mode
+#> osm_points 54     sf    list
+#> osm_lines  85     sf    list
+```
+
+The above code chunk loaded some key data and shows that way have a few dozen nodes and lines on the transport network: an easily manageable dataset size (transport datasets can get very large but it's best to learn with small ones).
+Before we make use of these datasets we need to load and take a look at one more type of input data: transport zones that represent residential areas that generate trips into the city centre and elsewhere.
+
+
+<div class="figure" style="text-align: center">
+<img src="figures/bristol.png" alt="Overview map of the city of Bristol" width="562" />
+<p class="caption">(\#fig:bristol)Overview map of the city of Bristol</p>
+</div>
+
+## Transport zones
+
+## Nodes on the transport system
+
+
+```r
+stations = ways$osm_points %>% 
+  filter(railway == "station" | name == "Bristol Temple Meads")
+```
+
+
+## Desire line analysis
+
+## Route analysis
+
+## Route networks
+
+## Agents in the transport system
+
+<!--chapter:end:08-transport.Rmd-->
 
 
 # References {-}

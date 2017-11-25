@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="transport-applications.html">
-
+<link rel="prev" href="location.html">
+<link rel="next" href="references.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -282,272 +282,87 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="references" class="section level1 unnumbered">
-<h1>References</h1>
+<div id="transport-applications" class="section level1">
+<h1><span class="header-section-number">8</span> Transport applications</h1>
+<div id="prerequisites-6" class="section level2 unnumbered">
+<h2>Prerequisites</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(osmdata)
+<span class="kw">library</span>(stplanr)
+<span class="kw">library</span>(dplyr)
+<span class="kw">library</span>(sf)</code></pre></div>
+<p>In no other sector is geographic space more tangible than transport. It is the effort of moving, particularly between places that are far apart, that led to the ‘first law’ of geography defined by Waldo Tobler in 1970 as follows <span class="citation">(Miller <a href="#ref-miller_toblers_2004">2004</a>)</span>:</p>
+<blockquote>
+<p>Everything is related to everything else, but near things are more related than distant things</p>
+</blockquote>
+<p>This ‘law’ applies to phenomena as diverse as friendship networks and ecological diversity and can be explained by the costs of transport — in terms of time, energy and money. These costs are known as the ‘friction of distance’. Thus transport technologies disrupt geographic relationships from the perspective of mobile humans and goods: “the purpose of transportation is to overcome space” <span class="citation">(Rodrigue, Comtois, and Slack <a href="#ref-rodrigue_geography_2013">2013</a>)</span>.</p>
+<p>Transport is an inherently geospatial activity. It involves traversing continuous geographic space between A and B, and infinite localities in between. It is therefore unsurprising that transport researchers have long turned to geocomputational methods to understand movement patterns and that transport problems are a motivator of geocomputational methods.</p>
+<p>This chapter provides an introduction to geographic analysis of transport systems. We will explore how movement patterns can be understood at multiple geographic levels, including:</p>
+<ul>
+<li>Areal units: transport can be understood simply in terms of zonal aggregates such as the main mode and average distance of trips made people living in a particular zone.</li>
+<li>Nodes: these are points in the transport system that can represent common origins and destinations (e.g. with one centroid per zone) and public transport stations such as bus stops and rail stations.</li>
+<li>Desire lines: straight lines that represent ‘origin-destination’ data that records how many people travel (or could travel) between places (points or zones) in geographic space.</li>
+<li>Routes: these are cirquitous (non-straight) routes, typically representing the ‘optimal’ path along the route network between origins and destinations along the desire lines defined in the previous bullet point.</li>
+<li>Route networks: these represent the system of roads, paths and other linear features in an area. They can be represented as purely geographic entities or as a graph. Their features are segments which can be assigned values representing ‘flow’, the number of people expected to use a particular street or path.</li>
+<li>Agents: these are the lowest-level but hardest to model entities in transport systems — mobile entities like you and me.</li>
+</ul>
+<p>These six levels of analysis show that transport systems are highly complex, even before accounting for the innevitable fact that all of them are constantly evolving in continuous time. The purpose of geographic transport modelling can be interpretted as simplifying this complexity in a way that captures the essence of transport problems.</p>
+<p>Typically models are designed to solve a particular problem. For this reason this chapter is based around a policy scenario that asks: how to increase walking and cycling? We will use input data from Bristol, a coastal city in the West of England, described in the next section.</p>
+</div>
+<div id="input-data-a-case-study-of-bristol" class="section level2">
+<h2><span class="header-section-number">8.1</span> Input data: a case study of Bristol</h2>
+<p>The case study used for this chapter is a diverse city on the west of England, 30 km east of the Welsh capital Cardiff. As with any case study it is worth taking some time to consider the local geography of the area, e.g. as dispayed in Figure 7.0 below. This shows the diversity of the city’s transport network, with railways, motorways and cycle paths plotted.</p>
+<p>The data used in this section was downloaded using <strong>osmdata</strong>. To avoid having to request the data from OSM repeadetly, we’ll use a locally saved version of the data, which contains point and line data for the case study area:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ways =<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;extdata/ways.Rds&quot;</span>)
+<span class="kw">summary</span>(ways)[<span class="dv">4</span>:<span class="dv">5</span>, ]
+<span class="co">#&gt;            Length Class Mode</span>
+<span class="co">#&gt; osm_points 54     sf    list</span>
+<span class="co">#&gt; osm_lines  85     sf    list</span></code></pre></div>
+<p>The above code chunk loaded some key data and shows that way have a few dozen nodes and lines on the transport network: an easily manageable dataset size (transport datasets can get very large but it’s best to learn with small ones). Before we make use of these datasets we need to load and take a look at one more type of input data: transport zones that represent residential areas that generate trips into the city centre and elsewhere.</p>
+<div class="figure" style="text-align: center"><span id="fig:bristol"></span>
+<img src="figures/bristol.png" alt="Overview map of the city of Bristol" width="562" />
+<p class="caption">
+Figure 8.1: Overview map of the city of Bristol
+</p>
+</div>
+</div>
+<div id="transport-zones" class="section level2">
+<h2><span class="header-section-number">8.2</span> Transport zones</h2>
+</div>
+<div id="nodes-on-the-transport-system" class="section level2">
+<h2><span class="header-section-number">8.3</span> Nodes on the transport system</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stations =<span class="st"> </span>ways$osm_points %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(railway ==<span class="st"> &quot;station&quot;</span> |<span class="st"> </span>name ==<span class="st"> &quot;Bristol Temple Meads&quot;</span>)</code></pre></div>
+</div>
+<div id="desire-line-analysis" class="section level2">
+<h2><span class="header-section-number">8.4</span> Desire line analysis</h2>
+</div>
+<div id="route-analysis" class="section level2">
+<h2><span class="header-section-number">8.5</span> Route analysis</h2>
+</div>
+<div id="route-networks" class="section level2">
+<h2><span class="header-section-number">8.6</span> Route networks</h2>
+</div>
+<div id="agents-in-the-transport-system" class="section level2">
+<h2><span class="header-section-number">8.7</span> Agents in the transport system</h2>
 
+</div>
+</div>
+<h3>References</h3>
 <div id="refs" class="references">
-<div>
-<p>Akima, Hiroshi, and Albrecht Gebhardt. 2016. <em>Akima: Interpolation of Irregularly and Regularly Spaced Data</em>. <a href="https://CRAN.R-project.org/package=akima" class="uri">https://CRAN.R-project.org/package=akima</a>.</p>
-</div>
-<div>
-<p>Appelhans, Tim, Florian Detsch, Christoph Reudenbach, and Stefan Woellauer. 2017. <em>Mapview: Interactive Viewing of Spatial Data in R</em>. <a href="https://CRAN.R-project.org/package=mapview" class="uri">https://CRAN.R-project.org/package=mapview</a>.</p>
-</div>
-<div>
-<p>Baddeley, Adrian, Ege Rubak, and Rolf Turner. 2015. <em>Spatial Point Patterns: Methodology and Applications with R</em>. London: Chapman; Hall/CRC Press. <a href="http://www.crcpress.com/Spatial-Point-Patterns-Methodology-and-Applications-with-R/Baddeley-Rubak-Turner/9781482210200/" class="uri">http://www.crcpress.com/Spatial-Point-Patterns-Methodology-and-Applications-with-R/Baddeley-Rubak-Turner/9781482210200/</a>.</p>
-</div>
-<div>
-<p>Bivand, Roger. 2001. “More on Spatial Data Analysis.” <em>R News</em> 1 (3): 13–17.</p>
-</div>
-<div>
-<p>———. 2003. “Approaches to Classes for Spatial Data in R.” In <em>Proceedings of DSC</em>, edited by Kurt Hornik, Friedrich Leisch, and Achim Zeileis. <a href="https://www.r-project.org/nosvn/conferences/DSC-2003/Proceedings/Bivand.pdf" class="uri">https://www.r-project.org/nosvn/conferences/DSC-2003/Proceedings/Bivand.pdf</a>.</p>
-</div>
-<div>
-<p>———. 2016a. <em>Rgrass7: Interface Between GRASS 7 Geographical Information System and R</em>. <a href="https://CRAN.R-project.org/package=rgrass7" class="uri">https://CRAN.R-project.org/package=rgrass7</a>.</p>
-</div>
-<div>
-<p>———. 2016b. <em>Spgrass6: Interface Between GRASS 6 and R</em>. <a href="http://CRAN.R-project.org/package=spgrass6" class="uri">http://CRAN.R-project.org/package=spgrass6</a>.</p>
-</div>
-<div>
-<p>———. 2017. <em>Spdep: Spatial Dependence: Weighting Schemes, Statistics and Models</em>. <a href="https://CRAN.R-project.org/package=spdep" class="uri">https://CRAN.R-project.org/package=spdep</a>.</p>
-</div>
-<div>
-<p>Bivand, Roger S. 2000. “Using the R Statistical Data Analysis Language on GRASS 5.0 GIS Database Files.” <em>Computers &amp; Geosciences</em> 26 (9): 1043–52. <a href="http://www.sciencedirect.com/science/article/pii/S0098300400000571" class="uri">http://www.sciencedirect.com/science/article/pii/S0098300400000571</a>.</p>
-</div>
-<div>
-<p>Bivand, Roger, and Albrecht Gebhardt. 2000. “Implementing Functions for Spatial Statistical Analysis Using the Language.” <em>Journal of Geographical Systems</em> 2 (3): 307–17. <a href="http://www.springerlink.com/index/CJRPUMB78JUYH54W.pdf" class="uri">http://www.springerlink.com/index/CJRPUMB78JUYH54W.pdf</a>.</p>
-</div>
-<div>
-<p>Bivand, Roger, and Nicholas Lewin-Koh. 2017. <em>Maptools: Tools for Reading and Handling Spatial Objects</em>. <a href="https://CRAN.R-project.org/package=maptools" class="uri">https://CRAN.R-project.org/package=maptools</a>.</p>
-</div>
-<div>
-<p>Bivand, Roger, and Markus Neteler. 2000. “Open Source Geocomputation: Using the R Data Analysis Language Integrated with GRASS GIS and PostgreSQL Data Base Systems.” In <em>Proceedings of the 5th International Conference on GeoComputation</em>, edited by Markus Neteler and Roger S. Bivand. <a href="http://www.geocomputation.org/2000/GC009/Gc009.htm" class="uri">http://www.geocomputation.org/2000/GC009/Gc009.htm</a>.</p>
-</div>
-<div>
-<p>Bivand, Roger, and Colin Rundel. 2017. <em>Rgeos: Interface to Geometry Engine - Open Source (’GEOS’)</em>. <a href="https://CRAN.R-project.org/package=rgeos" class="uri">https://CRAN.R-project.org/package=rgeos</a>.</p>
-</div>
-<div>
-<p>Bivand, Roger, Tim Keitt, and Barry Rowlingson. 2017. <em>Rgdal: Bindings for the ’Geospatial’ Data Abstraction Library</em>. <a href="https://CRAN.R-project.org/package=rgdal" class="uri">https://CRAN.R-project.org/package=rgdal</a>.</p>
-</div>
-<div>
-<p>Bivand, Roger, Edzer J Pebesma, and Virgilio Gómez-Rubio. 2013. <em>Applied Spatial Data Analysis with R</em>. Vol. 747248717. Springer.</p>
-</div>
-<div>
-<p>Brenning, Alexander. 2012. <em>ArcGIS Geoprocessing in R via Python</em>. <a href="https://CRAN.R-project.org/package=RPyGeo" class="uri">https://CRAN.R-project.org/package=RPyGeo</a>.</p>
-</div>
-<div>
-<p>Brenning, Alexander, and Donovan Bangs. 2016. <em>RSAGA: SAGA Geoprocessing and Terrain Analysis in R</em>. <a href="https://CRAN.R-project.org/package=RSAGA" class="uri">https://CRAN.R-project.org/package=RSAGA</a>.</p>
-</div>
-<div>
-<p>Brzustowicz, Michael R. 2017. <em>Data Science with Java: [Practical Methods for Scientists and Engineers]</em>. First edition. Beijing Boston Farnham: O´Reilly.</p>
-</div>
-<div>
-<p>Burrough, P. A., Rachael McDonnell, and Christopher D. Lloyd. 2015. <em>Principles of Geographical Information Systems</em>. Third edition. Oxford ; New York: Oxford University Press.</p>
-</div>
-<div>
-<p>Calenge, C. 2006. “The Package Adehabitat for the R Software: Tool for the Analysis of Space and Habitat Use by Animals.” <em>Ecological Modelling</em> 197: 1035.</p>
-</div>
-<div>
-<p>Chambers, John M. 2016. <em>Extending R</em>. CRC Press.</p>
-</div>
-<div>
-<p>Cheng, Joe, Bhaskar Karambelkar, and Yihui Xie. 2017. <em>Leaflet: Create Interactive Web Maps with the JavaScript ’Leaflet’ Library</em>. <a href="https://CRAN.R-project.org/package=leaflet" class="uri">https://CRAN.R-project.org/package=leaflet</a>.</p>
-</div>
-<div>
-<p>Garrard, Chris. 2016. <em>Geoprocessing with Python</em>. Shelter Island, NY: Manning Publications.</p>
-</div>
-<div>
-<p>Gillespie, Colin, and Robin Lovelace. 2016. <em>Efficient R Programming: A Practical Guide to Smarter Programming</em>. O’Reilly Media. <a href="https://csgillespie.github.io/efficientR/" class="uri">https://csgillespie.github.io/efficientR/</a>.</p>
-</div>
-<div>
-<p>Grolemund, Garrett, and Hadley Wickham. 2016. <em>R for Data Science</em>. 1 edition. O’Reilly Media.</p>
-</div>
-<div>
-<p>Hijmans, Robert J. 2016. <em>Geosphere: Spherical Trigonometry</em>. <a href="https://CRAN.R-project.org/package=geosphere" class="uri">https://CRAN.R-project.org/package=geosphere</a>.</p>
-</div>
-<div>
-<p>———. 2017. <em>Raster: Geographic Data Analysis and Modeling</em>. <a href="https://CRAN.R-project.org/package=raster" class="uri">https://CRAN.R-project.org/package=raster</a>.</p>
-</div>
-<div>
-<p>Huff, David L. 1963. “A Probabilistic Analysis of Shopping Center Trade Areas.” <em>Land Economics</em> 39 (1): 81–90. doi:<a href="https://doi.org/10.2307/3144521">10.2307/3144521</a>.</p>
-</div>
-<div>
-<p>Jenny, Bernhard, Bojan Šavrič, Nicholas D Arnold, Brooke E Marston, and Charles A Preppernau. 2017. “A Guide to Selecting Map Projections for World and Hemisphere Maps.” In <em>Choosing a Map Projection</em>, 213–28. Springer.</p>
-</div>
-<div>
-<p>Jr, Paulo J. Ribeiro, and Peter J. Diggle. 2016. <em>geoR: Analysis of Geostatistical Data</em>. <a href="https://CRAN.R-project.org/package=geoR" class="uri">https://CRAN.R-project.org/package=geoR</a>.</p>
-</div>
-<div>
-<p>Kahle, David, and Hadley Wickham. 2013. “Ggmap: Spatial Visualization with Ggplot2.” <em>The R Journal</em> 5 (1): 144–61. <a href="http://journal.r-project.org/archive/2013-1/kahle-wickham.pdf" class="uri">http://journal.r-project.org/archive/2013-1/kahle-wickham.pdf</a>.</p>
-</div>
-<div>
-<p>Lamigueiro, Óscar Perpiñán. 2014. <em>Displaying Time Series, Spatial, and Space-Time Data with R</em>. CRC Press.</p>
-</div>
-<div>
-<p>Liu, Jian-Guo, and Philippa J. Mason. 2009. <em>Essential Image Processing and GIS for Remote Sensing</em>. Chichester, West Sussex, UK ; Hoboken, NJ: Wiley-Blackwell.</p>
-</div>
-<div>
-<p>Livingstone, David N. 1992. <em>The Geographical Tradition: Episodes in the History of a Contested Enterprise</em>. Oxford, UK ; Cambridge, USA: John Wiley &amp; Sons Ltd.</p>
-</div>
-<div>
-<p>Longley, Paul. 2015. <em>Geographic Information Science &amp; Systems</em>. Fourth edition. Hoboken, NJ: Wiley.</p>
-</div>
-<div>
-<p>Longley, Paul A., Sue M. Brooks, Rachael McDonnell, and Bill MacMillan, eds. 1998. <em>Geocomputation: A Primer</em>. 1 edition. Chichester, Eng. ; New York: Wiley.</p>
-</div>
-<div>
+<div id="ref-miller_toblers_2004">
 <p>Miller, Harvey J. 2004. “Tobler’s First Law and Spatial Analysis.” <em>Annals of the Association of American Geographers</em> 94 (2).</p>
 </div>
-<div>
-<p>Muenchow, Jannes, and Patrick Schratz. 2017. <em>RQGIS: Integrating R with QGIS</em>. <a href="https://github.com/jannes-m/RQGIS" class="uri">https://github.com/jannes-m/RQGIS</a>.</p>
-</div>
-<div>
-<p>Muenchow, Jannes, Achim Bräuning, Eric Frank Rodríguez, and Henrik von Wehrden. 2013. “Predictive Mapping of Species Richness and Plant Species’ Distributions of a Peruvian Fog Oasis Along an Altitudinal Gradient.” <em>Biotropica</em> 45 (5): 557–66. doi:<a href="https://doi.org/10.1111/btp.12049">10.1111/btp.12049</a>.</p>
-</div>
-<div>
-<p>Muenchow, Jannes, Petra Dieker, Jürgen Kluge, Michael Kessler, and Henrik von Wehrden. 2017. “A Review of Ecological Gradient Research in the Tropics: Identifying Research Gaps, Future Directions, and Conservation Priorities.” <em>Biodiversity and Conservation</em>, November. doi:<a href="https://doi.org/10.1007/s10531-017-1465-y">10.1007/s10531-017-1465-y</a>.</p>
-</div>
-<div>
-<p>Neteler, Markus, and Helena Mitasova. 2008. <em>Open Source GIS: A GRASS GIS Approach</em>. 3. ed. New York, NY: Springer.</p>
-</div>
-<div>
-<p>Nolan, Deborah, and Duncan Temple Lang. 2014. <em>XML and Web Technologies for Data Sciences with R</em>. Use R! New York, NY: Springer.</p>
-</div>
-<div>
-<p>Openshaw, Stan, and Robert J. Abrahart, eds. 2000. <em>Geocomputation</em>. 1 edition. London ; New York: CRC Press.</p>
-</div>
-<div>
-<p>Padgham, Mark, Bob Rudis, Robin Lovelace, and Maëlle Salmon. 2017. <em>Osmdata: Import ’OpenStreetMap’ Data as Simple Features or Spatial Objects</em>. <a href="https://CRAN.R-project.org/package=osmdata" class="uri">https://CRAN.R-project.org/package=osmdata</a>.</p>
-</div>
-<div>
-<p>Pebesma, Edzer. 2017. <em>Sf: Simple Features for R</em>. <a href="https://github.com/r-spatial/sf/" class="uri">https://github.com/r-spatial/sf/</a>.</p>
-</div>
-<div>
-<p>Pebesma, Edzer J., and Roger S. Bivand. 2005. “Classes and Methods for Spatial Data in R.” <em>R News</em> 5 (2): 9–13. <a href="https://CRAN.R-project.org/doc/Rnews/" class="uri">https://CRAN.R-project.org/doc/Rnews/</a>.</p>
-</div>
-<div>
-<p>Pebesma, Edzer, and Roger Bivand. 2017. <em>Sp: Classes and Methods for Spatial Data</em>. <a href="https://CRAN.R-project.org/package=sp" class="uri">https://CRAN.R-project.org/package=sp</a>.</p>
-</div>
-<div>
-<p>Pebesma, Edzer, and Benedikt Graeler. 2017. <em>Gstat: Spatial and Spatio-Temporal Geostatistical Modelling, Prediction and Simulation</em>. <a href="https://CRAN.R-project.org/package=gstat" class="uri">https://CRAN.R-project.org/package=gstat</a>.</p>
-</div>
-<div>
-<p>Pebesma, Edzer, Thomas Mailund, and James Hiebert. 2016. “Measurement Units in R.” <em>The R Journal</em> 8 (2): 486–94. <a href="https://journal.r-project.org/archive/2016-2/pebesma-mailund-hiebert.pdf" class="uri">https://journal.r-project.org/archive/2016-2/pebesma-mailund-hiebert.pdf</a>.</p>
-</div>
-<div>
-<p>Pebesma, Edzer, Daniel Nüst, and Roger Bivand. 2012. “The R Software Environment in Reproducible Geoscientific Research.” <em>Eos, Transactions American Geophysical Union</em> 93 (16): 163–63. doi:<a href="https://doi.org/10.1029/2012EO160003">10.1029/2012EO160003</a>.</p>
-</div>
-<div>
-<p>Qiu, Fang, Caiyun Zhang, and Yuhong Zhou. 2012. “The Development of an Areal Interpolation ArcGIS Extension and a Comparative Study.” <em>GIScience &amp; Remote Sensing</em> 49 (5): 644–63. doi:<a href="https://doi.org/10.2747/1548-1603.49.5.644">10.2747/1548-1603.49.5.644</a>.</p>
-</div>
-<div>
-<p>Ripley, Brian D. 2001. “Spatial Statistics in R.” <em>R News</em> 1 (2): 14–15.</p>
-</div>
-<div>
-<p>Robinson, David. 2017. “The Impressive Growth of R.” <em>Stack Overflow Blog</em>. <a href="https://stackoverflow.blog/2017/10/10/impressive-growth-r/" class="uri">https://stackoverflow.blog/2017/10/10/impressive-growth-r/</a>.</p>
-</div>
-<div>
+<div id="ref-rodrigue_geography_2013">
 <p>Rodrigue, Jean-Paul, Claude Comtois, and Brian Slack. 2013. <em>The Geography of Transport Systems</em>. 3 edition. London ; New York: Routledge.</p>
 </div>
-<div>
-<p>Roller, D. 2010. <em>Eratosthenes’ “Geography”</em>. Princeton University Press. <a href="http://books.google.co.uk/books?id=8peKyWK_SWsC" class="uri">http://books.google.co.uk/books?id=8peKyWK_SWsC</a>.</p>
 </div>
-<div>
-<p>Rowlingson, B. S, and P. J Diggle. 1993. “Splancs: Spatial Point Pattern Analysis Code in S-Plus.” <em>Computers &amp; Geosciences</em> 19 (5): 627–55. doi:<a href="https://doi.org/10.1016/0098-3004(93)90099-Q">10.1016/0098-3004(93)90099-Q</a>.</p>
-</div>
-<div>
-<p>Rowlingson, Barry, and Peter Diggle. 2017. <em>Splancs: Spatial and Space-Time Point Pattern Analysis</em>. <a href="https://CRAN.R-project.org/package=splancs" class="uri">https://CRAN.R-project.org/package=splancs</a>.</p>
-</div>
-<div>
-<p>Rowlingson, Barry, Adrian Baddeley, Rolf Turner, and Peter Diggle. 2003. “Rasp: A Package for Spatial Statistics.” In <em>Proceedings of the 3rd International Workshop on Distributed Statistical Computing</em>, edited by Kurt Hornik. <a href="https://www.r-project.org/conferences/DSC-2003/Proceedings/RowlingsonEtAl.pdf" class="uri">https://www.r-project.org/conferences/DSC-2003/Proceedings/RowlingsonEtAl.pdf</a>.</p>
-</div>
-<div>
-<p>Sherman, Gary. 2008. <em>Desktop GIS: Mapping the Planet with Open Source Tools</em>. Pragmatic Bookshelf.</p>
-</div>
-<div>
-<p>Šavrič, Bojan, Bernhard Jenny, and Helen Jenny. 2016. “Projection Wizard – An Online Map Projection Selection Tool.” <em>The Cartographic Journal</em> 53 (2): 177–85. doi:<a href="https://doi.org/10.1080/00087041.2015.1131938">10.1080/00087041.2015.1131938</a>.</p>
-</div>
-<div>
-<p>Tennekes, Martijn. 2017. <em>Tmap: Thematic Maps</em>. <a href="https://github.com/mtennekes/tmap" class="uri">https://github.com/mtennekes/tmap</a>.</p>
-</div>
-<div>
-<p>Tobler, Waldo R. 1979. “Smooth Pycnophylactic Interpolation for Geographical Regions.” <em>Journal of the American Statistical Association</em> 74 (367): 519–30. doi:<a href="https://doi.org/10.1080/01621459.1979.10481647">10.1080/01621459.1979.10481647</a>.</p>
-</div>
-<div>
-<p>Tomintz, Melanie N M.N., Graham P Clarke, and Janette E J.E. Rigby. 2008. “The Geography of Smoking in Leeds: Estimating Individual Smoking Rates and the Implications for the Location of Stop Smoking Services.” <em>Area</em> 40 (3): 341–53. <a href="http://onlinelibrary.wiley.com/doi/10.1111/j.1475-4762.2008.00837.x/full" class="uri">http://onlinelibrary.wiley.com/doi/10.1111/j.1475-4762.2008.00837.x/full</a>.</p>
-</div>
-<div>
-<p>Tomlin, C. Dana. 1990. <em>Geographic Information Systems and Cartographic Modeling</em>. Englewood Cliffs, N.J: Prentice Hall.</p>
-</div>
-<div>
-<p>University, S. original by James J. Majure Iowa State, and R. port + extensions by Albrecht Gebhardt. 2016. <em>Sgeostat: An Object-Oriented Framework for Geostatistical Modeling in S+</em>. <a href="https://CRAN.R-project.org/package=sgeostat" class="uri">https://CRAN.R-project.org/package=sgeostat</a>.</p>
-</div>
-<div>
-<p>Venables, W. N., and B. D. Ripley. 2002. <em>Modern Applied Statistics with S</em>. Fourth. New York: Springer. <a href="http://www.stats.ox.ac.uk/pub/MASS4" class="uri">http://www.stats.ox.ac.uk/pub/MASS4</a>.</p>
-</div>
-<div>
-<p>Venables, W.N., D.M. Smith, and R Core Team. 2017. <em>An Introduction to R. Notes on R: A Programming Environment for Data Analysis and Graphics</em>. <a href="http://colinfay.me/intro-to-r/" class="uri">http://colinfay.me/intro-to-r/</a>.</p>
-</div>
-<div>
-<p>Wickham, Hadley. 2011. “The Split-Apply-Combine Strategy for Data Analysis.” <em>Journal of Statistical Software</em> 40 (1). doi:<a href="https://doi.org/10.18637/jss.v040.i01">10.18637/jss.v040.i01</a>.</p>
-</div>
-<div>
-<p>———. 2014. <em>Advanced R</em>. CRC Press. <a href="http://www.crcpress.com/product/isbn/9781466586963 http://adv-r.had.co.nz http://www.crcpress.com/product/isbn/9781466586963 http://adv-r.had.co.nz" class="uri">http://www.crcpress.com/product/isbn/9781466586963 http://adv-r.had.co.nz http://www.crcpress.com/product/isbn/9781466586963 http://adv-r.had.co.nz</a>.</p>
-</div>
-<div>
-<p>Wieland, Thomas. 2017. “Market Area Analysis for Retail and Service Locations with MCI.” <em>The R Journal</em> 9 (1): 298–323. <a href="https://journal.r-project.org/archive/2017/RJ-2017-020/index.html" class="uri">https://journal.r-project.org/archive/2017/RJ-2017-020/index.html</a>.</p>
-</div>
-<div>
-<p>Wulf, Andrea. 2015. <em>The Invention of Nature: Alexander von Humboldt’s New World</em>. First American Edition. New York: Alfred A. Knopf.</p>
-</div>
-</div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             </section>
 
           </div>
         </div>
       </div>
-<a href="transport-applications.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="location.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -576,7 +391,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Robinlovelace/geocompr/edit/master/references.Rmd",
+"link": "https://github.com/Robinlovelace/geocompr/edit/master/08-transport.Rmd",
 "text": "Edit"
 },
 "download": null,
