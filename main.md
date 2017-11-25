@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve82fd96b2f44b4469
+preservec6184f337b8a54cb
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3096,7 +3096,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve3fdbd71384440860
+preserve2bbe3720c7273a0f
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5487,14 +5487,10 @@ Naturally, the identified breaks serve as input for the reclassification matrix.
 ```r
 # construct reclassification matrix
 int = classInt::classIntervals(values(poi), n = 3, style = "fisher")
-#> Warning in classInt::classIntervals(values(poi), n = 3, style = "fisher"):
-#> var has missing values, omitted in finding classes
 int = round(int$brks)
 rcl_poi = matrix(c(int[1], rep(int[-c(1, length(int))], each = 2), 
                    int[length(int)] + 1), ncol = 2, byrow = TRUE)
 rcl_poi = cbind(rcl_poi, 0:3)  
-#> Warning in cbind(rcl_poi, 0:3): number of rows of result is not a multiple
-#> of vector length (arg 2)
 # reclassify
 poi = reclassify(poi, rcl = rcl_poi, right = NA) 
 names(poi) = "poi"
@@ -5502,7 +5498,7 @@ names(poi) = "poi"
 
 ### Identifying suitable locations
 
-As usual in (geo-)data science, the data retrieval and preprocessing represented the lion's share of the overall workload.
+As usual in (geographic-)data science, the data retrieval and preprocessing represented the lion's share of the overall workload.
 The final step, the calculation of a final score by summing up all prepared rasters, is a simple one-liner.
 Before doing that, we add the POI raster to and delete the population raster from the raster stack.
 The reasoning for the latter is twofold.
@@ -5526,7 +5522,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve15409d0edc536aef
+preservec3b247e674ffac59
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
