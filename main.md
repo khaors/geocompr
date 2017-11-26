@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve1dfedc2057478a56
+preserve5243154db074ace8
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3096,7 +3096,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserved7132cfee400c605
+preserve14f2c33b8ce5eb15
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3797,14 +3797,6 @@ library(spDataLarge)
 
 ## Introduction
 
-<!-- Maybe the solution could be to have three chapters: -->
-
-<!-- - attribute operations -->
-<!-- - spatial operations -->
-<!-- - geometric operations -->
-<!-- - This is also basically what Jakub was proposing, right?. Geometric operations also include reprojections. Then we could split the chapter again into vector and raster subsections. And the raster sections would include raster alignment, aggregations (change of resolution) and reprojections. -->
-<!-- geocoding? -->
-
 As stated in Chapter \@ref(crs-intro), it is important to understand which CRS you are working in when undertaking spatial operations.
 Many spatial operations assume that you are using a *projected* CRS (on a Euclidean grid with units of meters rather than a geographic 'lat/lon' grid with units of degrees).
 The GEOS engine underlying most spatial operations in **sf**, for example, assumes your data is in a projected CRS.
@@ -3926,15 +3918,6 @@ st_crs(cycle_hire_osm_projected)
 #>   proj4string: "+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs"
 ```
 
-<!-- plot -->
-<!-- ```{r} -->
-<!-- par_old = par() -->
-<!-- par(mfrow = c(1, 2)) -->
-<!-- plot(cycle_hire_osm$geometry, axes = TRUE) -->
-<!-- plot(cycle_hire_osm_projected$geometry, axes = TRUE) -->
-<!-- par(par_old) -->
-<!-- ``` -->
-
 Note that the result shows that the `epsg` has been updated and that `proj4string` element of the CRS now contains, among other things `+proj=tmerc` (meaning it is a projected CRS using the [tranverse Mercator](https://en.wikipedia.org/wiki/Transverse_Mercator_projection) projection) and `+units=m` (meaning the units of the coordinates are meters).
 Another function, from the **rgdal** library, provides a note containing the name of the CRS:
 
@@ -4040,11 +4023,10 @@ More information about CRS modification can be found in the [Using PROJ.4](http:
 <!-- ``` -->
 <!-- http://bl.ocks.org/vlandham/raw/9216751/ -->
 
+### Geometry transformations
 <!-- or ## Geometry processing -->
-<!-- Geometry transformations (e.g. clipping, buffers, centroids) -->
-<!-- (within which could go a small example showing affine transformations) -->
 
-### Clipping 
+#### Clipping 
 
 Spatial clipping is a form of spatial subsetting that involves changes to the `geometry` columns of at least some of the affected features.
 
@@ -4120,6 +4102,9 @@ text(x = c(-0.5, 1.5), y = 1, labels = l)
 
 
 #### Centroids
+<!-- st_point_on_surface -->
+<!-- st_centroid -->
+<!-- st_polygonize -->
 
 
 ```r
@@ -4133,17 +4118,14 @@ nz_pos = st_point_on_surface(nz)
 
 <img src="figures/unnamed-chunk-23-1.png" width="576" style="display: block; margin: auto;" />
 
+#### Buffers
+
+#### Affine transformations
+
 ### Type transformation
 <!-- or Geometry cast -->
 <!-- Changing the geometry type while the fundamental data remains unchanged ('casting') -->
-<!-- I think vector/raster conversion could either be part of point 1 or something else -->
-<!-- I think the brick-raster-stack could be part of 1 - a type transformation... -->
-<!-- - raster to vector -->
-<!-- - vector to raster -->
 <!-- - st_cast -->
-<!-- st_point_on_surface -->
-<!-- st_centroid -->
-<!-- st_polygonize -->
 
 
 ```r
@@ -4166,6 +4148,7 @@ nz_points = st_cast(nz, "MULTIPOINT")
 <!-- polygon example -->
 
 ### Rasterization
+<!-- - vector to raster -->
 
 ## Geometric operations on raster data
 
@@ -5448,7 +5431,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve9511314b8369cc51
+preserve8322029e086ea504
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 

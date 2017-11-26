@@ -206,7 +206,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.1" data-path="transform.html"><a href="transform.html#introduction-2"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
 <li class="chapter" data-level="5.2" data-path="transform.html"><a href="transform.html#geometric-operations-on-vector-data"><i class="fa fa-check"></i><b>5.2</b> Geometric operations on vector data</a><ul>
 <li class="chapter" data-level="5.2.1" data-path="transform.html"><a href="transform.html#reprojecting"><i class="fa fa-check"></i><b>5.2.1</b> Reprojecting</a></li>
-<li class="chapter" data-level="5.2.2" data-path="transform.html"><a href="transform.html#clipping"><i class="fa fa-check"></i><b>5.2.2</b> Clipping</a></li>
+<li class="chapter" data-level="5.2.2" data-path="transform.html"><a href="transform.html#geometry-transformations"><i class="fa fa-check"></i><b>5.2.2</b> Geometry transformations</a></li>
 <li class="chapter" data-level="5.2.3" data-path="transform.html"><a href="transform.html#type-transformation"><i class="fa fa-check"></i><b>5.2.3</b> Type transformation</a></li>
 <li class="chapter" data-level="5.2.4" data-path="transform.html"><a href="transform.html#simplification"><i class="fa fa-check"></i><b>5.2.4</b> Simplification</a></li>
 <li class="chapter" data-level="5.2.5" data-path="transform.html"><a href="transform.html#rasterization"><i class="fa fa-check"></i><b>5.2.5</b> Rasterization</a></li>
@@ -300,12 +300,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="introduction-2" class="section level2">
 <h2><span class="header-section-number">5.1</span> Introduction</h2>
-<!-- Maybe the solution could be to have three chapters: -->
-<!-- - attribute operations -->
-<!-- - spatial operations -->
-<!-- - geometric operations -->
-<!-- - This is also basically what Jakub was proposing, right?. Geometric operations also include reprojections. Then we could split the chapter again into vector and raster subsections. And the raster sections would include raster alignment, aggregations (change of resolution) and reprojections. -->
-<!-- geocoding? -->
 <p>As stated in Chapter <a href="spatial-class.html#crs-intro">2.3</a>, it is important to understand which CRS you are working in when undertaking spatial operations. Many spatial operations assume that you are using a <em>projected</em> CRS (on a Euclidean grid with units of meters rather than a geographic ‘lat/lon’ grid with units of degrees). The GEOS engine underlying most spatial operations in <strong>sf</strong>, for example, assumes your data is in a projected CRS. For this reason <strong>sf</strong> contains a function for checking if geometries have a geographic or projected CRS. This is illustrated below using the example of <em>London</em>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london =<span class="st"> </span><span class="kw">st_sf</span>(<span class="dt">geometry =</span> <span class="kw">st_sfc</span>(<span class="kw">st_point</span>(<span class="kw">c</span>(-<span class="fl">0.1</span>, <span class="fl">51.5</span>))))
 <span class="kw">st_is_longlat</span>(london)
@@ -359,14 +353,6 @@ Figure 5.2: Buffer on data with projected CRS.
 <span class="co">#&gt; Coordinate Reference System:</span>
 <span class="co">#&gt;   EPSG: 27700 </span>
 <span class="co">#&gt;   proj4string: &quot;+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs&quot;</span></code></pre></div>
-<!-- plot -->
-<!-- ```{r} -->
-<!-- par_old = par() -->
-<!-- par(mfrow = c(1, 2)) -->
-<!-- plot(cycle_hire_osm$geometry, axes = TRUE) -->
-<!-- plot(cycle_hire_osm_projected$geometry, axes = TRUE) -->
-<!-- par(par_old) -->
-<!-- ``` -->
 <p>Note that the result shows that the <code>epsg</code> has been updated and that <code>proj4string</code> element of the CRS now contains, among other things <code>+proj=tmerc</code> (meaning it is a projected CRS using the <a href="https://en.wikipedia.org/wiki/Transverse_Mercator_projection">tranverse Mercator</a> projection) and <code>+units=m</code> (meaning the units of the coordinates are meters). Another function, from the <strong>rgdal</strong> library, provides a note containing the name of the CRS:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">crs_codes =<span class="st"> </span>rgdal::<span class="kw">make_EPSG</span>()[<span class="dv">1</span>:<span class="dv">2</span>]
 dplyr::<span class="kw">filter</span>(crs_codes, code ==<span class="st"> </span><span class="dv">27700</span>)
@@ -434,12 +420,12 @@ Figure 5.6: Lambert azimuthal equal-area projection of the world centered on New
 <!-- plot(world_3$geom) -->
 <!-- ``` -->
 <!-- http://bl.ocks.org/vlandham/raw/9216751/ -->
-<!-- or ## Geometry processing -->
-<!-- Geometry transformations (e.g. clipping, buffers, centroids) -->
-<!-- (within which could go a small example showing affine transformations) -->
 </div>
-<div id="clipping" class="section level3">
-<h3><span class="header-section-number">5.2.2</span> Clipping</h3>
+<div id="geometry-transformations" class="section level3">
+<h3><span class="header-section-number">5.2.2</span> Geometry transformations</h3>
+<!-- or ## Geometry processing -->
+<div id="clipping" class="section level4">
+<h4><span class="header-section-number">5.2.2.1</span> Clipping</h4>
 <p>Spatial clipping is a form of spatial subsetting that involves changes to the <code>geometry</code> columns of at least some of the affected features.</p>
 <p>Clipping can only apply to features more complex than points: lines, polygons and their ‘multi’ equivalents. To illustrate the concept we will start with a simple example: two overlapping circles with a center point one unit away from each other and radius of one:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">b =<span class="st"> </span><span class="kw">st_sfc</span>(<span class="kw">st_point</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)), <span class="kw">st_point</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))) <span class="co"># create 2 points</span>
@@ -485,25 +471,28 @@ p =<span class="st"> </span><span class="kw">st_sample</span>(<span class="dt">x
 Figure 5.9: Randomly distributed points within the bounding box enclosing circles x and y.
 </p>
 </div>
+</div>
 <div id="centroids" class="section level4">
-<h4><span class="header-section-number">5.2.2.1</span> Centroids</h4>
+<h4><span class="header-section-number">5.2.2.2</span> Centroids</h4>
+<!-- st_point_on_surface -->
+<!-- st_centroid -->
+<!-- st_polygonize -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_centroid =<span class="st"> </span><span class="kw">st_centroid</span>(nz)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_pos =<span class="st"> </span><span class="kw">st_point_on_surface</span>(nz)</code></pre></div>
 <p><img src="figures/unnamed-chunk-23-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="buffers" class="section level4">
+<h4><span class="header-section-number">5.2.2.3</span> Buffers</h4>
+</div>
+<div id="affine-transformations" class="section level4">
+<h4><span class="header-section-number">5.2.2.4</span> Affine transformations</h4>
 </div>
 </div>
 <div id="type-transformation" class="section level3">
 <h3><span class="header-section-number">5.2.3</span> Type transformation</h3>
 <!-- or Geometry cast -->
 <!-- Changing the geometry type while the fundamental data remains unchanged ('casting') -->
-<!-- I think vector/raster conversion could either be part of point 1 or something else -->
-<!-- I think the brick-raster-stack could be part of 1 - a type transformation... -->
-<!-- - raster to vector -->
-<!-- - vector to raster -->
 <!-- - st_cast -->
-<!-- st_point_on_surface -->
-<!-- st_centroid -->
-<!-- st_polygonize -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_points =<span class="st"> </span><span class="kw">st_cast</span>(nz, <span class="st">&quot;MULTIPOINT&quot;</span>)</code></pre></div>
 <p><img src="figures/unnamed-chunk-25-1.png" width="576" style="display: block; margin: auto;" /></p>
 <!-- ### Class conversion -->
@@ -522,6 +511,7 @@ Figure 5.9: Randomly distributed points within the bounding box enclosing circle
 </div>
 <div id="rasterization" class="section level3">
 <h3><span class="header-section-number">5.2.5</span> Rasterization</h3>
+<!-- - vector to raster -->
 </div>
 </div>
 <div id="geometric-operations-on-raster-data" class="section level2">
