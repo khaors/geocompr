@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve5243154db074ace8
+preservec97ec69f7a757903
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2691,7 +2691,7 @@ Spatial operations on *rasters* include merging and subsetting, covered in secti
 The chapter also introduces new concepts that are unique to spatial data.
 A variety of *topological relations* can be used to subset/join vector geometries (by default **sf** uses the catch-all *intersects* but other relations such as *within* can be very useful), a topic that is explored in section \@ref(topological-relations).
 New geometry data can be created by modifying existing spatial objects, using operations such as 'buffer' and 'clip', described in sections \@ref(modifying-geometry-data) and \@ref(clipping).
-Spatial operations on raster datasets involve *map algebra* (covered in sections \@ref(map-algebra) to \@ref(global-operations-and-distances)) and combining and aligning them (covered in sections \@ref(merging-rasters) and \@ref(aligning-rasters)).
+Spatial operations on raster datasets involve *map algebra* (covered in sections \@ref(map-algebra) to \@ref(global-operations-and-distances)) and raster merging (covered in sections \@ref(merging-rasters)).
 
 Another unique aspect of spatial objects is distance.
 All spatial objects are related through space and distance calculations can be used to find the strength of this relationship between spatial entities.
@@ -3096,7 +3096,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve14f2c33b8ce5eb15
+preserve474f0afcb5f3cf78
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3580,118 +3580,6 @@ This might smooth the clear border in the merged result but it will most likely 
 To do so, we need a more advanced approach. 
 Remote scientist frequently apply histogram matching or use regression techniques to align the values of the first image with those of the second image.
 The packages **landsat** (`histmatch()`, `relnorm()`, `PIF()`), **satellite** (`calcHistMatch()`) and **RStoolbox** (`histMatch()`, `pifMatch()`) provide the corresponding functions.
-
-
-### Aligning rasters
-
-When merging or performing map algebra on rasters, their resolution, projection, origin and/or extent has to match.
-Otherwise, how should we add the values of one raster with a resolution of 0.2 decimal degrees to a second with a resolution of 1 decimal degree?
-The same problem arises when we would like to merge satellite imagery from different sensors with different projections and resolutions.
-We can deal with such mismatches by aligning the rasters.
-
-The `projectRaster()` function reprojects one raster to a desired projection, say from UTM to WGS84.
-Equally, map algebra operations require the same extent.
-Following code adds one row and two columns to each side of the raster while setting all new values to an elevation of 1000 meters (\@ref(fig:extend-example)).
-
-
-```r
-elev_2 = extend(elev, c(1, 2), value = 1000)
-plot(elev_2)
-```
-
-<div class="figure" style="text-align: center">
-<img src="figures/extend-example-1.png" alt="Original raster extended by 1 one row on each side (top, bottom) and two columns on each side (right, left)." width="576" />
-<p class="caption">(\#fig:extend-example)Original raster extended by 1 one row on each side (top, bottom) and two columns on each side (right, left).</p>
-</div>
-
-Performing an algebraic operation on two objects with differing extents in R, the **raster** package returns the result for the intersection, and says so in a warning.
-
-
-```r
-elev_3 = elev + elev_2
-#> Warning in elev + elev_2: Raster objects have different extents. Result for
-#> their intersection is returned
-```
-
-However, we can also align the extent of two rasters with the `extend()` command.
-Here, we extend the `elev` object to the extend of `elev_2`. 
-The newly added rows and column receive the default value of the `value` parameter, i.e., `NA`.
-
-
-```r
-elev_4 = extend(elev, elev_2)
-```
-
-The `aggregate()` and `disaggregate()` functions help to change the cell size resolution of a raster.
-For instance, let us aggregate `elev` from a resolution of 0.5 to a resolution of 1, that means we aggregate by a factor of 2 (Fig. \@ref(fig:aggregate-example)).
-Additionally, the output cell value should correspond to the mean of the input cells (but  one could use other functions as well such as `median()`, `sum()`, etc.):
-
-
-```r
-elev_agg = aggregate(elev, fact = 2, fun = mean)
-par(mfrow = c(1, 2))
-plot(elev)
-plot(elev_agg)
-```
-
-<div class="figure" style="text-align: center">
-<img src="figures/aggregate-example-1.png" alt="Original raster (left). Aggregated raster (right)." width="576" />
-<p class="caption">(\#fig:aggregate-example)Original raster (left). Aggregated raster (right).</p>
-</div>
-
-Note that the origin of `elev_agg` has changed, too.
-
-
-```r
-origin(elev)
-#> [1] 0 0
-origin(elev_agg)
-#> [1] 0.5 0.5
-```
-
-The origin is the point closest to (0, 0) if you moved towards it in steps of x and y resolution.
-If two rasters have different origins, their cells do not overlap completely which would make map algebra impossible.
-To change the origin , use `origin()`.^[If the origins of two raster datasets are just marginally apart, it sometimes is sufficient to simply increase the `tolerance` argument  of `raster::rasterOptions()`.]
-Looking at figure \@ref(fig:origin-example) reveals the effect of changing the origin.
-
-
-```r
-# plot the aggregated raster
-plot(elev_agg)
-# change the origin
-origin(elev_agg) = c(0, 0)
-# plot it again
-plot(elev_agg, add = TRUE)
-```
-
-<div class="figure" style="text-align: center">
-<img src="figures/origin-example-1.png" alt="Plotting rasters with the same values but different origins." width="576" />
-<p class="caption">(\#fig:origin-example)Plotting rasters with the same values but different origins.</p>
-</div>
-
-
-The `resample()` command lets you align several raster properties in one go, namely origin, extent and resolution.
-Let us resample an extended `elev_agg` to the properties of `elev` again.
-
-
-```r
-# add 2 rows and columns, i.e. change the extent
-elev_agg = extend(elev_agg, 2)
-elev_disagg = resample(elev_agg, elev)
-```
-
-Though our disaggregated `elev_disagg` retrieved back its original resolution, cell size and extent, its values differ. 
-However, this is to be expected, disaggregating **cannot** predict values at a finer resolution, it simply uses an interpolation algorithm.
-It is important to keep in mind that disaggregating results in a finer resolution, the corresponding values, however, are only as accurate as their lower resolution source.
-
-Finally, if you want to align many (possibly hundreds or thousands of) images stored on disk, you might want to checkout the `gdalUtils::align_rasters()` function.
-Nevertheless, you may also use **raster** with very large datasets. 
-This is because **raster**:
-
-1. lets you work with raster datasets that are too large to fit into the main memory (RAM) by only processing chunks of it.
-2. tries to facilitate parallel processing.
-For more information have a look at the help pages of `beginCluster()` and `clusteR()`.
-Additionally, check out the *Multi-core functions* section in `vignette("functions", package = "raster")`.
 
 <!-- ## Spatial data creation -->
 
@@ -4287,6 +4175,116 @@ summary(con_raster_ea)
 <!-- q: should we mentioned gdal_transform? -->
 
 ### Raster alignment
+
+
+
+When merging or performing map algebra on rasters, their resolution, projection, origin and/or extent has to match.
+Otherwise, how should we add the values of one raster with a resolution of 0.2 decimal degrees to a second with a resolution of 1 decimal degree?
+The same problem arises when we would like to merge satellite imagery from different sensors with different projections and resolutions.
+We can deal with such mismatches by aligning the rasters.
+
+The `projectRaster()` function reprojects one raster to a desired projection, say from UTM to WGS84.
+Equally, map algebra operations require the same extent.
+Following code adds one row and two columns to each side of the raster while setting all new values to an elevation of 1000 meters (\@ref(fig:extend-example)).
+
+
+```r
+elev_2 = extend(elev, c(1, 2), value = 1000)
+plot(elev_2)
+```
+
+<div class="figure" style="text-align: center">
+<img src="figures/extend-example-1.png" alt="Original raster extended by 1 one row on each side (top, bottom) and two columns on each side (right, left)." width="576" />
+<p class="caption">(\#fig:extend-example)Original raster extended by 1 one row on each side (top, bottom) and two columns on each side (right, left).</p>
+</div>
+
+Performing an algebraic operation on two objects with differing extents in R, the **raster** package returns the result for the intersection, and says so in a warning.
+
+
+```r
+elev_3 = elev + elev_2
+#> Warning in elev + elev_2: Raster objects have different extents. Result for
+#> their intersection is returned
+```
+
+However, we can also align the extent of two rasters with the `extend()` command.
+Here, we extend the `elev` object to the extend of `elev_2`. 
+The newly added rows and column receive the default value of the `value` parameter, i.e., `NA`.
+
+
+```r
+elev_4 = extend(elev, elev_2)
+```
+
+The `aggregate()` and `disaggregate()` functions help to change the cell size resolution of a raster.
+For instance, let us aggregate `elev` from a resolution of 0.5 to a resolution of 1, that means we aggregate by a factor of 2 (Fig. \@ref(fig:aggregate-example)).
+Additionally, the output cell value should correspond to the mean of the input cells (but  one could use other functions as well such as `median()`, `sum()`, etc.):
+
+
+```r
+elev_agg = aggregate(elev, fact = 2, fun = mean)
+par(mfrow = c(1, 2))
+plot(elev)
+plot(elev_agg)
+```
+
+<div class="figure" style="text-align: center">
+<img src="figures/aggregate-example-1.png" alt="Original raster (left). Aggregated raster (right)." width="576" />
+<p class="caption">(\#fig:aggregate-example)Original raster (left). Aggregated raster (right).</p>
+</div>
+
+Note that the origin of `elev_agg` has changed, too.
+
+
+```r
+origin(elev)
+#> [1] 0 0
+origin(elev_agg)
+#> [1] 0.5 0.5
+```
+
+The origin is the point closest to (0, 0) if you moved towards it in steps of x and y resolution.
+If two rasters have different origins, their cells do not overlap completely which would make map algebra impossible.
+To change the origin , use `origin()`.^[If the origins of two raster datasets are just marginally apart, it sometimes is sufficient to simply increase the `tolerance` argument  of `raster::rasterOptions()`.]
+Looking at figure \@ref(fig:origin-example) reveals the effect of changing the origin.
+
+
+```r
+# plot the aggregated raster
+plot(elev_agg)
+# change the origin
+origin(elev_agg) = c(0, 0)
+# plot it again
+plot(elev_agg, add = TRUE)
+```
+
+<div class="figure" style="text-align: center">
+<img src="figures/origin-example-1.png" alt="Plotting rasters with the same values but different origins." width="576" />
+<p class="caption">(\#fig:origin-example)Plotting rasters with the same values but different origins.</p>
+</div>
+
+The `resample()` command lets you align several raster properties in one go, namely origin, extent and resolution.
+Let us resample an extended `elev_agg` to the properties of `elev` again.
+
+
+```r
+# add 2 rows and columns, i.e. change the extent
+elev_agg = extend(elev_agg, 2)
+elev_disagg = resample(elev_agg, elev)
+```
+
+Though our disaggregated `elev_disagg` retrieved back its original resolution, cell size and extent, its values differ. 
+However, this is to be expected, disaggregating **cannot** predict values at a finer resolution, it simply uses an interpolation algorithm.
+It is important to keep in mind that disaggregating results in a finer resolution, the corresponding values, however, are only as accurate as their lower resolution source.
+
+Finally, if you want to align many (possibly hundreds or thousands of) images stored on disk, you might want to checkout the `gdalUtils::align_rasters()` function.
+Nevertheless, you may also use **raster** with very large datasets. 
+This is because **raster**:
+
+1. lets you work with raster datasets that are too large to fit into the main memory (RAM) by only processing chunks of it.
+2. tries to facilitate parallel processing.
+For more information have a look at the help pages of `beginCluster()` and `clusteR()`.
+Additionally, check out the *Multi-core functions* section in `vignette("functions", package = "raster")`.
 
 ### Aggregation
 
@@ -5431,7 +5429,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve8322029e086ea504
+preserve1c1e3ee340f9acc9
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 

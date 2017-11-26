@@ -197,7 +197,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.3.5" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#zonal-operations"><i class="fa fa-check"></i><b>4.3.5</b> Zonal operations</a></li>
 <li class="chapter" data-level="4.3.6" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#global-operations-and-distances"><i class="fa fa-check"></i><b>4.3.6</b> Global operations and distances</a></li>
 <li class="chapter" data-level="4.3.7" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#merging-rasters"><i class="fa fa-check"></i><b>4.3.7</b> Merging rasters</a></li>
-<li class="chapter" data-level="4.3.8" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#aligning-rasters"><i class="fa fa-check"></i><b>4.3.8</b> Aligning rasters</a></li>
 </ul></li>
 <li class="chapter" data-level="4.4" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#exercises-2"><i class="fa fa-check"></i><b>4.4</b> Exercises</a></li>
 </ul></li>
@@ -304,7 +303,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london =<span class="st"> </span><span class="kw">st_sf</span>(<span class="dt">geometry =</span> <span class="kw">st_sfc</span>(<span class="kw">st_point</span>(<span class="kw">c</span>(-<span class="fl">0.1</span>, <span class="fl">51.5</span>))))
 <span class="kw">st_is_longlat</span>(london)
 <span class="co">#&gt; [1] NA</span></code></pre></div>
-<p>The results show that when geographic data is created from scratch, or is loaded from a source that has no CRS metadata, the CRS is unspecified by default. CRS can be set with the <code>st_set_crs</code> function:<a href="#fn22" class="footnoteRef" id="fnref22"><sup>22</sup></a></p>
+<p>The results show that when geographic data is created from scratch, or is loaded from a source that has no CRS metadata, the CRS is unspecified by default. CRS can be set with the <code>st_set_crs</code> function:<a href="#fn21" class="footnoteRef" id="fnref21"><sup>21</sup></a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london =<span class="st"> </span><span class="kw">st_set_crs</span>(london, <span class="dv">4326</span>)
 <span class="kw">st_is_longlat</span>(london)
 <span class="co">#&gt; [1] TRUE</span></code></pre></div>
@@ -376,7 +375,7 @@ The EPSG code can be found inside the <code>crs</code> attribute of the object�
 Figure 5.3: Mollweide projection of the world
 </p>
 </div>
-<p>On the other hand, the goal for many visualization purposes is to have a map with minimized area, direction, and distance distortions. One of the most popular projection to achieve that is Winkel tripel (Figure <a href="transform.html#fig:wintriproj">5.4</a>).<a href="#fn23" class="footnoteRef" id="fnref23"><sup>23</sup></a> The <code>st_transform_proj</code> function allows for coordinates transformations to the Winkel tripel projection:</p>
+<p>On the other hand, the goal for many visualization purposes is to have a map with minimized area, direction, and distance distortions. One of the most popular projection to achieve that is Winkel tripel (Figure <a href="transform.html#fig:wintriproj">5.4</a>).<a href="#fn22" class="footnoteRef" id="fnref22"><sup>22</sup></a> The <code>st_transform_proj</code> function allows for coordinates transformations to the Winkel tripel projection:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_wintri =<span class="st"> </span><span class="kw">st_transform_proj</span>(world, <span class="dt">crs =</span> <span class="st">&quot;+proj=wintri&quot;</span>)</code></pre></div>
 <!-- plot(world_wintri$geom) -->
 <!-- plot(world_wintri$geom, graticule = TRUE) -->
@@ -535,7 +534,7 @@ cat_raster
 <span class="co">#&gt; data source : /home/travis/R/Library/spDataLarge/raster/nlcd2011.tif </span>
 <span class="co">#&gt; names       : nlcd2011 </span>
 <span class="co">#&gt; values      : 11, 95  (min, max)</span></code></pre></div>
-<p>In this region, 14 land cover classes were distinguished<a href="#fn24" class="footnoteRef" id="fnref24"><sup>24</sup></a>:</p>
+<p>In this region, 14 land cover classes were distinguished<a href="#fn23" class="footnoteRef" id="fnref23"><sup>23</sup></a>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">unique</span>(cat_raster)
 <span class="co">#&gt;  [1] 11 21 22 23 31 41 42 43 52 71 81 82 90 95</span></code></pre></div>
 <p>When reprojecting categorical raster, we need to ensure that our new estimated values would still have values of our original classes. This could be done using the nearest neighbor method (<code>ngb</code>). In this method, value of the output cell is calculated based on the nearest cell center of the input raster.</p>
@@ -593,6 +592,61 @@ con_raster_ea
 </div>
 <div id="raster-alignment" class="section level3">
 <h3><span class="header-section-number">5.3.2</span> Raster alignment</h3>
+<p>When merging or performing map algebra on rasters, their resolution, projection, origin and/or extent has to match. Otherwise, how should we add the values of one raster with a resolution of 0.2 decimal degrees to a second with a resolution of 1 decimal degree? The same problem arises when we would like to merge satellite imagery from different sensors with different projections and resolutions. We can deal with such mismatches by aligning the rasters.</p>
+<p>The <code>projectRaster()</code> function reprojects one raster to a desired projection, say from UTM to WGS84. Equally, map algebra operations require the same extent. Following code adds one row and two columns to each side of the raster while setting all new values to an elevation of 1000 meters (<a href="transform.html#fig:extend-example">5.10</a>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_2 =<span class="st"> </span><span class="kw">extend</span>(elev, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">value =</span> <span class="dv">1000</span>)
+<span class="kw">plot</span>(elev_2)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:extend-example"></span>
+<img src="figures/extend-example-1.png" alt="Original raster extended by 1 one row on each side (top, bottom) and two columns on each side (right, left)." width="576" />
+<p class="caption">
+Figure 5.10: Original raster extended by 1 one row on each side (top, bottom) and two columns on each side (right, left).
+</p>
+</div>
+<p>Performing an algebraic operation on two objects with differing extents in R, the <strong>raster</strong> package returns the result for the intersection, and says so in a warning.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_3 =<span class="st"> </span>elev +<span class="st"> </span>elev_2
+<span class="co">#&gt; Warning in elev + elev_2: Raster objects have different extents. Result for</span>
+<span class="co">#&gt; their intersection is returned</span></code></pre></div>
+<p>However, we can also align the extent of two rasters with the <code>extend()</code> command. Here, we extend the <code>elev</code> object to the extend of <code>elev_2</code>. The newly added rows and column receive the default value of the <code>value</code> parameter, i.e., <code>NA</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_4 =<span class="st"> </span><span class="kw">extend</span>(elev, elev_2)</code></pre></div>
+<p>The <code>aggregate()</code> and <code>disaggregate()</code> functions help to change the cell size resolution of a raster. For instance, let us aggregate <code>elev</code> from a resolution of 0.5 to a resolution of 1, that means we aggregate by a factor of 2 (Fig. <a href="transform.html#fig:aggregate-example">5.11</a>). Additionally, the output cell value should correspond to the mean of the input cells (but one could use other functions as well such as <code>median()</code>, <code>sum()</code>, etc.):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_agg =<span class="st"> </span><span class="kw">aggregate</span>(elev, <span class="dt">fact =</span> <span class="dv">2</span>, <span class="dt">fun =</span> mean)
+<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+<span class="kw">plot</span>(elev)
+<span class="kw">plot</span>(elev_agg)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:aggregate-example"></span>
+<img src="figures/aggregate-example-1.png" alt="Original raster (left). Aggregated raster (right)." width="576" />
+<p class="caption">
+Figure 5.11: Original raster (left). Aggregated raster (right).
+</p>
+</div>
+<p>Note that the origin of <code>elev_agg</code> has changed, too.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">origin</span>(elev)
+<span class="co">#&gt; [1] 0 0</span>
+<span class="kw">origin</span>(elev_agg)
+<span class="co">#&gt; [1] 0.5 0.5</span></code></pre></div>
+<p>The origin is the point closest to (0, 0) if you moved towards it in steps of x and y resolution. If two rasters have different origins, their cells do not overlap completely which would make map algebra impossible. To change the origin , use <code>origin()</code>.<a href="#fn24" class="footnoteRef" id="fnref24"><sup>24</sup></a> Looking at figure <a href="transform.html#fig:origin-example">5.12</a> reveals the effect of changing the origin.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the aggregated raster</span>
+<span class="kw">plot</span>(elev_agg)
+<span class="co"># change the origin</span>
+<span class="kw">origin</span>(elev_agg) =<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)
+<span class="co"># plot it again</span>
+<span class="kw">plot</span>(elev_agg, <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:origin-example"></span>
+<img src="figures/origin-example-1.png" alt="Plotting rasters with the same values but different origins." width="576" />
+<p class="caption">
+Figure 5.12: Plotting rasters with the same values but different origins.
+</p>
+</div>
+<p>The <code>resample()</code> command lets you align several raster properties in one go, namely origin, extent and resolution. Let us resample an extended <code>elev_agg</code> to the properties of <code>elev</code> again.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># add 2 rows and columns, i.e. change the extent</span>
+elev_agg =<span class="st"> </span><span class="kw">extend</span>(elev_agg, <span class="dv">2</span>)
+elev_disagg =<span class="st"> </span><span class="kw">resample</span>(elev_agg, elev)</code></pre></div>
+<p>Though our disaggregated <code>elev_disagg</code> retrieved back its original resolution, cell size and extent, its values differ. However, this is to be expected, disaggregating <strong>cannot</strong> predict values at a finer resolution, it simply uses an interpolation algorithm. It is important to keep in mind that disaggregating results in a finer resolution, the corresponding values, however, are only as accurate as their lower resolution source.</p>
+<p>Finally, if you want to align many (possibly hundreds or thousands of) images stored on disk, you might want to checkout the <code>gdalUtils::align_rasters()</code> function. Nevertheless, you may also use <strong>raster</strong> with very large datasets. This is because <strong>raster</strong>:</p>
+<ol style="list-style-type: decimal">
+<li>lets you work with raster datasets that are too large to fit into the main memory (RAM) by only processing chunks of it.</li>
+<li>tries to facilitate parallel processing. For more information have a look at the help pages of <code>beginCluster()</code> and <code>clusteR()</code>. Additionally, check out the <em>Multi-core functions</em> section in <code>vignette(&quot;functions&quot;, package = &quot;raster&quot;)</code>.</li>
+</ol>
 </div>
 <div id="aggregation" class="section level3">
 <h3><span class="header-section-number">5.3.3</span> Aggregation</h3>
@@ -627,10 +681,11 @@ con_raster_ea
 </div>
 <div class="footnotes">
 <hr />
-<ol start="22">
-<li id="fn22"><p>CRS could be also added when creating the object with the following command: <code>st_sf(geometry = st_sfc(st_point(c(-0.1, 51.5))), crs = 4326)</code><a href="transform.html#fnref22">↩</a></p></li>
-<li id="fn23"><p>This projection is used, among others, by the National Geographic Society.<a href="transform.html#fnref23">↩</a></p></li>
-<li id="fn24"><p>Full list of NLCD2011 land cover classes can be found at <a href="https://www.mrlc.gov/nlcd11_leg.php" class="uri">https://www.mrlc.gov/nlcd11_leg.php</a><a href="transform.html#fnref24">↩</a></p></li>
+<ol start="21">
+<li id="fn21"><p>CRS could be also added when creating the object with the following command: <code>st_sf(geometry = st_sfc(st_point(c(-0.1, 51.5))), crs = 4326)</code><a href="transform.html#fnref21">↩</a></p></li>
+<li id="fn22"><p>This projection is used, among others, by the National Geographic Society.<a href="transform.html#fnref22">↩</a></p></li>
+<li id="fn23"><p>Full list of NLCD2011 land cover classes can be found at <a href="https://www.mrlc.gov/nlcd11_leg.php" class="uri">https://www.mrlc.gov/nlcd11_leg.php</a><a href="transform.html#fnref23">↩</a></p></li>
+<li id="fn24"><p>If the origins of two raster datasets are just marginally apart, it sometimes is sufficient to simply increase the <code>tolerance</code> argument of <code>raster::rasterOptions()</code>.<a href="transform.html#fnref24">↩</a></p></li>
 </ol>
 </div>
             </section>

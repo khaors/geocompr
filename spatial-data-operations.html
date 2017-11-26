@@ -197,7 +197,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.3.5" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#zonal-operations"><i class="fa fa-check"></i><b>4.3.5</b> Zonal operations</a></li>
 <li class="chapter" data-level="4.3.6" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#global-operations-and-distances"><i class="fa fa-check"></i><b>4.3.6</b> Global operations and distances</a></li>
 <li class="chapter" data-level="4.3.7" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#merging-rasters"><i class="fa fa-check"></i><b>4.3.7</b> Merging rasters</a></li>
-<li class="chapter" data-level="4.3.8" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#aligning-rasters"><i class="fa fa-check"></i><b>4.3.8</b> Aligning rasters</a></li>
 </ul></li>
 <li class="chapter" data-level="4.4" data-path="spatial-data-operations.html"><a href="spatial-data-operations.html#exercises-2"><i class="fa fa-check"></i><b>4.4</b> Exercises</a></li>
 </ul></li>
@@ -299,7 +298,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="introduction-1" class="section level2">
 <h2><span class="header-section-number">4.1</span> Introduction</h2>
 <p>Spatial operations are a vital part of geocomputation. This chapter shows how spatial objects can be modified in a multitude of ways based on their location and shape. The content clearly builds on the previous chapter because many spatial operations have a non-spatial (attribute) equivalent. Spatial operations on <em>vector</em> objects include spatial subsetting (covered in section <a href="spatial-data-operations.html#spatial-subsetting">4.2.1</a>), joining and aggregation (section <a href="#spatial-joining-and-aggregation"><strong>??</strong></a>). These topics may sound daunting, but they have already been covered, in section <a href="attr.html#vector-attribute-manipulation">3.2</a>. Spatial operations on <em>rasters</em> include merging and subsetting, covered in section <a href="spatial-data-operations.html#spatial-operations-on-raster-data">4.3</a>.</p>
-<p>The chapter also introduces new concepts that are unique to spatial data. A variety of <em>topological relations</em> can be used to subset/join vector geometries (by default <strong>sf</strong> uses the catch-all <em>intersects</em> but other relations such as <em>within</em> can be very useful), a topic that is explored in section <a href="spatial-data-operations.html#topological-relations">4.2.2</a>. New geometry data can be created by modifying existing spatial objects, using operations such as ‘buffer’ and ‘clip’, described in sections <a href="#modifying-geometry-data"><strong>??</strong></a> and <a href="transform.html#clipping">5.2.2.1</a>. Spatial operations on raster datasets involve <em>map algebra</em> (covered in sections <a href="spatial-data-operations.html#map-algebra">4.3.2</a> to <a href="spatial-data-operations.html#global-operations-and-distances">4.3.6</a>) and combining and aligning them (covered in sections <a href="spatial-data-operations.html#merging-rasters">4.3.7</a> and <a href="spatial-data-operations.html#aligning-rasters">4.3.8</a>).</p>
+<p>The chapter also introduces new concepts that are unique to spatial data. A variety of <em>topological relations</em> can be used to subset/join vector geometries (by default <strong>sf</strong> uses the catch-all <em>intersects</em> but other relations such as <em>within</em> can be very useful), a topic that is explored in section <a href="spatial-data-operations.html#topological-relations">4.2.2</a>. New geometry data can be created by modifying existing spatial objects, using operations such as ‘buffer’ and ‘clip’, described in sections <a href="#modifying-geometry-data"><strong>??</strong></a> and <a href="transform.html#clipping">5.2.2.1</a>. Spatial operations on raster datasets involve <em>map algebra</em> (covered in sections <a href="spatial-data-operations.html#map-algebra">4.3.2</a> to <a href="spatial-data-operations.html#global-operations-and-distances">4.3.6</a>) and raster merging (covered in sections <a href="spatial-data-operations.html#merging-rasters">4.3.7</a>).</p>
 <p>Another unique aspect of spatial objects is distance. All spatial objects are related through space and distance calculations can be used to find the strength of this relationship between spatial entities. Distance operations are covered in sections <a href="spatial-data-operations.html#distance-relations">4.2.6</a> and <a href="spatial-data-operations.html#global-operations-and-distances">4.3.6</a> for vector and raster datasets respectively.</p>
 
 <div class="rmdnote">
@@ -744,64 +743,6 @@ ch =<span class="st"> </span><span class="kw">getData</span>(<span class="st">&q
 aut_ch =<span class="st"> </span><span class="kw">merge</span>(aut, ch)</code></pre></div>
 <p><strong>Raster</strong>’s <code>merge()</code> command combines two images, and in case they overlap, it uses the value of the first raster. You can do exactly the same with <code>gdalUtils::mosaic_rasters()</code> which is faster, and therefore recommended if you have to merge a multitude of large rasters stored on disk.</p>
 <p>The merging approach is of little use when the overlapping values do not correspond to each other. This is frequently the case when you want to combine spectral imagery from scenes that were taken on different dates. The <code>merge()</code> command will still work but you will see a clear border in the resulting image. The <code>mosaic()</code> command lets you define a function for the overlapping area. For instance, we could compute the mean value. This might smooth the clear border in the merged result but it will most likely not make it disappear. To do so, we need a more advanced approach. Remote scientist frequently apply histogram matching or use regression techniques to align the values of the first image with those of the second image. The packages <strong>landsat</strong> (<code>histmatch()</code>, <code>relnorm()</code>, <code>PIF()</code>), <strong>satellite</strong> (<code>calcHistMatch()</code>) and <strong>RStoolbox</strong> (<code>histMatch()</code>, <code>pifMatch()</code>) provide the corresponding functions.</p>
-</div>
-<div id="aligning-rasters" class="section level3">
-<h3><span class="header-section-number">4.3.8</span> Aligning rasters</h3>
-<p>When merging or performing map algebra on rasters, their resolution, projection, origin and/or extent has to match. Otherwise, how should we add the values of one raster with a resolution of 0.2 decimal degrees to a second with a resolution of 1 decimal degree? The same problem arises when we would like to merge satellite imagery from different sensors with different projections and resolutions. We can deal with such mismatches by aligning the rasters.</p>
-<p>The <code>projectRaster()</code> function reprojects one raster to a desired projection, say from UTM to WGS84. Equally, map algebra operations require the same extent. Following code adds one row and two columns to each side of the raster while setting all new values to an elevation of 1000 meters (<a href="spatial-data-operations.html#fig:extend-example">4.9</a>).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_2 =<span class="st"> </span><span class="kw">extend</span>(elev, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">value =</span> <span class="dv">1000</span>)
-<span class="kw">plot</span>(elev_2)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:extend-example"></span>
-<img src="figures/extend-example-1.png" alt="Original raster extended by 1 one row on each side (top, bottom) and two columns on each side (right, left)." width="576" />
-<p class="caption">
-Figure 4.9: Original raster extended by 1 one row on each side (top, bottom) and two columns on each side (right, left).
-</p>
-</div>
-<p>Performing an algebraic operation on two objects with differing extents in R, the <strong>raster</strong> package returns the result for the intersection, and says so in a warning.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_3 =<span class="st"> </span>elev +<span class="st"> </span>elev_2
-<span class="co">#&gt; Warning in elev + elev_2: Raster objects have different extents. Result for</span>
-<span class="co">#&gt; their intersection is returned</span></code></pre></div>
-<p>However, we can also align the extent of two rasters with the <code>extend()</code> command. Here, we extend the <code>elev</code> object to the extend of <code>elev_2</code>. The newly added rows and column receive the default value of the <code>value</code> parameter, i.e., <code>NA</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_4 =<span class="st"> </span><span class="kw">extend</span>(elev, elev_2)</code></pre></div>
-<p>The <code>aggregate()</code> and <code>disaggregate()</code> functions help to change the cell size resolution of a raster. For instance, let us aggregate <code>elev</code> from a resolution of 0.5 to a resolution of 1, that means we aggregate by a factor of 2 (Fig. <a href="spatial-data-operations.html#fig:aggregate-example">4.10</a>). Additionally, the output cell value should correspond to the mean of the input cells (but one could use other functions as well such as <code>median()</code>, <code>sum()</code>, etc.):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_agg =<span class="st"> </span><span class="kw">aggregate</span>(elev, <span class="dt">fact =</span> <span class="dv">2</span>, <span class="dt">fun =</span> mean)
-<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
-<span class="kw">plot</span>(elev)
-<span class="kw">plot</span>(elev_agg)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:aggregate-example"></span>
-<img src="figures/aggregate-example-1.png" alt="Original raster (left). Aggregated raster (right)." width="576" />
-<p class="caption">
-Figure 4.10: Original raster (left). Aggregated raster (right).
-</p>
-</div>
-<p>Note that the origin of <code>elev_agg</code> has changed, too.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">origin</span>(elev)
-<span class="co">#&gt; [1] 0 0</span>
-<span class="kw">origin</span>(elev_agg)
-<span class="co">#&gt; [1] 0.5 0.5</span></code></pre></div>
-<p>The origin is the point closest to (0, 0) if you moved towards it in steps of x and y resolution. If two rasters have different origins, their cells do not overlap completely which would make map algebra impossible. To change the origin , use <code>origin()</code>.<a href="#fn21" class="footnoteRef" id="fnref21"><sup>21</sup></a> Looking at figure <a href="spatial-data-operations.html#fig:origin-example">4.11</a> reveals the effect of changing the origin.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the aggregated raster</span>
-<span class="kw">plot</span>(elev_agg)
-<span class="co"># change the origin</span>
-<span class="kw">origin</span>(elev_agg) =<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)
-<span class="co"># plot it again</span>
-<span class="kw">plot</span>(elev_agg, <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:origin-example"></span>
-<img src="figures/origin-example-1.png" alt="Plotting rasters with the same values but different origins." width="576" />
-<p class="caption">
-Figure 4.11: Plotting rasters with the same values but different origins.
-</p>
-</div>
-<p>The <code>resample()</code> command lets you align several raster properties in one go, namely origin, extent and resolution. Let us resample an extended <code>elev_agg</code> to the properties of <code>elev</code> again.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># add 2 rows and columns, i.e. change the extent</span>
-elev_agg =<span class="st"> </span><span class="kw">extend</span>(elev_agg, <span class="dv">2</span>)
-elev_disagg =<span class="st"> </span><span class="kw">resample</span>(elev_agg, elev)</code></pre></div>
-<p>Though our disaggregated <code>elev_disagg</code> retrieved back its original resolution, cell size and extent, its values differ. However, this is to be expected, disaggregating <strong>cannot</strong> predict values at a finer resolution, it simply uses an interpolation algorithm. It is important to keep in mind that disaggregating results in a finer resolution, the corresponding values, however, are only as accurate as their lower resolution source.</p>
-<p>Finally, if you want to align many (possibly hundreds or thousands of) images stored on disk, you might want to checkout the <code>gdalUtils::align_rasters()</code> function. Nevertheless, you may also use <strong>raster</strong> with very large datasets. This is because <strong>raster</strong>:</p>
-<ol style="list-style-type: decimal">
-<li>lets you work with raster datasets that are too large to fit into the main memory (RAM) by only processing chunks of it.</li>
-<li>tries to facilitate parallel processing. For more information have a look at the help pages of <code>beginCluster()</code> and <code>clusteR()</code>. Additionally, check out the <em>Multi-core functions</em> section in <code>vignette(&quot;functions&quot;, package = &quot;raster&quot;)</code>.</li>
-</ol>
 <!-- ## Spatial data creation -->
 <!-- where should "area" example be? in this or the previous chapter? -->
 <!-- Not here - I think this chapter should focus on geomtry data -->
@@ -887,7 +828,6 @@ elev_disagg =<span class="st"> </span><span class="kw">resample</span>(elev_agg,
 <hr />
 <ol start="20">
 <li id="fn20"><p>This can be verified with <code>identical(nz$geometry, nz_avheight$geometry)</code>.<a href="spatial-data-operations.html#fnref20">↩</a></p></li>
-<li id="fn21"><p>If the origins of two raster datasets are just marginally apart, it sometimes is sufficient to simply increase the <code>tolerance</code> argument of <code>raster::rasterOptions()</code>.<a href="spatial-data-operations.html#fnref21">↩</a></p></li>
 </ol>
 </div>
             </section>
