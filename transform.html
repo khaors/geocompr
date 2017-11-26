@@ -492,6 +492,12 @@ Figure 5.9: Randomly distributed points within the bounding box enclosing circle
 <!-- or Geometry cast -->
 <!-- Changing the geometry type while the fundamental data remains unchanged ('casting') -->
 <!-- - st_cast -->
+<!-- two groups of examples: -->
+<!-- - top down (MULTIPOLYGON -> the rest) -->
+<!-- - bottom up (POINT -> the rest) -->
+<!-- and in the same time, two (?) groups of purposes: -->
+<!-- - split/join geometries (e.g one mutlipoint -> many points) -->
+<!-- - transform type (e.g one mutlipoint -> one line -> one polygon) -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_points =<span class="st"> </span><span class="kw">st_cast</span>(nz, <span class="st">&quot;MULTIPOINT&quot;</span>)</code></pre></div>
 <p><img src="figures/unnamed-chunk-25-1.png" width="576" style="display: block; margin: auto;" /></p>
 <!-- ### Class conversion -->
