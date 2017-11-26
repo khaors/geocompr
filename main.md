@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservec97ec69f7a757903
+preserve1d1ecef307491822
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3096,7 +3096,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve474f0afcb5f3cf78
+preserve3b4aa970fc0a71f8
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3578,7 +3578,7 @@ The `mosaic()` command lets you define a function for the overlapping area.
 For instance, we could compute the mean value. 
 This might smooth the clear border in the merged result but it will most likely not make it disappear.
 To do so, we need a more advanced approach. 
-Remote scientist frequently apply histogram matching or use regression techniques to align the values of the first image with those of the second image.
+Remote sensing scientist frequently apply histogram matching or use regression techniques to align the values of the first image with those of the second image.
 The packages **landsat** (`histmatch()`, `relnorm()`, `PIF()`), **satellite** (`calcHistMatch()`) and **RStoolbox** (`histMatch()`, `pifMatch()`) provide the corresponding functions.
 
 <!-- ## Spatial data creation -->
@@ -5429,7 +5429,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve1c1e3ee340f9acc9
+preservee07d5dff97455c68
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
