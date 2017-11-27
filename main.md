@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2017-11-26'
+date: '2017-11-27'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2017-11-26 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2017-11-27 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve36920bdb55e2cf4a
+preserveff8c92358bf5b2c2
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3096,7 +3096,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservea92fe049c7ef9ec5
+preserveeea9641dd6a85d91
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4943,11 +4943,12 @@ To demonstrate how geocomputation can answer these questions, the next section c
 ## Case study
 
 Imagine your are launching a cycling company and would like to open shops across urban areas of Germany.
-Survey data reveals the target audience: males between 20-40 years old who live alone or with just one person (single households, not families), and there is sufficient capital to open a number of shops.
+Imagine further that a survey you conducted indicates following target group: males between 20-40 years old who live alone or with just one person (single households, not families).
+Additionally, you are in the lucky position to have sufficient capital to open a number of shops.
 But where should they be placed?
+Geomarketing consultancies have been developed to help people answer such questions, and they would happily charge high rates for their expertise.
+<!--It is testament to the rate of technological development that these questions can now be answered by informed citizens using free and open source software.-->
 
-Many store location analysis consultancies have been developed to help people answer such questions, and they would happily charge high rates for their expertise.
-It is testament to the rate of technological development that this questions can now be answered by informed citizens using free and open source software.
 The here presented analysis will demonstrate a number of geocomputational techniques learned during the first chapters of the book.
 Additionally, this chapter will illustrate common steps in geomarketing to find suitable locations for a specific shop type (here: cycle stores).
 The analysis includes following steps:
@@ -5061,16 +5062,18 @@ input = mutate_all(input, funs(ifelse(. %in% c(-1, -9), NA, .)))
 ```
  
 After the data preprocessing, we convert the table into a raster stack.
-First, we use the x- and y-coordinates to convert the `data.frame` into a `SpatialPolygonsDataFrame` (we do not use sf-objects here, since the **raster** package does not support `sf`).
-`gridded()` converts a `SpatialPolygonsDataFrame` into a `SpatialPixelsDataFrame` which in turn can be used as an input for **raster**'s `stack()` function.
+First, we use the x- and y-coordinates and the CRS to convert the `data.frame` into a spatial object.
+`gridded()` converts a `SpatialPolygonsDataFrame` (but does not support `sf` objects) into a `SpatialPixelsDataFrame` which in turn can be used as an input for **raster**'s `stack()` function.
 The final raster stack consists of four layers: inhabitants, mean age, portion of women and household size (Fig. \@ref(fig:census-stack)).
 
 
 ```r
 # convert table into a raster (x and y are cell midpoints)
-coordinates(input) =~ x + y
+input = st_as_sf(input, coords = c("x", "y"))
 # use the correct projection (see data description)
-proj4string(input) = CRS("+init=epsg:3035")
+input = st_set_crs(input, 3035)
+# convert into an sp-object
+input = as(input, "Spatial")
 gridded(input) = TRUE
 # convert into a raster stack
 input = stack(input)
@@ -5133,17 +5136,11 @@ polys = st_as_sf(polys)
 Plotting these polygons reveals eight metropolitan regions (Fig. \@ref(fig:metro-areas)).
 Each region consists of one ore more polygons (raster cells).
 It would be nice if we could join all polygons belonging to one region.
-One approach is to union the polygons.
-<!-- add reference (see section \@ref(spatial-data-aggregation)). -->
-
-<!-- ```{r} -->
-<!-- metros = st_union(polys) %>%  -->
-<!--   st_cast("POLYGON")  -->
-<!-- ``` -->
+One approach is to union the polygons (see section \@ref(spatial-data-aggregation)).
 
 
 ```r
-polys = summarize(polys, pop = sum(layer))
+polys = st_union(polys)
 ```
 
 This returns one multipolygon feature with its elements corresponding to the metropolitan regions. 
@@ -5152,13 +5149,8 @@ To extract these polygons from the multipolygon, we can use `st_cast()`.
 
 ```r
 metros = st_cast(polys, "POLYGON")
-#> Warning in st_cast.sf(polys, "POLYGON"): repeating attributes for all sub-
-#> geometries for which they may not be constant
 ```
 
-The warning message tells us that the attributes are repeated for all sub-geometries.
-Here, this means that each region receives the total population of all metropolitan areas combined.
-Clearly this is wrong but here we can safely ignore this since we are merely interested in the geometry.
 
 <!-- maybe a good if advanced exercise
 This requires finding the nearest neighbors (`st_intersects()`), and some additional processing.
@@ -5227,7 +5219,7 @@ st_centroid(metros) %>%
 ```
 -->
 
-However, visual inspection reveals eight metropolitan areas whereas the dissolving comes up with nine.
+However, visual inspection reveals eight metropolitan areas whereas the unioning-casting approach comes up with nine.
 This is because one polygon just touches the corner of another polygon (western Germany, Cologne/Düsseldorf area; Fig. \@ref(fig:metro-areas)).
 
 <div class="figure" style="text-align: center">
@@ -5235,7 +5227,7 @@ This is because one polygon just touches the corner of another polygon (western 
 <p class="caption">(\#fig:metro-areas)The aggregated population raster (resolution: 20 km) with the identified metropolitan areas (golden polygons) and the corresponding names.</p>
 </div>
 
-One could assign it to the neighboring region using another dissolving procedure, however, we leave this as an exercise to the reader, and simply delete the offending polygon.
+One could assign it to the neighboring region using a dissolving procedure, however, we leave this as an exercise to the reader, and simply delete the offending polygon.
 
 
 ```r
@@ -5259,9 +5251,8 @@ metros_wgs = st_transform(metros_2, 4326)
 coords = st_centroid(metros_wgs) %>%
   st_coordinates() %>%
   round(., 4)
-#> Warning in st_centroid.sfc(st_geometry(x), of_largest_polygon =
-#> of_largest_polygon): st_centroid does not give correct centroids for
-#> longitude/latitude data
+#> Warning in st_centroid.sfc(metros_wgs): st_centroid does not give correct
+#> centroids for longitude/latitude data
 ```
 
 Additionally, `ggmap::revgeocode()` only accepts one coordinate at a time, which is why we iterate over each coordinate of `coords` via a loop (`map_dfr()`).
@@ -5288,6 +5279,11 @@ metro_names = map_dfr(1:nrow(coords), function(i) {
   add
 })
 ```
+
+
+
+
+
 
 Choosing `more` as `revgeocode()`'s `output` option will give back a `data.frame` with several columns referring to the location including the address, locality and various administrative levels.
 Overall, we are satisfied with the `locality` column serving as metropolitan names (München, Nürnberg, Stuttgart, Frankfurt, Hamburg, Berlin, Leipzig) apart from one exception, namely Velbert.
@@ -5319,7 +5315,7 @@ As with Google's reverse geocode API, the OSM-download will once in a while not 
 The `while` loop increases the number of download trials to three. 
 If then still no features can be downloaded, most likely there are none.
 Or it is an indication that another error has occurred before. 
-For instance, the `opq()` function has retrieved a wrong bounding box.
+For instance, the `opq()` function might have retrieved a wrong bounding box.
 
 
 ```r
@@ -5371,11 +5367,11 @@ shops = map(shops, dplyr::select, osm_id, shop) %>%
 
 
 It would have been easier to simply use `map_dfr()`. 
-Unfortunately, so far it does not work in harmony with `sf` objects but it will most likely in the future.
+Unfortunately, so far it does not work in harmony with `sf` objects.
 
 The only thing left to do is to convert the spatial point object into a raster.
 The `rasterize()` function does exactly this.
-As input it expects an `sp` vector object (here we use the spatial point object `shops`), and a raster object (here we use the population raster whose original values have been replaced by `NA`'s).
+As input it expects an `sp` of `sf` vector object (here we use the spatial point object `shops`), and a raster object (here we use the population raster whose original values have been replaced by `NA`'s).
 A function defines how the values from the spatial vector object are transferred to the raster object. 
 `count` simply counts the number of spatial objects falling into one raster cell, in this example the shop points, and returns this value as the output cell value.
 Hence, we end up with a shop density, namely the number of shops per square kilometer.
@@ -5386,7 +5382,6 @@ Naturally, the projection of the input raster and the input vector object have t
 
 ```r
 shops = st_transform(shops, proj4string(input$pop))
-shops = as(shops, "Spatial")
 # create poi raster
 poi = rasterize(x = shops, y = input$pop, field = "osm_id", fun = "count")
 ```
@@ -5430,13 +5425,11 @@ reclass = dropLayer(reclass, "pop")
 result = sum(reclass)
 ```
 
-
-
 The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve57007f400ac53239
+preserve9f2661af3abe7671
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
