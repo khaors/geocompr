@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve9d02fd261b3305b7
+preserved7447b2899b743c1
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3096,7 +3096,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve0892d890772fe699
+preservebf2495c3fb65b3ab
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3246,15 +3246,18 @@ A number of algorithms have been developed for areal interpolation, including ar
 </div>
 
 The simplest useful method for spatial interpolation is *area weighted* spatial interpolation.
-This is implemented in `st_interpolate_aw()`, as demonstrated below:
-<!-- well, what you are doing here is weighting the inhabitants presumably on the basis of the area. The link between your congruent and incongruent example is somehow missing. One gets the impression, that the spatial interpolation takes care of incongruencies which is not the case. So I would suggest to clarify the weighting procedure.-->
+This is implemented in `st_interpolate_aw()`, as demonstrated in the code chunk below.
+In this case values from the `incongruent` object are allocated to the `aggregating_zones` in proportion to the area:
 
 
 ```r
-# buff_agg_aw = st_interpolate_aw(x = africa["pop"], to = buff, extensive = TRUE)
+agg_aw = st_interpolate_aw(incongruent["value"], aggregating_zones, extensive = FALSE)
+#> Warning in st_interpolate_aw(incongruent["value"], aggregating_zones,
+#> extensive = FALSE): st_interpolate_aw assumes attributes are constant over
+#> areas of x
 ```
 
-Instead of simply aggregating, this procedure additionally applies a weight, in this case simply the area.
+Instead of simply taking the mean average of each area within each aggregating feature, `st_interpolate_aw` applies a weight to each value in proportion to its area in each aggregating zone (use `extensive = TRUE` for 'spatially extensive' variables such as population which should be summed rather than averaged).
 For instance, if the intersection of our buffer and a country is 100 000 km^^2^^ but the country has 1 mio square kilometers and 1 mio inhabitants, our result will obtain just a tenth of total population, in this case 100 000 inhabitants.
 <!-- - `aggregate.sf()` - aggregate an sf object, possibly union-ing geometries -->
 <!-- - disaggregation?? `st_cast()` - https://github.com/edzer/sfr/wiki/migrating -->
@@ -5429,7 +5432,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveb5ff8b3951cdffa3
+preserve1f5cd3e0d14765d1
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
