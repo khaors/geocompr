@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve8c5948f99697dfb2
+preserve9b5714fb84809370
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3095,7 +3095,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserved6c58af4beb3a62c
+preserve61c9613a26e60fc6
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3919,6 +3919,47 @@ More information about CRS modification can be found in the [Using PROJ.4](http:
 ### Geometry transformations
 <!-- or ## Geometry processing -->
 
+### Geometry unions and aggregation
+
+Spatial aggregation can also be done in the **tidyverse**, using **dplyr** functions as follows:
+
+
+```r
+group_by(us_states, REGION) %>%
+  summarize(sum(pop = total_pop_15, na.rm = TRUE))
+```
+
+For attribute data aggregation the grouping variable is another variable, typically one with few unique values relative to the number of rows (see section \@ref(vector-attribute-aggregation)).
+What we did not cover in that section was that attribute data aggregation dissolves the geometries of touching polygons.
+The `REGION` variable in the `us_states` dataset is a good example:
+there are 49 states (excluding Hawaii and Alaska) which can be aggregated into four regions.
+This is demonstrated in the code chunk below, the results of which are illustrated in Figure \@ref(fig:us-regions):
+
+
+```r
+regions = aggregate(x = us_states[, "total_pop_15"], by = list(us_states$REGION),
+                    FUN = sum, na.rm = TRUE)
+```
+<!--
+show also tidyverse way, so what you are doing is basically a spatial join and a subsequent aggregation without a grouping variable. Didactically, it might be better to present a grouping variable.
+-->
+
+
+
+<div class="figure" style="text-align: center">
+<img src="figures/us-regions-1.png" alt="Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions, with population represented by color. Note the operation automatically dissolves boundaries between states." width="100%" />
+<p class="caption">(\#fig:us-regions)Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions, with population represented by color. Note the operation automatically dissolves boundaries between states.</p>
+</div>
+
+The equivalent result can be achieved using **tidyverse** functions as follows (result not shown):
+
+
+```r
+regions2 = us_states %>% 
+  group_by(REGION) %>%
+  summarize(sum(pop = total_pop_15, na.rm = TRUE))
+```
+
 #### Clipping 
 
 Spatial clipping is a form of spatial subsetting that involves changes to the `geometry` columns of at least some of the affected features.
@@ -3954,7 +3995,7 @@ plot(b)
 plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
 ```
 
-<img src="figures/unnamed-chunk-19-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-23-1.png" width="576" style="display: block; margin: auto;" />
 
 The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
 <!-- Todo: reference r4ds -->
@@ -4009,7 +4050,7 @@ nz_centroid = st_centroid(nz)
 nz_pos = st_point_on_surface(nz)
 ```
 
-<img src="figures/unnamed-chunk-23-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-27-1.png" width="576" style="display: block; margin: auto;" />
 
 #### Buffers
 
@@ -4031,7 +4072,7 @@ nz_pos = st_point_on_surface(nz)
 nz_points = st_cast(nz, "MULTIPOINT")
 ```
 
-<img src="figures/unnamed-chunk-25-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-29-1.png" width="576" style="display: block; margin: auto;" />
 
 <!-- ### Class conversion -->
 <!-- placeholder for: -->
@@ -5434,7 +5475,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservedc2cb663d9926672
+preserve9c695f9171c3841d
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 

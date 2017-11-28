@@ -206,9 +206,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.2" data-path="transform.html"><a href="transform.html#geometric-operations-on-vector-data"><i class="fa fa-check"></i><b>5.2</b> Geometric operations on vector data</a><ul>
 <li class="chapter" data-level="5.2.1" data-path="transform.html"><a href="transform.html#reprojecting"><i class="fa fa-check"></i><b>5.2.1</b> Reprojecting</a></li>
 <li class="chapter" data-level="5.2.2" data-path="transform.html"><a href="transform.html#geometry-transformations"><i class="fa fa-check"></i><b>5.2.2</b> Geometry transformations</a></li>
-<li class="chapter" data-level="5.2.3" data-path="transform.html"><a href="transform.html#type-transformation"><i class="fa fa-check"></i><b>5.2.3</b> Type transformation</a></li>
-<li class="chapter" data-level="5.2.4" data-path="transform.html"><a href="transform.html#simplification"><i class="fa fa-check"></i><b>5.2.4</b> Simplification</a></li>
-<li class="chapter" data-level="5.2.5" data-path="transform.html"><a href="transform.html#rasterization"><i class="fa fa-check"></i><b>5.2.5</b> Rasterization</a></li>
+<li class="chapter" data-level="5.2.3" data-path="transform.html"><a href="transform.html#geometry-unions-and-aggregation"><i class="fa fa-check"></i><b>5.2.3</b> Geometry unions and aggregation</a></li>
+<li class="chapter" data-level="5.2.4" data-path="transform.html"><a href="transform.html#type-transformation"><i class="fa fa-check"></i><b>5.2.4</b> Type transformation</a></li>
+<li class="chapter" data-level="5.2.5" data-path="transform.html"><a href="transform.html#simplification"><i class="fa fa-check"></i><b>5.2.5</b> Simplification</a></li>
+<li class="chapter" data-level="5.2.6" data-path="transform.html"><a href="transform.html#rasterization"><i class="fa fa-check"></i><b>5.2.6</b> Rasterization</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="transform.html"><a href="transform.html#geometric-operations-on-raster-data"><i class="fa fa-check"></i><b>5.3</b> Geometric operations on raster data</a><ul>
 <li class="chapter" data-level="5.3.1" data-path="transform.html"><a href="transform.html#reprojecting-1"><i class="fa fa-check"></i><b>5.3.1</b> Reprojecting</a></li>
@@ -423,8 +424,30 @@ Figure 5.6: Lambert azimuthal equal-area projection of the world centered on New
 <div id="geometry-transformations" class="section level3">
 <h3><span class="header-section-number">5.2.2</span> Geometry transformations</h3>
 <!-- or ## Geometry processing -->
+</div>
+<div id="geometry-unions-and-aggregation" class="section level3">
+<h3><span class="header-section-number">5.2.3</span> Geometry unions and aggregation</h3>
+<p>Spatial aggregation can also be done in the <strong>tidyverse</strong>, using <strong>dplyr</strong> functions as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">group_by</span>(us_states, REGION) %&gt;%
+<span class="st">  </span><span class="kw">summarize</span>(<span class="kw">sum</span>(<span class="dt">pop =</span> total_pop_15, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</code></pre></div>
+<p>For attribute data aggregation the grouping variable is another variable, typically one with few unique values relative to the number of rows (see section <a href="attr.html#vector-attribute-aggregation">3.2.2</a>). What we did not cover in that section was that attribute data aggregation dissolves the geometries of touching polygons. The <code>REGION</code> variable in the <code>us_states</code> dataset is a good example: there are 49 states (excluding Hawaii and Alaska) which can be aggregated into four regions. This is demonstrated in the code chunk below, the results of which are illustrated in Figure <a href="spatial-data-operations.html#fig:us-regions">4.5</a>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">regions =<span class="st"> </span><span class="kw">aggregate</span>(<span class="dt">x =</span> us_states[, <span class="st">&quot;total_pop_15&quot;</span>], <span class="dt">by =</span> <span class="kw">list</span>(us_states$REGION),
+                    <span class="dt">FUN =</span> sum, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<!--
+show also tidyverse way, so what you are doing is basically a spatial join and a subsequent aggregation without a grouping variable. Didactically, it might be better to present a grouping variable.
+-->
+<div class="figure" style="text-align: center"><span id="fig:us-regions"></span>
+<img src="figures/us-regions-1.png" alt="Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions, with population represented by color. Note the operation automatically dissolves boundaries between states." width="100%" />
+<p class="caption">
+Figure 4.5: Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions, with population represented by color. Note the operation automatically dissolves boundaries between states.
+</p>
+</div>
+<p>The equivalent result can be achieved using <strong>tidyverse</strong> functions as follows (result not shown):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">regions2 =<span class="st"> </span>us_states %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(REGION) %&gt;%
+<span class="st">  </span><span class="kw">summarize</span>(<span class="kw">sum</span>(<span class="dt">pop =</span> total_pop_15, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</code></pre></div>
 <div id="clipping" class="section level4">
-<h4><span class="header-section-number">5.2.2.1</span> Clipping</h4>
+<h4><span class="header-section-number">5.2.3.1</span> Clipping</h4>
 <p>Spatial clipping is a form of spatial subsetting that involves changes to the <code>geometry</code> columns of at least some of the affected features.</p>
 <p>Clipping can only apply to features more complex than points: lines, polygons and their ‘multi’ equivalents. To illustrate the concept we will start with a simple example: two overlapping circles with a center point one unit away from each other and radius of one:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">b =<span class="st"> </span><span class="kw">st_sfc</span>(<span class="kw">st_point</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)), <span class="kw">st_point</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))) <span class="co"># create 2 points</span>
@@ -444,7 +467,7 @@ y =<span class="st"> </span>b[<span class="dv">2</span>]
 x_and_y =<span class="st"> </span><span class="kw">st_intersection</span>(x, y)
 <span class="kw">plot</span>(b)
 <span class="kw">plot</span>(x_and_y, <span class="dt">col =</span> <span class="st">&quot;lightgrey&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>) <span class="co"># color intersecting area</span></code></pre></div>
-<p><img src="figures/unnamed-chunk-19-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-23-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>The subsequent code chunk demonstrate how this works for all combinations of the ‘Venn’ diagram representing <code>x</code> and <code>y</code>, inspired by <a href="http://r4ds.had.co.nz/transform.html#logical-operators">Figure 5.1</a> of the book R for Data Science <span class="citation">(Grolemund and Wickham <a href="#ref-grolemund_r_2016">2016</a>)</span>. <!-- Todo: reference r4ds --></p>
 <div class="figure" style="text-align: center"><span id="fig:venn-clip"></span>
 <img src="figures/venn-clip-1.png" alt="Spatial equivalents of logical operators." width="576" />
@@ -472,23 +495,23 @@ Figure 5.9: Randomly distributed points within the bounding box enclosing circle
 </div>
 </div>
 <div id="centroids" class="section level4">
-<h4><span class="header-section-number">5.2.2.2</span> Centroids</h4>
+<h4><span class="header-section-number">5.2.3.2</span> Centroids</h4>
 <!-- st_point_on_surface -->
 <!-- st_centroid -->
 <!-- st_polygonize -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_centroid =<span class="st"> </span><span class="kw">st_centroid</span>(nz)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_pos =<span class="st"> </span><span class="kw">st_point_on_surface</span>(nz)</code></pre></div>
-<p><img src="figures/unnamed-chunk-23-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-27-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="buffers" class="section level4">
-<h4><span class="header-section-number">5.2.2.3</span> Buffers</h4>
+<h4><span class="header-section-number">5.2.3.3</span> Buffers</h4>
 </div>
 <div id="affine-transformations" class="section level4">
-<h4><span class="header-section-number">5.2.2.4</span> Affine transformations</h4>
+<h4><span class="header-section-number">5.2.3.4</span> Affine transformations</h4>
 </div>
 </div>
 <div id="type-transformation" class="section level3">
-<h3><span class="header-section-number">5.2.3</span> Type transformation</h3>
+<h3><span class="header-section-number">5.2.4</span> Type transformation</h3>
 <!-- or Geometry cast -->
 <!-- Changing the geometry type while the fundamental data remains unchanged ('casting') -->
 <!-- - st_cast -->
@@ -499,7 +522,7 @@ Figure 5.9: Randomly distributed points within the bounding box enclosing circle
 <!-- - split/join geometries (e.g one mutlipoint -> many points) -->
 <!-- - transform type (e.g one mutlipoint -> one line -> one polygon) -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_points =<span class="st"> </span><span class="kw">st_cast</span>(nz, <span class="st">&quot;MULTIPOINT&quot;</span>)</code></pre></div>
-<p><img src="figures/unnamed-chunk-25-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-29-1.png" width="576" style="display: block; margin: auto;" /></p>
 <!-- ### Class conversion -->
 <!-- placeholder for: -->
 <!-- sf -> sp -->
@@ -507,7 +530,7 @@ Figure 5.9: Randomly distributed points within the bounding box enclosing circle
 <!-- stars; https://github.com/r-spatial/stars/blob/master/vignettes/blog1.Rmd -->
 </div>
 <div id="simplification" class="section level3">
-<h3><span class="header-section-number">5.2.4</span> Simplification</h3>
+<h3><span class="header-section-number">5.2.5</span> Simplification</h3>
 <!-- - simplifications -->
 <!-- st_simplify -->
 <!-- line example -->
@@ -515,7 +538,7 @@ Figure 5.9: Randomly distributed points within the bounding box enclosing circle
 <!-- polygon example -->
 </div>
 <div id="rasterization" class="section level3">
-<h3><span class="header-section-number">5.2.5</span> Rasterization</h3>
+<h3><span class="header-section-number">5.2.6</span> Rasterization</h3>
 <!-- - vector to raster -->
 </div>
 </div>
