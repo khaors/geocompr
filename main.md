@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservea30514936cf5915e
+preserve9a525b3bcef75cc2
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3095,7 +3095,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve05148f182cfa271f
+preservee622dd2cc2f21557
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4023,6 +4023,15 @@ nz_pos = st_point_on_surface(nz)
 ### Affine transformations
 
 ### Type transformation
+
+Geometry casting is powerful operation which enable transformation of the geometry type <!--while the fundamental data remains unchanged-->.
+<!-- This could be done for one of two purposes, either simplification  -->
+<!-- (also called type transformation) is  -->
+
+<!-- a/ points -> lines -> polygons  -->
+
+<!-- b/ multi ->  single -->
+
 <!-- or Geometry cast -->
 <!-- Changing the geometry type while the fundamental data remains unchanged ('casting') -->
 <!-- - st_cast -->
@@ -4038,7 +4047,7 @@ nz_pos = st_point_on_surface(nz)
 nz_points = st_cast(nz, "MULTIPOINT")
 ```
 
-<img src="figures/unnamed-chunk-29-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-30-1.png" width="576" style="display: block; margin: auto;" />
 
 <!-- ### Class conversion -->
 <!-- placeholder for: -->
@@ -5441,7 +5450,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve49bc98d941bdec19
+preservefb9e0d3ed66c662d
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
