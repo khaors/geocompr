@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve9e8562ca4fd5fc56
+preserve364b042ff5f6c4e2
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2683,14 +2683,13 @@ library(spData)
 
 Spatial operations are a vital part of geocomputation.
 This chapter shows how spatial objects can be modified in a multitude of ways based on their location and shape.
-The content clearly builds on the previous chapter because many spatial operations have a non-spatial (attribute) equivalent.
-Spatial operations on *vector* objects include spatial subsetting (covered in section \@ref(spatial-subsetting)), joining and aggregation (section \@ref(spatial-joining-and-aggregation)).
-These topics may sound daunting, but they have already been covered, in section \@ref(vector-attribute-manipulation).
+The content builds on the previous chapter because many spatial operations have a non-spatial (attribute) equivalent.
+Spatial operations on *vector* objects include spatial subsetting (covered in section \@ref(spatial-subsetting)) and spatial joining (section \@ref(spatial-joining)).
+This content builds on section \@ref(vector-attribute-manipulation) in the previous chapter.
 Spatial operations on *rasters* include merging and subsetting, covered in section \@ref(spatial-operations-on-raster-data).
 
 The chapter also introduces new concepts that are unique to spatial data.
 A variety of *topological relations* can be used to subset/join vector geometries (by default **sf** uses the catch-all *intersects* but other relations such as *within* can be very useful), a topic that is explored in section \@ref(topological-relations).
-New geometry data can be created by modifying existing spatial objects, using operations such as 'buffer' and 'clip', described in sections \@ref(modifying-geometry-data) and \@ref(clipping).
 Spatial operations on raster datasets involve *map algebra* (covered in sections \@ref(map-algebra) to \@ref(global-operations-and-distances)) and raster merging (covered in sections \@ref(merging-rasters)).
 
 Another unique aspect of spatial objects is distance.
@@ -3096,7 +3095,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveac85477c7031b1ed
+preserve0bd759df1db60328
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5432,7 +5431,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve623bc550cceffc90
+preserve397a5a9461dca610
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
