@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve364b042ff5f6c4e2
+preserve8966a619b79591e3
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2723,7 +2723,7 @@ canterbury_height = nz_height[canterbury, ]
 </div>
 
 Like attribute subsetting `x[y, ]` subsets features of *target* object `x` using the contents of a *source* object `y`.
-With spatial subsetting however, instead of `y` being `logical` --- a vector of `TRUE` and `FALSE` values --- it is another spatial (`sf`) object.
+With spatial subsetting however, instead of `y` being of class `logical` or `integer` --- a vector of `TRUE` and `FALSE` values or whole numbers --- it is another spatial (`sf`) object.
 
 Various *topological relations* can be used for spatial subsetting.
 These determine the type of spatial relationship that features in the target object must have with the subsetting object to be selected, including *touches*, *crosses* or *within* (see section \@ref(topological-relations)). 
@@ -3095,7 +3095,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve0bd759df1db60328
+preserve25eb131b4d22f63b
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5431,7 +5431,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve397a5a9461dca610
+preserved58da19d6f8beeee
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
