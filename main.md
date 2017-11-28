@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve81001b6abc22f400
+preserve42dadd740dfcb02f
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3095,7 +3095,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserved551fd77a6552aa0
+preserve29eb27f368927c69
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3926,7 +3926,7 @@ regions2 = us_states %>%
   summarize(sum(pop = total_pop_15, na.rm = TRUE))
 ```
 
-#### Clipping 
+### Clipping 
 
 Spatial clipping is a form of spatial subsetting that involves changes to the `geometry` columns of at least some of the affected features.
 
@@ -4001,7 +4001,7 @@ text(x = c(-0.5, 1.5), y = 1, labels = l)
 
 
 
-#### Centroids
+### Centroids
 <!-- st_point_on_surface -->
 <!-- st_centroid -->
 <!-- st_polygonize -->
@@ -4018,9 +4018,9 @@ nz_pos = st_point_on_surface(nz)
 
 <img src="figures/unnamed-chunk-27-1.png" width="576" style="display: block; margin: auto;" />
 
-#### Buffers
+### Buffers
 
-#### Affine transformations
+### Affine transformations
 
 ### Type transformation
 <!-- or Geometry cast -->
@@ -5441,7 +5441,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve82fe0d203c8c2157
+preserve8d523f821c13c195
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 

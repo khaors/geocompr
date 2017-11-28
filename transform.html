@@ -206,9 +206,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.2" data-path="transform.html"><a href="transform.html#geometric-operations-on-vector-data"><i class="fa fa-check"></i><b>5.2</b> Geometric operations on vector data</a><ul>
 <li class="chapter" data-level="5.2.1" data-path="transform.html"><a href="transform.html#reprojecting"><i class="fa fa-check"></i><b>5.2.1</b> Reprojecting</a></li>
 <li class="chapter" data-level="5.2.2" data-path="transform.html"><a href="transform.html#geometry-unions-and-aggregation"><i class="fa fa-check"></i><b>5.2.2</b> Geometry unions and aggregation</a></li>
-<li class="chapter" data-level="5.2.3" data-path="transform.html"><a href="transform.html#type-transformation"><i class="fa fa-check"></i><b>5.2.3</b> Type transformation</a></li>
-<li class="chapter" data-level="5.2.4" data-path="transform.html"><a href="transform.html#simplification"><i class="fa fa-check"></i><b>5.2.4</b> Simplification</a></li>
-<li class="chapter" data-level="5.2.5" data-path="transform.html"><a href="transform.html#rasterization"><i class="fa fa-check"></i><b>5.2.5</b> Rasterization</a></li>
+<li class="chapter" data-level="5.2.3" data-path="transform.html"><a href="transform.html#clipping"><i class="fa fa-check"></i><b>5.2.3</b> Clipping</a></li>
+<li class="chapter" data-level="5.2.4" data-path="transform.html"><a href="transform.html#centroids"><i class="fa fa-check"></i><b>5.2.4</b> Centroids</a></li>
+<li class="chapter" data-level="5.2.5" data-path="transform.html"><a href="transform.html#buffers"><i class="fa fa-check"></i><b>5.2.5</b> Buffers</a></li>
+<li class="chapter" data-level="5.2.6" data-path="transform.html"><a href="transform.html#affine-transformations"><i class="fa fa-check"></i><b>5.2.6</b> Affine transformations</a></li>
+<li class="chapter" data-level="5.2.7" data-path="transform.html"><a href="transform.html#type-transformation"><i class="fa fa-check"></i><b>5.2.7</b> Type transformation</a></li>
+<li class="chapter" data-level="5.2.8" data-path="transform.html"><a href="transform.html#simplification"><i class="fa fa-check"></i><b>5.2.8</b> Simplification</a></li>
+<li class="chapter" data-level="5.2.9" data-path="transform.html"><a href="transform.html#rasterization"><i class="fa fa-check"></i><b>5.2.9</b> Rasterization</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="transform.html"><a href="transform.html#geometric-operations-on-raster-data"><i class="fa fa-check"></i><b>5.3</b> Geometric operations on raster data</a><ul>
 <li class="chapter" data-level="5.3.1" data-path="transform.html"><a href="transform.html#reprojecting-1"><i class="fa fa-check"></i><b>5.3.1</b> Reprojecting</a></li>
@@ -442,8 +446,9 @@ Figure 5.7: Spatial aggregation on contiguous polygons, illustrated by aggregati
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">regions2 =<span class="st"> </span>us_states %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">group_by</span>(REGION) %&gt;%
 <span class="st">  </span><span class="kw">summarize</span>(<span class="kw">sum</span>(<span class="dt">pop =</span> total_pop_15, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</code></pre></div>
-<div id="clipping" class="section level4">
-<h4><span class="header-section-number">5.2.2.1</span> Clipping</h4>
+</div>
+<div id="clipping" class="section level3">
+<h3><span class="header-section-number">5.2.3</span> Clipping</h3>
 <p>Spatial clipping is a form of spatial subsetting that involves changes to the <code>geometry</code> columns of at least some of the affected features.</p>
 <p>Clipping can only apply to features more complex than points: lines, polygons and their ‘multi’ equivalents. To illustrate the concept we will start with a simple example: two overlapping circles with a center point one unit away from each other and radius of one:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">b =<span class="st"> </span><span class="kw">st_sfc</span>(<span class="kw">st_point</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)), <span class="kw">st_point</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))) <span class="co"># create 2 points</span>
@@ -490,8 +495,8 @@ Figure 5.10: Randomly distributed points within the bounding box enclosing circl
 </p>
 </div>
 </div>
-<div id="centroids" class="section level4">
-<h4><span class="header-section-number">5.2.2.2</span> Centroids</h4>
+<div id="centroids" class="section level3">
+<h3><span class="header-section-number">5.2.4</span> Centroids</h3>
 <!-- st_point_on_surface -->
 <!-- st_centroid -->
 <!-- st_polygonize -->
@@ -499,15 +504,14 @@ Figure 5.10: Randomly distributed points within the bounding box enclosing circl
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_pos =<span class="st"> </span><span class="kw">st_point_on_surface</span>(nz)</code></pre></div>
 <p><img src="figures/unnamed-chunk-27-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
-<div id="buffers" class="section level4">
-<h4><span class="header-section-number">5.2.2.3</span> Buffers</h4>
+<div id="buffers" class="section level3">
+<h3><span class="header-section-number">5.2.5</span> Buffers</h3>
 </div>
-<div id="affine-transformations" class="section level4">
-<h4><span class="header-section-number">5.2.2.4</span> Affine transformations</h4>
-</div>
+<div id="affine-transformations" class="section level3">
+<h3><span class="header-section-number">5.2.6</span> Affine transformations</h3>
 </div>
 <div id="type-transformation" class="section level3">
-<h3><span class="header-section-number">5.2.3</span> Type transformation</h3>
+<h3><span class="header-section-number">5.2.7</span> Type transformation</h3>
 <!-- or Geometry cast -->
 <!-- Changing the geometry type while the fundamental data remains unchanged ('casting') -->
 <!-- - st_cast -->
@@ -526,7 +530,7 @@ Figure 5.10: Randomly distributed points within the bounding box enclosing circl
 <!-- stars; https://github.com/r-spatial/stars/blob/master/vignettes/blog1.Rmd -->
 </div>
 <div id="simplification" class="section level3">
-<h3><span class="header-section-number">5.2.4</span> Simplification</h3>
+<h3><span class="header-section-number">5.2.8</span> Simplification</h3>
 <!-- - simplifications -->
 <!-- st_simplify -->
 <!-- line example -->
@@ -534,7 +538,7 @@ Figure 5.10: Randomly distributed points within the bounding box enclosing circl
 <!-- polygon example -->
 </div>
 <div id="rasterization" class="section level3">
-<h3><span class="header-section-number">5.2.5</span> Rasterization</h3>
+<h3><span class="header-section-number">5.2.9</span> Rasterization</h3>
 <!-- - vector to raster -->
 </div>
 </div>
