@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve9a525b3bcef75cc2
+preserve4db14ee6ea85e31b
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3095,7 +3095,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservee622dd2cc2f21557
+preserved7ab2f6fd49654ef
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4977,7 +4977,7 @@ The analysis includes following steps:
 - The retrieval of socio-demographic data by downloading gridded German census data (section \@ref(create-census-rasters)).
 - The identification of areas of high population density (metropolitan areas; section \@ref(define-metropolitan-areas)).
 - The download of detailed geographic data (OSM data) for these areas (section \@ref(points-of-interest)).
-- Creating input rasters comparable by means of reclassifaction, and using map algebra to compute a final score where higher scores indicate more favorable locations (section \@ref(identifying-suitable-locations)).
+- Creating input rasters comparable by means of reclassification, and using map algebra to compute a final score where higher scores indicate more favorable locations (section \@ref(identifying-suitable-locations)).
 
 Note that although we have applied these steps to a specific case study, they could be generalized to many scenarios of store location or public service provision.
 
@@ -5450,7 +5450,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservefb9e0d3ed66c662d
+preserve694894dea1022d41
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -5500,7 +5500,7 @@ Use `as.tibble()` to convert it into a tibble.
 Build an inhabitant raster, aggregate it to a cell resolution of 1 km, and compare the difference with the inhabitant raster (`inh`) we have created using class mean values.
 1. In the text we have deleted one polygon of the `metros` object (polygon number 5) since it only touches the border of another polygon.
 Recreate the `metros` object and instead of deleting polygon number 5, make it part of the Cologne/Düsseldorf metropolitan region (hint: create a column named region_id, add polygon number 5 to the Cologne/Düsseldorf area and dissolve).
-1. Suppose our bike shop predominantly sold  electric bikes to older people. 
+1. Suppose our bike shop predominantly sold electric bikes to older people. 
 Change the age raster accordingly, repeat the remaining analyses and compare the changes with our original result.
 
 <!--chapter:end:07-location.Rmd-->
