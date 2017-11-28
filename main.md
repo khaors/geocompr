@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve769a9e25bf6bf5f7
+preserve5f2d6d0932288449
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3095,7 +3095,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve54bece474126556e
+preserveef4e7adebcaf59a0
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3191,44 +3191,9 @@ nz_avheight2 = st_join(nz, nz_height) %>%
   summarize(elevation = mean(elevation, na.rm = TRUE))
 ```
 
-Spatial aggregation can also be done in the **tidyverse**, using **dplyr** functions as follows:
-
-
-```r
-group_by(us_states, REGION) %>%
-  summarize(sum(pop = total_pop_15, na.rm = TRUE))
-```
-
-For attribute data aggregation the grouping variable is another variable, typically one with few unique values relative to the number of rows (see section \@ref(vector-attribute-aggregation)).
-What we did not cover in that section was that attribute data aggregation dissolves the geometries of touching polygons.
-The `REGION` variable in the `us_states` dataset is a good example:
-there are 49 states (excluding Hawaii and Alaska) which can be aggregated into four regions.
-This is demonstrated in the code chunk below, the results of which are illustrated in Figure \@ref(fig:us-regions):
-
-
-```r
-regions = aggregate(x = us_states[, "total_pop_15"], by = list(us_states$REGION),
-                    FUN = sum, na.rm = TRUE)
-```
-<!--
-show also tidyverse way, so what you are doing is basically a spatial join and a subsequent aggregation without a grouping variable. Didactically, it might be better to present a grouping variable.
--->
-
-
-
-<div class="figure" style="text-align: center">
-<img src="figures/us-regions-1.png" alt="Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions, with population represented by color. Note the operation automatically dissolves boundaries between states." width="100%" />
-<p class="caption">(\#fig:us-regions)Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions, with population represented by color. Note the operation automatically dissolves boundaries between states.</p>
-</div>
-
-The equivalent result can be achieved using **tidyverse** functions as follows (result not shown):
-
-
-```r
-regions2 = us_states %>% 
-  group_by(REGION) %>%
-  summarize(sum(pop = total_pop_15, na.rm = TRUE))
-```
+The resulting `nz_avheight` objects have the same geometry as the aggregating object `nz` but with a a new column representing the mean average height of points within each region of New Zealand (other summary functions such as `median()` and `sd()` can be used in place of `mean()`).
+Note that regions containing no points have an associated `elevation` value of `NA`.
+For aggregating operations which also create new geometries, see section \@ref(geometry-unions-and-aggregation).
 
 #### Spatial congruence and areal interpolation
 
@@ -5475,7 +5440,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve536eac28bcc9962a
+preserve5f07c9e49d10180a
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
