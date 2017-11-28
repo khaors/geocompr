@@ -205,11 +205,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.1" data-path="transform.html"><a href="transform.html#introduction-2"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
 <li class="chapter" data-level="5.2" data-path="transform.html"><a href="transform.html#geometric-operations-on-vector-data"><i class="fa fa-check"></i><b>5.2</b> Geometric operations on vector data</a><ul>
 <li class="chapter" data-level="5.2.1" data-path="transform.html"><a href="transform.html#reprojecting"><i class="fa fa-check"></i><b>5.2.1</b> Reprojecting</a></li>
-<li class="chapter" data-level="5.2.2" data-path="transform.html"><a href="transform.html#geometry-transformations"><i class="fa fa-check"></i><b>5.2.2</b> Geometry transformations</a></li>
-<li class="chapter" data-level="5.2.3" data-path="transform.html"><a href="transform.html#geometry-unions-and-aggregation"><i class="fa fa-check"></i><b>5.2.3</b> Geometry unions and aggregation</a></li>
-<li class="chapter" data-level="5.2.4" data-path="transform.html"><a href="transform.html#type-transformation"><i class="fa fa-check"></i><b>5.2.4</b> Type transformation</a></li>
-<li class="chapter" data-level="5.2.5" data-path="transform.html"><a href="transform.html#simplification"><i class="fa fa-check"></i><b>5.2.5</b> Simplification</a></li>
-<li class="chapter" data-level="5.2.6" data-path="transform.html"><a href="transform.html#rasterization"><i class="fa fa-check"></i><b>5.2.6</b> Rasterization</a></li>
+<li class="chapter" data-level="5.2.2" data-path="transform.html"><a href="transform.html#geometry-unions-and-aggregation"><i class="fa fa-check"></i><b>5.2.2</b> Geometry unions and aggregation</a></li>
+<li class="chapter" data-level="5.2.3" data-path="transform.html"><a href="transform.html#type-transformation"><i class="fa fa-check"></i><b>5.2.3</b> Type transformation</a></li>
+<li class="chapter" data-level="5.2.4" data-path="transform.html"><a href="transform.html#simplification"><i class="fa fa-check"></i><b>5.2.4</b> Simplification</a></li>
+<li class="chapter" data-level="5.2.5" data-path="transform.html"><a href="transform.html#rasterization"><i class="fa fa-check"></i><b>5.2.5</b> Rasterization</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="transform.html"><a href="transform.html#geometric-operations-on-raster-data"><i class="fa fa-check"></i><b>5.3</b> Geometric operations on raster data</a><ul>
 <li class="chapter" data-level="5.3.1" data-path="transform.html"><a href="transform.html#reprojecting-1"><i class="fa fa-check"></i><b>5.3.1</b> Reprojecting</a></li>
@@ -338,6 +337,7 @@ Figure 5.2: Buffer on data with projected CRS.
 </div>
 <div id="geometric-operations-on-vector-data" class="section level2">
 <h2><span class="header-section-number">5.2</span> Geometric operations on vector data</h2>
+<p>This section is about operations that in some way change the geometry of vector (<code>sf</code>) objects. It is more advanced than the spatial data operations presented in the previous Chapter (in section <a href="spatial-data-operations.html#spatial-operations-on-vector-data">4.2</a>) because here we drill down into the geometry: the functions discussed in this section work on objects of class <code>sfc</code> (simple feature geometry collections) in addition to objects of class <code>sf</code>.</p>
 <div id="reprojecting" class="section level3">
 <h3><span class="header-section-number">5.2.1</span> Reprojecting</h3>
 <p>While CRSs can be set manually, it is more common in real world applications to <em>transform</em> a known CRS into another. CRS transformation could be vital to obtain proper results in many cases. A typical example is when geometry data is provided in a geographic CRS but you want to do spatial operations, which require it to be in a projected CRS. It includes distance measurements or area calculations. CRS also represent spatial relationship between datasets. Therefore, spatial operations on many datasets can only be correctly performed when all the data have the same CRS. The most common reason to unify the CRS is to combine different datasets or apply methods which need at least two objects. Let’s use real-world examples to illustrate this.</p>
@@ -421,12 +421,8 @@ Figure 5.6: Lambert azimuthal equal-area projection of the world centered on New
 <!-- ``` -->
 <!-- http://bl.ocks.org/vlandham/raw/9216751/ -->
 </div>
-<div id="geometry-transformations" class="section level3">
-<h3><span class="header-section-number">5.2.2</span> Geometry transformations</h3>
-<!-- or ## Geometry processing -->
-</div>
 <div id="geometry-unions-and-aggregation" class="section level3">
-<h3><span class="header-section-number">5.2.3</span> Geometry unions and aggregation</h3>
+<h3><span class="header-section-number">5.2.2</span> Geometry unions and aggregation</h3>
 <p>Spatial aggregation can also be done in the <strong>tidyverse</strong>, using <strong>dplyr</strong> functions as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">group_by</span>(us_states, REGION) %&gt;%
 <span class="st">  </span><span class="kw">summarize</span>(<span class="kw">sum</span>(<span class="dt">pop =</span> total_pop_15, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</code></pre></div>
@@ -447,7 +443,7 @@ Figure 5.7: Spatial aggregation on contiguous polygons, illustrated by aggregati
 <span class="st">  </span><span class="kw">group_by</span>(REGION) %&gt;%
 <span class="st">  </span><span class="kw">summarize</span>(<span class="kw">sum</span>(<span class="dt">pop =</span> total_pop_15, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</code></pre></div>
 <div id="clipping" class="section level4">
-<h4><span class="header-section-number">5.2.3.1</span> Clipping</h4>
+<h4><span class="header-section-number">5.2.2.1</span> Clipping</h4>
 <p>Spatial clipping is a form of spatial subsetting that involves changes to the <code>geometry</code> columns of at least some of the affected features.</p>
 <p>Clipping can only apply to features more complex than points: lines, polygons and their ‘multi’ equivalents. To illustrate the concept we will start with a simple example: two overlapping circles with a center point one unit away from each other and radius of one:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">b =<span class="st"> </span><span class="kw">st_sfc</span>(<span class="kw">st_point</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)), <span class="kw">st_point</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))) <span class="co"># create 2 points</span>
@@ -495,7 +491,7 @@ Figure 5.10: Randomly distributed points within the bounding box enclosing circl
 </div>
 </div>
 <div id="centroids" class="section level4">
-<h4><span class="header-section-number">5.2.3.2</span> Centroids</h4>
+<h4><span class="header-section-number">5.2.2.2</span> Centroids</h4>
 <!-- st_point_on_surface -->
 <!-- st_centroid -->
 <!-- st_polygonize -->
@@ -504,14 +500,14 @@ Figure 5.10: Randomly distributed points within the bounding box enclosing circl
 <p><img src="figures/unnamed-chunk-27-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="buffers" class="section level4">
-<h4><span class="header-section-number">5.2.3.3</span> Buffers</h4>
+<h4><span class="header-section-number">5.2.2.3</span> Buffers</h4>
 </div>
 <div id="affine-transformations" class="section level4">
-<h4><span class="header-section-number">5.2.3.4</span> Affine transformations</h4>
+<h4><span class="header-section-number">5.2.2.4</span> Affine transformations</h4>
 </div>
 </div>
 <div id="type-transformation" class="section level3">
-<h3><span class="header-section-number">5.2.4</span> Type transformation</h3>
+<h3><span class="header-section-number">5.2.3</span> Type transformation</h3>
 <!-- or Geometry cast -->
 <!-- Changing the geometry type while the fundamental data remains unchanged ('casting') -->
 <!-- - st_cast -->
@@ -530,7 +526,7 @@ Figure 5.10: Randomly distributed points within the bounding box enclosing circl
 <!-- stars; https://github.com/r-spatial/stars/blob/master/vignettes/blog1.Rmd -->
 </div>
 <div id="simplification" class="section level3">
-<h3><span class="header-section-number">5.2.5</span> Simplification</h3>
+<h3><span class="header-section-number">5.2.4</span> Simplification</h3>
 <!-- - simplifications -->
 <!-- st_simplify -->
 <!-- line example -->
@@ -538,7 +534,7 @@ Figure 5.10: Randomly distributed points within the bounding box enclosing circl
 <!-- polygon example -->
 </div>
 <div id="rasterization" class="section level3">
-<h3><span class="header-section-number">5.2.6</span> Rasterization</h3>
+<h3><span class="header-section-number">5.2.5</span> Rasterization</h3>
 <!-- - vector to raster -->
 </div>
 </div>

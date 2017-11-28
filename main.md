@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve5f2d6d0932288449
+preserve1ad3e652b8e7eb36
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3095,7 +3095,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveef4e7adebcaf59a0
+preserve6552703342fdac1d
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3735,6 +3735,10 @@ plot(london_proj, add = TRUE)
 
 ## Geometric operations on vector data
 
+This section is about operations that in some way change the geometry of vector (`sf`) objects.
+It is more advanced than the spatial data operations presented in the previous Chapter (in section \@ref(spatial-operations-on-vector-data)) because here we drill down into the geometry:
+the functions discussed in this section work on objects of class `sfc` (simple feature geometry collections) in addition to objects of class `sf`.
+
 ### Reprojecting
 
 While CRSs can be set manually, it is more common in real world applications to *transform* a known CRS into another.
@@ -3880,9 +3884,6 @@ More information about CRS modification can be found in the [Using PROJ.4](http:
 <!-- plot(world_3$geom) -->
 <!-- ``` -->
 <!-- http://bl.ocks.org/vlandham/raw/9216751/ -->
-
-### Geometry transformations
-<!-- or ## Geometry processing -->
 
 ### Geometry unions and aggregation
 
@@ -5440,7 +5441,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve5f07c9e49d10180a
+preservec3fa5fca8573746a
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
