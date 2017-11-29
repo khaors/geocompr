@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve4b4e2b81571cc3c0
+preserve1e1cb8a7e5c0c97e
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3095,7 +3095,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve88213bfbdc56bc97
+preserve5d69d5681237ab82
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4030,7 +4030,65 @@ Geometry casting is powerful operation which enable transformation of the geomet
 
 <!-- a/ points -> lines -> polygons  -->
 
+```r
+multipoint = st_multipoint(matrix(c(1, 3, 5, 1, 3, 1), ncol = 2))
+linestring = st_cast(multipoint, "LINESTRING")
+polyg = st_cast(multipoint, "POLYGON")
+```
+
+
+```r
+par_old = par()
+par(mfrow = c(1, 3))
+plot(multipoint)
+plot(linestring)
+plot(polyg)
+par(par_old)
+#> Warning in par(par_old): graphical parameter "cin" cannot be set
+#> Warning in par(par_old): graphical parameter "cra" cannot be set
+#> Warning in par(par_old): graphical parameter "csi" cannot be set
+#> Warning in par(par_old): graphical parameter "cxy" cannot be set
+#> Warning in par(par_old): graphical parameter "din" cannot be set
+#> Warning in par(par_old): graphical parameter "page" cannot be set
+```
+
+<img src="figures/unnamed-chunk-29-1.png" width="576" style="display: block; margin: auto;" />
+
+<!-- note: beware of information lost (you will get a warning) -->
+
+
 <!-- b/ multi ->  single -->
+<!-- real example?? -->
+
+
+```r
+multilinestring_list = list(matrix(c(1, 4, 5, 3), ncol = 2), 
+                            matrix(c(4, 4, 4, 1), ncol = 2),
+                            matrix(c(2, 4, 2, 2), ncol = 2))
+multilinestring = st_multilinestring((multilinestring_list))
+```
+
+
+```r
+multilinestring_sf = st_sf(geom = st_sfc(multilinestring))
+dim(multilinestring_sf)
+#> [1] 1 1
+linestring_sf2 = st_cast(multilinestring_sf, "LINESTRING")
+dim(linestring_sf2)
+#> [1] 3 1
+```
+
+
+```
+#> Warning in par(par_old): graphical parameter "cin" cannot be set
+#> Warning in par(par_old): graphical parameter "cra" cannot be set
+#> Warning in par(par_old): graphical parameter "csi" cannot be set
+#> Warning in par(par_old): graphical parameter "cxy" cannot be set
+#> Warning in par(par_old): graphical parameter "din" cannot be set
+#> Warning in par(par_old): graphical parameter "page" cannot be set
+```
+
+<img src="figures/unnamed-chunk-33-1.png" width="576" style="display: block; margin: auto;" />
 
 <!-- or Geometry cast -->
 <!-- Changing the geometry type while the fundamental data remains unchanged ('casting') -->
@@ -4047,7 +4105,7 @@ Geometry casting is powerful operation which enable transformation of the geomet
 nz_points = st_cast(nz, "MULTIPOINT")
 ```
 
-<img src="figures/unnamed-chunk-30-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-35-1.png" width="576" style="display: block; margin: auto;" />
 
 <!-- ### Class conversion -->
 <!-- placeholder for: -->
@@ -5450,7 +5508,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservea913e8fb91eda6af
+preserve4e232d48fcb9725f
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
