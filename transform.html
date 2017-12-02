@@ -386,7 +386,7 @@ The EPSG code can be found inside the <code>crs</code> attribute of the objectâ€
 Figure 5.3: Mollweide projection of the world
 </p>
 </div>
-<p>On the other hand, the goal for many visualization purposes is to have a map with minimized area, direction, and distance distortions. One of the most popular projection to achieve that is Winkel tripel (Figure <a href="transform.html#fig:wintriproj">5.4</a>).<a href="#fn22" class="footnoteRef" id="fnref22"><sup>22</sup></a> The <code>st_transform_proj</code> function allows for coordinates transformations to the Winkel tripel projection:</p>
+<p>On the other hand, the goal for many visualization purposes is to have a map with minimized area, direction, and distance distortions. One of the most popular projection to achieve that is Winkel tripel (Figure <a href="transform.html#fig:wintriproj">5.4</a>).<a href="#fn22" class="footnoteRef" id="fnref22"><sup>22</sup></a> The <code>st_transform_proj</code> function from the <strong>lwgeom</strong> package allows for coordinates transformations to a wider range of CRSs, inluding the Winkel tripel projection:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_wintri =<span class="st"> </span><span class="kw">st_transform_proj</span>(world, <span class="dt">crs =</span> <span class="st">&quot;+proj=wintri&quot;</span>)</code></pre></div>
 <!-- plot(world_wintri$geom) -->
 <!-- plot(world_wintri$geom, graticule = TRUE) -->

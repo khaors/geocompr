@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve5b30cab30b977f58
+preserve2639a950df4ceffa
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3095,7 +3095,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve44f88d7f4f19e53b
+preserve3e81761e6b5355b1
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3850,7 +3850,7 @@ world_mollweide = st_transform(world, crs = "+proj=moll")
 
 On the other hand, the goal for many visualization purposes is to have a map with minimized area, direction, and distance distortions.
 One of the most popular projection to achieve that is Winkel tripel (Figure \@ref(fig:wintriproj)).^[This projection is used, among others, by the National Geographic Society.]
-The `st_transform_proj` function allows for coordinates transformations to the Winkel tripel projection: 
+The `st_transform_proj` function from the **lwgeom** package allows for coordinates transformations to a wider range of CRSs, inluding the Winkel tripel projection: 
 
 
 ```r
@@ -5539,7 +5539,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve0b6d5614409f302e
+preserve651e4a227195d833
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
