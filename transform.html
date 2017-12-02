@@ -290,10 +290,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="prerequisites-3" class="section level2 unnumbered">
 <h2>Prerequisites</h2>
 <ul>
-<li>This chapter requires the following packages:</li>
+<li>This chapter requires the following packages:<a href="#fn21" class="footnoteRef" id="fnref21"><sup>21</sup></a></li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(lwgeom)
-<span class="kw">library</span>(sf)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sf)
 <span class="kw">library</span>(raster)
 <span class="kw">library</span>(tidyverse)</code></pre></div>
 <ul>
@@ -312,7 +311,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london =<span class="st"> </span><span class="kw">st_sf</span>(<span class="dt">geometry =</span> <span class="kw">st_sfc</span>(<span class="kw">st_point</span>(<span class="kw">c</span>(-<span class="fl">0.1</span>, <span class="fl">51.5</span>))))
 <span class="kw">st_is_longlat</span>(london)
 <span class="co">#&gt; [1] NA</span></code></pre></div>
-<p>The results show that when geographic data is created from scratch, or is loaded from a source that has no CRS metadata, the CRS is unspecified by default. The CRS can be set with <code>st_set_crs()</code>:<a href="#fn21" class="footnoteRef" id="fnref21"><sup>21</sup></a></p>
+<p>The results show that when geographic data is created from scratch, or is loaded from a source that has no CRS metadata, the CRS is unspecified by default. The CRS can be set with <code>st_set_crs()</code>:<a href="#fn22" class="footnoteRef" id="fnref22"><sup>22</sup></a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london =<span class="st"> </span><span class="kw">st_set_crs</span>(london, <span class="dv">4326</span>)
 <span class="kw">st_is_longlat</span>(london)
 <span class="co">#&gt; [1] TRUE</span></code></pre></div>
@@ -386,8 +385,8 @@ The EPSG code can be found inside the <code>crs</code> attribute of the object�
 Figure 5.3: Mollweide projection of the world
 </p>
 </div>
-<p>On the other hand, the goal for many visualization purposes is to have a map with minimized area, direction, and distance distortions. One of the most popular projection to achieve that is Winkel tripel (Figure <a href="transform.html#fig:wintriproj">5.4</a>).<a href="#fn22" class="footnoteRef" id="fnref22"><sup>22</sup></a> The <code>st_transform_proj</code> function from the <strong>lwgeom</strong> package allows for coordinates transformations to a wider range of CRSs, inluding the Winkel tripel projection:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_wintri =<span class="st"> </span><span class="kw">st_transform_proj</span>(world, <span class="dt">crs =</span> <span class="st">&quot;+proj=wintri&quot;</span>)</code></pre></div>
+<p>On the other hand, the goal for many visualization purposes is to have a map with minimized area, direction, and distance distortions. One of the most popular projection to achieve that is Winkel tripel (Figure <a href="transform.html#fig:wintriproj">5.4</a>).<a href="#fn23" class="footnoteRef" id="fnref23"><sup>23</sup></a> <code>st_transform_proj()</code> from the <strong>lwgeom</strong> package allows for coordinates transformations to a wider range of CRSs, inluding the Winkel tripel projection:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_wintri =<span class="st"> </span>lwgeom::<span class="kw">st_transform_proj</span>(world, <span class="dt">crs =</span> <span class="st">&quot;+proj=wintri&quot;</span>)</code></pre></div>
 <!-- plot(world_wintri$geom) -->
 <!-- plot(world_wintri$geom, graticule = TRUE) -->
 <div class="figure" style="text-align: center"><span id="fig:wintriproj"></span>
@@ -426,7 +425,7 @@ Figure 5.6: Lambert azimuthal equal-area projection of the world centered on New
 <!-- ```{r} -->
 <!-- # devtools::install_github("r-spatial/lwgeom") -->
 <!-- library(lwgeom) -->
-<!-- world_3 = st_transform_proj(world, crs = "+proj=wintri") -->
+<!-- world_3 = lwgeom::st_transform_proj(world, crs = "+proj=wintri") -->
 <!-- plot(world_3$geom) -->
 <!-- ``` -->
 <!-- http://bl.ocks.org/vlandham/raw/9216751/ -->
@@ -451,7 +450,7 @@ cat_raster
 <span class="co">#&gt; data source : /home/travis/R/Library/spDataLarge/raster/nlcd2011.tif </span>
 <span class="co">#&gt; names       : nlcd2011 </span>
 <span class="co">#&gt; values      : 11, 95  (min, max)</span></code></pre></div>
-<p>In this region, 14 land cover classes were distinguished<a href="#fn23" class="footnoteRef" id="fnref23"><sup>23</sup></a>:</p>
+<p>In this region, 14 land cover classes were distinguished<a href="#fn24" class="footnoteRef" id="fnref24"><sup>24</sup></a>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">unique</span>(cat_raster)
 <span class="co">#&gt;  [1] 11 21 22 23 31 41 42 43 52 71 81 82 90 95</span></code></pre></div>
 <p>When reprojecting categorical raster, we need to ensure that our new estimated values would still have values of our original classes. This could be done using the nearest neighbor method (<code>ngb</code>). In this method, value of the output cell is calculated based on the nearest cell center of the input raster.</p>
@@ -702,7 +701,7 @@ Figure 5.13: Original raster (left). Aggregated raster (right).
 <span class="co">#&gt; [1] 0 0</span>
 <span class="kw">origin</span>(elev_agg)
 <span class="co">#&gt; [1] 0.5 0.5</span></code></pre></div>
-<p>The origin is the point closest to (0, 0) if you moved towards it in steps of x and y resolution. If two rasters have different origins, their cells do not overlap completely which would make map algebra impossible. To change the origin , use <code>origin()</code>.<a href="#fn24" class="footnoteRef" id="fnref24"><sup>24</sup></a> Looking at figure <a href="transform.html#fig:origin-example">5.14</a> reveals the effect of changing the origin.</p>
+<p>The origin is the point closest to (0, 0) if you moved towards it in steps of x and y resolution. If two rasters have different origins, their cells do not overlap completely which would make map algebra impossible. To change the origin , use <code>origin()</code>.<a href="#fn25" class="footnoteRef" id="fnref25"><sup>25</sup></a> Looking at figure <a href="transform.html#fig:origin-example">5.14</a> reveals the effect of changing the origin.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the aggregated raster</span>
 <span class="kw">plot</span>(elev_agg)
 <span class="co"># change the origin</span>
@@ -760,10 +759,11 @@ elev_disagg =<span class="st"> </span><span class="kw">resample</span>(elev_agg,
 <div class="footnotes">
 <hr />
 <ol start="21">
-<li id="fn21"><p>The CRS can also be added when creating <code>sf</code> objects with the <code>crs</code> argument (e.g. <code>st_sf(geometry = st_sfc(st_point(c(-0.1, 51.5))), crs = 4326)</code>). The same argument can also be used to set the CRS when creating raster datasets (e.g. <code>raster(crs = &quot;+proj=longlat&quot;)</code>).<a href="transform.html#fnref21">↩</a></p></li>
-<li id="fn22"><p>This projection is used, among others, by the National Geographic Society.<a href="transform.html#fnref22">↩</a></p></li>
-<li id="fn23"><p>Full list of NLCD2011 land cover classes can be found at <a href="https://www.mrlc.gov/nlcd11_leg.php" class="uri">https://www.mrlc.gov/nlcd11_leg.php</a><a href="transform.html#fnref23">↩</a></p></li>
-<li id="fn24"><p>If the origins of two raster datasets are just marginally apart, it sometimes is sufficient to simply increase the <code>tolerance</code> argument of <code>raster::rasterOptions()</code>.<a href="transform.html#fnref24">↩</a></p></li>
+<li id="fn21"><p><strong>lwgeom</strong> is also needed for a couple of more advanced transformations.<a href="transform.html#fnref21">↩</a></p></li>
+<li id="fn22"><p>The CRS can also be added when creating <code>sf</code> objects with the <code>crs</code> argument (e.g. <code>st_sf(geometry = st_sfc(st_point(c(-0.1, 51.5))), crs = 4326)</code>). The same argument can also be used to set the CRS when creating raster datasets (e.g. <code>raster(crs = &quot;+proj=longlat&quot;)</code>).<a href="transform.html#fnref22">↩</a></p></li>
+<li id="fn23"><p>This projection is used, among others, by the National Geographic Society.<a href="transform.html#fnref23">↩</a></p></li>
+<li id="fn24"><p>Full list of NLCD2011 land cover classes can be found at <a href="https://www.mrlc.gov/nlcd11_leg.php" class="uri">https://www.mrlc.gov/nlcd11_leg.php</a><a href="transform.html#fnref24">↩</a></p></li>
+<li id="fn25"><p>If the origins of two raster datasets are just marginally apart, it sometimes is sufficient to simply increase the <code>tolerance</code> argument of <code>raster::rasterOptions()</code>.<a href="transform.html#fnref25">↩</a></p></li>
 </ol>
 </div>
             </section>

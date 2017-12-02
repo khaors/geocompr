@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservee04b2abe80696124
+preservefe8539f16f1136bf
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3095,7 +3095,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserved4d4654de1e5a310
+preserve1f9aea633c13cb9a
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3635,11 +3635,10 @@ A more advanced approach might instead weight by flow direction, i.e. favor the 
 
 ## Prerequisites {-}
 
-- This chapter requires the following packages:
+- This chapter requires the following packages:^[**lwgeom** is also needed for a couple of more advanced transformations.]
 
 
 ```r
-library(lwgeom)
 library(sf)
 library(raster)
 library(tidyverse)
@@ -3850,11 +3849,11 @@ world_mollweide = st_transform(world, crs = "+proj=moll")
 
 On the other hand, the goal for many visualization purposes is to have a map with minimized area, direction, and distance distortions.
 One of the most popular projection to achieve that is Winkel tripel (Figure \@ref(fig:wintriproj)).^[This projection is used, among others, by the National Geographic Society.]
-The `st_transform_proj` function from the **lwgeom** package allows for coordinates transformations to a wider range of CRSs, inluding the Winkel tripel projection: 
+`st_transform_proj()` from the **lwgeom** package allows for coordinates transformations to a wider range of CRSs, inluding the Winkel tripel projection: 
 
 
 ```r
-world_wintri = st_transform_proj(world, crs = "+proj=wintri")
+world_wintri = lwgeom::st_transform_proj(world, crs = "+proj=wintri")
 ```
 <!-- plot(world_wintri$geom) -->
 <!-- plot(world_wintri$geom, graticule = TRUE) -->
@@ -3905,7 +3904,7 @@ More information about CRS modification can be found in the [Using PROJ.4](http:
 <!-- ```{r} -->
 <!-- # devtools::install_github("r-spatial/lwgeom") -->
 <!-- library(lwgeom) -->
-<!-- world_3 = st_transform_proj(world, crs = "+proj=wintri") -->
+<!-- world_3 = lwgeom::st_transform_proj(world, crs = "+proj=wintri") -->
 <!-- plot(world_3$geom) -->
 <!-- ``` -->
 <!-- http://bl.ocks.org/vlandham/raw/9216751/ -->
@@ -5539,7 +5538,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve75bb2b6e68ca9528
+preservea75fb31a997ed80a
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
