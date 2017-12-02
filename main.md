@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve2d28af380a71a2a2
+preserve5b30cab30b977f58
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3095,7 +3095,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservea24893ba564f34ec
+preserve44f88d7f4f19e53b
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3635,14 +3635,14 @@ A more advanced approach might instead weight by flow direction, i.e. favor the 
 
 ## Prerequisites {-}
 
-- This chapter requires the packages **tidyverse**, **sf**, **raster**:
+- This chapter requires the following packages:
 
 
 ```r
-library(tidyverse)
-library(sf)
 library(lwgeom)
+library(sf)
 library(raster)
+library(tidyverse)
 ```
 
 - It also relies on **spData** and **spDataLarge**, which load `cycle_hire_osm` dataset and provide external files:
@@ -3653,9 +3653,25 @@ library(spData)
 library(spDataLarge)
 ```
 
-## Introduction
+The previous three chapters have demonstrated how geographic datasets are structured in R (Chapter \@ref(spatial-class)) and how to manipulate them based on their non-geographic attributes (\@ref(attr)) and spatial properties (\@ref(spatial-data-operations)).
+This chapter goes a step further, by showing how to modify the *geometry* underlying spatial datasets.
 
-As stated in Chapter \@ref(crs-intro), it is important to understand which CRS you are working in when undertaking spatial operations.
+Section \@ref(geo-vec) covers transforming vector geometries.
+This includes simplifying, buffering, clipping and even shifting/scaling/rotating geometries using 'affine transformations'.
+Geometry unions, which underlie spatial data aggregation, are covered in section \@ref(geometry-unions).
+Advanced transformations of vector geometries include type transformations (e.g. from few multipolygons to many polygons) and 'rasterization', which sets-up the next section.
+
+Section \@ref(geo-ras) covers geometric transformations on raster objects.
+This involves changing the size and number of the underlying pixels, and assigning them new values.
+It teaches how to align rasters, enabling the map algebra methods demonstrated in section \@ref(map-algebra) to work on raster objects from different sources (section \@ref(raster-alignment)).
+Raster aggregation is covered in section \@ref(ras-agg).
+
+A vital type of geometry transformation is *reprojection*, from one coordinate reference system (CRS) to another.
+Because of the importance of reprojection, introduced in section \@ref(crs-intro), and the fact that it applies to raster and vector geometries alike, it is the topic of the first section in this chapter.
+
+## Reprojecting geographic data 
+
+Section \@ref(crs-intro) demonstrated the importance of understanding CRSs for geocomputation.
 Many spatial operations assume that you are using a *projected* CRS (on a Euclidean grid with units of meters rather than a geographic 'lat/lon' grid with units of degrees).
 The GEOS engine underlying most spatial operations in **sf**, for example, assumes your data is in a projected CRS.
 For this reason **sf** contains a function for checking if geometries have a geographic or projected CRS.
@@ -3669,7 +3685,8 @@ st_is_longlat(london)
 ```
 
 The results show that when geographic data is created from scratch, or is loaded from a source that has no CRS metadata, the CRS is unspecified by default.
-CRS can be set with the `st_set_crs` function:^[CRS could be also added when creating the object with the following command: `st_sf(geometry = st_sfc(st_point(c(-0.1, 51.5))), crs = 4326)`]
+The CRS can be set with `st_set_crs()`:^[The CRS can also be added when creating `sf` objects with the `crs` argument (e.g. `st_sf(geometry = st_sfc(st_point(c(-0.1, 51.5))), crs = 4326)`).
+The same argument can also be used to set the CRS when creating raster datasets (e.g. `raster(crs = "+proj=longlat")`).]
 
 
 ```r
@@ -3679,7 +3696,7 @@ st_is_longlat(london)
 ```
 
 Spatial operations on objects without a CRS run on the implicit assumption that they are projected, even when in reality they are not.
-This can be seen by creating a buffer of one degree around the `london` point:
+This can lead to problems, as illustrated by the following code chunk, which creates a buffer of one degree around `london`:
 
 
 ```r
@@ -3689,9 +3706,9 @@ london_buff = st_buffer(london, dist = 1)
 #> dist is assumed to be in decimal degrees (arc_degrees).
 ```
 
-Note the message warning users that the operation may not work correctly and because the distance is degrees (which is not really a measure of distance, unlike meters).
-The small step of setting the CRS may seem inconsequential but has important consequences, illustrated in Figure \@ref(fig:crs-buf).
-This shows how the buffer created in the geographic CRS is dramatically elongated in the north-south direction due to the thinning of the vertical lines of longitude towards the Earth's poles.  
+Note the warning that informs us that the result has limited use because distances in geographic CRSs are in degrees, rather than meters or some other suitable measure of distance.
+The consequences of a failure to work on projected data are illustrated in Figure \@ref(fig:crs-buf):
+not how the buffer is dramatically elongated in the north-south direction due to the thinning of the vertical lines of longitude towards the Earth's poles.  
 
 
 ```r
@@ -3705,22 +3722,36 @@ plot(london, add = TRUE)
 </div>
 
 This example does not mean that the CRS should not be set (it almost always should!) but that many spatial operations should be undertaken on projected geographic data.
-The following command creates a version of the `london` reprojected onto the British National Grid CRS (EPSG:27700):
+The solution is to *reproject* the data onto a projected CRS using the **sf** function `st_transform()`:
 
 
 ```r
 london_proj = st_transform(london, crs = 27700)
 ```
 
-This projected CRS has units in meters. 
-One degree at the equator represents 111,320 meters and we can use this value to create our buffer:
+The result is a new object that is identical to `london`, but reprojected onto a suitable CRS (the British National Grid, which has an EPSG code of 27700) that has units of meters. 
+We can verify that the CRS has changed using `st_crs()` as follows:
+
+
+```r
+st_crs(london_proj)
+#> Coordinate Reference System:
+#>   EPSG: 27700 
+#>   proj4string: "+proj=tmerc +lat_0=49 +lon_0=-2 ... +units=m +no_defs"
+```
+
+The most important components of the outputs are the EPSG code (`EPSG: 27700`), the origin (`+lat_0=49 +lon_0=-2`) and units (`+units=m`) (other details have been replaced by `...`).
+This CRS information tells us operations on this projected version of the `london` dataset will make sense.
+This can be verified by repeating the buffer operation, but with a meaningful measure of distance.
+Moving 1 degree at the equator means moving more than 100 km (111,320 meters):
 
 
 ```r
 london_proj_buff = st_buffer(london_proj, 111320)
 ```
 
-The result in Figure \@ref(fig:crs-buf-proj) shows that buffers based on a projected CRS are not distorted and we can expect the same distance from our point to every part of the buffer's border.
+The result in Figure \@ref(fig:crs-buf-proj) shows that buffers based on a projected CRS are not distorted:
+it is the same distance from London to every part of the buffer's border.
 
 
 ```r
@@ -3733,13 +3764,7 @@ plot(london_proj, add = TRUE)
 <p class="caption">(\#fig:crs-buf-proj)Buffer on data with projected CRS.</p>
 </div>
 
-## Geometric operations on vector data
-
-This section is about operations that in some way change the geometry of vector (`sf`) objects.
-It is more advanced than the spatial data operations presented in the previous Chapter (in section \@ref(spatial-operations-on-vector-data)) because here we drill down into the geometry:
-the functions discussed in this section work on objects of class `sfc` (simple feature geometry collections) in addition to objects of class `sf`.
-
-### Reprojecting
+### Reprojecting vector geometries
 
 While CRSs can be set manually, it is more common in real world applications to *transform* a known CRS into another.
 CRS transformation could be vital to obtain proper results in many cases.
@@ -3839,8 +3864,8 @@ world_wintri = st_transform_proj(world, crs = "+proj=wintri")
 <p class="caption">(\#fig:wintriproj)Winkel tripel projection of the world</p>
 </div>
 
-\BeginKnitrBlock{rmdnote}<div class="rmdnote">Two main functions for transformation of simple features coordinates are `sf::st_transform()` and `lwgeom::st_transform_proj()`. 
-The `st_transform` function uses the GDAL interface to PROJ.4, while `st_transform_proj()` uses the PROJ.4 API directly.
+\BeginKnitrBlock{rmdnote}<div class="rmdnote">Two main functions for transformation of simple features coordinates are `sf::st_transform()` and `sf::sf_project()`. 
+The `st_transform` function uses the GDAL interface to PROJ.4, while `sf_project()` uses the PROJ.4 API directly.
 The first one is appropriate in most situations, and provides a set of the most often used parameters and well defined transformations.
 The second one allows for a greater customization of a projection, which includes cases when some of the PROJ.4 parameters (e.g. `+over`) or projection (`+proj=wintri`) is not available in `st_transform()`.</div>\EndKnitrBlock{rmdnote}
 
@@ -3885,258 +3910,18 @@ More information about CRS modification can be found in the [Using PROJ.4](http:
 <!-- ``` -->
 <!-- http://bl.ocks.org/vlandham/raw/9216751/ -->
 
-### Geometry unions and aggregation
-
-Spatial aggregation can also be done in the **tidyverse**, using **dplyr** functions as follows:
-
-
-```r
-group_by(us_states, REGION) %>%
-  summarize(sum(pop = total_pop_15, na.rm = TRUE))
-```
-
-For attribute data aggregation the grouping variable is another variable, typically one with few unique values relative to the number of rows (see section \@ref(vector-attribute-aggregation)).
-What we did not cover in that section was that attribute data aggregation dissolves the geometries of touching polygons.
-The `REGION` variable in the `us_states` dataset is a good example:
-there are 49 states (excluding Hawaii and Alaska) which can be aggregated into four regions.
-This is demonstrated in the code chunk below, the results of which are illustrated in Figure \@ref(fig:us-regions):
-
-
-```r
-regions = aggregate(x = us_states[, "total_pop_15"], by = list(us_states$REGION),
-                    FUN = sum, na.rm = TRUE)
-```
-<!--
-show also tidyverse way, so what you are doing is basically a spatial join and a subsequent aggregation without a grouping variable. Didactically, it might be better to present a grouping variable.
--->
-
-
-
-<div class="figure" style="text-align: center">
-<img src="figures/us-regions-1.png" alt="Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions, with population represented by color. Note the operation automatically dissolves boundaries between states." width="100%" />
-<p class="caption">(\#fig:us-regions)Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions, with population represented by color. Note the operation automatically dissolves boundaries between states.</p>
-</div>
-
-The equivalent result can be achieved using **tidyverse** functions as follows (result not shown):
-
-
-```r
-regions2 = us_states %>% 
-  group_by(REGION) %>%
-  summarize(sum(pop = total_pop_15, na.rm = TRUE))
-```
-
-### Clipping 
-
-Spatial clipping is a form of spatial subsetting that involves changes to the `geometry` columns of at least some of the affected features.
-
-Clipping can only apply to features more complex than points: 
-lines, polygons and their 'multi' equivalents.
-To illustrate the concept we will start with a simple example:
-two overlapping circles with a center point one unit away from each other and radius of one:
-
-
-```r
-b = st_sfc(st_point(c(0, 1)), st_point(c(1, 1))) # create 2 points
-b = st_buffer(b, dist = 1) # convert points to circles
-l = c("x", "y")
-plot(b)
-text(x = c(-0.5, 1.5), y = 1, labels = l) # add text
-```
-
-<div class="figure" style="text-align: center">
-<img src="figures/points-1.png" alt="Overlapping circles." width="576" />
-<p class="caption">(\#fig:points)Overlapping circles.</p>
-</div>
-
-Imagine you want to select not one circle or the other, but the space covered by both `x` *and* `y`.
-This can be done using the function `st_intersection()`, illustrated using objects named `x` and `y` which represent the left and right-hand circles:
-
-
-```r
-x = b[1]
-y = b[2]
-x_and_y = st_intersection(x, y)
-plot(b)
-plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
-```
-
-<img src="figures/unnamed-chunk-23-1.png" width="576" style="display: block; margin: auto;" />
-
-The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
-<!-- Todo: reference r4ds -->
-
-<div class="figure" style="text-align: center">
-<img src="figures/venn-clip-1.png" alt="Spatial equivalents of logical operators." width="576" />
-<p class="caption">(\#fig:venn-clip)Spatial equivalents of logical operators.</p>
-</div>
-
-To illustrate the relationship between subsetting and clipping spatial data, we will subset points that cover the bounding box of the circles `x` and `y` in Figure \@ref(fig:venn-clip).
-Some points will be inside just one circle, some will be inside both and some will be inside neither.
-
-There are two different ways to subset points that fit into combinations of the circles: via clipping and logical operators.
-But first we must generate some points.
-We will use the *simple random* sampling strategy to sample from a box representing the extent of `x` and `y`.
-To generate this points will use a function not yet covered in this book, `st_sample()`.
-Next we will generate the situation plotted in Figure \@ref(fig:venn-subset):
-
-
-```r
-bb = st_bbox(st_union(x, y))
-pmat = matrix(c(bb[c(1, 2, 3, 2, 3, 4, 1, 4, 1, 2)]), ncol = 2, byrow = TRUE)
-box = st_polygon(list(pmat))
-set.seed(2017)
-p = st_sample(x = box, size = 10)
-plot(box)
-plot(x, add = TRUE)
-plot(y, add = TRUE)
-plot(p, add = TRUE)
-text(x = c(-0.5, 1.5), y = 1, labels = l)
-```
-
-<div class="figure" style="text-align: center">
-<img src="figures/venn-subset-1.png" alt="Randomly distributed points within the bounding box enclosing circles x and y." width="576" />
-<p class="caption">(\#fig:venn-subset)Randomly distributed points within the bounding box enclosing circles x and y.</p>
-</div>
-
-
-
-### Centroids
-<!-- st_point_on_surface -->
-<!-- st_centroid -->
-<!-- st_polygonize -->
-
-
-```r
-nz_centroid = st_centroid(nz)
-```
-
-
-```r
-nz_pos = st_point_on_surface(nz)
-```
-
-<img src="figures/unnamed-chunk-27-1.png" width="576" style="display: block; margin: auto;" />
-
-### Buffers
-
-### Affine transformations
-
-### Type transformation
-
-Geometry casting is powerful operation which enable transformation of the geometry type<!--while the fundamental data remains unchanged-->.
-It is implemented in the `st_cast` function from the `sf` package.
-Importantly, `st_cast` behaves differently on single simple feature geometry (`sfg`) objects, and simple feature geometry column (`sfc`) and simple features objects.
-
-Let's create a multipoint to ilustrate how geometry casting works on simple feature geometry (`sfg`) objects:
-
-
-```r
-multipoint = st_multipoint(matrix(c(1, 3, 5, 1, 3, 1), ncol = 2))
-```
-
-In this case, `st_cast` can be useful to transform the new object into linestring or polygon (Figure \@ref(fig:single-cast)):
-
-<!-- a/ points -> lines -> polygons  -->
-
-```r
-linestring = st_cast(multipoint, "LINESTRING")
-polyg = st_cast(multipoint, "POLYGON")
-```
-
-<div class="figure" style="text-align: center">
-<img src="figures/single-cast-1.png" alt="Examples of linestring and polygon created based on multipoint using the `st_cast` function" width="576" />
-<p class="caption">(\#fig:single-cast)Examples of linestring and polygon created based on multipoint using the `st_cast` function</p>
-</div>
-
-This process can be also reversed using `st_cast`:
-
-
-```r
-multipoint_2 = st_cast(linestring, "MULTIPOINT")
-multipoint_3 = st_cast(polyg, "MULTIPOINT")
-```
-
-\BeginKnitrBlock{rmdnote}<div class="rmdnote">For single simple feature geometries (`sfg`), `st_cast` provides also geometry casting from non-multi to multi types (e.g. `POINT` to `MULTIPOINT`) and from multi types to non-multi types.
-However, only the first element of the old object would remain in the second group of cases.
-<!-- note: beware of information lost (you will get a warning) --></div>\EndKnitrBlock{rmdnote}
-
-
-
-<!-- single geometries ()s behaviour differs depending on class of a data - -->
-<!-- There are two main types of geometry casting t -->
-<!-- This could be done for one of two purposes, either simplification  -->
-<!-- (also called type transformation) is  -->
-<!-- b/ multi ->  single -->
-<!-- real example?? -->
-
-
-```r
-multilinestring_list = list(matrix(c(1, 4, 5, 3), ncol = 2), 
-                            matrix(c(4, 4, 4, 1), ncol = 2),
-                            matrix(c(2, 4, 2, 2), ncol = 2))
-multilinestring = st_multilinestring((multilinestring_list))
-```
-
-
-```r
-multilinestring_sf = st_sf(geom = st_sfc(multilinestring))
-dim(multilinestring_sf)
-#> [1] 1 1
-linestring_sf2 = st_cast(multilinestring_sf, "LINESTRING")
-dim(linestring_sf2)
-#> [1] 3 1
-```
-
-<img src="figures/unnamed-chunk-35-1.png" width="576" style="display: block; margin: auto;" />
-
-<!-- or Geometry cast -->
-<!-- Changing the geometry type while the fundamental data remains unchanged ('casting') -->
-<!-- - st_cast -->
-<!-- two groups of examples: -->
-<!-- - top down (MULTIPOLYGON -> the rest) -->
-<!-- - bottom up (POINT -> the rest) -->
-<!-- and in the same time, two (?) groups of purposes: -->
-<!-- - split/join geometries (e.g one mutlipoint -> many points) -->
-<!-- - transform type (e.g one mutlipoint -> one line -> one polygon) -->
-
-
-```r
-nz_points = st_cast(nz, "MULTIPOINT")
-```
-
-<img src="figures/unnamed-chunk-37-1.png" width="576" style="display: block; margin: auto;" />
-
-<!-- ### Class conversion -->
-<!-- placeholder for: -->
-<!-- sf -> sp -->
-<!-- sp -> sf -->
-<!-- stars; https://github.com/r-spatial/stars/blob/master/vignettes/blog1.Rmd -->
-
-### Simplification
-<!-- - simplifications -->
-<!-- st_simplify -->
-<!-- line example -->
-<!-- rmapshaper -->
-<!-- polygon example -->
-
-### Rasterization
-<!-- - vector to raster -->
-
-## Geometric operations on raster data
-
-### Reprojecting
-
-The basic concepts of CRS apply to both vector and raster data model.
-However, there are important differences in reprojection of vectors and rasters.
-Transformation of CRS in vector data changes coordinates of each vertex. 
-This do not apply to raster data.
-Rasters are are composed of rectangular cells of the same size (expressed by map units, such as degrees or meters).
-To preserve this property, it is impossible to transform coordinates of cells separately.
-This entails that a new raster could have a different number of columns and rows, and therefore different number of cells that the original one.
-Therefore, values of these new cells need to be estimated after a geometric operation is completed.
-The `projectRaster()` function's role is to reproject `Raster*` objects into a new object with another coordinate reference system. 
-Compared to `st_tranform()`, `projectRaster()` only accepts the `proj4string` definitions.
+### Reprojecting raster geometries
+
+The projection concepts described in the previous section apply equally to rasters objects.
+However, there are important differences in reprojection of vectors and rasters:
+transforming a vector object involves changing the coordinates of every vertex but this do not apply to raster data.
+Rasters are are composed of rectangular cells of the same size (expressed by map units, such as degrees or meters), so it is impossible to transform coordinates of pixels separately.
+
+Raster reprojection involves creating a new raster object, often with a different number of columns and rows than the original.
+The attributes must subsequently be re-estimated, allowing the new pixels to be 'filled' with appropriate values.
+This two-stage process is done with `projectRaster()` from the **raster** package.
+Like the `st_transform()` function demonstrated in the previous section, `projectRaster()` takes a geographic object (a raster dataset in this case) and a `crs` argument.
+However, `projectRaster()` only accepts the lengthy `proj4string` definitions of a CRS rather than concise EPSG codes.
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">It is possible to use a EPSG code in a `proj4string` definition with `"+init=epsg:MY_NUMBER"`.
 For example, one can use the `"+init=epsg:4326"` definition to set CRS to WGS84 (EPSG code of 4326).
@@ -4216,7 +4001,7 @@ con_raster
 ```
 
 The nearest neighbor method should not be used for continuous raster data, as we want to preserve gradual changes in values.
-Alternatively, continuous data could be reprojected in the **raster** package using the bilinear method. 
+Alternatively, continuous data could be reprojected in the **raster** package using the bi-linear method. 
 In this technique, value of the output cell is calculated based on four nearest cells in the original raster. 
 The new value is a weighted average of values from these four cells, adjusted for their distance from the center of the output cell. 
 This dataset has geographic CRS and we want to transform it into projected CRS.
@@ -4258,6 +4043,252 @@ summary(con_raster_ea)
 <!-- note1: in most of the cases reproject vector, not raster-->
 <!-- note2: equal area projections are the best for raster calculations -->
 <!-- q: should we mentioned gdal_transform? -->
+
+## Geometric operations on vector data {#geo-vec}
+
+This section is about operations that in some way change the geometry of vector (`sf`) objects.
+It is more advanced than the spatial data operations presented in the previous Chapter (in section \@ref(spatial-operations-on-vector-data)) because here we drill down into the geometry:
+the functions discussed in this section work on objects of class `sfc` (simple feature geometry collections) in addition to objects of class `sf`.
+
+### Geometry unions
+
+Spatial aggregation can also be done in the **tidyverse**, using **dplyr** functions as follows:
+
+
+```r
+group_by(us_states, REGION) %>%
+  summarize(sum(pop = total_pop_15, na.rm = TRUE))
+```
+
+For attribute data aggregation the grouping variable is another variable, typically one with few unique values relative to the number of rows (see section \@ref(vector-attribute-aggregation)).
+What we did not cover in that section was that attribute data aggregation dissolves the geometries of touching polygons.
+The `REGION` variable in the `us_states` dataset is a good example:
+there are 49 states (excluding Hawaii and Alaska) which can be aggregated into four regions.
+This is demonstrated in the code chunk below, the results of which are illustrated in Figure \@ref(fig:us-regions):
+
+
+```r
+regions = aggregate(x = us_states[, "total_pop_15"], by = list(us_states$REGION),
+                    FUN = sum, na.rm = TRUE)
+```
+<!--
+show also tidyverse way, so what you are doing is basically a spatial join and a subsequent aggregation without a grouping variable. Didactically, it might be better to present a grouping variable.
+-->
+
+
+
+<div class="figure" style="text-align: center">
+<img src="figures/us-regions-1.png" alt="Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions, with population represented by color. Note the operation automatically dissolves boundaries between states." width="100%" />
+<p class="caption">(\#fig:us-regions)Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions, with population represented by color. Note the operation automatically dissolves boundaries between states.</p>
+</div>
+
+The equivalent result can be achieved using **tidyverse** functions as follows (result not shown):
+
+
+```r
+regions2 = us_states %>% 
+  group_by(REGION) %>%
+  summarize(sum(pop = total_pop_15, na.rm = TRUE))
+```
+
+### Clipping 
+
+Spatial clipping is a form of spatial subsetting that involves changes to the `geometry` columns of at least some of the affected features.
+
+Clipping can only apply to features more complex than points: 
+lines, polygons and their 'multi' equivalents.
+To illustrate the concept we will start with a simple example:
+two overlapping circles with a center point one unit away from each other and radius of one:
+
+
+```r
+b = st_sfc(st_point(c(0, 1)), st_point(c(1, 1))) # create 2 points
+b = st_buffer(b, dist = 1) # convert points to circles
+l = c("x", "y")
+plot(b)
+text(x = c(-0.5, 1.5), y = 1, labels = l) # add text
+```
+
+<div class="figure" style="text-align: center">
+<img src="figures/points-1.png" alt="Overlapping circles." width="576" />
+<p class="caption">(\#fig:points)Overlapping circles.</p>
+</div>
+
+Imagine you want to select not one circle or the other, but the space covered by both `x` *and* `y`.
+This can be done using the function `st_intersection()`, illustrated using objects named `x` and `y` which represent the left and right-hand circles:
+
+
+```r
+x = b[1]
+y = b[2]
+x_and_y = st_intersection(x, y)
+plot(b)
+plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
+```
+
+<img src="figures/unnamed-chunk-32-1.png" width="576" style="display: block; margin: auto;" />
+
+The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
+<!-- Todo: reference r4ds -->
+
+<div class="figure" style="text-align: center">
+<img src="figures/venn-clip-1.png" alt="Spatial equivalents of logical operators." width="576" />
+<p class="caption">(\#fig:venn-clip)Spatial equivalents of logical operators.</p>
+</div>
+
+To illustrate the relationship between subsetting and clipping spatial data, we will subset points that cover the bounding box of the circles `x` and `y` in Figure \@ref(fig:venn-clip).
+Some points will be inside just one circle, some will be inside both and some will be inside neither.
+
+There are two different ways to subset points that fit into combinations of the circles: via clipping and logical operators.
+But first we must generate some points.
+We will use the *simple random* sampling strategy to sample from a box representing the extent of `x` and `y`.
+To generate this points will use a function not yet covered in this book, `st_sample()`.
+Next we will generate the situation plotted in Figure \@ref(fig:venn-subset):
+
+
+```r
+bb = st_bbox(st_union(x, y))
+pmat = matrix(c(bb[c(1, 2, 3, 2, 3, 4, 1, 4, 1, 2)]), ncol = 2, byrow = TRUE)
+box = st_polygon(list(pmat))
+set.seed(2017)
+p = st_sample(x = box, size = 10)
+plot(box)
+plot(x, add = TRUE)
+plot(y, add = TRUE)
+plot(p, add = TRUE)
+text(x = c(-0.5, 1.5), y = 1, labels = l)
+```
+
+<div class="figure" style="text-align: center">
+<img src="figures/venn-subset-1.png" alt="Randomly distributed points within the bounding box enclosing circles x and y." width="576" />
+<p class="caption">(\#fig:venn-subset)Randomly distributed points within the bounding box enclosing circles x and y.</p>
+</div>
+
+
+
+### Centroids
+<!-- st_point_on_surface -->
+<!-- st_centroid -->
+<!-- st_polygonize -->
+
+
+```r
+nz_centroid = st_centroid(nz)
+```
+
+
+```r
+nz_pos = st_point_on_surface(nz)
+```
+
+<img src="figures/unnamed-chunk-36-1.png" width="576" style="display: block; margin: auto;" />
+
+### Buffers
+
+### Affine transformations
+
+### Type transformation
+
+Geometry casting is powerful operation which enable transformation of the geometry type<!--while the fundamental data remains unchanged-->.
+It is implemented in the `st_cast` function from the `sf` package.
+Importantly, `st_cast` behaves differently on single simple feature geometry (`sfg`) objects, and simple feature geometry column (`sfc`) and simple features objects.
+
+Let's create a multipoint to illustrate how geometry casting works on simple feature geometry (`sfg`) objects:
+
+
+```r
+multipoint = st_multipoint(matrix(c(1, 3, 5, 1, 3, 1), ncol = 2))
+```
+
+In this case, `st_cast` can be useful to transform the new object into linestring or polygon (Figure \@ref(fig:single-cast)):
+
+<!-- a/ points -> lines -> polygons  -->
+
+```r
+linestring = st_cast(multipoint, "LINESTRING")
+polyg = st_cast(multipoint, "POLYGON")
+```
+
+<div class="figure" style="text-align: center">
+<img src="figures/single-cast-1.png" alt="Examples of linestring and polygon created based on multipoint using the `st_cast` function" width="576" />
+<p class="caption">(\#fig:single-cast)Examples of linestring and polygon created based on multipoint using the `st_cast` function</p>
+</div>
+
+This process can be also reversed using `st_cast`:
+
+
+```r
+multipoint_2 = st_cast(linestring, "MULTIPOINT")
+multipoint_3 = st_cast(polyg, "MULTIPOINT")
+```
+
+\BeginKnitrBlock{rmdnote}<div class="rmdnote">For single simple feature geometries (`sfg`), `st_cast` provides also geometry casting from non-multi to multi types (e.g. `POINT` to `MULTIPOINT`) and from multi types to non-multi types.
+However, only the first element of the old object would remain in the second group of cases.
+<!-- note: beware of information lost (you will get a warning) --></div>\EndKnitrBlock{rmdnote}
+
+
+
+<!-- single geometries ()s behaviour differs depending on class of a data - -->
+<!-- There are two main types of geometry casting t -->
+<!-- This could be done for one of two purposes, either simplification  -->
+<!-- (also called type transformation) is  -->
+<!-- b/ multi ->  single -->
+<!-- real example?? -->
+
+
+```r
+multilinestring_list = list(matrix(c(1, 4, 5, 3), ncol = 2), 
+                            matrix(c(4, 4, 4, 1), ncol = 2),
+                            matrix(c(2, 4, 2, 2), ncol = 2))
+multilinestring = st_multilinestring((multilinestring_list))
+```
+
+
+```r
+multilinestring_sf = st_sf(geom = st_sfc(multilinestring))
+dim(multilinestring_sf)
+#> [1] 1 1
+linestring_sf2 = st_cast(multilinestring_sf, "LINESTRING")
+dim(linestring_sf2)
+#> [1] 3 1
+```
+
+<img src="figures/unnamed-chunk-44-1.png" width="576" style="display: block; margin: auto;" />
+
+<!-- or Geometry cast -->
+<!-- Changing the geometry type while the fundamental data remains unchanged ('casting') -->
+<!-- - st_cast -->
+<!-- two groups of examples: -->
+<!-- - top down (MULTIPOLYGON -> the rest) -->
+<!-- - bottom up (POINT -> the rest) -->
+<!-- and in the same time, two (?) groups of purposes: -->
+<!-- - split/join geometries (e.g one mutlipoint -> many points) -->
+<!-- - transform type (e.g one mutlipoint -> one line -> one polygon) -->
+
+
+```r
+nz_points = st_cast(nz, "MULTIPOINT")
+```
+
+<img src="figures/unnamed-chunk-46-1.png" width="576" style="display: block; margin: auto;" />
+
+<!-- ### Class conversion -->
+<!-- placeholder for: -->
+<!-- sf -> sp -->
+<!-- sp -> sf -->
+<!-- stars; https://github.com/r-spatial/stars/blob/master/vignettes/blog1.Rmd -->
+
+### Simplification
+<!-- - simplifications -->
+<!-- st_simplify -->
+<!-- line example -->
+<!-- rmapshaper -->
+<!-- polygon example -->
+
+### Rasterization
+<!-- - vector to raster -->
+
+## Geometric operations on raster data {#geo-ras}
 
 ### Raster alignment
 
@@ -4372,7 +4403,7 @@ This is because **raster**:
 For more information have a look at the help pages of `beginCluster()` and `clusteR()`.
 Additionally, check out the *Multi-core functions* section in `vignette("functions", package = "raster")`.
 
-### Aggregation
+### Aggregation {#ras-agg}
 
 ### Vectorization
 
@@ -4391,7 +4422,7 @@ Why the new object differs from the original one?
 <!--  world_4326 = st_transform(world_tmerc, 4326) -->
 <!-- plot(world_4326$geom) -->
 <!-- ``` -->
-1. Try to transform the categorical raster (`cat_raster`) into WGS 84 using the bilinear interpolation method. 
+1. Try to transform the categorical raster (`cat_raster`) into WGS 84 using the bi-linear interpolation method. 
 What has changed?
 How it influences the results?
 <!-- ```{r} -->
@@ -5508,7 +5539,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveec5fbd628ca1a9c8
+preserve0b6d5614409f302e
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
