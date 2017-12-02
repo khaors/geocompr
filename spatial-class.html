@@ -490,7 +490,7 @@ Figure 2.6: Country continents (represented by fill colour) and 2015 populations
 </div>
 <div id="sf-classes" class="section level3">
 <h3><span class="header-section-number">2.1.5</span> Simple feature classes</h3>
-<p>To understand new data formats in depth, it often helps to build them from the ground up. This section walks you through vector spatial classes step-by-step, from the elementary simple feature geometry to simple feature objects of class <code>sf</code> representing complex spatial data. Before describing each geometry type that the <strong>sf</strong> package supports, it is worth taking a step back to understand the building blocks of <code>sf</code> objects. As stated in section <a href="spatial-class.html#intro-sf">2.1.1</a>, simple features are simply data frames with at least one special column that makes it spatial. These spatial columns are often called <code>geom</code> or <code>geometry</code> and can be like non-spatial columns: <code>world$geom</code> refers to the spatial element of the <code>world</code> object described above. These geometry columns are ‘list columns’ of class <code>sfc</code>: they are simple feature collections. In turn, <code>sfc</code> objects are composed of one or more objects of class <code>sfg</code>: simple feature geometries.</p>
+<p>To understand new data formats in depth, it often helps to build them from the ground up. This section walks you through vector spatial classes step-by-step, from the elementary simple feature geometry to simple feature objects of class <code>sf</code> representing complex spatial data. Before describing each geometry type that the <strong>sf</strong> package supports, it is worth taking a step back to understand the building blocks of <code>sf</code> objects. As stated in section <a href="spatial-class.html#intro-sf">2.1.1</a>, simple features are simply data frames with at least one special column that makes it spatial. These spatial columns are often called <code>geom</code> or <code>geometry</code> and can be like non-spatial columns: <code>world$geom</code> refers to the spatial element of the <code>world</code> object described above. These geometry columns are ‘list columns’ of class <code>sfc</code>. In turn, <code>sfc</code> objects are composed of one or more objects of class <code>sfg</code>: simple feature geometries.</p>
 <p>To understand how the spatial components of simple features work, it is vital to understand simple feature geometries. For this reason we cover each currently supported <code>sfg</code> type in the next subsections before moving on to describe how these can be combined to form <code>sfc</code> and eventually full <code>sf</code> objects.</p>
 <div id="geometry" class="section level4">
 <h4><span class="header-section-number">2.1.5.1</span> Simple feature geometry types</h4>
@@ -604,8 +604,8 @@ gemetrycollection_list =<span class="st"> </span><span class="kw">list</span>(<s
 <!-- https://r-spatial.github.io/sf/articles/sf1.html -->
 </div>
 <div id="sfc" class="section level4">
-<h4><span class="header-section-number">2.1.5.3</span> Simple feature collections</h4>
-<p>One <code>sfg</code> object contains only a single simple feature geometry. A collection of simple feature geometries (<code>sfc</code>) is a list is a list of <code>sfg</code> objects and can additionally contain information about the coordinate reference system in use. For instance, to combine two simple features into one object with two features, we can use the <code>st_sfc()</code> function. This is important since this collection represents the geometry column in <strong>sf</strong> data frames:</p>
+<h4><span class="header-section-number">2.1.5.3</span> Simple feature geometry column</h4>
+<p>One <code>sfg</code> object contains only a single simple feature geometry. A simple feature geometry column (<code>sfc</code>) is a list of <code>sfg</code> objects, which is additionally able to contain information about the coordinate reference system in use. For instance, to combine two simple features into one object with two features, we can use the <code>st_sfc()</code> function. This is important since <code>sfg</code> represents the geometry column in <strong>sf</strong> data frames:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># sfc POINT</span>
 point1 =<span class="st"> </span><span class="kw">st_point</span>(<span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">2</span>))
 point2 =<span class="st"> </span><span class="kw">st_point</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))
@@ -618,7 +618,7 @@ point2 =<span class="st"> </span><span class="kw">st_point</span>(<span class="k
 <span class="co">#&gt; proj4string:    NA</span>
 <span class="co">#&gt; POINT (5 2)</span>
 <span class="co">#&gt; POINT (1 3)</span></code></pre></div>
-<p>In most cases, an <code>sfc</code> object contains objects of the same geometry type. Therefore, when we convert <code>sfg</code> objects of type polygon into a simple feature collection, we would also end up with an <code>sfc</code> object of type polygon. Equally, a collection of multilinestrings would result in an <code>sfc</code> object of type multilinestring:</p>
+<p>In most cases, an <code>sfc</code> object contains objects of the same geometry type. Therefore, when we convert <code>sfg</code> objects of type polygon into a simple feature geometry column, we would also end up with an <code>sfc</code> object of type polygon. Equally, a geometry column of multilinestrings would result in an <code>sfc</code> object of type multilinestring:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># sfc POLYGON</span>
 polygon_list1 =<span class="st"> </span><span class="kw">list</span>(<span class="kw">rbind</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">5</span>), <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>), <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">5</span>)))
 polygon1 =<span class="st"> </span><span class="kw">st_polygon</span>(polygon_list)
@@ -674,7 +674,7 @@ multilinestring2 =<span class="st"> </span><span class="kw">st_multilinestring</
 <span class="co">#&gt; proj4string:    NA</span>
 <span class="co">#&gt; POINT (5 2)</span>
 <span class="co">#&gt; POINT (1 3)</span></code></pre></div>
-<p>Of course, all geometries in an <code>sfc</code> object must have the same CRS.</p>
+<p>All geometries in an <code>sfc</code> object must have the same CRS.</p>
 <p>We can add coordinate reference system as a <code>crs</code> argument of <code>st_sfc()</code>. This argument accepts either an integer with the <code>epsg</code> code (e.g., <code>4326</code>) or a <code>proj4string</code> character string (e.g., <code>&quot;+proj=longlat +datum=WGS84 +no_defs&quot;</code>) (see section <a href="spatial-class.html#crs-intro">2.3</a>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># EPSG definition</span>
 <span class="kw">st_sfc</span>(point1, point2, <span class="dt">crs =</span> <span class="dv">4326</span>)
@@ -723,7 +723,7 @@ multilinestring2 =<span class="st"> </span><span class="kw">st_multilinestring</
 <div id="sf" class="section level4">
 <h4><span class="header-section-number">2.1.5.4</span> Simple feature objects</h4>
 <p>So far, we have only dealt with the pure geometries. Most of the time, however, these geometries come with a set of attributes describing them. These attributes could represent the name of the geometry, measured values, groups to which the geometry belongs, and many more. For example, we measured a temperature of 25°C on Trafalgar Square in London on June 21<sup>th</sup> 2017. Hence, we have a specific point in space (the coordinates), the name of the location (Trafalgar Square), a temperature value, the date of the measurement. Other attributes might include a urbanity category (city or village), or a remark if the measurement was made using an automatic station.</p>
-<p>The simple feature class, <code>sf</code>, is a combination of an attribute table (<code>data.frame</code>) and a simple feature geometry collection (<code>sfc</code>). Simple features are created using the <code>st_sf()</code> function:</p>
+<p>The simple feature class, <code>sf</code>, is a combination of an attribute table (<code>data.frame</code>) and a simple feature geometry column (<code>sfc</code>). Simple features are created using the <code>st_sf()</code> function:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># sfg objects</span>
 london_point =<span class="st"> </span><span class="kw">st_point</span>(<span class="kw">c</span>(<span class="fl">0.1</span>, <span class="fl">51.5</span>))
 ruan_point =<span class="st"> </span><span class="kw">st_point</span>(<span class="kw">c</span>(-<span class="dv">9</span>, <span class="dv">53</span>))
@@ -740,7 +740,7 @@ our_attributes =<span class="st"> </span><span class="kw">data.frame</span>(<spa
 
 <span class="co"># sf object</span>
 sf_points =<span class="st"> </span><span class="kw">st_sf</span>(our_attributes, <span class="dt">geometry =</span> our_geometry)</code></pre></div>
-<p>The above example illustrates the components of <code>sf</code> objects. Firstly, coordinates define the geometry of the simple feature geometry (<code>sfg</code>). Secondly, we can combine the geometries in a simple feature collection (<code>sfc</code>) which also stores the CRS. Subsequently, we store the attribute information on the geometries in a <code>data.frame</code>. Finally, the <code>st_sf()</code> function combines the attribute table and the <code>sfc</code> object in an <code>sf</code> object.</p>
+<p>The above example illustrates the components of <code>sf</code> objects. Firstly, coordinates define the geometry of the simple feature geometry (<code>sfg</code>). Secondly, we can combine the geometries in a simple feature geometry column (<code>sfc</code>) which also stores the CRS. Subsequently, we store the attribute information on the geometries in a <code>data.frame</code>. Finally, the <code>st_sf()</code> function combines the attribute table and the <code>sfc</code> object in an <code>sf</code> object.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sf_points
 <span class="co">#&gt; Simple feature collection with 2 features and 5 fields</span>
 <span class="co">#&gt; geometry type:  POINT</span>

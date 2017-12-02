@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve7b80c01b40464ee4
+preservefd452740d68cb3ff
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -853,7 +853,7 @@ This section walks you through vector spatial classes step-by-step, from the ele
 Before describing each geometry type that the **sf** package supports, it is worth taking a step back to understand the building blocks of `sf` objects. 
 As stated in section \@ref(intro-sf), simple features are simply data frames with at least one special column that makes it spatial.
 These spatial columns are often called `geom` or `geometry` and can be like non-spatial columns: `world$geom` refers to the spatial element of the `world` object described above.
-These geometry columns are 'list columns' of class `sfc`: they are simple feature collections.
+These geometry columns are 'list columns' of class `sfc`.
 In turn, `sfc` objects are composed of one or more objects of class `sfg`: simple feature geometries.
 
 To understand how the spatial components of simple features work, it is vital to understand simple feature geometries.
@@ -1023,12 +1023,12 @@ st_geometrycollection(gemetrycollection_list)
 <!-- lines could create mutlilines or polygons, etc. -->
 <!-- https://r-spatial.github.io/sf/articles/sf1.html -->
 
-#### Simple feature collections {#sfc}
+#### Simple feature geometry column {#sfc}
 
 One `sfg` object contains only a single simple feature geometry. 
-A collection of simple feature geometries (`sfc`) is a list is a list of `sfg` objects and can additionally contain information about the coordinate reference system in use.
+A simple feature geometry column (`sfc`) is a list of `sfg` objects, which is additionally able to contain information about the coordinate reference system in use.
 For instance, to combine two simple features into one object with two features, we can use the `st_sfc()` function. 
-This is important since this collection represents the geometry column in **sf** data frames:
+This is important since `sfg` represents the geometry column in **sf** data frames:
 
 
 ```r
@@ -1047,8 +1047,8 @@ st_sfc(point1, point2)
 ```
 
 In most cases, an `sfc` object contains objects of the same geometry type.
-Therefore, when we convert `sfg` objects of type polygon into a simple feature collection, we would also end up with an `sfc` object of type polygon. 
-Equally, a collection of multilinestrings would result in an `sfc` object of type multilinestring:
+Therefore, when we convert `sfg` objects of type polygon into a simple feature geometry column, we would also end up with an `sfc` object of type polygon. 
+Equally, a geometry column of multilinestrings would result in an `sfc` object of type multilinestring:
 
 
 ```r
@@ -1127,7 +1127,7 @@ st_sfc(point1, point2)
 #> POINT (1 3)
 ```
 
-Of course, all geometries in an `sfc` object must have the same CRS. 
+All geometries in an `sfc` object must have the same CRS. 
 
 We can add coordinate reference system as a `crs` argument of `st_sfc()`. 
 This argument accepts either an integer with the `epsg` code (e.g., `4326`)  or a `proj4string` character string (e.g., `"+proj=longlat +datum=WGS84 +no_defs"`) (see section \@ref(crs-intro)). 
@@ -1206,7 +1206,7 @@ For example, we measured a temperature of 25°C on Trafalgar Square in London on
 Hence, we have a specific point in space (the coordinates), the name of the location (Trafalgar Square), a temperature value, the date of the measurement.
 Other attributes might include a urbanity category (city or village), or a remark if the measurement was made using an automatic station.
 
-The simple feature class, `sf`, is a combination of an attribute table (`data.frame`) and a simple feature geometry collection (`sfc`).
+The simple feature class, `sf`, is a combination of an attribute table (`data.frame`) and a simple feature geometry column (`sfc`).
 Simple features are created using the `st_sf()` function:
 
 
@@ -1231,7 +1231,7 @@ sf_points = st_sf(our_attributes, geometry = our_geometry)
 
 The above example illustrates the components of `sf` objects. 
 Firstly, coordinates define the geometry of the simple feature geometry (`sfg`).
-Secondly, we can combine the geometries in a simple feature collection (`sfc`) which also stores the CRS.
+Secondly, we can combine the geometries in a simple feature geometry column (`sfc`) which also stores the CRS.
 Subsequently, we store the attribute information on the geometries in a `data.frame`.
 Finally, the `st_sf()` function combines the attribute table and the `sfc` object in an `sf` object.
 
@@ -3095,7 +3095,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveadc9a29e5c3e984b
+preserve9be9caaa0f97e9c5
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5544,7 +5544,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve04e6eec856172250
+preserve46beec7096d332e7
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
