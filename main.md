@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservef3ef3b0fcf5c034a
+preserve9a18b8d01e6de969
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3095,7 +3095,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve4693310d07743528
+preserve231f3ecf3e5a4f95
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3722,16 +3722,19 @@ plot(london, add = TRUE)
 <p class="caption">(\#fig:crs-buf)Buffer on data with geographic CRS.</p>
 </div>
 
-This example does not mean that the CRS should not be set (it almost always should!) but that many spatial operations should be undertaken on projected geographic data.
-The solution is to *reproject* the data onto a projected CRS using the **sf** function `st_transform()`:
+Do not interpret the warning about the geographic (`longitude/latitude`) CRS as "the CRS should not be set": it almost always should be!
+It is better understood as a suggestion to *reproject* the data onto a projected CRS.
+This suggestion does not always need to be heeded: performing spatial and geometric operations makes little or no difference some cases (e.g. spatial subsetting).
+But for operations involving distances such as buffering, the only way to ensure a good result is to create a projected copy of the data and run the operation on that.
+This is done in the command below, using the **sf** function `st_transform()`:
 
 
 ```r
 london_proj = st_transform(london, crs = 27700)
 ```
 
-The result is a new object that is identical to `london`, but reprojected onto a suitable CRS (the British National Grid, which has an EPSG code of 27700) that has units of meters. 
-We can verify that the CRS has changed using `st_crs()` as follows:
+The result is a new object that is identical to `london`, but reprojected onto a suitable CRS (the British National Grid, which has an EPSG code of 27700 in this case) that has units of meters. 
+We can verify that the CRS has changed using `st_crs()` as follows (only the most important components of the output are shown, other details have been replaced by `...`):
 
 
 ```r
@@ -3741,10 +3744,11 @@ st_crs(london_proj)
 #>   proj4string: "+proj=tmerc +lat_0=49 +lon_0=-2 ... +units=m +no_defs"
 ```
 
-The most important components of the outputs are the EPSG code (`EPSG: 27700`), the origin (`+lat_0=49 +lon_0=-2`) and units (`+units=m`) (other details have been replaced by `...`).
-This CRS information tells us operations on this projected version of the `london` dataset will make sense.
-This can be verified by repeating the buffer operation, but with a meaningful measure of distance.
-Moving 1 degree at the equator means moving more than 100 km (111,320 meters):
+Notable components of this CRS description include the EPSG code (`EPSG: 27700`), the origin (`+lat_0=49 +lon_0=-2`) and units (`+units=m`).
+The fact that the units of the CRS are meters (rather than degrees) tells us that geometry operations on on `london_proj` will make sense (and not emit a warning).
+This can be verified by checking that it is no longer in a geographic CRS, that `st_is_longlat(london_proj)` returns `FALSE`.
+Now we can repeat the buffer operation with a meaningful measure of distance.
+Moving 1 degree at the equator means moving more than 100 km (111,320 meters), the new buffer distance:
 
 
 ```r
@@ -5540,7 +5544,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve4f05b8ddca531670
+preserve9fac172bbdb519a2
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
