@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve2c8dd89f4b32f1cf
+preserve7b80c01b40464ee4
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -1839,7 +1839,7 @@ Assign random values between 0 and 10 to the new raster and plot it.
 <!--chapter:end:02-spatial-data.Rmd-->
 
 
-# Attribute data operations {#attr}
+# Attribute operations {#attr}
 
 ## Prerequisites {-}
 
@@ -2659,7 +2659,7 @@ Create a raster stack using `dem` and `ndvi`, and make a `pairs()` plot
 <!--chapter:end:03-attribute-operations.Rmd-->
 
 
-# Spatial data operations
+# Spatial operations
 
 ## Prerequisites {-}
 
@@ -3095,7 +3095,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve00aa695661d355cc
+preserveadc9a29e5c3e984b
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5544,7 +5544,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve292be54c6a0c0ed9
+preserve04e6eec856172250
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
