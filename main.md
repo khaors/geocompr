@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve2639a950df4ceffa
+preservee04b2abe80696124
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3095,7 +3095,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve3e81761e6b5355b1
+preserved4d4654de1e5a310
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3865,7 +3865,7 @@ world_wintri = st_transform_proj(world, crs = "+proj=wintri")
 </div>
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">Two main functions for transformation of simple features coordinates are `sf::st_transform()` and `sf::sf_project()`. 
-The `st_transform` function uses the GDAL interface to PROJ.4, while `sf_project()` uses the PROJ.4 API directly.
+The `st_transform` function uses the GDAL interface to PROJ.4, while `sf_project()` (which works on point data only) and `lwgeom::st_transform_proj()` use the PROJ.4 API directly.
 The first one is appropriate in most situations, and provides a set of the most often used parameters and well defined transformations.
 The second one allows for a greater customization of a projection, which includes cases when some of the PROJ.4 parameters (e.g. `+over`) or projection (`+proj=wintri`) is not available in `st_transform()`.</div>\EndKnitrBlock{rmdnote}
 
@@ -5539,7 +5539,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve651e4a227195d833
+preserve75bb2b6e68ca9528
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 

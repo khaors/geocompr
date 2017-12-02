@@ -398,7 +398,7 @@ Figure 5.4: Winkel tripel projection of the world
 </div>
 
 <div class="rmdnote">
-Two main functions for transformation of simple features coordinates are <code>sf::st_transform()</code> and <code>sf::sf_project()</code>. The <code>st_transform</code> function uses the GDAL interface to PROJ.4, while <code>sf_project()</code> uses the PROJ.4 API directly. The first one is appropriate in most situations, and provides a set of the most often used parameters and well defined transformations. The second one allows for a greater customization of a projection, which includes cases when some of the PROJ.4 parameters (e.g. <code>+over</code>) or projection (<code>+proj=wintri</code>) is not available in <code>st_transform()</code>.
+Two main functions for transformation of simple features coordinates are <code>sf::st_transform()</code> and <code>sf::sf_project()</code>. The <code>st_transform</code> function uses the GDAL interface to PROJ.4, while <code>sf_project()</code> (which works on point data only) and <code>lwgeom::st_transform_proj()</code> use the PROJ.4 API directly. The first one is appropriate in most situations, and provides a set of the most often used parameters and well defined transformations. The second one allows for a greater customization of a projection, which includes cases when some of the PROJ.4 parameters (e.g. <code>+over</code>) or projection (<code>+proj=wintri</code>) is not available in <code>st_transform()</code>.
 </div>
 <p></p>
 <p>Moreover, PROJ.4 parameters can be modified in most CRS definitions. The below code transforms the coordinates to the Lambert azimuthal equal-area projection centered on longitude and latitude of <code>0</code> (Figure <a href="transform.html#fig:laeaproj1">5.5</a>).</p>
