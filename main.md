@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve8128bb034b8a58d8
+preserve19f7a30f1671bc53
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3095,7 +3095,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve93c129517a51b3f0
+preserve1afae7f621f2b142
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3708,7 +3708,7 @@ london_buff = st_buffer(london, dist = 1)
 
 Note the warning that informs us that the result has limited use because distances in geographic CRSs are in degrees, rather than meters or some other suitable measure of distance.
 The consequences of a failure to work on projected data are illustrated in Figure \@ref(fig:crs-buf):
-not how the buffer is dramatically elongated in the north-south direction due to the thinning of the vertical lines of longitude towards the Earth's poles.  
+note how the buffer is dramatically elongated in the north-south direction due to the thinning of the vertical lines of longitude towards the Earth's poles.  
 
 
 ```r
@@ -3912,7 +3912,7 @@ More information about CRS modification can be found in the [Using PROJ.4](http:
 
 ### Reprojecting raster geometries
 
-The projection concepts described in the previous section apply equally to rasters objects.
+The projection concepts described in the previous section apply equally to rasters.
 However, there are important differences in reprojection of vectors and rasters:
 transforming a vector object involves changing the coordinates of every vertex but this do not apply to raster data.
 Rasters are are composed of rectangular cells of the same size (expressed by map units, such as degrees or meters), so it is impossible to transform coordinates of pixels separately.
@@ -5539,7 +5539,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve8f1315d88abfa63f
+preserve872bbc80e833a06c
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
