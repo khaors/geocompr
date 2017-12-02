@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2017-12-01'
+date: '2017-12-02'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2017-12-01 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2017-12-02 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveb2cd8d438e2d33ce
+preserve2d28af380a71a2a2
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3095,7 +3095,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve1729abefbec1e92b
+preservea24893ba564f34ec
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4024,39 +4024,49 @@ nz_pos = st_point_on_surface(nz)
 
 ### Type transformation
 
-Geometry casting is powerful operation which enable transformation of the geometry type <!--while the fundamental data remains unchanged-->.
-<!-- This could be done for one of two purposes, either simplification  -->
-<!-- (also called type transformation) is  -->
+Geometry casting is powerful operation which enable transformation of the geometry type<!--while the fundamental data remains unchanged-->.
+It is implemented in the `st_cast` function from the `sf` package.
+Importantly, `st_cast` behaves differently on single simple feature geometry (`sfg`) objects, and simple feature geometry column (`sfc`) and simple features objects.
+
+Let's create a multipoint to ilustrate how geometry casting works on simple feature geometry (`sfg`) objects:
+
+
+```r
+multipoint = st_multipoint(matrix(c(1, 3, 5, 1, 3, 1), ncol = 2))
+```
+
+In this case, `st_cast` can be useful to transform the new object into linestring or polygon (Figure \@ref(fig:single-cast)):
 
 <!-- a/ points -> lines -> polygons  -->
 
 ```r
-multipoint = st_multipoint(matrix(c(1, 3, 5, 1, 3, 1), ncol = 2))
 linestring = st_cast(multipoint, "LINESTRING")
 polyg = st_cast(multipoint, "POLYGON")
 ```
 
+<div class="figure" style="text-align: center">
+<img src="figures/single-cast-1.png" alt="Examples of linestring and polygon created based on multipoint using the `st_cast` function" width="576" />
+<p class="caption">(\#fig:single-cast)Examples of linestring and polygon created based on multipoint using the `st_cast` function</p>
+</div>
+
+This process can be also reversed using `st_cast`:
+
 
 ```r
-par_old = par()
-par(mfrow = c(1, 3))
-plot(multipoint)
-plot(linestring)
-plot(polyg)
-par(par_old)
-#> Warning in par(par_old): graphical parameter "cin" cannot be set
-#> Warning in par(par_old): graphical parameter "cra" cannot be set
-#> Warning in par(par_old): graphical parameter "csi" cannot be set
-#> Warning in par(par_old): graphical parameter "cxy" cannot be set
-#> Warning in par(par_old): graphical parameter "din" cannot be set
-#> Warning in par(par_old): graphical parameter "page" cannot be set
+multipoint_2 = st_cast(linestring, "MULTIPOINT")
+multipoint_3 = st_cast(polyg, "MULTIPOINT")
 ```
 
-<img src="figures/unnamed-chunk-29-1.png" width="576" style="display: block; margin: auto;" />
+\BeginKnitrBlock{rmdnote}<div class="rmdnote">For single simple feature geometries (`sfg`), `st_cast` provides also geometry casting from non-multi to multi types (e.g. `POINT` to `MULTIPOINT`) and from multi types to non-multi types.
+However, only the first element of the old object would remain in the second group of cases.
+<!-- note: beware of information lost (you will get a warning) --></div>\EndKnitrBlock{rmdnote}
 
-<!-- note: beware of information lost (you will get a warning) -->
 
 
+<!-- single geometries ()s behaviour differs depending on class of a data - -->
+<!-- There are two main types of geometry casting t -->
+<!-- This could be done for one of two purposes, either simplification  -->
+<!-- (also called type transformation) is  -->
 <!-- b/ multi ->  single -->
 <!-- real example?? -->
 
@@ -4078,17 +4088,7 @@ dim(linestring_sf2)
 #> [1] 3 1
 ```
 
-
-```
-#> Warning in par(par_old): graphical parameter "cin" cannot be set
-#> Warning in par(par_old): graphical parameter "cra" cannot be set
-#> Warning in par(par_old): graphical parameter "csi" cannot be set
-#> Warning in par(par_old): graphical parameter "cxy" cannot be set
-#> Warning in par(par_old): graphical parameter "din" cannot be set
-#> Warning in par(par_old): graphical parameter "page" cannot be set
-```
-
-<img src="figures/unnamed-chunk-33-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-35-1.png" width="576" style="display: block; margin: auto;" />
 
 <!-- or Geometry cast -->
 <!-- Changing the geometry type while the fundamental data remains unchanged ('casting') -->
@@ -4105,7 +4105,7 @@ dim(linestring_sf2)
 nz_points = st_cast(nz, "MULTIPOINT")
 ```
 
-<img src="figures/unnamed-chunk-35-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-37-1.png" width="576" style="display: block; margin: auto;" />
 
 <!-- ### Class conversion -->
 <!-- placeholder for: -->
@@ -5508,7 +5508,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve2d0d7dcde1a3d5ab
+preserveec5fbd628ca1a9c8
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
