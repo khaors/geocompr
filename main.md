@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservefe8539f16f1136bf
+preserve8128bb034b8a58d8
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3095,7 +3095,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve1f9aea633c13cb9a
+preserve93c129517a51b3f0
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3662,11 +3662,12 @@ Advanced transformations of vector geometries include type transformations (e.g.
 
 Section \@ref(geo-ras) covers geometric transformations on raster objects.
 This involves changing the size and number of the underlying pixels, and assigning them new values.
-It teaches how to align rasters, enabling the map algebra methods demonstrated in section \@ref(map-algebra) to work on raster objects from different sources (section \@ref(raster-alignment)).
-Raster aggregation is covered in section \@ref(ras-agg).
+It teaches how to change the resolution (also called raster aggregation and disaggregation), the extent and the origin of a raster.
+These operations are especially useful if one would like to align raster datasets from diverse sources (see section \@ref(raster-alignment)).
+Only making sure that these rasters share the same header information allows the jointly usage of map algebra operations (see section \@ref(map-algebra)). 
 
-A vital type of geometry transformation is *reprojection*, from one coordinate reference system (CRS) to another.
-Because of the importance of reprojection, introduced in section \@ref(crs-intro), and the fact that it applies to raster and vector geometries alike, it is the topic of the first section in this chapter.
+A vital type of geometry transformation is *reprojecting* from one coordinate reference system (CRS) to another.
+Because of the importance of reprojection, introduced in Chapter \@ref(spatial-class) (see figure \@ref(fig:vectorplots) and section \@ref(crs-intro)), and the fact that it applies to raster and vector geometries alike, it is the topic of the first section in this chapter.
 
 ## Reprojecting geographic data 
 
@@ -5538,7 +5539,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservea75fb31a997ed80a
+preserve8f1315d88abfa63f
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
