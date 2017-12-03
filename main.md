@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserved2e4df82fcf63a53
+preserve56679d8a6108473d
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3094,7 +3094,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve5a4018fdd22dc372
+preserve1e0a99aa7ee910f6
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4315,6 +4315,28 @@ linestring_sf2
 <!-- stars; https://github.com/r-spatial/stars/blob/master/vignettes/blog1.Rmd -->
 
 ### Simplification
+
+
+```r
+plot(us_states$geometry)
+plot(st_simplify(us_states, preserveTopology = FALSE, dTolerance = 0.3)$geometry)
+#> Warning in st_simplify.sfc(st_geometry(x), preserveTopology, dTolerance):
+#> st_simplify does not correctly simplify longitude/latitude data, dTolerance
+#> needs to be in decimal degrees
+```
+
+<img src="figures/unnamed-chunk-46-1.png" width="576" style="display: block; margin: auto;" /><img src="figures/unnamed-chunk-46-2.png" width="576" style="display: block; margin: auto;" />
+
+
+```r
+# proportion of points to retain (0-1; default 0.05)
+plot(rmapshaper::ms_simplify(us_states, keep = 0.03, keep_shapes = TRUE)$geometry)
+#> Warning in value[[3L]](cond): Could not convert column NA to class units.
+#> Returning as numeric
+```
+
+<img src="figures/unnamed-chunk-47-1.png" width="576" style="display: block; margin: auto;" />
+
 <!-- - simplifications -->
 <!-- st_simplify -->
 <!-- line example -->
@@ -5575,7 +5597,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve389b588eb8da7bf0
+preserve72d22c29884e3d5e
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
