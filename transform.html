@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2017-12-02">
+<meta name="date" content="2017-12-03">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -170,7 +170,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="3.2.1" data-path="attr.html"><a href="attr.html#vector-attribute-subsetting"><i class="fa fa-check"></i><b>3.2.1</b> Vector attribute subsetting</a></li>
 <li class="chapter" data-level="3.2.2" data-path="attr.html"><a href="attr.html#vector-attribute-aggregation"><i class="fa fa-check"></i><b>3.2.2</b> Vector attribute aggregation</a></li>
 <li class="chapter" data-level="3.2.3" data-path="attr.html"><a href="attr.html#vector-attribute-joining"><i class="fa fa-check"></i><b>3.2.3</b> Vector attribute joining</a></li>
-<li class="chapter" data-level="3.2.4" data-path="attr.html"><a href="attr.html#creating-attributes-and-removing-spatial-information"><i class="fa fa-check"></i><b>3.2.4</b> Creating attributes and removing spatial information</a></li>
+<li class="chapter" data-level="3.2.4" data-path="attr.html"><a href="attr.html#vec-attr-creation"><i class="fa fa-check"></i><b>3.2.4</b> Creating attributes and removing spatial information</a></li>
 </ul></li>
 <li class="chapter" data-level="3.3" data-path="attr.html"><a href="attr.html#manipulating-raster-objects"><i class="fa fa-check"></i><b>3.3</b> Manipulating raster objects</a><ul>
 <li class="chapter" data-level="3.3.1" data-path="attr.html"><a href="attr.html#raster-subsetting"><i class="fa fa-check"></i><b>3.3.1</b> Raster subsetting</a></li>
@@ -597,7 +597,7 @@ Figure 5.10: Randomly distributed points within the bounding box enclosing circl
 </div>
 <div id="type-transformation" class="section level3">
 <h3><span class="header-section-number">5.2.6</span> Type transformation</h3>
-<p>Geometry casting is powerful operation which enable transformation of the geometry type<!--while the fundamental data remains unchanged-->. It is implemented in the <code>st_cast</code> function from the <code>sf</code> package. Importantly, <code>st_cast</code> behaves differently on single simple feature geometry (<code>sfg</code>) objects, and simple feature geometry column (<code>sfc</code>) and simple features objects.</p>
+<p>Geometry casting is powerful operation which enable transformation of the geometry type. It is implemented in the <code>st_cast</code> function from the <code>sf</code> package. Importantly, <code>st_cast</code> behaves differently on single simple feature geometry (<code>sfg</code>) objects, and simple feature geometry column (<code>sfc</code>) and simple features objects.</p>
 <p>Let’s create a multipoint to illustrate how geometry casting works on simple feature geometry (<code>sfg</code>) objects:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">multipoint =<span class="st"> </span><span class="kw">st_multipoint</span>(<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">1</span>), <span class="dt">ncol =</span> <span class="dv">2</span>))</code></pre></div>
 <p>In this case, <code>st_cast</code> can be useful to transform the new object into linestring or polygon (Figure <a href="transform.html#fig:single-cast">5.11</a>):</p>
@@ -612,40 +612,63 @@ Figure 5.11: Examples of linestring and polygon created based on multipoint usin
 </div>
 <p>This process can be also reversed using <code>st_cast</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">multipoint_2 =<span class="st"> </span><span class="kw">st_cast</span>(linestring, <span class="st">&quot;MULTIPOINT&quot;</span>)
-multipoint_3 =<span class="st"> </span><span class="kw">st_cast</span>(polyg, <span class="st">&quot;MULTIPOINT&quot;</span>)</code></pre></div>
+multipoint_3 =<span class="st"> </span><span class="kw">st_cast</span>(polyg, <span class="st">&quot;MULTIPOINT&quot;</span>)
+<span class="kw">all.equal</span>(multipoint, multipoint_2, multipoint_3)
+<span class="co">#&gt; [1] TRUE</span></code></pre></div>
 
 <div class="rmdnote">
 For single simple feature geometries (<code>sfg</code>), <code>st_cast</code> provides also geometry casting from non-multi to multi types (e.g. <code>POINT</code> to <code>MULTIPOINT</code>) and from multi types to non-multi types. However, only the first element of the old object would remain in the second group of cases. <!-- note: beware of information lost (you will get a warning) -->
 </div>
 <p></p>
-<!-- single geometries ()s behaviour differs depending on class of a data - -->
-<!-- There are two main types of geometry casting t -->
-<!-- This could be done for one of two purposes, either simplification  -->
-<!-- (also called type transformation) is  -->
-<!-- b/ multi ->  single -->
-<!-- real example?? -->
+<p>Geometry casting of simple feature geometry column (<code>sfc</code>) and simple features objects works the same as for single geometries in most of the cases. One imporant difference is conversion between multi to non-multi types. As a result of this process, multi-objects are splitted into many non-multi objects.</p>
+<p>We would use a new object, <code>multilinestring_sf</code>, as an example (on the left in Figure <a href="transform.html#fig:line-cast">5.12</a>):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">multilinestring_list =<span class="st"> </span><span class="kw">list</span>(<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">3</span>), <span class="dt">ncol =</span> <span class="dv">2</span>), 
                             <span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>), <span class="dt">ncol =</span> <span class="dv">2</span>),
                             <span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">2</span>), <span class="dt">ncol =</span> <span class="dv">2</span>))
-multilinestring =<span class="st"> </span><span class="kw">st_multilinestring</span>((multilinestring_list))</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">multilinestring_sf =<span class="st"> </span><span class="kw">st_sf</span>(<span class="dt">geom =</span> <span class="kw">st_sfc</span>(multilinestring))
-<span class="kw">dim</span>(multilinestring_sf)
-<span class="co">#&gt; [1] 1 1</span>
-linestring_sf2 =<span class="st"> </span><span class="kw">st_cast</span>(multilinestring_sf, <span class="st">&quot;LINESTRING&quot;</span>)
-<span class="kw">dim</span>(linestring_sf2)
-<span class="co">#&gt; [1] 3 1</span></code></pre></div>
-<p><img src="figures/unnamed-chunk-44-1.png" width="576" style="display: block; margin: auto;" /></p>
-<!-- or Geometry cast -->
-<!-- Changing the geometry type while the fundamental data remains unchanged ('casting') -->
-<!-- - st_cast -->
-<!-- two groups of examples: -->
-<!-- - top down (MULTIPOLYGON -> the rest) -->
-<!-- - bottom up (POINT -> the rest) -->
-<!-- and in the same time, two (?) groups of purposes: -->
-<!-- - split/join geometries (e.g one mutlipoint -> many points) -->
-<!-- - transform type (e.g one mutlipoint -> one line -> one polygon) -->
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_points =<span class="st"> </span><span class="kw">st_cast</span>(nz, <span class="st">&quot;MULTIPOINT&quot;</span>)</code></pre></div>
-<p><img src="figures/unnamed-chunk-46-1.png" width="576" style="display: block; margin: auto;" /></p>
+multilinestring =<span class="st"> </span><span class="kw">st_multilinestring</span>((multilinestring_list))
+multilinestring_sf =<span class="st"> </span><span class="kw">st_sf</span>(<span class="dt">geom =</span> <span class="kw">st_sfc</span>(multilinestring))
+multilinestring_sf
+<span class="co">#&gt; Simple feature collection with 1 feature and 0 fields</span>
+<span class="co">#&gt; geometry type:  MULTILINESTRING</span>
+<span class="co">#&gt; dimension:      XY</span>
+<span class="co">#&gt; bbox:           xmin: 1 ymin: 1 xmax: 4 ymax: 5</span>
+<span class="co">#&gt; epsg (SRID):    NA</span>
+<span class="co">#&gt; proj4string:    NA</span>
+<span class="co">#&gt;                             geom</span>
+<span class="co">#&gt; 1 MULTILINESTRING ((1 5, 4 3)...</span></code></pre></div>
+<p>You can imagine it as a road or river network. The new object has only one row that define all the lines. This restrict number of operation that could be done, for example it prevent adding names to each line segment or calculating lenghts of single lines. The <code>st_cast</code> function can be used in this situation, as it separates one mutlilinestring into three linestrings:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">linestring_sf2 =<span class="st"> </span><span class="kw">st_cast</span>(multilinestring_sf, <span class="st">&quot;LINESTRING&quot;</span>)
+linestring_sf2
+<span class="co">#&gt; Simple feature collection with 3 features and 0 fields</span>
+<span class="co">#&gt; geometry type:  LINESTRING</span>
+<span class="co">#&gt; dimension:      XY</span>
+<span class="co">#&gt; bbox:           xmin: 1 ymin: 1 xmax: 4 ymax: 5</span>
+<span class="co">#&gt; epsg (SRID):    NA</span>
+<span class="co">#&gt; proj4string:    NA</span>
+<span class="co">#&gt;                geometry</span>
+<span class="co">#&gt; 1 LINESTRING (1 5, 4 3)</span>
+<span class="co">#&gt; 2 LINESTRING (4 4, 4 1)</span>
+<span class="co">#&gt; 3 LINESTRING (2 2, 4 2)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:line-cast"></span>
+<img src="figures/line-cast-1.png" alt="Examples of type cast between MULTILINESTRING (left) and LINESTRING (right)" width="576" />
+<p class="caption">
+Figure 5.12: Examples of type cast between MULTILINESTRING (left) and LINESTRING (right)
+</p>
+</div>
+<p>The newely created object allows for attributes creation (see more in section <a href="attr.html#vec-attr-creation">3.2.4</a>) and length measurement:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">linestring_sf2$name =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Riddle Rd&quot;</span>, <span class="st">&quot;Marshall Ave&quot;</span>, <span class="st">&quot;Foulke St&quot;</span>)
+linestring_sf2$length =<span class="st"> </span><span class="kw">st_length</span>(linestring_sf2)
+linestring_sf2
+<span class="co">#&gt; Simple feature collection with 3 features and 2 fields</span>
+<span class="co">#&gt; geometry type:  LINESTRING</span>
+<span class="co">#&gt; dimension:      XY</span>
+<span class="co">#&gt; bbox:           xmin: 1 ymin: 1 xmax: 4 ymax: 5</span>
+<span class="co">#&gt; epsg (SRID):    NA</span>
+<span class="co">#&gt; proj4string:    NA</span>
+<span class="co">#&gt;                geometry         name length</span>
+<span class="co">#&gt; 1 LINESTRING (1 5, 4 3)    Riddle Rd   3.61</span>
+<span class="co">#&gt; 2 LINESTRING (4 4, 4 1) Marshall Ave   3.00</span>
+<span class="co">#&gt; 3 LINESTRING (2 2, 4 2)    Foulke St   2.00</span></code></pre></div>
 <!-- ### Class conversion -->
 <!-- placeholder for: -->
 <!-- sf -> sp -->
@@ -670,13 +693,13 @@ linestring_sf2 =<span class="st"> </span><span class="kw">st_cast</span>(multili
 <div id="raster-alignment" class="section level3">
 <h3><span class="header-section-number">5.3.1</span> Raster alignment</h3>
 <p>When merging or performing map algebra on rasters, their resolution, projection, origin and/or extent has to match. Otherwise, how should we add the values of one raster with a resolution of 0.2 decimal degrees to a second with a resolution of 1 decimal degree? The same problem arises when we would like to merge satellite imagery from different sensors with different projections and resolutions. We can deal with such mismatches by aligning the rasters.</p>
-<p>This section uses the <code>elev</code> object from <a href="attr.html#manipulating-raster-objects">3.3</a>. The <code>projectRaster()</code> function reprojects one raster to a desired projection, say from UTM to WGS84. Equally, map algebra operations require the same extent. Following code adds one row and two columns to each side of the raster while setting all new values to an elevation of 1000 meters (<a href="transform.html#fig:extend-example">5.12</a>).</p>
+<p>This section uses the <code>elev</code> object from <a href="attr.html#manipulating-raster-objects">3.3</a>. The <code>projectRaster()</code> function reprojects one raster to a desired projection, say from UTM to WGS84. Equally, map algebra operations require the same extent. Following code adds one row and two columns to each side of the raster while setting all new values to an elevation of 1000 meters (<a href="transform.html#fig:extend-example">5.13</a>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_2 =<span class="st"> </span><span class="kw">extend</span>(elev, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">value =</span> <span class="dv">1000</span>)
 <span class="kw">plot</span>(elev_2)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:extend-example"></span>
 <img src="figures/extend-example-1.png" alt="Original raster extended by 1 one row on each side (top, bottom) and two columns on each side (right, left)." width="576" />
 <p class="caption">
-Figure 5.12: Original raster extended by 1 one row on each side (top, bottom) and two columns on each side (right, left).
+Figure 5.13: Original raster extended by 1 one row on each side (top, bottom) and two columns on each side (right, left).
 </p>
 </div>
 <p>Performing an algebraic operation on two objects with differing extents in R, the <strong>raster</strong> package returns the result for the intersection, and says so in a warning.</p>
@@ -685,7 +708,7 @@ Figure 5.12: Original raster extended by 1 one row on each side (top, bottom) an
 <span class="co">#&gt; their intersection is returned</span></code></pre></div>
 <p>However, we can also align the extent of two rasters with the <code>extend()</code> command. Here, we extend the <code>elev</code> object to the extend of <code>elev_2</code>. The newly added rows and column receive the default value of the <code>value</code> parameter, i.e., <code>NA</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_4 =<span class="st"> </span><span class="kw">extend</span>(elev, elev_2)</code></pre></div>
-<p>The <code>aggregate()</code> and <code>disaggregate()</code> functions help to change the cell size resolution of a raster. For instance, let us aggregate <code>elev</code> from a resolution of 0.5 to a resolution of 1, that means we aggregate by a factor of 2 (Fig. <a href="transform.html#fig:aggregate-example">5.13</a>). Additionally, the output cell value should correspond to the mean of the input cells (but one could use other functions as well such as <code>median()</code>, <code>sum()</code>, etc.):</p>
+<p>The <code>aggregate()</code> and <code>disaggregate()</code> functions help to change the cell size resolution of a raster. For instance, let us aggregate <code>elev</code> from a resolution of 0.5 to a resolution of 1, that means we aggregate by a factor of 2 (Fig. <a href="transform.html#fig:aggregate-example">5.14</a>). Additionally, the output cell value should correspond to the mean of the input cells (but one could use other functions as well such as <code>median()</code>, <code>sum()</code>, etc.):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_agg =<span class="st"> </span><span class="kw">aggregate</span>(elev, <span class="dt">fact =</span> <span class="dv">2</span>, <span class="dt">fun =</span> mean)
 <span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
 <span class="kw">plot</span>(elev)
@@ -693,7 +716,7 @@ Figure 5.12: Original raster extended by 1 one row on each side (top, bottom) an
 <div class="figure" style="text-align: center"><span id="fig:aggregate-example"></span>
 <img src="figures/aggregate-example-1.png" alt="Original raster (left). Aggregated raster (right)." width="576" />
 <p class="caption">
-Figure 5.13: Original raster (left). Aggregated raster (right).
+Figure 5.14: Original raster (left). Aggregated raster (right).
 </p>
 </div>
 <p>Note that the origin of <code>elev_agg</code> has changed, too.</p>
@@ -701,7 +724,7 @@ Figure 5.13: Original raster (left). Aggregated raster (right).
 <span class="co">#&gt; [1] 0 0</span>
 <span class="kw">origin</span>(elev_agg)
 <span class="co">#&gt; [1] 0.5 0.5</span></code></pre></div>
-<p>The origin is the point closest to (0, 0) if you moved towards it in steps of x and y resolution. If two rasters have different origins, their cells do not overlap completely which would make map algebra impossible. To change the origin , use <code>origin()</code>.<a href="#fn25" class="footnoteRef" id="fnref25"><sup>25</sup></a> Looking at figure <a href="transform.html#fig:origin-example">5.14</a> reveals the effect of changing the origin.</p>
+<p>The origin is the point closest to (0, 0) if you moved towards it in steps of x and y resolution. If two rasters have different origins, their cells do not overlap completely which would make map algebra impossible. To change the origin , use <code>origin()</code>.<a href="#fn25" class="footnoteRef" id="fnref25"><sup>25</sup></a> Looking at figure <a href="transform.html#fig:origin-example">5.15</a> reveals the effect of changing the origin.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the aggregated raster</span>
 <span class="kw">plot</span>(elev_agg)
 <span class="co"># change the origin</span>
@@ -711,7 +734,7 @@ Figure 5.13: Original raster (left). Aggregated raster (right).
 <div class="figure" style="text-align: center"><span id="fig:origin-example"></span>
 <img src="figures/origin-example-1.png" alt="Plotting rasters with the same values but different origins." width="576" />
 <p class="caption">
-Figure 5.14: Plotting rasters with the same values but different origins.
+Figure 5.15: Plotting rasters with the same values but different origins.
 </p>
 </div>
 <p>The <code>resample()</code> command lets you align several raster properties in one go, namely origin, extent and resolution. Let us resample an extended <code>elev_agg</code> to the properties of <code>elev</code> again.</p>

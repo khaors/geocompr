@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2017-12-02'
+date: '2017-12-03'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2017-12-02 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2017-12-03 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservefd452740d68cb3ff
+preserve34cf1d5b7fb1cd7e
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -1909,7 +1909,6 @@ methods(class = "sf") # methods for sf objects, first 12 shown
 
 
 
-
 Many of these functions, including `rbind()` (for binding rows of data together) and `$<-` (for creating new columns) were developed for data frames.
 A key feature of `sf` objects is that they store spatial and non-spatial data in the same way, as columns in a `data.frame` (the geometry column is typically called `geometry`).
 
@@ -1954,7 +1953,7 @@ Unlike objects of class `Spatial` of the **sp** package, `sf` objects are also c
 The former provides fast and powerful functions for data manipulation (see [Section 6.7](https://csgillespie.github.io/efficientR/data-carpentry.html#data-processing-with-data.table) of @gillespie_efficient_2016), and the latter provides powerful plotting capabilities.
 ]
 
-###  Vector attribute subsetting
+### Vector attribute subsetting
 
 Base R subsetting functions include `[`, `subset()` and  `$`.
 **dplyr** subsetting functions include `select()`, `filter()`, and `pull()`.
@@ -2346,7 +2345,7 @@ inner_join1$name_long
 #> [1] "Canada"        "United States"
 ```
 
-### Creating attributes and removing spatial information
+### Creating attributes and removing spatial information {#vec-attr-creation}
 <!-- lubridate? -->
 
 Often, we would like to create a new column based on already existing columns.
@@ -3095,7 +3094,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve9be9caaa0f97e9c5
+preservea7a93292e1b10649
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3232,8 +3231,7 @@ For instance, if the intersection of our buffer and a country is 100 000 km^^2^^
 <!-- - ? generalization **rmapsharper** - https://github.com/ateucher/rmapshaper -->
 <!-- `st_union` -->
 
-
-### Distance relations
+### Distance relations 
 
 While topological relations are binary --- a feature either intersects with another or does not --- distance relations are continuous.
 The distance between two objects is calculated with the `st_distance()` function.
@@ -4194,7 +4192,7 @@ nz_pos = st_point_on_surface(nz)
 
 ### Type transformation
 
-Geometry casting is powerful operation which enable transformation of the geometry type<!--while the fundamental data remains unchanged-->.
+Geometry casting is powerful operation which enable transformation of the geometry type.
 It is implemented in the `st_cast` function from the `sf` package.
 Importantly, `st_cast` behaves differently on single simple feature geometry (`sfg`) objects, and simple feature geometry column (`sfc`) and simple features objects.
 
@@ -4225,6 +4223,8 @@ This process can be also reversed using `st_cast`:
 ```r
 multipoint_2 = st_cast(linestring, "MULTIPOINT")
 multipoint_3 = st_cast(polyg, "MULTIPOINT")
+all.equal(multipoint, multipoint_2, multipoint_3)
+#> [1] TRUE
 ```
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">For single simple feature geometries (`sfg`), `st_cast` provides also geometry casting from non-multi to multi types (e.g. `POINT` to `MULTIPOINT`) and from multi types to non-multi types.
@@ -4233,12 +4233,11 @@ However, only the first element of the old object would remain in the second gro
 
 
 
-<!-- single geometries ()s behaviour differs depending on class of a data - -->
-<!-- There are two main types of geometry casting t -->
-<!-- This could be done for one of two purposes, either simplification  -->
-<!-- (also called type transformation) is  -->
-<!-- b/ multi ->  single -->
-<!-- real example?? -->
+Geometry casting of simple feature geometry column (`sfc`) and simple features objects works the same as for single geometries in most of the cases. 
+One imporant difference is conversion between multi to non-multi types.
+As a result of this process, multi-objects are splitted into many non-multi objects.
+
+We would use a new object, `multilinestring_sf`, as an example (on the left in Figure \@ref(fig:line-cast)):
 
 
 ```r
@@ -4246,36 +4245,62 @@ multilinestring_list = list(matrix(c(1, 4, 5, 3), ncol = 2),
                             matrix(c(4, 4, 4, 1), ncol = 2),
                             matrix(c(2, 4, 2, 2), ncol = 2))
 multilinestring = st_multilinestring((multilinestring_list))
-```
-
-
-```r
 multilinestring_sf = st_sf(geom = st_sfc(multilinestring))
-dim(multilinestring_sf)
-#> [1] 1 1
-linestring_sf2 = st_cast(multilinestring_sf, "LINESTRING")
-dim(linestring_sf2)
-#> [1] 3 1
+multilinestring_sf
+#> Simple feature collection with 1 feature and 0 fields
+#> geometry type:  MULTILINESTRING
+#> dimension:      XY
+#> bbox:           xmin: 1 ymin: 1 xmax: 4 ymax: 5
+#> epsg (SRID):    NA
+#> proj4string:    NA
+#>                             geom
+#> 1 MULTILINESTRING ((1 5, 4 3)...
 ```
 
-<img src="figures/unnamed-chunk-44-1.png" width="576" style="display: block; margin: auto;" />
-
-<!-- or Geometry cast -->
-<!-- Changing the geometry type while the fundamental data remains unchanged ('casting') -->
-<!-- - st_cast -->
-<!-- two groups of examples: -->
-<!-- - top down (MULTIPOLYGON -> the rest) -->
-<!-- - bottom up (POINT -> the rest) -->
-<!-- and in the same time, two (?) groups of purposes: -->
-<!-- - split/join geometries (e.g one mutlipoint -> many points) -->
-<!-- - transform type (e.g one mutlipoint -> one line -> one polygon) -->
+You can imagine it as a road or river network. 
+The new object has only one row that define all the lines.
+This restrict number of operation that could be done, for example it prevent adding names to each line segment or calculating lenghts of single lines.
+The `st_cast` function can be used in this situation, as it separates one mutlilinestring into three linestrings:
 
 
 ```r
-nz_points = st_cast(nz, "MULTIPOINT")
+linestring_sf2 = st_cast(multilinestring_sf, "LINESTRING")
+linestring_sf2
+#> Simple feature collection with 3 features and 0 fields
+#> geometry type:  LINESTRING
+#> dimension:      XY
+#> bbox:           xmin: 1 ymin: 1 xmax: 4 ymax: 5
+#> epsg (SRID):    NA
+#> proj4string:    NA
+#>                geometry
+#> 1 LINESTRING (1 5, 4 3)
+#> 2 LINESTRING (4 4, 4 1)
+#> 3 LINESTRING (2 2, 4 2)
 ```
 
-<img src="figures/unnamed-chunk-46-1.png" width="576" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures/line-cast-1.png" alt="Examples of type cast between MULTILINESTRING (left) and LINESTRING (right)" width="576" />
+<p class="caption">(\#fig:line-cast)Examples of type cast between MULTILINESTRING (left) and LINESTRING (right)</p>
+</div>
+
+The newely created object allows for attributes creation (see more in section \@ref(vec-attr-creation)) and length measurement:
+
+
+```r
+linestring_sf2$name = c("Riddle Rd", "Marshall Ave", "Foulke St")
+linestring_sf2$length = st_length(linestring_sf2)
+linestring_sf2
+#> Simple feature collection with 3 features and 2 fields
+#> geometry type:  LINESTRING
+#> dimension:      XY
+#> bbox:           xmin: 1 ymin: 1 xmax: 4 ymax: 5
+#> epsg (SRID):    NA
+#> proj4string:    NA
+#>                geometry         name length
+#> 1 LINESTRING (1 5, 4 3)    Riddle Rd   3.61
+#> 2 LINESTRING (4 4, 4 1) Marshall Ave   3.00
+#> 3 LINESTRING (2 2, 4 2)    Foulke St   2.00
+```
 
 <!-- ### Class conversion -->
 <!-- placeholder for: -->
@@ -5544,7 +5569,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve46beec7096d332e7
+preserveaee8163408560764
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
