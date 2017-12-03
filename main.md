@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve1441c9a20c1f04e8
+preservef774c871691a85d0
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3094,7 +3094,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve9051c28b6035c1f7
+preserve6b56b39efe6d0c78
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4176,14 +4176,19 @@ text(x = c(-0.5, 1.5), y = 1, labels = l)
 
 
 ### Centroids
-<!-- st_point_on_surface -->
+
+<!-- centroids intro -->
+<!-- There are two main functions that create point representation of a vector object. -->
 <!-- st_centroid -->
-<!-- st_polygonize -->
 
 
 ```r
 nz_centroid = st_centroid(nz)
 ```
+
+<!-- st_point_on_surface -->
+<!-- should st_point_on_surface work on non-polygons? -->
+<!-- The second one -->
 
 
 ```r
@@ -5598,7 +5603,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve4291040ed33d8d48
+preserve9d6b225137fe84be
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 

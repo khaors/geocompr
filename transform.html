@@ -583,10 +583,13 @@ Figure 5.10: Randomly distributed points within the bounding box enclosing circl
 </div>
 <div id="centroids" class="section level3">
 <h3><span class="header-section-number">5.2.3</span> Centroids</h3>
-<!-- st_point_on_surface -->
+<!-- centroids intro -->
+<!-- There are two main functions that create point representation of a vector object. -->
 <!-- st_centroid -->
-<!-- st_polygonize -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_centroid =<span class="st"> </span><span class="kw">st_centroid</span>(nz)</code></pre></div>
+<!-- st_point_on_surface -->
+<!-- should st_point_on_surface work on non-polygons? -->
+<!-- The second one -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_pos =<span class="st"> </span><span class="kw">st_point_on_surface</span>(nz)</code></pre></div>
 <p><img src="figures/unnamed-chunk-37-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
