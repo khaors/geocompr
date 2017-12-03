@@ -684,21 +684,25 @@ linestring_sf2
 <h3><span class="header-section-number">5.2.7</span> Simplification</h3>
 <!-- - simplifications -->
 <!-- st_simplify -->
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(us_states$geometry)
-<span class="kw">plot</span>(<span class="kw">st_simplify</span>(us_states, <span class="dt">preserveTopology =</span> <span class="ot">FALSE</span>, <span class="dt">dTolerance =</span> <span class="fl">0.3</span>)$geometry)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">us_states_simp1 =<span class="st"> </span><span class="kw">st_simplify</span>(us_states, <span class="dt">dTolerance =</span> <span class="dv">1</span>)
 <span class="co">#&gt; Warning in st_simplify.sfc(st_geometry(x), preserveTopology, dTolerance):</span>
 <span class="co">#&gt; st_simplify does not correctly simplify longitude/latitude data, dTolerance</span>
 <span class="co">#&gt; needs to be in decimal degrees</span></code></pre></div>
-<p><img src="figures/unnamed-chunk-46-1.png" width="576" style="display: block; margin: auto;" /><img src="figures/unnamed-chunk-46-2.png" width="576" style="display: block; margin: auto;" /></p>
 <!-- line example -->
 <!-- maybe river or road network to spData?? -->
 <!-- rmapshaper -->
 <!-- polygon example -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># proportion of points to retain (0-1; default 0.05)</span>
-<span class="kw">plot</span>(rmapshaper::<span class="kw">ms_simplify</span>(us_states, <span class="dt">keep =</span> <span class="fl">0.03</span>, <span class="dt">keep_shapes =</span> <span class="ot">TRUE</span>)$geometry)
+us_states_simp2 =<span class="st"> </span>rmapshaper::<span class="kw">ms_simplify</span>(us_states, <span class="dt">keep =</span> <span class="fl">0.01</span>, <span class="dt">keep_shapes =</span> <span class="ot">TRUE</span>)
 <span class="co">#&gt; Warning in value[[3L]](cond): Could not convert column NA to class units.</span>
 <span class="co">#&gt; Returning as numeric</span></code></pre></div>
-<p><img src="figures/unnamed-chunk-47-1.png" width="576" style="display: block; margin: auto;" /></p>
+<pre><code>#&gt; Warning in par(par_old): graphical parameter &quot;cin&quot; cannot be set
+#&gt; Warning in par(par_old): graphical parameter &quot;cra&quot; cannot be set
+#&gt; Warning in par(par_old): graphical parameter &quot;csi&quot; cannot be set
+#&gt; Warning in par(par_old): graphical parameter &quot;cxy&quot; cannot be set
+#&gt; Warning in par(par_old): graphical parameter &quot;din&quot; cannot be set
+#&gt; Warning in par(par_old): graphical parameter &quot;page&quot; cannot be set</code></pre>
+<p><img src="figures/unnamed-chunk-48-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="rasterization" class="section level3">
 <h3><span class="header-section-number">5.2.8</span> Rasterization</h3>

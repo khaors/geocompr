@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve9c63611e0b4f9d70
+preserveb37a473e100a6605
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3094,7 +3094,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservead586bf4f9bddab2
+preserve325f813396d07e61
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4327,14 +4327,11 @@ linestring_sf2
 <!-- st_simplify -->
 
 ```r
-plot(us_states$geometry)
-plot(st_simplify(us_states, preserveTopology = FALSE, dTolerance = 0.3)$geometry)
+us_states_simp1 = st_simplify(us_states, dTolerance = 1)
 #> Warning in st_simplify.sfc(st_geometry(x), preserveTopology, dTolerance):
 #> st_simplify does not correctly simplify longitude/latitude data, dTolerance
 #> needs to be in decimal degrees
 ```
-
-<img src="figures/unnamed-chunk-46-1.png" width="576" style="display: block; margin: auto;" /><img src="figures/unnamed-chunk-46-2.png" width="576" style="display: block; margin: auto;" />
 
 <!-- line example -->
 <!-- maybe river or road network to spData?? -->
@@ -4344,12 +4341,22 @@ plot(st_simplify(us_states, preserveTopology = FALSE, dTolerance = 0.3)$geometry
 
 ```r
 # proportion of points to retain (0-1; default 0.05)
-plot(rmapshaper::ms_simplify(us_states, keep = 0.03, keep_shapes = TRUE)$geometry)
+us_states_simp2 = rmapshaper::ms_simplify(us_states, keep = 0.01, keep_shapes = TRUE)
 #> Warning in value[[3L]](cond): Could not convert column NA to class units.
 #> Returning as numeric
 ```
 
-<img src="figures/unnamed-chunk-47-1.png" width="576" style="display: block; margin: auto;" />
+
+```
+#> Warning in par(par_old): graphical parameter "cin" cannot be set
+#> Warning in par(par_old): graphical parameter "cra" cannot be set
+#> Warning in par(par_old): graphical parameter "csi" cannot be set
+#> Warning in par(par_old): graphical parameter "cxy" cannot be set
+#> Warning in par(par_old): graphical parameter "din" cannot be set
+#> Warning in par(par_old): graphical parameter "page" cannot be set
+```
+
+<img src="figures/unnamed-chunk-48-1.png" width="576" style="display: block; margin: auto;" />
 
 ### Rasterization
 <!-- - vector to raster -->
@@ -5605,7 +5612,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservef20a7ac67be88412
+preserve0dc9f41a65fa66c2
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
