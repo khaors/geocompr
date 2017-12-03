@@ -397,7 +397,7 @@ Figure 5.4: Winkel tripel projection of the world
 </div>
 
 <div class="rmdnote">
-Two main functions for transformation of simple features coordinates are <code>sf::st_transform()</code> and <code>sf::sf_project()</code>. The <code>st_transform</code> function uses the GDAL interface to PROJ.4, while <code>sf_project()</code> (which works on point data only) and <code>lwgeom::st_transform_proj()</code> use the PROJ.4 API directly. The first one is appropriate in most situations, and provides a set of the most often used parameters and well defined transformations. The second one allows for a greater customization of a projection, which includes cases when some of the PROJ.4 parameters (e.g. <code>+over</code>) or projection (<code>+proj=wintri</code>) is not available in <code>st_transform()</code>.
+Two main functions for transformation of simple features coordinates are <code>sf::st_transform()</code> and <code>sf::sf_project()</code>. The <code>st_transform</code> function uses the GDAL interface to PROJ.4, while <code>sf_project()</code> (which works with two-column numeric matrices, representing points) and <code>lwgeom::st_transform_proj()</code> use the PROJ.4 API directly. The first one is appropriate in most situations, and provides a set of the most often used parameters and well defined transformations. The second one allows for a greater customization of a projection, which includes cases when some of the PROJ.4 parameters (e.g. <code>+over</code>) or projection (<code>+proj=wintri</code>) is not available in <code>st_transform()</code>.
 </div>
 <p></p>
 <p>Moreover, PROJ.4 parameters can be modified in most CRS definitions. The below code transforms the coordinates to the Lambert azimuthal equal-area projection centered on longitude and latitude of <code>0</code> (Figure <a href="transform.html#fig:laeaproj1">5.5</a>).</p>
@@ -553,7 +553,7 @@ y =<span class="st"> </span>b[<span class="dv">2</span>]
 x_and_y =<span class="st"> </span><span class="kw">st_intersection</span>(x, y)
 <span class="kw">plot</span>(b)
 <span class="kw">plot</span>(x_and_y, <span class="dt">col =</span> <span class="st">&quot;lightgrey&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>) <span class="co"># color intersecting area</span></code></pre></div>
-<p><img src="figures/unnamed-chunk-32-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-33-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>The subsequent code chunk demonstrate how this works for all combinations of the ‘Venn’ diagram representing <code>x</code> and <code>y</code>, inspired by <a href="http://r4ds.had.co.nz/transform.html#logical-operators">Figure 5.1</a> of the book R for Data Science <span class="citation">(Grolemund and Wickham <a href="#ref-grolemund_r_2016">2016</a>)</span>. <!-- Todo: reference r4ds --></p>
 <div class="figure" style="text-align: center"><span id="fig:venn-clip"></span>
 <img src="figures/venn-clip-1.png" alt="Spatial equivalents of logical operators." width="576" />
@@ -587,7 +587,7 @@ Figure 5.10: Randomly distributed points within the bounding box enclosing circl
 <!-- st_polygonize -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_centroid =<span class="st"> </span><span class="kw">st_centroid</span>(nz)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_pos =<span class="st"> </span><span class="kw">st_point_on_surface</span>(nz)</code></pre></div>
-<p><img src="figures/unnamed-chunk-36-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-37-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="buffers" class="section level3">
 <h3><span class="header-section-number">5.2.4</span> Buffers</h3>

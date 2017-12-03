@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveeea9504f8ccc60f7
+preservec2204e09682667cc
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3094,7 +3094,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve742679ad61b9a6cd
+preserve3115b1cea876a623
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3868,9 +3868,12 @@ world_wintri = lwgeom::st_transform_proj(world, crs = "+proj=wintri")
 </div>
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">Two main functions for transformation of simple features coordinates are `sf::st_transform()` and `sf::sf_project()`. 
-The `st_transform` function uses the GDAL interface to PROJ.4, while `sf_project()` (which works on point data only) and `lwgeom::st_transform_proj()` use the PROJ.4 API directly.
+The `st_transform` function uses the GDAL interface to PROJ.4, while `sf_project()` (which works with two-column numeric matrices, representing points) and `lwgeom::st_transform_proj()` use the PROJ.4 API directly.
 The first one is appropriate in most situations, and provides a set of the most often used parameters and well defined transformations.
 The second one allows for a greater customization of a projection, which includes cases when some of the PROJ.4 parameters (e.g. `+over`) or projection (`+proj=wintri`) is not available in `st_transform()`.</div>\EndKnitrBlock{rmdnote}
+
+
+
 
 Moreover, PROJ.4 parameters can be modified in most CRS definitions.
 The below code transforms the coordinates to the Lambert azimuthal equal-area projection centered on longitude and latitude of `0` (Figure \@ref(fig:laeaproj1)).
@@ -4129,7 +4132,7 @@ plot(b)
 plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
 ```
 
-<img src="figures/unnamed-chunk-32-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-33-1.png" width="576" style="display: block; margin: auto;" />
 
 The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
 <!-- Todo: reference r4ds -->
@@ -4184,7 +4187,7 @@ nz_centroid = st_centroid(nz)
 nz_pos = st_point_on_surface(nz)
 ```
 
-<img src="figures/unnamed-chunk-36-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-37-1.png" width="576" style="display: block; margin: auto;" />
 
 ### Buffers
 
@@ -5569,7 +5572,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve6af04832c6a7bf5b
+preservee77e7adec054e8bb
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
