@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve56679d8a6108473d
+preserve1441c9a20c1f04e8
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3094,7 +3094,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve1e0a99aa7ee910f6
+preserve9051c28b6035c1f7
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4316,6 +4316,8 @@ linestring_sf2
 
 ### Simplification
 
+<!-- - simplifications -->
+<!-- st_simplify -->
 
 ```r
 plot(us_states$geometry)
@@ -4327,6 +4329,11 @@ plot(st_simplify(us_states, preserveTopology = FALSE, dTolerance = 0.3)$geometry
 
 <img src="figures/unnamed-chunk-46-1.png" width="576" style="display: block; margin: auto;" /><img src="figures/unnamed-chunk-46-2.png" width="576" style="display: block; margin: auto;" />
 
+<!-- line example -->
+<!-- maybe river or road network to spData?? -->
+
+<!-- rmapshaper -->
+<!-- polygon example -->
 
 ```r
 # proportion of points to retain (0-1; default 0.05)
@@ -4336,12 +4343,6 @@ plot(rmapshaper::ms_simplify(us_states, keep = 0.03, keep_shapes = TRUE)$geometr
 ```
 
 <img src="figures/unnamed-chunk-47-1.png" width="576" style="display: block; margin: auto;" />
-
-<!-- - simplifications -->
-<!-- st_simplify -->
-<!-- line example -->
-<!-- rmapshaper -->
-<!-- polygon example -->
 
 ### Rasterization
 <!-- - vector to raster -->
@@ -5597,7 +5598,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve72d22c29884e3d5e
+preserve4291040ed33d8d48
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
