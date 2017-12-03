@@ -620,7 +620,7 @@ multipoint_3 =<span class="st"> </span><span class="kw">st_cast</span>(polyg, <s
 For single simple feature geometries (<code>sfg</code>), <code>st_cast</code> provides also geometry casting from non-multi to multi types (e.g. <code>POINT</code> to <code>MULTIPOINT</code>) and from multi types to non-multi types. However, only the first element of the old object would remain in the second group of cases. <!-- note: beware of information lost (you will get a warning) -->
 </div>
 <p></p>
-<p>Geometry casting of simple feature geometry column (<code>sfc</code>) and simple features objects works the same as for single geometries in most of the cases. One imporant difference is conversion between multi to non-multi types. As a result of this process, multi-objects are splitted into many non-multi objects.</p>
+<p>Geometry casting of simple feature geometry column (<code>sfc</code>) and simple features objects works the same as for single geometries in most of the cases. One imporant difference is conversion between multi to non-multi types. As a result of this process, multi-objects are split into many non-multi objects.</p>
 <p>We would use a new object, <code>multilinestring_sf</code>, as an example (on the left in Figure <a href="transform.html#fig:line-cast">5.12</a>):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">multilinestring_list =<span class="st"> </span><span class="kw">list</span>(<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">3</span>), <span class="dt">ncol =</span> <span class="dv">2</span>), 
                             <span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>), <span class="dt">ncol =</span> <span class="dv">2</span>),
@@ -636,7 +636,7 @@ multilinestring_sf
 <span class="co">#&gt; proj4string:    NA</span>
 <span class="co">#&gt;                             geom</span>
 <span class="co">#&gt; 1 MULTILINESTRING ((1 5, 4 3)...</span></code></pre></div>
-<p>You can imagine it as a road or river network. The new object has only one row that define all the lines. This restrict number of operation that could be done, for example it prevent adding names to each line segment or calculating lenghts of single lines. The <code>st_cast</code> function can be used in this situation, as it separates one mutlilinestring into three linestrings:</p>
+<p>You can imagine it as a road or river network. The new object has only one row that define all the lines. This restrict number of operation that could be done, for example it prevent adding names to each line segment or calculating lengths of single lines. The <code>st_cast</code> function can be used in this situation, as it separates one mutlilinestring into three linestrings:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">linestring_sf2 =<span class="st"> </span><span class="kw">st_cast</span>(multilinestring_sf, <span class="st">&quot;LINESTRING&quot;</span>)
 linestring_sf2
 <span class="co">#&gt; Simple feature collection with 3 features and 0 fields</span>

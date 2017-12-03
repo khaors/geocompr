@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve34cf1d5b7fb1cd7e
+preserve28801b99542034df
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3094,7 +3094,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservea7a93292e1b10649
+preserve821137007e9e904e
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4235,7 +4235,7 @@ However, only the first element of the old object would remain in the second gro
 
 Geometry casting of simple feature geometry column (`sfc`) and simple features objects works the same as for single geometries in most of the cases. 
 One imporant difference is conversion between multi to non-multi types.
-As a result of this process, multi-objects are splitted into many non-multi objects.
+As a result of this process, multi-objects are split into many non-multi objects.
 
 We would use a new object, `multilinestring_sf`, as an example (on the left in Figure \@ref(fig:line-cast)):
 
@@ -4259,7 +4259,7 @@ multilinestring_sf
 
 You can imagine it as a road or river network. 
 The new object has only one row that define all the lines.
-This restrict number of operation that could be done, for example it prevent adding names to each line segment or calculating lenghts of single lines.
+This restrict number of operation that could be done, for example it prevent adding names to each line segment or calculating lengths of single lines.
 The `st_cast` function can be used in this situation, as it separates one mutlilinestring into three linestrings:
 
 
@@ -5569,7 +5569,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveaee8163408560764
+preservec45b39a545d0d811
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
