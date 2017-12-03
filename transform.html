@@ -347,6 +347,7 @@ Figure 5.1: Buffer on data with geographic CRS.
 Figure 5.2: Buffer on data with projected CRS.
 </p>
 </div>
+<p>The importance of understanding an object’s CRS (primarily whether it’s projected or geographic), and reprojecting when appropriate, is illustrated above using a simple geographic vector object representing London. The subsequent two sections go into more depth on reprojections, exploring which CRS to use and providing details about the process of reprojecting vector and raster objects.</p>
 <div id="reprojecting-vector-geometries" class="section level3">
 <h3><span class="header-section-number">5.1.1</span> Reprojecting vector geometries</h3>
 <p>While CRSs can be set manually, it is more common in real world applications to <em>transform</em> a known CRS into another. CRS transformation could be vital to obtain proper results in many cases. A typical example is when geometry data is provided in a geographic CRS but you want to do spatial operations, which require it to be in a projected CRS. It includes distance measurements or area calculations. CRS also represent spatial relationship between datasets. Therefore, spatial operations on many datasets can only be correctly performed when all the data have the same CRS. The most common reason to unify the CRS is to combine different datasets or apply methods which need at least two objects. Let’s use real-world examples to illustrate this.</p>

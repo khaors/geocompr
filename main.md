@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservec2204e09682667cc
+preserved2e4df82fcf63a53
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3094,7 +3094,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve3115b1cea876a623
+preserve5a4018fdd22dc372
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3766,6 +3766,9 @@ plot(london_proj, add = TRUE)
 <img src="figures/crs-buf-proj-1.png" alt="Buffer on data with projected CRS." width="576" />
 <p class="caption">(\#fig:crs-buf-proj)Buffer on data with projected CRS.</p>
 </div>
+
+The importance of understanding an object's CRS (primarily whether it's projected or geographic), and reprojecting when appropriate, is illustrated above using a simple geographic vector object representing London.
+The subsequent two sections go into more depth on reprojections, exploring which CRS to use and providing details about the process of reprojecting vector and raster objects.
 
 ### Reprojecting vector geometries
 
@@ -5572,7 +5575,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservee77e7adec054e8bb
+preserve389b588eb8da7bf0
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
