@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveb37a473e100a6605
+preservefa8f5e9d18daa3d1
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3094,7 +3094,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve325f813396d07e61
+preservee39f9145e654c773
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4344,16 +4344,6 @@ us_states_simp1 = st_simplify(us_states, dTolerance = 1)
 us_states_simp2 = rmapshaper::ms_simplify(us_states, keep = 0.01, keep_shapes = TRUE)
 #> Warning in value[[3L]](cond): Could not convert column NA to class units.
 #> Returning as numeric
-```
-
-
-```
-#> Warning in par(par_old): graphical parameter "cin" cannot be set
-#> Warning in par(par_old): graphical parameter "cra" cannot be set
-#> Warning in par(par_old): graphical parameter "csi" cannot be set
-#> Warning in par(par_old): graphical parameter "cxy" cannot be set
-#> Warning in par(par_old): graphical parameter "din" cannot be set
-#> Warning in par(par_old): graphical parameter "page" cannot be set
 ```
 
 <img src="figures/unnamed-chunk-48-1.png" width="576" style="display: block; margin: auto;" />
@@ -5612,7 +5602,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve0dc9f41a65fa66c2
+preserve3d843191513ba329
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
