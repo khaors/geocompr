@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2017-12-03'
+date: '2017-12-04'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2017-12-03 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2017-12-04 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservefa8f5e9d18daa3d1
+preservef5fa2ce002bbd02e
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3094,7 +3094,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservee39f9145e654c773
+preservec663326206cdf73c
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4178,7 +4178,8 @@ text(x = c(-0.5, 1.5), y = 1, labels = l)
 ### Centroids
 
 <!-- centroids intro -->
-There are two main functions that create point representations of vector objects.
+There are two main functions that create single point representations of more complex vector objects - `st_centroid()` and `st_point_on_surface()`.
+
 
 <!-- The first one is `st_centroid()`  -->
 <!-- st_centroid -->
@@ -4292,8 +4293,8 @@ linestring_sf2
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/line-cast-1.png" alt="Examples of type casting between MULTILINESTRING (left) and LINESTRING (right)" width="576" />
-<p class="caption">(\#fig:line-cast)Examples of type casting between MULTILINESTRING (left) and LINESTRING (right)</p>
+<img src="figures/line-cast-1.png" alt="Examples of type casting between MULTILINESTRING (left) and LINESTRING (right)." width="576" />
+<p class="caption">(\#fig:line-cast)Examples of type casting between MULTILINESTRING (left) and LINESTRING (right).</p>
 </div>
 
 The newely created object allows for attributes creation (see more in section \@ref(vec-attr-creation)) and length measurement:
@@ -4323,6 +4324,8 @@ linestring_sf2
 
 ### Simplification
 
+\@ref(us-simp)
+
 <!-- - simplifications -->
 <!-- st_simplify -->
 
@@ -4346,7 +4349,10 @@ us_states_simp2 = rmapshaper::ms_simplify(us_states, keep = 0.01, keep_shapes = 
 #> Returning as numeric
 ```
 
-<img src="figures/unnamed-chunk-48-1.png" width="576" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures/us-simp-1.png" alt="Comparision of original data of the contiguous United States and two simplified versions using `st_simplify` and `ms_simplify`." width="576" />
+<p class="caption">(\#fig:us-simp)Comparision of original data of the contiguous United States and two simplified versions using `st_simplify` and `ms_simplify`.</p>
+</div>
 
 ### Rasterization
 <!-- - vector to raster -->
@@ -5602,7 +5608,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve3d843191513ba329
+preserve54269c04dc770e4d
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
