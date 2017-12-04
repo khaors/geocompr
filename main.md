@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveb234ada49a8b9f7f
+preserve615b7317875f7aae
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -533,15 +533,14 @@ We will introduce the theory behind each data model and the disciplines in which
 <!-- Vector and raster models are vital to geospatial analysis [@longley_geographic_2015]. -->
 
 The *vector data model* represents the world using points, lines and polygons.
-This means, it supports data with discrete, well-defined borders.
-Generally, vector datasets have a high level of precision (but not necessarily accuracy as we will see in \@ref(units)).
-
-The *raster data model* is good at representing continuous phenomena such as elevation or rainfall with the help of grid cells that divide the surface up into a cells of constant size (*resolution*).
-Rasters aggregate spatially specific features to a given resolution, meaning that they are spatially consistent and scalable (many worldwide raster datasets are available).
+These have discrete, well-defined borders, meaning that vector datasets usually have a high level of precision (but not necessarily accuracy as we will see in \@ref(units)).
+The *raster data model*, by contrast, divides the surface up into a cells of constant size (*resolution*).
+It is ideal for representing continuous phenomena such as elevation or rainfall. 
+Rasters aggregate spatially specific features to a given resolution, meaning that they are consistent over space and scalable (many worldwide raster datasets are available).
 The downside of this is that small features can be blurred or lost.
 <!-- todo: add figure(s) showing raster data and blurring? -->
 
-The appropriate data model to use depends on the domain of application:
+Which should you use? It likely depends on your domain of application:
 
 - Vector data tends to dominate the social sciences because human settlements and boundaries have discrete borders.
 - By contrast, raster data often dominates the environmental sciences because these often use remotely sensed imagery. 
@@ -563,12 +562,14 @@ Points can represent self-standing features (e.g. the location of a bus stop) or
 Most point geometries contain only two dimension (3 dimensional CRSs contain an additional $z$ value, typically representing height above sea level).
 
 In this system London, for example, can be represented by the coordinates `c(-0.1, 51.5)`.
-This mean its location is -0.1 degrees east and 55.5 degrees north of the origin at 0 degrees longitude (the Prime Meridian) and 0 degree latitude (the Equator) in a geographic ('lon/lat') CRS (Figure \@ref(fig:vectorplots), left panel).
-The same point could also be approximated in a projected CRS with 'Easting/Northing' values of `c(530000, 180000)` in the British National Grid (BNG).
-In the vector data model this suggests that London is located 530 km *East* and 180 km *North* of the $origin$ of the CRS.
+This means that its location is -0.1 degrees east and 55.5 degrees north of the origin.
+The origin in this case is at 0 degrees longitude (the Prime Meridian) and 0 degree latitude (the Equator) in a geographic ('lon/lat') CRS (Figure \@ref(fig:vectorplots), left panel).
+The same point could also be approximated in a projected CRS with 'Easting/Northing' values of `c(530000, 180000)` in the British National Grid (BNG), meaning that London is located 530 km *East* and 180 km *North* of the $origin$ of the CRS.
 This can be verified visually: slightly more than 5 'boxes' --- square areas bounded by the grey grid lines 100 km in width --- separate the point representing London from the origin in Figure \@ref(fig:vectorplots).
-This shows that the origin of the BNG is located in the sea to the southeast of the UK, ensuring that all locations in the UK can be represented with positive Easting and Northing values.
-CRSs are described in section \@ref(crs-intro).
+This shows that the origin of the BNG is located in the sea beyond the southwest tip of England.
+This origin did not arise by accident: it ensures that most locations in the UK have positive Easting and Northing values.
+There is more to CRSs, as described in sections \@ref(crs-intro) \@ref(reprojecting-geographic-data).
+For now it is sufficient to know that coordinates consist of numbers representing distance from an origin, usually in $x$ then $y$ dimensions on printed map and that coordinates are the basis of vector data models including simple features.
 
 
 
@@ -3094,7 +3095,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve3e7ed6dafe8c2cdd
+preserve2adf051d90b34b90
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5607,7 +5608,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservef75f30e2ec9f01a3
+preserve405f1d074d31567f
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
