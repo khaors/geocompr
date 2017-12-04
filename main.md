@@ -13,14 +13,14 @@ biblio-style: apalike
 link-citations: yes
 description: "Forthcoming book on geographic data with R."
 github-repo: "Robinlovelace/geocompr"
-url: 'http\://robinlovelace.net/geocompr'
+url: 'https\://geocompr.robinlovelace.net'
 ---
 
 
 
 # Welcome {-}
 
-Welcome to the [online home](http://robinlovelace.net/geocompr) of *Geocomputation with R*, a forthcoming book with [CRC Press](https://www.crcpress.com/Chapman--HallCRC-The-R-Series/book-series/CRCTHERSER).
+Welcome to the [online home](https://geocompr.robinlovelace.net) of *Geocomputation with R*, a forthcoming book with [CRC Press](https://www.crcpress.com/Chapman--HallCRC-The-R-Series/book-series/CRCTHERSER).
 
 ## Development {-}
 
@@ -36,7 +36,7 @@ The book's development can be divided into four main phases:
 4. Advanced applications
 
 Currently the focus is on Part 2, which we aim to be complete by December.
-New chapters will be added to this website as the project progresses, hosted at [robinlovelace.net/geocompr](http://robinlovelace.net/geocompr) and kept up-to-date thanks to [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+New chapters will be added to this website as the project progresses, hosted at [geocompr.robinlovelace.net](https://geocompr.robinlovelace.net) and kept up-to-date thanks to [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve6e52687e2d97d603
+preserveb234ada49a8b9f7f
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3094,7 +3094,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve5b67a924e3526c1a
+preserve3e7ed6dafe8c2cdd
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5607,7 +5607,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve7834b3aeb055e677
+preservef75f30e2ec9f01a3
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
