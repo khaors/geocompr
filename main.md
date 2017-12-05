@@ -1,4 +1,5 @@
 
+
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
@@ -257,7 +258,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve6c5ebf0da2e10b36
+preserve177c215ec9ad814f
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -1288,7 +1289,7 @@ Of course, we can represent discrete features such as soil or landcover classes 
 Consequently, the discrete borders of these features become blurred, and depending on the spatial task a vector representation might be more suitable.
 
 <div class="figure" style="text-align: center">
-<img src="figures/02_raster_intro_plot2.png" alt="Examples of continuous (left) and categorical (right) raster." width="475" />
+<img src="figures/02_raster_intro_plot2.png" alt="Examples of continuous (left) and categorical (right) raster."  />
 <p class="caption">(\#fig:raster-intro-plot2)Examples of continuous (left) and categorical (right) raster.</p>
 </div>
 
@@ -3094,7 +3095,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve958426eb15248d08
+preserve6a7d2a97b7f6aa00
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4070,6 +4071,58 @@ This section is about operations that in some way change the geometry of vector 
 It is more advanced than the spatial data operations presented in the previous Chapter (in section \@ref(spatial-operations-on-vector-data)) because here we drill down into the geometry:
 the functions discussed in this section work on objects of class `sfc` (simple feature geometry collections) in addition to objects of class `sf`.
 
+### Simplification
+
+<!-- \@ref(fig:seine-simp) -->
+
+
+```r
+seine_simp = st_simplify(seine, dTolerance = 2000)
+```
+
+
+```r
+object.size(seine)
+#> 16768 bytes
+object.size(seine_simp)
+#> 7808 bytes
+```
+
+<div class="figure" style="text-align: center">
+<img src="figures/seine-simp-1.png" alt="Comparision of original data of the contiguous United States and two simplified versions using `st_simplify` and `ms_simplify`." width="576" />
+<p class="caption">(\#fig:seine-simp)Comparision of original data of the contiguous United States and two simplified versions using `st_simplify` and `ms_simplify`.</p>
+</div>
+
+<!-- \@ref(fig:us-simp) -->
+
+<!-- - simplifications -->
+<!-- st_simplify -->
+
+```r
+us_states_simp1 = st_simplify(us_states, dTolerance = 1)
+#> Warning in st_simplify.sfc(st_geometry(x), preserveTopology, dTolerance):
+#> st_simplify does not correctly simplify longitude/latitude data, dTolerance
+#> needs to be in decimal degrees
+```
+
+<!-- line example -->
+<!-- maybe river or road network to spData?? -->
+
+<!-- rmapshaper -->
+<!-- polygon example -->
+
+```r
+# proportion of points to retain (0-1; default 0.05)
+us_states_simp2 = rmapshaper::ms_simplify(us_states, keep = 0.01, keep_shapes = TRUE)
+#> Warning in value[[3L]](cond): Could not convert column NA to class units.
+#> Returning as numeric
+```
+
+<div class="figure" style="text-align: center">
+<img src="figures/us-simp-1.png" alt="Comparision of original data of the contiguous United States and two simplified versions using `st_simplify` and `ms_simplify`." width="576" />
+<p class="caption">(\#fig:us-simp)Comparision of original data of the contiguous United States and two simplified versions using `st_simplify` and `ms_simplify`.</p>
+</div>
+
 ### Geometry unions
 
 Spatial aggregation can also be done in the **tidyverse**, using **dplyr** functions as follows:
@@ -4146,7 +4199,7 @@ plot(b)
 plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
 ```
 
-<img src="figures/unnamed-chunk-34-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-38-1.png" width="576" style="display: block; margin: auto;" />
 
 The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
 <!-- Todo: reference r4ds -->
@@ -4219,7 +4272,7 @@ seine_centroid = st_centroid(seine)
 seine_pos = st_point_on_surface(seine)
 ```
 
-<img src="figures/unnamed-chunk-40-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-44-1.png" width="576" style="display: block; margin: auto;" />
 
 ### Buffers
 
@@ -4342,58 +4395,6 @@ linestring_sf2
 <!-- sf -> sp -->
 <!-- sp -> sf -->
 <!-- stars; https://github.com/r-spatial/stars/blob/master/vignettes/blog1.Rmd -->
-
-### Simplification
-
-<!-- \@ref(fig:seine-simp) -->
-
-
-```r
-seine_simp = st_simplify(seine, dTolerance = 2000)
-```
-
-
-```r
-object.size(seine)
-#> 16768 bytes
-object.size(seine_simp)
-#> 7808 bytes
-```
-
-<div class="figure" style="text-align: center">
-<img src="figures/seine-simp-1.png" alt="Comparision of original data of the contiguous United States and two simplified versions using `st_simplify` and `ms_simplify`." width="576" />
-<p class="caption">(\#fig:seine-simp)Comparision of original data of the contiguous United States and two simplified versions using `st_simplify` and `ms_simplify`.</p>
-</div>
-
-<!-- \@ref(fig:us-simp) -->
-
-<!-- - simplifications -->
-<!-- st_simplify -->
-
-```r
-us_states_simp1 = st_simplify(us_states, dTolerance = 1)
-#> Warning in st_simplify.sfc(st_geometry(x), preserveTopology, dTolerance):
-#> st_simplify does not correctly simplify longitude/latitude data, dTolerance
-#> needs to be in decimal degrees
-```
-
-<!-- line example -->
-<!-- maybe river or road network to spData?? -->
-
-<!-- rmapshaper -->
-<!-- polygon example -->
-
-```r
-# proportion of points to retain (0-1; default 0.05)
-us_states_simp2 = rmapshaper::ms_simplify(us_states, keep = 0.01, keep_shapes = TRUE)
-#> Warning in value[[3L]](cond): Could not convert column NA to class units.
-#> Returning as numeric
-```
-
-<div class="figure" style="text-align: center">
-<img src="figures/us-simp-1.png" alt="Comparision of original data of the contiguous United States and two simplified versions using `st_simplify` and `ms_simplify`." width="576" />
-<p class="caption">(\#fig:us-simp)Comparision of original data of the contiguous United States and two simplified versions using `st_simplify` and `ms_simplify`.</p>
-</div>
 
 ### Rasterization
 <!-- - vector to raster -->
@@ -5649,7 +5650,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservef99ba856cb192a27
+preserve266c368ea87da7b5
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 

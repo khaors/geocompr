@@ -208,13 +208,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.1.3" data-path="transform.html"><a href="transform.html#reprojecting-raster-geometries"><i class="fa fa-check"></i><b>5.1.3</b> Reprojecting raster geometries</a></li>
 </ul></li>
 <li class="chapter" data-level="5.2" data-path="transform.html"><a href="transform.html#geo-vec"><i class="fa fa-check"></i><b>5.2</b> Geometric operations on vector data</a><ul>
-<li class="chapter" data-level="5.2.1" data-path="transform.html"><a href="transform.html#geometry-unions"><i class="fa fa-check"></i><b>5.2.1</b> Geometry unions</a></li>
-<li class="chapter" data-level="5.2.2" data-path="transform.html"><a href="transform.html#clipping"><i class="fa fa-check"></i><b>5.2.2</b> Clipping</a></li>
-<li class="chapter" data-level="5.2.3" data-path="transform.html"><a href="transform.html#centroids"><i class="fa fa-check"></i><b>5.2.3</b> Centroids</a></li>
-<li class="chapter" data-level="5.2.4" data-path="transform.html"><a href="transform.html#buffers"><i class="fa fa-check"></i><b>5.2.4</b> Buffers</a></li>
-<li class="chapter" data-level="5.2.5" data-path="transform.html"><a href="transform.html#affine-transformations"><i class="fa fa-check"></i><b>5.2.5</b> Affine transformations</a></li>
-<li class="chapter" data-level="5.2.6" data-path="transform.html"><a href="transform.html#type-transformation"><i class="fa fa-check"></i><b>5.2.6</b> Type transformation</a></li>
-<li class="chapter" data-level="5.2.7" data-path="transform.html"><a href="transform.html#simplification"><i class="fa fa-check"></i><b>5.2.7</b> Simplification</a></li>
+<li class="chapter" data-level="5.2.1" data-path="transform.html"><a href="transform.html#simplification"><i class="fa fa-check"></i><b>5.2.1</b> Simplification</a></li>
+<li class="chapter" data-level="5.2.2" data-path="transform.html"><a href="transform.html#geometry-unions"><i class="fa fa-check"></i><b>5.2.2</b> Geometry unions</a></li>
+<li class="chapter" data-level="5.2.3" data-path="transform.html"><a href="transform.html#clipping"><i class="fa fa-check"></i><b>5.2.3</b> Clipping</a></li>
+<li class="chapter" data-level="5.2.4" data-path="transform.html"><a href="transform.html#centroids"><i class="fa fa-check"></i><b>5.2.4</b> Centroids</a></li>
+<li class="chapter" data-level="5.2.5" data-path="transform.html"><a href="transform.html#buffers"><i class="fa fa-check"></i><b>5.2.5</b> Buffers</a></li>
+<li class="chapter" data-level="5.2.6" data-path="transform.html"><a href="transform.html#affine-transformations"><i class="fa fa-check"></i><b>5.2.6</b> Affine transformations</a></li>
+<li class="chapter" data-level="5.2.7" data-path="transform.html"><a href="transform.html#type-transformation"><i class="fa fa-check"></i><b>5.2.7</b> Type transformation</a></li>
 <li class="chapter" data-level="5.2.8" data-path="transform.html"><a href="transform.html#rasterization"><i class="fa fa-check"></i><b>5.2.8</b> Rasterization</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="transform.html"><a href="transform.html#geo-ras"><i class="fa fa-check"></i><b>5.3</b> Geometric operations on raster data</a><ul>
@@ -302,7 +302,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(spData)
 <span class="kw">library</span>(spDataLarge)</code></pre></div>
 <p>The previous three chapters have demonstrated how geographic datasets are structured in R (Chapter <a href="spatial-class.html#spatial-class">2</a>) and how to manipulate them based on their non-geographic attributes (<a href="attr.html#attr">3</a>) and spatial properties (<a href="#spatial-data-operations"><strong>??</strong></a>). This chapter goes a step further, by showing how to modify the <em>geometry</em> underlying spatial datasets.</p>
-<p>Section <a href="transform.html#geo-vec">5.2</a> covers transforming vector geometries. This includes simplifying, buffering, clipping and even shifting/scaling/rotating geometries using ‘affine transformations’. Geometry unions, which underlie spatial data aggregation, are covered in section <a href="transform.html#geometry-unions">5.2.1</a>. Advanced transformations of vector geometries include type transformations (e.g. from few multipolygons to many polygons) and ‘rasterization’, which sets-up the next section.</p>
+<p>Section <a href="transform.html#geo-vec">5.2</a> covers transforming vector geometries. This includes simplifying, buffering, clipping and even shifting/scaling/rotating geometries using ‘affine transformations’. Geometry unions, which underlie spatial data aggregation, are covered in section <a href="transform.html#geometry-unions">5.2.2</a>. Advanced transformations of vector geometries include type transformations (e.g. from few multipolygons to many polygons) and ‘rasterization’, which sets-up the next section.</p>
 <p>Section <a href="transform.html#geo-ras">5.3</a> covers geometric transformations on raster objects. This involves changing the size and number of the underlying pixels, and assigning them new values. It teaches how to change the resolution (also called raster aggregation and disaggregation), the extent and the origin of a raster. These operations are especially useful if one would like to align raster datasets from diverse sources (see section <a href="transform.html#raster-alignment">5.3.1</a>). Only making sure that these rasters share the same header information allows the jointly usage of map algebra operations (see section <a href="spatial-operations.html#map-algebra">4.3.2</a>).</p>
 <p>A vital type of geometry transformation is <em>reprojecting</em> from one coordinate reference system (CRS) to another. Because of the importance of reprojection, introduced in Chapter <a href="spatial-class.html#spatial-class">2</a> (see figure <a href="spatial-class.html#fig:vectorplots">2.1</a> and section <a href="spatial-class.html#crs-intro">2.3</a>), and the fact that it applies to raster and vector geometries alike, it is the topic of the first section in this chapter.</p>
 </div>
@@ -518,12 +518,48 @@ con_raster_ea
 <div id="geo-vec" class="section level2">
 <h2><span class="header-section-number">5.2</span> Geometric operations on vector data</h2>
 <p>This section is about operations that in some way change the geometry of vector (<code>sf</code>) objects. It is more advanced than the spatial data operations presented in the previous Chapter (in section <a href="spatial-operations.html#spatial-operations-on-vector-data">4.2</a>) because here we drill down into the geometry: the functions discussed in this section work on objects of class <code>sfc</code> (simple feature geometry collections) in addition to objects of class <code>sf</code>.</p>
+<div id="simplification" class="section level3">
+<h3><span class="header-section-number">5.2.1</span> Simplification</h3>
+<!-- \@ref(fig:seine-simp) -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">seine_simp =<span class="st"> </span><span class="kw">st_simplify</span>(seine, <span class="dt">dTolerance =</span> <span class="dv">2000</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">object.size</span>(seine)
+<span class="co">#&gt; 16768 bytes</span>
+<span class="kw">object.size</span>(seine_simp)
+<span class="co">#&gt; 7808 bytes</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:seine-simp"></span>
+<img src="figures/seine-simp-1.png" alt="Comparision of original data of the contiguous United States and two simplified versions using `st_simplify` and `ms_simplify`." width="576" />
+<p class="caption">
+Figure 5.7: Comparision of original data of the contiguous United States and two simplified versions using <code>st_simplify</code> and <code>ms_simplify</code>.
+</p>
+</div>
+<!-- \@ref(fig:us-simp) -->
+<!-- - simplifications -->
+<!-- st_simplify -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">us_states_simp1 =<span class="st"> </span><span class="kw">st_simplify</span>(us_states, <span class="dt">dTolerance =</span> <span class="dv">1</span>)
+<span class="co">#&gt; Warning in st_simplify.sfc(st_geometry(x), preserveTopology, dTolerance):</span>
+<span class="co">#&gt; st_simplify does not correctly simplify longitude/latitude data, dTolerance</span>
+<span class="co">#&gt; needs to be in decimal degrees</span></code></pre></div>
+<!-- line example -->
+<!-- maybe river or road network to spData?? -->
+<!-- rmapshaper -->
+<!-- polygon example -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># proportion of points to retain (0-1; default 0.05)</span>
+us_states_simp2 =<span class="st"> </span>rmapshaper::<span class="kw">ms_simplify</span>(us_states, <span class="dt">keep =</span> <span class="fl">0.01</span>, <span class="dt">keep_shapes =</span> <span class="ot">TRUE</span>)
+<span class="co">#&gt; Warning in value[[3L]](cond): Could not convert column NA to class units.</span>
+<span class="co">#&gt; Returning as numeric</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:us-simp"></span>
+<img src="figures/us-simp-1.png" alt="Comparision of original data of the contiguous United States and two simplified versions using `st_simplify` and `ms_simplify`." width="576" />
+<p class="caption">
+Figure 5.8: Comparision of original data of the contiguous United States and two simplified versions using <code>st_simplify</code> and <code>ms_simplify</code>.
+</p>
+</div>
+</div>
 <div id="geometry-unions" class="section level3">
-<h3><span class="header-section-number">5.2.1</span> Geometry unions</h3>
+<h3><span class="header-section-number">5.2.2</span> Geometry unions</h3>
 <p>Spatial aggregation can also be done in the <strong>tidyverse</strong>, using <strong>dplyr</strong> functions as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">group_by</span>(us_states, REGION) %&gt;%
 <span class="st">  </span><span class="kw">summarize</span>(<span class="kw">sum</span>(<span class="dt">pop =</span> total_pop_15, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</code></pre></div>
-<p>For attribute data aggregation the grouping variable is another variable, typically one with few unique values relative to the number of rows (see section <a href="attr.html#vector-attribute-aggregation">3.2.2</a>). What we did not cover in that section was that attribute data aggregation dissolves the geometries of touching polygons. The <code>REGION</code> variable in the <code>us_states</code> dataset is a good example: there are 49 states (excluding Hawaii and Alaska) which can be aggregated into four regions. This is demonstrated in the code chunk below, the results of which are illustrated in Figure <a href="transform.html#fig:us-regions">5.7</a>:</p>
+<p>For attribute data aggregation the grouping variable is another variable, typically one with few unique values relative to the number of rows (see section <a href="attr.html#vector-attribute-aggregation">3.2.2</a>). What we did not cover in that section was that attribute data aggregation dissolves the geometries of touching polygons. The <code>REGION</code> variable in the <code>us_states</code> dataset is a good example: there are 49 states (excluding Hawaii and Alaska) which can be aggregated into four regions. This is demonstrated in the code chunk below, the results of which are illustrated in Figure <a href="transform.html#fig:us-regions">5.9</a>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">regions =<span class="st"> </span><span class="kw">aggregate</span>(<span class="dt">x =</span> us_states[, <span class="st">&quot;total_pop_15&quot;</span>], <span class="dt">by =</span> <span class="kw">list</span>(us_states$REGION),
                     <span class="dt">FUN =</span> sum, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <!--
@@ -532,7 +568,7 @@ show also tidyverse way, so what you are doing is basically a spatial join and a
 <div class="figure" style="text-align: center"><span id="fig:us-regions"></span>
 <img src="figures/us-regions-1.png" alt="Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions, with population represented by color. Note the operation automatically dissolves boundaries between states." width="100%" />
 <p class="caption">
-Figure 5.7: Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions, with population represented by color. Note the operation automatically dissolves boundaries between states.
+Figure 5.9: Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions, with population represented by color. Note the operation automatically dissolves boundaries between states.
 </p>
 </div>
 <p>The equivalent result can be achieved using <strong>tidyverse</strong> functions as follows (result not shown):</p>
@@ -541,7 +577,7 @@ Figure 5.7: Spatial aggregation on contiguous polygons, illustrated by aggregati
 <span class="st">  </span><span class="kw">summarize</span>(<span class="kw">sum</span>(<span class="dt">pop =</span> total_pop_15, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</code></pre></div>
 </div>
 <div id="clipping" class="section level3">
-<h3><span class="header-section-number">5.2.2</span> Clipping</h3>
+<h3><span class="header-section-number">5.2.3</span> Clipping</h3>
 <p>Spatial clipping is a form of spatial subsetting that involves changes to the <code>geometry</code> columns of at least some of the affected features.</p>
 <p>Clipping can only apply to features more complex than points: lines, polygons and their ‘multi’ equivalents. To illustrate the concept we will start with a simple example: two overlapping circles with a center point one unit away from each other and radius of one:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">b =<span class="st"> </span><span class="kw">st_sfc</span>(<span class="kw">st_point</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)), <span class="kw">st_point</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))) <span class="co"># create 2 points</span>
@@ -552,7 +588,7 @@ l =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;x&q
 <div class="figure" style="text-align: center"><span id="fig:points"></span>
 <img src="figures/points-1.png" alt="Overlapping circles." width="576" />
 <p class="caption">
-Figure 5.8: Overlapping circles.
+Figure 5.10: Overlapping circles.
 </p>
 </div>
 <p>Imagine you want to select not one circle or the other, but the space covered by both <code>x</code> <em>and</em> <code>y</code>. This can be done using the function <code>st_intersection()</code>, illustrated using objects named <code>x</code> and <code>y</code> which represent the left and right-hand circles:</p>
@@ -561,16 +597,16 @@ y =<span class="st"> </span>b[<span class="dv">2</span>]
 x_and_y =<span class="st"> </span><span class="kw">st_intersection</span>(x, y)
 <span class="kw">plot</span>(b)
 <span class="kw">plot</span>(x_and_y, <span class="dt">col =</span> <span class="st">&quot;lightgrey&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>) <span class="co"># color intersecting area</span></code></pre></div>
-<p><img src="figures/unnamed-chunk-34-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-38-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>The subsequent code chunk demonstrate how this works for all combinations of the ‘Venn’ diagram representing <code>x</code> and <code>y</code>, inspired by <a href="http://r4ds.had.co.nz/transform.html#logical-operators">Figure 5.1</a> of the book R for Data Science <span class="citation">(Grolemund and Wickham <a href="#ref-grolemund_r_2016">2016</a>)</span>. <!-- Todo: reference r4ds --></p>
 <div class="figure" style="text-align: center"><span id="fig:venn-clip"></span>
 <img src="figures/venn-clip-1.png" alt="Spatial equivalents of logical operators." width="576" />
 <p class="caption">
-Figure 5.9: Spatial equivalents of logical operators.
+Figure 5.11: Spatial equivalents of logical operators.
 </p>
 </div>
-<p>To illustrate the relationship between subsetting and clipping spatial data, we will subset points that cover the bounding box of the circles <code>x</code> and <code>y</code> in Figure <a href="transform.html#fig:venn-clip">5.9</a>. Some points will be inside just one circle, some will be inside both and some will be inside neither.</p>
-<p>There are two different ways to subset points that fit into combinations of the circles: via clipping and logical operators. But first we must generate some points. We will use the <em>simple random</em> sampling strategy to sample from a box representing the extent of <code>x</code> and <code>y</code>. To generate this points will use a function not yet covered in this book, <code>st_sample()</code>. Next we will generate the situation plotted in Figure <a href="transform.html#fig:venn-subset">5.10</a>:</p>
+<p>To illustrate the relationship between subsetting and clipping spatial data, we will subset points that cover the bounding box of the circles <code>x</code> and <code>y</code> in Figure <a href="transform.html#fig:venn-clip">5.11</a>. Some points will be inside just one circle, some will be inside both and some will be inside neither.</p>
+<p>There are two different ways to subset points that fit into combinations of the circles: via clipping and logical operators. But first we must generate some points. We will use the <em>simple random</em> sampling strategy to sample from a box representing the extent of <code>x</code> and <code>y</code>. To generate this points will use a function not yet covered in this book, <code>st_sample()</code>. Next we will generate the situation plotted in Figure <a href="transform.html#fig:venn-subset">5.12</a>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bb =<span class="st"> </span><span class="kw">st_bbox</span>(<span class="kw">st_union</span>(x, y))
 pmat =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(bb[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">2</span>)]), <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)
 box =<span class="st"> </span><span class="kw">st_polygon</span>(<span class="kw">list</span>(pmat))
@@ -584,12 +620,12 @@ p =<span class="st"> </span><span class="kw">st_sample</span>(<span class="dt">x
 <div class="figure" style="text-align: center"><span id="fig:venn-subset"></span>
 <img src="figures/venn-subset-1.png" alt="Randomly distributed points within the bounding box enclosing circles x and y." width="576" />
 <p class="caption">
-Figure 5.10: Randomly distributed points within the bounding box enclosing circles x and y.
+Figure 5.12: Randomly distributed points within the bounding box enclosing circles x and y.
 </p>
 </div>
 </div>
 <div id="centroids" class="section level3">
-<h3><span class="header-section-number">5.2.3</span> Centroids</h3>
+<h3><span class="header-section-number">5.2.4</span> Centroids</h3>
 <!-- centroids intro -->
 <p>There are two main functions that create single point representations of more complex vector objects - <code>st_centroid()</code> and <code>st_point_on_surface()</code>.</p>
 <!-- The first one is `st_centroid()`  -->
@@ -602,27 +638,27 @@ Figure 5.10: Randomly distributed points within the bounding box enclosing circl
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_pos =<span class="st"> </span><span class="kw">st_point_on_surface</span>(nz)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">seine_centroid =<span class="st"> </span><span class="kw">st_centroid</span>(seine)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">seine_pos =<span class="st"> </span><span class="kw">st_point_on_surface</span>(seine)</code></pre></div>
-<p><img src="figures/unnamed-chunk-40-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-44-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="buffers" class="section level3">
-<h3><span class="header-section-number">5.2.4</span> Buffers</h3>
+<h3><span class="header-section-number">5.2.5</span> Buffers</h3>
 </div>
 <div id="affine-transformations" class="section level3">
-<h3><span class="header-section-number">5.2.5</span> Affine transformations</h3>
+<h3><span class="header-section-number">5.2.6</span> Affine transformations</h3>
 </div>
 <div id="type-transformation" class="section level3">
-<h3><span class="header-section-number">5.2.6</span> Type transformation</h3>
+<h3><span class="header-section-number">5.2.7</span> Type transformation</h3>
 <p>Geometry casting is powerful operation which enable transformation of the geometry type. It is implemented in the <code>st_cast</code> function from the <code>sf</code> package. Importantly, <code>st_cast</code> behaves differently on single simple feature geometry (<code>sfg</code>) objects, and simple feature geometry column (<code>sfc</code>) and simple features objects.</p>
 <p>Let’s create a multipoint to illustrate how geometry casting works on simple feature geometry (<code>sfg</code>) objects:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">multipoint =<span class="st"> </span><span class="kw">st_multipoint</span>(<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">1</span>), <span class="dt">ncol =</span> <span class="dv">2</span>))</code></pre></div>
-<p>In this case, <code>st_cast</code> can be useful to transform the new object into linestring or polygon (Figure <a href="transform.html#fig:single-cast">5.11</a>):</p>
+<p>In this case, <code>st_cast</code> can be useful to transform the new object into linestring or polygon (Figure <a href="transform.html#fig:single-cast">5.13</a>):</p>
 <!-- a/ points -> lines -> polygons  -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">linestring =<span class="st"> </span><span class="kw">st_cast</span>(multipoint, <span class="st">&quot;LINESTRING&quot;</span>)
 polyg =<span class="st"> </span><span class="kw">st_cast</span>(multipoint, <span class="st">&quot;POLYGON&quot;</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:single-cast"></span>
 <img src="figures/single-cast-1.png" alt="Examples of linestring and polygon created based on multipoint using the `st_cast` function" width="576" />
 <p class="caption">
-Figure 5.11: Examples of linestring and polygon created based on multipoint using the <code>st_cast</code> function
+Figure 5.13: Examples of linestring and polygon created based on multipoint using the <code>st_cast</code> function
 </p>
 </div>
 <p>This process can be also reversed using <code>st_cast</code>:</p>
@@ -636,7 +672,7 @@ For single simple feature geometries (<code>sfg</code>), <code>st_cast</code> pr
 </div>
 <p></p>
 <p>Geometry casting of simple feature geometry column (<code>sfc</code>) and simple features objects works the same as for single geometries in most of the cases. One imporant difference is conversion between multi to non-multi types. As a result of this process, multi-objects are split into many non-multi objects.</p>
-<p>We would use a new object, <code>multilinestring_sf</code>, as an example (on the left in Figure <a href="transform.html#fig:line-cast">5.12</a>):</p>
+<p>We would use a new object, <code>multilinestring_sf</code>, as an example (on the left in Figure <a href="transform.html#fig:line-cast">5.14</a>):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">multilinestring_list =<span class="st"> </span><span class="kw">list</span>(<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">3</span>), <span class="dt">ncol =</span> <span class="dv">2</span>), 
                             <span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>), <span class="dt">ncol =</span> <span class="dv">2</span>),
                             <span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">2</span>), <span class="dt">ncol =</span> <span class="dv">2</span>))
@@ -667,7 +703,7 @@ linestring_sf2
 <div class="figure" style="text-align: center"><span id="fig:line-cast"></span>
 <img src="figures/line-cast-1.png" alt="Examples of type casting between MULTILINESTRING (left) and LINESTRING (right)." width="576" />
 <p class="caption">
-Figure 5.12: Examples of type casting between MULTILINESTRING (left) and LINESTRING (right).
+Figure 5.14: Examples of type casting between MULTILINESTRING (left) and LINESTRING (right).
 </p>
 </div>
 <p>The newely created object allows for attributes creation (see more in section <a href="attr.html#vec-attr-creation">3.2.4</a>) and length measurement:</p>
@@ -689,42 +725,6 @@ linestring_sf2
 <!-- sf -> sp -->
 <!-- sp -> sf -->
 <!-- stars; https://github.com/r-spatial/stars/blob/master/vignettes/blog1.Rmd -->
-</div>
-<div id="simplification" class="section level3">
-<h3><span class="header-section-number">5.2.7</span> Simplification</h3>
-<!-- \@ref(fig:seine-simp) -->
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">seine_simp =<span class="st"> </span><span class="kw">st_simplify</span>(seine, <span class="dt">dTolerance =</span> <span class="dv">2000</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">object.size</span>(seine)
-<span class="co">#&gt; 16768 bytes</span>
-<span class="kw">object.size</span>(seine_simp)
-<span class="co">#&gt; 7808 bytes</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:seine-simp"></span>
-<img src="figures/seine-simp-1.png" alt="Comparision of original data of the contiguous United States and two simplified versions using `st_simplify` and `ms_simplify`." width="576" />
-<p class="caption">
-Figure 5.13: Comparision of original data of the contiguous United States and two simplified versions using <code>st_simplify</code> and <code>ms_simplify</code>.
-</p>
-</div>
-<!-- \@ref(fig:us-simp) -->
-<!-- - simplifications -->
-<!-- st_simplify -->
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">us_states_simp1 =<span class="st"> </span><span class="kw">st_simplify</span>(us_states, <span class="dt">dTolerance =</span> <span class="dv">1</span>)
-<span class="co">#&gt; Warning in st_simplify.sfc(st_geometry(x), preserveTopology, dTolerance):</span>
-<span class="co">#&gt; st_simplify does not correctly simplify longitude/latitude data, dTolerance</span>
-<span class="co">#&gt; needs to be in decimal degrees</span></code></pre></div>
-<!-- line example -->
-<!-- maybe river or road network to spData?? -->
-<!-- rmapshaper -->
-<!-- polygon example -->
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># proportion of points to retain (0-1; default 0.05)</span>
-us_states_simp2 =<span class="st"> </span>rmapshaper::<span class="kw">ms_simplify</span>(us_states, <span class="dt">keep =</span> <span class="fl">0.01</span>, <span class="dt">keep_shapes =</span> <span class="ot">TRUE</span>)
-<span class="co">#&gt; Warning in value[[3L]](cond): Could not convert column NA to class units.</span>
-<span class="co">#&gt; Returning as numeric</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:us-simp"></span>
-<img src="figures/us-simp-1.png" alt="Comparision of original data of the contiguous United States and two simplified versions using `st_simplify` and `ms_simplify`." width="576" />
-<p class="caption">
-Figure 5.14: Comparision of original data of the contiguous United States and two simplified versions using <code>st_simplify</code> and <code>ms_simplify</code>.
-</p>
-</div>
 </div>
 <div id="rasterization" class="section level3">
 <h3><span class="header-section-number">5.2.8</span> Rasterization</h3>
