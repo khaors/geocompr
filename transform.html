@@ -203,8 +203,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5" data-path="transform.html"><a href="transform.html"><i class="fa fa-check"></i><b>5</b> Geometric operations</a><ul>
 <li class="chapter" data-level="" data-path="transform.html"><a href="transform.html#prerequisites-3"><i class="fa fa-check"></i>Prerequisites</a></li>
 <li class="chapter" data-level="5.1" data-path="transform.html"><a href="transform.html#reprojecting-geographic-data"><i class="fa fa-check"></i><b>5.1</b> Reprojecting geographic data</a><ul>
-<li class="chapter" data-level="5.1.1" data-path="transform.html"><a href="transform.html#reprojecting-vector-geometries"><i class="fa fa-check"></i><b>5.1.1</b> Reprojecting vector geometries</a></li>
-<li class="chapter" data-level="5.1.2" data-path="transform.html"><a href="transform.html#reprojecting-raster-geometries"><i class="fa fa-check"></i><b>5.1.2</b> Reprojecting raster geometries</a></li>
+<li class="chapter" data-level="5.1.1" data-path="transform.html"><a href="transform.html#which-crs-to-use"><i class="fa fa-check"></i><b>5.1.1</b> Which CRS to use?</a></li>
+<li class="chapter" data-level="5.1.2" data-path="transform.html"><a href="transform.html#reprojecting-vector-geometries"><i class="fa fa-check"></i><b>5.1.2</b> Reprojecting vector geometries</a></li>
+<li class="chapter" data-level="5.1.3" data-path="transform.html"><a href="transform.html#reprojecting-raster-geometries"><i class="fa fa-check"></i><b>5.1.3</b> Reprojecting raster geometries</a></li>
 </ul></li>
 <li class="chapter" data-level="5.2" data-path="transform.html"><a href="transform.html#geo-vec"><i class="fa fa-check"></i><b>5.2</b> Geometric operations on vector data</a><ul>
 <li class="chapter" data-level="5.2.1" data-path="transform.html"><a href="transform.html#geometry-unions"><i class="fa fa-check"></i><b>5.2.1</b> Geometry unions</a></li>
@@ -348,9 +349,15 @@ Figure 5.2: Buffer on data with projected CRS.
 </p>
 </div>
 <p>The importance of understanding an object’s CRS (primarily whether it’s projected or geographic), and reprojecting when appropriate, is illustrated above using a simple geographic vector object representing London. The subsequent two sections go into more depth on reprojections, exploring which CRS to use and providing details about the process of reprojecting vector and raster objects.</p>
+<div id="which-crs-to-use" class="section level3">
+<h3><span class="header-section-number">5.1.1</span> Which CRS to use?</h3>
+<p>While CRSs can be set manually — as illustrated in the previous section with <code>st_set_crs(london, 4326)</code> — it is more common in real world applications for CRSs to be set automatically when data is read-in. The main task will be to <em>transform</em> objects provided in one CRS into another. But when should data be transformed? And into which CRS? Although there are no clear-cut answers to these questions, the contents of this section should help you decide on answers, on a case-by-case basis.</p>
+<p>The question of <strong>when to transform</strong> is simpler to answer. Transformation from geographic to projected CRSs is vital in some cases: when distance measurements or area calculations are needed, for example. Another case when transformation is vital is when exploring the spatial relationships between two objects with different CRSs. As illustrated in the below code chunk, which attempts to find the distance between the projected and unprojected versions of the <code>london</code> objects, this results in an error telling you that either dataset must be transformed:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">st_distance</span>(london, london_proj)
+<span class="co"># &gt; Error: st_crs(x) == st_crs(y) is not TRUE</span></code></pre></div>
+</div>
 <div id="reprojecting-vector-geometries" class="section level3">
-<h3><span class="header-section-number">5.1.1</span> Reprojecting vector geometries</h3>
-<p>While CRSs can be set manually, it is more common in real world applications to <em>transform</em> a known CRS into another. CRS transformation could be vital to obtain proper results in many cases. A typical example is when geometry data is provided in a geographic CRS but you want to do spatial operations, which require it to be in a projected CRS. It includes distance measurements or area calculations. CRS also represent spatial relationship between datasets. Therefore, spatial operations on many datasets can only be correctly performed when all the data have the same CRS. The most common reason to unify the CRS is to combine different datasets or apply methods which need at least two objects. Let’s use real-world examples to illustrate this.</p>
+<h3><span class="header-section-number">5.1.2</span> Reprojecting vector geometries</h3>
 <p>Vector data on the most basic level is represented by individual points, and points create more complex objects, such as lines and polygons. Spatial reprojection of vectors is a mathematical transformation of coordinates of these point. Depending on projections used, reprojection could be either lossy or lossless. For example, loss of spatial information could occur when the new CRS is only adequate for smaller area than input vector. The precision could be also lost when transformation is between coordinate systems that have different datum - in those situations approximations are used. However, in most cases CRS vector transformation is lossless.</p>
 <p>The dataset <code>cycle_hire_osm</code> represents all cycle hire locations across London, taken from OpenStreetMap (OSM). It is automatically loaded by the <strong>spData</strong> package, meaning we do not have to load it, and its CRS can be queried as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">st_crs</span>(cycle_hire_osm)
@@ -432,7 +439,7 @@ Figure 5.6: Lambert azimuthal equal-area projection of the world centered on New
 <!-- http://bl.ocks.org/vlandham/raw/9216751/ -->
 </div>
 <div id="reprojecting-raster-geometries" class="section level3">
-<h3><span class="header-section-number">5.1.2</span> Reprojecting raster geometries</h3>
+<h3><span class="header-section-number">5.1.3</span> Reprojecting raster geometries</h3>
 <p>The projection concepts described in the previous section apply equally to rasters. However, there are important differences in reprojection of vectors and rasters: transforming a vector object involves changing the coordinates of every vertex but this do not apply to raster data. Rasters are are composed of rectangular cells of the same size (expressed by map units, such as degrees or meters), so it is impossible to transform coordinates of pixels separately.</p>
 <p>Raster reprojection involves creating a new raster object, often with a different number of columns and rows than the original. The attributes must subsequently be re-estimated, allowing the new pixels to be ‘filled’ with appropriate values. This two-stage process is done with <code>projectRaster()</code> from the <strong>raster</strong> package. Like the <code>st_transform()</code> function demonstrated in the previous section, <code>projectRaster()</code> takes a geographic object (a raster dataset in this case) and a <code>crs</code> argument. However, <code>projectRaster()</code> only accepts the lengthy <code>proj4string</code> definitions of a CRS rather than concise EPSG codes.</p>
 
@@ -554,7 +561,7 @@ y =<span class="st"> </span>b[<span class="dv">2</span>]
 x_and_y =<span class="st"> </span><span class="kw">st_intersection</span>(x, y)
 <span class="kw">plot</span>(b)
 <span class="kw">plot</span>(x_and_y, <span class="dt">col =</span> <span class="st">&quot;lightgrey&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>) <span class="co"># color intersecting area</span></code></pre></div>
-<p><img src="figures/unnamed-chunk-33-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-34-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>The subsequent code chunk demonstrate how this works for all combinations of the ‘Venn’ diagram representing <code>x</code> and <code>y</code>, inspired by <a href="http://r4ds.had.co.nz/transform.html#logical-operators">Figure 5.1</a> of the book R for Data Science <span class="citation">(Grolemund and Wickham <a href="#ref-grolemund_r_2016">2016</a>)</span>. <!-- Todo: reference r4ds --></p>
 <div class="figure" style="text-align: center"><span id="fig:venn-clip"></span>
 <img src="figures/venn-clip-1.png" alt="Spatial equivalents of logical operators." width="576" />
@@ -592,7 +599,7 @@ Figure 5.10: Randomly distributed points within the bounding box enclosing circl
 <!-- The second one -->
 <!-- add lines example -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_pos =<span class="st"> </span><span class="kw">st_point_on_surface</span>(nz)</code></pre></div>
-<p><img src="figures/unnamed-chunk-37-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-38-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="buffers" class="section level3">
 <h3><span class="header-section-number">5.2.4</span> Buffers</h3>

@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservef11f20ecd9106d17
+preserve664f9a42b0a831bf
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3095,7 +3095,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve70de867e3774a89a
+preserve68ebb798c0cfe63b
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3771,16 +3771,27 @@ plot(london_proj, add = TRUE)
 The importance of understanding an object's CRS (primarily whether it's projected or geographic), and reprojecting when appropriate, is illustrated above using a simple geographic vector object representing London.
 The subsequent two sections go into more depth on reprojections, exploring which CRS to use and providing details about the process of reprojecting vector and raster objects.
 
-### Reprojecting vector geometries
+### Which CRS to use?
 
-While CRSs can be set manually, it is more common in real world applications to *transform* a known CRS into another.
-CRS transformation could be vital to obtain proper results in many cases.
-A typical example is when geometry data is provided in a geographic CRS but you want to do spatial operations, which require it to be in a projected CRS.
-It includes distance measurements or area calculations.
-CRS also represent spatial relationship between datasets.
-Therefore, spatial operations on many datasets can only be correctly performed when all the data have the same CRS.
-The most common reason to unify the CRS is to combine different datasets or apply methods which need at least two objects.
-Let's use real-world examples to illustrate this.
+While CRSs can be set manually --- as illustrated in the previous section with `st_set_crs(london, 4326)` --- it is more common in real world applications for CRSs to be set automatically when data is read-in.
+The main task will be to *transform* objects provided in one CRS into another.
+But when should data be transformed? And into which CRS?
+Although there are no clear-cut answers to these questions, the contents of this section should help you decide on answers, on a case-by-case basis. 
+
+The question of **when to transform** is simpler to answer.
+Transformation from geographic to projected CRSs is vital in some cases:
+when distance measurements or area calculations are needed, for example.
+Another case when transformation is vital is when exploring the spatial relationships between two objects with different CRSs.
+As illustrated in the below code chunk, which attempts to find the distance between the projected and unprojected versions of the `london` objects, this results in an error telling you that either dataset must be transformed:
+
+
+```r
+st_distance(london, london_proj)
+# > Error: st_crs(x) == st_crs(y) is not TRUE
+```
+
+
+### Reprojecting vector geometries
 
 Vector data on the most basic level is represented by individual points, and points create more complex objects, such as lines and polygons.
 Spatial reprojection of vectors is a mathematical transformation of coordinates of these point.
@@ -4136,7 +4147,7 @@ plot(b)
 plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
 ```
 
-<img src="figures/unnamed-chunk-33-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-34-1.png" width="576" style="display: block; margin: auto;" />
 
 The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
 <!-- Todo: reference r4ds -->
@@ -4198,7 +4209,7 @@ nz_centroid = st_centroid(nz)
 nz_pos = st_point_on_surface(nz)
 ```
 
-<img src="figures/unnamed-chunk-37-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-38-1.png" width="576" style="display: block; margin: auto;" />
 
 ### Buffers
 
@@ -5608,7 +5619,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservee7cab9a04314b115
+preserve33eec8bb6ef3db63
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
