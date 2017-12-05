@@ -226,7 +226,7 @@ For instance, an autonomous car could create 100 GB or more per day (see e.g., t
 Equally, earth observation data (satellite imagery) has become so big that it is impossible to analyze the corresponding data with a single computer (see [http://r-spatial.org/2016/11/29/openeo.html](http://r-spatial.org/2016/11/29/openeo.html)).
 Hence, we need computational power, software and related tools to handle and extract the most interesting patterns of this ever-increasing amount of (geo-)data.
 (Geo-)Databases help with data management, storing and querying such large amounts of data.
-Through interfaces we can access subsets of these data for further analysis, information extraction and visualization.
+Through interfaces, we can access subsets of these data for further analysis, information extraction and visualization.
 In this book we treat R as a 'tool for the trade' for the latter.
 
 R is a multi-platform, open source language and environment for statistical computing and graphics ([https://www.r-project.org/](https://www.r-project.org/)).
@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservea2c71076749ea4f2
+preserve8c0fcce4fa6f040c
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -304,7 +304,7 @@ Due to their similarities there is much on-line discussion framing the relative 
 
 In practice both languages have their strengths and to some extent which you use is less important than domain of application and the communication of results.
 Learning either will provide a head-start in learning the other.
-However there are major advantages of R over Python for geocomputation which explains its prominence in this book.
+However, there are major advantages of R over Python for geocomputation which explains its prominence in this book.
 R has unparalled support for statistics, including spatial statistics, with hundreds of packages (unmatched by Python) supporting thousands of statistical methods.
 
 The major advantage of Python is that it is a *general-purpose* programming language.
@@ -370,8 +370,7 @@ geojsonio          421
 
 ## The history of R-spatial
 
-There are many benefits of using recent spatial packages such as **sf**, as advocated in this book.
-However it is also important to be aware of the history of R's spatial capabilities: many functions, use-cases and teaching material are contained in older packages.
+There are many benefits of using recent spatial packages such as **sf**, but it also important to be aware of the history of R's spatial capabilities: many functions, use-cases and teaching material are contained in older packages.
 These can still be useful today, provided you know where to look.
 
 R's spatial capabilities originated in early spatial packages in the S language [@bivand_implementing_2000].
@@ -568,7 +567,7 @@ The same point could also be approximated in a projected CRS with 'Easting/North
 This can be verified visually: slightly more than 5 'boxes' --- square areas bounded by the grey grid lines 100 km in width --- separate the point representing London from the origin in Figure \@ref(fig:vectorplots).
 This shows that the origin of the BNG is located in the sea beyond the southwest tip of England.
 This origin did not arise by accident: it ensures that most locations in the UK have positive Easting and Northing values.
-There is more to CRSs, as described in sections \@ref(crs-intro) \@ref(reprojecting-geographic-data).
+There is more to CRSs, as described in sections \@ref(crs-intro) and \@ref(reprojecting-geographic-data).
 For now it is sufficient to know that coordinates consist of numbers representing distance from an origin, usually in $x$ then $y$ dimensions on printed map and that coordinates are the basis of vector data models including simple features.
 
 
@@ -3095,7 +3094,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve29fd00e077561e5c
+preserve625fcd702ff57e43
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5619,7 +5618,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve24d42099e94242d2
+preserve54f18a3143162704
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
