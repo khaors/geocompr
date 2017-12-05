@@ -258,7 +258,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve9cdcaf9ae7a1f5a6
+preservef8215ec59ae580e5
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3095,7 +3095,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservefb4cb3946660e993
+preserve14bdbfab5a7fb357
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3658,9 +3658,10 @@ The previous three chapters have demonstrated how geographic datasets are struct
 This chapter goes a step further, by showing how to modify the *geometry* underlying spatial datasets.
 
 Section \@ref(geo-vec) covers transforming vector geometries.
-This includes simplifying, buffering, clipping and even shifting/scaling/rotating geometries using 'affine transformations'.
+This includes simplifying, creating buffers and centroids representing, and even shifting/scaling/rotating geometries using 'affine transformations', covered in sections \@ref(simplification) to \@ref(affine-transformations).
+It is also possible to modify vector geometries based on their relationships with another spatial objects, for example clipping the road network inside an adminstrative boundary, as demonstrated in section \@ref(clipping).
 Geometry unions, which underlie spatial data aggregation, are covered in section \@ref(geometry-unions).
-Advanced transformations of vector geometries include type transformations (e.g. from few multipolygons to many polygons) and 'rasterization', which sets-up the next section.
+Advanced transformations of vector geometries include type transformations (e.g. from few multipolygons to many polygons) and 'rasterization' are covered in sections \@ref(type-transformations) and \@ref(rasterization) respectively.
 
 Section \@ref(geo-ras) covers geometric transformations on raster objects.
 This involves changing the size and number of the underlying pixels, and assigning them new values.
@@ -4280,7 +4281,7 @@ regions2 = us_states %>%
   summarize(sum(pop = total_pop_15, na.rm = TRUE))
 ```
 
-### Type transformation
+### Type transformations
 
 Geometry casting is powerful operation which enable transformation of the geometry type.
 It is implemented in the `st_cast` function from the `sf` package.
@@ -5653,7 +5654,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve9f31cd7d65bf9a68
+preserve20c4960830ec16d5
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
