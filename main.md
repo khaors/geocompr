@@ -258,7 +258,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveba358dce05c47c1e
+preserved935d0d8ae714b62
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3095,7 +3095,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservee818fcce83488446
+preserveefd2a46be9e24330
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3181,7 +3181,10 @@ The result of the previous command is an `sf` object with the same geometry as t
 The result of the previous operation is illustrated in Figure \@ref(fig:spatial-aggregation).
 The same result can also be generated using the 'tidy' functions `group_by()` and `summarize()` (used in combination with `st_join()`):
 
-<img src="figures/spatial-aggregation-1.png" width="576" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures/spatial-aggregation-1.png" alt="Average height of high points (stored in the `nz_height` object) across the regions of New Zealand (stored in `nz`." width="576" />
+<p class="caption">(\#fig:spatial-aggregation)Average height of high points (stored in the `nz_height` object) across the regions of New Zealand (stored in `nz`.</p>
+</div>
 
 
 
@@ -3193,7 +3196,7 @@ nz_avheight2 = st_join(nz, nz_height) %>%
 
 The resulting `nz_avheight` objects have the same geometry as the aggregating object `nz` but with a a new column representing the mean average height of points within each region of New Zealand (other summary functions such as `median()` and `sd()` can be used in place of `mean()`).
 Note that regions containing no points have an associated `elevation` value of `NA`.
-For aggregating operations which also create new geometries, see section \@ref(geometry-unions-and-aggregation).
+For aggregating operations which also create new geometries, see section \@ref(geometry-unions).
 
 #### Spatial congruence and areal interpolation
 
@@ -4690,7 +4693,8 @@ parks = opq(bbox = "leeds uk") %>%
 
 OpenStreetMap is a vast global database of crowd-sourced data and it is growing by the minute.
 Although the quality is not as spatially consistent as many official datasets, OSM data have many advantages: they are globally available free of charge and using crowd-source data can encourage 'citizen science' and contributions back to the digital commons.
-Have a look at sections \@ref(location) and \@ref(gis) for further examples of how to use **osmdata** in applied research.
+Further examples of **osmdata** in action are provided in Chapters \@ref(location) and \@ref(transport).
+<!-- Todo: Replace the above with "Chapters \@ref(location) and \@ref(gis)." when gis is online (RL) -->
 
 Finally, R packages might contain or just consist of spatial data (e.g., package **spData**).
 You can access such data with the `data()` function.
@@ -5650,7 +5654,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserved4215996a85cfdc0
+preserve0a0c3234cc7a239b
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -5706,7 +5710,7 @@ Change the age raster accordingly, repeat the remaining analyses and compare the
 <!--chapter:end:07-location.Rmd-->
 
 
-# Transport applications
+# Transport applications {#transport}
 
 ## Prerequisites {-}
 
@@ -5799,7 +5803,7 @@ More importantly, official administrative zones often do not relate to 'travel w
 
 To overcome this issue for transport data analysis in the UK, the Travel to Work Areas (TTWAs) were created.
 TTWAs are contiguous zones defined roughly as areas in which 75% of the population both live and work.
-Because Bristol is a major employer attracting travel from surrounding towns, its TTWA is substantially larger than its administratively defined area, as illustrated in Figure \@ref(ttwa-bristol).
+Because Bristol is a major employer attracting travel from surrounding towns, its TTWA is substantially larger than its administratively defined area, as illustrated in Figure \@ref(fig:ttwa-bristol).
 
 
 
@@ -5812,8 +5816,8 @@ qtm(region)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/ttwa-bristo-1.png" alt="Region definitions in Bristol" width="576" />
-<p class="caption">(\#fig:ttwa-bristo)Region definitions in Bristol</p>
+<img src="figures/ttwa-bristol-1.png" alt="Region definitions in Bristol" width="576" />
+<p class="caption">(\#fig:ttwa-bristol)Region definitions in Bristol</p>
 </div>
 
 

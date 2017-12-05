@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="index.html">
-<link rel="next" href="intro.html">
+<link rel="prev" href="location.html">
+<link rel="next" href="references.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -286,62 +286,94 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="preface" class="section level1 unnumbered">
-<h1>Preface</h1>
-<p>This book is aimed at people who want to do spatial data analysis, visualization and modeling with a modern programming language (R). There is no single target audience but we expect the book to be especially useful for:</p>
-<ul>
-<li>People who have learned spatial analysis skills using a desktop Geographic Information System (GIS) such as <a href="http://qgis.org/en/site/">QGIS</a>, <a href="http://desktop.arcgis.com/en/arcmap/">ArcMap</a>, <a href="https://grass.osgeo.org/">GRASS</a> or <a href="http://www.saga-gis.org/en/index.html">SAGA</a>, who want access to a powerful (geo)statistical and visualization programming language and the benefits of a command-line approach <span class="citation">(Sherman <a href="#ref-sherman_desktop_2008">2008</a>)</span>:</li>
-</ul>
+<div id="transport" class="section level1">
+<h1><span class="header-section-number">8</span> Transport applications</h1>
+<div id="prerequisites-6" class="section level2 unnumbered">
+<h2>Prerequisites</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
+<span class="kw">library</span>(osmdata)
+<span class="kw">library</span>(stplanr)
+<span class="kw">library</span>(sf)
+<span class="kw">library</span>(tmap)</code></pre></div>
+<p>In no other sector is geographic space more tangible than transport. It is the effort of moving, particularly between places that are far apart, that led to the ‘first law’ of geography defined by Waldo Tobler in 1970 as follows <span class="citation">(Miller <a href="#ref-miller_toblers_2004">2004</a>)</span>:</p>
 <blockquote>
-<p>With the advent of ‘modern’ GIS software, most people want to point and click their way through life. That’s good, but there is a tremendous amount of flexibility and power waiting for you with the command line.</p>
+<p>Everything is related to everything else, but near things are more related than distant things</p>
 </blockquote>
+<p>This ‘law’ applies to phenomena as diverse as friendship networks and ecological diversity and can be explained by the costs of transport — in terms of time, energy and money. These costs are known as the ‘friction of distance’. Thus transport technologies disrupt geographic relationships from the perspective of mobile humans and goods: “the purpose of transportation is to overcome space” <span class="citation">(Rodrigue, Comtois, and Slack <a href="#ref-rodrigue_geography_2013">2013</a>)</span>.</p>
+<p>Transport is an inherently geospatial activity. It involves traversing continuous geographic space between A and B, and infinite localities in between. It is therefore unsurprising that transport researchers have long turned to geocomputational methods to understand movement patterns and that transport problems are a motivator of geocomputational methods.</p>
+<p>This chapter provides an introduction to geographic analysis of transport systems. We will explore how movement patterns can be understood at multiple geographic levels, including:</p>
 <ul>
-<li>Graduate students and researchers from fields specializing in geographic data including Geography, Remote Sensing, Planning, GIS and Geographic Data Science</li>
-<li>Academics and post-graduate students working on projects in fields including Geology, Regional Science, Biology and Ecology, Agricultural Sciences (precision farming), Archaeology, Epidemiology, Transport Modeling, and broadly defined Data Science which require the power and flexibility of R for their research <!-- please add further fields--></li>
-<li>Applied researchers and analysts in public, private or third-sector organisations who need the reproducibility, speed and flexibility of a command-line language such as R in applications dealing with spatial data as diverse as Urban and Transport Planning, Logistics, Geo-marketing (store location analysis) and Emergency Planning <!-- please add further examples--></li>
+<li>Areal units: transport can be understood simply in terms of zonal aggregates such as the main mode and average distance of trips made people living in a particular zone.</li>
+<li>Nodes: these are points in the transport system that can represent common origins and destinations (e.g. with one centroid per zone) and public transport stations such as bus stops and rail stations.</li>
+<li>Desire lines: straight lines that represent ‘origin-destination’ data that records how many people travel (or could travel) between places (points or zones) in geographic space.</li>
+<li>Routes: these are cirquitous (non-straight) routes, typically representing the ‘optimal’ path along the route network between origins and destinations along the desire lines defined in the previous bullet point.</li>
+<li>Route networks: these represent the system of roads, paths and other linear features in an area. They can be represented as purely geographic entities or as a graph. Their features are segments which can be assigned values representing ‘flow’, the number of people expected to use a particular street or path.</li>
+<li>Agents: these are the lowest-level but hardest to model entities in transport systems — mobile entities like you and me.</li>
 </ul>
-<p>The book is designed to be accessible to a wide audience. The chapters progress gradually in difficulty and exercises are provided at the end of each chapter to ensure understanding. However, R novices may find the reproducible code chunks — an integral part of the book — difficult to understand and implement at first.</p>
-<p>Impatient readers are welcome to dive straight into the first practical examples in Chapter <a href="spatial-class.html#spatial-class">2</a>. However we suggest most R beginners get up-to-speed with R before diving-in to chapters onwards (unless you’re reading the book for an understanding of the concepts). R has a supportive community that has developed a wealth of resources that can help here, three of which we highly recommend: <a href="http://colinfay.me/intro-to-r/">An introduction to R</a> <span class="citation">(Venables, Smith, and Team <a href="#ref-venables_introduction_2017">2017</a>)</span>, <a href="http://r4ds.had.co.nz/">R for Data Science</a> <span class="citation">(Grolemund and Wickham <a href="#ref-grolemund_r_2016">2016</a>)</span> and <a href="https://csgillespie.github.io/efficientR/">Efficient R Programming</a> <span class="citation">(Gillespie and Lovelace <a href="#ref-gillespie_efficient_2016">2016</a>)</span>, especially <a href="https://csgillespie.github.io/efficientR/set-up.html#r-version">Chapter 2</a> (on installing and setting-up R/RStudio) and <a href="https://csgillespie.github.io/efficientR/learning.html">Chapter 10</a> (on learning to learn). There are also many interactive resources, including DataCamp’s <a href="https://www.datacamp.com/courses/free-introduction-to-r">Introduction to R</a> and tutorials created with <a href="https://rstudio.github.io/learnr/examples.html"><strong>learnr</strong></a>.</p>
-<p>With such material to hand we are confident that the command-line approach demonstrated in this book will be worthwhile within a few months for most people, including programming novices. Over time and with practice R will likely become the natural choice for many geographic applications. We expect you will eventually find its interface faster than the point-and-click interface emphasized in many desktop GISs. For some applications such as Spatial Statistics and modelling R may be the <em>only</em> realistic way to get the work done.</p>
-<p>As outlined in section <a href="intro.html#why-geocomputation-with-r">1.2</a> there are many reasons for using R for geocomputation: R is well-suited to the interactive use required in many geographic data analysis workflows compared with other languages. R excels in the rapidly growing fields of Data Science (which includes data carpentry, statistical learning techniques and data visualization) and (via efficient interfaces to databases and distributed computing systems) Big Data.</p>
-<p>For some applications another language may be more appropriate, such as Python, Java or C++. There are excellent resources for learning geocomputation <em>without R</em>, as discussed in section <a href="intro.html#software-for-geocomputation">1.3</a>. However we advocate learning one language (R) in <em>depth</em> to gain an understanding of the concepts. Proficiency with one programming language is preferable to the <em>breadth</em> of knowledge (and potential for confusion) attainable by dabbling with many.</p>
-<p>We believe that <em>Geocomputation with R</em> will equip you with the knowledge and skills needed to solve the majority of challenges that geographic data pose. A logical question to ask if you’ve read this far may be: what <em>is</em> geocomputation anyway? The answer is provided in section <a href="intro.html#what-is-geocomputation">1.1</a> which, alongside the rest of Chapter <a href="intro.html#intro">1</a>, explains the motivations behind this book.</p>
-<!-- to think about, not sure if needed but then this would be a good place to point out why our book might have advantages over other books. Compare with:
-- Bivand, R., Pebesma, E., Gomez-Rubio, V. (2013): Applied spatial data analysis with R.
-- Blangiardo, M. & Cameletti, M. (2015): Spatial and spatio-temporal Bayesian models with R - INLA.
-- Brunsdon, C. & Comber, L. (2015): An introduction to R for spatial analysis and mapping.
-- Dorman, M. (2014): Learning R for geospatial analysis.
-- Hijmans, R. (2016): Spatial data analysis and modeling with R.  http://rspatial.org/intr/index.html (haven't read it but might be more suitable for beginners, however, it does not consider sf; additionally, it provides more code than text, and hence, probably less explanations than our book) 
-- Quiang, S. (2016): Environmental and Ecological Statistics with R (not really a competitor, I have ordered a copy, this book is really about modeling, and I would rather prefer the Zuur et al. books over it)
-- Wegmann, M., Leutner, B., Dech, S. (2016): Remote Sensing and GIS for ecologists: Using Open Source Software.
-- Zuur, A., Ieno, E., Saveliev, A. (2017): Beginner's guide to spatial, temporal and spatial-temporal ecological data analysis with R-INLA.
-
-Put the competing books into categories, e.g., introduction to spatial analysis (Brundsdon, Dorman, Hijmans), advanced spatial analysis (Bivand), topical spatial analysis (Quiang, Wegmann),  (mainly) spatial modeling (Bivand, Blangiardo, Hijmans, Quiang, Zuur).
-Point out where our book fits in and which gap it is filling -> somewhere between advanced (but not that hard) and spatial modeling with a broad range of topics (not just one like ecology).
-We try to address a broad audiecence with an interest in spatial data, and how things can be **get done**, not just theoretically but in an applied way.
-On the other hand, we embed the shown methods into the bigger field of GIScience, provide context and refer to further literature for the interested reader.
-
--->
-<!-- ## Acknowledgements {-} -->
-<!-- add list of people who helped with this book -->
+<p>These six levels of analysis show that transport systems are highly complex, even before accounting for the innevitable fact that all of them are constantly evolving in continuous time. The purpose of geographic transport modelling can be interpretted as simplifying this complexity in a way that captures the essence of transport problems.</p>
+<p>Typically models are designed to solve a particular problem. For this reason this chapter is based around a policy scenario that asks: how to increase walking and cycling? We will use input data from Bristol, a coastal city in the West of England, described in the next section.</p>
+</div>
+<div id="input-data-a-case-study-of-bristol" class="section level2">
+<h2><span class="header-section-number">8.1</span> Input data: a case study of Bristol</h2>
+<p>The case study used for this chapter is a diverse city on the west of England, 30 km east of the Welsh capital Cardiff. As with any case study it is worth taking some time to consider the local geography of the area, e.g. as dispayed in Figure 7.0 below. This shows the diversity of the city’s transport network, with railways, motorways and cycle paths plotted.</p>
+<p>The data used in this section was downloaded using <strong>osmdata</strong>. To avoid having to request the data from OSM repeadetly, we’ll use a locally saved version of the data, which contains point and line data for the case study area:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ways =<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;extdata/ways.Rds&quot;</span>)
+<span class="kw">summary</span>(ways)[<span class="dv">4</span>:<span class="dv">5</span>, ]
+<span class="co">#&gt;            Length Class Mode</span>
+<span class="co">#&gt; osm_points 54     sf    list</span>
+<span class="co">#&gt; osm_lines  85     sf    list</span></code></pre></div>
+<p>The above code chunk loaded some key data and shows that way have a few dozen nodes and lines on the transport network: an easily manageable dataset size (transport datasets can get very large but it’s best to learn with small ones). Before we make use of these datasets we need to load and take a look at one more type of input data: transport zones that represent residential areas that generate trips into the city centre and elsewhere.</p>
+<div class="figure" style="text-align: center"><span id="fig:bristol"></span>
+<img src="figures/bristol.png" alt="Overview map of the city of Bristol" width="562" />
+<p class="caption">
+Figure 8.1: Overview map of the city of Bristol
+</p>
+</div>
+</div>
+<div id="transport-zones" class="section level2">
+<h2><span class="header-section-number">8.2</span> Transport zones</h2>
+<p>Although transport systems are inherently based on linear features and nodes — the nodes and edges of the transport network — it often makes sense to start with areal data. Three types of zone will typically be of particular interest: the study region, origin zones (typically residential areas), and destination zones (which are often the same as the origin zones).</p>
+<p>The simplest definition of the study area is typically the first matching boundary returned by OpenStreetMap, which can be obtained using the <strong>osmdata</strong> package as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">region =<span class="st"> </span><span class="kw">getbb</span>(<span class="st">&quot;Bristol&quot;</span>, <span class="dt">format_out =</span> <span class="st">&quot;polygon&quot;</span>)[<span class="dv">1</span>]</code></pre></div>
+<p>OSM will will often contain valid depiction of the case study city or region of interest (in this case the result is the same as the officially defined area of the Local Authority District). However the approach is problematic because OSM data may not correspond to the most recent administrative areas over which transport planning authorities have control, meaning the analysis may be of limited interest to local transport planners. More importantly, official administrative zones often do not relate to ‘travel watersheds’, areas that can are defined not by (often arbitrary) political decisions but by data on where people actually travel to.</p>
+<p>To overcome this issue for transport data analysis in the UK, the Travel to Work Areas (TTWAs) were created. TTWAs are contiguous zones defined roughly as areas in which 75% of the population both live and work. Because Bristol is a major employer attracting travel from surrounding towns, its TTWA is substantially larger than its administratively defined area, as illustrated in Figure <a href="transport.html#fig:ttwa-bristol">8.2</a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">region =<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;extdata/bristol-region.Rds&quot;</span>)
+<span class="kw">qtm</span>(region)
+<span class="co">#&gt; Warning: Currect projection of shape region unknown. Long-lat (WGS84) is</span>
+<span class="co">#&gt; assumed.</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:ttwa-bristol"></span>
+<img src="figures/ttwa-bristol-1.png" alt="Region definitions in Bristol" width="576" />
+<p class="caption">
+Figure 8.2: Region definitions in Bristol
+</p>
+</div>
+</div>
+<div id="nodes-on-the-transport-system" class="section level2">
+<h2><span class="header-section-number">8.3</span> Nodes on the transport system</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stations =<span class="st"> </span>ways$osm_points %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(railway ==<span class="st"> &quot;station&quot;</span> |<span class="st"> </span>name ==<span class="st"> &quot;Bristol Temple Meads&quot;</span>)</code></pre></div>
+</div>
+<div id="desire-line-analysis" class="section level2">
+<h2><span class="header-section-number">8.4</span> Desire line analysis</h2>
+</div>
+<div id="route-analysis" class="section level2">
+<h2><span class="header-section-number">8.5</span> Route analysis</h2>
+</div>
+<div id="route-networks" class="section level2">
+<h2><span class="header-section-number">8.6</span> Route networks</h2>
+</div>
+<div id="agents-in-the-transport-system" class="section level2">
+<h2><span class="header-section-number">8.7</span> Agents in the transport system</h2>
 
 </div>
-
-
-
+</div>
 <h3>References</h3>
 <div id="refs" class="references">
-<div id="ref-sherman_desktop_2008">
-<p>Sherman, Gary. 2008. <em>Desktop GIS: Mapping the Planet with Open Source Tools</em>. Pragmatic Bookshelf.</p>
+<div id="ref-miller_toblers_2004">
+<p>Miller, Harvey J. 2004. “Tobler’s First Law and Spatial Analysis.” <em>Annals of the Association of American Geographers</em> 94 (2).</p>
 </div>
-<div id="ref-venables_introduction_2017">
-<p>Venables, W.N., D.M. Smith, and R Core Team. 2017. <em>An Introduction to R. Notes on R: A Programming Environment for Data Analysis and Graphics</em>. <a href="http://colinfay.me/intro-to-r/" class="uri">http://colinfay.me/intro-to-r/</a>.</p>
-</div>
-<div id="ref-grolemund_r_2016">
-<p>Grolemund, Garrett, and Hadley Wickham. 2016. <em>R for Data Science</em>. 1 edition. O’Reilly Media.</p>
-</div>
-<div id="ref-gillespie_efficient_2016">
-<p>Gillespie, Colin, and Robin Lovelace. 2016. <em>Efficient R Programming: A Practical Guide to Smarter Programming</em>. O’Reilly Media. <a href="https://csgillespie.github.io/efficientR/" class="uri">https://csgillespie.github.io/efficientR/</a>.</p>
+<div id="ref-rodrigue_geography_2013">
+<p>Rodrigue, Jean-Paul, Claude Comtois, and Brian Slack. 2013. <em>The Geography of Transport Systems</em>. 3 edition. London ; New York: Routledge.</p>
 </div>
 </div>
             </section>
@@ -349,8 +381,8 @@ On the other hand, we embed the shown methods into the bigger field of GIScience
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="intro.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="location.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -379,7 +411,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Robinlovelace/geocompr/edit/master/index.Rmd",
+"link": "https://github.com/Robinlovelace/geocompr/edit/master/08-transport.Rmd",
 "text": "Edit"
 },
 "download": null,
