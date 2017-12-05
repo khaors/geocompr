@@ -435,7 +435,7 @@ world_sp =<span class="st"> </span><span class="kw">as</span>(world, <span class
 Figure 2.4: Plotting with sf, with multiple variables (left) and a single variable (right).
 </p>
 </div>
-<p>As with <strong>sp</strong>, you can add further layers to your maps using the <code>add = TRUE</code>-argument of the <code>plot()</code> function .<a href="#fn16" class="footnoteRef" id="fnref16"><sup>16</sup></a> To illustrate this, and prepare for content covered in chapters <a href="attr.html#attr">3</a> and <a href="#spatial-data-operations"><strong>??</strong></a> on attribute and spatial data operations, we will subset and combine countries in the <code>world</code> object, which creates a single object representing Asia:</p>
+<p>As with <strong>sp</strong>, you can add further layers to your maps using the <code>add = TRUE</code>-argument of the <code>plot()</code> function .<a href="#fn16" class="footnoteRef" id="fnref16"><sup>16</sup></a> To illustrate this, and prepare for content covered in chapters <a href="attr.html#attr">3</a> and <a href="spatial-operations.html#spatial-operations">4</a> on attribute and spatial data operations, we will subset and combine countries in the <code>world</code> object, which creates a single object representing Asia:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">asia =<span class="st"> </span>world[world$continent ==<span class="st"> &quot;Asia&quot;</span>, ]
 asia =<span class="st"> </span><span class="kw">st_union</span>(asia)</code></pre></div>
 <p>We can now plot the Asian continent over a map of the world. Note, however, that this only works if the initial plot has only one layer:</p>
@@ -457,7 +457,7 @@ Sorry for commenting on this again but just to clarify africa[0] selects zero co
 </div>
 <div id="base-args" class="section level3">
 <h3><span class="header-section-number">2.1.4</span> Base plot arguments</h3>
-<p><strong>sf</strong> simplifies spatial data objects compared with <strong>sp</strong> and provides a near-direct interface to GDAL and GEOS C++ functions. In theory this should make <strong>sf</strong> faster than <strong>sp</strong>/<strong>rgdal</strong>/<strong>rgeos</strong>, something that is tested in Chapter 5 for data I/O. This section introduces <strong>sf</strong> classes in preparation for subsequent chapters which deal with vector data (in particular Chapter <a href="#spatial-data-operations"><strong>??</strong></a>).</p>
+<p><strong>sf</strong> simplifies spatial data objects compared with <strong>sp</strong> and provides a near-direct interface to GDAL and GEOS C++ functions. In theory this should make <strong>sf</strong> faster than <strong>sp</strong>/<strong>rgdal</strong>/<strong>rgeos</strong>, something that is tested in Chapter 5 for data I/O. This section introduces <strong>sf</strong> classes in preparation for subsequent chapters which deal with vector data (in particular Chapter <a href="spatial-operations.html#spatial-operations">4</a>).</p>
 <p>As a final exercise, we will see one way of how to do a spatial overlay in <strong>sf</strong>. First, we convert the countries of the world into centroids, and then subset those in Asia. Finally, the <code>summary</code>-command tells us how many centroids (countries) are part of Asia (43) and how many are not (134).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_centroids =<span class="st"> </span><span class="kw">st_centroid</span>(world)
 <span class="co">#&gt; Warning in st_centroid.sfc(st_geometry(x), of_largest_polygon =</span>
@@ -470,7 +470,7 @@ sel_asia =<span class="st"> </span><span class="kw">st_intersects</span>(world_c
 <span class="co">#&gt;  Mode :logical  </span>
 <span class="co">#&gt;  FALSE:134      </span>
 <span class="co">#&gt;  TRUE :43</span></code></pre></div>
-<p>Note: <code>st_intersects()</code> uses <a href="https://trac.osgeo.org/geos/">GEOS</a> in the background for the spatial overlay operation (see also Chapter <a href="#spatial-data-operations"><strong>??</strong></a>).</p>
+<p>Note: <code>st_intersects()</code> uses <a href="https://trac.osgeo.org/geos/">GEOS</a> in the background for the spatial overlay operation (see also Chapter <a href="spatial-operations.html#spatial-operations">4</a>).</p>
 <p>Since <strong>sf</strong>’s <code>plot()</code> function builds on base plotting methods, you may also use its many optional arguments (see <code>?plot</code> and <code>?par</code>). This provides a powerful but not necessarily intuitive interface. To make the area of circles proportional to population, for example, the <code>cex</code> argument can be used as follows (see Figure <a href="spatial-class.html#fig:contpop">2.6</a> created with the code below and the exercises in section <a href="spatial-class.html#ex2">2.5</a>):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(world[<span class="st">&quot;continent&quot;</span>])
 <span class="kw">plot</span>(world_centroids, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">cex =</span> <span class="kw">sqrt</span>(world$pop) /<span class="st"> </span><span class="dv">10000</span>)</code></pre></div>
