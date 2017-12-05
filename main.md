@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve31054aa0dff9967e
+preserve6c5ebf0da2e10b36
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3094,7 +3094,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserved84c0ee2a4d4a999
+preserve958426eb15248d08
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4720,7 +4720,7 @@ File-based data formats can contain either vector or raster data, while spatial 
 Historically, GIS file formats were developed by mapping agencies and software companies. <!--examples-->
 Exchanging spatial data between different software packages each coming with its own format was troublesome in the beginning.
 
-GDAL^[Prounounce "goo-dal", with the double o making a reference to object-orientation] put an end to these troubles by enabling reading and writing many raster and vector data formats.
+GDAL^[GDAL should be prounounced "goo-dal", with the double o making a reference to object-orientation.] put an end to these troubles by enabling reading and writing many raster and vector data formats.
 Subsequently, many open and proprietary GIS software (e.g., GRASS, QGIS, ArcGIS, ENVI) were quick to incorporate it.
 <!-- GDAL (it's great - you can read, convert, and very often (though not always) write) -->
 <!-- GDAL info "it is possible to have smaller number of supported formats than there are on the GDAL webpage; you may need to recompile..." -->
@@ -5649,7 +5649,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservee0f5871e7e419492
+preservef99ba856cb192a27
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
