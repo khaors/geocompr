@@ -258,7 +258,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservea86a5eb688ac65e5
+preserve35bcb1c91399f1f8
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3095,7 +3095,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservec8fa260154850677
+preserve44fa4a3b322582e3
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4126,6 +4126,119 @@ us_states_simp2 = rmapshaper::ms_simplify(us_states, keep = 0.01, keep_shapes = 
 <p class="caption">(\#fig:us-simp)Comparision of original data of the contiguous United States and two simplified versions using `st_simplify` and `ms_simplify`.</p>
 </div>
 
+### Buffers and centroids
+
+<!-- centroids intro -->
+There are two main functions that create single point representations of more complex vector objects - `st_centroid()` and `st_point_on_surface()`.
+
+<!-- The first one is `st_centroid()`  -->
+<!-- st_centroid -->
+
+
+```r
+nz_centroid = st_centroid(nz)
+```
+
+<!-- st_point_on_surface -->
+<!-- The second one -->
+<!-- add lines example -->
+<!-- note about computation time -->
+
+
+```r
+nz_pos = st_point_on_surface(nz)
+```
+
+
+```r
+seine_centroid = st_centroid(seine)
+```
+
+
+```r
+seine_pos = st_point_on_surface(seine)
+```
+
+<img src="figures/unnamed-chunk-38-1.png" width="576" style="display: block; margin: auto;" />
+
+### Affine transformations
+
+### Clipping 
+
+Spatial clipping is a form of spatial subsetting that involves changes to the `geometry` columns of at least some of the affected features.
+
+Clipping can only apply to features more complex than points: 
+lines, polygons and their 'multi' equivalents.
+To illustrate the concept we will start with a simple example:
+two overlapping circles with a center point one unit away from each other and radius of one:
+
+
+```r
+b = st_sfc(st_point(c(0, 1)), st_point(c(1, 1))) # create 2 points
+b = st_buffer(b, dist = 1) # convert points to circles
+l = c("x", "y")
+plot(b)
+text(x = c(-0.5, 1.5), y = 1, labels = l) # add text
+```
+
+<div class="figure" style="text-align: center">
+<img src="figures/points-1.png" alt="Overlapping circles." width="576" />
+<p class="caption">(\#fig:points)Overlapping circles.</p>
+</div>
+
+Imagine you want to select not one circle or the other, but the space covered by both `x` *and* `y`.
+This can be done using the function `st_intersection()`, illustrated using objects named `x` and `y` which represent the left and right-hand circles:
+
+
+```r
+x = b[1]
+y = b[2]
+x_and_y = st_intersection(x, y)
+plot(b)
+plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
+```
+
+<img src="figures/unnamed-chunk-39-1.png" width="576" style="display: block; margin: auto;" />
+
+The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
+<!-- Todo: reference r4ds -->
+
+<div class="figure" style="text-align: center">
+<img src="figures/venn-clip-1.png" alt="Spatial equivalents of logical operators." width="576" />
+<p class="caption">(\#fig:venn-clip)Spatial equivalents of logical operators.</p>
+</div>
+
+To illustrate the relationship between subsetting and clipping spatial data, we will subset points that cover the bounding box of the circles `x` and `y` in Figure \@ref(fig:venn-clip).
+Some points will be inside just one circle, some will be inside both and some will be inside neither.
+
+There are two different ways to subset points that fit into combinations of the circles: via clipping and logical operators.
+But first we must generate some points.
+We will use the *simple random* sampling strategy to sample from a box representing the extent of `x` and `y`.
+To generate this points will use a function not yet covered in this book, `st_sample()`.
+Next we will generate the situation plotted in Figure \@ref(fig:venn-subset):
+
+
+```r
+bb = st_bbox(st_union(x, y))
+pmat = matrix(c(bb[c(1, 2, 3, 2, 3, 4, 1, 4, 1, 2)]), ncol = 2, byrow = TRUE)
+box = st_polygon(list(pmat))
+set.seed(2017)
+p = st_sample(x = box, size = 10)
+plot(box)
+plot(x, add = TRUE)
+plot(y, add = TRUE)
+plot(p, add = TRUE)
+text(x = c(-0.5, 1.5), y = 1, labels = l)
+```
+
+<div class="figure" style="text-align: center">
+<img src="figures/venn-subset-1.png" alt="Randomly distributed points within the bounding box enclosing circles x and y." width="576" />
+<p class="caption">(\#fig:venn-subset)Randomly distributed points within the bounding box enclosing circles x and y.</p>
+</div>
+
+
+
+
 ### Geometry unions
 
 Spatial aggregation can also be done in the **tidyverse**, using **dplyr** functions as follows:
@@ -4166,120 +4279,6 @@ regions2 = us_states %>%
   group_by(REGION) %>%
   summarize(sum(pop = total_pop_15, na.rm = TRUE))
 ```
-
-### Clipping 
-
-Spatial clipping is a form of spatial subsetting that involves changes to the `geometry` columns of at least some of the affected features.
-
-Clipping can only apply to features more complex than points: 
-lines, polygons and their 'multi' equivalents.
-To illustrate the concept we will start with a simple example:
-two overlapping circles with a center point one unit away from each other and radius of one:
-
-
-```r
-b = st_sfc(st_point(c(0, 1)), st_point(c(1, 1))) # create 2 points
-b = st_buffer(b, dist = 1) # convert points to circles
-l = c("x", "y")
-plot(b)
-text(x = c(-0.5, 1.5), y = 1, labels = l) # add text
-```
-
-<div class="figure" style="text-align: center">
-<img src="figures/points-1.png" alt="Overlapping circles." width="576" />
-<p class="caption">(\#fig:points)Overlapping circles.</p>
-</div>
-
-Imagine you want to select not one circle or the other, but the space covered by both `x` *and* `y`.
-This can be done using the function `st_intersection()`, illustrated using objects named `x` and `y` which represent the left and right-hand circles:
-
-
-```r
-x = b[1]
-y = b[2]
-x_and_y = st_intersection(x, y)
-plot(b)
-plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
-```
-
-<img src="figures/unnamed-chunk-38-1.png" width="576" style="display: block; margin: auto;" />
-
-The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
-<!-- Todo: reference r4ds -->
-
-<div class="figure" style="text-align: center">
-<img src="figures/venn-clip-1.png" alt="Spatial equivalents of logical operators." width="576" />
-<p class="caption">(\#fig:venn-clip)Spatial equivalents of logical operators.</p>
-</div>
-
-To illustrate the relationship between subsetting and clipping spatial data, we will subset points that cover the bounding box of the circles `x` and `y` in Figure \@ref(fig:venn-clip).
-Some points will be inside just one circle, some will be inside both and some will be inside neither.
-
-There are two different ways to subset points that fit into combinations of the circles: via clipping and logical operators.
-But first we must generate some points.
-We will use the *simple random* sampling strategy to sample from a box representing the extent of `x` and `y`.
-To generate this points will use a function not yet covered in this book, `st_sample()`.
-Next we will generate the situation plotted in Figure \@ref(fig:venn-subset):
-
-
-```r
-bb = st_bbox(st_union(x, y))
-pmat = matrix(c(bb[c(1, 2, 3, 2, 3, 4, 1, 4, 1, 2)]), ncol = 2, byrow = TRUE)
-box = st_polygon(list(pmat))
-set.seed(2017)
-p = st_sample(x = box, size = 10)
-plot(box)
-plot(x, add = TRUE)
-plot(y, add = TRUE)
-plot(p, add = TRUE)
-text(x = c(-0.5, 1.5), y = 1, labels = l)
-```
-
-<div class="figure" style="text-align: center">
-<img src="figures/venn-subset-1.png" alt="Randomly distributed points within the bounding box enclosing circles x and y." width="576" />
-<p class="caption">(\#fig:venn-subset)Randomly distributed points within the bounding box enclosing circles x and y.</p>
-</div>
-
-
-
-### Centroids
-
-<!-- centroids intro -->
-There are two main functions that create single point representations of more complex vector objects - `st_centroid()` and `st_point_on_surface()`.
-
-<!-- The first one is `st_centroid()`  -->
-<!-- st_centroid -->
-
-
-```r
-nz_centroid = st_centroid(nz)
-```
-
-<!-- st_point_on_surface -->
-<!-- The second one -->
-<!-- add lines example -->
-<!-- note about computation time -->
-
-
-```r
-nz_pos = st_point_on_surface(nz)
-```
-
-
-```r
-seine_centroid = st_centroid(seine)
-```
-
-
-```r
-seine_pos = st_point_on_surface(seine)
-```
-
-<img src="figures/unnamed-chunk-44-1.png" width="576" style="display: block; margin: auto;" />
-
-### Buffers
-
-### Affine transformations
 
 ### Type transformation
 
@@ -5654,7 +5653,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve02966fb891571cad
+preserve80abc227bfa85b8b
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
