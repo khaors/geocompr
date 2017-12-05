@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve8c0fcce4fa6f040c
+preserve31054aa0dff9967e
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3094,7 +3094,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve625fcd702ff57e43
+preserved84c0ee2a4d4a999
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4202,13 +4202,24 @@ nz_centroid = st_centroid(nz)
 <!-- st_point_on_surface -->
 <!-- The second one -->
 <!-- add lines example -->
+<!-- note about computation time -->
 
 
 ```r
 nz_pos = st_point_on_surface(nz)
 ```
 
-<img src="figures/unnamed-chunk-38-1.png" width="576" style="display: block; margin: auto;" />
+
+```r
+seine_centroid = st_centroid(seine)
+```
+
+
+```r
+seine_pos = st_point_on_surface(seine)
+```
+
+<img src="figures/unnamed-chunk-40-1.png" width="576" style="display: block; margin: auto;" />
 
 ### Buffers
 
@@ -4334,7 +4345,27 @@ linestring_sf2
 
 ### Simplification
 
-\@ref(fig:us-simp)
+<!-- \@ref(fig:seine-simp) -->
+
+
+```r
+seine_simp = st_simplify(seine, dTolerance = 2000)
+```
+
+
+```r
+object.size(seine)
+#> 16768 bytes
+object.size(seine_simp)
+#> 7808 bytes
+```
+
+<div class="figure" style="text-align: center">
+<img src="figures/seine-simp-1.png" alt="Comparision of original data of the contiguous United States and two simplified versions using `st_simplify` and `ms_simplify`." width="576" />
+<p class="caption">(\#fig:seine-simp)Comparision of original data of the contiguous United States and two simplified versions using `st_simplify` and `ms_simplify`.</p>
+</div>
+
+<!-- \@ref(fig:us-simp) -->
 
 <!-- - simplifications -->
 <!-- st_simplify -->
@@ -4689,7 +4720,7 @@ File-based data formats can contain either vector or raster data, while spatial 
 Historically, GIS file formats were developed by mapping agencies and software companies. <!--examples-->
 Exchanging spatial data between different software packages each coming with its own format was troublesome in the beginning.
 
-GDAL^[prounounce "goo-dal", with the double o making a reference to object-orientation] put an end to these troubles by enabling reading and writing many raster and vector data formats.
+GDAL^[Prounounce "goo-dal", with the double o making a reference to object-orientation] put an end to these troubles by enabling reading and writing many raster and vector data formats.
 Subsequently, many open and proprietary GIS software (e.g., GRASS, QGIS, ArcGIS, ENVI) were quick to incorporate it.
 <!-- GDAL (it's great - you can read, convert, and very often (though not always) write) -->
 <!-- GDAL info "it is possible to have smaller number of supported formats than there are on the GDAL webpage; you may need to recompile..." -->
@@ -5618,7 +5649,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve54f18a3143162704
+preservee0f5871e7e419492
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 

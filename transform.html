@@ -598,8 +598,11 @@ Figure 5.10: Randomly distributed points within the bounding box enclosing circl
 <!-- st_point_on_surface -->
 <!-- The second one -->
 <!-- add lines example -->
+<!-- note about computation time -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_pos =<span class="st"> </span><span class="kw">st_point_on_surface</span>(nz)</code></pre></div>
-<p><img src="figures/unnamed-chunk-38-1.png" width="576" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">seine_centroid =<span class="st"> </span><span class="kw">st_centroid</span>(seine)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">seine_pos =<span class="st"> </span><span class="kw">st_point_on_surface</span>(seine)</code></pre></div>
+<p><img src="figures/unnamed-chunk-40-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="buffers" class="section level3">
 <h3><span class="header-section-number">5.2.4</span> Buffers</h3>
@@ -689,7 +692,19 @@ linestring_sf2
 </div>
 <div id="simplification" class="section level3">
 <h3><span class="header-section-number">5.2.7</span> Simplification</h3>
-<p><a href="transform.html#fig:us-simp">5.13</a></p>
+<!-- \@ref(fig:seine-simp) -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">seine_simp =<span class="st"> </span><span class="kw">st_simplify</span>(seine, <span class="dt">dTolerance =</span> <span class="dv">2000</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">object.size</span>(seine)
+<span class="co">#&gt; 16768 bytes</span>
+<span class="kw">object.size</span>(seine_simp)
+<span class="co">#&gt; 7808 bytes</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:seine-simp"></span>
+<img src="figures/seine-simp-1.png" alt="Comparision of original data of the contiguous United States and two simplified versions using `st_simplify` and `ms_simplify`." width="576" />
+<p class="caption">
+Figure 5.13: Comparision of original data of the contiguous United States and two simplified versions using <code>st_simplify</code> and <code>ms_simplify</code>.
+</p>
+</div>
+<!-- \@ref(fig:us-simp) -->
 <!-- - simplifications -->
 <!-- st_simplify -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">us_states_simp1 =<span class="st"> </span><span class="kw">st_simplify</span>(us_states, <span class="dt">dTolerance =</span> <span class="dv">1</span>)
@@ -707,7 +722,7 @@ us_states_simp2 =<span class="st"> </span>rmapshaper::<span class="kw">ms_simpli
 <div class="figure" style="text-align: center"><span id="fig:us-simp"></span>
 <img src="figures/us-simp-1.png" alt="Comparision of original data of the contiguous United States and two simplified versions using `st_simplify` and `ms_simplify`." width="576" />
 <p class="caption">
-Figure 5.13: Comparision of original data of the contiguous United States and two simplified versions using <code>st_simplify</code> and <code>ms_simplify</code>.
+Figure 5.14: Comparision of original data of the contiguous United States and two simplified versions using <code>st_simplify</code> and <code>ms_simplify</code>.
 </p>
 </div>
 </div>
@@ -721,13 +736,13 @@ Figure 5.13: Comparision of original data of the contiguous United States and tw
 <div id="raster-alignment" class="section level3">
 <h3><span class="header-section-number">5.3.1</span> Raster alignment</h3>
 <p>When merging or performing map algebra on rasters, their resolution, projection, origin and/or extent has to match. Otherwise, how should we add the values of one raster with a resolution of 0.2 decimal degrees to a second with a resolution of 1 decimal degree? The same problem arises when we would like to merge satellite imagery from different sensors with different projections and resolutions. We can deal with such mismatches by aligning the rasters.</p>
-<p>This section uses the <code>elev</code> object from <a href="attr.html#manipulating-raster-objects">3.3</a>. The <code>projectRaster()</code> function reprojects one raster to a desired projection, say from UTM to WGS84. Equally, map algebra operations require the same extent. Following code adds one row and two columns to each side of the raster while setting all new values to an elevation of 1000 meters (<a href="transform.html#fig:extend-example">5.14</a>).</p>
+<p>This section uses the <code>elev</code> object from <a href="attr.html#manipulating-raster-objects">3.3</a>. The <code>projectRaster()</code> function reprojects one raster to a desired projection, say from UTM to WGS84. Equally, map algebra operations require the same extent. Following code adds one row and two columns to each side of the raster while setting all new values to an elevation of 1000 meters (<a href="transform.html#fig:extend-example">5.15</a>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_2 =<span class="st"> </span><span class="kw">extend</span>(elev, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">value =</span> <span class="dv">1000</span>)
 <span class="kw">plot</span>(elev_2)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:extend-example"></span>
 <img src="figures/extend-example-1.png" alt="Original raster extended by 1 one row on each side (top, bottom) and two columns on each side (right, left)." width="576" />
 <p class="caption">
-Figure 5.14: Original raster extended by 1 one row on each side (top, bottom) and two columns on each side (right, left).
+Figure 5.15: Original raster extended by 1 one row on each side (top, bottom) and two columns on each side (right, left).
 </p>
 </div>
 <p>Performing an algebraic operation on two objects with differing extents in R, the <strong>raster</strong> package returns the result for the intersection, and says so in a warning.</p>
@@ -736,7 +751,7 @@ Figure 5.14: Original raster extended by 1 one row on each side (top, bottom) an
 <span class="co">#&gt; their intersection is returned</span></code></pre></div>
 <p>However, we can also align the extent of two rasters with the <code>extend()</code> command. Here, we extend the <code>elev</code> object to the extend of <code>elev_2</code>. The newly added rows and column receive the default value of the <code>value</code> parameter, i.e., <code>NA</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_4 =<span class="st"> </span><span class="kw">extend</span>(elev, elev_2)</code></pre></div>
-<p>The <code>aggregate()</code> and <code>disaggregate()</code> functions help to change the cell size resolution of a raster. For instance, let us aggregate <code>elev</code> from a resolution of 0.5 to a resolution of 1, that means we aggregate by a factor of 2 (Fig. <a href="transform.html#fig:aggregate-example">5.15</a>). Additionally, the output cell value should correspond to the mean of the input cells (but one could use other functions as well such as <code>median()</code>, <code>sum()</code>, etc.):</p>
+<p>The <code>aggregate()</code> and <code>disaggregate()</code> functions help to change the cell size resolution of a raster. For instance, let us aggregate <code>elev</code> from a resolution of 0.5 to a resolution of 1, that means we aggregate by a factor of 2 (Fig. <a href="transform.html#fig:aggregate-example">5.16</a>). Additionally, the output cell value should correspond to the mean of the input cells (but one could use other functions as well such as <code>median()</code>, <code>sum()</code>, etc.):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_agg =<span class="st"> </span><span class="kw">aggregate</span>(elev, <span class="dt">fact =</span> <span class="dv">2</span>, <span class="dt">fun =</span> mean)
 <span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
 <span class="kw">plot</span>(elev)
@@ -744,7 +759,7 @@ Figure 5.14: Original raster extended by 1 one row on each side (top, bottom) an
 <div class="figure" style="text-align: center"><span id="fig:aggregate-example"></span>
 <img src="figures/aggregate-example-1.png" alt="Original raster (left). Aggregated raster (right)." width="576" />
 <p class="caption">
-Figure 5.15: Original raster (left). Aggregated raster (right).
+Figure 5.16: Original raster (left). Aggregated raster (right).
 </p>
 </div>
 <p>Note that the origin of <code>elev_agg</code> has changed, too.</p>
@@ -752,7 +767,7 @@ Figure 5.15: Original raster (left). Aggregated raster (right).
 <span class="co">#&gt; [1] 0 0</span>
 <span class="kw">origin</span>(elev_agg)
 <span class="co">#&gt; [1] 0.5 0.5</span></code></pre></div>
-<p>The origin is the point closest to (0, 0) if you moved towards it in steps of x and y resolution. If two rasters have different origins, their cells do not overlap completely which would make map algebra impossible. To change the origin , use <code>origin()</code>.<a href="#fn25" class="footnoteRef" id="fnref25"><sup>25</sup></a> Looking at figure <a href="transform.html#fig:origin-example">5.16</a> reveals the effect of changing the origin.</p>
+<p>The origin is the point closest to (0, 0) if you moved towards it in steps of x and y resolution. If two rasters have different origins, their cells do not overlap completely which would make map algebra impossible. To change the origin , use <code>origin()</code>.<a href="#fn25" class="footnoteRef" id="fnref25"><sup>25</sup></a> Looking at figure <a href="transform.html#fig:origin-example">5.17</a> reveals the effect of changing the origin.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the aggregated raster</span>
 <span class="kw">plot</span>(elev_agg)
 <span class="co"># change the origin</span>
@@ -762,7 +777,7 @@ Figure 5.15: Original raster (left). Aggregated raster (right).
 <div class="figure" style="text-align: center"><span id="fig:origin-example"></span>
 <img src="figures/origin-example-1.png" alt="Plotting rasters with the same values but different origins." width="576" />
 <p class="caption">
-Figure 5.16: Plotting rasters with the same values but different origins.
+Figure 5.17: Plotting rasters with the same values but different origins.
 </p>
 </div>
 <p>The <code>resample()</code> command lets you align several raster properties in one go, namely origin, extent and resolution. Let us resample an extended <code>elev_agg</code> to the properties of <code>elev</code> again.</p>
