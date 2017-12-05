@@ -101,7 +101,7 @@ For some applications such as Spatial Statistics and modelling R may be the *onl
 
 As outlined in section \@ref(why-geocomputation-with-r) there are many reasons for using R for geocomputation:
 R is well-suited to the interactive use required in many geographic data analysis workflows compared with other languages.
-R excels in the rapidly growing fields of Data Science (which includes data carpentry, statistical learning techniques and data visualization) and (via efficient interfaces to databases and distributed computing systems) Big Data.
+R excels in the rapidly growing fields of Data Science (which includes data carpentry, statistical learning techniques and data visualization) and Big Data (via efficient interfaces to databases and distributed computing systems).
 
 For some applications another language may be more appropriate, such as Python, Java or C++.
 There are excellent resources for learning geocomputation *without R*, as discussed in section \@ref(software-for-geocomputation).
@@ -258,7 +258,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve35bcb1c91399f1f8
+preserve9cdcaf9ae7a1f5a6
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3095,7 +3095,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve44fa4a3b322582e3
+preservefb4cb3946660e993
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5653,7 +5653,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve80abc227bfa85b8b
+preserve9f31cd7d65bf9a68
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
