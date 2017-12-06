@@ -258,7 +258,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservef8215ec59ae580e5
+preserve75183e6247614f95
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3095,7 +3095,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve14bdbfab5a7fb357
+preservefe49514f901bac9b
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3658,8 +3658,8 @@ The previous three chapters have demonstrated how geographic datasets are struct
 This chapter goes a step further, by showing how to modify the *geometry* underlying spatial datasets.
 
 Section \@ref(geo-vec) covers transforming vector geometries.
-This includes simplifying, creating buffers and centroids representing, and even shifting/scaling/rotating geometries using 'affine transformations', covered in sections \@ref(simplification) to \@ref(affine-transformations).
-It is also possible to modify vector geometries based on their relationships with another spatial objects, for example clipping the road network inside an adminstrative boundary, as demonstrated in section \@ref(clipping).
+This includes simplication, buffers and centroids and even shifting/scaling/rotating single geometries using 'affine transformations' (see sections \@ref(simplification) to \@ref(affine-transformations)).
+Vector geometries can also be modified by another spatial object with 'clipping' operations, demonstrated in section \@ref(clipping).
 Geometry unions, which underlie spatial data aggregation, are covered in section \@ref(geometry-unions).
 Advanced transformations of vector geometries include type transformations (e.g. from few multipolygons to many polygons) and 'rasterization' are covered in sections \@ref(type-transformations) and \@ref(rasterization) respectively.
 
@@ -5654,7 +5654,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve20c4960830ec16d5
+preservef348ed9881da1616
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
