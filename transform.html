@@ -360,13 +360,14 @@ Figure 5.2: Buffer on data with projected CRS.
 <p>The question of <strong>when to transform</strong> is simpler to answer. Transformation from geographic to projected CRSs is vital in some cases: when distance measurements or area calculations are needed, for example. Another case when transformation is vital is when exploring the spatial relationships between two objects with different CRSs. As illustrated in the below code chunk, which attempts to find the distance between the projected and unprojected versions of the <code>london</code> objects, this results in an error telling you that either dataset must be transformed:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">st_distance</span>(london, london_proj)
 <span class="co"># &gt; Error: st_crs(x) == st_crs(y) is not TRUE</span></code></pre></div>
-<p>To make the <code>london</code> and <code>london_proj</code> objects geographically comparable one of them must be transformed into the CRS of the other. But which CRS to use? The answer is usually ‘to the projected CRS’, which in this case is the British National Grid (EPSG:267700):</p>
+<p>To make the <code>london</code> and <code>london_proj</code> objects geographically comparable one of them must be transformed into the CRS of the other. But which CRS to use? The answer is usually ‘to the projected CRS’, which in this case is the British National Grid (BNG, EPSG:267700):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london2 =<span class="st"> </span><span class="kw">st_transform</span>(london, <span class="dv">27700</span>)</code></pre></div>
 <p>Now that a transformed version of <code>london</code> has been created, using the <strong>sf</strong> function <code>st_transform()</code>, the distance between the two representations of London can be found. It may come as a surprise that <code>london</code> and <code>london2</code> are just over 2 km apart!<a href="#fn23" class="footnoteRef" id="fnref23"><sup>23</sup></a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">st_distance</span>(london2, london_proj)
 <span class="co">#&gt; Units: m</span>
 <span class="co">#&gt;      [,1]</span>
 <span class="co">#&gt; [1,] 2018</span></code></pre></div>
+<p>The question of ‘which CRS’ was relatively easy to answer for the example of London a) because the BNG is well-known and b) because the original dataset (<code>london</code>) already had a CRS. The subsequent example will demonstrate the more challenging case when the appropriate projected CRS is not clear from the context.</p>
 </div>
 <div id="reprojecting-vector-geometries" class="section level3">
 <h3><span class="header-section-number">5.1.2</span> Reprojecting vector geometries</h3>

@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservece4b60f9bf4bee85
+preserve5063736b3511199a
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3093,7 +3093,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveb7b45fafa565ecb8
+preserve67cfccb8165231f6
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3800,7 +3800,7 @@ st_distance(london, london_proj)
 
 To make the `london` and `london_proj` objects geographically comparable one of them must be transformed into the CRS of the other.
 But which CRS to use?
-The answer is usually 'to the projected CRS', which in this case is the British National Grid (EPSG:267700):
+The answer is usually 'to the projected CRS', which in this case is the British National Grid (BNG, EPSG:267700):
 
 
 ```r
@@ -3821,6 +3821,9 @@ st_distance(london2, london_proj)
 #>      [,1]
 #> [1,] 2018
 ```
+
+The question of 'which CRS' was relatively easy to answer for the example of London a) because the BNG is well-known and b) because the original dataset (`london`) already had a CRS.
+The subsequent example will demonstrate the more challenging case when the appropriate projected CRS is not clear from the context.
 
 ### Reprojecting vector geometries
 
@@ -5681,7 +5684,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve9c6eb386026ea887
+preserveac0d44eef01aaa2d
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
