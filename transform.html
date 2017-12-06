@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2017-12-05">
+<meta name="date" content="2017-12-06">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -307,8 +307,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="reprojecting-geographic-data" class="section level2">
 <h2><span class="header-section-number">5.1</span> Reprojecting geographic data</h2>
-<p>Section <a href="spatial-class.html#crs-intro">2.3</a> demonstrated the importance of understanding CRSs for geocomputation. Many spatial operations assume that you are using a <em>projected</em> CRS (on a Euclidean grid with units of meters rather than a geographic ‘lat/lon’ grid with units of degrees). The GEOS engine underlying most spatial operations in <strong>sf</strong>, for example, assumes your data is in a projected CRS. For this reason <strong>sf</strong> contains a function for checking if geometries have a geographic or projected CRS. This is illustrated below using the example of <em>London</em>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london =<span class="st"> </span><span class="kw">st_sf</span>(<span class="dt">geometry =</span> <span class="kw">st_sfc</span>(<span class="kw">st_point</span>(<span class="kw">c</span>(-<span class="fl">0.1</span>, <span class="fl">51.5</span>))))
+<p>Section <a href="spatial-class.html#crs-intro">2.3</a> demonstrated the importance of understanding CRSs for geocomputation. Many spatial operations assume that you are using a <em>projected</em> CRS (on a Euclidean grid with units of meters rather than a geographic ‘lat/lon’ grid with units of degrees). The GEOS engine underlying most spatial operations in <strong>sf</strong>, for example, assumes your data is in a projected CRS. For this reason <strong>sf</strong> contains a function for checking if geometries have a geographic or projected CRS. This is illustrated below using the example of London introduced in section <a href="spatial-class.html#vector-data">2.1</a>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london =<span class="st"> </span><span class="kw">c</span>(-<span class="fl">0.1</span>, <span class="fl">51.5</span>) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">st_point</span>() %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">st_sfc</span>() %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">st_sf</span>()
 <span class="kw">st_is_longlat</span>(london)
 <span class="co">#&gt; [1] NA</span></code></pre></div>
 <p>The results show that when geographic data is created from scratch, or is loaded from a source that has no CRS metadata, the CRS is unspecified by default. The CRS can be set with <code>st_set_crs()</code>:<a href="#fn22" class="footnoteRef" id="fnref22"><sup>22</sup></a></p>
@@ -329,8 +332,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 Figure 5.1: Buffer on data with geographic CRS.
 </p>
 </div>
-<p>Do not interpret the warning about the geographic (<code>longitude/latitude</code>) CRS as “the CRS should not be set”: it almost always should be! It is better understood as a suggestion to <em>reproject</em> the data onto a projected CRS. This suggestion does not always need to be heeded: performing spatial and geometric operations makes little or no difference some cases (e.g. spatial subsetting). But for operations involving distances such as buffering, the only way to ensure a good result is to create a projected copy of the data and run the operation on that. This is done in the command below, using the <strong>sf</strong> function <code>st_transform()</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london_proj =<span class="st"> </span><span class="kw">st_transform</span>(london, <span class="dt">crs =</span> <span class="dv">27700</span>)</code></pre></div>
+<p>Do not interpret the warning about the geographic (<code>longitude/latitude</code>) CRS as “the CRS should not be set”: it almost always should be! It is better understood as a suggestion to <em>reproject</em> the data onto a projected CRS. This suggestion does not always need to be heeded: performing spatial and geometric operations makes little or no difference some cases (e.g. spatial subsetting). But for operations involving distances such as buffering, the only way to ensure a good result is to create a projected copy of the data and run the operation on that. This is done in the code chunk below:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london_proj =<span class="st"> </span><span class="kw">c</span>(<span class="dv">530000</span>, <span class="dv">180000</span>) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">st_point</span>() %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">st_sfc</span>() %&gt;%
+<span class="st">  </span><span class="kw">st_sf</span>(<span class="dt">crs =</span> <span class="dv">27700</span>)</code></pre></div>
 <p>The result is a new object that is identical to <code>london</code>, but reprojected onto a suitable CRS (the British National Grid, which has an EPSG code of 27700 in this case) that has units of meters. We can verify that the CRS has changed using <code>st_crs()</code> as follows (only the most important components of the output are shown, other details have been replaced by <code>...</code>):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">st_crs</span>(london_proj)
 <span class="co">#&gt; Coordinate Reference System:</span>
@@ -354,6 +360,13 @@ Figure 5.2: Buffer on data with projected CRS.
 <p>The question of <strong>when to transform</strong> is simpler to answer. Transformation from geographic to projected CRSs is vital in some cases: when distance measurements or area calculations are needed, for example. Another case when transformation is vital is when exploring the spatial relationships between two objects with different CRSs. As illustrated in the below code chunk, which attempts to find the distance between the projected and unprojected versions of the <code>london</code> objects, this results in an error telling you that either dataset must be transformed:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">st_distance</span>(london, london_proj)
 <span class="co"># &gt; Error: st_crs(x) == st_crs(y) is not TRUE</span></code></pre></div>
+<p>To make the <code>london</code> and <code>london_proj</code> objects geographically comparable one of them must be transformed into the CRS of the other. But which CRS to use? The answer is usually ‘to the projected CRS’, which in this case is the British National Grid (EPSG:267700):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london2 =<span class="st"> </span><span class="kw">st_transform</span>(london, <span class="dv">27700</span>)</code></pre></div>
+<p>Now the distance between the two representations of London can be found. There is a difference between the two <code>london</code>s of 2 km:<a href="#fn23" class="footnoteRef" id="fnref23"><sup>23</sup></a></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">st_distance</span>(london2, london_proj)
+<span class="co">#&gt; Units: m</span>
+<span class="co">#&gt;      [,1]</span>
+<span class="co">#&gt; [1,] 2018</span></code></pre></div>
 </div>
 <div id="reprojecting-vector-geometries" class="section level3">
 <h3><span class="header-section-number">5.1.2</span> Reprojecting vector geometries</h3>
@@ -392,7 +405,7 @@ The EPSG code can be found inside the <code>crs</code> attribute of the object�
 Figure 5.3: Mollweide projection of the world
 </p>
 </div>
-<p>On the other hand, the goal for many visualization purposes is to have a map with minimized area, direction, and distance distortions. One of the most popular projection to achieve that is Winkel tripel (Figure <a href="transform.html#fig:wintriproj">5.4</a>).<a href="#fn23" class="footnoteRef" id="fnref23"><sup>23</sup></a> <code>st_transform_proj()</code> from the <strong>lwgeom</strong> package allows for coordinates transformations to a wider range of CRSs, inluding the Winkel tripel projection:</p>
+<p>On the other hand, the goal for many visualization purposes is to have a map with minimized area, direction, and distance distortions. One of the most popular projection to achieve that is Winkel tripel (Figure <a href="transform.html#fig:wintriproj">5.4</a>).<a href="#fn24" class="footnoteRef" id="fnref24"><sup>24</sup></a> <code>st_transform_proj()</code> from the <strong>lwgeom</strong> package allows for coordinates transformations to a wider range of CRSs, inluding the Winkel tripel projection:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_wintri =<span class="st"> </span>lwgeom::<span class="kw">st_transform_proj</span>(world, <span class="dt">crs =</span> <span class="st">&quot;+proj=wintri&quot;</span>)</code></pre></div>
 <!-- plot(world_wintri$geom) -->
 <!-- plot(world_wintri$geom, graticule = TRUE) -->
@@ -457,7 +470,7 @@ cat_raster
 <span class="co">#&gt; data source : /home/travis/R/Library/spDataLarge/raster/nlcd2011.tif </span>
 <span class="co">#&gt; names       : nlcd2011 </span>
 <span class="co">#&gt; values      : 11, 95  (min, max)</span></code></pre></div>
-<p>In this region, 14 land cover classes were distinguished<a href="#fn24" class="footnoteRef" id="fnref24"><sup>24</sup></a>:</p>
+<p>In this region, 14 land cover classes were distinguished<a href="#fn25" class="footnoteRef" id="fnref25"><sup>25</sup></a>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">unique</span>(cat_raster)
 <span class="co">#&gt;  [1] 11 21 22 23 31 41 42 43 52 71 81 82 90 95</span></code></pre></div>
 <p>When reprojecting categorical raster, we need to ensure that our new estimated values would still have values of our original classes. This could be done using the nearest neighbor method (<code>ngb</code>). In this method, value of the output cell is calculated based on the nearest cell center of the input raster.</p>
@@ -567,7 +580,7 @@ Figure 5.8: Comparision of original data of the contiguous United States and two
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_pos =<span class="st"> </span><span class="kw">st_point_on_surface</span>(nz)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">seine_centroid =<span class="st"> </span><span class="kw">st_centroid</span>(seine)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">seine_pos =<span class="st"> </span><span class="kw">st_point_on_surface</span>(seine)</code></pre></div>
-<p><img src="figures/unnamed-chunk-38-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-40-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="affine-transformations" class="section level3">
 <h3><span class="header-section-number">5.2.3</span> Affine transformations</h3>
@@ -593,7 +606,7 @@ y =<span class="st"> </span>b[<span class="dv">2</span>]
 x_and_y =<span class="st"> </span><span class="kw">st_intersection</span>(x, y)
 <span class="kw">plot</span>(b)
 <span class="kw">plot</span>(x_and_y, <span class="dt">col =</span> <span class="st">&quot;lightgrey&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>) <span class="co"># color intersecting area</span></code></pre></div>
-<p><img src="figures/unnamed-chunk-39-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-41-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>The subsequent code chunk demonstrate how this works for all combinations of the ‘Venn’ diagram representing <code>x</code> and <code>y</code>, inspired by <a href="http://r4ds.had.co.nz/transform.html#logical-operators">Figure 5.1</a> of the book R for Data Science <span class="citation">(Grolemund and Wickham <a href="#ref-grolemund_r_2016">2016</a>)</span>. <!-- Todo: reference r4ds --></p>
 <div class="figure" style="text-align: center"><span id="fig:venn-clip"></span>
 <img src="figures/venn-clip-1.png" alt="Spatial equivalents of logical operators." width="576" />
@@ -763,7 +776,7 @@ Figure 5.16: Original raster (left). Aggregated raster (right).
 <span class="co">#&gt; [1] 0 0</span>
 <span class="kw">origin</span>(elev_agg)
 <span class="co">#&gt; [1] 0.5 0.5</span></code></pre></div>
-<p>The origin is the point closest to (0, 0) if you moved towards it in steps of x and y resolution. If two rasters have different origins, their cells do not overlap completely which would make map algebra impossible. To change the origin , use <code>origin()</code>.<a href="#fn25" class="footnoteRef" id="fnref25"><sup>25</sup></a> Looking at figure <a href="transform.html#fig:origin-example">5.17</a> reveals the effect of changing the origin.</p>
+<p>The origin is the point closest to (0, 0) if you moved towards it in steps of x and y resolution. If two rasters have different origins, their cells do not overlap completely which would make map algebra impossible. To change the origin , use <code>origin()</code>.<a href="#fn26" class="footnoteRef" id="fnref26"><sup>26</sup></a> Looking at figure <a href="transform.html#fig:origin-example">5.17</a> reveals the effect of changing the origin.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the aggregated raster</span>
 <span class="kw">plot</span>(elev_agg)
 <span class="co"># change the origin</span>
@@ -823,9 +836,10 @@ elev_disagg =<span class="st"> </span><span class="kw">resample</span>(elev_agg,
 <ol start="21">
 <li id="fn21"><p><strong>lwgeom</strong> is also needed for a couple of more advanced transformations.<a href="transform.html#fnref21">↩</a></p></li>
 <li id="fn22"><p>The CRS can also be added when creating <code>sf</code> objects with the <code>crs</code> argument (e.g. <code>st_sf(geometry = st_sfc(st_point(c(-0.1, 51.5))), crs = 4326)</code>). The same argument can also be used to set the CRS when creating raster datasets (e.g. <code>raster(crs = &quot;+proj=longlat&quot;)</code>).<a href="transform.html#fnref22">↩</a></p></li>
-<li id="fn23"><p>This projection is used, among others, by the National Geographic Society.<a href="transform.html#fnref23">↩</a></p></li>
-<li id="fn24"><p>Full list of NLCD2011 land cover classes can be found at <a href="https://www.mrlc.gov/nlcd11_leg.php" class="uri">https://www.mrlc.gov/nlcd11_leg.php</a><a href="transform.html#fnref24">↩</a></p></li>
-<li id="fn25"><p>If the origins of two raster datasets are just marginally apart, it sometimes is sufficient to simply increase the <code>tolerance</code> argument of <code>raster::rasterOptions()</code>.<a href="transform.html#fnref25">↩</a></p></li>
+<li id="fn23"><p>It may come as a surprise that the distance is not 0. The difference in location between the two points is not due to imperfections in the transforming operation (which is in fact very accurate) but the low precision of the manually-created coordinates that created <code>london</code> and <code>london_proj</code>.<a href="transform.html#fnref23">↩</a></p></li>
+<li id="fn24"><p>This projection is used, among others, by the National Geographic Society.<a href="transform.html#fnref24">↩</a></p></li>
+<li id="fn25"><p>Full list of NLCD2011 land cover classes can be found at <a href="https://www.mrlc.gov/nlcd11_leg.php" class="uri">https://www.mrlc.gov/nlcd11_leg.php</a><a href="transform.html#fnref25">↩</a></p></li>
+<li id="fn26"><p>If the origins of two raster datasets are just marginally apart, it sometimes is sufficient to simply increase the <code>tolerance</code> argument of <code>raster::rasterOptions()</code>.<a href="transform.html#fnref26">↩</a></p></li>
 </ol>
 </div>
             </section>

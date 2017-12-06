@@ -3,7 +3,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2017-12-05'
+date: '2017-12-06'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -42,7 +42,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2017-12-05 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2017-12-06 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -258,7 +258,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve75183e6247614f95
+preservedbb0504e8018e87b
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3095,7 +3095,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservefe49514f901bac9b
+preserve6d12680a6204dc11
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3678,11 +3678,14 @@ Section \@ref(crs-intro) demonstrated the importance of understanding CRSs for g
 Many spatial operations assume that you are using a *projected* CRS (on a Euclidean grid with units of meters rather than a geographic 'lat/lon' grid with units of degrees).
 The GEOS engine underlying most spatial operations in **sf**, for example, assumes your data is in a projected CRS.
 For this reason **sf** contains a function for checking if geometries have a geographic or projected CRS.
-This is illustrated below using the example of *London*:
+This is illustrated below using the example of London introduced in section \@ref(vector-data):
 
 
 ```r
-london = st_sf(geometry = st_sfc(st_point(c(-0.1, 51.5))))
+london = c(-0.1, 51.5) %>% 
+  st_point() %>% 
+  st_sfc() %>% 
+  st_sf()
 st_is_longlat(london)
 #> [1] NA
 ```
@@ -3729,11 +3732,14 @@ Do not interpret the warning about the geographic (`longitude/latitude`) CRS as 
 It is better understood as a suggestion to *reproject* the data onto a projected CRS.
 This suggestion does not always need to be heeded: performing spatial and geometric operations makes little or no difference some cases (e.g. spatial subsetting).
 But for operations involving distances such as buffering, the only way to ensure a good result is to create a projected copy of the data and run the operation on that.
-This is done in the command below, using the **sf** function `st_transform()`:
+This is done in the code chunk below:
 
 
 ```r
-london_proj = st_transform(london, crs = 27700)
+london_proj = c(530000, 180000) %>% 
+  st_point() %>% 
+  st_sfc() %>%
+  st_sf(crs = 27700)
 ```
 
 The result is a new object that is identical to `london`, but reprojected onto a suitable CRS (the British National Grid, which has an EPSG code of 27700 in this case) that has units of meters. 
@@ -3792,6 +3798,28 @@ As illustrated in the below code chunk, which attempts to find the distance betw
 ```r
 st_distance(london, london_proj)
 # > Error: st_crs(x) == st_crs(y) is not TRUE
+```
+
+To make the `london` and `london_proj` objects geographically comparable one of them must be transformed into the CRS of the other.
+But which CRS to use?
+The answer is usually 'to the projected CRS', which in this case is the British National Grid (EPSG:267700):
+
+
+```r
+london2 = st_transform(london, 27700)
+```
+
+Now the distance between the two representations of London can be found.
+There is a difference between the two `london`s of 2 km:^[
+It may come as a surprise that the distance is not 0.
+The difference in location between the two points is not due to imperfections in the transforming operation (which is in fact very accurate) but the low precision of the manually-created coordinates that created `london` and `london_proj`.]
+
+
+```r
+st_distance(london2, london_proj)
+#> Units: m
+#>      [,1]
+#> [1,] 2018
 ```
 
 
@@ -4160,7 +4188,7 @@ seine_centroid = st_centroid(seine)
 seine_pos = st_point_on_surface(seine)
 ```
 
-<img src="figures/unnamed-chunk-38-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-40-1.png" width="576" style="display: block; margin: auto;" />
 
 ### Affine transformations
 
@@ -4199,7 +4227,7 @@ plot(b)
 plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
 ```
 
-<img src="figures/unnamed-chunk-39-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-41-1.png" width="576" style="display: block; margin: auto;" />
 
 The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
 <!-- Todo: reference r4ds -->
@@ -5654,7 +5682,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservef348ed9881da1616
+preserve81682e99ef9a7aa4
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
