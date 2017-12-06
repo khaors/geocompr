@@ -257,7 +257,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservec0919ad5e68f2886
+preservece4b60f9bf4bee85
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3093,7 +3093,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserved9662a112312ef8d
+preserveb7b45fafa565ecb8
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3807,10 +3807,12 @@ The answer is usually 'to the projected CRS', which in this case is the British 
 london2 = st_transform(london, 27700)
 ```
 
-Now the distance between the two representations of London can be found.
-There is a difference between the two `london`s of 2 km:^[
-It may come as a surprise that the distance is not 0.
-The difference in location between the two points is not due to imperfections in the transforming operation (which is in fact very accurate) but the low precision of the manually-created coordinates that created `london` and `london_proj`.]
+Now that a transformed version of `london` has been created, using the **sf** function `st_transform()`, the distance between the two representations of London can be found.
+It may come as a surprise that `london` and `london2` are just over 2 km apart!^[
+The difference in location between the two points is not due to imperfections in the transforming operation (which is in fact very accurate) but the low precision of the manually-created coordinates that created `london` and `london_proj`.
+Also surprising may be that the result is provided in a matrix with units of meters.
+This is because `st_distance()` can provide distances between many features and because the CRS has units of meters.
+Use `as.numeric()` to coerce the result into a regular number.]
 
 
 ```r
@@ -3819,7 +3821,6 @@ st_distance(london2, london_proj)
 #>      [,1]
 #> [1,] 2018
 ```
-
 
 ### Reprojecting vector geometries
 
@@ -5680,7 +5681,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve1842e2c725938902
+preserve9c6eb386026ea887
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
