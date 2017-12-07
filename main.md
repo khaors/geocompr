@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve3d998bf46e029394
+preserve821610487b9c71d0
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservef1cc67e41a2b7bfb
+preserve65e326e110ee01e6
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4105,6 +4105,10 @@ It is more advanced than the spatial data operations presented in the previous C
 the functions discussed in this section work on objects of class `sfc` (simple feature geometry collections) in addition to objects of class `sf`.
 
 ### Simplification
+
+Simplification is a process for generalization of vector objects (lines and polygons) usually for its use in smaller scale maps.
+Additional reason for simplification is reduction of the object size and therefore a size of the saved file.
+
 
 <!-- \@ref(fig:seine-simp) -->
 
@@ -5683,7 +5687,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve4866bbc74a4f038f
+preserveecc3fb85512764ed
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 

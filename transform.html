@@ -533,6 +533,7 @@ con_raster_ea
 <p>This section is about operations that in some way change the geometry of vector (<code>sf</code>) objects. It is more advanced than the spatial data operations presented in the previous Chapter (in section <a href="spatial-operations.html#spatial-operations-on-vector-data">4.2</a>) because here we drill down into the geometry: the functions discussed in this section work on objects of class <code>sfc</code> (simple feature geometry collections) in addition to objects of class <code>sf</code>.</p>
 <div id="simplification" class="section level3">
 <h3><span class="header-section-number">5.2.1</span> Simplification</h3>
+<p>Simplification is a process for generalization of vector objects (lines and polygons) usually for its use in smaller scale maps. Additional reason for simplification is reduction of the object size and therefore a size of the saved file.</p>
 <!-- \@ref(fig:seine-simp) -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">seine_simp =<span class="st"> </span><span class="kw">st_simplify</span>(seine, <span class="dt">dTolerance =</span> <span class="dv">2000</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">object.size</span>(seine)
