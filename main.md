@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve31b266ba67c3e73d
+preservefe50e50deb37be0d
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve0fec9714ff1857fa
+preserve3a23ea98506b2a67
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4118,7 +4118,7 @@ We can use data of the Seine, Marne and Yonne rivers (on the left in Figure \@re
 
 
 ```r
-seine_simp = st_simplify(seine, dTolerance = 2000) #2000 meters
+seine_simp = st_simplify(seine, dTolerance = 2000) #2000 m
 ```
 
 <div class="figure" style="text-align: center">
@@ -4147,27 +4147,26 @@ us_states2163 = st_transform(us_states, 2163)
 ```
 
 The `st_simplify` function uses the standard Douglas-Peucker algorithm, which is realatively fast.
-On the other hand, this algorithm simplify objects on a per-geometry basis, and therefore does not preserve topology.
 
-<!-- ref to crs - and transform usa to proj -->
-<!-- , which generalize  -->
-<!--  does a simplification on a per-geometry basis, -->
-<!-- \@ref(fig:us-simp) -->
-
-<!-- - simplifications -->
-<!-- st_simplify -->
 
 ```r
-us_states_simp1 = st_simplify(us_states2163, dTolerance = 100000)
+us_states_simp1 = st_simplify(us_states2163, dTolerance = 100000) #100 km
 ```
 
-<!-- rmapshaper -->
-<!-- polygon example -->
+On the other hand, this algorithm simplify objects on a per-geometry basis, and therefore does not preserve topology.
+This could be seen on the middle map in Figure \@ref(fig:us-simp), where polygons of single states are splitted creating holes or overlapping each other.
+An alternative simplification method can be used to solve this issue, such as the Visvalingam algorithm implemented in the **rmapshaper** package's function `ms_simplify()`.
+<!-- https://bost.ocks.org/mike/simplify/ -->
+In the below example, we would simplified the `us_states2163` object using only 0.1% of original data vertices (argument `keep`), and also assure that all of the original objects (states) would be be kept (argument `keep_shapes`).
+
 
 ```r
 # proportion of points to retain (0-1; default 0.05)
-us_states_simp2 = rmapshaper::ms_simplify(us_states2163, keep = 0.001, keep_shapes = TRUE)
+us_states_simp2 = rmapshaper::ms_simplify(us_states2163, keep = 0.001,
+                                          keep_shapes = TRUE)
 ```
+
+Finally, the visual comparison of the original dataset and two simplified versions shows differences between the Douglas-Peucker and Visvalingam algorithms outputs (Figure \@ref(fig:us-simp)):
 
 <div class="figure" style="text-align: center">
 <img src="figures/us-simp-1.png" alt="Comparison of the original data of the contiguous United States and two simplified versions using `st_simplify` and `ms_simplify`." width="576" />
@@ -5700,7 +5699,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve29cd84c2bd713c9e
+preservecb37d172e831e6f1
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
