@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve821610487b9c71d0
+preservef914a8e0c3cbe49a
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve65e326e110ee01e6
+preserve02baed5749a8dce2
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4107,15 +4107,22 @@ the functions discussed in this section work on objects of class `sfc` (simple f
 ### Simplification
 
 Simplification is a process for generalization of vector objects (lines and polygons) usually for its use in smaller scale maps.
-Additional reason for simplification is reduction of the object size and therefore a size of the saved file.
+Additional reason for simplification is reduction of the object size and therefore the size of a saved file.
+The **sf** package provides the `st_simplify()` function^[It uses the simplify algorithm from GEOS.]
+Level of generalization is controled by the `dTolerance` argument, which expects a value in map units.
+As the result, all vertices in the simplified geometry will be within this value from the original ones.
 
-
-<!-- \@ref(fig:seine-simp) -->
+We can use the Seine, Marne and Yonne rivers (on the left in Figure \@ref(fig:seine-simp)) as an example of line vector data simplification:
 
 
 ```r
 seine_simp = st_simplify(seine, dTolerance = 2000)
 ```
+
+<div class="figure" style="text-align: center">
+<img src="figures/seine-simp-1.png" alt="Comparision of the original data of the Seine, Marne and Yonne rivers and its simplified versions using `st_simplify`." width="576" />
+<p class="caption">(\#fig:seine-simp)Comparision of the original data of the Seine, Marne and Yonne rivers and its simplified versions using `st_simplify`.</p>
+</div>
 
 
 ```r
@@ -4125,11 +4132,10 @@ object.size(seine_simp)
 #> 7808 bytes
 ```
 
-<div class="figure" style="text-align: center">
-<img src="figures/seine-simp-1.png" alt="Comparision of the original data of the Seine, Marne and Yonne rivers and its simplified versions using `st_simplify`." width="576" />
-<p class="caption">(\#fig:seine-simp)Comparision of the original data of the Seine, Marne and Yonne rivers and its simplified versions using `st_simplify`.</p>
-</div>
 
+
+<!-- , which generalize  -->
+<!--  does a simplification on a per-geometry basis, -->
 <!-- \@ref(fig:us-simp) -->
 
 <!-- - simplifications -->
@@ -4269,7 +4275,6 @@ text(x = c(-0.5, 1.5), y = 1, labels = l)
 <img src="figures/venn-subset-1.png" alt="Randomly distributed points within the bounding box enclosing circles x and y." width="576" />
 <p class="caption">(\#fig:venn-subset)Randomly distributed points within the bounding box enclosing circles x and y.</p>
 </div>
-
 
 
 
@@ -5687,7 +5692,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveecc3fb85512764ed
+preserve09304b5fbd79f808
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
