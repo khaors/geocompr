@@ -290,7 +290,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="prerequisites-3" class="section level2 unnumbered">
 <h2>Prerequisites</h2>
 <ul>
-<li>This chapter requires the following packages:<a href="#fn21" class="footnoteRef" id="fnref21"><sup>21</sup></a></li>
+<li>This chapter requires the following packages:<a href="#fn22" class="footnoteRef" id="fnref22"><sup>22</sup></a></li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(units)
 <span class="kw">library</span>(sf)
@@ -308,6 +308,19 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="reproj-geo-data" class="section level2">
 <h2><span class="header-section-number">5.1</span> Reprojecting geographic data</h2>
+<!-- So far this intro mainly shows examples how to reproject vector data, and a few exemplarily pitfalls.
+And though the pitfall examples are good, I wonder if we can keep them a bit more general (so far only related to vector data) or if at times a coding example is necessary, maybe only a figure would be sufficient.
+Overall, I would suggest to start this section with a short intro to projections. What exactly is a projected CRS (ellipsoid + datum) -> this should also explain the parts of a projection string.
+We should especially point out that since we project from 3D to 2D we can only keep two out of three spherical (real-world) properties: angle, length, area (-> could be also part of which CRS to use or even better we refer to this explanation in "which CRS to use").
+So a specific use case determines which projection to use. 
+In sea navigation we need angles and lengths, real estate is especially interested in correct areas, etc.
+
+Hence, maybe we should move parts from c2 to c5 since the stuff in c2 is already rather specific, and not a short intro to CRS anymore. 
+Another solution would be to leave the intro crs stuff in c2 (extended by when to use which CRS) and in c5 we don't have a joint vector-raster projection section but have a repojection section in the vector and raster section.
+(In the case of raster this would make perfectly sense since for reprojecting one needs all the geometric operations in section raster alignment (warp, shift, scale, aggregate, etc.).
+Maybe (not sure) a few figures would also help (conic, azimuthal projection; ellipsoids, etc.)
+We should probably mention the most widely used map projection system UTM with either the WGS84 global or local datum.
+-->
 <p>Section <a href="spatial-class.html#crs-intro">2.3</a> demonstrated the importance of understanding CRSs for geocomputation. Many spatial operations assume that you are using a <em>projected</em> CRS (on a Euclidean grid with units of meters rather than a geographic ‘lat/lon’ grid with units of degrees). The GEOS engine underlying most spatial operations in <strong>sf</strong>, for example, assumes your data is in a projected CRS. For this reason <strong>sf</strong> contains a function for checking if geometries have a geographic or projected CRS. This is illustrated below using the example of London introduced in section <a href="spatial-class.html#vector-data">2.1</a>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london =<span class="st"> </span><span class="kw">c</span>(-<span class="fl">0.1</span>, <span class="fl">51.5</span>) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">st_point</span>() %&gt;%<span class="st"> </span>
@@ -315,7 +328,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="st">  </span><span class="kw">st_sf</span>()
 <span class="kw">st_is_longlat</span>(london)
 <span class="co">#&gt; [1] NA</span></code></pre></div>
-<p>The results show that when geographic data is created from scratch, or is loaded from a source that has no CRS metadata, the CRS is unspecified by default. The CRS can be set with <code>st_set_crs()</code>:<a href="#fn22" class="footnoteRef" id="fnref22"><sup>22</sup></a></p>
+<p>The results show that when geographic data is created from scratch, or is loaded from a source that has no CRS metadata, the CRS is unspecified by default. The CRS can be set with <code>st_set_crs()</code>:<a href="#fn23" class="footnoteRef" id="fnref23"><sup>23</sup></a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london =<span class="st"> </span><span class="kw">st_set_crs</span>(london, <span class="dv">4326</span>)
 <span class="kw">st_is_longlat</span>(london)
 <span class="co">#&gt; [1] TRUE</span></code></pre></div>
@@ -333,7 +346,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 Figure 5.1: Buffer on data with geographic CRS.
 </p>
 </div>
-<p>Do not interpret the warning about the geographic (<code>longitude/latitude</code>) CRS as “the CRS should not be set”: it almost always should be! It is better understood as a suggestion to <em>reproject</em> the data onto a projected CRS. This suggestion does not always need to be heeded: performing spatial and geometric operations makes little or no difference some cases (e.g. spatial subsetting). But for operations involving distances such as buffering, the only way to ensure a good result is to create a projected copy of the data and run the operation on that. This is done in the code chunk below:</p>
+<p>Do not interpret the warning about the geographic (<code>longitude/latitude</code>) CRS as “the CRS should not be set”: it almost always should be! It is better understood as a suggestion to <em>reproject</em> the data onto a projected CRS. This suggestion does not always need to be heeded: performing spatial and geometric operations makes little or no difference in some cases (e.g., spatial subsetting). But for operations involving distances such as buffering, the only way to ensure a good result is to create a projected copy of the data and run the operation on that. This is done in the code chunk below:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london_proj =<span class="st"> </span><span class="kw">c</span>(<span class="dv">530000</span>, <span class="dv">180000</span>) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">st_point</span>() %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">st_sfc</span>() %&gt;%
@@ -363,7 +376,7 @@ Figure 5.2: Buffer on data with projected CRS.
 <span class="co"># &gt; Error: st_crs(x) == st_crs(y) is not TRUE</span></code></pre></div>
 <p>To make the <code>london</code> and <code>london_proj</code> objects geographically comparable one of them must be transformed into the CRS of the other. But which CRS to use? The answer is usually ‘to the projected CRS’, which in this case is the British National Grid (BNG, EPSG:267700):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london2 =<span class="st"> </span><span class="kw">st_transform</span>(london, <span class="dv">27700</span>)</code></pre></div>
-<p>Now that a transformed version of <code>london</code> has been created, using the <strong>sf</strong> function <code>st_transform()</code>, the distance between the two representations of London can be found. It may come as a surprise that <code>london</code> and <code>london2</code> are just over 2 km apart!<a href="#fn23" class="footnoteRef" id="fnref23"><sup>23</sup></a></p>
+<p>Now that a transformed version of <code>london</code> has been created, using the <strong>sf</strong> function <code>st_transform()</code>, the distance between the two representations of London can be found. It may come as a surprise that <code>london</code> and <code>london2</code> are just over 2 km apart!<a href="#fn24" class="footnoteRef" id="fnref24"><sup>24</sup></a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">st_distance</span>(london2, london_proj)
 <span class="co">#&gt; Units: m</span>
 <span class="co">#&gt;      [,1]</span>
@@ -372,7 +385,7 @@ Figure 5.2: Buffer on data with projected CRS.
 </div>
 <div id="reprojecting-vector-geometries" class="section level3">
 <h3><span class="header-section-number">5.1.2</span> Reprojecting vector geometries</h3>
-<p>Vector data on the most basic level is represented by individual points, and points create more complex objects, such as lines and polygons. Spatial reprojection of vectors is a mathematical transformation of coordinates of these point. Depending on projections used, reprojection could be either lossy or lossless. For example, loss of spatial information could occur when the new CRS is only adequate for smaller area than input vector. The precision could be also lost when transformation is between coordinate systems that have different datum - in those situations approximations are used. However, in most cases CRS vector transformation is lossless.</p>
+<p>Vector data on the most basic level is represented by individual points, and points create more complex objects, such as lines and polygons. Spatial reprojection of vectors is a mathematical transformation of coordinates of these points. Depending on projections used, reprojection could be either lossy or lossless. <!-- I don't understand the following sentence --> For example, loss of spatial information could occur when the new CRS is only adequate for smaller area than input vector. <!-- Do you have an example for the next sentence? --> The precision could be also lost when transforming coordinate systems with different datums - in those situations approximations are used. However, in most cases CRS vector transformation is lossless.</p>
 <p>The dataset <code>cycle_hire_osm</code> represents all cycle hire locations across London, taken from OpenStreetMap (OSM). It is automatically loaded by the <strong>spData</strong> package, meaning we do not have to load it, and its CRS can be queried as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">st_crs</span>(cycle_hire_osm)
 <span class="co">#&gt; Coordinate Reference System:</span>
@@ -407,7 +420,7 @@ The EPSG code can be found inside the <code>crs</code> attribute of the object�
 Figure 5.3: Mollweide projection of the world
 </p>
 </div>
-<p>On the other hand, the goal for many visualization purposes is to have a map with minimized area, direction, and distance distortions. One of the most popular projection to achieve that is Winkel tripel (Figure <a href="transform.html#fig:wintriproj">5.4</a>).<a href="#fn24" class="footnoteRef" id="fnref24"><sup>24</sup></a> <code>st_transform_proj()</code> from the <strong>lwgeom</strong> package allows for coordinates transformations to a wider range of CRSs, inluding the Winkel tripel projection:</p>
+<p>On the other hand, the goal for many visualization purposes is to have a map with minimized area, direction, and distance distortions. One of the most popular projection to achieve that is the Winkel tripel projection (Figure <a href="transform.html#fig:wintriproj">5.4</a>).<a href="#fn25" class="footnoteRef" id="fnref25"><sup>25</sup></a> <code>st_transform_proj()</code> from the <strong>lwgeom</strong> package allows for coordinate transformations to a wide range of CRSs, inluding the Winkel tripel projection:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_wintri =<span class="st"> </span>lwgeom::<span class="kw">st_transform_proj</span>(world, <span class="dt">crs =</span> <span class="st">&quot;+proj=wintri&quot;</span>)</code></pre></div>
 <!-- plot(world_wintri$geom) -->
 <!-- plot(world_wintri$geom, graticule = TRUE) -->
@@ -442,7 +455,7 @@ Figure 5.5: Lambert azimuthal equal-area projection of the world centered on lon
 Figure 5.6: Lambert azimuthal equal-area projection of the world centered on New York City
 </p>
 </div>
-<p>More information about CRS modification can be found in the <a href="http://proj4.org/usage/index.html">Using PROJ.4</a> documentation.</p>
+<p>More information on CRS modifications can be found in the <a href="http://proj4.org/usage/index.html">Using PROJ.4</a> documentation.</p>
 <!-- https://github.com/r-spatial/lwgeom/issues/6 -->
 <!-- ```{r} -->
 <!-- # devtools::install_github("r-spatial/lwgeom") -->
@@ -454,7 +467,7 @@ Figure 5.6: Lambert azimuthal equal-area projection of the world centered on New
 </div>
 <div id="reprojecting-raster-geometries" class="section level3">
 <h3><span class="header-section-number">5.1.3</span> Reprojecting raster geometries</h3>
-<p>The projection concepts described in the previous section apply equally to rasters. However, there are important differences in reprojection of vectors and rasters: transforming a vector object involves changing the coordinates of every vertex but this do not apply to raster data. Rasters are are composed of rectangular cells of the same size (expressed by map units, such as degrees or meters), so it is impossible to transform coordinates of pixels separately.</p>
+<p>The projection concepts described in the previous section apply equally to rasters. However, there are important differences in reprojection of vectors and rasters: transforming a vector object involves changing the coordinates of every vertex but this does not apply to raster data. Rasters are composed of rectangular cells of the same size (expressed by map units, such as degrees or meters), so it is impossible to transform coordinates of pixels separately.</p>
 <p>Raster reprojection involves creating a new raster object, often with a different number of columns and rows than the original. The attributes must subsequently be re-estimated, allowing the new pixels to be ‘filled’ with appropriate values. This two-stage process is done with <code>projectRaster()</code> from the <strong>raster</strong> package. Like the <code>st_transform()</code> function demonstrated in the previous section, <code>projectRaster()</code> takes a geographic object (a raster dataset in this case) and a <code>crs</code> argument. However, <code>projectRaster()</code> only accepts the lengthy <code>proj4string</code> definitions of a CRS rather than concise EPSG codes.</p>
 
 <div class="rmdnote">
@@ -472,7 +485,7 @@ cat_raster
 <span class="co">#&gt; data source : /home/travis/R/Library/spDataLarge/raster/nlcd2011.tif </span>
 <span class="co">#&gt; names       : nlcd2011 </span>
 <span class="co">#&gt; values      : 11, 95  (min, max)</span></code></pre></div>
-<p>In this region, 14 land cover classes were distinguished<a href="#fn25" class="footnoteRef" id="fnref25"><sup>25</sup></a>:</p>
+<p>In this region, 14 land cover classes were distinguished<a href="#fn26" class="footnoteRef" id="fnref26"><sup>26</sup></a>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">unique</span>(cat_raster)
 <span class="co">#&gt;  [1] 11 21 22 23 31 41 42 43 52 71 81 82 90 95</span></code></pre></div>
 <p>When reprojecting categorical raster, we need to ensure that our new estimated values would still have values of our original classes. This could be done using the nearest neighbor method (<code>ngb</code>). In this method, value of the output cell is calculated based on the nearest cell center of the input raster.</p>
@@ -501,12 +514,14 @@ con_raster
 <span class="co">#&gt; data source : /home/travis/R/Library/spDataLarge/raster/srtm.tif </span>
 <span class="co">#&gt; names       : srtm </span>
 <span class="co">#&gt; values      : 1024, 2892  (min, max)</span></code></pre></div>
-<p>The nearest neighbor method should not be used for continuous raster data, as we want to preserve gradual changes in values. Alternatively, continuous data could be reprojected in the <strong>raster</strong> package using the bi-linear method. In this technique, value of the output cell is calculated based on four nearest cells in the original raster. The new value is a weighted average of values from these four cells, adjusted for their distance from the center of the output cell. This dataset has geographic CRS and we want to transform it into projected CRS.</p>
+<p>This dataset has a geographic CRS and we want to transform it into a projected CRS. The nearest neighbor method should not be used for continuous raster data, as we want to preserve gradual changes in values. Instead we will use the bilinear method which computes the output cell value based on the four nearest cells in the original raster. <!-- Quadric and cubic polynomials are also popular nterpolation functions for resampling with more complexity and improved accuracy. @liu_essential_2009: 111--> The new value is the distance-weighted average of the values from these four cells, i.e., the closer the input cell is to the center of the output cell, the stronger is its weight.</p>
+<!-- I am not really sure what the following note wants to tell the reader. -->
 
 <div class="rmdnote">
 All the grid cells in equal-area projections have the same size. Therefore, these projections are recommended when performing many raster operations, such as distance calculations.
 </div>
 <p></p>
+<!-- unclear what is meant -->
 <p>In the fist step we need to obtain the proj4 definition of the existing projected CRS appropriate for this area or create a new one using the <a href="http://projectionwizard.org/">Projection Wizard</a> online tool <span class="citation">(Šavrič, Jenny, and Jenny <a href="#ref-savric_projection_2016">2016</a>)</span>. For this example, we used the Oblique Lambert azimuthal equal-area projection. The second step is to define the <code>bilinear</code> reprojection method:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">equalarea =<span class="st"> &quot;+proj=laea +lat_0=37.32 +lon_0=-113.04&quot;</span>
 con_raster_ea =<span class="st"> </span><span class="kw">projectRaster</span>(con_raster, <span class="dt">crs =</span> equalarea, <span class="dt">method =</span> <span class="st">&quot;bilinear&quot;</span>)
@@ -519,7 +534,8 @@ con_raster_ea
 <span class="co">#&gt; data source : in memory</span>
 <span class="co">#&gt; names       : srtm </span>
 <span class="co">#&gt; values      : 1027, 2891  (min, max)</span></code></pre></div>
-<p>Reprojection of continuous rasters also changes spatial properties, such as the number of cells, resolution, and extent. Moreover, it slightly modifies values in the new raster, which can be seen by comparing the outputs of the <code>summary()</code> function between <code>con_raster</code> and <code>con_raster_ea</code>.</p>
+<!-- we have said so before, so maybe we can delete? -->
+<p>Reprojecting (continuous) rasters also changes spatial properties, such as the number of cells, resolution, and extent. Moreover, it slightly modifies values in the new raster, which can be seen by comparing the outputs of the <code>summary()</code> function between <code>con_raster</code> and <code>con_raster_ea</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(con_raster)
 <span class="kw">summary</span>(con_raster_ea)</code></pre></div>
 <!-- why new na? -->
@@ -534,7 +550,7 @@ con_raster_ea
 <p>This section is about operations that in some way change the geometry of vector (<code>sf</code>) objects. It is more advanced than the spatial data operations presented in the previous Chapter (in section <a href="spatial-operations.html#spatial-operations-on-vector-data">4.2</a>) because here we drill down into the geometry: the functions discussed in this section work on objects of class <code>sfc</code> (simple feature geometry collections) in addition to objects of class <code>sf</code>.</p>
 <div id="simplification" class="section level3">
 <h3><span class="header-section-number">5.2.1</span> Simplification</h3>
-<p>Simplification is a process for generalization of vector objects (lines and polygons) usually for its use in smaller scale maps. Additional reason for simplification is reduction of the object size and therefore the size of a saved file. Therefore, data is often simplified before its use in interactive maps. The <strong>sf</strong> package provides the <code>st_simplify()</code> function<a href="#fn26" class="footnoteRef" id="fnref26"><sup>26</sup></a> Level of generalization is controlled by the <code>dTolerance</code> argument, which expects a value in map units. As the result, all vertices in the simplified geometry will be within this value from the original ones.</p>
+<p>Simplification is a process for generalization of vector objects (lines and polygons) usually for its use in smaller scale maps. Additional reason for simplification is reduction of the object size and therefore the size of a saved file. Therefore, data is often simplified before its use in interactive maps. The <strong>sf</strong> package provides the <code>st_simplify()</code> function<a href="#fn27" class="footnoteRef" id="fnref27"><sup>27</sup></a> Level of generalization is controlled by the <code>dTolerance</code> argument, which expects a value in map units. As the result, all vertices in the simplified geometry will be within this value from the original ones.</p>
 <p>We can use data of the Seine, Marne and Yonne rivers (on the left in Figure <a href="transform.html#fig:seine-simp">5.7</a>) as an example of line vector data simplification:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">seine_simp =<span class="st"> </span><span class="kw">st_simplify</span>(seine, <span class="dt">dTolerance =</span> <span class="dv">2000</span>) <span class="co">#2000 m</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:seine-simp"></span>
@@ -740,6 +756,23 @@ linestring_sf2
 </div>
 <div id="geo-ras" class="section level2">
 <h2><span class="header-section-number">5.3</span> Geometric operations on raster data</h2>
+<!-- two useful citations for into on geometric operations on raster:
+
+> Geometric operations include the shift, rotation and warping of images to a given shape or framework.
+In remote sensing applications, geometric operations are mainly used for the co-registration of images of the same scene acquired by different sensor systems or at different times or from different positions, and for rectifying an image to fit a particular coordinate system (geocoding).
+Image mosaic is a geometric operation that was commonly used in the early days of remote sensing image processing when computer power was inadequate for the massive demands of the geocoding process, but this is no longer the case.
+Once a set of adjacent images is accurately rectified to a map projection system, such as a UTM coordinate system (see Chapter 13 in Part Two for details) the images, though separate, are effectively in a mosaic.
+
+@liu_essential_2009: 105
+
+> Vector data store their coordinate information implicitly with each node position in real-world coordinates and these are used directly to plot positions and to re-project from one coordinate system to another.
+Raster data on the other hand have a regular local row and column number system for each pixel so that, internally, the geometry and position of a pixel’s location are implicit.
+Externally, however, a world geographic reference must be explicitly stated; this requires the geographic location of the image origin and the ground distance represented by each pixel.
+A transformation is then performed, which converts local image coordinates to realworld coordinates for each pixel location using the geometric operations described in Chapter 9. This transformation information is also stored explicitly.
+
+@liu_essential_2009: 173-74
+
+-->
 <div id="raster-alignment" class="section level3">
 <h3><span class="header-section-number">5.3.1</span> Raster alignment</h3>
 <p>When merging or performing map algebra on rasters, their resolution, projection, origin and/or extent has to match. Otherwise, how should we add the values of one raster with a resolution of 0.2 decimal degrees to a second with a resolution of 1 decimal degree? The same problem arises when we would like to merge satellite imagery from different sensors with different projections and resolutions. We can deal with such mismatches by aligning the rasters.</p>
@@ -774,7 +807,7 @@ Figure 5.16: Original raster (left). Aggregated raster (right).
 <span class="co">#&gt; [1] 0 0</span>
 <span class="kw">origin</span>(elev_agg)
 <span class="co">#&gt; [1] 0.5 0.5</span></code></pre></div>
-<p>The origin is the point closest to (0, 0) if you moved towards it in steps of x and y resolution. If two rasters have different origins, their cells do not overlap completely which would make map algebra impossible. To change the origin , use <code>origin()</code>.<a href="#fn27" class="footnoteRef" id="fnref27"><sup>27</sup></a> Looking at figure <a href="transform.html#fig:origin-example">5.17</a> reveals the effect of changing the origin.</p>
+<p>The origin is the point closest to (0, 0) if you moved towards it in steps of x and y resolution. If two rasters have different origins, their cells do not overlap completely which would make map algebra impossible. To change the origin , use <code>origin()</code>.<a href="#fn28" class="footnoteRef" id="fnref28"><sup>28</sup></a> Looking at figure <a href="transform.html#fig:origin-example">5.17</a> reveals the effect of changing the origin.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the aggregated raster</span>
 <span class="kw">plot</span>(elev_agg)
 <span class="co"># change the origin</span>
@@ -831,14 +864,14 @@ elev_disagg =<span class="st"> </span><span class="kw">resample</span>(elev_agg,
 </div>
 <div class="footnotes">
 <hr />
-<ol start="21">
-<li id="fn21"><p><strong>lwgeom</strong> is also needed for a couple of more advanced transformations.<a href="transform.html#fnref21">↩</a></p></li>
-<li id="fn22"><p>The CRS can also be added when creating <code>sf</code> objects with the <code>crs</code> argument (e.g. <code>st_sf(geometry = st_sfc(st_point(c(-0.1, 51.5))), crs = 4326)</code>). The same argument can also be used to set the CRS when creating raster datasets (e.g. <code>raster(crs = &quot;+proj=longlat&quot;)</code>).<a href="transform.html#fnref22">↩</a></p></li>
-<li id="fn23"><p>The difference in location between the two points is not due to imperfections in the transforming operation (which is in fact very accurate) but the low precision of the manually-created coordinates that created <code>london</code> and <code>london_proj</code>. Also surprising may be that the result is provided in a matrix with units of meters. This is because <code>st_distance()</code> can provide distances between many features and because the CRS has units of meters. Use <code>as.numeric()</code> to coerce the result into a regular number.<a href="transform.html#fnref23">↩</a></p></li>
-<li id="fn24"><p>This projection is used, among others, by the National Geographic Society.<a href="transform.html#fnref24">↩</a></p></li>
-<li id="fn25"><p>Full list of NLCD2011 land cover classes can be found at <a href="https://www.mrlc.gov/nlcd11_leg.php" class="uri">https://www.mrlc.gov/nlcd11_leg.php</a><a href="transform.html#fnref25">↩</a></p></li>
-<li id="fn26"><p>It uses the simplify algorithm from GEOS.<a href="transform.html#fnref26">↩</a></p></li>
-<li id="fn27"><p>If the origins of two raster datasets are just marginally apart, it sometimes is sufficient to simply increase the <code>tolerance</code> argument of <code>raster::rasterOptions()</code>.<a href="transform.html#fnref27">↩</a></p></li>
+<ol start="22">
+<li id="fn22"><p><strong>lwgeom</strong> is also needed for a couple of more advanced transformations.<a href="transform.html#fnref22">↩</a></p></li>
+<li id="fn23"><p>The CRS can also be added when creating <code>sf</code> objects with the <code>crs</code> argument (e.g. <code>st_sf(geometry = st_sfc(st_point(c(-0.1, 51.5))), crs = 4326)</code>). The same argument can also be used to set the CRS when creating raster datasets (e.g. <code>raster(crs = &quot;+proj=longlat&quot;)</code>).<a href="transform.html#fnref23">↩</a></p></li>
+<li id="fn24"><p>The difference in location between the two points is not due to imperfections in the transforming operation (which is in fact very accurate) but the low precision of the manually-created coordinates that created <code>london</code> and <code>london_proj</code>. Also surprising may be that the result is provided in a matrix with units of meters. This is because <code>st_distance()</code> can provide distances between many features and because the CRS has units of meters. Use <code>as.numeric()</code> to coerce the result into a regular number.<a href="transform.html#fnref24">↩</a></p></li>
+<li id="fn25"><p>This projection is used, among others, by the National Geographic Society.<a href="transform.html#fnref25">↩</a></p></li>
+<li id="fn26"><p>Full list of NLCD2011 land cover classes can be found at <a href="https://www.mrlc.gov/nlcd11_leg.php" class="uri">https://www.mrlc.gov/nlcd11_leg.php</a><a href="transform.html#fnref26">↩</a></p></li>
+<li id="fn27"><p>It uses the simplify algorithm from GEOS.<a href="transform.html#fnref27">↩</a></p></li>
+<li id="fn28"><p>If the origins of two raster datasets are just marginally apart, it sometimes is sufficient to simply increase the <code>tolerance</code> argument of <code>raster::rasterOptions()</code>.<a href="transform.html#fnref28">↩</a></p></li>
 </ol>
 </div>
             </section>

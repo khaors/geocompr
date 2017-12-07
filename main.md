@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve53061073f4cac7c6
+preserve2d9a399a1a312901
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -1266,7 +1266,7 @@ Simple features are, in essence, data frames with a spatial extension.
 
 ## Raster data
 
-The geographic raster data model consists of a raster header and a matrix (with rows and columns) representing equally spaced cells (often also called pixels; Figure \@ref(fig:raster-intro-plot):A).
+The geographic raster data model consists of a raster header^[Depending on the file format the header is part of the actual image data file, e.g., GeoTiff, or stored in an extra header or world file, e.g., ASCII grid formats] and a matrix (with rows and columns) representing equally spaced cells (often also called pixels; Figure \@ref(fig:raster-intro-plot):A).
 The raster header defines the coordinate reference system, the extent and the origin.
 The origin (or starting point) is frequently the coordinate of the lower-left corner of the matrix (the **raster** package, however, uses the upper left corner, by default (Figure  \@ref(fig:raster-intro-plot):B)).
 The header defines the extent via the number of columns, the number of rows and the cell size resolution.
@@ -1616,9 +1616,9 @@ A list of datums supported in R could be obtain with `st_proj_info(type = "datum
 ### Projected coordinate systems 
 
 Projected coordinate systems are based on Cartesian coordinates (X, Y) and represent any area on a flat surface. 
-A projected coordinate system has an origin, x and y axes, and a linear unit of measure.
+A projected coordinate system have an origin, x and y axes, and a linear unit of measure.
 All projected coordinate systems are based on geographic coordinate systems.
-Maps projections are mathematical models for conversion of three-dimensional surface into a two-dimensional representation on a map.
+Map projections are mathematical models for conversion of three-dimensional surface into a two-dimensional representation on a map.
 This transition cannot be done without adding some distortion.
 Therefore, some properties of the Earth's surface are distorted in this process, such as area, direction, distance, and shape.
 A projected coordinate system can preserve only one or two of those properties.
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve94636e3ed2772aa3
+preserve995b69bf1f314de2
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3672,6 +3672,20 @@ Because of the importance of reprojection, introduced in Chapter \@ref(spatial-c
 
 ## Reprojecting geographic data {#reproj-geo-data}
 
+<!-- So far this intro mainly shows examples how to reproject vector data, and a few exemplarily pitfalls.
+And though the pitfall examples are good, I wonder if we can keep them a bit more general (so far only related to vector data) or if at times a coding example is necessary, maybe only a figure would be sufficient.
+Overall, I would suggest to start this section with a short intro to projections. What exactly is a projected CRS (ellipsoid + datum) -> this should also explain the parts of a projection string.
+We should especially point out that since we project from 3D to 2D we can only keep two out of three spherical (real-world) properties: angle, length, area (-> could be also part of which CRS to use or even better we refer to this explanation in "which CRS to use").
+So a specific use case determines which projection to use. 
+In sea navigation we need angles and lengths, real estate is especially interested in correct areas, etc.
+
+Hence, maybe we should move parts from c2 to c5 since the stuff in c2 is already rather specific, and not a short intro to CRS anymore. 
+Another solution would be to leave the intro crs stuff in c2 (extended by when to use which CRS) and in c5 we don't have a joint vector-raster projection section but have a repojection section in the vector and raster section.
+(In the case of raster this would make perfectly sense since for reprojecting one needs all the geometric operations in section raster alignment (warp, shift, scale, aggregate, etc.).
+Maybe (not sure) a few figures would also help (conic, azimuthal projection; ellipsoids, etc.)
+We should probably mention the most widely used map projection system UTM with either the WGS84 global or local datum.
+-->
+
 Section \@ref(crs-intro) demonstrated the importance of understanding CRSs for geocomputation.
 Many spatial operations assume that you are using a *projected* CRS (on a Euclidean grid with units of meters rather than a geographic 'lat/lon' grid with units of degrees).
 The GEOS engine underlying most spatial operations in **sf**, for example, assumes your data is in a projected CRS.
@@ -3728,7 +3742,7 @@ plot(london, add = TRUE)
 
 Do not interpret the warning about the geographic (`longitude/latitude`) CRS as "the CRS should not be set": it almost always should be!
 It is better understood as a suggestion to *reproject* the data onto a projected CRS.
-This suggestion does not always need to be heeded: performing spatial and geometric operations makes little or no difference some cases (e.g. spatial subsetting).
+This suggestion does not always need to be heeded: performing spatial and geometric operations makes little or no difference in some cases (e.g., spatial subsetting).
 But for operations involving distances such as buffering, the only way to ensure a good result is to create a projected copy of the data and run the operation on that.
 This is done in the code chunk below:
 
@@ -3828,10 +3842,12 @@ The subsequent example will demonstrate the more challenging case when the appro
 ### Reprojecting vector geometries
 
 Vector data on the most basic level is represented by individual points, and points create more complex objects, such as lines and polygons.
-Spatial reprojection of vectors is a mathematical transformation of coordinates of these point.
+Spatial reprojection of vectors is a mathematical transformation of coordinates of these points.
 Depending on projections used, reprojection could be either lossy or lossless.
+<!-- I don't understand the following sentence -->
 For example, loss of spatial information could occur when the new CRS is only adequate for smaller area than input vector.
-The precision could be also lost when transformation is between coordinate systems that have different datum - in those situations approximations are used.
+<!-- Do you have an example for the next sentence? -->
+The precision could be also lost when transforming coordinate systems with different datums - in those situations approximations are used.
 However, in most cases CRS vector transformation is lossless.
 
 The dataset `cycle_hire_osm` represents all cycle hire locations across London, taken from OpenStreetMap (OSM).
@@ -3901,8 +3917,8 @@ world_mollweide = st_transform(world, crs = "+proj=moll")
 </div>
 
 On the other hand, the goal for many visualization purposes is to have a map with minimized area, direction, and distance distortions.
-One of the most popular projection to achieve that is Winkel tripel (Figure \@ref(fig:wintriproj)).^[This projection is used, among others, by the National Geographic Society.]
-`st_transform_proj()` from the **lwgeom** package allows for coordinates transformations to a wider range of CRSs, inluding the Winkel tripel projection: 
+One of the most popular projection to achieve that is the Winkel tripel projection (Figure \@ref(fig:wintriproj)).^[This projection is used, among others, by the National Geographic Society.]
+`st_transform_proj()` from the **lwgeom** package allows for coordinate transformations to a wide range of CRSs, inluding the Winkel tripel projection: 
 
 
 ```r
@@ -3954,7 +3970,7 @@ world_laea2 = st_transform(world, crs = "+proj=laea +x_0=0 +y_0=0 +lon_0=-74 +la
 <p class="caption">(\#fig:laeaproj2)Lambert azimuthal equal-area projection of the world centered on New York City</p>
 </div>
 
-More information about CRS modification can be found in the [Using PROJ.4](http://proj4.org/usage/index.html) documentation.
+More information on CRS modifications can be found in the [Using PROJ.4](http://proj4.org/usage/index.html) documentation.
 
 <!-- https://github.com/r-spatial/lwgeom/issues/6 -->
 <!-- ```{r} -->
@@ -3969,8 +3985,8 @@ More information about CRS modification can be found in the [Using PROJ.4](http:
 
 The projection concepts described in the previous section apply equally to rasters.
 However, there are important differences in reprojection of vectors and rasters:
-transforming a vector object involves changing the coordinates of every vertex but this do not apply to raster data.
-Rasters are are composed of rectangular cells of the same size (expressed by map units, such as degrees or meters), so it is impossible to transform coordinates of pixels separately.
+transforming a vector object involves changing the coordinates of every vertex but this does not apply to raster data.
+Rasters are composed of rectangular cells of the same size (expressed by map units, such as degrees or meters), so it is impossible to transform coordinates of pixels separately.
 
 Raster reprojection involves creating a new raster object, often with a different number of columns and rows than the original.
 The attributes must subsequently be re-estimated, allowing the new pixels to be 'filled' with appropriate values.
@@ -4055,15 +4071,17 @@ con_raster
 #> values      : 1024, 2892  (min, max)
 ```
 
+This dataset has a geographic CRS and we want to transform it into a projected CRS.
 The nearest neighbor method should not be used for continuous raster data, as we want to preserve gradual changes in values.
-Alternatively, continuous data could be reprojected in the **raster** package using the bi-linear method. 
-In this technique, value of the output cell is calculated based on four nearest cells in the original raster. 
-The new value is a weighted average of values from these four cells, adjusted for their distance from the center of the output cell. 
-This dataset has geographic CRS and we want to transform it into projected CRS.
+Instead we will use the bilinear method which computes the output cell value based on the four nearest cells in the original raster. 
+<!-- Quadric and cubic polynomials are also popular nterpolation functions for resampling with more complexity and improved accuracy. @liu_essential_2009: 111-->
+The new value is the distance-weighted average of the values from these four cells, i.e., the closer the input cell is to the center of the output cell, the stronger is its weight.
 
+<!-- I am not really sure what the following note wants to tell the reader. -->
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">All the grid cells in equal-area projections have the same size.
 Therefore, these projections are recommended when performing many raster operations, such as distance calculations.</div>\EndKnitrBlock{rmdnote}
 
+<!-- unclear what is meant -->
 In the fist step we need to obtain the proj4 definition of the existing projected CRS appropriate for this area or create a new one using the [Projection Wizard](http://projectionwizard.org/) online tool [@savric_projection_2016].
 For this example, we used the Oblique Lambert azimuthal equal-area projection.
 The second step is to define the `bilinear` reprojection method:
@@ -4083,7 +4101,8 @@ con_raster_ea
 #> values      : 1027, 2891  (min, max)
 ```
 
-Reprojection of continuous rasters also changes spatial properties, such as the number of cells, resolution, and extent.
+<!-- we have said so before, so maybe we can delete? -->
+Reprojecting (continuous) rasters also changes spatial properties, such as the number of cells, resolution, and extent.
 Moreover, it slightly modifies values in the new raster, which can be seen by comparing the outputs of the `summary()` function between `con_raster` and `con_raster_ea`.
 
 
@@ -4448,6 +4467,24 @@ linestring_sf2
 <!-- - vector to raster -->
 
 ## Geometric operations on raster data {#geo-ras}
+
+<!-- two useful citations for into on geometric operations on raster:
+
+> Geometric operations include the shift, rotation and warping of images to a given shape or framework.
+In remote sensing applications, geometric operations are mainly used for the co-registration of images of the same scene acquired by different sensor systems or at different times or from different positions, and for rectifying an image to fit a particular coordinate system (geocoding).
+Image mosaic is a geometric operation that was commonly used in the early days of remote sensing image processing when computer power was inadequate for the massive demands of the geocoding process, but this is no longer the case.
+Once a set of adjacent images is accurately rectified to a map projection system, such as a UTM coordinate system (see Chapter 13 in Part Two for details) the images, though separate, are effectively in a mosaic.
+
+@liu_essential_2009: 105
+
+> Vector data store their coordinate information implicitly with each node position in real-world coordinates and these are used directly to plot positions and to re-project from one coordinate system to another.
+Raster data on the other hand have a regular local row and column number system for each pixel so that, internally, the geometry and position of a pixel’s location are implicit.
+Externally, however, a world geographic reference must be explicitly stated; this requires the geographic location of the image origin and the ground distance represented by each pixel.
+A transformation is then performed, which converts local image coordinates to realworld coordinates for each pixel location using the geometric operations described in Chapter 9. This transformation information is also stored explicitly.
+
+@liu_essential_2009: 173-74
+
+-->
 
 ### Raster alignment
 
@@ -5699,7 +5736,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve1d59f30c62f27899
+preserve9963439689c242b1
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
