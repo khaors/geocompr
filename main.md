@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservee1bc0c79da5a35f6
+preserve31b266ba67c3e73d
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservee798f56e629bcedd
+preserve0fec9714ff1857fa
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4126,7 +4126,7 @@ seine_simp = st_simplify(seine, dTolerance = 2000) #2000 meters
 <p class="caption">(\#fig:seine-simp)Comparison of the original data of the Seine, Marne and Yonne rivers and its simplified version using `st_simplify`.</p>
 </div>
 
-The new object, `seine_simp`, is not only visually generalized, but also has twice smaller size than the original object:
+The new object, `seine_simp`, is not only visually generalized (on the right in Figure \@ref(fig:seine-simp)), but also has twice smaller size than the original object:
 
 
 ```r
@@ -4136,13 +4136,18 @@ object.size(seine_simp)
 #> 7808 bytes
 ```
 
-\@ref(reproj-geo-data)
+Let's take a look at the second example of simplification.
+It will use, `us_states`, polygons representing the contiguous United States.
+As we showed in section \@ref(reproj-geo-data), GEOS assumes that the data is in a projected CRS and this could lead to unexpected results when using a geographic CRS.
+Therefore, the first step is to project the data into some adequate projected CRS, such as US National Atlas Equal Area (epsg = 2163) (on the left in Figure \@ref(fig:us-simp)):
 
 
 ```r
 us_states2163 = st_transform(us_states, 2163)
 ```
 
+The `st_simplify` function uses the standard Douglas-Peucker algorithm, which is realatively fast.
+On the other hand, this algorithm simplify objects on a per-geometry basis, and therefore does not preserve topology.
 
 <!-- ref to crs - and transform usa to proj -->
 <!-- , which generalize  -->
@@ -5695,7 +5700,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve2e15a76dce058e3d
+preserve29cd84c2bd713c9e
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
