@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservef914a8e0c3cbe49a
+preserve2b50375340b0a6a9
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve02baed5749a8dce2
+preserve38a2b8f402248deb
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4120,8 +4120,8 @@ seine_simp = st_simplify(seine, dTolerance = 2000)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/seine-simp-1.png" alt="Comparision of the original data of the Seine, Marne and Yonne rivers and its simplified versions using `st_simplify`." width="576" />
-<p class="caption">(\#fig:seine-simp)Comparision of the original data of the Seine, Marne and Yonne rivers and its simplified versions using `st_simplify`.</p>
+<img src="figures/seine-simp-1.png" alt="Comparision of the original data of the Seine, Marne and Yonne rivers and its simplified version using `st_simplify`." width="576" />
+<p class="caption">(\#fig:seine-simp)Comparision of the original data of the Seine, Marne and Yonne rivers and its simplified version using `st_simplify`.</p>
 </div>
 
 
@@ -5692,7 +5692,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve09304b5fbd79f808
+preserve7efb719f1c4bcd94
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
