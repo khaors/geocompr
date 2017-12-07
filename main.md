@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2017-12-06'
+date: '2017-12-07'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2017-12-06 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2017-12-07 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve979488eb37b39eac
+preserve3d998bf46e029394
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve69425ff09ff81576
+preservef1cc67e41a2b7bfb
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4122,8 +4122,8 @@ object.size(seine_simp)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/seine-simp-1.png" alt="Comparision of original data of the contiguous United States and two simplified versions using `st_simplify` and `ms_simplify`." width="576" />
-<p class="caption">(\#fig:seine-simp)Comparision of original data of the contiguous United States and two simplified versions using `st_simplify` and `ms_simplify`.</p>
+<img src="figures/seine-simp-1.png" alt="Comparision of the original data of the Seine, Marne and Yonne rivers and its simplified versions using `st_simplify`." width="576" />
+<p class="caption">(\#fig:seine-simp)Comparision of the original data of the Seine, Marne and Yonne rivers and its simplified versions using `st_simplify`.</p>
 </div>
 
 <!-- \@ref(fig:us-simp) -->
@@ -4152,8 +4152,8 @@ us_states_simp2 = rmapshaper::ms_simplify(us_states, keep = 0.01, keep_shapes = 
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/us-simp-1.png" alt="Comparision of original data of the contiguous United States and two simplified versions using `st_simplify` and `ms_simplify`." width="576" />
-<p class="caption">(\#fig:us-simp)Comparision of original data of the contiguous United States and two simplified versions using `st_simplify` and `ms_simplify`.</p>
+<img src="figures/us-simp-1.png" alt="Comparision of the original data of the contiguous United States and two simplified versions using `st_simplify` and `ms_simplify`." width="576" />
+<p class="caption">(\#fig:us-simp)Comparision of the original data of the contiguous United States and two simplified versions using `st_simplify` and `ms_simplify`.</p>
 </div>
 
 ### Buffers and centroids
@@ -5683,7 +5683,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveb832be5416a41c71
+preserve4866bbc74a4f038f
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
