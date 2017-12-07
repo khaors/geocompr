@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve3bb45018cd4c2adb
+preserve53061073f4cac7c6
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve89b0605fe1b2c62f
+preserve94636e3ed2772aa3
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4162,7 +4162,7 @@ In the below example, we would simplified the `us_states2163` object using only 
 
 ```r
 # proportion of points to retain (0-1; default 0.05)
-us_states_simp2 = rmapshaper::ms_simplify(us_states2163, keep = 0.001,
+us_states_simp2 = rmapshaper::ms_simplify(us_states2163, keep = 0.005,
                                           keep_shapes = TRUE)
 ```
 
@@ -5699,7 +5699,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservedb89fef3c0ba0606
+preserve1d59f30c62f27899
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
