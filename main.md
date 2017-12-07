@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve2b50375340b0a6a9
+preserved179a1ad592afee5
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve38a2b8f402248deb
+preserve15143691157d4ec0
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4108,6 +4108,7 @@ the functions discussed in this section work on objects of class `sfc` (simple f
 
 Simplification is a process for generalization of vector objects (lines and polygons) usually for its use in smaller scale maps.
 Additional reason for simplification is reduction of the object size and therefore the size of a saved file.
+Therefore, data is often simplified before its use in interactive maps. 
 The **sf** package provides the `st_simplify()` function^[It uses the simplify algorithm from GEOS.]
 Level of generalization is controled by the `dTolerance` argument, which expects a value in map units.
 As the result, all vertices in the simplified geometry will be within this value from the original ones.
@@ -4116,13 +4117,15 @@ We can use the Seine, Marne and Yonne rivers (on the left in Figure \@ref(fig:se
 
 
 ```r
-seine_simp = st_simplify(seine, dTolerance = 2000)
+seine_simp = st_simplify(seine, dTolerance = 2000) #2000 meters
 ```
 
 <div class="figure" style="text-align: center">
 <img src="figures/seine-simp-1.png" alt="Comparision of the original data of the Seine, Marne and Yonne rivers and its simplified version using `st_simplify`." width="576" />
 <p class="caption">(\#fig:seine-simp)Comparision of the original data of the Seine, Marne and Yonne rivers and its simplified version using `st_simplify`.</p>
 </div>
+
+The new object, `seine_simp`, is not only visually generalized, but also has twice smaller size than the original object:
 
 
 ```r
@@ -4131,8 +4134,6 @@ object.size(seine)
 object.size(seine_simp)
 #> 7808 bytes
 ```
-
-
 
 <!-- , which generalize  -->
 <!--  does a simplification on a per-geometry basis, -->
@@ -4147,9 +4148,6 @@ us_states_simp1 = st_simplify(us_states, dTolerance = 1)
 #> st_simplify does not correctly simplify longitude/latitude data, dTolerance
 #> needs to be in decimal degrees
 ```
-
-<!-- line example -->
-<!-- maybe river or road network to spData?? -->
 
 <!-- rmapshaper -->
 <!-- polygon example -->
@@ -5692,7 +5690,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve7efb719f1c4bcd94
+preserve557259ff9cffffc7
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
