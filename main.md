@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve28b461bcae249a8b
+preserve1406e9e3e13deed6
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -566,7 +566,7 @@ This can be verified visually: slightly more than 5 'boxes' --- square areas bou
 
 The origin of the BNG is located in the sea beyond the southwest tip of England.
 This origin did not arise by accident: it ensures that most locations in the UK have positive Easting and Northing values.
-There is more to CRSs, as described in sections \@ref(crs-intro) and \@ref(reprojecting-geographic-data) but, for the purposes of this section it is sufficient to know that coordinates consist 2 numbers representing distance from an origin, usually in $x$ then $y$ dimensions.
+There is more to CRSs, as described in sections \@ref(crs-intro) and \@ref(reproj-geo-data) but, for the purposes of this section, it is sufficient to know that coordinates consist 2 numbers representing distance from an origin, usually in $x$ then $y$ dimensions.
 
 
 
@@ -1577,7 +1577,9 @@ Vector and raster spatial data types share concepts intrinsic to spatial data.
 Perhaps the most fundamental of these is the Coordinate Reference System (CRS), which defines how the spatial elements of the data relate to the surface of the Earth (or other bodies).
 <!-- Coordinates are meaningles without a CRS, as we don't know theirs units (meters, feets, degrees) or what's the origin -->
 <!-- (-12579102, 4439107) = (-113, 37) -->
-Coordinate system could be either geographic or projected (Figures \@ref(fig:vector-crs) and \@ref(fig:raster-crs)).
+Coordinate system are either geographic (represented with a longitude and a lattitude, 'lon/lat'), or projected (measured in meters of or other units of distances from an origin).
+These were introduced at the beginning of this chapter in section \@ref(vector-data) (see Figure (\@ref(fig:vectorplots)).
+This section will will explain what CRSs are in more detail, laying the foundations for section \@ref(reproj-geo-data) on CRS transformations.
 
 ### Geographic coordinate systems
 
@@ -3092,7 +3094,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve11b92fb7d8a92be2
+preservef73c2b8e033cf54a
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5736,7 +5738,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve5fb8ed5f5244fabc
+preserve5d00e231242e76bd
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
