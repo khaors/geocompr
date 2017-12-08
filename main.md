@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2017-12-07'
+date: '2017-12-08'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2017-12-07 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2017-12-08 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve2d9a399a1a312901
+preserve28b461bcae249a8b
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -562,17 +562,17 @@ In this system London, for example, can be represented by the coordinates `c(-0.
 This means that its location is -0.1 degrees east and 55.5 degrees north of the origin.
 The origin in this case is at 0 degrees longitude (the Prime Meridian) and 0 degree latitude (the Equator) in a geographic ('lon/lat') CRS (Figure \@ref(fig:vectorplots), left panel).
 The same point could also be approximated in a projected CRS with 'Easting/Northing' values of `c(530000, 180000)` in the British National Grid (BNG), meaning that London is located 530 km *East* and 180 km *North* of the $origin$ of the CRS.
-This can be verified visually: slightly more than 5 'boxes' --- square areas bounded by the grey grid lines 100 km in width --- separate the point representing London from the origin in Figure \@ref(fig:vectorplots).
-This shows that the origin of the BNG is located in the sea beyond the southwest tip of England.
+This can be verified visually: slightly more than 5 'boxes' --- square areas bounded by the grey grid lines 100 km in width --- separate the point representing London from the origin (Figure \@ref(fig:vectorplots), right panel).
+
+The origin of the BNG is located in the sea beyond the southwest tip of England.
 This origin did not arise by accident: it ensures that most locations in the UK have positive Easting and Northing values.
-There is more to CRSs, as described in sections \@ref(crs-intro) and \@ref(reprojecting-geographic-data).
-For now it is sufficient to know that coordinates consist of numbers representing distance from an origin, usually in $x$ then $y$ dimensions on printed map and that coordinates are the basis of vector data models including simple features.
+There is more to CRSs, as described in sections \@ref(crs-intro) and \@ref(reprojecting-geographic-data) but, for the purposes of this section it is sufficient to know that coordinates consist 2 numbers representing distance from an origin, usually in $x$ then $y$ dimensions.
 
 
 
 <div class="figure" style="text-align: center">
-<img src="figures/vector_lonlat.png" alt="Illustration of vector (point) data in R with the location of London (the red X) represented with reference to an origin (the blue circle). The left plot represents a geographic CRS with an origin at 0° Longitude and latitude. The right plot represents a projected CRS with an origin at -2° longitude and 49° latitude, and units of meters." width="45%" /><img src="figures/vector_projected.png" alt="Illustration of vector (point) data in R with the location of London (the red X) represented with reference to an origin (the blue circle). The left plot represents a geographic CRS with an origin at 0° Longitude and latitude. The right plot represents a projected CRS with an origin at -2° longitude and 49° latitude, and units of meters." width="45%" />
-<p class="caption">(\#fig:vectorplots)Illustration of vector (point) data in R with the location of London (the red X) represented with reference to an origin (the blue circle). The left plot represents a geographic CRS with an origin at 0° Longitude and latitude. The right plot represents a projected CRS with an origin at -2° longitude and 49° latitude, and units of meters.</p>
+<img src="figures/vector_lonlat.png" alt="Illustration of vector (point) data in which location of London (the red X) is represented with reference to an origin (the blue circle). The left plot represents a geographic CRS with an origin at 0° Longitude and latitude. The right plot represents a projected CRS with an origin at -2° longitude and 49° latitude, and units of meters." width="49%" /><img src="figures/vector_projected.png" alt="Illustration of vector (point) data in which location of London (the red X) is represented with reference to an origin (the blue circle). The left plot represents a geographic CRS with an origin at 0° Longitude and latitude. The right plot represents a projected CRS with an origin at -2° longitude and 49° latitude, and units of meters." width="49%" />
+<p class="caption">(\#fig:vectorplots)Illustration of vector (point) data in which location of London (the red X) is represented with reference to an origin (the blue circle). The left plot represents a geographic CRS with an origin at 0° Longitude and latitude. The right plot represents a projected CRS with an origin at -2° longitude and 49° latitude, and units of meters.</p>
 </div>
 
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve995b69bf1f314de2
+preserve11b92fb7d8a92be2
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5736,7 +5736,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve9963439689c242b1
+preserve5fb8ed5f5244fabc
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
