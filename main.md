@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve91bbde0292c31ed7
+preserve02f31faabdec745a
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -1580,9 +1580,8 @@ Vector and raster spatial data types share concepts intrinsic to spatial data.
 Perhaps the most fundamental of these is the Coordinate Reference System (CRS), which defines how the spatial elements of the data relate to the surface of the Earth (or other bodies).
 <!-- Coordinates are meaningles without a CRS, as we don't know theirs units (meters, feets, degrees) or what's the origin -->
 <!-- (-12579102, 4439107) = (-113, 37) -->
-Coordinate system are either geographic (represented with a longitude and a lattitude, 'lon/lat'), or projected (measured in meters of or other units of distances from an origin).
-These were introduced at the beginning of this chapter in section \@ref(vector-data) (see Figure (\@ref(fig:vectorplots)).
-This section will will explain what CRSs are in more detail, laying the foundations for section \@ref(reproj-geo-data) on CRS transformations.
+CRSs are either geographic or projected, as introduced at the beginning of this chapter (see Figure (\@ref(fig:vectorplots)).
+This section will will explain each type, laying the foundations for section \@ref(reproj-geo-data) on CRS transformations.
 
 ### Geographic coordinate systems
 
@@ -3097,7 +3096,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservece17ec66d091f39f
+preserve27ae530a12ff0ab0
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5749,7 +5748,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveab32651ed6624377
+preserve3bdc9d8bada17a06
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
