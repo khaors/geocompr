@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve02f31faabdec745a
+preserve436a098e5b9e73a5
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -1585,9 +1585,11 @@ This section will will explain each type, laying the foundations for section \@r
 
 ### Geographic coordinate systems
 
-Geographic coordinate systems identify any location on the Earth's surface using two values - longitude and latitude. 
-The first one is an angle from the prime meridian plan and the second one is an angle from the equatorial plane to this location.
-Therefore, units of geographic coordinate systems are degrees.
+Geographic coordinate systems identify any location on the Earth's surface using two values --- longitude and latitude. 
+*Longitude* is location in the East-West direction in anglular distance from the Prime Meridian plane.
+*Latitude* is angular distance North or South of the equatorial plane.
+Distance in geographic CRSs is therefore measured not in metres but degrees.
+This has important consequences, as demonstrated in section \@ref(reproj-geo-data).
 <!-- for example Los Angeles, Melbourne -->
 
 The surface of the Earth in geographic coordinate systems is represented by a spherical or ellipsoidal surface.
@@ -3096,7 +3098,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve27ae530a12ff0ab0
+preserve8829f6baab0f1dcb
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5748,7 +5750,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve3bdc9d8bada17a06
+preserve2aee93341207b412
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
