@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve6e7a4b02f3c2c921
+preserve5434193486f87769
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3094,7 +3094,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve825d7af11e588d0c
+preserve4dc8af048434c079
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3688,7 +3688,9 @@ Maybe (not sure) a few figures would also help (conic, azimuthal projection; ell
 We should probably mention the most widely used map projection system UTM with either the WGS84 global or local datum.
 -->
 
-Section \@ref(crs-intro) demonstrated the importance of understanding CRSs for geocomputation.
+Section \@ref(crs-intro) introduced coordinate reference systems (CRSs) and demonstrated their importance for geocomputation.
+This section goes further, by demonstrating some problems that can arise when using an inappropriate and how to *transform* geographic objects, from one CRS to another.
+
 Many spatial operations assume that you are using a *projected* CRS (on a Euclidean grid with units of meters rather than a geographic 'lat/lon' grid with units of degrees).
 The GEOS engine underlying most spatial operations in **sf**, for example, assumes your data is in a projected CRS.
 For this reason **sf** contains a function for checking if geometries have a geographic or projected CRS.
@@ -5744,7 +5746,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve7f9636a9668052eb
+preservece42eb5e73ae8e8a
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
