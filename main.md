@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve3283bee74e7142dc
+preserved04b77ba741da2e0
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -1602,12 +1602,13 @@ Values of $a$ and $rf$ used in a variety of ellipsoidal models can be seen be ex
 ]
 
 Ellipsoids are part of a wider component of CRSs: the *datum*.
-The *datam* of a CRS contains not only what ellipsoid it uses (with the `ellps` parameter in the proj4 notation) but other parameters defining the precise relationship between the cartesian coodinates and location on the Earth's service.
-These allow local variations in Earth's surface, e.g. due to large mountain ranges, to be accounted for in CRSs.
+The *datam* of a CRS contains not only what ellipsoid it uses (with the `ellps` parameter in the proj4 CRS library) but also information about precise relationship between the cartesian coodinates and location on the Earth's service.
+In R, these additional details are stored in the `towgs84` argument of  [proj4](http://proj4.org/parameters.html#towgs84-datum-transformation-to-wgs84) notation (see [proj4.org/parameters.html](http://proj4.org/parameters.html) for details).
+These allow local variations in Earth's surface, e.g. due to large mountain ranges, to be accounted for in a local CRS.
 There are two types of datums --- local and geocentric.
-In *local datums*, the ellipsoidal surface is shifted to align with the surface at a particular location.
-They are defined in the [proj4](http://proj4.org/parameters.html#towgs84-datum-transformation-to-wgs84) by the `towgs84` argument which is defined by either 3 or 7 parameters (see [proj4.org/parameters.html](http://proj4.org/parameters.html) for details).
-A list of datums supported by R can be obtain with `st_proj_info(type = "datum")`.
+In a *local datum* such as `NAD83` the ellipsoidal surface is shifted to align with the surface at a particular location.
+In a *geocentric datum*  such as `WGS84` the centre is the Earth's centre of gravity and the accuracy of projections is not optimised for a specific location.
+Available datum definitions can be seen by executing `st_proj_info(type = "datum")`.
 <!-- plots? -->
 <!-- plus maybe table (few examples) -->
 
@@ -3090,7 +3091,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve66cf12e73a604cca
+preserve29247ed039e42e45
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5741,7 +5742,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve1feab81c54d63a40
+preserve4d40cda1a8c5c78b
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
