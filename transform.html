@@ -351,14 +351,14 @@ Figure 5.1: Buffer on data with geographic CRS.
 <span class="st">  </span><span class="kw">st_point</span>() %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">st_sfc</span>() %&gt;%
 <span class="st">  </span><span class="kw">st_sf</span>(<span class="dt">crs =</span> <span class="dv">27700</span>)</code></pre></div>
-<p>The result is a new object that is identical to <code>london</code>, but reprojected onto a suitable CRS (the British National Grid, which has an EPSG code of 27700 in this case) that has units of meters. We can verify that the CRS has changed using <code>st_crs()</code> as follows (only the most important components of the output are shown, other details have been replaced by <code>...</code>):</p>
+<p>The result is a new object that is identical to <code>london</code>, but reprojected onto a suitable CRS (the British National Grid, which has an EPSG code of 27700 in this case) that has units of meters. We can verify that the CRS has changed using <code>st_crs()</code> as follows (some of the output has been replace by <code>...</code>):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">st_crs</span>(london_proj)
 <span class="co">#&gt; Coordinate Reference System:</span>
 <span class="co">#&gt;   EPSG: 27700 </span>
 <span class="co">#&gt;   proj4string: &quot;+proj=tmerc +lat_0=49 +lon_0=-2 ... +units=m +no_defs&quot;</span></code></pre></div>
-<p>Notable components of this CRS description include the EPSG code (<code>EPSG: 27700</code>), the origin (<code>+lat_0=49 +lon_0=-2</code>) and units (<code>+units=m</code>). The fact that the units of the CRS are meters (rather than degrees) tells us that geometry operations on on <code>london_proj</code> will make sense (and not emit a warning). This can be verified by checking that it is no longer in a geographic CRS, that <code>st_is_longlat(london_proj)</code> returns <code>FALSE</code>. Now we can repeat the buffer operation with a meaningful measure of distance. Moving 1 degree at the equator means moving more than 100 km (111,320 meters), the new buffer distance:</p>
+<p>Notable components of this CRS description include the EPSG code (<code>EPSG: 27700</code>), the origin (<code>+lat_0=49 +lon_0=-2</code>) and units (<code>+units=m</code>). The fact that the units of the CRS are meters (rather than degrees) tells us that this is a projected CRS: geometry operations on <code>london_proj</code> will work without a warning, meaning buffers can be produced from it using proper units of distance. Moving 1 degree means moving 100+ km (111,320 meters) at the equator. This is used as the new buffer distance:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london_proj_buff =<span class="st"> </span><span class="kw">st_buffer</span>(london_proj, <span class="dv">111320</span>)</code></pre></div>
-<p>The result in Figure <a href="transform.html#fig:crs-buf-proj">5.2</a> shows that buffers based on a projected CRS are not distorted: it is the same distance from London to every part of the buffer’s border.</p>
+<p>The result in Figure <a href="transform.html#fig:crs-buf-proj">5.2</a> shows that buffers based on a projected CRS are not distorted: every part of the buffer’s border is equidistant to London.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(london_proj_buff, <span class="dt">graticule =</span> <span class="kw">st_crs</span>(<span class="dv">27700</span>), <span class="dt">axes =</span> <span class="ot">TRUE</span>)
 <span class="kw">plot</span>(london_proj, <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:crs-buf-proj"></span>
@@ -367,7 +367,7 @@ Figure 5.1: Buffer on data with geographic CRS.
 Figure 5.2: Buffer on data with projected CRS.
 </p>
 </div>
-<p>The importance of understanding an object’s CRS (primarily whether it’s projected or geographic), and reprojecting when appropriate, is illustrated above using a simple geographic vector object representing London. The subsequent two sections go into more depth on reprojections, exploring which CRS to use and providing details about the process of reprojecting vector and raster objects.</p>
+<p>The importance of CRSs (primarily whether they are projected or geographic) has been demonstrated using the example of London. The subsequent sections go into more depth, exploring which CRS to use and the details of reprojecting vector and raster objects.</p>
 <div id="which-crs-to-use" class="section level3">
 <h3><span class="header-section-number">5.1.1</span> Which CRS to use?</h3>
 <p>While CRSs can be set manually — as illustrated in the previous section with <code>st_set_crs(london, 4326)</code> — it is more common in real world applications for CRSs to be set automatically when data is read-in. The main task will be to <em>transform</em> objects provided in one CRS into another. But when should data be transformed? And into which CRS? Although there are no clear-cut answers to these questions, the contents of this section should help you decide, on a case-by-case basis.</p>

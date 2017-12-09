@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve3c669b1001c3f999
+preserve667263c67e7cd28d
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3091,7 +3091,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve8c693dd237cb4c6b
+preserve0c2b91291a2d2d1c
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3755,7 +3755,7 @@ london_proj = c(530000, 180000) %>%
 ```
 
 The result is a new object that is identical to `london`, but reprojected onto a suitable CRS (the British National Grid, which has an EPSG code of 27700 in this case) that has units of meters. 
-We can verify that the CRS has changed using `st_crs()` as follows (only the most important components of the output are shown, other details have been replaced by `...`):
+We can verify that the CRS has changed using `st_crs()` as follows (some of the output has been replace by `...`):
 
 
 ```r
@@ -3766,10 +3766,9 @@ st_crs(london_proj)
 ```
 
 Notable components of this CRS description include the EPSG code (`EPSG: 27700`), the origin (`+lat_0=49 +lon_0=-2`) and units (`+units=m`).
-The fact that the units of the CRS are meters (rather than degrees) tells us that geometry operations on on `london_proj` will make sense (and not emit a warning).
-This can be verified by checking that it is no longer in a geographic CRS, that `st_is_longlat(london_proj)` returns `FALSE`.
-Now we can repeat the buffer operation with a meaningful measure of distance.
-Moving 1 degree at the equator means moving more than 100 km (111,320 meters), the new buffer distance:
+The fact that the units of the CRS are meters (rather than degrees) tells us that this is a projected CRS: geometry operations on `london_proj` will work without a warning, meaning buffers can be produced from it using proper units of distance.
+Moving 1 degree means moving 100+ km (111,320 meters) at the equator.
+This is used as the new buffer distance:
 
 
 ```r
@@ -3777,7 +3776,7 @@ london_proj_buff = st_buffer(london_proj, 111320)
 ```
 
 The result in Figure \@ref(fig:crs-buf-proj) shows that buffers based on a projected CRS are not distorted:
-it is the same distance from London to every part of the buffer's border.
+every part of the buffer's border is equidistant to London.
 
 
 ```r
@@ -3790,8 +3789,8 @@ plot(london_proj, add = TRUE)
 <p class="caption">(\#fig:crs-buf-proj)Buffer on data with projected CRS.</p>
 </div>
 
-The importance of understanding an object's CRS (primarily whether it's projected or geographic), and reprojecting when appropriate, is illustrated above using a simple geographic vector object representing London.
-The subsequent two sections go into more depth on reprojections, exploring which CRS to use and providing details about the process of reprojecting vector and raster objects.
+The importance of CRSs (primarily whether they are projected or geographic) has been demonstrated using the example of London.
+The subsequent sections go into more depth, exploring which CRS to use and the details of reprojecting vector and raster objects.
 
 ### Which CRS to use?
 
@@ -5742,7 +5741,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveb5dbd2bcdb2c8a87
+preserve712e0ad9bb254d65
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
