@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve8c5d8ecd98b32ea3
+preserve3283bee74e7142dc
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -1601,7 +1601,8 @@ Because $f$ is a rather small value, digital ellipsoid models use the 'inverse f
 Values of $a$ and $rf$ used in a variety of ellipsoidal models can be seen be executing `st_proj_info(type = "ellps")`.
 ]
 
-The position and orientation ellipsoids are defined by a *datum*.
+Ellipsoids are part of a wider component of CRSs: the *datum*.
+The *datam* of a CRS contains not only what ellipsoid it uses (with the `ellps` parameter in the proj4 notation) but other parameters defining the precise relationship between the cartesian coodinates and location on the Earth's service.
 These allow local variations in Earth's surface, e.g. due to large mountain ranges, to be accounted for in CRSs.
 There are two types of datums --- local and geocentric.
 In *local datums*, the ellipsoidal surface is shifted to align with the surface at a particular location.
@@ -3089,7 +3090,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservec1f3e2598e08a794
+preserve66cf12e73a604cca
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5740,7 +5741,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve275608cde0658ba8
+preserve1feab81c54d63a40
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
