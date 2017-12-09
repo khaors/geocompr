@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2017-12-08'
+date: '2017-12-09'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2017-12-08 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2017-12-09 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve436a098e5b9e73a5
+preserve3d3f3baf6aa6838e
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -1593,19 +1593,14 @@ This has important consequences, as demonstrated in section \@ref(reproj-geo-dat
 <!-- for example Los Angeles, Melbourne -->
 
 The surface of the Earth in geographic coordinate systems is represented by a spherical or ellipsoidal surface.
-Spherical models represent the shape of the Earth of a specific radius, assuming that the Earth is a perfect sphere. 
-While it simplifies calculations and works well for small scale maps, it could not be sufficient for the work at a larger scale.
-More accurate measurements can be done with an ellipsoidal model.
-The shape of an ellipse is defined by either the equatorial radius (a) and the polar radius (b), or by a and the inverse flattening (rf), where:
-$$rf = 1/((a-b)/a)$$
-<!--fig?-->
-<!-- WGS84   a=6378137.0     rf=298.2572 -->
-<!-- 1/((a-b)/a) -->
-<!-- a - 1/rf * a = b -->
-Since the Earth is flattened at the poles, an equatorial radius is slightly longer than a polar axis.
-For example, the difference of the equatorial radius and polar radius in the WGS 84 ellipsoid is about 21.385 km.
-You can access a list of available ellipses and theirs properties using the `st_proj_info(type = "ellps")` function.
-<!-- ellipsoid example -->
+Spherical models assume that the Earth is a perfect sphere of a given radius.
+Spherical models have the advantage of simplicity but are rarely used because they are innacurate: the Earth is not a sphere!
+Ellipsoidal models are defined by two parameters: the equatorial radius (a) and the polar radius (b).
+These are suitable because the Earth is compressed: at the equatorial radius is around 11.5 km longer than the polar radius [@maling_coordinate_1992].^[
+The degree of compression is often referred to as [*flattening*](https://en.wikipedia.org/wiki/Flattening), defined as $f = (a - b) / a$ --- terms *ellipticity* and *compression* can also be used [@maling_coordinate_1992].
+Because $f$ is a rather small value, digital ellipsoid models use the 'inverse flattening' ($rf = 1/f$) to define the Earth's compression.
+Values of $a$ and $rf$ used in a variety of ellipsoidal models can be seen be executing `st_proj_info(type = "ellps")`.
+]
 
 Additionally, a position and orientation of the spheroid relative to the center of the Earth needs to be defined using a datum.
 The Earth’s surface is irregular due to gravitational and surface feature variations.
@@ -3098,7 +3093,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve8829f6baab0f1dcb
+preserve8644e4b905302a6c
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5750,7 +5745,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve2aee93341207b412
+preserve45756a598f833522
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
