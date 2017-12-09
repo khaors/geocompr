@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve0bdcec0e218d92d7
+preserve8b4d07091bcfab9e
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3091,7 +3091,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve82fbe9865c55f807
+preserve953a4b856d057810
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4222,7 +4222,7 @@ nz_pos = st_point_on_surface(nz)
 seine_pos = st_point_on_surface(seine)
 ```
 
-It ensures that the created point lies on the given object (see red points on Figure \@ref(centr)).
+It ensures that the created point lies on the given object (see red points on Figure \@ref(fig:centr)).
 
 <div class="figure" style="text-align: center">
 <img src="figures/centr-1.png" alt="Comparison between the outputs of `st_centroid()` (black points) and `st_point_on_surface()` (red points) on New Zeleand's regions (left) and the Seine, Marne and Yonne rivers (right)." width="576" />
@@ -5738,7 +5738,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve54c747f7d1a507e7
+preserve0542231d0dd0a942
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
