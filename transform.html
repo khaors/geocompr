@@ -585,10 +585,10 @@ Figure 5.8: Comparison of the original data of the contiguous United States and 
 <h3><span class="header-section-number">5.2.2</span> Centroids and buffers</h3>
 <!-- centroids intro -->
 <p>There are two main functions that create single point representations of more complex vector objects - <code>st_centroid()</code> and <code>st_point_on_surface()</code>.</p>
-<p>The <code>st_centroid()</code> function calculates the geometric center of a geometry. We can create centroids for polygons, lines (see black points on Figure <a href="#centr"><strong>??</strong></a>) and multipoints:</p>
+<p>The <code>st_centroid()</code> function calculates the geometric center of a geometry. We can create centroids for polygons, lines (see black points on Figure <a href="transform.html#fig:centr">5.9</a>) and multipoints:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_centroid =<span class="st"> </span><span class="kw">st_centroid</span>(nz)
 seine_centroid =<span class="st"> </span><span class="kw">st_centroid</span>(seine)</code></pre></div>
-<p>Centroids could be useful to represent more complex objects - lines and polygons, for example to calculate distances between centers of polygons. They are also often used as places where polygons or lines labels are put. However, it is important to know that centroids could be located outside of the given object, e.g. in cases of irregular shaped polygons or lines. Examples of this could be seen on the right plot on Figure <a href="#centr"><strong>??</strong></a>.</p>
+<p>Centroids could be useful to represent more complex objects - lines and polygons, for example to calculate distances between centers of polygons. They are also often used as places where polygons or lines labels are put. However, it is important to know that centroids could be located outside of the given object, e.g. in cases of irregular shaped polygons or lines. Examples of this could be seen on the right plot on Figure <a href="transform.html#fig:centr">5.9</a>.</p>
 <p>Alternatively, the <code>st_point_on_surface()</code> can be used.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_pos =<span class="st"> </span><span class="kw">st_point_on_surface</span>(nz)
 seine_pos =<span class="st"> </span><span class="kw">st_point_on_surface</span>(seine)</code></pre></div>

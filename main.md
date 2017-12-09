@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve7d9bec6fec431860
+preserve0bdcec0e218d92d7
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3091,7 +3091,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserved0901f7e90efb281
+preserve82fbe9865c55f807
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4201,7 +4201,7 @@ Finally, the visual comparison of the original dataset and two simplified versio
 There are two main functions that create single point representations of more complex vector objects - `st_centroid()` and `st_point_on_surface()`.
 
 The `st_centroid()` function calculates the geometric center of a geometry.
-We can create centroids for polygons, lines (see black points on Figure \@ref(centr)) and multipoints:
+We can create centroids for polygons, lines (see black points on Figure \@ref(fig:centr)) and multipoints:
 
 
 ```r
@@ -4212,7 +4212,7 @@ seine_centroid = st_centroid(seine)
 Centroids could be useful to represent more complex objects - lines and polygons, for example to calculate distances between centers of polygons.
 They are also often used as places where polygons or lines labels are put. 
 However, it is important to know that centroids could be located outside of the given object, e.g. in cases of irregular shaped polygons or lines.
-Examples of this could be seen on the right plot on Figure \@ref(centr).
+Examples of this could be seen on the right plot on Figure \@ref(fig:centr).
 
 Alternatively, the `st_point_on_surface()` can be used.
 
@@ -5738,7 +5738,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve6d56b010cd5093a2
+preserve54c747f7d1a507e7
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
