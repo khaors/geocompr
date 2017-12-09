@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservefdcc9034730cf8b0
+preserve6494ac2b62214e67
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3091,7 +3091,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve4da50943014737e1
+preservefdec633cce7b7e38
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3849,8 +3849,39 @@ This means that when working with local data sources, it is likely preferable to
 The example of London was easy to answer because a) the CRS 'BNG' (with its associated EPSG code 27700) is well-known and b) the original dataset (`london`) already had that CRS.
 
 What about when a projected CRS is needed but the study region lacks a well-known CRS?
-Again, although there is no universal answer there is a sensible default CRS: Universal Transverse Mercator ([UTM]https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system).
-UTM is not actually a single CRS but a system of CRSs that covers the entire world.
+Again, although there is no universal answer there is a sensible default CRS: Universal Transverse Mercator ([UTM](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system)).
+UTM is not actually a single CRS but a system of CRSs that covers the entire world, and breaks it into 60 segments, each containing 6 lines of longitude.
+All UTM projections have the same datum (WGS84) and their EPSG codes run sequentially from 32601 to 32660.
+This makes it possible to create a function (we'll call it `lonlat2UTM`) to calculate the EPSG code associated with any point on the planet as follows:  
+
+
+```r
+long2UTM = function(lonlat) {
+  utm = (floor((lonlat[1] + 180) / 6) %% 60) + 1
+  message(paste0("This is in UTM", utm))
+  utm + 32600
+}
+```
+
+Let's use this function to identify the UTM zone and associated EPSG code for London:
+
+
+```r
+epsg_utm = long2UTM(st_coordinates(london))
+#> This is in UTM30
+st_crs(epsg_utm)
+#> Coordinate Reference System:
+#>   EPSG: 32630 
+#>   proj4string: "+proj=utm +zone=30 +datum=WGS84 +units=m +no_defs"
+```
+
+As expected by viewing a map of UTM zones (such as that provided by [dmap.co.uk](http://www.dmap.co.uk/utmworld.htm)), the EPSG code returned refers to UTM zone 30, which would represent a good projected CRS for England if the BNG did not exist.
+London can be transformed into this CRS as follows (result not shown):
+
+
+```r
+lnd_utm = st_transform(london, crs = epsg_utm)
+```
 
 ### Reprojecting vector geometries
 
@@ -4276,7 +4307,7 @@ plot(b)
 plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
 ```
 
-<img src="figures/unnamed-chunk-39-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-42-1.png" width="576" style="display: block; margin: auto;" />
 
 The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
 <!-- Todo: reference r4ds -->
@@ -5748,7 +5779,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve886188cb6f2c69ba
+preserved4bef49aa6165175
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 

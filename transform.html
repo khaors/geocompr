@@ -382,7 +382,21 @@ Figure 5.2: Buffer on data with projected CRS.
 <span class="co">#&gt; [1,] 2018</span></code></pre></div>
 <p>The question of <em>which CRS</em> is trickier to answer. “There exist no all-purpose projections, all involve distortion when far from the centre of the specified frame” <span class="citation">(Bivand, Pebesma, and Gómez-Rubio <a href="#ref-bivand_applied_2013">2013</a>)</span>. For geographic CRSs the answer is often <a href="https://en.wikipedia.org/wiki/World_Geodetic_System#A_new_World_Geodetic_System:_WGS_84">WGS84</a>, not only for web mapping (covered in the previous paragraph) but also because GPS datasets and thousands of raster and vector datasets are provided in this CRS by default. WGS84 is the most common CRS in the world so it is worth knowing it’s EPSG code: 4326. This ‘magic number’ can be used to convert objects with unusual projected CRSs something that is widely understood with a sinle command, such as<code>st_transform(london_proj, 4326)</code>.</p>
 <p>What about when a projected CRS is required? In some cases it is not something that we are free to decide: “often the choice of projection is made by a public mapping agency” <span class="citation">(Bivand, Pebesma, and Gómez-Rubio <a href="#ref-bivand_applied_2013">2013</a>)</span>. This means that when working with local data sources, it is likely preferable to work with the CRS in which the data was provided, to ensure compatibility, even if the ‘official’ CRS is not the most accurate. The example of London was easy to answer because a) the CRS ‘BNG’ (with its associated EPSG code 27700) is well-known and b) the original dataset (<code>london</code>) already had that CRS.</p>
-<p>What about when a projected CRS is needed but the study region lacks a well-known CRS? Again, although there is no universal answer there is a sensible default CRS: Universal Transverse Mercator ([UTM]<a href="https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system" class="uri">https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system</a>). UTM is not actually a single CRS but a system of CRSs that covers the entire world.</p>
+<p>What about when a projected CRS is needed but the study region lacks a well-known CRS? Again, although there is no universal answer there is a sensible default CRS: Universal Transverse Mercator (<a href="https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system">UTM</a>). UTM is not actually a single CRS but a system of CRSs that covers the entire world, and breaks it into 60 segments, each containing 6 lines of longitude. All UTM projections have the same datum (WGS84) and their EPSG codes run sequentially from 32601 to 32660. This makes it possible to create a function (we’ll call it <code>lonlat2UTM</code>) to calculate the EPSG code associated with any point on the planet as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">long2UTM =<span class="st"> </span>function(lonlat) {
+  utm =<span class="st"> </span>(<span class="kw">floor</span>((lonlat[<span class="dv">1</span>] +<span class="st"> </span><span class="dv">180</span>) /<span class="st"> </span><span class="dv">6</span>) %%<span class="st"> </span><span class="dv">60</span>) +<span class="st"> </span><span class="dv">1</span>
+  <span class="kw">message</span>(<span class="kw">paste0</span>(<span class="st">&quot;This is in UTM&quot;</span>, utm))
+  utm +<span class="st"> </span><span class="dv">32600</span>
+}</code></pre></div>
+<p>Let’s use this function to identify the UTM zone and associated EPSG code for London:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">epsg_utm =<span class="st"> </span><span class="kw">long2UTM</span>(<span class="kw">st_coordinates</span>(london))
+<span class="co">#&gt; This is in UTM30</span>
+<span class="kw">st_crs</span>(epsg_utm)
+<span class="co">#&gt; Coordinate Reference System:</span>
+<span class="co">#&gt;   EPSG: 32630 </span>
+<span class="co">#&gt;   proj4string: &quot;+proj=utm +zone=30 +datum=WGS84 +units=m +no_defs&quot;</span></code></pre></div>
+<p>As expected by viewing a map of UTM zones (such as that provided by <a href="http://www.dmap.co.uk/utmworld.htm">dmap.co.uk</a>), the EPSG code returned refers to UTM zone 30, which would represent a good projected CRS for England if the BNG did not exist. London can be transformed into this CRS as follows (result not shown):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lnd_utm =<span class="st"> </span><span class="kw">st_transform</span>(london, <span class="dt">crs =</span> epsg_utm)</code></pre></div>
 </div>
 <div id="reprojecting-vector-geometries" class="section level3">
 <h3><span class="header-section-number">5.1.2</span> Reprojecting vector geometries</h3>
@@ -624,7 +638,7 @@ y =<span class="st"> </span>b[<span class="dv">2</span>]
 x_and_y =<span class="st"> </span><span class="kw">st_intersection</span>(x, y)
 <span class="kw">plot</span>(b)
 <span class="kw">plot</span>(x_and_y, <span class="dt">col =</span> <span class="st">&quot;lightgrey&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>) <span class="co"># color intersecting area</span></code></pre></div>
-<p><img src="figures/unnamed-chunk-39-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-42-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>The subsequent code chunk demonstrate how this works for all combinations of the ‘Venn’ diagram representing <code>x</code> and <code>y</code>, inspired by <a href="http://r4ds.had.co.nz/transform.html#logical-operators">Figure 5.1</a> of the book R for Data Science <span class="citation">(Grolemund and Wickham <a href="#ref-grolemund_r_2016">2016</a>)</span>. <!-- Todo: reference r4ds --></p>
 <div class="figure" style="text-align: center"><span id="fig:venn-clip"></span>
 <img src="figures/venn-clip-1.png" alt="Spatial equivalents of logical operators." width="576" />
