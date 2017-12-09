@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve667263c67e7cd28d
+preserve2f3a42a093779af1
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3091,7 +3091,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve0c2b91291a2d2d1c
+preserve58e1fe3e4355aafb
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3795,15 +3795,14 @@ The subsequent sections go into more depth, exploring which CRS to use and the d
 ### Which CRS to use?
 
 While CRSs can be set manually --- as illustrated in the previous section with `st_set_crs(london, 4326)` --- it is more common in real world applications for CRSs to be set automatically when data is read-in.
-The main task will be to *transform* objects provided in one CRS into another.
+The main task involving CRSs is often to *transform* objects provided in one CRS into another.
 But when should data be transformed? And into which CRS?
-Although there are no clear-cut answers to these questions, the contents of this section should help you decide, on a case-by-case basis. 
+Although there are no clear-cut answers to these questions, the contents of this section should help you decide. 
 
 The question of **when to transform** is simpler to answer.
-Transformation from geographic to projected CRSs is vital in some cases:
-when distance measurements or area calculations are needed, for example.
-Another case when transformation is vital is when exploring the spatial relationships between two objects with different CRSs.
-As illustrated in the below code chunk, which attempts to find the distance between the projected and unprojected versions of the `london` objects, this results in an error telling you that either dataset must be transformed:
+Transformation to a projected CRS may be vital, for instance when planned geometric operations --- those involving distance measurements or area calculations, for example --- require meaningful units of distance by the object has be provided with a geographic CRS.
+Another case is when two objects with different CRSs must be compared or combined: performing a geometric operation on two objects with different CRSs results in an error.
+This is demonstrated in the code chunk below, which attempts to find the distance between the projected and unprojected versions of `london`:
 
 
 ```r
@@ -5741,7 +5740,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve712e0ad9bb254d65
+preserve925033518269b287
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
