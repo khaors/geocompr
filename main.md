@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve8b4d07091bcfab9e
+preservea32a25521325b87e
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3091,7 +3091,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve953a4b856d057810
+preservef924cb11b3c13ff8
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3797,10 +3797,13 @@ The subsequent sections go into more depth, exploring which CRS to use and the d
 While CRSs can be set manually --- as illustrated in the previous section with `st_set_crs(london, 4326)` --- it is more common in real world applications for CRSs to be set automatically when data is read-in.
 The main task involving CRSs is often to *transform* objects provided in one CRS into another.
 But when should data be transformed? And into which CRS?
-Although there are no clear-cut answers to these questions, the contents of this section should help you decide. 
+There are no clear-cut answers to these questions and CRS selection always involves tradeoffs [@maling_coordinate_1992].
+However there are some general principles, provided in this section, that can help decide. 
 
-The question of **when to transform** is simpler to answer.
+The question of **when to transform** is easier to answer.
 Transformation to a projected CRS may be vital, for instance when planned geometric operations --- those involving distance measurements or area calculations, for example --- require meaningful units of distance by the object has be provided with a geographic CRS.
+Conversely if the outputs of a project are to be published in an on-line map, it may be necessary to convert them to a geographic CRS.
+If the visualization phase of a project involves publishing results using [leaflet](https://github.com/Leaflet/Leaflet) via the common format [GeoJSON](http://geojson.org/) (a common scenario) projected data should probably be transformed to WGS84. 
 Another case is when two objects with different CRSs must be compared or combined: performing a geometric operation on two objects with different CRSs results in an error.
 This is demonstrated in the code chunk below, which attempts to find the distance between the projected and unprojected versions of `london`:
 
@@ -3834,9 +3837,11 @@ st_distance(london2, london_proj)
 #> [1,] 2018
 ```
 
-The question of 'which CRS' is more difficult to answer, and there may not be a 'right' answer.
-If you want a geographic CRS, e.g. for global maps, the answer is often easy: [WGS84](https://en.wikipedia.org/wiki/World_Geodetic_System#A_new_World_Geodetic_System:_WGS_84) is by far most common geographic CRS in use and forms the basis of GPS datasets, the popular `.geojson` file format (which expects geometries in WGS84) and thousands of raster and vector datasets.
-WGS84 is represented by the EPSG code 4326: a magic numbers that can get datasets in an esoteric projected CRS into a common geographic one, e.g. with `st_transform(london_proj, 4326)` to continue the previous example.
+The question of *which CRS* is trickier to answer.
+"There exist no all-purpose projections, all involve distortion when far from the centre of the specified frame" [@bivand_applied_2013].
+For geographic CRSs the answer is often [WGS84](https://en.wikipedia.org/wiki/World_Geodetic_System#A_new_World_Geodetic_System:_WGS_84), not only for web mapping (covered in the previous paragraph) but also because GPS datasets and thousands of raster and vector datasets are provided in this CRS by default.
+WGS84 is the most common CRS in the world so it is worth knowing it's EPSG code: 4326.
+This 'magic number' can be used to convert objects with unusual projected CRSs something that is widely understood with a sinle command, such as`st_transform(london_proj, 4326)`.
 
 The answer is often harder to decide when a projected CRS is required.
 The example of London was easy to answer because a) because the CRS 'BNG' (with its associated EPSG code 27700) is well-known and used and b) because the original dataset (`london`) already had a CRS.
@@ -5738,7 +5743,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve0542231d0dd0a942
+preservee0b7592c039430f7
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
