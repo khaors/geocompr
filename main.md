@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservea2ac221f12ed1286
+preserve8c5d8ecd98b32ea3
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3089,7 +3089,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve2f73425ef9b85a92
+preservec1f3e2598e08a794
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3671,7 +3671,6 @@ Because of the importance of reprojection, introduced in Chapter \@ref(spatial-c
 
 <!-- So far this intro mainly shows examples how to reproject vector data, and a few exemplarily pitfalls.
 And though the pitfall examples are good, I wonder if we can keep them a bit more general (so far only related to vector data) or if at times a coding example is necessary, maybe only a figure would be sufficient.
-Overall, I would suggest to start this section with a short intro to projections. What exactly is a projected CRS (ellipsoid + datum) -> this should also explain the parts of a projection string.
 We should especially point out that since we project from 3D to 2D we can only keep two out of three spherical (real-world) properties: angle, length, area (-> could be also part of which CRS to use or even better we refer to this explanation in "which CRS to use").
 So a specific use case determines which projection to use. 
 In sea navigation we need angles and lengths, real estate is especially interested in correct areas, etc.
@@ -5741,7 +5740,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve89a35ef00de677f0
+preserve275608cde0658ba8
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
