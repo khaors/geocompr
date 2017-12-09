@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservea32a25521325b87e
+preserve454bce3b09987037
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3091,7 +3091,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservef924cb11b3c13ff8
+preserve3aedf6d16a27b119
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3843,9 +3843,13 @@ For geographic CRSs the answer is often [WGS84](https://en.wikipedia.org/wiki/Wo
 WGS84 is the most common CRS in the world so it is worth knowing it's EPSG code: 4326.
 This 'magic number' can be used to convert objects with unusual projected CRSs something that is widely understood with a sinle command, such as`st_transform(london_proj, 4326)`.
 
-The answer is often harder to decide when a projected CRS is required.
-The example of London was easy to answer because a) because the CRS 'BNG' (with its associated EPSG code 27700) is well-known and used and b) because the original dataset (`london`) already had a CRS.
-But what projected CRS to use in a part of the world that lacks a well-known CRS?
+What about when a projected CRS is required?
+In some cases it is not something that we are free to decide:
+"often the choice of projection is made by a public mapping agency" [@bivand_applied_2013].
+This means that when working with local data sources, it is likely preferable to work with the CRS in which the data was provided, to ensure compatibility, even if the 'official' CRS is not the most accurate.
+The example of London was easy to answer because a) the CRS 'BNG' (with its associated EPSG code 27700) is well-known and b) the original dataset (`london`) already had that CRS.
+
+What about when a projected CRS is needed but the study region lacks a well-known CRS?
 
 ### Reprojecting vector geometries
 
@@ -5743,7 +5747,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservee0b7592c039430f7
+preservee4e440d7db515913
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
