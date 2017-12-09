@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve454bce3b09987037
+preservefdcc9034730cf8b0
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3091,7 +3091,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve3aedf6d16a27b119
+preserve4da50943014737e1
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3681,7 +3681,6 @@ Hence, maybe we should move parts from c2 to c5 since the stuff in c2 is already
 Another solution would be to leave the intro crs stuff in c2 (extended by when to use which CRS) and in c5 we don't have a joint vector-raster projection section but have a repojection section in the vector and raster section.
 (In the case of raster this would make perfectly sense since for reprojecting one needs all the geometric operations in section raster alignment (warp, shift, scale, aggregate, etc.).
 Maybe (not sure) a few figures would also help (conic, azimuthal projection; ellipsoids, etc.)
-We should probably mention the most widely used map projection system UTM with either the WGS84 global or local datum.
 -->
 
 Section \@ref(crs-intro) introduced coordinate reference systems (CRSs) and demonstrated their importance for geocomputation.
@@ -3850,6 +3849,8 @@ This means that when working with local data sources, it is likely preferable to
 The example of London was easy to answer because a) the CRS 'BNG' (with its associated EPSG code 27700) is well-known and b) the original dataset (`london`) already had that CRS.
 
 What about when a projected CRS is needed but the study region lacks a well-known CRS?
+Again, although there is no universal answer there is a sensible default CRS: Universal Transverse Mercator ([UTM]https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system).
+UTM is not actually a single CRS but a system of CRSs that covers the entire world.
 
 ### Reprojecting vector geometries
 
@@ -5747,7 +5748,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservee4e440d7db515913
+preserve886188cb6f2c69ba
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
