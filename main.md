@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve436c1cd302eb7914
+preservea2ac221f12ed1286
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -1590,27 +1590,23 @@ Geographic coordinate systems identify any location on the Earth's surface using
 *Latitude* is angular distance North or South of the equatorial plane.
 Distance in geographic CRSs is therefore measured not in metres but degrees.
 This has important consequences, as demonstrated in section \@ref(reproj-geo-data).
-<!-- for example Los Angeles, Melbourne -->
 
 The surface of the Earth in geographic coordinate systems is represented by a spherical or ellipsoidal surface.
 Spherical models assume that the Earth is a perfect sphere of a given radius.
 Spherical models have the advantage of simplicity but are rarely used because they are innacurate: the Earth is not a sphere!
 Ellipsoidal models are defined by two parameters: the equatorial radius (a) and the polar radius (b).
-These are suitable because the Earth is compressed: at the equatorial radius is around 11.5 km longer than the polar radius [@maling_coordinate_1992].^[
-The degree of compression is often referred to as [*flattening*](https://en.wikipedia.org/wiki/Flattening), defined as $f = (a - b) / a$ --- terms *ellipticity* and *compression* can also be used [@maling_coordinate_1992].
+These are suitable because the Earth is compressed: the equatorial radius is around 11.5 km longer than the polar radius [@maling_coordinate_1992].^[
+The degree of compression is often referred to as [*flattening*](https://en.wikipedia.org/wiki/Flattening), defined as $f = (a - b) / a$ but the terms *ellipticity* and *compression* can also be used [@maling_coordinate_1992].
 Because $f$ is a rather small value, digital ellipsoid models use the 'inverse flattening' ($rf = 1/f$) to define the Earth's compression.
 Values of $a$ and $rf$ used in a variety of ellipsoidal models can be seen be executing `st_proj_info(type = "ellps")`.
 ]
 
-Additionally, a position and orientation of the spheroid relative to the center of the Earth needs to be defined using a datum.
-The Earth’s surface is irregular due to gravitational and surface feature variations.
-Therefore, datums were created to account for the local variations in establishing a coordinate system.
-There are two types of datums - local and geocentric.
-In local datums, the ellipsoid surface aligns closely to the Earth surface at a particular location.
-For example, NAD27 (North American Datum of 1927) is a local datum created for the United States area.
-Geocentric datums are aligned to the center of the Earth
-It includes WGS84 (World Geodetic System 1984) Datum.
-A list of datums supported in R could be obtain with `st_proj_info(type = "datum")`.
+The position and orientation ellipsoids are defined by a *datum*.
+These allow local variations in Earth's surface, e.g. due to large mountain ranges, to be accounted for in CRSs.
+There are two types of datums --- local and geocentric.
+In *local datums*, the ellipsoidal surface is shifted to align with the surface at a particular location.
+They are defined in the [proj4](http://proj4.org/parameters.html#towgs84-datum-transformation-to-wgs84) by the `towgs84` argument which is defined by either 3 or 7 parameters (see [proj4.org/parameters.html](http://proj4.org/parameters.html) for details).
+A list of datums supported by R can be obtain with `st_proj_info(type = "datum")`.
 <!-- plots? -->
 <!-- plus maybe table (few examples) -->
 
@@ -3093,7 +3089,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveedd980a3772d7570
+preserve2f73425ef9b85a92
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5745,7 +5741,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve4db214df3cbe5795
+preserve89a35ef00de677f0
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
