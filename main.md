@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve6494ac2b62214e67
+preserve321e9150280763ca
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3091,7 +3091,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservefdec633cce7b7e38
+preserve1784ebd426884bce
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3852,7 +3852,9 @@ What about when a projected CRS is needed but the study region lacks a well-know
 Again, although there is no universal answer there is a sensible default CRS: Universal Transverse Mercator ([UTM](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system)).
 UTM is not actually a single CRS but a system of CRSs that covers the entire world, and breaks it into 60 segments, each containing 6 lines of longitude.
 All UTM projections have the same datum (WGS84) and their EPSG codes run sequentially from 32601 to 32660.
-This makes it possible to create a function (we'll call it `lonlat2UTM`) to calculate the EPSG code associated with any point on the planet as follows:  
+This makes it possible to create a function (we'll call it `lonlat2UTM`) to calculate the EPSG code associated with any point on the planet as follows:^[
+Thanks to Josh O'Brien who provided the basis for this function in an answer to a question on [stackoverflow](https://stackoverflow.com/questions/9186496).
+] 
 
 
 ```r
@@ -5779,7 +5781,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserved4bef49aa6165175
+preservef451557caa26f48d
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
