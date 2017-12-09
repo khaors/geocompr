@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve2f3a42a093779af1
+preserve7d9bec6fec431860
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3091,7 +3091,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve58e1fe3e4355aafb
+preserved0901f7e90efb281
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4195,41 +4195,39 @@ Finally, the visual comparison of the original dataset and two simplified versio
 <p class="caption">(\#fig:us-simp)Comparison of the original data of the contiguous United States and two simplified versions using `st_simplify` and `ms_simplify`.</p>
 </div>
 
-### Buffers and centroids
+### Centroids and buffers
 
 <!-- centroids intro -->
 There are two main functions that create single point representations of more complex vector objects - `st_centroid()` and `st_point_on_surface()`.
 
 The `st_centroid()` function calculates the geometric center of a geometry.
-<!-- The first one is `st_centroid()`  -->
-<!-- st_centroid -->
+We can create centroids for polygons, lines (see black points on Figure \@ref(centr)) and multipoints:
 
 
 ```r
 nz_centroid = st_centroid(nz)
+seine_centroid = st_centroid(seine)
 ```
 
-<!-- st_point_on_surface -->
-<!-- The second one -->
-<!-- add lines example -->
-<!-- note about computation time -->
+Centroids could be useful to represent more complex objects - lines and polygons, for example to calculate distances between centers of polygons.
+They are also often used as places where polygons or lines labels are put. 
+However, it is important to know that centroids could be located outside of the given object, e.g. in cases of irregular shaped polygons or lines.
+Examples of this could be seen on the right plot on Figure \@ref(centr).
+
+Alternatively, the `st_point_on_surface()` can be used.
 
 
 ```r
 nz_pos = st_point_on_surface(nz)
-```
-
-
-```r
-seine_centroid = st_centroid(seine)
-```
-
-
-```r
 seine_pos = st_point_on_surface(seine)
 ```
 
-<img src="figures/unnamed-chunk-41-1.png" width="576" style="display: block; margin: auto;" />
+It ensures that the created point lies on the given object (see red points on Figure \@ref(centr)).
+
+<div class="figure" style="text-align: center">
+<img src="figures/centr-1.png" alt="Comparison between the outputs of `st_centroid()` (black points) and `st_point_on_surface()` (red points) on New Zeleand's regions (left) and the Seine, Marne and Yonne rivers (right)." width="576" />
+<p class="caption">(\#fig:centr)Comparison between the outputs of `st_centroid()` (black points) and `st_point_on_surface()` (red points) on New Zeleand's regions (left) and the Seine, Marne and Yonne rivers (right).</p>
+</div>
 
 ### Affine transformations
 
@@ -4268,7 +4266,7 @@ plot(b)
 plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
 ```
 
-<img src="figures/unnamed-chunk-42-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-39-1.png" width="576" style="display: block; margin: auto;" />
 
 The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
 <!-- Todo: reference r4ds -->
@@ -5740,7 +5738,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve925033518269b287
+preserve6d56b010cd5093a2
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
