@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve49539deba51c5ec8
+preserveecd4be5d68521240
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3091,7 +3091,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve5074e9c55c455623
+preservea927d252056e2b75
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5271,26 +5271,26 @@ library(tidyverse)
 
 ## Introduction
 
-This chapter demonstrates how the skills learned in the previous chapters can be applied to location analysis.
-Geomarketing (also called location analysis) is a broad field of research and commercial application, the aim of which is to decide the optimal location for new services.
+This chapter demonstrates how the skills learned in the previous chapters can be applied to location analysis (sometimes also referred to as geomarketing).
+Location analysis is a broad field of research and commercial application, the aim of which is to decide the optimal location for new services.
 A standard example is where to locate a new shop: there are typically hundreds of possible locations in a city and location analysis can be used to decide where the shop will attract most visitors and, ultimately, make most profit.
 There are also many non-commercial applications that can use the technique for public benefit.
 A good example is where to locate new health services [@tomintz_geography_2008].
 
-Geomarketing is focused on people and where they are likely to spend their time and other resources.
+Location analysis is focused on people and where they are likely to spend their time and other resources.
 However, it has several links with ecology: animals and plants have needs which can be best met in optimal locations based on variables that change over space (called gradients in the ecological literature --- see e.g., @muenchow_review_2017<!--and chapter xx-->).
 <!-- add reference!! -->
 Polar bears, for example, prefer northern latitudes where temperatures are lower and food (seals and sea lions) is plentiful.
 Similarly, humans tend to congregate certain places, creating economic niches (and high land prices) analogous to the ecological niche of the Arctic.
-The main task of geomarketing is to find out where such 'optimal locations' are for specific services, based on available data.
-Typical research questions in geomarketing include:
+The main task of location analysis is to find out where such 'optimal locations' are for specific services, based on available data.
+Typical research questions in location analysis include:
 
 - Where are the service users (or clients), specific target groups and competitors?
 - How many people can easily reach my stores?
 - Do existing services over or under-exploit the market potential?
 - How big is my market share and turnovers, and are spatial differences exist?
 
-To demonstrate how geocomputation can answer these questions, the next section creates a scenario where geomarketing is vital to make informed real-world decisions.
+To demonstrate how geocomputation can answer these questions, the next section creates a scenario where location analysis is vital to make informed real-world decisions.
 
 ## Case study
 
@@ -5298,11 +5298,11 @@ Imagine your are launching a cycling company and would like to open shops across
 Imagine further that a survey you conducted indicates following target group: males between 20-40 years old who live alone or with just one person (single households, not families).
 Additionally, you are in the lucky position to have sufficient capital to open between one and ten shops per region.
 But where should they be placed?
-Geomarketing consultancies have been developed to help people answer such questions, and they would happily charge high rates for their expertise.
+Location analysis consultancies have been developed to help people answer such questions, and they would happily charge high rates for their expertise.
 <!--It is testament to the rate of technological development that these questions can now be answered by informed citizens using free and open source software.-->
 
 The here presented analysis will demonstrate a number of geocomputational techniques learned during the first chapters of the book.
-Additionally, this chapter will illustrate common steps in geomarketing to find suitable locations for a specific shop type (here: cycle stores).
+Additionally, this chapter will illustrate common steps in location analysis to find suitable locations for a specific shop type (here: cycle stores).
 The analysis includes following steps:
 
 - The retrieval of socio-demographic data by downloading gridded German census data (section \@ref(create-census-rasters)).
@@ -5781,7 +5781,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservec778491e22a3dd47
+preservec99614a9d2a906f6
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -5807,7 +5807,7 @@ The bike paths density might be another interesting variable as well as the purc
 However, to find out about such an interaction we would need customer data.
 
 In short, the presented analysis is far from perfect.
-Nevertheless, it should have given you a first impression and understanding of how to obtain, and deal with spatial data in R within a geomarketing context.
+Nevertheless, it should have given you a first impression and understanding of how to obtain, and deal with spatial data in R within a location analysis context.
 
 Finally, we have to point out that the presented analysis would be merely the first step of finding suitable locations.
 So far we have identified areas, 1 by 1 km in size, potentially suitable for a bike shop in accordance with our survey.
