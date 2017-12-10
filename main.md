@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2017-12-09'
+date: '2017-12-10'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2017-12-09 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2017-12-10 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve321e9150280763ca
+preserve49539deba51c5ec8
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3091,7 +3091,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve1784ebd426884bce
+preserve5074e9c55c455623
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5296,7 +5296,7 @@ To demonstrate how geocomputation can answer these questions, the next section c
 
 Imagine your are launching a cycling company and would like to open shops across urban areas of Germany.
 Imagine further that a survey you conducted indicates following target group: males between 20-40 years old who live alone or with just one person (single households, not families).
-Additionally, you are in the lucky position to have sufficient capital to open a number of shops.
+Additionally, you are in the lucky position to have sufficient capital to open between one and ten shops per region.
 But where should they be placed?
 Geomarketing consultancies have been developed to help people answer such questions, and they would happily charge high rates for their expertise.
 <!--It is testament to the rate of technological development that these questions can now be answered by informed citizens using free and open source software.-->
@@ -5781,7 +5781,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservef451557caa26f48d
+preservec778491e22a3dd47
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
