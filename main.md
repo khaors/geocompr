@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve2ac73145f0c70bff
+preserve456226df17848c45
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3091,7 +3091,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve2e08023b257cbce1
+preserveee72e27354085c92
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4510,6 +4510,7 @@ linestring_sf2
 
 ### Rasterization
 <!-- - vector to raster -->
+<!-- rasterize() -->
 
 ## Geometric operations on raster data {#geo-ras}
 
@@ -4647,6 +4648,10 @@ Additionally, check out the *Multi-core functions* section in `vignette("functio
 ### Aggregation {#ras-agg}
 
 ### Vectorization
+
+<!-- e.g. landcover map to polygonss -->
+<!-- rasterToPolygons() -->
+<!-- rasterToContour() -->
 
 ## Exercises
 
@@ -5781,7 +5786,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserved586c6b13a6390bd
+preservee7df9c041e9c7826
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
