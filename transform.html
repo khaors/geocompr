@@ -398,6 +398,13 @@ Figure 5.2: Buffer on data with projected CRS.
 <span class="co">#&gt;   proj4string: &quot;+proj=utm +zone=30 +datum=WGS84 +units=m +no_defs&quot;</span></code></pre></div>
 <p>As expected by viewing a map of UTM zones (such as that provided by <a href="http://www.dmap.co.uk/utmworld.htm">dmap.co.uk</a>), the EPSG code returned refers to UTM zone 30, which would represent a good projected CRS for England if the BNG did not exist. London can be transformed into this CRS as follows (result not shown):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lnd_utm =<span class="st"> </span><span class="kw">st_transform</span>(london, <span class="dt">crs =</span> epsg_utm)</code></pre></div>
+<p>Another approach to automatically selecting a projected CRS specific to a local dataset is to create an azimuthal equidistant (AEQD) projection for the centre-point of the study area. This involves creating a custom CRS (with no EPSG code) with units of meters based on the centrepoint of a dataset. This approach is used in the <strong>stplanr</strong> function <code>geo_select_crs()</code> which returns a CRS object that can be used in other functions (see <code>?stplanr::geo_select_aeq</code> for further details):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stplanr::<span class="kw">geo_select_aeq</span>(london)
+<span class="co">#&gt; Coordinate Reference System:</span>
+<span class="co">#&gt;   No EPSG code</span>
+<span class="co">#&gt;   proj4string: &quot;+proj=aeqd +lat_0=-0.1 +lon_0=-0.1 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs&quot;</span></code></pre></div>
+<p>Another <strong>stplanr</strong> function, <code>geo_buffer()</code>, uses this behind the scenes to enable buffers to be created around objects with geographic CRSs with units of metres, and returns the result in the original CRS, as illustrated in the code chunk below:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london_proj_buff2 =<span class="st"> </span>stplanr::<span class="kw">geo_buffer</span>(london, <span class="dt">dist =</span> <span class="dv">111320</span>)</code></pre></div>
 </div>
 <div id="reprojecting-vector-geometries" class="section level3">
 <h3><span class="header-section-number">5.1.2</span> Reprojecting vector geometries</h3>
@@ -639,7 +646,7 @@ y =<span class="st"> </span>b[<span class="dv">2</span>]
 x_and_y =<span class="st"> </span><span class="kw">st_intersection</span>(x, y)
 <span class="kw">plot</span>(b)
 <span class="kw">plot</span>(x_and_y, <span class="dt">col =</span> <span class="st">&quot;lightgrey&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>) <span class="co"># color intersecting area</span></code></pre></div>
-<p><img src="figures/unnamed-chunk-42-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-45-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>The subsequent code chunk demonstrate how this works for all combinations of the ‘Venn’ diagram representing <code>x</code> and <code>y</code>, inspired by <a href="http://r4ds.had.co.nz/transform.html#logical-operators">Figure 5.1</a> of the book R for Data Science <span class="citation">(Grolemund and Wickham <a href="#ref-grolemund_r_2016">2016</a>)</span>. <!-- Todo: reference r4ds --></p>
 <div class="figure" style="text-align: center"><span id="fig:venn-clip"></span>
 <img src="figures/venn-clip-1.png" alt="Spatial equivalents of logical operators." width="576" />

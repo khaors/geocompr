@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve25d76df2e6c8ad86
+preservef24605e2732a46e7
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservecdf515e5a9ecafd6
+preserve48cc0553266a48d6
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3874,6 +3874,28 @@ London can be transformed into this CRS as follows (result not shown):
 lnd_utm = st_transform(london, crs = epsg_utm)
 ```
 
+Another approach to automatically selecting a projected CRS specific to a local dataset is to create an azimuthal equidistant (AEQD) projection for the centre-point of the study area.
+This involves creating a custom CRS (with no EPSG code) with units of meters based on the centrepoint of a dataset.
+This approach is used in the **stplanr** function `geo_select_crs()` which returns a CRS object that can be used in other functions (see `?stplanr::geo_select_aeq` for further details):
+
+
+```r
+stplanr::geo_select_aeq(london)
+#> Coordinate Reference System:
+#>   No EPSG code
+#>   proj4string: "+proj=aeqd +lat_0=-0.1 +lon_0=-0.1 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"
+```
+
+Another **stplanr** function, `geo_buffer()`, uses this behind the scenes to enable buffers to be created around objects with geographic CRSs with units of metres, and returns the result in the original CRS, as illustrated in the code chunk below:
+
+
+```r
+london_proj_buff2 = stplanr::geo_buffer(london, dist = 111320)
+```
+
+
+
+
 ### Reprojecting vector geometries
 
 Vector data on the most basic level is represented by individual points, and points create more complex objects, such as lines and polygons.
@@ -4298,7 +4320,7 @@ plot(b)
 plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
 ```
 
-<img src="figures/unnamed-chunk-42-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-45-1.png" width="576" style="display: block; margin: auto;" />
 
 The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
 <!-- Todo: reference r4ds -->
@@ -5783,7 +5805,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve34a3dd09db6dc513
+preserve030d26d171f8d13d
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
