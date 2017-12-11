@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve2a64a806f29ed11e
+preserve575949136d197c8d
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -1824,6 +1824,7 @@ Again, the `res()` command gives back a numeric vector without any unit, forcing
 <!-- raster exercises -->
 1. Read the `raster/nlcd2011.tif` file from the **spDataLarge** package. 
 What kind of information can you get about the properties of this file?
+
 <!-- (crs, ncols, nrow, ncells, bbox, navalues) -->
 1. Create an empty `RasterLayer` object called `my_raster` with 10 columns and 10 rows, and resolution of 10 units.
 Assign random values between 0 and 10 to the new raster and plot it.
@@ -3091,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve67c450c17c386ddf
+preserve0cd0ec08f0472517
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4687,6 +4688,7 @@ How it influences the results?
 #> TRUE): st_interpolate_aw assumes attributes are constant over areas of x
 ```
 <!-- AFFINE TRANSFORMATION -->
+
 <!-- CLIPPING -->
 1. Write code that subsets points that are contained within `x` *and* `y` (illustrated by the plot in the 2^nd^ row and the 1^st^ column in Figure \@ref(fig:venn-clip)).
     - Create a randomly located point with the command `st_point()` (refer back to section \@ref(sfg) to see how to create spatial data 'from scratch').
@@ -5797,7 +5799,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve6a1681057301abc8
+preserved9ee8967c3fb625d
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
