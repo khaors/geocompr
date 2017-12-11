@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveefd4849f8c7eecea
+preserve1fa73d1f97331ad9
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve37a789852d8780b6
+preserveaed23c0ea8683e22
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3593,11 +3593,11 @@ The packages **landsat** (`histmatch()`, `relnorm()`, `PIF()`), **satellite** (`
 
 
 
-2. Which region has the second highest number of `nz_height` points in, and how many does it have?
+1. Which region has the second highest number of `nz_height` points in, and how many does it have?
 
 
 
-3. Generalizing the question to all regions: how many of New Zealand's 16 regions contain points in the topo 100 highest points in the country? Which regions?
+1. Generalizing the question to all regions: how many of New Zealand's 16 regions contain points in the topo 100 highest points in the country? Which regions?
     - Bonus: create a table listing these regions in order of the number of points and their name.
 <!-- Raster exercises-->
 1. Use `data(dem, package = "RQGIS")`, and reclassify the elevation in three classes: low, middle and high.
@@ -3754,14 +3754,6 @@ london_proj_buff = st_buffer(london_proj, 111320)
 
 The result in Figure \@ref(fig:crs-buf) (right panel) shows that buffers based on a projected CRS are not distorted:
 every part of the buffer's border is equidistant to London.
-
-
-```
-#> The rnaturalearthdata package needs to be installed.
-#> Installing the rnaturalearthdata package.
-#> Installing package into '/home/travis/R/Library'
-#> (as 'lib' is unspecified)
-```
 
 <div class="figure" style="text-align: center">
 <img src="figures/crs-buf-1.png" alt="Buffer on vector represenations of London with a geographic (left) and projected (right) CRS. The circular point represents London and the grey outline represents the outline of the UK." width="45%" /><img src="figures/crs-buf-2.png" alt="Buffer on vector represenations of London with a geographic (left) and projected (right) CRS. The circular point represents London and the grey outline represents the outline of the UK." width="45%" />
@@ -5799,7 +5791,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve22b6965c299e9052
+preserve9298464418d7f1b2
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
