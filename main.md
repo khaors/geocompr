@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve82040b96e023396d
+preserve25d76df2e6c8ad86
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -1805,26 +1805,21 @@ Again, the `res()` command gives back a numeric vector without any unit, forcing
     - The geometry type?
     - How many countries there are?
     - The coordinate reference system (CRS)?
-
 1. Using **sf**'s `plot()` command, create a map of Nigeria in context, building on the code that creates and plots Asia above (see Figure \@ref(fig:asia) for an example of what this could look like). 
     - Hint: this used the `lwd`, `main` and `col` arguments of `plot()`. 
     - Bonus: make the country boundaries a dotted grey line.
     - Hint: `border` is an additional argument of `plot()` for **sf**  objects.
-
 1. What does the `cex` argument do in the `plot()` function that generates Figure \@ref(fig:contpop)?
     - Why was `cex` passed the `sqrt(world$pop) / 10000` instead of just the population directly?
     - Bonus: what equivalent arguments to `cex` exist in the dedicated vizualisation package **tmap**?
-    
 1. Re-run the code that 'generated' Figure \@ref(fig:contpop) at the end of \@ref(base-args) and find 3 similarities and 3 differences between the plot produced on your computer and that in the book.
     - What is similar?
     - What has changed?
     - Bonus: play around with and research base plotting arguments to make your version of Figure \@ref(fig:contpop) more attractive. Which arguments were most useful.
     - Advanced: try to reproduce the map presented in Figure \@ref(base-args). Copy-and-pasting is prohibited!
-
 <!-- raster exercises -->
 1. Read the `raster/nlcd2011.tif` file from the **spDataLarge** package. 
 What kind of information can you get about the properties of this file?
-
 <!-- (crs, ncols, nrow, ncells, bbox, navalues) -->
 1. Create an empty `RasterLayer` object called `my_raster` with 10 columns and 10 rows, and resolution of 10 units.
 Assign random values between 0 and 10 to the new raster and plot it.
@@ -3097,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve219dbb3273b26fb6
+preservecdf515e5a9ecafd6
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5788,7 +5783,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservee2d483afbafb7f09
+preserve34a3dd09db6dc513
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
