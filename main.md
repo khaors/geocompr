@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve364fd6e578971a83
+preserve7555d7a1278e9bf5
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3097,7 +3097,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve5861e6b7eed9079d
+preserve573abfa8b1527931
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3594,10 +3594,16 @@ The packages **landsat** (`histmatch()`, `relnorm()`, `PIF()`), **satellite** (`
 
 ## Exercises
 <!-- vector exercises -->
-1. It was established in section \@ref(spatial-vec) that Canterbury was the region of New Zealand containing most of 100 highest points in the country. How many high points does it contain?
+1. It was established in section \@ref(spatial-vec) that Canterbury was the region of New Zealand containing most of 100 highest points in the country. How many of these high points does Canterbury Region contain?
 
 
 
+2. Which region has the second highest number of `nz_height` points in, and how many does it have?
+
+
+
+3. Generalizing the question to all regions: how many of New Zealand's 16 regions contain points in the topo 100 highest points in the country? Which regions?
+    - Bonus: create a table listing these regions in order of the number of points and their name.
 <!-- Raster exercises-->
 1. Use `data(dem, package = "RQGIS")`, and reclassify the elevation in three classes: low, middle and high.
 Secondly, compute the NDVI (`data(ndvi, package = "RQGIS")`) and the mean elevation for each altitudinal class.
@@ -5808,7 +5814,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve43a252e80d73d21c
+preserve0876437ef142d916
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
