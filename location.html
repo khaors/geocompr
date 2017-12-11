@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2017-12-10">
+<meta name="date" content="2017-12-11">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -243,11 +243,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7" data-path="location.html"><a href="location.html"><i class="fa fa-check"></i><b>7</b> Location analysis</a><ul>
 <li class="chapter" data-level="" data-path="location.html"><a href="location.html#prerequisites-5"><i class="fa fa-check"></i>Prerequisites</a></li>
 <li class="chapter" data-level="7.1" data-path="location.html"><a href="location.html#introduction-3"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
-<li class="chapter" data-level="7.2" data-path="location.html"><a href="location.html#case-study"><i class="fa fa-check"></i><b>7.2</b> Case study</a><ul>
-<li class="chapter" data-level="7.2.1" data-path="location.html"><a href="location.html#create-census-rasters"><i class="fa fa-check"></i><b>7.2.1</b> Create census rasters</a></li>
-<li class="chapter" data-level="7.2.2" data-path="location.html"><a href="location.html#define-metropolitan-areas"><i class="fa fa-check"></i><b>7.2.2</b> Define metropolitan areas</a></li>
-<li class="chapter" data-level="7.2.3" data-path="location.html"><a href="location.html#points-of-interest"><i class="fa fa-check"></i><b>7.2.3</b> Points of interest</a></li>
-<li class="chapter" data-level="7.2.4" data-path="location.html"><a href="location.html#identifying-suitable-locations"><i class="fa fa-check"></i><b>7.2.4</b> Identifying suitable locations</a></li>
+<li class="chapter" data-level="7.2" data-path="location.html"><a href="location.html#case-study"><i class="fa fa-check"></i><b>7.2</b> Case study: bike shops in Germany</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="location.html"><a href="location.html#tidy-the-input-data"><i class="fa fa-check"></i><b>7.2.1</b> Tidy the input data</a></li>
+<li class="chapter" data-level="7.2.2" data-path="location.html"><a href="location.html#create-census-rasters"><i class="fa fa-check"></i><b>7.2.2</b> Create census rasters</a></li>
+<li class="chapter" data-level="7.2.3" data-path="location.html"><a href="location.html#define-metropolitan-areas"><i class="fa fa-check"></i><b>7.2.3</b> Define metropolitan areas</a></li>
+<li class="chapter" data-level="7.2.4" data-path="location.html"><a href="location.html#points-of-interest"><i class="fa fa-check"></i><b>7.2.4</b> Points of interest</a></li>
+<li class="chapter" data-level="7.2.5" data-path="location.html"><a href="location.html#identifying-suitable-locations"><i class="fa fa-check"></i><b>7.2.5</b> Identifying suitable locations</a></li>
 </ul></li>
 <li class="chapter" data-level="7.3" data-path="location.html"><a href="location.html#discussion-and-next-steps"><i class="fa fa-check"></i><b>7.3</b> Discussion and next steps</a></li>
 <li class="chapter" data-level="7.4" data-path="location.html"><a href="location.html#exercises-5"><i class="fa fa-check"></i><b>7.4</b> Exercises</a></li>
@@ -290,14 +291,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="prerequisites-5" class="section level2 unnumbered">
 <h2>Prerequisites</h2>
 <ul>
-<li>This chapter requires following packages:</li>
+<li>This chapter requires the following packages (<strong>ggmap</strong> and <strong>classInt</strong> must also be installed):</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(classInt)
-<span class="kw">library</span>(ggmap)
-<span class="kw">library</span>(osmdata)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(osmdata)
 <span class="kw">library</span>(raster)
 <span class="kw">library</span>(sf)
-<span class="kw">library</span>(sp)
 <span class="kw">library</span>(tidyverse)</code></pre></div>
 <ul>
 <li>Required data will be downloaded in due course.</li>
@@ -305,43 +303,38 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="introduction-3" class="section level2">
 <h2><span class="header-section-number">7.1</span> Introduction</h2>
-<p>This chapter demonstrates how the skills learned in the previous chapters can be applied to location analysis (sometimes also referred to as geomarketing). Location analysis is a broad field of research and commercial application, the aim of which is to decide the optimal location for new services. A standard example is where to locate a new shop: there are typically hundreds of possible locations in a city and location analysis can be used to decide where the shop will attract most visitors and, ultimately, make most profit. There are also many non-commercial applications that can use the technique for public benefit. A good example is where to locate new health services <span class="citation">(Tomintz, Clarke, and Rigby <a href="#ref-tomintz_geography_2008">2008</a>)</span>.</p>
-<p>Location analysis is focused on people and where they are likely to spend their time and other resources. However, it has several links with ecology: animals and plants have needs which can be best met in optimal locations based on variables that change over space (called gradients in the ecological literature — see e.g., <span class="citation">Muenchow et al. (<a href="#ref-muenchow_review_2017">2017</a>)</span><!--and chapter xx-->). <!-- add reference!! --> Polar bears, for example, prefer northern latitudes where temperatures are lower and food (seals and sea lions) is plentiful. Similarly, humans tend to congregate certain places, creating economic niches (and high land prices) analogous to the ecological niche of the Arctic. The main task of location analysis is to find out where such ‘optimal locations’ are for specific services, based on available data. Typical research questions in location analysis include:</p>
+<p>This chapter demonstrates how the skills learned in Part I can be applied to a particular domain: location analysis (also called geomarketing). This is a broad field of research and commercial application, the aim of which is usually to decide the optimal location for new services. A typical example is where to locate a new shop. The aim here is to attract most visitors and, ultimately, make most profit. There are also many non-commercial applications that can use the technique for public benefit, for example where to locate new health services <span class="citation">(Tomintz, Clarke, and Rigby <a href="#ref-tomintz_geography_2008">2008</a>)</span>.</p>
+<p>People are fundamental to location analysis, in particular where they are likely spend their time and other resources. However, ecological concepts and models can be useful for store location analysis. Animals have needs can best meet their needs in certain ‘optimal’ locations, based on variables that change over space <span class="citation">(Muenchow et al. <a href="#ref-muenchow_review_2017">2017</a>)</span><!--and chapter xx-->.</p>
+<!-- add reference!! -->
+<p>Polar bears, for example, prefer northern latitudes where temperatures are lower and food (seals and sea lions) is plentiful. Similarly, humans tend to congregate certain places, creating economic niches (and high land prices) analogous to the ecological niche of the Arctic. The main task of location analysis is to find out where such ‘optimal locations’ are for specific services, based on available data. Typical research questions include:</p>
 <ul>
-<li>Where are the service users (or clients), specific target groups and competitors?</li>
-<li>How many people can easily reach my stores?</li>
+<li>Where do target groups live and which areas to they frequent?</li>
+<li>Where are competing stores or services located?</li>
+<li>How many people can easily reach specific stores?</li>
 <li>Do existing services over or under-exploit the market potential?</li>
-<li>How big is my market share and turnovers, and are spatial differences exist?</li>
+<li>What is the market share of a company in a specific are?</li>
 </ul>
-<p>To demonstrate how geocomputation can answer these questions, the next section creates a scenario where location analysis is vital to make informed real-world decisions.</p>
+<p>This chapter demonstrates how geocomputation can answer such questions based on a hypothetical case study with based on real data. This case study is described in the next section.</p>
 </div>
 <div id="case-study" class="section level2">
-<h2><span class="header-section-number">7.2</span> Case study</h2>
-<p>Imagine your are launching a cycling company and would like to open shops across urban areas of Germany. Imagine further that a survey you conducted indicates following target group: males between 20-40 years old who live alone or with just one person (single households, not families). Additionally, you are in the lucky position to have sufficient capital to open between one and ten shops per region. But where should they be placed? Location analysis consultancies have been developed to help people answer such questions, and they would happily charge high rates for their expertise. <!--It is testament to the rate of technological development that these questions can now be answered by informed citizens using free and open source software.--></p>
-<p>The here presented analysis will demonstrate a number of geocomputational techniques learned during the first chapters of the book. Additionally, this chapter will illustrate common steps in location analysis to find suitable locations for a specific shop type (here: cycle stores). The analysis includes following steps:</p>
+<h2><span class="header-section-number">7.2</span> Case study: bike shops in Germany</h2>
+<p>Imagine you are starting a chain of bike shops in Germany. A survey suggests that single young males (aged 20 to 40) are most likely to buy your products: this is the <em>target audience</em>. You are in the lucky position to have sufficient capital to open a number of shops. But where should they be placed? Location analysts would happily charge high rates to answer such questions, but it is now possible for the answer to be generated for free using open data and open source software, in a reproducible manner, given sufficient geocomputational skill. <!--It is testament to the rate of technological development that these questions can now be answered by informed citizens using free and open source software.--></p>
+<p>The following sections will demonstrate how the techniques learned during the first chapters of the book can be applied to undertake the following steps:</p>
 <ul>
-<li>The retrieval of socio-demographic data by downloading gridded German census data (section <a href="location.html#create-census-rasters">7.2.1</a>).</li>
-<li>The identification of areas of high population density (metropolitan areas; section <a href="location.html#define-metropolitan-areas">7.2.2</a>).</li>
-<li>The download of detailed geographic data (OSM data) for these areas (section <a href="location.html#points-of-interest">7.2.3</a>).</li>
-<li>Creating input rasters comparable by means of reclassification, and using map algebra to compute a final score where higher scores indicate more favorable locations (section <a href="location.html#identifying-suitable-locations">7.2.4</a>).</li>
+<li>Tidy the input data from the German census (section <a href="location.html#tidy-the-input-data">7.2.1</a>).</li>
+<li>Create geographic objects from the census data by converting the census data into raster format (section <a href="location.html#create-census-rasters">7.2.2</a>).</li>
+<li>Identify metropolitan areas with high population densities (section <a href="location.html#define-metropolitan-areas">7.2.3</a>).</li>
+<li>Download detailed geographic data (from OpenStreetMap, with <strong>osmdata</strong>) for these areas (section <a href="location.html#points-of-interest">7.2.4</a>).</li>
+<li>Create rasters for scoring the relative desirability of different locations using map algebra (section <a href="location.html#identifying-suitable-locations">7.2.5</a>).</li>
 </ul>
-<p>Note that although we have applied these steps to a specific case study, they could be generalized to many scenarios of store location or public service provision.</p>
-<div id="create-census-rasters" class="section level3">
-<h3><span class="header-section-number">7.2.1</span> Create census rasters</h3>
-<p>The German government provides a csv-file containing gridded census data of 2011 for Germany. One can either download a 1 km or a 100 m resolution. Here, we download the 1 km data, unzip it and read it into R.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">url =<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;https://www.zensus2011.de/SharedDocs/Downloads/DE/&quot;</span>, 
-             <span class="st">&quot;Pressemitteilung/DemografischeGrunddaten/csv_Zensusatlas_&quot;</span>, 
-             <span class="st">&quot;klassierte_Werte_1km_Gitter.zip?__blob=publicationFile&amp;v=8&quot;</span>)
-<span class="kw">download.file</span>(<span class="dt">url =</span> url, <span class="dt">destfile =</span> <span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">&quot;census.zip&quot;</span>),
-              <span class="dt">method =</span> <span class="st">&quot;auto&quot;</span>, <span class="dt">mode =</span> <span class="st">&quot;wb&quot;</span>)
-<span class="co"># list the file names</span>
-nms =<span class="st"> </span><span class="kw">unzip</span>(<span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">&quot;census.zip&quot;</span>), <span class="dt">list =</span> <span class="ot">TRUE</span>)
-<span class="co"># unzip only the csv file</span>
-base_name =<span class="st"> </span><span class="kw">grep</span>(<span class="st">&quot;.csv$&quot;</span>, nms$Name, <span class="dt">value =</span> <span class="ot">TRUE</span>)
-<span class="kw">unzip</span>(<span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">&quot;census.zip&quot;</span>), <span class="dt">files =</span> base_name, <span class="dt">exdir =</span> <span class="kw">tempdir</span>())
-<span class="co"># read in the csv file</span>
-census =<span class="st"> </span>readr::<span class="kw">read_csv2</span>(<span class="kw">file.path</span>(<span class="kw">tempdir</span>(), base_name))</code></pre></div>
-<p>Next we select the variables we need: x and y coordinates, the number of inhabitants (population), mean age, proportion of women and the household size (Table <a href="location.html#tab:census-desc">7.1</a>).</p>
+<p>Although we have applied these steps to a specific case study, they could be generalized to many scenarios of store location or public service provision.</p>
+<div id="tidy-the-input-data" class="section level3">
+<h3><span class="header-section-number">7.2.1</span> Tidy the input data</h3>
+<p>The German government provides gridded census data at either 1 km or 100 m resolution. The following code chunk downloads, unzips and reads-in the 1 km data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">download.file</span>(<span class="st">&quot;https://tinyurl.com/ybtpkwxz&quot;</span>, <span class="dt">destfile =</span> <span class="st">&quot;census.zip&quot;</span>)
+<span class="kw">unzip</span>(<span class="st">&quot;census.zip&quot;</span>) <span class="co"># unzip the files</span>
+census =<span class="st"> </span>readr::<span class="kw">read_csv2</span>(<span class="kw">list.files</span>(<span class="dt">pattern =</span> <span class="st">&quot;Gitter.csv&quot;</span>))</code></pre></div>
+<p>The <code>census</code> object is a data frame containing 13 variables for more than 300,000 grid cells across Germany. For our work we only need a subset of these: Easting and Northing, number of inhabitants (population), mean average age, proportion of women and average household size. These variables and selected and renamed in the code chunk below and summarized in Table <a href="location.html#tab:census-desc">7.1</a>. Further, <code>mutate_all</code> is used to covert values -1 and -9 (meaning unknown) to <code>NA</code>.</p>
 <table>
 <caption>
 <span id="tab:census-desc">Table 7.1: </span>Excerpt from the data description ‘Datensatzbeschreibung_klassierte_Werte_1km-Gitter.xlsx’ located in the downloaded file census.zip describing the classes of the retained variables. The classes -1 and -9 refer to uninhabited areas or areas which have to be kept secret, for example due to anonymization reasons.
@@ -471,23 +464,17 @@ household size<br />
 </tr>
 </tbody>
 </table>
-<p>Additionally, we set the values -1 and -9 to <code>NA</code> since these values are unknown.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># pop = population, hh_size = household size</span>
 input =<span class="st"> </span>dplyr::<span class="kw">select</span>(census, <span class="dt">x =</span> x_mp_1km, <span class="dt">y =</span> y_mp_1km, <span class="dt">pop =</span> Einwohner,
                       <span class="dt">women =</span> Frauen_A, <span class="dt">mean_age =</span> Alter_D,
                       <span class="dt">hh_size =</span> HHGroesse_D)
 <span class="co"># set -1 and -9 to NA</span>
-input =<span class="st"> </span><span class="kw">mutate_all</span>(input, <span class="kw">funs</span>(<span class="kw">ifelse</span>(. %in%<span class="st"> </span><span class="kw">c</span>(-<span class="dv">1</span>, -<span class="dv">9</span>), <span class="ot">NA</span>, .)))</code></pre></div>
-<p>After the data preprocessing, we convert the table into a raster stack. First, we use the x- and y-coordinates and the CRS to convert the <code>data.frame</code> into a spatial object. <code>gridded()</code> converts a <code>SpatialPolygonsDataFrame</code> (but does not support <code>sf</code> objects) into a <code>SpatialPixelsDataFrame</code> which in turn can be used as an input for <strong>raster</strong>’s <code>stack()</code> function. The final raster stack consists of four layers: inhabitants, mean age, portion of women and household size (Fig. <a href="location.html#fig:census-stack">7.1</a>).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># convert table into a raster (x and y are cell midpoints)</span>
-input =<span class="st"> </span><span class="kw">st_as_sf</span>(input, <span class="dt">coords =</span> <span class="kw">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>))
-<span class="co"># use the correct projection (see data description)</span>
-input =<span class="st"> </span><span class="kw">st_set_crs</span>(input, <span class="dv">3035</span>)
-<span class="co"># convert into an sp-object</span>
-input =<span class="st"> </span><span class="kw">as</span>(input, <span class="st">&quot;Spatial&quot;</span>)
-<span class="kw">gridded</span>(input) =<span class="st"> </span><span class="ot">TRUE</span>
-<span class="co"># convert into a raster stack</span>
-input =<span class="st"> </span><span class="kw">stack</span>(input)</code></pre></div>
+input_tidy =<span class="st"> </span><span class="kw">mutate_all</span>(input, <span class="kw">funs</span>(<span class="kw">ifelse</span>(. %in%<span class="st"> </span><span class="kw">c</span>(-<span class="dv">1</span>, -<span class="dv">9</span>), <span class="ot">NA</span>, .)))</code></pre></div>
+</div>
+<div id="create-census-rasters" class="section level3">
+<h3><span class="header-section-number">7.2.2</span> Create census rasters</h3>
+<p>Now the data has been preprocessed, it can be converted into a raster stack. This is done by using the <strong>tidyverse</strong> function <code>map()</code> to iterate over each attribute variable (columns from 3 to 6 in <code>input_tidy</code>) in combination with the <strong>raster</strong> function <code>rasterFromXYZ()</code>. The result is a list of raster objects containing data on each of the selected census variables, illustrated in Figure <a href="location.html#fig:census-stack">7.1</a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">input_ras =<span class="st"> </span><span class="kw">map</span>(<span class="dv">3</span>:<span class="dv">6</span>, ~<span class="st"> </span><span class="kw">rasterFromXYZ</span>(input_tidy[<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">2</span>, .)]))</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:census-stack"></span>
 <img src="figures/08_census_stack.png" alt="Gridded German census data of 2011. See Table \@ref(tab:census-desc) for a description of the classes." width="765" />
 <p class="caption">
@@ -495,9 +482,10 @@ Figure 7.1: Gridded German census data of 2011. See Table <a href="location.html
 </p>
 </div>
 <!-- find out about new lines in headings + blank cells-->
-<p>We <code>reclassify()</code> the ordinal-scaled rasters in accordance with our survey (see section <a href="location.html#case-study">7.2</a>). In the case of the population data we convert the classes into a numeric data type using class means. This means we use 127 for class 1 (ranging from 3 to 250 inhabitants), 375 for class 2 (ranging from 250 to 500 inhabitants), etc. (Table <a href="location.html#tab:census-desc">7.1</a>). We arbitrarily chose 8000 inhabitants for class 6 since it represents cells where more than 8000 people live. Of course, this is only a simple approximation of the true population number<a href="#fn40" class="footnoteRef" id="fnref40"><sup>40</sup></a>, however, the level of detail is good enough for the purpose of delineating metropolitan areas (see next section). By contrast, we convert the remaining input rasters into weight rasters whereas the highest weights are in correspondence with our survey. For instance, the women class 1 (0-40%) receives a weight of 3 since our clientele is predominantly male. Equally, the mean age class containing the youngest people receives the highest weight as well as the single households class.</p>
+<p>The next stage is to reclassify the values of the rasters stored in <code>input_ras</code> in accordance with the survey mentioned in section <a href="location.html#case-study">7.2</a>, using the <strong>raster</strong> function <code>reclassify()</code>, which was introduced in section <a href="spatial-operations.html#local-operations">4.3.3</a>. In the case of the population data we convert the classes into a numeric data type using class means. Raster cells are assumed to have a population of 127 if they had a value of 1 (cells in ‘class 1’ contain between 3 and 250 inhabitants) and 375 if they had a value of 2 (containing 250 to 500 inhabitants), and so on (see Table <a href="location.html#tab:census-desc">7.1</a>). A cell value of 10,000 inhabitants was chosen for ‘class 6’ because these cells contain more than 8000 people. Of course, these are approximations of the true population, not precise values.<a href="#fn40" class="footnoteRef" id="fnref40"><sup>40</sup></a> However, the level of detail is sufficient to delineate metropolitan areas (see next section).</p>
+<p>In contrast to the <code>pop</code> variable, representing absolute estimates of the total population, the remaining variables were re-classified as weights corresponding with weights used in the survey. Class 1 in the variable <code>women</code>, for instance, represents areas in which 0 to 40% of the population is female; these are reclassified with a comparatively high weight of 3 because the target demographic is predominantly male. Similarly, the classes containing the youngest people and highest proportion of single households are reclassified to have high weights.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rcl_pop =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">127</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">375</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">1250</span>, 
-                   <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">3000</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">6000</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">8000</span>), 
+                   <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">3000</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">6000</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">10000</span>), 
                  <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)
 rcl_women =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">0</span>), 
                    <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)
@@ -505,21 +493,21 @@ rcl_age =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw
                  <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)
 rcl_hh =<span class="st"> </span>rcl_women
 rcl =<span class="st"> </span><span class="kw">list</span>(rcl_pop, rcl_women, rcl_age, rcl_hh)</code></pre></div>
-<!-- maybe a sentence or two of explanations could be important here -->
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">reclass =<span class="st"> </span>input
-for (i in <span class="kw">seq_len</span>(<span class="kw">nlayers</span>(reclass))) {
-  reclass[[i]] =<span class="st"> </span><span class="kw">reclassify</span>(reclass[[i]], <span class="dt">rcl =</span> rcl[[i]], <span class="dt">right =</span> <span class="ot">NA</span>) 
-}
-<span class="kw">names</span>(reclass) =<span class="st"> </span><span class="kw">names</span>(input)</code></pre></div>
 <!-- alternative code (more purrr) -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">reclass =<span class="st"> </span><span class="kw">map2</span>(input_ras, rcl, reclassify, <span class="dt">right =</span> <span class="ot">NA</span>) %&gt;%
+<span class="st">  </span><span class="kw">set_names</span>(<span class="kw">names</span>(input_tidy[<span class="dv">3</span>:<span class="dv">6</span>])) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">stack</span>()
+<span class="kw">crs</span>(reclass) =<span class="st"> </span><span class="kw">st_crs</span>(<span class="dv">3035</span>)$proj4string</code></pre></div>
+<!-- maybe a sentence or two of explanations could be important here -->
 </div>
 <div id="define-metropolitan-areas" class="section level3">
-<h3><span class="header-section-number">7.2.2</span> Define metropolitan areas</h3>
-<p>We arbitrarily define a pixel of 20 sq-km as metropolitan if more than half a million people lives in it. The <code>aggregate()</code> command helps to change the resolution from 1 to 20 sq-km while each output cell represents the sum of all 1 sq-km input cells (see section <a href="transform.html#raster-alignment">5.3.1</a>). Next, we only keep cells with more than half a million inhabitants using a Boolean operation, and convert the resulting cells into spatial polygons of class <code>sf</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pop_agg =<span class="st"> </span><span class="kw">aggregate</span>(reclass$pop, <span class="dt">fact =</span> <span class="dv">20000</span> /<span class="st"> </span><span class="kw">res</span>(input)[<span class="dv">1</span>], <span class="dt">fun =</span> sum)
-polys =<span class="st"> </span><span class="kw">rasterToPolygons</span>(pop_agg[pop_agg &gt;<span class="st"> </span><span class="dv">500000</span>, <span class="dt">drop =</span> <span class="ot">FALSE</span>])
-polys =<span class="st"> </span><span class="kw">st_as_sf</span>(polys)</code></pre></div>
-<p>Plotting these polygons reveals eight metropolitan regions (Fig. <a href="location.html#fig:metro-areas">7.2</a>). Each region consists of one ore more polygons (raster cells). It would be nice if we could join all polygons belonging to one region. One approach is to union the polygons (see section <a href="spatial-operations.html#spatial-data-aggregation">4.2.5</a>).</p>
+<h3><span class="header-section-number">7.2.3</span> Define metropolitan areas</h3>
+<p>We define metropolitan areas as pixels of 20 km<sup>2</sup> inhabited by more than 500,000 people. Pixels at this coarse resolution can rapidly be created using <code>aggregate()</code>, as introduced in section <a href="transform.html#raster-alignment">5.3.1</a>. The command below uses the argument <code>fact = 20</code> to reduce the resolution of the result twenty-fold (recall the original raster resolution was 1 km<sup>2</sup>):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pop_agg =<span class="st"> </span><span class="kw">aggregate</span>(reclass$pop, <span class="dt">fact =</span> <span class="dv">20</span>, <span class="dt">fun =</span> sum)</code></pre></div>
+<p>The next stage is to keep only cells with more than half a million people, and convert the result cells into a vector object of class <code>sf</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">polys =<span class="st"> </span><span class="kw">rasterToPolygons</span>(pop_agg[pop_agg &gt;<span class="st"> </span><span class="dv">500000</span>, <span class="dt">drop =</span> <span class="ot">FALSE</span>]) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">st_as_sf</span>(polys)</code></pre></div>
+<p>Plotting these polygons reveals eight metropolitan regions (Fig. <a href="location.html#fig:metro-areas">7.2</a>). Each region consists of one or more polygons (raster cells). It would be nice if we could join all polygons belonging to one region. One approach is to union the polygons (see section <a href="spatial-operations.html#spatial-data-aggregation">4.2.5</a>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">polys =<span class="st"> </span><span class="kw">st_union</span>(polys)</code></pre></div>
 <p>This returns one multipolygon feature with its elements corresponding to the metropolitan regions. To extract these polygons from the multipolygon, we can use <code>st_cast()</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">metros =<span class="st"> </span><span class="kw">st_cast</span>(polys, <span class="st">&quot;POLYGON&quot;</span>)</code></pre></div>
@@ -609,7 +597,7 @@ coords =<span class="st"> </span><span class="kw">st_centroid</span>(metros_wgs)
 <span class="st">  </span><span class="kw">round</span>(., <span class="dv">4</span>)
 <span class="co">#&gt; Warning in st_centroid.sfc(metros_wgs): st_centroid does not give correct</span>
 <span class="co">#&gt; centroids for longitude/latitude data</span></code></pre></div>
-<p>Additionally, <code>ggmap::revgeocode()</code> only accepts one coordinate at a time, which is why we iterate over each coordinate of <code>coords</code> via a loop (<code>map_dfr()</code>). <code>map_dfr()</code> does exactly the same as <code>lapply()</code> except for returning a <code>data.frame</code> instead of a <code>list</code>.<a href="#fn42" class="footnoteRef" id="fnref42"><sup>42</sup></a> Sometimes, the reverse geocoding API of Google is unable to find an address returning <code>NA</code>. Often enough trying the same coordinate again, returns an address at the second or third attempt (see <code>while()-loop</code>). However, if three attempts have already failed, this is a good indication that the requested information is indeed unavailable. Since it is our interest to be a good cyberspace citizen, we try not to overburden the server with too many queries within a short amount of time. Instead we let the loop sleep between one and four seconds after each iteration before accessing the reverse geocoding API again.</p>
+<p>Additionally, <code>ggmap::revgeocode()</code> only accepts one coordinate at a time, which is why we iterate over each coordinate of <code>coords</code> via a loop (<code>map_dfr()</code>). <code>map_dfr()</code> does exactly the same as <code>lapply()</code> except for returning a <code>data.frame</code> instead of a <code>list</code>.<a href="#fn42" class="footnoteRef" id="fnref42"><sup>42</sup></a> Sometimes, the reverse geocoding API of Google is unable to find an address returning <code>NA</code>. Often enough trying the same coordinate again, returns an address at the second or third attempt (see <code>while()-loop</code>). However, if three attempts have already failed, this is a good indication that the requested information is indeed unavailable. Since it is our interest to be a good cyberspace citizen, we try not to overburden the server with too many queries within a short amount of time. Instead, we let the loop sleep between one and four seconds after each iteration before accessing the reverse geocoding API again.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">metro_names =<span class="st"> </span><span class="kw">map_dfr</span>(<span class="dv">1</span>:<span class="kw">nrow</span>(coords), function(i) {
   add =<span class="st"> </span>ggmap::<span class="kw">revgeocode</span>(coords[i, ], <span class="dt">output =</span> <span class="st">&quot;more&quot;</span>)
   x =<span class="st"> </span><span class="dv">2</span>
@@ -633,7 +621,7 @@ coords =<span class="st"> </span><span class="kw">st_centroid</span>(metros_wgs)
 <span class="st">  </span><span class="kw">pull</span>(locality)</code></pre></div>
 </div>
 <div id="points-of-interest" class="section level3">
-<h3><span class="header-section-number">7.2.3</span> Points of interest</h3>
+<h3><span class="header-section-number">7.2.4</span> Points of interest</h3>
 <p>The <strong>osmdata</strong> package provides a fantastic and easy-to-use interface to download OSM data (see also section <a href="read-write.html#retrieving-data">6.2</a>). Instead of downloading all shops for the whole of Germany, we restrict the download to the defined metropolitan areas. This relieves the OSM server resources, reduces download time and above all only gives back the shop locations we are interested in. The <code>map()</code> loop, the <code>lapply()</code> equivalent of <strong>purrr</strong>, runs through all eight metropolitan names which subsequently define the bounding box in the <code>opq()</code> function (see section <a href="read-write.html#retrieving-data">6.2</a>). Alternatively, we could have provided the bounding box in the form of coordinates ourselves. Next, we indicate that we only would like to download <code>shop</code> features (see this <a href="http://wiki.openstreetmap.org/wiki/Map_Features">page</a> for a full list of OpenStreetMap map features). <code>osmdata_sf()</code> returns a list with several spatial objects (points, lines, polygons, etc.). Here, we will only keep the point objects. As with Google’s reverse geocode API, the OSM-download will once in a while not work at the first attempt. The <code>while</code> loop increases the number of download trials to three. If then still no features can be downloaded, most likely there are none. Or it is an indication that another error has occurred before. For instance, the <code>opq()</code> function might have retrieved a wrong bounding box.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">shop_download_osm =<span class="st"> </span>function(x){
   <span class="kw">message</span>(<span class="st">&quot;Downloading shops of: &quot;</span>, x, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
@@ -663,11 +651,17 @@ if (<span class="kw">any</span>(ind)) {
 shops =<span class="st"> </span><span class="kw">map</span>(shops, dplyr::select, osm_id, shop) %&gt;%
 <span class="st">  </span><span class="kw">reduce</span>(rbind)</code></pre></div>
 <p>It would have been easier to simply use <code>map_dfr()</code>. Unfortunately, so far it does not work in harmony with <code>sf</code> objects.</p>
-<p>The only thing left to do is to convert the spatial point object into a raster. The <code>rasterize()</code> function does exactly this. As input it expects an <code>sp</code> of <code>sf</code> vector object (here we use the spatial point object <code>shops</code>), and a raster object (here we use the population raster whose original values have been replaced by <code>NA</code>’s). A function defines how the values from the spatial vector object are transferred to the raster object. <code>count</code> simply counts the number of spatial objects falling into one raster cell, in this example the shop points, and returns this value as the output cell value. Hence, we end up with a shop density, namely the number of shops per square kilometer. But one has too be careful: had we used the <code>shop</code> instead of the <code>osm_id</code> column, we would have retrieved fewer shops per grid cell. This is because the <code>shop</code> column contains <code>NA</code> values, which the <code>count()</code> function omits when rasterizing vector objects. Naturally, the projection of the input raster and the input vector object have to match which is why we first have to reproject our shops to the CRS of the raster object.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">shops =<span class="st"> </span><span class="kw">st_transform</span>(shops, <span class="kw">proj4string</span>(input$pop))
+<p>The only thing left to do is to convert the spatial point object into a raster. <code>rasterize()</code> does exactly this. This <strong>raster</strong> function takes an <code>sp</code> or <code>sf</code> object (<code>shops</code> in this case), and converts it into a raster with dimensions, resolution and CRS determined by another raster object (the raster stack <code>reclass</code> in this case). <code>rasterize()</code> also takes a <code>fun</code> argument which specifies how attributes are transferred to the raster object (<code>count</code> is used in this case to calculate the number shops in each cell).</p>
+
+<div class="rmdnote">
+If the <code>shop</code> column were used instead of the <code>osm_id</code> column, we would have retrieved fewer shops per grid cell. This is because the <code>shop</code> column contains <code>NA</code> values, which the <code>count()</code> function omits when rasterizing vector objects.
+</div>
+<p></p>
+<p>The result of the subsequent code chunk is therefore an estimate of shop density (shops/km<sup>2</sup>). <code>st_transform()</code> is used before <code>rasterize()</code> to ensure the CRS of the inputs match.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">shops =<span class="st"> </span><span class="kw">st_transform</span>(shops, <span class="kw">proj4string</span>(reclass))
 <span class="co"># create poi raster</span>
-poi =<span class="st"> </span><span class="kw">rasterize</span>(<span class="dt">x =</span> shops, <span class="dt">y =</span> input$pop, <span class="dt">field =</span> <span class="st">&quot;osm_id&quot;</span>, <span class="dt">fun =</span> <span class="st">&quot;count&quot;</span>)</code></pre></div>
-<p>As with the other rasters (population, women, mean age, household size) we would like to classify the <code>poi</code> raster into four classes (see section <a href="location.html#create-census-rasters">7.2.1</a>). Defining class intervals is an arbitrary undertaking to a certain degree. One can use equal breaks, quantile breaks, fixed values and many more. Here, we choose the Fisher-Jenks natural breaks approach which tries to minimize the within-class variance. Naturally, the identified breaks serve as input for the reclassification matrix.</p>
+poi =<span class="st"> </span><span class="kw">rasterize</span>(<span class="dt">x =</span> shops, <span class="dt">y =</span> reclass, <span class="dt">field =</span> <span class="st">&quot;osm_id&quot;</span>, <span class="dt">fun =</span> <span class="st">&quot;count&quot;</span>)</code></pre></div>
+<p>As with the other raster layers (population, women, mean age, household size) the <code>poi</code> raster is reclassified into four classes (see section <a href="location.html#create-census-rasters">7.2.2</a>). Defining class intervals is an arbitrary undertaking to a certain degree. One can use equal breaks, quantile breaks, fixed values or others. Here, we choose the Fisher-Jenks natural breaks approach which minimizes within-class variance, the result of which provides an input for the reclassification matrix.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># construct reclassification matrix</span>
 int =<span class="st"> </span>classInt::<span class="kw">classIntervals</span>(<span class="kw">values</span>(poi), <span class="dt">n =</span> <span class="dv">3</span>, <span class="dt">style =</span> <span class="st">&quot;fisher&quot;</span>)
 int =<span class="st"> </span><span class="kw">round</span>(int$brks)
@@ -679,18 +673,19 @@ poi =<span class="st"> </span><span class="kw">reclassify</span>(poi, <span clas
 <span class="kw">names</span>(poi) =<span class="st"> &quot;poi&quot;</span></code></pre></div>
 </div>
 <div id="identifying-suitable-locations" class="section level3">
-<h3><span class="header-section-number">7.2.4</span> Identifying suitable locations</h3>
-<p>As usual in (geographic-)data science, the data retrieval and preprocessing represented the lion’s share of the overall workload. The final step, the calculation of a final score by summing up all prepared rasters, is a simple one-liner. Before doing that, we add the POI raster to and delete the population raster from the raster stack. The reasoning for the latter is twofold. First of all, we already have delineated metropolitan areas, that is areas where the population density is above average compared to the rest of Germany. Secondly, though it is advantageous to have many potential customers within a specific catchment area, the sheer number alone might not actually represent the desired target group. For instance, residential tower blocks are areas with a high population density but not necessarily with a high purchasing power for luxurious bike components.</p>
+<h3><span class="header-section-number">7.2.5</span> Identifying suitable locations</h3>
+<p>The only steps that remain before combining all the layers are to add POI and delete the population from the raster stack. The reasoning for the latter is twofold. First of all, we already have delineated metropolitan areas, that is areas where the population density is above average compared to the rest of Germany. Secondly, though it is advantageous to have many potential customers within a specific catchment area, the sheer number alone might not actually represent the desired target group. For instance, residential tower blocks are areas with a high population density but not necessarily with a high purchasing power for expensive cycle components. This is acheived with the complimentary functions <code>addLayer()</code> and <code>dropLayer()</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># add poi raster</span>
 reclass =<span class="st"> </span><span class="kw">addLayer</span>(reclass, poi)
 <span class="co"># delete population raster</span>
-reclass =<span class="st"> </span><span class="kw">dropLayer</span>(reclass, <span class="st">&quot;pop&quot;</span>)
-<span class="co"># calculate the total score</span>
+reclass =<span class="st"> </span><span class="kw">dropLayer</span>(reclass, <span class="st">&quot;pop&quot;</span>)</code></pre></div>
+<p>In common with other data science projects, data retrieval and ‘tidying’ have consumed much of the overall workload so far. With clean data the final step, calculating of a final score by summing up all raster layers, can be accomplished in a single line.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate the total score</span>
 result =<span class="st"> </span><span class="kw">sum</span>(reclass)</code></pre></div>
 <p>The result is a score summing up the values of all input rasters. For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure <a href="location.html#fig:bikeshop-berlin">7.3</a>).</p>
 <div class="figure" style="text-align: center"><span id="fig:bikeshop-berlin"></span>
 <div id="htmlwidget-ec897849c5c50a6f7846" style="width:576px;height:355.968px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-ec897849c5c50a6f7846">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addRasterImage","args":["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAANElEQVRYhe3SQQ0AMAwDsYAtfwrdrxS2TjaCU5QEAIB1Kn07AUal55NPfvPJqDWsBwDA7w7HAAhTKSmWWQAAAABJRU5ErkJggg==",[[52.696600856383,13.0820026147986],[52.3210740877061,13.6981591380976]],0.8,null,null,null]},{"method":"addLegend","args":[{"colors":["darkgreen"],"labels":["potential locations"],"na_color":null,"na_label":"NA","opacity":0.5,"position":"bottomright","type":"unknown","title":"Legend","extra":null,"layerId":null,"className":"info legend"}]}],"limits":{"lat":[52.3210740877061,52.696600856383],"lng":[13.0820026147986,13.6981591380976]}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-ec897849c5c50a6f7846">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addRasterImage","args":["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAFUlEQVQ4jWNgGAWjYBSMglEwCqgDAAZUAAHyXCJfAAAAAElFTkSuQmCC",[[51.458783689313,12.150091013307],[51.2736152144672,12.4461556654709]],0.8,null,null,null]},{"method":"addLegend","args":[{"colors":["darkgreen"],"labels":["potential locations"],"na_color":null,"na_label":"NA","opacity":0.5,"position":"bottomright","type":"unknown","title":"Legend","extra":null,"layerId":null,"className":"info legend"}]}],"limits":{"lat":[51.2736152144672,51.458783689313],"lng":[12.150091013307,12.4461556654709]}},"evals":[],"jsHooks":[]}</script>
 <p class="caption">
 Figure 7.3: Suitable areas (i.e., raster cells with a score &gt; 10) in accordance with our hypothetical survey for bike stores in Berlin.
 </p>
@@ -703,7 +698,7 @@ Figure 7.3: Suitable areas (i.e., raster cells with a score &gt; 10) in accordan
 <p>A few other things remained unconsidered but might improve the analysis:</p>
 <ul>
 <li>We used equal weights when calculating the final scores. But is, for example, the household size as important as the portion of men or the mean age?</li>
-<li>We used all points of interest. Maybe it would be wiser to use only those which might be interesting for bike shops such as do-it-yourself, hardware, bicycle, fishing, hunting, motorcycles, outdoor, sports shops, etc. (see all the other columns of the osmdata simple features and <a href="http://wiki.openstreetmap.org/wiki/Map_Features#Shop">Map_Features#Shop</a>).</li>
+<li>We used all points of interest. Maybe it would be wiser to use only those which might be interesting for bike shops such as do-it-yourself, hardware, bicycle, fishing, hunting, motorcycles, outdoor and sports shops (see the range of shop values available on the <a href="http://wiki.openstreetmap.org/wiki/Map_Features#Shop">OSM Wiki</a>).</li>
 <li>Maybe data at a better resolution changes and improves the output. For example, there is also population data at a finer resolution (100 m; see exercises).</li>
 <li>We have used only a limited set of variables. The <a href="http://inspire-geoportal.ec.europa.eu/discovery/">INSPIRE geoportal</a> might contain much more data of possible interest to our analysis. The bike paths density might be another interesting variable as well as the purchasing power or even better the retail purchasing power for bikes.</li>
 <li>Interactions remained unconsidered such as a possible interaction between the portion of men and single households. However, to find out about such an interaction we would need customer data.</li>
@@ -747,7 +742,7 @@ Figure 7.3: Suitable areas (i.e., raster cells with a score &gt; 10) in accordan
 <div class="footnotes">
 <hr />
 <ol start="40">
-<li id="fn40"><p>You can explore the introduced error in more detail in the exercises.<a href="location.html#fnref40">↩</a></p></li>
+<li id="fn40"><p>The potential error introduced during this reclassification stage will be explored in the exercises.<a href="location.html#fnref40">↩</a></p></li>
 <li id="fn41"><p>Note that Google allows each user to access its services on a free basis for a maximum of 2500 queries a day.<a href="location.html#fnref41">↩</a></p></li>
 <li id="fn42"><p>To learn more about the split-apply-combine strategy for data analysis, we refer the reader to <span class="citation">Wickham (<a href="#ref-wickham_split-apply-combine_2011">2011</a>)</span>.<a href="location.html#fnref42">↩</a></p></li>
 </ol>
