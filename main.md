@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservec3941eae55068c81
+preserveefd4849f8c7eecea
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservef2e0e4ba89611222
+preserve37a789852d8780b6
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3764,8 +3764,8 @@ every part of the buffer's border is equidistant to London.
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/crs-buf-1.png" alt="Buffer on vector geometries with a geographic (left) and projected (right) CRS." width="45%" /><img src="figures/crs-buf-2.png" alt="Buffer on vector geometries with a geographic (left) and projected (right) CRS." width="45%" />
-<p class="caption">(\#fig:crs-buf)Buffer on vector geometries with a geographic (left) and projected (right) CRS.</p>
+<img src="figures/crs-buf-1.png" alt="Buffer on vector represenations of London with a geographic (left) and projected (right) CRS. The circular point represents London and the grey outline represents the outline of the UK." width="45%" /><img src="figures/crs-buf-2.png" alt="Buffer on vector represenations of London with a geographic (left) and projected (right) CRS. The circular point represents London and the grey outline represents the outline of the UK." width="45%" />
+<p class="caption">(\#fig:crs-buf)Buffer on vector represenations of London with a geographic (left) and projected (right) CRS. The circular point represents London and the grey outline represents the outline of the UK.</p>
 </div>
 
 The importance of CRSs (primarily whether they are projected or geographic) has been demonstrated using the example of London.
@@ -5799,7 +5799,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve7a27396d27078b1b
+preserve22b6965c299e9052
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
