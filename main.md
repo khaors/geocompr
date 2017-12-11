@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve575949136d197c8d
+preserve364fd6e578971a83
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2656,6 +2656,11 @@ Create a raster stack using `dem` and `ndvi`, and make a `pairs()` plot
 <!--chapter:end:03-attribute-operations.Rmd-->
 
 
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
 # Spatial operations
 
 ## Prerequisites {-}
@@ -2683,7 +2688,7 @@ This chapter shows how spatial objects can be modified in a multitude of ways ba
 The content builds on the previous chapter because many spatial operations have a non-spatial (attribute) equivalent.
 Spatial operations on *vector* objects include spatial subsetting (covered in section \@ref(spatial-subsetting)) and spatial joining (section \@ref(spatial-joining)).
 This content builds on section \@ref(vector-attribute-manipulation) in the previous chapter.
-Spatial operations on *rasters* include merging and subsetting, covered in section \@ref(spatial-operations-on-raster-data).
+Spatial operations on *rasters* include merging and subsetting, covered in section \@ref(spatial-ras).
 
 The chapter also introduces new concepts that are unique to spatial data.
 A variety of *topological relations* can be used to subset/join vector geometries (by default **sf** uses the catch-all *intersects* but other relations such as *within* can be very useful), a topic that is explored in section \@ref(topological-relations).
@@ -2695,9 +2700,9 @@ Distance operations are covered in sections \@ref(distance-relations) and \@ref(
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">It is important to note that spatial operations that use two spatial objects rely on both objects having the same coordinate reference system, a topic that was introduced in \@ref(crs-intro) and which will be covered in more depth in Chapter 6.</div>\EndKnitrBlock{rmdnote}
 
-## Spatial operations on vector data
+## Spatial operations on vector data {#spatial-vec}
 
-This section provides an overview of spatial operations on vector geographic data represented as simple features in the **sf** package before section \@ref(spatial-operations-on-raster-data), which presents spatial methods using the **raster** package.
+This section provides an overview of spatial operations on vector geographic data represented as simple features in the **sf** package before section \@ref(spatial-ras), which presents spatial methods using the **raster** package.
 
 ### Spatial subsetting
 
@@ -3092,7 +3097,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve0cd0ec08f0472517
+preserve5861e6b7eed9079d
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3273,7 +3278,7 @@ plot(nz_height$geometry[2:3], add = TRUE)
 ```
 
 
-## Spatial operations on raster data
+## Spatial operations on raster data {#spatial-ras}
 
 This section builds on \@ref(manipulating-raster-objects), which highlights various basic methods for manipulating raster datasets, to demonstrate more advanced and explicitly spatial raster operations,
 and uses the same object `elev` and `grain`.
@@ -3589,6 +3594,10 @@ The packages **landsat** (`histmatch()`, `relnorm()`, `PIF()`), **satellite** (`
 
 ## Exercises
 <!-- vector exercises -->
+1. It was established in section \@ref(spatial-vec) that Canterbury was the region of New Zealand containing most of 100 highest points in the country. How many high points does it contain?
+
+
+
 <!-- Raster exercises-->
 1. Use `data(dem, package = "RQGIS")`, and reclassify the elevation in three classes: low, middle and high.
 Secondly, compute the NDVI (`data(ndvi, package = "RQGIS")`) and the mean elevation for each altitudinal class.
@@ -4146,7 +4155,7 @@ summary(con_raster_ea)
 ## Geometric operations on vector data {#geo-vec}
 
 This section is about operations that in some way change the geometry of vector (`sf`) objects.
-It is more advanced than the spatial data operations presented in the previous Chapter (in section \@ref(spatial-operations-on-vector-data)) because here we drill down into the geometry:
+It is more advanced than the spatial data operations presented in the previous Chapter (in section \@ref(spatial-vec)) because here we drill down into the geometry:
 the functions discussed in this section work on objects of class `sfc` (simple feature geometry collections) in addition to objects of class `sf`.
 
 ### Simplification
@@ -5799,7 +5808,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserved9ee8967c3fb625d
+preserve43a252e80d73d21c
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 

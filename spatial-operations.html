@@ -181,7 +181,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4" data-path="spatial-operations.html"><a href="spatial-operations.html"><i class="fa fa-check"></i><b>4</b> Spatial operations</a><ul>
 <li class="chapter" data-level="" data-path="spatial-operations.html"><a href="spatial-operations.html#prerequisites-2"><i class="fa fa-check"></i>Prerequisites</a></li>
 <li class="chapter" data-level="4.1" data-path="spatial-operations.html"><a href="spatial-operations.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
-<li class="chapter" data-level="4.2" data-path="spatial-operations.html"><a href="spatial-operations.html#spatial-operations-on-vector-data"><i class="fa fa-check"></i><b>4.2</b> Spatial operations on vector data</a><ul>
+<li class="chapter" data-level="4.2" data-path="spatial-operations.html"><a href="spatial-operations.html#spatial-vec"><i class="fa fa-check"></i><b>4.2</b> Spatial operations on vector data</a><ul>
 <li class="chapter" data-level="4.2.1" data-path="spatial-operations.html"><a href="spatial-operations.html#spatial-subsetting"><i class="fa fa-check"></i><b>4.2.1</b> Spatial subsetting</a></li>
 <li class="chapter" data-level="4.2.2" data-path="spatial-operations.html"><a href="spatial-operations.html#topological-relations"><i class="fa fa-check"></i><b>4.2.2</b> Topological relations</a></li>
 <li class="chapter" data-level="4.2.3" data-path="spatial-operations.html"><a href="spatial-operations.html#spatial-joining"><i class="fa fa-check"></i><b>4.2.3</b> Spatial joining</a></li>
@@ -189,7 +189,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.2.5" data-path="spatial-operations.html"><a href="spatial-operations.html#spatial-data-aggregation"><i class="fa fa-check"></i><b>4.2.5</b> Spatial data aggregation</a></li>
 <li class="chapter" data-level="4.2.6" data-path="spatial-operations.html"><a href="spatial-operations.html#distance-relations"><i class="fa fa-check"></i><b>4.2.6</b> Distance relations</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="spatial-operations.html"><a href="spatial-operations.html#spatial-operations-on-raster-data"><i class="fa fa-check"></i><b>4.3</b> Spatial operations on raster data</a><ul>
+<li class="chapter" data-level="4.3" data-path="spatial-operations.html"><a href="spatial-operations.html#spatial-ras"><i class="fa fa-check"></i><b>4.3</b> Spatial operations on raster data</a><ul>
 <li class="chapter" data-level="4.3.1" data-path="attr.html"><a href="attr.html#raster-subsetting"><i class="fa fa-check"></i><b>4.3.1</b> Spatial subsetting</a></li>
 <li class="chapter" data-level="4.3.2" data-path="spatial-operations.html"><a href="spatial-operations.html#map-algebra"><i class="fa fa-check"></i><b>4.3.2</b> Map algebra</a></li>
 <li class="chapter" data-level="4.3.3" data-path="spatial-operations.html"><a href="spatial-operations.html#local-operations"><i class="fa fa-check"></i><b>4.3.3</b> Local operations</a></li>
@@ -303,7 +303,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="introduction-1" class="section level2">
 <h2><span class="header-section-number">4.1</span> Introduction</h2>
-<p>Spatial operations are a vital part of geocomputation. This chapter shows how spatial objects can be modified in a multitude of ways based on their location and shape. The content builds on the previous chapter because many spatial operations have a non-spatial (attribute) equivalent. Spatial operations on <em>vector</em> objects include spatial subsetting (covered in section <a href="spatial-operations.html#spatial-subsetting">4.2.1</a>) and spatial joining (section <a href="spatial-operations.html#spatial-joining">4.2.3</a>). This content builds on section <a href="attr.html#vector-attribute-manipulation">3.2</a> in the previous chapter. Spatial operations on <em>rasters</em> include merging and subsetting, covered in section <a href="spatial-operations.html#spatial-operations-on-raster-data">4.3</a>.</p>
+<p>Spatial operations are a vital part of geocomputation. This chapter shows how spatial objects can be modified in a multitude of ways based on their location and shape. The content builds on the previous chapter because many spatial operations have a non-spatial (attribute) equivalent. Spatial operations on <em>vector</em> objects include spatial subsetting (covered in section <a href="spatial-operations.html#spatial-subsetting">4.2.1</a>) and spatial joining (section <a href="spatial-operations.html#spatial-joining">4.2.3</a>). This content builds on section <a href="attr.html#vector-attribute-manipulation">3.2</a> in the previous chapter. Spatial operations on <em>rasters</em> include merging and subsetting, covered in section <a href="spatial-operations.html#spatial-ras">4.3</a>.</p>
 <p>The chapter also introduces new concepts that are unique to spatial data. A variety of <em>topological relations</em> can be used to subset/join vector geometries (by default <strong>sf</strong> uses the catch-all <em>intersects</em> but other relations such as <em>within</em> can be very useful), a topic that is explored in section <a href="spatial-operations.html#topological-relations">4.2.2</a>. Spatial operations on raster datasets involve <em>map algebra</em> (covered in sections <a href="spatial-operations.html#map-algebra">4.3.2</a> to <a href="spatial-operations.html#global-operations-and-distances">4.3.6</a>) and raster merging (covered in sections <a href="spatial-operations.html#merging-rasters">4.3.7</a>).</p>
 <p>Another unique aspect of spatial objects is distance. All spatial objects are related through space and distance calculations can be used to find the strength of this relationship between spatial entities. Distance operations are covered in sections <a href="spatial-operations.html#distance-relations">4.2.6</a> and <a href="spatial-operations.html#global-operations-and-distances">4.3.6</a> for vector and raster datasets respectively.</p>
 
@@ -312,9 +312,9 @@ It is important to note that spatial operations that use two spatial objects rel
 </div>
 <p></p>
 </div>
-<div id="spatial-operations-on-vector-data" class="section level2">
+<div id="spatial-vec" class="section level2">
 <h2><span class="header-section-number">4.2</span> Spatial operations on vector data</h2>
-<p>This section provides an overview of spatial operations on vector geographic data represented as simple features in the <strong>sf</strong> package before section <a href="spatial-operations.html#spatial-operations-on-raster-data">4.3</a>, which presents spatial methods using the <strong>raster</strong> package.</p>
+<p>This section provides an overview of spatial operations on vector geographic data represented as simple features in the <strong>sf</strong> package before section <a href="spatial-operations.html#spatial-ras">4.3</a>, which presents spatial methods using the <strong>raster</strong> package.</p>
 <div id="spatial-subsetting" class="section level3">
 <h3><span class="header-section-number">4.2.1</span> Spatial subsetting</h3>
 <p>Spatial subsetting is the process of selecting features of a spatial object based on whether or not they in some way <em>relate</em> in space to another object. It is analogous to <em>attribute subsetting</em> (covered in section <a href="attr.html#vector-attribute-subsetting">3.2.1</a>) and can be done with the base R square bracket (<code>[</code>) operator or with the <code>filter()</code> function from the <strong>tidyverse</strong>.</p>
@@ -620,7 +620,7 @@ canterbury_centroid =<span class="st"> </span><span class="kw">st_centroid</span
 <span class="kw">plot</span>(nz_height$geometry[<span class="dv">2</span>:<span class="dv">3</span>], <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
 </div>
 </div>
-<div id="spatial-operations-on-raster-data" class="section level2">
+<div id="spatial-ras" class="section level2">
 <h2><span class="header-section-number">4.3</span> Spatial operations on raster data</h2>
 <p>This section builds on <a href="attr.html#manipulating-raster-objects">3.3</a>, which highlights various basic methods for manipulating raster datasets, to demonstrate more advanced and explicitly spatial raster operations, and uses the same object <code>elev</code> and <code>grain</code>.</p>
 <div id="raster-subsetting" class="section level3">
@@ -773,6 +773,9 @@ aut_ch =<span class="st"> </span><span class="kw">merge</span>(aut, ch)</code></
 <div id="exercises-2" class="section level2">
 <h2><span class="header-section-number">4.4</span> Exercises</h2>
 <!-- vector exercises -->
+<ol style="list-style-type: decimal">
+<li>It was established in section <a href="spatial-operations.html#spatial-vec">4.2</a> that Canterbury was the region of New Zealand containing most of 100 highest points in the country. How many high points does it contain?</li>
+</ol>
 <!-- Raster exercises-->
 <ol style="list-style-type: decimal">
 <li>Use <code>data(dem, package = &quot;RQGIS&quot;)</code>, and reclassify the elevation in three classes: low, middle and high. Secondly, compute the NDVI (<code>data(ndvi, package = &quot;RQGIS&quot;)</code>) and the mean elevation for each altitudinal class.</li>

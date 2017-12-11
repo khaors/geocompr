@@ -181,7 +181,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4" data-path="spatial-operations.html"><a href="spatial-operations.html"><i class="fa fa-check"></i><b>4</b> Spatial operations</a><ul>
 <li class="chapter" data-level="" data-path="spatial-operations.html"><a href="spatial-operations.html#prerequisites-2"><i class="fa fa-check"></i>Prerequisites</a></li>
 <li class="chapter" data-level="4.1" data-path="spatial-operations.html"><a href="spatial-operations.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
-<li class="chapter" data-level="4.2" data-path="spatial-operations.html"><a href="spatial-operations.html#spatial-operations-on-vector-data"><i class="fa fa-check"></i><b>4.2</b> Spatial operations on vector data</a><ul>
+<li class="chapter" data-level="4.2" data-path="spatial-operations.html"><a href="spatial-operations.html#spatial-vec"><i class="fa fa-check"></i><b>4.2</b> Spatial operations on vector data</a><ul>
 <li class="chapter" data-level="4.2.1" data-path="spatial-operations.html"><a href="spatial-operations.html#spatial-subsetting"><i class="fa fa-check"></i><b>4.2.1</b> Spatial subsetting</a></li>
 <li class="chapter" data-level="4.2.2" data-path="spatial-operations.html"><a href="spatial-operations.html#topological-relations"><i class="fa fa-check"></i><b>4.2.2</b> Topological relations</a></li>
 <li class="chapter" data-level="4.2.3" data-path="spatial-operations.html"><a href="spatial-operations.html#spatial-joining"><i class="fa fa-check"></i><b>4.2.3</b> Spatial joining</a></li>
@@ -189,7 +189,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.2.5" data-path="spatial-operations.html"><a href="spatial-operations.html#spatial-data-aggregation"><i class="fa fa-check"></i><b>4.2.5</b> Spatial data aggregation</a></li>
 <li class="chapter" data-level="4.2.6" data-path="spatial-operations.html"><a href="spatial-operations.html#distance-relations"><i class="fa fa-check"></i><b>4.2.6</b> Distance relations</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="spatial-operations.html"><a href="spatial-operations.html#spatial-operations-on-raster-data"><i class="fa fa-check"></i><b>4.3</b> Spatial operations on raster data</a><ul>
+<li class="chapter" data-level="4.3" data-path="spatial-operations.html"><a href="spatial-operations.html#spatial-ras"><i class="fa fa-check"></i><b>4.3</b> Spatial operations on raster data</a><ul>
 <li class="chapter" data-level="4.3.1" data-path="attr.html"><a href="attr.html#raster-subsetting"><i class="fa fa-check"></i><b>4.3.1</b> Spatial subsetting</a></li>
 <li class="chapter" data-level="4.3.2" data-path="spatial-operations.html"><a href="spatial-operations.html#map-algebra"><i class="fa fa-check"></i><b>4.3.2</b> Map algebra</a></li>
 <li class="chapter" data-level="4.3.3" data-path="spatial-operations.html"><a href="spatial-operations.html#local-operations"><i class="fa fa-check"></i><b>4.3.3</b> Local operations</a></li>
@@ -563,7 +563,7 @@ con_raster_ea
 </div>
 <div id="geo-vec" class="section level2">
 <h2><span class="header-section-number">5.2</span> Geometric operations on vector data</h2>
-<p>This section is about operations that in some way change the geometry of vector (<code>sf</code>) objects. It is more advanced than the spatial data operations presented in the previous Chapter (in section <a href="spatial-operations.html#spatial-operations-on-vector-data">4.2</a>) because here we drill down into the geometry: the functions discussed in this section work on objects of class <code>sfc</code> (simple feature geometry collections) in addition to objects of class <code>sf</code>.</p>
+<p>This section is about operations that in some way change the geometry of vector (<code>sf</code>) objects. It is more advanced than the spatial data operations presented in the previous Chapter (in section <a href="spatial-operations.html#spatial-vec">4.2</a>) because here we drill down into the geometry: the functions discussed in this section work on objects of class <code>sfc</code> (simple feature geometry collections) in addition to objects of class <code>sf</code>.</p>
 <div id="simplification" class="section level3">
 <h3><span class="header-section-number">5.2.1</span> Simplification</h3>
 <p>Simplification is a process for generalization of vector objects (lines and polygons) usually for its use in smaller scale maps. Additional reason for simplification is reduction of the object size and therefore the size of a saved file. Therefore, data is often simplified before its use in interactive maps. The <strong>sf</strong> package provides the <code>st_simplify()</code> function<a href="#fn30" class="footnoteRef" id="fnref30"><sup>30</sup></a> Level of generalization is controlled by the <code>dTolerance</code> argument, which expects a value in map units. As the result, all vertices in the simplified geometry will be within this value from the original ones.</p>
