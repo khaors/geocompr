@@ -337,15 +337,7 @@ Maybe (not sure) a few figures would also help (conic, azimuthal projection; ell
 <span class="co">#&gt; Warning in st_buffer.sfc(st_geometry(x), dist, nQuadSegs): st_buffer does</span>
 <span class="co">#&gt; not correctly buffer longitude/latitude data</span>
 <span class="co">#&gt; dist is assumed to be in decimal degrees (arc_degrees).</span></code></pre></div>
-<p>Note the warning that informs us that the result has limited use because distances in geographic CRSs are in degrees, rather than meters or some other suitable measure of distance. The consequences of a failure to work on projected data are illustrated in Figure <a href="transform.html#fig:crs-buf">5.1</a>: note how the buffer is elongated in the north-south direction. This because lines of longitude are converge towards the Earth’s poles making them closer together (lines of latitude by contrast have constant distance from each other).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(london_buff, <span class="dt">graticule =</span> <span class="kw">st_crs</span>(<span class="dv">4326</span>), <span class="dt">axes =</span> <span class="ot">TRUE</span>)
-<span class="kw">plot</span>(london, <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:crs-buf"></span>
-<img src="figures/crs-buf-1.png" alt="Buffer on data with geographic CRS." width="576" />
-<p class="caption">
-Figure 5.1: Buffer on data with geographic CRS.
-</p>
-</div>
+<p>Note the warning that informs us that the result has limited use because distances in geographic CRSs are in degrees, rather than meters or some other suitable measure of distance. The consequences of a failure to work on projected data are illustrated in Figure <a href="transform.html#fig:crs-buf">5.1</a> (left panel): note how the buffer is elongated in the north-south direction. This because lines of longitude are converge towards the Earth’s poles making them closer together (lines of latitude by contrast have constant distance from each other).</p>
 <p>Do not interpret the warning about the geographic (<code>longitude/latitude</code>) CRS as “the CRS should not be set”: it almost always should be! It is better understood as a suggestion to <em>reproject</em> the data onto a projected CRS. This suggestion does not always need to be heeded: performing spatial and geometric operations makes little or no difference in some cases (e.g., spatial subsetting). But for operations involving distances such as buffering, the only way to ensure a good result is to create a projected copy of the data and run the operation on that. This is done in the code chunk below:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london_proj =<span class="st"> </span><span class="kw">c</span>(<span class="dv">530000</span>, <span class="dv">180000</span>) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">st_point</span>() %&gt;%<span class="st"> </span>
@@ -358,13 +350,11 @@ Figure 5.1: Buffer on data with geographic CRS.
 <span class="co">#&gt;   proj4string: &quot;+proj=tmerc +lat_0=49 +lon_0=-2 ... +units=m +no_defs&quot;</span></code></pre></div>
 <p>Notable components of this CRS description include the EPSG code (<code>EPSG: 27700</code>), the origin (<code>+lat_0=49 +lon_0=-2</code>) and units (<code>+units=m</code>). The fact that the units of the CRS are meters (rather than degrees) tells us that this is a projected CRS: geometry operations on <code>london_proj</code> will work without a warning, meaning buffers can be produced from it using proper units of distance. Moving 1 degree means moving 100+ km (111,320 meters) at the equator. This is used as the new buffer distance:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london_proj_buff =<span class="st"> </span><span class="kw">st_buffer</span>(london_proj, <span class="dv">111320</span>)</code></pre></div>
-<p>The result in Figure <a href="transform.html#fig:crs-buf-proj">5.2</a> shows that buffers based on a projected CRS are not distorted: every part of the buffer’s border is equidistant to London.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(london_proj_buff, <span class="dt">graticule =</span> <span class="kw">st_crs</span>(<span class="dv">27700</span>), <span class="dt">axes =</span> <span class="ot">TRUE</span>)
-<span class="kw">plot</span>(london_proj, <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:crs-buf-proj"></span>
-<img src="figures/crs-buf-proj-1.png" alt="Buffer on data with projected CRS." width="576" />
+<p>The result in Figure <a href="transform.html#fig:crs-buf">5.1</a> (right panel) shows that buffers based on a projected CRS are not distorted: every part of the buffer’s border is equidistant to London.</p>
+<div class="figure" style="text-align: center"><span id="fig:crs-buf"></span>
+<img src="figures/crs-buf-1.png" alt="Buffer on vector geometries with a geographic (left) and projected (right) CRS." width="45%" /><img src="figures/crs-buf-2.png" alt="Buffer on vector geometries with a geographic (left) and projected (right) CRS." width="45%" />
 <p class="caption">
-Figure 5.2: Buffer on data with projected CRS.
+Figure 5.1: Buffer on vector geometries with a geographic (left) and projected (right) CRS.
 </p>
 </div>
 <p>The importance of CRSs (primarily whether they are projected or geographic) has been demonstrated using the example of London. The subsequent sections go into more depth, exploring which CRS to use and the details of reprojecting vector and raster objects.</p>
@@ -442,24 +432,24 @@ dplyr::<span class="kw">filter</span>(crs_codes, code ==<span class="st"> </span
 The EPSG code can be found inside the <code>crs</code> attribute of the object’s geometry. It is hidden from view for most of the time except when the object is printed but can be can identified and set using the <code>st_crs</code> function, for example <code>st_crs(cycle_hire_osm)$epsg</code>.
 </div>
 <p></p>
-<p>Existing CRS are well suited for most purposes. <!-- examples --> In the same time, <code>proj4string</code> definitions are highly modifiable and allow for CRS customization. <!-- as we mentioned in section \@ref(crs-in-r). --> We can present that using selected world projections. The Mollweide projection is recommended when it is important to preserve areas <span class="citation">(Jenny et al. <a href="#ref-jenny_guide_2017">2017</a>)</span> (Figure <a href="transform.html#fig:mollproj">5.3</a>). To use this projection, we need to specify it using the <code>proj4string</code> element, <code>&quot;+proj=moll&quot;</code>, in the <code>st_transform</code> function:</p>
+<p>Existing CRS are well suited for most purposes. <!-- examples --> In the same time, <code>proj4string</code> definitions are highly modifiable and allow for CRS customization. <!-- as we mentioned in section \@ref(crs-in-r). --> We can present that using selected world projections. The Mollweide projection is recommended when it is important to preserve areas <span class="citation">(Jenny et al. <a href="#ref-jenny_guide_2017">2017</a>)</span> (Figure <a href="transform.html#fig:mollproj">5.2</a>). To use this projection, we need to specify it using the <code>proj4string</code> element, <code>&quot;+proj=moll&quot;</code>, in the <code>st_transform</code> function:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_mollweide =<span class="st"> </span><span class="kw">st_transform</span>(world, <span class="dt">crs =</span> <span class="st">&quot;+proj=moll&quot;</span>)</code></pre></div>
 <!-- plot(world_mollweide$geom) -->
 <!-- plot(world_mollweide$geom, graticule = TRUE) -->
 <div class="figure" style="text-align: center"><span id="fig:mollproj"></span>
 <img src="figures/mollproj-1.png" alt="Mollweide projection of the world" width="576" />
 <p class="caption">
-Figure 5.3: Mollweide projection of the world
+Figure 5.2: Mollweide projection of the world
 </p>
 </div>
-<p>On the other hand, the goal for many visualization purposes is to have a map with minimized area, direction, and distance distortions. One of the most popular projection to achieve that is the Winkel tripel projection (Figure <a href="transform.html#fig:wintriproj">5.4</a>).<a href="#fn28" class="footnoteRef" id="fnref28"><sup>28</sup></a> <code>st_transform_proj()</code> from the <strong>lwgeom</strong> package allows for coordinate transformations to a wide range of CRSs, inluding the Winkel tripel projection:</p>
+<p>On the other hand, the goal for many visualization purposes is to have a map with minimized area, direction, and distance distortions. One of the most popular projection to achieve that is the Winkel tripel projection (Figure <a href="transform.html#fig:wintriproj">5.3</a>).<a href="#fn28" class="footnoteRef" id="fnref28"><sup>28</sup></a> <code>st_transform_proj()</code> from the <strong>lwgeom</strong> package allows for coordinate transformations to a wide range of CRSs, inluding the Winkel tripel projection:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_wintri =<span class="st"> </span>lwgeom::<span class="kw">st_transform_proj</span>(world, <span class="dt">crs =</span> <span class="st">&quot;+proj=wintri&quot;</span>)</code></pre></div>
 <!-- plot(world_wintri$geom) -->
 <!-- plot(world_wintri$geom, graticule = TRUE) -->
 <div class="figure" style="text-align: center"><span id="fig:wintriproj"></span>
 <img src="figures/wintriproj-1.png" alt="Winkel tripel projection of the world" width="576" />
 <p class="caption">
-Figure 5.4: Winkel tripel projection of the world
+Figure 5.3: Winkel tripel projection of the world
 </p>
 </div>
 
@@ -467,24 +457,24 @@ Figure 5.4: Winkel tripel projection of the world
 Two main functions for transformation of simple features coordinates are <code>sf::st_transform()</code> and <code>sf::sf_project()</code>. The <code>st_transform</code> function uses the GDAL interface to PROJ.4, while <code>sf_project()</code> (which works with two-column numeric matrices, representing points) and <code>lwgeom::st_transform_proj()</code> use the PROJ.4 API directly. The first one is appropriate in most situations, and provides a set of the most often used parameters and well defined transformations. The second one allows for a greater customization of a projection, which includes cases when some of the PROJ.4 parameters (e.g. <code>+over</code>) or projection (<code>+proj=wintri</code>) is not available in <code>st_transform()</code>.
 </div>
 <p></p>
-<p>Moreover, PROJ.4 parameters can be modified in most CRS definitions. The below code transforms the coordinates to the Lambert azimuthal equal-area projection centered on longitude and latitude of <code>0</code> (Figure <a href="transform.html#fig:laeaproj1">5.5</a>).</p>
+<p>Moreover, PROJ.4 parameters can be modified in most CRS definitions. The below code transforms the coordinates to the Lambert azimuthal equal-area projection centered on longitude and latitude of <code>0</code> (Figure <a href="transform.html#fig:laeaproj1">5.4</a>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_laea1 =<span class="st"> </span><span class="kw">st_transform</span>(world, <span class="dt">crs =</span> <span class="st">&quot;+proj=laea +x_0=0 +y_0=0 +lon_0=0 +lat_0=0&quot;</span>)</code></pre></div>
 <!-- plot(world_laea1$geom) -->
 <!-- plot(world_laea1$geom, graticule = TRUE) -->
 <div class="figure" style="text-align: center"><span id="fig:laeaproj1"></span>
 <img src="figures/laeaproj1-1.png" alt="Lambert azimuthal equal-area projection of the world centered on longitude and latitude of 0" width="576" />
 <p class="caption">
-Figure 5.5: Lambert azimuthal equal-area projection of the world centered on longitude and latitude of 0
+Figure 5.4: Lambert azimuthal equal-area projection of the world centered on longitude and latitude of 0
 </p>
 </div>
-<p>We can change the PROJ.4 parameters, for example the center of the projection using the <code>+lon_0</code> and <code>+lat_0</code> parameters. The code below gives the map centered on New York City (Figure <a href="transform.html#fig:laeaproj2">5.6</a>).</p>
+<p>We can change the PROJ.4 parameters, for example the center of the projection using the <code>+lon_0</code> and <code>+lat_0</code> parameters. The code below gives the map centered on New York City (Figure <a href="transform.html#fig:laeaproj2">5.5</a>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_laea2 =<span class="st"> </span><span class="kw">st_transform</span>(world, <span class="dt">crs =</span> <span class="st">&quot;+proj=laea +x_0=0 +y_0=0 +lon_0=-74 +lat_0=40&quot;</span>)</code></pre></div>
 <!-- plot(world_laea2$geom) -->
 <!-- plot(world_laea2$geom, graticule = TRUE) -->
 <div class="figure" style="text-align: center"><span id="fig:laeaproj2"></span>
 <img src="figures/laeaproj2-1.png" alt="Lambert azimuthal equal-area projection of the world centered on New York City" width="576" />
 <p class="caption">
-Figure 5.6: Lambert azimuthal equal-area projection of the world centered on New York City
+Figure 5.5: Lambert azimuthal equal-area projection of the world centered on New York City
 </p>
 </div>
 <p>More information on CRS modifications can be found in the <a href="http://proj4.org/usage/index.html">Using PROJ.4</a> documentation.</p>
@@ -583,32 +573,32 @@ con_raster_ea
 <div id="simplification" class="section level3">
 <h3><span class="header-section-number">5.2.1</span> Simplification</h3>
 <p>Simplification is a process for generalization of vector objects (lines and polygons) usually for its use in smaller scale maps. Additional reason for simplification is reduction of the object size and therefore the size of a saved file. Therefore, data is often simplified before its use in interactive maps. The <strong>sf</strong> package provides the <code>st_simplify()</code> function<a href="#fn30" class="footnoteRef" id="fnref30"><sup>30</sup></a> Level of generalization is controlled by the <code>dTolerance</code> argument, which expects a value in map units. As the result, all vertices in the simplified geometry will be within this value from the original ones.</p>
-<p>We can use data of the Seine, Marne and Yonne rivers (on the left in Figure <a href="transform.html#fig:seine-simp">5.7</a>) as an example of line vector data simplification:</p>
+<p>We can use data of the Seine, Marne and Yonne rivers (on the left in Figure <a href="transform.html#fig:seine-simp">5.6</a>) as an example of line vector data simplification:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">seine_simp =<span class="st"> </span><span class="kw">st_simplify</span>(seine, <span class="dt">dTolerance =</span> <span class="dv">2000</span>) <span class="co">#2000 m</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:seine-simp"></span>
 <img src="figures/seine-simp-1.png" alt="Comparison of the original data of the Seine, Marne and Yonne rivers and its simplified version using `st_simplify`." width="576" />
 <p class="caption">
-Figure 5.7: Comparison of the original data of the Seine, Marne and Yonne rivers and its simplified version using <code>st_simplify</code>.
+Figure 5.6: Comparison of the original data of the Seine, Marne and Yonne rivers and its simplified version using <code>st_simplify</code>.
 </p>
 </div>
-<p>The new object, <code>seine_simp</code>, is not only visually generalized (on the right in Figure <a href="transform.html#fig:seine-simp">5.7</a>), but also has twice smaller size than the original object:</p>
+<p>The new object, <code>seine_simp</code>, is not only visually generalized (on the right in Figure <a href="transform.html#fig:seine-simp">5.6</a>), but also has twice smaller size than the original object:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">object.size</span>(seine)
 <span class="co">#&gt; 16768 bytes</span>
 <span class="kw">object.size</span>(seine_simp)
 <span class="co">#&gt; 7808 bytes</span></code></pre></div>
-<p>Let’s take a look at the second example of simplification. It will use, <code>us_states</code>, polygons representing the contiguous United States. As we showed in section <a href="transform.html#reproj-geo-data">5.1</a>, GEOS assumes that the data is in a projected CRS and this could lead to unexpected results when using a geographic CRS. Therefore, the first step is to project the data into some adequate projected CRS, such as US National Atlas Equal Area (epsg = 2163) (on the left in Figure <a href="transform.html#fig:us-simp">5.8</a>):</p>
+<p>Let’s take a look at the second example of simplification. It will use, <code>us_states</code>, polygons representing the contiguous United States. As we showed in section <a href="transform.html#reproj-geo-data">5.1</a>, GEOS assumes that the data is in a projected CRS and this could lead to unexpected results when using a geographic CRS. Therefore, the first step is to project the data into some adequate projected CRS, such as US National Atlas Equal Area (epsg = 2163) (on the left in Figure <a href="transform.html#fig:us-simp">5.7</a>):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">us_states2163 =<span class="st"> </span><span class="kw">st_transform</span>(us_states, <span class="dv">2163</span>)</code></pre></div>
 <p>The <code>st_simplify</code> function uses the standard Douglas-Peucker algorithm, which is realatively fast.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">us_states_simp1 =<span class="st"> </span><span class="kw">st_simplify</span>(us_states2163, <span class="dt">dTolerance =</span> <span class="dv">100000</span>) <span class="co">#100 km</span></code></pre></div>
-<p>On the other hand, this algorithm simplify objects on a per-geometry basis, and therefore does not preserve topology. This could be seen on the middle map in Figure <a href="transform.html#fig:us-simp">5.8</a>, where polygons of single states are splitted creating holes or overlapping each other. An alternative simplification method can be used to solve this issue, such as the Visvalingam algorithm implemented in the <strong>rmapshaper</strong> package’s function <code>ms_simplify()</code>. <!-- https://bost.ocks.org/mike/simplify/ --> In the below example, we would simplified the <code>us_states2163</code> object using only 0.1% of original data vertices (argument <code>keep</code>), and also assure that all of the original objects (states) would be be kept (argument <code>keep_shapes</code>).</p>
+<p>On the other hand, this algorithm simplify objects on a per-geometry basis, and therefore does not preserve topology. This could be seen on the middle map in Figure <a href="transform.html#fig:us-simp">5.7</a>, where polygons of single states are splitted creating holes or overlapping each other. An alternative simplification method can be used to solve this issue, such as the Visvalingam algorithm implemented in the <strong>rmapshaper</strong> package’s function <code>ms_simplify()</code>. <!-- https://bost.ocks.org/mike/simplify/ --> In the below example, we would simplified the <code>us_states2163</code> object using only 0.1% of original data vertices (argument <code>keep</code>), and also assure that all of the original objects (states) would be be kept (argument <code>keep_shapes</code>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># proportion of points to retain (0-1; default 0.05)</span>
 us_states_simp2 =<span class="st"> </span>rmapshaper::<span class="kw">ms_simplify</span>(us_states2163, <span class="dt">keep =</span> <span class="fl">0.005</span>,
                                           <span class="dt">keep_shapes =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<p>Finally, the visual comparison of the original dataset and two simplified versions shows differences between the Douglas-Peucker (<code>st_simplify</code>) and Visvalingam (<code>ms_simplify</code>) algorithms outputs (Figure <a href="transform.html#fig:us-simp">5.8</a>):</p>
+<p>Finally, the visual comparison of the original dataset and two simplified versions shows differences between the Douglas-Peucker (<code>st_simplify</code>) and Visvalingam (<code>ms_simplify</code>) algorithms outputs (Figure <a href="transform.html#fig:us-simp">5.7</a>):</p>
 <div class="figure" style="text-align: center"><span id="fig:us-simp"></span>
 <img src="figures/us-simp-1.png" alt="Comparison of the original data of the contiguous United States and two simplified versions using `st_simplify` and `ms_simplify`." width="576" />
 <p class="caption">
-Figure 5.8: Comparison of the original data of the contiguous United States and two simplified versions using <code>st_simplify</code> and <code>ms_simplify</code>.
+Figure 5.7: Comparison of the original data of the contiguous United States and two simplified versions using <code>st_simplify</code> and <code>ms_simplify</code>.
 </p>
 </div>
 </div>
@@ -616,18 +606,18 @@ Figure 5.8: Comparison of the original data of the contiguous United States and 
 <h3><span class="header-section-number">5.2.2</span> Centroids and buffers</h3>
 <!-- centroids intro -->
 <p>There are two main functions that create single point representations of more complex vector objects - <code>st_centroid()</code> and <code>st_point_on_surface()</code>.</p>
-<p>The <code>st_centroid()</code> function calculates the geometric center of a geometry. We can create centroids for polygons, lines (see black points on Figure <a href="transform.html#fig:centr">5.9</a>) and multipoints:</p>
+<p>The <code>st_centroid()</code> function calculates the geometric center of a geometry. We can create centroids for polygons, lines (see black points on Figure <a href="transform.html#fig:centr">5.8</a>) and multipoints:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_centroid =<span class="st"> </span><span class="kw">st_centroid</span>(nz)
 seine_centroid =<span class="st"> </span><span class="kw">st_centroid</span>(seine)</code></pre></div>
-<p>Centroids could be useful to represent more complex objects - lines and polygons, for example to calculate distances between centers of polygons. They are also often used as places where polygons or lines labels are put. However, it is important to know that centroids could be located outside of the given object, e.g. in cases of irregular shaped polygons or lines. Examples of this could be seen on the right plot on Figure <a href="transform.html#fig:centr">5.9</a>.</p>
+<p>Centroids could be useful to represent more complex objects - lines and polygons, for example to calculate distances between centers of polygons. They are also often used as places where polygons or lines labels are put. However, it is important to know that centroids could be located outside of the given object, e.g. in cases of irregular shaped polygons or lines. Examples of this could be seen on the right plot on Figure <a href="transform.html#fig:centr">5.8</a>.</p>
 <p>Alternatively, the <code>st_point_on_surface()</code> can be used.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_pos =<span class="st"> </span><span class="kw">st_point_on_surface</span>(nz)
 seine_pos =<span class="st"> </span><span class="kw">st_point_on_surface</span>(seine)</code></pre></div>
-<p>It ensures that the created point lies on the given object (see red points on Figure <a href="transform.html#fig:centr">5.9</a>).</p>
+<p>It ensures that the created point lies on the given object (see red points on Figure <a href="transform.html#fig:centr">5.8</a>).</p>
 <div class="figure" style="text-align: center"><span id="fig:centr"></span>
 <img src="figures/centr-1.png" alt="Comparison between the outputs of `st_centroid()` (black points) and `st_point_on_surface()` (red points) on New Zeleand's regions (left) and the Seine, Marne and Yonne rivers (right)." width="576" />
 <p class="caption">
-Figure 5.9: Comparison between the outputs of <code>st_centroid()</code> (black points) and <code>st_point_on_surface()</code> (red points) on New Zeleand’s regions (left) and the Seine, Marne and Yonne rivers (right).
+Figure 5.8: Comparison between the outputs of <code>st_centroid()</code> (black points) and <code>st_point_on_surface()</code> (red points) on New Zeleand’s regions (left) and the Seine, Marne and Yonne rivers (right).
 </p>
 </div>
 </div>
@@ -646,7 +636,7 @@ l =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;x&q
 <div class="figure" style="text-align: center"><span id="fig:points"></span>
 <img src="figures/points-1.png" alt="Overlapping circles." width="576" />
 <p class="caption">
-Figure 5.10: Overlapping circles.
+Figure 5.9: Overlapping circles.
 </p>
 </div>
 <p>Imagine you want to select not one circle or the other, but the space covered by both <code>x</code> <em>and</em> <code>y</code>. This can be done using the function <code>st_intersection()</code>, illustrated using objects named <code>x</code> and <code>y</code> which represent the left and right-hand circles:</p>
@@ -660,11 +650,11 @@ x_and_y =<span class="st"> </span><span class="kw">st_intersection</span>(x, y)
 <div class="figure" style="text-align: center"><span id="fig:venn-clip"></span>
 <img src="figures/venn-clip-1.png" alt="Spatial equivalents of logical operators." width="576" />
 <p class="caption">
-Figure 5.11: Spatial equivalents of logical operators.
+Figure 5.10: Spatial equivalents of logical operators.
 </p>
 </div>
-<p>To illustrate the relationship between subsetting and clipping spatial data, we will subset points that cover the bounding box of the circles <code>x</code> and <code>y</code> in Figure <a href="transform.html#fig:venn-clip">5.11</a>. Some points will be inside just one circle, some will be inside both and some will be inside neither.</p>
-<p>There are two different ways to subset points that fit into combinations of the circles: via clipping and logical operators. But first we must generate some points. We will use the <em>simple random</em> sampling strategy to sample from a box representing the extent of <code>x</code> and <code>y</code>. To generate this points will use a function not yet covered in this book, <code>st_sample()</code>. Next we will generate the situation plotted in Figure <a href="transform.html#fig:venn-subset">5.12</a>:</p>
+<p>To illustrate the relationship between subsetting and clipping spatial data, we will subset points that cover the bounding box of the circles <code>x</code> and <code>y</code> in Figure <a href="transform.html#fig:venn-clip">5.10</a>. Some points will be inside just one circle, some will be inside both and some will be inside neither.</p>
+<p>There are two different ways to subset points that fit into combinations of the circles: via clipping and logical operators. But first we must generate some points. We will use the <em>simple random</em> sampling strategy to sample from a box representing the extent of <code>x</code> and <code>y</code>. To generate this points will use a function not yet covered in this book, <code>st_sample()</code>. Next we will generate the situation plotted in Figure <a href="transform.html#fig:venn-subset">5.11</a>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bb =<span class="st"> </span><span class="kw">st_bbox</span>(<span class="kw">st_union</span>(x, y))
 pmat =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(bb[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">2</span>)]), <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)
 box =<span class="st"> </span><span class="kw">st_polygon</span>(<span class="kw">list</span>(pmat))
@@ -678,7 +668,7 @@ p =<span class="st"> </span><span class="kw">st_sample</span>(<span class="dt">x
 <div class="figure" style="text-align: center"><span id="fig:venn-subset"></span>
 <img src="figures/venn-subset-1.png" alt="Randomly distributed points within the bounding box enclosing circles x and y." width="576" />
 <p class="caption">
-Figure 5.12: Randomly distributed points within the bounding box enclosing circles x and y.
+Figure 5.11: Randomly distributed points within the bounding box enclosing circles x and y.
 </p>
 </div>
 </div>
@@ -687,7 +677,7 @@ Figure 5.12: Randomly distributed points within the bounding box enclosing circl
 <p>Spatial aggregation can also be done in the <strong>tidyverse</strong>, using <strong>dplyr</strong> functions as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">group_by</span>(us_states, REGION) %&gt;%
 <span class="st">  </span><span class="kw">summarize</span>(<span class="kw">sum</span>(<span class="dt">pop =</span> total_pop_15, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</code></pre></div>
-<p>For attribute data aggregation the grouping variable is another variable, typically one with few unique values relative to the number of rows (see section <a href="attr.html#vector-attribute-aggregation">3.2.2</a>). What we did not cover in that section was that attribute data aggregation dissolves the geometries of touching polygons. The <code>REGION</code> variable in the <code>us_states</code> dataset is a good example: there are 49 states (excluding Hawaii and Alaska) which can be aggregated into four regions. This is demonstrated in the code chunk below, the results of which are illustrated in Figure <a href="transform.html#fig:us-regions">5.13</a>:</p>
+<p>For attribute data aggregation the grouping variable is another variable, typically one with few unique values relative to the number of rows (see section <a href="attr.html#vector-attribute-aggregation">3.2.2</a>). What we did not cover in that section was that attribute data aggregation dissolves the geometries of touching polygons. The <code>REGION</code> variable in the <code>us_states</code> dataset is a good example: there are 49 states (excluding Hawaii and Alaska) which can be aggregated into four regions. This is demonstrated in the code chunk below, the results of which are illustrated in Figure <a href="transform.html#fig:us-regions">5.12</a>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">regions =<span class="st"> </span><span class="kw">aggregate</span>(<span class="dt">x =</span> us_states[, <span class="st">&quot;total_pop_15&quot;</span>], <span class="dt">by =</span> <span class="kw">list</span>(us_states$REGION),
                     <span class="dt">FUN =</span> sum, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <!--
@@ -696,7 +686,7 @@ show also tidyverse way, so what you are doing is basically a spatial join and a
 <div class="figure" style="text-align: center"><span id="fig:us-regions"></span>
 <img src="figures/us-regions-1.png" alt="Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions, with population represented by color. Note the operation automatically dissolves boundaries between states." width="100%" />
 <p class="caption">
-Figure 5.13: Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions, with population represented by color. Note the operation automatically dissolves boundaries between states.
+Figure 5.12: Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions, with population represented by color. Note the operation automatically dissolves boundaries between states.
 </p>
 </div>
 <p>The equivalent result can be achieved using <strong>tidyverse</strong> functions as follows (result not shown):</p>
@@ -709,14 +699,14 @@ Figure 5.13: Spatial aggregation on contiguous polygons, illustrated by aggregat
 <p>Geometry casting is powerful operation which enable transformation of the geometry type. It is implemented in the <code>st_cast</code> function from the <code>sf</code> package. Importantly, <code>st_cast</code> behaves differently on single simple feature geometry (<code>sfg</code>) objects, and simple feature geometry column (<code>sfc</code>) and simple features objects.</p>
 <p>Let’s create a multipoint to illustrate how geometry casting works on simple feature geometry (<code>sfg</code>) objects:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">multipoint =<span class="st"> </span><span class="kw">st_multipoint</span>(<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">1</span>), <span class="dt">ncol =</span> <span class="dv">2</span>))</code></pre></div>
-<p>In this case, <code>st_cast</code> can be useful to transform the new object into linestring or polygon (Figure <a href="transform.html#fig:single-cast">5.14</a>):</p>
+<p>In this case, <code>st_cast</code> can be useful to transform the new object into linestring or polygon (Figure <a href="transform.html#fig:single-cast">5.13</a>):</p>
 <!-- a/ points -> lines -> polygons  -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">linestring =<span class="st"> </span><span class="kw">st_cast</span>(multipoint, <span class="st">&quot;LINESTRING&quot;</span>)
 polyg =<span class="st"> </span><span class="kw">st_cast</span>(multipoint, <span class="st">&quot;POLYGON&quot;</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:single-cast"></span>
 <img src="figures/single-cast-1.png" alt="Examples of linestring and polygon created based on multipoint using the `st_cast` function" width="576" />
 <p class="caption">
-Figure 5.14: Examples of linestring and polygon created based on multipoint using the <code>st_cast</code> function
+Figure 5.13: Examples of linestring and polygon created based on multipoint using the <code>st_cast</code> function
 </p>
 </div>
 <p>This process can be also reversed using <code>st_cast</code>:</p>
@@ -730,7 +720,7 @@ For single simple feature geometries (<code>sfg</code>), <code>st_cast</code> pr
 </div>
 <p></p>
 <p>Geometry casting of simple feature geometry column (<code>sfc</code>) and simple features objects works the same as for single geometries in most of the cases. One imporant difference is conversion between multi to non-multi types. As a result of this process, multi-objects are split into many non-multi objects.</p>
-<p>We would use a new object, <code>multilinestring_sf</code>, as an example (on the left in Figure <a href="transform.html#fig:line-cast">5.15</a>):</p>
+<p>We would use a new object, <code>multilinestring_sf</code>, as an example (on the left in Figure <a href="transform.html#fig:line-cast">5.14</a>):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">multilinestring_list =<span class="st"> </span><span class="kw">list</span>(<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">3</span>), <span class="dt">ncol =</span> <span class="dv">2</span>), 
                             <span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>), <span class="dt">ncol =</span> <span class="dv">2</span>),
                             <span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">2</span>), <span class="dt">ncol =</span> <span class="dv">2</span>))
@@ -761,7 +751,7 @@ linestring_sf2
 <div class="figure" style="text-align: center"><span id="fig:line-cast"></span>
 <img src="figures/line-cast-1.png" alt="Examples of type casting between MULTILINESTRING (left) and LINESTRING (right)." width="576" />
 <p class="caption">
-Figure 5.15: Examples of type casting between MULTILINESTRING (left) and LINESTRING (right).
+Figure 5.14: Examples of type casting between MULTILINESTRING (left) and LINESTRING (right).
 </p>
 </div>
 <p>The newely created object allows for attributes creation (see more in section <a href="attr.html#vec-attr-creation">3.2.4</a>) and length measurement:</p>
@@ -813,13 +803,13 @@ A transformation is then performed, which converts local image coordinates to re
 <div id="raster-alignment" class="section level3">
 <h3><span class="header-section-number">5.3.1</span> Raster alignment</h3>
 <p>When merging or performing map algebra on rasters, their resolution, projection, origin and/or extent has to match. Otherwise, how should we add the values of one raster with a resolution of 0.2 decimal degrees to a second with a resolution of 1 decimal degree? The same problem arises when we would like to merge satellite imagery from different sensors with different projections and resolutions. We can deal with such mismatches by aligning the rasters.</p>
-<p>This section uses the <code>elev</code> object from <a href="attr.html#manipulating-raster-objects">3.3</a>. The <code>projectRaster()</code> function reprojects one raster to a desired projection, say from UTM to WGS84. Equally, map algebra operations require the same extent. Following code adds one row and two columns to each side of the raster while setting all new values to an elevation of 1000 meters (<a href="transform.html#fig:extend-example">5.16</a>).</p>
+<p>This section uses the <code>elev</code> object from <a href="attr.html#manipulating-raster-objects">3.3</a>. The <code>projectRaster()</code> function reprojects one raster to a desired projection, say from UTM to WGS84. Equally, map algebra operations require the same extent. Following code adds one row and two columns to each side of the raster while setting all new values to an elevation of 1000 meters (<a href="transform.html#fig:extend-example">5.15</a>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_2 =<span class="st"> </span><span class="kw">extend</span>(elev, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">value =</span> <span class="dv">1000</span>)
 <span class="kw">plot</span>(elev_2)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:extend-example"></span>
 <img src="figures/extend-example-1.png" alt="Original raster extended by 1 one row on each side (top, bottom) and two columns on each side (right, left)." width="576" />
 <p class="caption">
-Figure 5.16: Original raster extended by 1 one row on each side (top, bottom) and two columns on each side (right, left).
+Figure 5.15: Original raster extended by 1 one row on each side (top, bottom) and two columns on each side (right, left).
 </p>
 </div>
 <p>Performing an algebraic operation on two objects with differing extents in R, the <strong>raster</strong> package returns the result for the intersection, and says so in a warning.</p>
@@ -828,7 +818,7 @@ Figure 5.16: Original raster extended by 1 one row on each side (top, bottom) an
 <span class="co">#&gt; their intersection is returned</span></code></pre></div>
 <p>However, we can also align the extent of two rasters with the <code>extend()</code> command. Here, we extend the <code>elev</code> object to the extend of <code>elev_2</code>. The newly added rows and column receive the default value of the <code>value</code> parameter, i.e., <code>NA</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_4 =<span class="st"> </span><span class="kw">extend</span>(elev, elev_2)</code></pre></div>
-<p>The <code>aggregate()</code> and <code>disaggregate()</code> functions help to change the cell size resolution of a raster. For instance, let us aggregate <code>elev</code> from a resolution of 0.5 to a resolution of 1, that means we aggregate by a factor of 2 (Fig. <a href="transform.html#fig:aggregate-example">5.17</a>). Additionally, the output cell value should correspond to the mean of the input cells (but one could use other functions as well such as <code>median()</code>, <code>sum()</code>, etc.):</p>
+<p>The <code>aggregate()</code> and <code>disaggregate()</code> functions help to change the cell size resolution of a raster. For instance, let us aggregate <code>elev</code> from a resolution of 0.5 to a resolution of 1, that means we aggregate by a factor of 2 (Fig. <a href="transform.html#fig:aggregate-example">5.16</a>). Additionally, the output cell value should correspond to the mean of the input cells (but one could use other functions as well such as <code>median()</code>, <code>sum()</code>, etc.):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_agg =<span class="st"> </span><span class="kw">aggregate</span>(elev, <span class="dt">fact =</span> <span class="dv">2</span>, <span class="dt">fun =</span> mean)
 <span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
 <span class="kw">plot</span>(elev)
@@ -836,7 +826,7 @@ Figure 5.16: Original raster extended by 1 one row on each side (top, bottom) an
 <div class="figure" style="text-align: center"><span id="fig:aggregate-example"></span>
 <img src="figures/aggregate-example-1.png" alt="Original raster (left). Aggregated raster (right)." width="576" />
 <p class="caption">
-Figure 5.17: Original raster (left). Aggregated raster (right).
+Figure 5.16: Original raster (left). Aggregated raster (right).
 </p>
 </div>
 <p>Note that the origin of <code>elev_agg</code> has changed, too.</p>
@@ -844,7 +834,7 @@ Figure 5.17: Original raster (left). Aggregated raster (right).
 <span class="co">#&gt; [1] 0 0</span>
 <span class="kw">origin</span>(elev_agg)
 <span class="co">#&gt; [1] 0.5 0.5</span></code></pre></div>
-<p>The origin is the point closest to (0, 0) if you moved towards it in steps of x and y resolution. If two rasters have different origins, their cells do not overlap completely which would make map algebra impossible. To change the origin , use <code>origin()</code>.<a href="#fn31" class="footnoteRef" id="fnref31"><sup>31</sup></a> Looking at figure <a href="transform.html#fig:origin-example">5.18</a> reveals the effect of changing the origin.</p>
+<p>The origin is the point closest to (0, 0) if you moved towards it in steps of x and y resolution. If two rasters have different origins, their cells do not overlap completely which would make map algebra impossible. To change the origin , use <code>origin()</code>.<a href="#fn31" class="footnoteRef" id="fnref31"><sup>31</sup></a> Looking at figure <a href="transform.html#fig:origin-example">5.17</a> reveals the effect of changing the origin.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the aggregated raster</span>
 <span class="kw">plot</span>(elev_agg)
 <span class="co"># change the origin</span>
@@ -854,7 +844,7 @@ Figure 5.17: Original raster (left). Aggregated raster (right).
 <div class="figure" style="text-align: center"><span id="fig:origin-example"></span>
 <img src="figures/origin-example-1.png" alt="Plotting rasters with the same values but different origins." width="576" />
 <p class="caption">
-Figure 5.18: Plotting rasters with the same values but different origins.
+Figure 5.17: Plotting rasters with the same values but different origins.
 </p>
 </div>
 <p>The <code>resample()</code> command lets you align several raster properties in one go, namely origin, extent and resolution. Let us resample an extended <code>elev_agg</code> to the properties of <code>elev</code> again.</p>
@@ -890,7 +880,7 @@ elev_disagg =<span class="st"> </span><span class="kw">resample</span>(elev_agg,
 <ul>
 <li>Bonus: rewrite code that generated the answer to the previous question using a projected CRS (suggestion: UTM). <!-- AFFINE TRANSFORMATION --> <!-- CLIPPING --></li>
 </ul></li>
-<li>Write code that subsets points that are contained within <code>x</code> <em>and</em> <code>y</code> (illustrated by the plot in the 2<sup>nd</sup> row and the 1<sup>st</sup> column in Figure <a href="transform.html#fig:venn-clip">5.11</a>).
+<li>Write code that subsets points that are contained within <code>x</code> <em>and</em> <code>y</code> (illustrated by the plot in the 2<sup>nd</sup> row and the 1<sup>st</sup> column in Figure <a href="transform.html#fig:venn-clip">5.10</a>).
 <ul>
 <li>Create a randomly located point with the command <code>st_point()</code> (refer back to section <a href="spatial-class.html#sfg">2.1.5.2</a> to see how to create spatial data ‘from scratch’).</li>
 </ul></li>

@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveef2cbe2c537ca7ad
+preserveab221370aa39d0bb
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservedd492803b12ea870
+preserve12acf576a0868075
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3713,20 +3713,9 @@ london_buff = st_buffer(london, dist = 1)
 ```
 
 Note the warning that informs us that the result has limited use because distances in geographic CRSs are in degrees, rather than meters or some other suitable measure of distance.
-The consequences of a failure to work on projected data are illustrated in Figure \@ref(fig:crs-buf):
+The consequences of a failure to work on projected data are illustrated in Figure \@ref(fig:crs-buf) (left panel):
 note how the buffer is elongated in the north-south direction.
 This because lines of longitude are converge towards the Earth's poles making them closer together (lines of latitude by contrast have constant distance from each other).  
-
-
-```r
-plot(london_buff, graticule = st_crs(4326), axes = TRUE)
-plot(london, add = TRUE)
-```
-
-<div class="figure" style="text-align: center">
-<img src="figures/crs-buf-1.png" alt="Buffer on data with geographic CRS." width="576" />
-<p class="caption">(\#fig:crs-buf)Buffer on data with geographic CRS.</p>
-</div>
 
 Do not interpret the warning about the geographic (`longitude/latitude`) CRS as "the CRS should not be set": it almost always should be!
 It is better understood as a suggestion to *reproject* the data onto a projected CRS.
@@ -3763,18 +3752,12 @@ This is used as the new buffer distance:
 london_proj_buff = st_buffer(london_proj, 111320)
 ```
 
-The result in Figure \@ref(fig:crs-buf-proj) shows that buffers based on a projected CRS are not distorted:
+The result in Figure \@ref(fig:crs-buf) (right panel) shows that buffers based on a projected CRS are not distorted:
 every part of the buffer's border is equidistant to London.
 
-
-```r
-plot(london_proj_buff, graticule = st_crs(27700), axes = TRUE)
-plot(london_proj, add = TRUE)
-```
-
 <div class="figure" style="text-align: center">
-<img src="figures/crs-buf-proj-1.png" alt="Buffer on data with projected CRS." width="576" />
-<p class="caption">(\#fig:crs-buf-proj)Buffer on data with projected CRS.</p>
+<img src="figures/crs-buf-1.png" alt="Buffer on vector geometries with a geographic (left) and projected (right) CRS." width="45%" /><img src="figures/crs-buf-2.png" alt="Buffer on vector geometries with a geographic (left) and projected (right) CRS." width="45%" />
+<p class="caption">(\#fig:crs-buf)Buffer on vector geometries with a geographic (left) and projected (right) CRS.</p>
 </div>
 
 The importance of CRSs (primarily whether they are projected or geographic) has been demonstrated using the example of London.
@@ -5808,7 +5791,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve95e01b2e826b9011
+preserve8473d416ec05b1bc
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
