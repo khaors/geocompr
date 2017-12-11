@@ -869,7 +869,27 @@ elev_disagg =<span class="st"> </span><span class="kw">resample</span>(elev_agg,
 <ol style="list-style-type: decimal">
 <li>Transform the <code>world</code> dataset to the transverse Mercator projection (<code>&quot;+proj=tmerc&quot;</code>) and plot the result. What has changed and why? Try to transform it back into WGS 84 and plot the new object. Why the new object differs from the original one? <!-- https://github.com/r-spatial/sf/issues/509 --> <!-- ```{r} --> <!-- world_tmerc = st_transform(world, "+proj=tmerc") --> <!-- plot(world_tmerc$geom) --> <!--  world_4326 = st_transform(world_tmerc, 4326) --> <!-- plot(world_4326$geom) --> <!-- ``` --></li>
 <li>Try to transform the categorical raster (<code>cat_raster</code>) into WGS 84 using the bi-linear interpolation method. What has changed? How it influences the results? <!-- ```{r} --> <!-- wgs84 = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs" --> <!-- cat_raster_wgs84 = projectRaster(cat_raster, crs = wgs84, method = "bilinear") --> <!-- cat_raster_wgs84 --> <!-- ``` --></li>
-<li>Try to transform the continuous raster (<code>cat_raster</code>) into WGS 84 using the nearest neighbor interpolation method. What has changed? How it influences the results? <!-- ```{r} --> <!-- con_raster = raster(system.file("raster/srtm.tif", package="spDataLarge")) --> <!-- con_raster_wgs84 = projectRaster(con_raster, crs = wgs84, method = "ngb") --> <!-- con_raster_wgs84 --> <!-- ``` --> <!-- GEOMETRY TRANSFORMATION --> <!-- VECTOR --> <!-- SIMPLIFICATION --> <!-- CENTROIDS AND BUFFERS--> <!-- AFFINE TRANSFORMATION --> <!-- CLIPPING --> <!-- UNIONS --> <!-- TYPE TRANS. --> <!-- RASTERIZATION --> <!-- RASTER --> <!-- ALIGNMENT --> <!-- AGGREGATION --> <!-- VECTORIZATION --></li>
+<li>Try to transform the continuous raster (<code>cat_raster</code>) into WGS 84 using the nearest neighbor interpolation method. What has changed? How it influences the results? <!-- ```{r} --> <!-- con_raster = raster(system.file("raster/srtm.tif", package="spDataLarge")) --> <!-- con_raster_wgs84 = projectRaster(con_raster, crs = wgs84, method = "ngb") --> <!-- con_raster_wgs84 --> <!-- ``` --> <!-- GEOMETRY TRANSFORMATION --> <!-- VECTOR --> <!-- SIMPLIFICATION --> <!-- CENTROIDS AND BUFFERS--></li>
+<li>Write code that uses functions <code>aggregate()</code> and <code>st_buffer()</code> to answers the following question: What proportion of the world’s population lives in countries that intersect a circle with a 10 degree radius of the intersection between the equator and the <a href="https://en.wikipedia.org/wiki/9th_meridian_east">9<sup>th</sup> meridian</a>? (Advanced challenge: find the point with the highest number of people within a 10 degree radius.)</li>
+</ol>
+<pre><code>#&gt; Warning in st_buffer.sfc(st_geometry(x), dist, nQuadSegs): st_buffer does
+#&gt; not correctly buffer longitude/latitude data
+#&gt; dist is assumed to be in decimal degrees (arc_degrees).
+#&gt; although coordinates are longitude/latitude, st_intersects assumes that they are planar
+#&gt; [1] 0.00998</code></pre>
+<ol style="list-style-type: decimal">
+<li>Assuming that people are evenly distributed across countries, estimate the population living <em>within</em> the circle created to answer the previous question.</li>
+</ol>
+<pre><code>#&gt; although coordinates are longitude/latitude, st_intersection assumes that they are planar
+#&gt; Warning in st_interpolate_aw(x = world[&quot;pop&quot;], to = buff9, extensive =
+#&gt; TRUE): st_interpolate_aw assumes attributes are constant over areas of x</code></pre>
+<!-- AFFINE TRANSFORMATION -->
+<!-- CLIPPING -->
+<ol style="list-style-type: decimal">
+<li>Write code that subsets points that are contained within <code>x</code> <em>and</em> <code>y</code> (illustrated by the plot in the 2<sup>nd</sup> row and the 1<sup>st</sup> column in Figure <a href="transform.html#fig:venn-clip">5.11</a>).
+<ul>
+<li>Create a randomly located point with the command <code>st_point()</code> (refer back to section <a href="spatial-class.html#sfg">2.1.5.2</a> to see how to create spatial data ‘from scratch’). <!-- UNIONS --> <!-- TYPE TRANS. --> <!-- RASTERIZATION --> <!-- RASTER --> <!-- ALIGNMENT --> <!-- AGGREGATION --> <!-- VECTORIZATION --></li>
+</ul></li>
 </ol>
 
 </div>

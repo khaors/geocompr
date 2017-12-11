@@ -772,24 +772,6 @@ aut_ch =<span class="st"> </span><span class="kw">merge</span>(aut, ch)</code></
 </div>
 <div id="exercises-2" class="section level2">
 <h2><span class="header-section-number">4.4</span> Exercises</h2>
-<ol style="list-style-type: decimal">
-<li>Write code that subsets points that are contained within <code>x</code> <em>and</em> <code>y</code> (illustrated by the plot in the 2<sup>nd</sup> row and the 1<sup>st</sup> column in Figure <a href="transform.html#fig:venn-clip">5.11</a>).
-<ul>
-<li>Create a randomly located point with the command <code>st_point()</code> (refer back to section <a href="spatial-class.html#sfg">2.1.5.2</a> to see how to create spatial data ‘from scratch’).</li>
-</ul></li>
-<li>Write code that uses functions <code>aggregate()</code> and <code>st_buffer()</code> to answers the following question: What proportion of the world’s population lives in countries that intersect a circle with a 10 degree radius of the intersection between the equator and the <a href="https://en.wikipedia.org/wiki/9th_meridian_east">9<sup>th</sup> meridian</a>? (Advanced challenge: find the point with the highest number of people within a 10 degree radius.)</li>
-</ol>
-<pre><code>#&gt; Warning in st_buffer.sfc(st_geometry(x), dist, nQuadSegs): st_buffer does
-#&gt; not correctly buffer longitude/latitude data
-#&gt; dist is assumed to be in decimal degrees (arc_degrees).
-#&gt; although coordinates are longitude/latitude, st_intersects assumes that they are planar
-#&gt; [1] 0.00998</code></pre>
-<ol start="3" style="list-style-type: decimal">
-<li>Assuming that people are evenly distributed across countries, estimate the population living <em>within</em> the circle created to answer the previous question.</li>
-</ol>
-<pre><code>#&gt; although coordinates are longitude/latitude, st_intersection assumes that they are planar
-#&gt; Warning in st_interpolate_aw(x = world[&quot;pop&quot;], to = buff9, extensive =
-#&gt; TRUE): st_interpolate_aw assumes attributes are constant over areas of x</code></pre>
 <!-- Raster exercises-->
 <ol start="4" style="list-style-type: decimal">
 <li>Use <code>data(dem, package = &quot;RQGIS&quot;)</code>, and reclassify the elevation in three classes: low, middle and high. Secondly, compute the NDVI (<code>data(ndvi, package = &quot;RQGIS&quot;)</code>) and the mean elevation for each altitudinal class.</li>

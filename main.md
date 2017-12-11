@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservedf47ed12aa8b44b3
+preserved1f9bca481d40020
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3091,7 +3091,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve5b81e483dc8e103b
+preserveb7179f8c7fecda12
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3587,28 +3587,6 @@ The packages **landsat** (`histmatch()`, `relnorm()`, `PIF()`), **satellite** (`
 <!-- changes classes; polygonize, etc-->
 
 ## Exercises
-
-1. Write code that subsets points that are contained within `x` *and* `y` (illustrated by the plot in the 2^nd^ row and the 1^st^ column in Figure \@ref(fig:venn-clip)).
-    - Create a randomly located point with the command `st_point()` (refer back to section \@ref(sfg) to see how to create spatial data 'from scratch').
-2. Write code that uses functions `aggregate()` and `st_buffer()` to answers the following question: What proportion of the world's population lives in countries that intersect a circle with a 10 degree radius of the intersection between the equator and the [9^th^ meridian](https://en.wikipedia.org/wiki/9th_meridian_east)? (Advanced challenge: find the point with the highest number of people within a 10 degree radius.)
-
-
-```
-#> Warning in st_buffer.sfc(st_geometry(x), dist, nQuadSegs): st_buffer does
-#> not correctly buffer longitude/latitude data
-#> dist is assumed to be in decimal degrees (arc_degrees).
-#> although coordinates are longitude/latitude, st_intersects assumes that they are planar
-#> [1] 0.00998
-```
-
-3. Assuming that people are evenly distributed across countries, estimate the population living *within* the circle created to answer the previous question.
-
-
-```
-#> although coordinates are longitude/latitude, st_intersection assumes that they are planar
-#> Warning in st_interpolate_aw(x = world["pop"], to = buff9, extensive =
-#> TRUE): st_interpolate_aw assumes attributes are constant over areas of x
-```
 
 <!-- Raster exercises-->
 4. Use `data(dem, package = "RQGIS")`, and reclassify the elevation in three classes: low, middle and high.
@@ -4689,8 +4667,29 @@ How it influences the results?
 <!-- VECTOR -->
 <!-- SIMPLIFICATION -->
 <!-- CENTROIDS AND BUFFERS-->
+1. Write code that uses functions `aggregate()` and `st_buffer()` to answers the following question: What proportion of the world's population lives in countries that intersect a circle with a 10 degree radius of the intersection between the equator and the [9^th^ meridian](https://en.wikipedia.org/wiki/9th_meridian_east)? (Advanced challenge: find the point with the highest number of people within a 10 degree radius.)
+
+
+```
+#> Warning in st_buffer.sfc(st_geometry(x), dist, nQuadSegs): st_buffer does
+#> not correctly buffer longitude/latitude data
+#> dist is assumed to be in decimal degrees (arc_degrees).
+#> although coordinates are longitude/latitude, st_intersects assumes that they are planar
+#> [1] 0.00998
+```
+
+1. Assuming that people are evenly distributed across countries, estimate the population living *within* the circle created to answer the previous question.
+
+
+```
+#> although coordinates are longitude/latitude, st_intersection assumes that they are planar
+#> Warning in st_interpolate_aw(x = world["pop"], to = buff9, extensive =
+#> TRUE): st_interpolate_aw assumes attributes are constant over areas of x
+```
 <!-- AFFINE TRANSFORMATION -->
 <!-- CLIPPING -->
+1. Write code that subsets points that are contained within `x` *and* `y` (illustrated by the plot in the 2^nd^ row and the 1^st^ column in Figure \@ref(fig:venn-clip)).
+    - Create a randomly located point with the command `st_point()` (refer back to section \@ref(sfg) to see how to create spatial data 'from scratch').
 <!-- UNIONS -->
 <!-- TYPE TRANS. -->
 <!-- RASTERIZATION -->
@@ -5798,7 +5797,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveeae05b0583fc686e
+preserve0afd25c8b6739f27
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
