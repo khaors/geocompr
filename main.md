@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserved1f9bca481d40020
+preserve2a64a806f29ed11e
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -467,9 +467,9 @@ Naturally, this is the reason why we will describe **sf** in detail in Chapter \
 
 1. Think about the terms 'GIS', 'GDS' and 'Geocomputation' described above. Which is your favorite, and why?
 
-2. Provide three reasons for using a scriptable language such as R for geocomputation instead of using an established GIS program such as QGIS.
+1. Provide three reasons for using a scriptable language such as R for geocomputation instead of using an established GIS program such as QGIS.
 
-3. Name two advantages and two disadvantages of using mature packages compared with 'cutting edge' packages for spatial data (for example **sp** vs **sf**).
+1. Name two advantages and two disadvantages of using mature packages compared with 'cutting edge' packages for spatial data (for example **sp** vs **sf**).
 
 
 <!--chapter:end:01-introduction.Rmd-->
@@ -1806,26 +1806,26 @@ Again, the `res()` command gives back a numeric vector without any unit, forcing
     - How many countries there are?
     - The coordinate reference system (CRS)?
 
-2. Using **sf**'s `plot()` command, create a map of Nigeria in context, building on the code that creates and plots Asia above (see Figure \@ref(fig:asia) for an example of what this could look like). 
+1. Using **sf**'s `plot()` command, create a map of Nigeria in context, building on the code that creates and plots Asia above (see Figure \@ref(fig:asia) for an example of what this could look like). 
     - Hint: this used the `lwd`, `main` and `col` arguments of `plot()`. 
     - Bonus: make the country boundaries a dotted grey line.
     - Hint: `border` is an additional argument of `plot()` for **sf**  objects.
 
-3. What does the `cex` argument do in the `plot()` function that generates Figure \@ref(fig:contpop)?
+1. What does the `cex` argument do in the `plot()` function that generates Figure \@ref(fig:contpop)?
     - Why was `cex` passed the `sqrt(world$pop) / 10000` instead of just the population directly?
     - Bonus: what equivalent arguments to `cex` exist in the dedicated vizualisation package **tmap**?
     
-4. Re-run the code that 'generated' Figure \@ref(fig:contpop) at the end of \@ref(base-args) and find 3 similarities and 3 differences between the plot produced on your computer and that in the book.
+1. Re-run the code that 'generated' Figure \@ref(fig:contpop) at the end of \@ref(base-args) and find 3 similarities and 3 differences between the plot produced on your computer and that in the book.
     - What is similar?
     - What has changed?
     - Bonus: play around with and research base plotting arguments to make your version of Figure \@ref(fig:contpop) more attractive. Which arguments were most useful.
     - Advanced: try to reproduce the map presented in Figure \@ref(base-args). Copy-and-pasting is prohibited!
 
 <!-- raster exercises -->
-5. Read the `raster/nlcd2011.tif` file from the **spDataLarge** package. 
+1. Read the `raster/nlcd2011.tif` file from the **spDataLarge** package. 
 What kind of information can you get about the properties of this file?
 <!-- (crs, ncols, nrow, ncells, bbox, navalues) -->
-6. Create an empty `RasterLayer` object called `my_raster` with 10 columns and 10 rows, and resolution of 10 units.
+1. Create an empty `RasterLayer` object called `my_raster` with 10 columns and 10 rows, and resolution of 10 units.
 Assign random values between 0 and 10 to the new raster and plot it.
 <!-- crs exercises -->
 <!-- 1. pros and cons of the projection types -->
@@ -2609,47 +2609,47 @@ The data comes from the US Census Bureau, and is documented in `?us_states` and 
 <!-- Attribute subsetting -->
 1. Create a new object called `us_states_name` that contains only the `NAME` column from the `us_states` object. 
 What is the class of the new object? <!--why there is a "sf" part? -->
-2. Select columns from the `us_states` object which contain population data.
+1. Select columns from the `us_states` object which contain population data.
 Obtain the same result using a different command (bonus: try to find three ways of obtaining the same result).
 Hint: try to use helper functions, such as `contains` or `starts_with` from **dplyr** (see `?contains`).
-3. Find all states with the following characteristics (bonus find *and* plot them):
+1. Find all states with the following characteristics (bonus find *and* plot them):
     - Belong to the Midwest region.
     - Belong to the West region, have an area below 250,000 km^2^ *and* in 2015 a population greater than 5,000,000 residents (hint: you may need to use the function `units::set_units()` or `as.numeric()`).
     - Belong to the South region, had an area larger than 150,000 km^2^ or a total population in 2015 larger than 7,000,000 residents.
 <!-- Attribute aggregation -->
-4. What was the total population in 2015 in the `us_states` dataset?
+1. What was the total population in 2015 in the `us_states` dataset?
 What was the minimum and maximum total population in 2015?
-5. How many states are there in each region?
-6. What was the minimum and maximum total population in 2015 in each region?
+1. How many states are there in each region?
+1. What was the minimum and maximum total population in 2015 in each region?
 What was the total population in 2015 in each region?
 <!-- Attribute joining -->
-7. Add variables from `us_states_df` to `us_states`, and create a new object called `us_states_stats`.
+1. Add variables from `us_states_df` to `us_states`, and create a new object called `us_states_stats`.
 What function did you use and why?
 Which variable is the key in both datasets?
 What is the class of the new object?
-8. `us_states_df` has two more variables than `us_states`.
+1. `us_states_df` has two more variables than `us_states`.
 How you can find them? (hint: try to use the `dplyr::anti_join` function)
 <!-- Attribute creation -->
-9. What was the population density in 2015 in each state?
+1. What was the population density in 2015 in each state?
 What was the population density in 2010 in each state?
-10. How much has population density changed between 2010 and 2015 in each state?
+1. How much has population density changed between 2010 and 2015 in each state?
 Calculate the change in percentages and map them.
-11. Change the columns names in `us_states` to lowercase. (Hint: helper functions - `tolower()` and `colnames()` may help).
+1. Change the columns names in `us_states` to lowercase. (Hint: helper functions - `tolower()` and `colnames()` may help).
 <!-- Mixed exercises -->
 <!-- combination of use of select, mutate, group_by, summarize, etc  -->
-12. Using `us_states` and `us_states_df` create a new object called `us_states_sel`.
+1. Using `us_states` and `us_states_df` create a new object called `us_states_sel`.
 The new object should have only two variables - `median_income_15` and `geometry`.
 Change the name of the `median_income_15` column to `Income`.
-13. Calculate the change in median income between 2010 and 2015 for each state.
+1. Calculate the change in median income between 2010 and 2015 for each state.
 Bonus: what was the minimum, average and maximum median income in 2015 for each region?
 What is the region with the largest increase of the median income?
 <!-- Raster exercises -->
-14. Create a raster from scratch with nine rows and columns and a resolution of 0.5 decimal degrees (WGS84).
+1. Create a raster from scratch with nine rows and columns and a resolution of 0.5 decimal degrees (WGS84).
 Fill it with random numbers.
 Extract the values of the four corner cells. 
-15. What is the most common class of our example raster `grain` (hint: `modal()`)?
-16. Plot the histogram and the boxplot of the `data(dem, package = "RQGIS")` raster. 
-17. Now attach also `data(ndvi, package = "RQGIS")`. 
+1. What is the most common class of our example raster `grain` (hint: `modal()`)?
+1. Plot the histogram and the boxplot of the `data(dem, package = "RQGIS")` raster. 
+1. Now attach also `data(ndvi, package = "RQGIS")`. 
 Create a raster stack using `dem` and `ndvi`, and make a `pairs()` plot
 
 <!--chapter:end:03-attribute-operations.Rmd-->
@@ -3091,7 +3091,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveb7179f8c7fecda12
+preserve67c450c17c386ddf
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3587,14 +3587,14 @@ The packages **landsat** (`histmatch()`, `relnorm()`, `PIF()`), **satellite** (`
 <!-- changes classes; polygonize, etc-->
 
 ## Exercises
-
+<!-- vector exercises -->
 <!-- Raster exercises-->
-4. Use `data(dem, package = "RQGIS")`, and reclassify the elevation in three classes: low, middle and high.
+1. Use `data(dem, package = "RQGIS")`, and reclassify the elevation in three classes: low, middle and high.
 Secondly, compute the NDVI (`data(ndvi, package = "RQGIS")`) and the mean elevation for each altitudinal class.
-5. Apply a line detection filter to `data(dem, package = "RQGIS")`.
-6. Calculate the NDVI of a Landsat image. 
+1. Apply a line detection filter to `data(dem, package = "RQGIS")`.
+1. Calculate the NDVI of a Landsat image. 
 Use the Landsat image provided by the **spDataLarge** package (`system.file("raster/landsat.tif", package="spDataLarge")`).
-7. This [post](https://stackoverflow.com/questions/35555709/global-raster-of-geographic-distances) shows how to compute distances to the nearest coastline using `raster::distance()`.
+1. This [post](https://stackoverflow.com/questions/35555709/global-raster-of-geographic-distances) shows how to compute distances to the nearest coastline using `raster::distance()`.
 Retrieve a digital elevation model of Spain, and compute a raster which represents the distance to the coast.
 (Hint: Have a look at `getData()` to retrieve a digital elevation model and administrative boundaries for Spain.)
 Before, computing the distance raster, you might want to increase the resolution of the input dem raster, otherwise computing time might become too long. 
@@ -5797,7 +5797,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve0afd25c8b6739f27
+preserve6a1681057301abc8
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
