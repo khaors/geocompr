@@ -351,6 +351,10 @@ Maybe (not sure) a few figures would also help (conic, azimuthal projection; ell
 <p>Notable components of this CRS description include the EPSG code (<code>EPSG: 27700</code>), the origin (<code>+lat_0=49 +lon_0=-2</code>) and units (<code>+units=m</code>). The fact that the units of the CRS are meters (rather than degrees) tells us that this is a projected CRS: geometry operations on <code>london_proj</code> will work without a warning, meaning buffers can be produced from it using proper units of distance. Moving 1 degree means moving 100+ km (111,320 meters) at the equator. This is used as the new buffer distance:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london_proj_buff =<span class="st"> </span><span class="kw">st_buffer</span>(london_proj, <span class="dv">111320</span>)</code></pre></div>
 <p>The result in Figure <a href="transform.html#fig:crs-buf">5.1</a> (right panel) shows that buffers based on a projected CRS are not distorted: every part of the buffer’s border is equidistant to London.</p>
+<pre><code>#&gt; The rnaturalearthdata package needs to be installed.
+#&gt; Installing the rnaturalearthdata package.
+#&gt; Installing package into &#39;/home/travis/R/Library&#39;
+#&gt; (as &#39;lib&#39; is unspecified)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:crs-buf"></span>
 <img src="figures/crs-buf-1.png" alt="Buffer on vector geometries with a geographic (left) and projected (right) CRS." width="45%" /><img src="figures/crs-buf-2.png" alt="Buffer on vector geometries with a geographic (left) and projected (right) CRS." width="45%" />
 <p class="caption">

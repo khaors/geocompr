@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveab221370aa39d0bb
+preservec3941eae55068c81
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve12acf576a0868075
+preservef2e0e4ba89611222
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3754,6 +3754,14 @@ london_proj_buff = st_buffer(london_proj, 111320)
 
 The result in Figure \@ref(fig:crs-buf) (right panel) shows that buffers based on a projected CRS are not distorted:
 every part of the buffer's border is equidistant to London.
+
+
+```
+#> The rnaturalearthdata package needs to be installed.
+#> Installing the rnaturalearthdata package.
+#> Installing package into '/home/travis/R/Library'
+#> (as 'lib' is unspecified)
+```
 
 <div class="figure" style="text-align: center">
 <img src="figures/crs-buf-1.png" alt="Buffer on vector geometries with a geographic (left) and projected (right) CRS." width="45%" /><img src="figures/crs-buf-2.png" alt="Buffer on vector geometries with a geographic (left) and projected (right) CRS." width="45%" />
@@ -5791,7 +5799,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve8473d416ec05b1bc
+preserve7a27396d27078b1b
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
