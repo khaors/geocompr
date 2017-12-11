@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve7555d7a1278e9bf5
+preserve82040b96e023396d
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3097,7 +3097,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve573abfa8b1527931
+preserve219dbb3273b26fb6
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4656,57 +4656,31 @@ Additionally, check out the *Multi-core functions* section in `vignette("functio
 What has changed and why?
 Try to transform it back into WGS 84 and plot the new object.
 Why the new object differs from the original one?
-<!-- https://github.com/r-spatial/sf/issues/509 -->
-<!-- ```{r} -->
-<!-- world_tmerc = st_transform(world, "+proj=tmerc") -->
-<!-- plot(world_tmerc$geom) -->
-<!--  world_4326 = st_transform(world_tmerc, 4326) -->
-<!-- plot(world_4326$geom) -->
-<!-- ``` -->
+
+1. Write code that uses functions `aggregate()` and `st_buffer()` to answers the following question: What proportion of the world's population lives in countries that intersect a circle with a 10 degree radius of the intersection between the equator and the [9^th^ meridian](https://en.wikipedia.org/wiki/9th_meridian_east)?
+
+1. Assuming that people are evenly distributed across countries, estimate the population living *within* the circle created to answer the previous question.
+    
+1. Warning messages should have been produced during the working to find the answer to the previous questions. What do these warnings mean and how could they be stopped? 
+    - Bonus: rewrite code that generated the answer to the previous question using a projected CRS (suggestion: UTM).
+<!-- AFFINE TRANSFORMATION -->
+<!-- CLIPPING -->
+1. Write code that subsets points that are contained within `x` *and* `y` (illustrated by the plot in the 2^nd^ row and the 1^st^ column in Figure \@ref(fig:venn-clip)).
+    - Create a randomly located point with the command `st_point()` (refer back to section \@ref(sfg) to see how to create spatial data 'from scratch').
 1. Try to transform the categorical raster (`cat_raster`) into WGS 84 using the bi-linear interpolation method. 
 What has changed?
 How it influences the results?
-<!-- ```{r} -->
-<!-- wgs84 = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs" -->
-<!-- cat_raster_wgs84 = projectRaster(cat_raster, crs = wgs84, method = "bilinear") -->
-<!-- cat_raster_wgs84 -->
-<!-- ``` -->
-1. Try to transform the continuous raster (`cat_raster`) into WGS 84 using the nearest neighbor interpolation method. 
+
+1. Transform the continuous raster (`cat_raster`) into WGS 84 using the nearest neighbor interpolation method. 
 What has changed?
 How it influences the results?
-<!-- ```{r} -->
-<!-- con_raster = raster(system.file("raster/srtm.tif", package="spDataLarge")) -->
-<!-- con_raster_wgs84 = projectRaster(con_raster, crs = wgs84, method = "ngb") -->
-<!-- con_raster_wgs84 -->
-<!-- ``` -->
+1. Advanced challenge: find the point with the highest number of people within a 10 degree radius.
+
 <!-- GEOMETRY TRANSFORMATION -->
 <!-- VECTOR -->
 <!-- SIMPLIFICATION -->
 <!-- CENTROIDS AND BUFFERS-->
-1. Write code that uses functions `aggregate()` and `st_buffer()` to answers the following question: What proportion of the world's population lives in countries that intersect a circle with a 10 degree radius of the intersection between the equator and the [9^th^ meridian](https://en.wikipedia.org/wiki/9th_meridian_east)? (Advanced challenge: find the point with the highest number of people within a 10 degree radius.)
 
-
-```
-#> Warning in st_buffer.sfc(st_geometry(x), dist, nQuadSegs): st_buffer does
-#> not correctly buffer longitude/latitude data
-#> dist is assumed to be in decimal degrees (arc_degrees).
-#> although coordinates are longitude/latitude, st_intersects assumes that they are planar
-#> [1] 0.00998
-```
-
-1. Assuming that people are evenly distributed across countries, estimate the population living *within* the circle created to answer the previous question.
-
-
-```
-#> although coordinates are longitude/latitude, st_intersection assumes that they are planar
-#> Warning in st_interpolate_aw(x = world["pop"], to = buff9, extensive =
-#> TRUE): st_interpolate_aw assumes attributes are constant over areas of x
-```
-<!-- AFFINE TRANSFORMATION -->
-
-<!-- CLIPPING -->
-1. Write code that subsets points that are contained within `x` *and* `y` (illustrated by the plot in the 2^nd^ row and the 1^st^ column in Figure \@ref(fig:venn-clip)).
-    - Create a randomly located point with the command `st_point()` (refer back to section \@ref(sfg) to see how to create spatial data 'from scratch').
 <!-- UNIONS -->
 <!-- TYPE TRANS. -->
 <!-- RASTERIZATION -->
@@ -5814,7 +5788,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve0876437ef142d916
+preservee2d483afbafb7f09
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
