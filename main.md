@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve6ce4939a70c4efc5
+preserveeb23155a0a2c3c8b
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservefc16948e24d46025
+preserve309c776afbaaa2ac
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3642,7 +3642,7 @@ Section \@ref(geo-vec) covers transforming vector geometries.
 This includes simplication, buffers and centroids and even shifting/scaling/rotating single geometries using 'affine transformations' (see sections \@ref(simplification) to \@ref(affine-transformations)).
 Vector geometries can also be modified by another spatial object with 'clipping' operations, demonstrated in section \@ref(clipping).
 Geometry unions, which underlie spatial data aggregation, are covered in section \@ref(geometry-unions).
-Advanced transformations of vector geometries include type transformations (e.g. from few multipolygons to many polygons) and 'rasterization' are covered in sections \@ref(type-transformations) and \@ref(rasterization) respectively.
+Advanced transformations of vector geometries include type transformations (from few multipolygons to many polygons, for example) and 'rasterization', operations that are demonstrated in sections \@ref(type-transformations) and \@ref(rasterization) respectively.
 
 Section \@ref(geo-ras) covers geometric transformations on raster objects.
 This involves changing the size and number of the underlying pixels, and assigning them new values.
@@ -3651,7 +3651,7 @@ These operations are especially useful if one would like to align raster dataset
 Only making sure that these rasters share the same header information allows the jointly usage of map algebra operations (see section \@ref(map-algebra)). 
 
 A vital type of geometry transformation is *reprojecting* from one coordinate reference system (CRS) to another.
-Because of the importance of reprojection, introduced in Chapter \@ref(spatial-class) (see figure \@ref(fig:vectorplots) and section \@ref(crs-intro)), and the fact that it applies to raster and vector geometries alike, it is the topic of the first section in this chapter.
+Because of the importance of reprojection, introduced in Chapter \@ref(spatial-class), and the fact that it applies to raster and vector geometries alike, it is the topic of the first section in this chapter.
 
 ## Reprojecting geographic data {#reproj-geo-data}
 
@@ -5788,7 +5788,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve434c0f0533573a77
+preserve43418acd82ef86d0
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
