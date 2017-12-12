@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveb6f92432a6b0e384
+preserve5594cb0264e2358e
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservece8ba381b717b349
+preserve94c287e1feda1094
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3821,9 +3821,8 @@ Thanks to Josh O'Brien who provided the basis for this function in an answer to 
 
 
 ```r
-long2UTM = function(lonlat) {
+lonlat2UTM = function(lonlat) {
   utm = (floor((lonlat[1] + 180) / 6) %% 60) + 1
-  message(paste0("This is in UTM", utm))
   utm + 32600
 }
 ```
@@ -3832,8 +3831,7 @@ Let's use this function to identify the UTM zone and associated EPSG code for Lo
 
 
 ```r
-epsg_utm = long2UTM(st_coordinates(london))
-#> This is in UTM30
+epsg_utm = lonlat2UTM(st_coordinates(london))
 st_crs(epsg_utm)
 #> Coordinate Reference System:
 #>   EPSG: 32630 
@@ -5784,7 +5782,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveb85e702f81d4ab91
+preserve97f927d678bd82dc
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
