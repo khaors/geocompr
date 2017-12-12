@@ -401,8 +401,14 @@ Figure 5.1: Buffer on vector represenations of London with a geographic (left) a
 </div>
 <div id="reprojecting-vector-geometries" class="section level3">
 <h3><span class="header-section-number">5.1.2</span> Reprojecting vector geometries</h3>
-<p>Vector data on the most basic level is represented by individual points, and points create more complex objects, such as lines and polygons. Spatial reprojection of vectors is a mathematical transformation of coordinates of these points. Depending on projections used, reprojection could be either lossy or lossless. <!-- I don't understand the following sentence --> For example, loss of spatial information could occur when the new CRS is only adequate for smaller area than input vector. <!-- Do you have an example for the next sentence? --> The precision could be also lost when transforming coordinate systems with different datums - in those situations approximations are used. However, in most cases CRS vector transformation is lossless.</p>
-<p>The dataset <code>cycle_hire_osm</code> represents all cycle hire locations across London, taken from OpenStreetMap (OSM). It is automatically loaded by the <strong>spData</strong> package, meaning we do not have to load it, and its CRS can be queried as follows:</p>
+<p>Chapter <a href="spatial-class.html#spatial-class">2</a> demonstrated how vector geometries are made-up of points, which combine to create more complex objects such as lines and polygons. Reprojecting vectors thus consists of transforming the coordinates of these points.</p>
+<!-- Depending on projections used, reprojection could be either lossy or lossless. -->
+<!-- I don't understand the following sentence -->
+<!-- For example, loss of spatial information could occur when the new CRS is only adequate for smaller area than input vector. -->
+<!-- Do you have an example for the next sentence? -->
+<!-- The precision could be also lost when transforming coordinate systems with different datums - in those situations approximations are used. -->
+<!-- However, in most cases CRS vector transformation is lossless. -->
+<p>To illustrate this point we’ll use the dataset <code>cycle_hire_osm</code> from <strong>spData</strong>, representing cycle hire locations across London. Its CRS can be queried as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">st_crs</span>(cycle_hire_osm)
 <span class="co">#&gt; Coordinate Reference System:</span>
 <span class="co">#&gt;   EPSG: 4326 </span>

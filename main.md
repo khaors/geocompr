@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveb6d9c7075e5883b3
+preserve5c1eae7116d19836
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve7534d5ac7a04d577
+preserved509337f6366b26d
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3874,17 +3874,18 @@ This approach should be used with caution: no other datasets will be compatible 
 
 ### Reprojecting vector geometries
 
-Vector data on the most basic level is represented by individual points, and points create more complex objects, such as lines and polygons.
-Spatial reprojection of vectors is a mathematical transformation of coordinates of these points.
-Depending on projections used, reprojection could be either lossy or lossless.
-<!-- I don't understand the following sentence -->
-For example, loss of spatial information could occur when the new CRS is only adequate for smaller area than input vector.
-<!-- Do you have an example for the next sentence? -->
-The precision could be also lost when transforming coordinate systems with different datums - in those situations approximations are used.
-However, in most cases CRS vector transformation is lossless.
+Chapter \@ref(spatial-class) demonstrated how vector geometries are made-up of points, which combine to create more complex objects such as lines and polygons.
+Reprojecting vectors thus consists of transforming the coordinates of these points.
 
-The dataset `cycle_hire_osm` represents all cycle hire locations across London, taken from OpenStreetMap (OSM).
-It is automatically loaded by the **spData** package, meaning we do not have to load it, and its CRS can be queried as follows:
+<!-- Depending on projections used, reprojection could be either lossy or lossless. -->
+<!-- I don't understand the following sentence -->
+<!-- For example, loss of spatial information could occur when the new CRS is only adequate for smaller area than input vector. -->
+<!-- Do you have an example for the next sentence? -->
+<!-- The precision could be also lost when transforming coordinate systems with different datums - in those situations approximations are used. -->
+<!-- However, in most cases CRS vector transformation is lossless. -->
+
+To illustrate this point we'll use the dataset `cycle_hire_osm` from **spData**, representing cycle hire locations across London.
+Its CRS can be queried as follows:
 
 
 ```r
@@ -5783,7 +5784,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve8d472d447ca64f53
+preserve0353b1e7ea766a13
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
