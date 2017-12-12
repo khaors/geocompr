@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve899e864a054507c8
+preservea02ebd4df3d5829e
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -605,7 +605,7 @@ It is a hierarchical data model that simplifies geographic data by condensing a 
 Only 7 out of 68 possible types of simple feature are currently used in the vast majority of GIS operations (Figure \@ref(fig:sf-ogc)).
 The R package **sf** [@R-sf] fully supports all of these (including plotting methods etc.).^[
 The full OGC standard includes rather exotic geometry types including 'surface' and 'curve' geometry types, which currently have limited application in real world applications.
-All 68 types can be represented in R, although (at the time of writing) all methods, such as plotting, are only supported for the 7 types that are used.
+All 68 types can be represented with the **sf** package, although (at the time of writing) all methods, such as plotting, are only supported for the 7 types described in this chapter.
 ]
 
 <div class="figure" style="text-align: center">
@@ -916,7 +916,7 @@ Finally, a geometry collection might contain any combination of geometry types:
 
 #### Simple feature geometry (sfg) objects {#sfg}
 
-In R, the `sfg` class represents the different simple feature geometry types: (multi-)point, (multi-)linestring, (multi-)polygon or geometry collection.
+The `sfg` class represents the different simple feature geometry types: point, linestring, polygon (and their 'multi' equivalents, such as multipoints) or geometry collection.
 
 Usually you are spared the tedious task of creating geometries on your own since you can simply import an already existing spatial file.
 However, there are a set of function to create simple feature geometry objects (`sfg`) from scratch if needed.
@@ -930,7 +930,7 @@ The names of these functions are simple and consistent, as they all start with t
 - A multipolygon - `st_multipolygon()`
 - A geometry collection - `st_geometrycollection()`
 
-In R, you create `sfg` objects with the help of three native data types:
+`sfg` objects can be created from three native data types:
 
 1. A numeric vector - a single point
 2. A matrix - a set of points, where each row contains a point - a multipoint or linestring
@@ -1603,7 +1603,7 @@ Values of $a$ and $rf$ used in a variety of ellipsoidal models can be seen be ex
 
 Ellipsoids are part of a wider component of CRSs: the *datum*.
 This contains information on what ellipsoid to use (with the `ellps` parameter in the proj4 CRS library) and the precise relationship between the cartesian coodinates and location on the Earth's service.
-In R, these additional details are stored in the `towgs84` argument of  [proj4](http://proj4.org/parameters.html#towgs84-datum-transformation-to-wgs84) notation (see [proj4.org/parameters.html](http://proj4.org/parameters.html) for details).
+These additional details are stored in the `towgs84` argument of  [proj4](http://proj4.org/parameters.html#towgs84-datum-transformation-to-wgs84) notation (see [proj4.org/parameters.html](http://proj4.org/parameters.html) for details).
 These allow local variations in Earth's surface, e.g. due to large mountain ranges, to be accounted for in a local CRS.
 There are two types of datums --- local and geocentric.
 In a *local datum* such as `NAD83` the ellipsoidal surface is shifted to align with the surface at a particular location.
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve8a2bdc51b6815c66
+preserveeb9b3ca797f42f7f
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5784,7 +5784,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservee22f9c3c2f35a9e6
+preserve14e2d04e65e2976b
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
