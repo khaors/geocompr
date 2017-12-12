@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservece53ea86d1346e48
+preserve899e864a054507c8
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservebdd070d8a818fb2b
+preserve8a2bdc51b6815c66
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3677,10 +3677,8 @@ This is illustrated below using the example of London introduced in section \@re
 
 
 ```r
-london = c(-0.1, 51.5) %>% 
-  st_point() %>% 
-  st_sfc() %>% 
-  st_sf()
+london = tibble(lon = -0.1, lat = 51.5) %>% 
+  st_as_sf(coords = c("lon", "lat"))
 st_is_longlat(london)
 #> [1] NA
 ```
@@ -3720,10 +3718,8 @@ This is done in the code chunk below:
 
 
 ```r
-london_proj = c(530000, 180000) %>% 
-  st_point() %>% 
-  st_sfc() %>%
-  st_sf(crs = 27700)
+london_proj = tibble(x = 530000, y = 180000) %>% 
+  st_as_sf(coords = 1:2, crs = 27700)
 ```
 
 The result is a new object that is identical to `london`, but reprojected onto a suitable CRS (the British National Grid, which has an EPSG code of 27700 in this case) that has units of meters. 
@@ -5788,7 +5784,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve5e5a7b533f43cbc6
+preservee22f9c3c2f35a9e6
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
