@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve5c1eae7116d19836
+preservee615a986d92d43f1
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserved509337f6366b26d
+preservecfddf204c7b9f8c3
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3777,7 +3777,7 @@ st_distance(london, london_proj)
 
 To make the `london` and `london_proj` objects geographically comparable one of them must be transformed into the CRS of the other.
 But which CRS to use?
-The answer is usually 'to the projected CRS', which in this case is the British National Grid (BNG, EPSG:267700):
+The answer is usually 'to the projected CRS', which in this case is the British National Grid (BNG, EPSG:27700):
 
 
 ```r
@@ -3803,7 +3803,7 @@ The question of *which CRS* is tricky, and there is often no 'right' answer:
 "There exist no all-purpose projections, all involve distortion when far from the centre of the specified frame" [@bivand_applied_2013].
 For geographic CRSs the answer is often [WGS84](https://en.wikipedia.org/wiki/World_Geodetic_System#A_new_World_Geodetic_System:_WGS_84), not only for web mapping (covered in the previous paragraph) but also because GPS datasets and thousands of raster and vector datasets are provided in this CRS by default.
 WGS84 is the most common CRS in the world so it is worth knowing it's EPSG code: 4326.
-This 'magic number' can be used to convert objects with unusual projected CRSs something that is widely understood with a sinle command, such as`st_transform(london_proj, 4326)`.
+This 'magic number' can be used to convert objects with unusual projected CRSs something that is widely understood.
 
 What about when a projected CRS is required?
 In some cases it is not something that we are free to decide:
@@ -3840,16 +3840,18 @@ st_crs(epsg_utm)
 ```
 
 As expected by viewing a map of UTM zones (such as that provided by [dmap.co.uk](http://www.dmap.co.uk/utmworld.htm)), the EPSG code returned refers to UTM zone 30, which would represent a good projected CRS for England if the BNG did not exist.
-London can be transformed into this CRS as follows (result not shown):
+<!-- London can be transformed into this CRS as follows (result not shown): -->
 
-
-```r
-lnd_utm = st_transform(london, crs = epsg_utm)
-```
+<!-- ```{r} -->
+<!-- lnd_utm = st_transform(london, crs = epsg_utm) -->
+<!-- ``` -->
 
 Another approach to automatically selecting a projected CRS specific to a local dataset is to create an azimuthal equidistant ([AEQD](https://en.wikipedia.org/wiki/Azimuthal_equidistant_projection)) projection for the centre-point of the study area.
 This involves creating a custom CRS (with no EPSG code) with units of meters based on the centrepoint of a dataset.
 This approach should be used with caution: no other datasets will be compatible with the custom CRS created and results may not be accurate when used on extensive datasets covering hundreds of kilomtres.
+
+Although we used vector datasets to illustrate the points outlined in this section, the principles apply equally to raster datasets.
+The subsequent sections explain features of CRS transformation that are unique to each geographic data model, continuing with vector data in section \@ref(reprojecting-vector-geometries) and moving-on to explain how raster transformation is different, in section \@ref(reprojecting-raster-geometries).
 
 <!-- This approach is used in the **stplanr** function `geo_select_crs()` which returns a CRS object that can be used in other functions (see `?stplanr::geo_select_aeq` for further details): -->
 
@@ -3895,7 +3897,8 @@ st_crs(cycle_hire_osm)
 #>   proj4string: "+proj=longlat +datum=WGS84 +no_defs"
 ```
 
-CRS in R can be described as an `epsg` code or a `proj4string` definition, as described in section \@ref(crs-in-r).
+CRSs in the **sf** package be using their `epsg` code or a `proj4string` definition (see section \@ref(crs-in-r)).
+
 Let's create a new version of `cycle_hire_osm` in a projected CRS, using the `epsg` number of 27700:
 
 
@@ -4299,7 +4302,7 @@ plot(b)
 plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
 ```
 
-<img src="figures/unnamed-chunk-42-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-41-1.png" width="576" style="display: block; margin: auto;" />
 
 The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
 <!-- Todo: reference r4ds -->
@@ -5784,7 +5787,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve0353b1e7ea766a13
+preserve90f4eebe5e3b3328
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
