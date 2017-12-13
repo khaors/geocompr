@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservefe397d673f0193ff
+preserve42b68fa04f532f84
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve4773593041e6f305
+preserve6be87630554d0e97
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3673,11 +3673,11 @@ This section goes further, by demonstrating some problems that can arise when us
 Many spatial operations assume that you are using a *projected* CRS.
 The GEOS engine underlying most spatial operations in **sf**, for example, assumes your data is in a projected CRS.
 For this reason **sf** contains a function for checking if geometries have a geographic or projected CRS.
-This is illustrated below using the example of London introduced in section \@ref(vector-data), which is created by *coercing* a `tibble` data frame object into an `sf` object (the `coords` argument specifies the coordinates):
+This is illustrated below using the example of London introduced in section \@ref(vector-data), which is created by *coercing* a `data.frame` into an `sf` object (the `coords` argument specifies the coordinates):
 
 
 ```r
-london = tibble(lon = -0.1, lat = 51.5) %>% 
+london = data.frame(lon = -0.1, lat = 51.5) %>% 
   st_as_sf(coords = c("lon", "lat"))
 st_is_longlat(london)
 #> [1] NA
@@ -3718,7 +3718,7 @@ This is done in the code chunk below:
 
 
 ```r
-london_proj = tibble(x = 530000, y = 180000) %>% 
+london_proj = data.frame(x = 530000, y = 180000) %>% 
   st_as_sf(coords = 1:2, crs = 27700)
 ```
 
@@ -5787,7 +5787,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve636fe2a13c547c0d
+preserve17c3453de2521b39
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
