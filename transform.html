@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2017-12-13">
+<meta name="date" content="2017-12-15">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -783,6 +783,7 @@ linestring_sf2
 <div id="rasterization" class="section level3">
 <h3><span class="header-section-number">5.2.7</span> Rasterization</h3>
 <!-- - vector to raster -->
+<!-- why? map tilling, simple analysis of terrain? -->
 <!-- rasterize() -->
 <!-- https://github.com/ecohealthalliance/fasterize -->
 </div>
@@ -870,6 +871,7 @@ elev_disagg =<span class="st"> </span><span class="kw">resample</span>(elev_agg,
 <div id="vectorization" class="section level3">
 <h3><span class="header-section-number">5.3.3</span> Vectorization</h3>
 <!-- e.g. landcover map to polygonss -->
+<!-- vectorization is used when we get raster data as an input (such as scanned map or satellite image) and we want to extract objects -->
 <!-- rasterToPolygons() -->
 <!-- rasterToContour() -->
 </div>
