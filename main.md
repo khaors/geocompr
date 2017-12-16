@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservebed943549ca86b7b
+preservec4a2f2cfc58206d1
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservead32fb70c5925a4a
+preserve31b0b6c49267c817
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5813,7 +5813,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve6e4df1045bcbe4c2
+preserve089be23d785c2546
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -5875,11 +5875,9 @@ Change the age raster accordingly, repeat the remaining analyses and compare the
 
 
 ```r
-library(dplyr)
-library(osmdata)
-library(stplanr)
 library(sf)
-library(tmap)
+library(stplanr)
+library(tidyverse)
 ```
 
 
@@ -5920,7 +5918,7 @@ We will use input data from Bristol, a coastal city in the West of England, desc
 ## Input data: a case study of Bristol
 
 The case study used for this chapter is a diverse city on the west of England, 30 km east of the Welsh capital Cardiff.
-As with any case study it is worth taking some time to consider the local geography of the area, e.g. as dispayed in Figure 7.0 below.
+As with any case study it is worth taking some time to consider the local geography of the area (see Figure \@ref(fig:bristol)).
 This shows the diversity of the city's transport network, with railways, motorways and cycle paths plotted.
 
 
@@ -5931,17 +5929,23 @@ To avoid having to request the data from OSM repeadetly, we'll use a locally sav
 
 ```r
 ways = readRDS("extdata/ways.Rds")
-summary(ways)[4:5, ]
-#>            Length Class Mode
-#> osm_points 54     sf    list
-#> osm_lines  85     sf    list
+summary(ways)
+#>      highway        maxspeed         ref                geometry   
+#>  cycleway: 866   30 mph : 494   A38    : 136   LINESTRING   :2938  
+#>  motorway: 206   20 mph : 398   A4018  : 120   epsg:4326    :   0  
+#>  rail    : 590   40 mph : 159   A420   :  65   +proj=long...:   0  
+#>  road    :1276   70 mph : 153   B4054  :  64                       
+#>                  25 mph :  92   B4057  :  61                       
+#>                  (Other): 209   (Other): 961                       
+#>                  NA's   :1433   NA's   :1531
 ```
 
-The above code chunk loaded some key data and shows that way have a few dozen nodes and lines on the transport network: an easily manageable dataset size (transport datasets can get very large but it's best to learn with small ones).
-Before we make use of these datasets we need to load and take a look at one more type of input data: transport zones that represent residential areas that generate trips into the city centre and elsewhere.
+The above code chunk loaded a few thousand lines, representing segments on the transport network.
+This an easily manageable dataset size (transport datasets be large but it's best to start small).
+Before we use these in our scenario (to boost active travel in the city) let's  one more type of input data: transport zones that represent residential areas that generate trips into the city centre and elsewhere.
 
 
-preserve2302a8aeea4bafdd<div class="figure" style="text-align: center">
+<div class="figure" style="text-align: center">
 <img src="figures/bristol.png" alt="Overview map of the city of Bristol" width="671" />
 <p class="caption">(\#fig:bristol)Overview map of the city of Bristol</p>
 </div>
@@ -5971,12 +5975,13 @@ Because Bristol is a major employer attracting travel from surrounding towns, it
 
 ```r
 region = readRDS("extdata/bristol-region.Rds")
-qtm(region)
-#> Warning: Currect projection of shape region unknown. Long-lat (WGS84) is
-#> assumed.
+plot(region)
 ```
 
-preserve67e98283a0d2621a
+<div class="figure" style="text-align: center">
+<img src="figures/ttwa-bristol-1.png" alt="Region definitions in Bristol" width="576" />
+<p class="caption">(\#fig:ttwa-bristol)Region definitions in Bristol</p>
+</div>
 
 
 
@@ -5984,8 +5989,7 @@ preserve67e98283a0d2621a
 
 
 ```r
-stations = ways$osm_points %>% 
-  filter(railway == "station" | name == "Bristol Temple Meads")
+rail_stations = readRDS("extdata/rail_stations.Rds")
 ```
 
 
