@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2017-12-15">
+<meta name="date" content="2017-12-16">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1018,10 +1018,10 @@ Figure 2.10: Examples of geographic (WGS 84; left) and projected (NAD83 / UTM zo
 <span class="co">#&gt; 9.05e+11 m^2</span></code></pre></div>
 <p>The result is in units of square meters (m<sup>2</sup>), showing a) that the result represents two-dimensional space and b) and that Nigeria is a large country! This information, stored as an attribute (which interested readers can discover with <code>attributes(st_area(nigeria))</code>) is advantageous for many reasons, for example it could feed into subsequent calculations such as population density. Reporting units prevents confusion. To take the Nigeria example, if the units remained unspecified, one could incorrectly assume that the units were in km<sup>2</sup>. To translate the huge number into a more digestible size, it is tempting to divide the results by a million (the number of square meters in a square kilometer):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">st_area</span>(nigeria) /<span class="st"> </span><span class="fl">1e6</span>
-<span class="co">#&gt; 905072 m^2</span></code></pre></div>
+<span class="co">#&gt; 905062 m^2</span></code></pre></div>
 <p>However, the result is incorrectly given again as square meters. The solution is to set the correct units with the <strong>units</strong> package:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">units::<span class="kw">set_units</span>(<span class="kw">st_area</span>(nigeria), km^<span class="dv">2</span>)
-<span class="co">#&gt; 905072 km^2</span></code></pre></div>
+<span class="co">#&gt; 905062 km^2</span></code></pre></div>
 <!-- Is that right? I mean, the units DESCRIPTION says "Support for measurement units in R vectors, matrices and arrays". Since raster datasets are just matrices, units might be easily used with them?-->
 <p>Units are of equal importance in the case of raster data. However, so far <strong>sf</strong> is the only spatial package that supports units, meaning that people working on raster data should approach changes in the units of analysis (e.g., converting pixel widths from imperial to decimal units) with care. The <code>new_raster</code> object (see above) uses a UTM projection with meters as units. Consequently, its resolution is also given in meters but you have to know it, since the <code>res()</code> function simply returns a numeric vector.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">res</span>(new_raster)

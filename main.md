@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2017-12-15'
+date: '2017-12-16'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2017-12-15 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2017-12-16 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve2a1f6b02de1b5c0a
+preserve2765cd26cf1ffd8b
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -1756,7 +1756,7 @@ To translate the huge number into a more digestible size, it is tempting to divi
 
 ```r
 st_area(nigeria) / 1e6
-#> 905072 m^2
+#> 905062 m^2
 ```
 
 However, the result is incorrectly given again as square meters.
@@ -1765,7 +1765,7 @@ The solution is to set the correct units with the **units** package:
 
 ```r
 units::set_units(st_area(nigeria), km^2)
-#> 905072 km^2
+#> 905062 km^2
 ```
 
 <!-- Is that right? I mean, the units DESCRIPTION says "Support for measurement units in R vectors, matrices and arrays". Since raster datasets are just matrices, units might be easily used with them?-->
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve07445d4735dd9aa4
+preserve6438979ed8cee99f
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5813,7 +5813,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve7122b0adaf882d09
+preserve857240a3b042f8d6
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -5915,6 +5915,8 @@ For this reason this chapter is based around a policy scenario that asks:
 how to increase walking and cycling?
 We will use input data from Bristol, a coastal city in the West of England, described in the next section.
 
+<!-- Idea: make it about reducing CO2 emissions instead. Thoughts? + Multi-model - more complex -->
+
 ## Input data: a case study of Bristol
 
 The case study used for this chapter is a diverse city on the west of England, 30 km east of the Welsh capital Cardiff.
@@ -5939,7 +5941,7 @@ The above code chunk loaded some key data and shows that way have a few dozen no
 Before we make use of these datasets we need to load and take a look at one more type of input data: transport zones that represent residential areas that generate trips into the city centre and elsewhere.
 
 
-<div class="figure" style="text-align: center">
+preserveefa2a04574e91333<div class="figure" style="text-align: center">
 <img src="figures/bristol.png" alt="Overview map of the city of Bristol" width="562" />
 <p class="caption">(\#fig:bristol)Overview map of the city of Bristol</p>
 </div>
@@ -5974,10 +5976,7 @@ qtm(region)
 #> assumed.
 ```
 
-<div class="figure" style="text-align: center">
-<img src="figures/ttwa-bristol-1.png" alt="Region definitions in Bristol" width="576" />
-<p class="caption">(\#fig:ttwa-bristol)Region definitions in Bristol</p>
-</div>
+preservef2bcdc4a38a6408f
 
 
 
