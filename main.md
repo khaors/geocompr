@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve2765cd26cf1ffd8b
+preservebed943549ca86b7b
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve6438979ed8cee99f
+preservead32fb70c5925a4a
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5813,7 +5813,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve857240a3b042f8d6
+preserve6e4df1045bcbe4c2
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -5941,8 +5941,8 @@ The above code chunk loaded some key data and shows that way have a few dozen no
 Before we make use of these datasets we need to load and take a look at one more type of input data: transport zones that represent residential areas that generate trips into the city centre and elsewhere.
 
 
-preserveefa2a04574e91333<div class="figure" style="text-align: center">
-<img src="figures/bristol.png" alt="Overview map of the city of Bristol" width="562" />
+preserve2302a8aeea4bafdd<div class="figure" style="text-align: center">
+<img src="figures/bristol.png" alt="Overview map of the city of Bristol" width="671" />
 <p class="caption">(\#fig:bristol)Overview map of the city of Bristol</p>
 </div>
 
@@ -5976,7 +5976,7 @@ qtm(region)
 #> assumed.
 ```
 
-preservef2bcdc4a38a6408f
+preserve67e98283a0d2621a
 
 
 
