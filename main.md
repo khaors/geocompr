@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservea821e0ec082d3aee
+preserved7d6606f99112638
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve71b264b418028850
+preserve52a9aecf43f7479d
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5825,7 +5825,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve1ffc88f6a37da5d8
+preserve6c973adb8e80205c
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -5992,8 +5992,8 @@ Because Bristol is a major employer attracting travel from surrounding towns, it
 
 
 ```r
-region = readRDS("extdata/bristol-region.Rds")
-region_ttwa = readRDS("extdata/bristol-ttwa.Rds")
+region = readRDS("extdata/bristol-region.rds")
+region_ttwa = readRDS("extdata/bristol-ttwa.rds")
 plot(region_ttwa$geometry)
 plot(region$Bristol, add = TRUE)
 ```
@@ -6005,8 +6005,8 @@ plot(region$Bristol, add = TRUE)
 
 
 ```r
-zones = readRDS("extdata/bristol-zones.Rds")
-od = readRDS("extdata/bristol-od.Rds")
+zones = readRDS("extdata/bristol-zones.rds")
+od = readRDS("extdata/bristol-od.rds")
 zones_attr = od %>%
   group_by(geo_code1) %>% 
   summarise_if(is.numeric, sum) %>% 
@@ -6049,7 +6049,7 @@ plot(zones %>% select(bicycle, foot, car_driver, train))
 
 
 ```r
-rail_stations = readRDS("extdata/rail_stations.Rds")
+rail_stations = readRDS("extdata/rail_stations.rds")
 ```
 
 ## Desire line analysis
@@ -6124,7 +6124,7 @@ To avoid having to request the data from OSM repeadetly, we'll use a locally sav
 
 
 ```r
-ways = readRDS("extdata/ways.Rds")
+ways = readRDS("extdata/ways.rds")
 summary(ways)
 #>      highway        maxspeed         ref                geometry   
 #>  cycleway: 866   30 mph : 494   A38    : 136   LINESTRING   :2938  
