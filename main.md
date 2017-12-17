@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve5827c59dfc5c7030
+preserveb9549e5d75885a11
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservebe60dad0e89af26c
+preservef9994416e729e642
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5835,7 +5835,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve73c62ebe06c4c7e1
+preserve2cafbb6ebaccac3a
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -5972,26 +5972,8 @@ This high-level aim will be met via the following objectives:
 - Analyse travel 'desire lines' in the city to identify those with greatest potential for modal shift.
 - Building on the desire-line level analysis, identify which routes would most benefit from having dedicated cycleways and improved provision for pedestrians. 
 
-The data used in this section was downloaded using **osmdata**.
-To avoid having to request the data from OSM repeadetly, we'll use a locally saved version of the data, which contains point and line data for the case study area:
-
-
-```r
-ways = readRDS("extdata/ways.Rds")
-summary(ways)
-#>      highway        maxspeed         ref                geometry   
-#>  cycleway: 866   30 mph : 494   A38    : 136   LINESTRING   :2938  
-#>  motorway: 206   20 mph : 398   A4018  : 120   epsg:4326    :   0  
-#>  rail    : 590   40 mph : 159   A420   :  65   +proj=long...:   0  
-#>  road    :1276   70 mph : 153   B4054  :  64                       
-#>                  25 mph :  92   B4057  :  61                       
-#>                  (Other): 209   (Other): 961                       
-#>                  NA's   :1433   NA's   :1531
-```
-
-The above code chunk loaded a simple feature object representing around 3,000 segments on the transport network.
-This an easily manageable dataset size (transport datasets be large but it's best to start small).
-A smaller but often vital level of geographic data is provided at the zone level, described in the next section.
+To get the wheels rolling on the practical aspects of this chapter, we begin by loading zonal data on travel paterns.
+These zone-level data are small but often vital for gaining a basic understanding of a settlement's overall transport system.
 
 ## Transport zones
 
@@ -6026,8 +6008,6 @@ plot(region)
 <p class="caption">(\#fig:ttwa-bristol)Region definitions in Bristol</p>
 </div>
 
-
-
 ## Nodes on the transport system
 
 
@@ -6041,6 +6021,26 @@ rail_stations = readRDS("extdata/rail_stations.Rds")
 ## Route analysis
 
 ## Route networks
+
+The data used in this section was downloaded using **osmdata**.
+To avoid having to request the data from OSM repeadetly, we'll use a locally saved version of the data, which contains point and line data for the case study area:
+
+
+```r
+ways = readRDS("extdata/ways.Rds")
+summary(ways)
+#>      highway        maxspeed         ref                geometry   
+#>  cycleway: 866   30 mph : 494   A38    : 136   LINESTRING   :2938  
+#>  motorway: 206   20 mph : 398   A4018  : 120   epsg:4326    :   0  
+#>  rail    : 590   40 mph : 159   A420   :  65   +proj=long...:   0  
+#>  road    :1276   70 mph : 153   B4054  :  64                       
+#>                  25 mph :  92   B4057  :  61                       
+#>                  (Other): 209   (Other): 961                       
+#>                  NA's   :1433   NA's   :1531
+```
+
+The above code chunk loaded a simple feature object representing around 3,000 segments on the transport network.
+This an easily manageable dataset size (transport datasets be large but it's best to start small).
 
 ## Agents in the transport system
 
