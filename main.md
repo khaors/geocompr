@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve39475cabf4653c65
+preserve1eab429322fa153e
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve0384949c82b3042e
+preserveced4dab9b9ca55dd
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5835,7 +5835,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservef8dc272de5e0f7f6
+preserve0abc52ba7a5d1890
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -5922,13 +5922,13 @@ It is therefore unsurprising that transport researchers have long turned to geoc
 This chapter provides an introduction to geographic analysis of transport systems.
 We will explore how movement patterns can be understood at multiple geographic levels, including:
 
-- Areal units: transport can be understood simply in terms of zonal aggregates such as the main mode and average distance of trips made people living in a particular zone.
-- Nodes: these are points in the transport system that can represent common origins and destinations (e.g. with one centroid per zone) and public transport stations such as bus stops and rail stations.
-- Desire lines: straight lines that represent 'origin-destination' data that records how many people travel (or could travel) between places (points or zones) in geographic space.
-- Routes: these are cirquitous (non-straight) routes, typically representing the 'optimal' path along the route network between origins and destinations along the desire lines defined in the previous bullet point.
-- Route networks: these represent the system of roads, paths and other linear features in an area. They can be represented as purely geographic entities or as a graph.
+- **Areal units**: transport can be understood simply in terms of zonal aggregates such as the main mode and average distance of trips made people living in a particular zone.
+- **Nodes**: these are points in the transport system that can represent common origins and destinations (e.g. with one centroid per zone) and public transport stations such as bus stops and rail stations.
+- **Desire lines**: straight lines that represent 'origin-destination' data that records how many people travel (or could travel) between places (points or zones) in geographic space.
+- **Routes**: these are cirquitous (non-straight) routes, typically representing the 'optimal' path along the route network between origins and destinations along the desire lines defined in the previous bullet point.
+- **Route networks**: these represent the system of roads, paths and other linear features in an area. They can be represented as purely geographic entities or as a graph.
 Their features are segments which can be assigned values representing 'flow', the number of people expected to use a particular street or path.
-- Agents: these are the lowest-level but hardest to model entities in transport systems --- mobile entities like you and me.
+- **Agents**: these are the lowest-level but hardest to model entities in transport systems --- mobile entities like you and me.
 
 These six levels of analysis show that transport systems are highly complex, even before accounting for the innevitable fact that all of them are constantly evolving in continuous time.
 The purpose of geographic transport modelling can be interpretted as simplifying this complexity in a way that captures the essence of transport problems.
