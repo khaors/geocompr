@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveea75339bd092941b
+preservebda5b9ce30318104
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve14a1b5779aa58d31
+preserve287fec583eb95420
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5835,7 +5835,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve2bc2b14047023e16
+preserve90a8bb83ba153b11
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6107,7 +6107,7 @@ desire_lines = od2line(od, zones)
 
 The above code generates a geographic object `desire_lines` (of class `sf`) that allows the `od` object to be plotted on the map and, vitally, used to inform geographically targetted transport policies.
 The `desire_lines` can now be plotted using plot commands such as that provided in the command below.
-The results, illustrated in Figure \@ref(fig:od), demonstrate that Bristol city centre is by far the largest trip attractor in the region.
+The results, illustrated in Figure \@ref(fig:desire), demonstrate that Bristol city centre is by far the largest trip attractor in the region.
 However, there are several peripheral sub-centres including Bradford Stoke to the North and Portishead to the West.
 
 
@@ -6115,7 +6115,10 @@ However, there are several peripheral sub-centres including Bradford Stoke to th
 plot(desire_lines$geometry)
 ```
 
-
+<div class="figure" style="text-align: center">
+<img src="https://user-images.githubusercontent.com/1825120/34081176-74fd39c8-e341-11e7-9f3e-b98807cb113b.png" alt="Desire lines representing the centrality of Bristol City Centre in the region's transport patterns."  />
+<p class="caption">(\#fig:desire)Desire lines representing the centrality of Bristol City Centre in the region's transport patterns.</p>
+</div>
 
 
 

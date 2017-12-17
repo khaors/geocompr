@@ -457,8 +457,14 @@ zones_attr =<span class="st"> </span>od %&gt;%
 <span class="co">#&gt; Warning in st_centroid.sfc(st_geometry(x), of_largest_polygon =</span>
 <span class="co">#&gt; of_largest_polygon): st_centroid does not give correct centroids for</span>
 <span class="co">#&gt; longitude/latitude data</span></code></pre></div>
-<p>The above code generates a geographic object <code>desire_lines</code> (of class <code>sf</code>) that allows the <code>od</code> object to be plotted on the map and, vitally, used to inform geographically targetted transport policies. The <code>desire_lines</code> can now be plotted using plot commands such as that provided in the command below. The results, illustrated in Figure <a href="#fig:od"><strong>??</strong></a>, demonstrate that Bristol city centre is by far the largest trip attractor in the region. However, there are several peripheral sub-centres including Bradford Stoke to the North and Portishead to the West.</p>
+<p>The above code generates a geographic object <code>desire_lines</code> (of class <code>sf</code>) that allows the <code>od</code> object to be plotted on the map and, vitally, used to inform geographically targetted transport policies. The <code>desire_lines</code> can now be plotted using plot commands such as that provided in the command below. The results, illustrated in Figure <a href="transport.html#fig:desire">8.3</a>, demonstrate that Bristol city centre is by far the largest trip attractor in the region. However, there are several peripheral sub-centres including Bradford Stoke to the North and Portishead to the West.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(desire_lines$geometry)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:desire"></span>
+<img src="https://user-images.githubusercontent.com/1825120/34081176-74fd39c8-e341-11e7-9f3e-b98807cb113b.png" alt="Desire lines representing the centrality of Bristol City Centre in the region's transport patterns."  />
+<p class="caption">
+Figure 8.3: Desire lines representing the centrality of Bristol City Centre in the region’s transport patterns.
+</p>
+</div>
 </div>
 <div id="route-analysis" class="section level2">
 <h2><span class="header-section-number">8.5</span> Route analysis</h2>
