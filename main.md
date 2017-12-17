@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserved8396112b7d4f816
+preserveed163562d88260c3
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve4da079b15a74bf8b
+preserve6687187313396b84
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5835,7 +5835,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve96a5021a84636ce1
+preserved5d1c63bbbf6ef84
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -5941,9 +5941,31 @@ We will use input data from Bristol, a coastal city in the West of England, desc
 
 The case study used for this chapter is a diverse city on the west of England, 30 km east of the Welsh capital Cardiff.
 As with any case study it is worth taking some time to consider the local geography of the area (see Figure \@ref(fig:bristol)).
-This shows the diversity of the city's transport network, with railways, motorways and cycle paths plotted.
+This shows the diversity of the city's transport network, with railways, tarmac roads (consisting of 'roads' which bicycles can use and motorways which are exclusively for motor vehicles) and cycle paths plotted.
 
 
+
+Bristol is the 10^th^ largest city council in England, with a population of half a million people in the city bounds (Bristol's travel catchment area is larger though, as demonstrated in the next section).
+It has a vibrant economy with aerospace, media, financial service and tourism, alongside two major universities, contributing to a high average income per capita (although Bristol also has deprived, low income areas).
+
+In terms of transport, Bristol is well served by rail and road links, and has a relatively high level of active travel.
+19% of its citizens cycle and 88% walk at least once per month according to the [Active People Survey](https://www.gov.uk/government/statistical-data-sets/how-often-and-time-spent-walking-and-cycling-at-local-authority-level-cw010#table-cw0103) (the national average is 15% and 81% respectively).
+8% of the population reported cycling to work in the 2011 census, compared with only 3% nationwide.
+
+
+
+Despite impressive walking and cycling statistics, the city has a major congestion problem.
+Part of the solution is to continue increase the proportion of trips made by cycling.
+Cycling has a greater potential to replace car trips than walking because of the speed of this mode, around 3-4 times faster than walking (with typical [speeds](https://en.wikipedia.org/wiki/Bicycle_performance) of 15-20 km/h vs 4-6 km/h for walking).
+There is therefore a [plan](http://www.cyclingweekly.com/news/interview-bristols-mayor-george-ferguson-24114) to double the mode share of cycling by 2020.
+
+In this policy context the aim of this chapter, beyond demonstrating how geocomputation with R can be used to support sustainable transport planning, is to provide evidence for decision-makers in Bristol to decide how best to increase the mode share of walking and cycling in particular in the city.
+This high-level aim will be met via the following objectives:
+
+- Describe the geographical pattern of transport behaviour in the city.
+- Identify key nodes and potential bottlenecks where walking and cycling potential is likely to be highest.
+- Analyse travel 'desire lines' in the city to identify those with greatest potential for modal shift.
+- Building on the desire-line level analysis, identify which routes would most benefit from having dedicated cycleways and improved provision for pedestrians. 
 
 The data used in this section was downloaded using **osmdata**.
 To avoid having to request the data from OSM repeadetly, we'll use a locally saved version of the data, which contains point and line data for the case study area:
@@ -5962,10 +5984,9 @@ summary(ways)
 #>                  NA's   :1433   NA's   :1531
 ```
 
-The above code chunk loaded a few thousand lines, representing segments on the transport network.
+The above code chunk loaded a simple feature object representing around 3,000 segments on the transport network.
 This an easily manageable dataset size (transport datasets be large but it's best to start small).
-Before we use these in our scenario (to boost active travel in the city) let's  one more type of input data: transport zones that represent residential areas that generate trips into the city centre and elsewhere.
-
+A smaller but often vital level of geographic data is provided at the zone level, described in the next section.
 
 <div class="figure" style="text-align: center">
 <img src="figures/bristol.png" alt="Overview map of the city of Bristol" width="671" />
