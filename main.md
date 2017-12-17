@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve6ffd4805ba8d3a2c
+preserve5827c59dfc5c7030
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve571ded76a521c021
+preservebe60dad0e89af26c
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5835,7 +5835,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve4f4d3ee5d496391a
+preserve73c62ebe06c4c7e1
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -5945,6 +5945,11 @@ This shows the diversity of the city's transport network, with railways, tarmac 
 
 
 
+<div class="figure" style="text-align: center">
+<img src="figures/bristol.png" alt="Overview map of Bristol, with key parts of the transport network represented as colored lines for active (green), private motor (red lines and orange) and public (black) modes of travel." width="671" />
+<p class="caption">(\#fig:bristol)Overview map of Bristol, with key parts of the transport network represented as colored lines for active (green), private motor (red lines and orange) and public (black) modes of travel.</p>
+</div>
+
 Bristol is the 10^th^ largest city council in England, with a population of half a million people in the city bounds (Bristol's travel catchment area is larger though, as demonstrated in the next section).
 It has a vibrant economy with aerospace, media, financial service and tourism, alongside two major universities, contributing to a high average income per capita (although Bristol also has deprived, low income areas).
 
@@ -5987,11 +5992,6 @@ summary(ways)
 The above code chunk loaded a simple feature object representing around 3,000 segments on the transport network.
 This an easily manageable dataset size (transport datasets be large but it's best to start small).
 A smaller but often vital level of geographic data is provided at the zone level, described in the next section.
-
-<div class="figure" style="text-align: center">
-<img src="figures/bristol.png" alt="Overview map of the city of Bristol" width="671" />
-<p class="caption">(\#fig:bristol)Overview map of the city of Bristol</p>
-</div>
 
 ## Transport zones
 
