@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserved0fbd940abc07d23
+preserve2cfdc7caa23149e5
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservedf855b570303d86d
+preserve3f5de4600f7377d7
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4648,6 +4648,31 @@ Additionally, check out the *Multi-core functions* section in `vignette("functio
 <!-- rasterToPolygons() -->
 <!-- rasterToContour() -->
 
+
+```r
+image(grain)
+```
+
+<img src="figures/unnamed-chunk-60-1.png" width="576" style="display: block; margin: auto;" />
+
+
+```r
+grain_poly = spex::polygonize(grain)
+plot(grain_poly)
+```
+
+<img src="figures/unnamed-chunk-61-1.png" width="576" style="display: block; margin: auto;" />
+
+
+```r
+grain_poly2 = grain_poly %>% 
+  group_by(VALUE) %>%
+  summarize()
+plot(grain_poly2)
+```
+
+<img src="figures/unnamed-chunk-62-1.png" width="576" style="display: block; margin: auto;" />
+
 <!-- ```{r} -->
 <!-- nlcd2011 = raster(system.file("raster/nlcd2011.tif", package = "spDataLarge")) -->
 <!-- plot(nlcd2011) -->
@@ -4660,18 +4685,14 @@ Additionally, check out the *Multi-core functions* section in `vignette("functio
 <!-- ``` -->
 
 <!-- ```{r} -->
-<!-- # install.packages("spex") -->
-<!-- library(spex) -->
-<!-- nlcd2011_poly2 = polygonize(nlcd2011) -->
+<!-- system.time({nlcd2011_poly2 = polygonize(nlcd2011)}) -->
 <!-- ``` -->
-
-<!-- create two examples - small (r size) and large (gdal?) -->
 
 <!-- ```{r} -->
-<!-- nlcd2011_cont = rasterToContour(nlcd2011) -->
+<!-- nlcd2011_cont = rasterToContour(nlcd2011) %>%  -->
+<!--   st_as_sf() -->
 <!-- plot(nlcd2011_cont) -->
 <!-- ``` -->
-
 
 ## Exercises
 
@@ -5813,7 +5834,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve3a654bce60ddbd7b
+preservec44de4ecdd4fc62d
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
