@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve3300c399e5fa4590
+preservea821e0ec082d3aee
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve56cbf174da6b2143
+preserve71b264b418028850
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4644,6 +4644,7 @@ Additionally, check out the *Multi-core functions* section in `vignette("functio
 ### Vectorization
 
 <!-- e.g. landcover map to polygonss -->
+<!-- how it's different from a vectorization in CS -->
 <!-- vectorization is used when we get raster data as an input (such as scanned map or satellite image) and we want to extract objects -->
 <!-- it could be also used when we want to add attributes -->
 <!-- rasterToPolygons() -->
@@ -4651,28 +4652,17 @@ Additionally, check out the *Multi-core functions* section in `vignette("functio
 
 
 ```r
-image(grain)
-```
-
-<img src="figures/unnamed-chunk-60-1.png" width="576" style="display: block; margin: auto;" />
-
-
-```r
 grain_poly = spex::polygonize(grain)
-plot(grain_poly)
 ```
-
-<img src="figures/unnamed-chunk-61-1.png" width="576" style="display: block; margin: auto;" />
 
 
 ```r
 grain_poly2 = grain_poly %>% 
   group_by(VALUE) %>%
   summarize()
-plot(grain_poly2)
 ```
 
-<img src="figures/unnamed-chunk-62-1.png" width="576" style="display: block; margin: auto;" />
+
 
 <!-- ```{r} -->
 <!-- nlcd2011 = raster(system.file("raster/nlcd2011.tif", package = "spDataLarge")) -->
@@ -5835,7 +5825,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveaf4463f52f51ab12
+preserve1ffc88f6a37da5d8
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 

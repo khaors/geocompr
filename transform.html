@@ -872,20 +872,15 @@ elev_disagg =<span class="st"> </span><span class="kw">resample</span>(elev_agg,
 <div id="vectorization" class="section level3">
 <h3><span class="header-section-number">5.3.3</span> Vectorization</h3>
 <!-- e.g. landcover map to polygonss -->
+<!-- how it's different from a vectorization in CS -->
 <!-- vectorization is used when we get raster data as an input (such as scanned map or satellite image) and we want to extract objects -->
 <!-- it could be also used when we want to add attributes -->
 <!-- rasterToPolygons() -->
 <!-- rasterToContour() -->
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">image</span>(grain)</code></pre></div>
-<p><img src="figures/unnamed-chunk-60-1.png" width="576" style="display: block; margin: auto;" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grain_poly =<span class="st"> </span>spex::<span class="kw">polygonize</span>(grain)
-<span class="kw">plot</span>(grain_poly)</code></pre></div>
-<p><img src="figures/unnamed-chunk-61-1.png" width="576" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grain_poly =<span class="st"> </span>spex::<span class="kw">polygonize</span>(grain)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grain_poly2 =<span class="st"> </span>grain_poly %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">group_by</span>(VALUE) %&gt;%
-<span class="st">  </span><span class="kw">summarize</span>()
-<span class="kw">plot</span>(grain_poly2)</code></pre></div>
-<p><img src="figures/unnamed-chunk-62-1.png" width="576" style="display: block; margin: auto;" /></p>
+<span class="st">  </span><span class="kw">summarize</span>()</code></pre></div>
 <!-- ```{r} -->
 <!-- nlcd2011 = raster(system.file("raster/nlcd2011.tif", package = "spDataLarge")) -->
 <!-- plot(nlcd2011) -->
