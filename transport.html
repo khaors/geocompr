@@ -255,7 +255,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="8" data-path="transport.html"><a href="transport.html"><i class="fa fa-check"></i><b>8</b> Transport applications</a><ul>
 <li class="chapter" data-level="" data-path="transport.html"><a href="transport.html#prerequisites-6"><i class="fa fa-check"></i>Prerequisites</a></li>
-<li class="chapter" data-level="8.1" data-path="transport.html"><a href="transport.html#input-data-a-case-study-of-bristol"><i class="fa fa-check"></i><b>8.1</b> Input data: a case study of Bristol</a></li>
+<li class="chapter" data-level="8.1" data-path="transport.html"><a href="transport.html#bris-case"><i class="fa fa-check"></i><b>8.1</b> A case study of Bristol</a></li>
 <li class="chapter" data-level="8.2" data-path="transport.html"><a href="transport.html#transport-zones"><i class="fa fa-check"></i><b>8.2</b> Transport zones</a></li>
 <li class="chapter" data-level="8.3" data-path="transport.html"><a href="transport.html#nodes-on-the-transport-system"><i class="fa fa-check"></i><b>8.3</b> Nodes on the transport system</a></li>
 <li class="chapter" data-level="8.4" data-path="transport.html"><a href="transport.html#desire-line-analysis"><i class="fa fa-check"></i><b>8.4</b> Desire line analysis</a></li>
@@ -312,8 +312,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Typically models are designed to solve a particular problem. For this reason this chapter is based around a policy scenario that asks: how to increase walking and cycling? We will use input data from Bristol, a coastal city in the West of England, described in the next section.</p>
 <!-- Idea: make it about reducing CO2 emissions instead. Thoughts? + Multi-model - more complex -->
 </div>
-<div id="input-data-a-case-study-of-bristol" class="section level2">
-<h2><span class="header-section-number">8.1</span> Input data: a case study of Bristol</h2>
+<div id="bris-case" class="section level2">
+<h2><span class="header-section-number">8.1</span> A case study of Bristol</h2>
 <p>The case study used for this chapter is a diverse city on the west of England, 30 km east of the Welsh capital Cardiff. As with any case study it is worth taking some time to consider the local geography of the area (see Figure <a href="transport.html#fig:bristol">8.1</a>). This shows the diversity of the city’s transport network, with railways, motorways and cycle paths plotted.</p>
 <p>The data used in this section was downloaded using <strong>osmdata</strong>. To avoid having to request the data from OSM repeadetly, we’ll use a locally saved version of the data, which contains point and line data for the case study area:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ways =<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;extdata/ways.Rds&quot;</span>)
