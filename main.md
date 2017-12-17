@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve7cd5d341c197cd8b
+preserveea75339bd092941b
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservedf290acc73365e55
+preserve14a1b5779aa58d31
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5835,7 +5835,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve4b14e29e428d152a
+preserve2bc2b14047023e16
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6025,22 +6025,24 @@ zones_attr = od %>%
 zones = left_join(zones, zones_attr)
 #> Joining, by = "geo_code"
 sum(zones$all)
-#> [1] 244489
+#> [1] NA
 summary(zones)
 #>    geo_code             name                all           bicycle    
-#>  Length:100         Length:100         Min.   :   78   Min.   :   3  
-#>  Class :character   Class :character   1st Qu.: 1086   1st Qu.:  48  
-#>  Mode  :character   Mode  :character   Median : 1807   Median :  92  
-#>                                        Mean   : 2445   Mean   : 185  
-#>                                        3rd Qu.: 3261   3rd Qu.: 232  
-#>                                        Max.   :22972   Max.   :2327  
+#>  Length:100         Length:100         Min.   :  127   Min.   :   3  
+#>  Class :character   Class :character   1st Qu.: 1071   1st Qu.:  47  
+#>  Mode  :character   Mode  :character   Median : 1826   Median :  92  
+#>                                        Mean   : 2445   Mean   : 183  
+#>                                        3rd Qu.: 3225   3rd Qu.: 241  
+#>                                        Max.   :22453   Max.   :2186  
+#>                                        NA's   :2       NA's   :2     
 #>       foot        car_driver       train              geometry  
-#>  Min.   :   1   Min.   :  33   Min.   :  0   MULTIPOLYGON :100  
-#>  1st Qu.:  86   1st Qu.: 690   1st Qu.:  4   epsg:4326    :  0  
-#>  Median : 180   Median :1284   Median : 12   +proj=long...:  0  
-#>  Mean   : 354   Mean   :1463   Mean   : 25                      
-#>  3rd Qu.: 308   3rd Qu.:1866   3rd Qu.: 34                      
-#>  Max.   :5158   Max.   :8527   Max.   :382
+#>  Min.   :   1   Min.   :  41   Min.   :  0   MULTIPOLYGON :100  
+#>  1st Qu.:  86   1st Qu.: 688   1st Qu.:  4   epsg:4326    :  0  
+#>  Median : 184   Median :1272   Median : 12   +proj=long...:  0  
+#>  Mean   : 355   Mean   :1464   Mean   : 25                      
+#>  3rd Qu.: 311   3rd Qu.:1835   3rd Qu.: 33                      
+#>  Max.   :5070   Max.   :8408   Max.   :349                      
+#>  NA's   :2      NA's   :2      NA's   :2
 ```
 
 
@@ -6061,6 +6063,15 @@ rail_stations = readRDS("extdata/rail_stations.Rds")
 
 We have already loaded data representing desire lines in the dataset `od`.
 This origin-destination (OD) data frame object represents the number of people travelling between the zone represented in `geo_code1` and `geo_code2`, as illustrated in Table \@ref(tab:od).
+This subset of the data was using attribute operations described in Chatper \@ref(attr), to arrange the OD data by all trips and then filter-out only the top 5:
+
+
+```r
+od_top5 = od %>% 
+  arrange(desc(all)) %>% 
+  top_n(5, all)
+```
+
 
 
 Table: (\#tab:od)Sample of the origin-destination data stored in the data frame object `od`. These represent the top 5 most common desire lines between zones in the study area.
@@ -6072,6 +6083,40 @@ E02003037   E02003043    1330        97   1016          127       3
 E02003036   E02003043    1273       119   1021           59       6
 E02003031   E02003043    1257       310    620          182       7
 E02003034   E02003043    1249       289    754          114       7
+
+This table provides a snapshot of Bristolian travel patterns demonstrating, for example, that walking is the most popular mode of transport among the top 5 inter-zonal origin-destination pairs.
+But from a policy perspective it's useless:
+aside from the fact that it contains only a tiny portion of the 4,148 OD pairs, there is no way of deciding *where* policy measures are needed to boost walking and cycling.
+What is needed is a way to plot this origin-destination data on the map.
+
+The solution is to convert the non-geographic `od` dataset into geographical desire lines that can be plotted on a map.
+This conversion is done in the code below which matches the IDs in the first two columns of Table \@ref(tab:od) to the `zone_code` ID column in the geographic `zones` object:^[
+Note that the operation emits a warning: this is because the **stplanr** function `od2line()` used to create the desire lines works by allocating the start and end points of each origin-destination pair to the *centroid* of its zone of origin and destination.
+This represents a straight line between the centroid of zone `E02003043` and the centroid of `E02003047` for the first origin-destination pair represented in Table \@ref(tab:od), for example.
+For real-world use one would use centroid values generated from projected data or, preferably, use *population-weighted* centroids.
+<!-- Todo: add PCT reference (RL) -->
+]
+
+
+```r
+desire_lines = od2line(od, zones)
+#> Warning in st_centroid.sfc(st_geometry(x), of_largest_polygon =
+#> of_largest_polygon): st_centroid does not give correct centroids for
+#> longitude/latitude data
+```
+
+The above code generates a geographic object `desire_lines` (of class `sf`) that allows the `od` object to be plotted on the map and, vitally, used to inform geographically targetted transport policies.
+The `desire_lines` can now be plotted using plot commands such as that provided in the command below.
+The results, illustrated in Figure \@ref(fig:od), demonstrate that Bristol city centre is by far the largest trip attractor in the region.
+However, there are several peripheral sub-centres including Bradford Stoke to the North and Portishead to the West.
+
+
+```r
+plot(desire_lines$geometry)
+```
+
+
+
 
 
 ## Route analysis

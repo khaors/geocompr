@@ -359,22 +359,24 @@ zones_attr =<span class="st"> </span>od %&gt;%
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zones =<span class="st"> </span><span class="kw">left_join</span>(zones, zones_attr)
 <span class="co">#&gt; Joining, by = &quot;geo_code&quot;</span>
 <span class="kw">sum</span>(zones$all)
-<span class="co">#&gt; [1] 244489</span>
+<span class="co">#&gt; [1] NA</span>
 <span class="kw">summary</span>(zones)
 <span class="co">#&gt;    geo_code             name                all           bicycle    </span>
-<span class="co">#&gt;  Length:100         Length:100         Min.   :   78   Min.   :   3  </span>
-<span class="co">#&gt;  Class :character   Class :character   1st Qu.: 1086   1st Qu.:  48  </span>
-<span class="co">#&gt;  Mode  :character   Mode  :character   Median : 1807   Median :  92  </span>
-<span class="co">#&gt;                                        Mean   : 2445   Mean   : 185  </span>
-<span class="co">#&gt;                                        3rd Qu.: 3261   3rd Qu.: 232  </span>
-<span class="co">#&gt;                                        Max.   :22972   Max.   :2327  </span>
+<span class="co">#&gt;  Length:100         Length:100         Min.   :  127   Min.   :   3  </span>
+<span class="co">#&gt;  Class :character   Class :character   1st Qu.: 1071   1st Qu.:  47  </span>
+<span class="co">#&gt;  Mode  :character   Mode  :character   Median : 1826   Median :  92  </span>
+<span class="co">#&gt;                                        Mean   : 2445   Mean   : 183  </span>
+<span class="co">#&gt;                                        3rd Qu.: 3225   3rd Qu.: 241  </span>
+<span class="co">#&gt;                                        Max.   :22453   Max.   :2186  </span>
+<span class="co">#&gt;                                        NA&#39;s   :2       NA&#39;s   :2     </span>
 <span class="co">#&gt;       foot        car_driver       train              geometry  </span>
-<span class="co">#&gt;  Min.   :   1   Min.   :  33   Min.   :  0   MULTIPOLYGON :100  </span>
-<span class="co">#&gt;  1st Qu.:  86   1st Qu.: 690   1st Qu.:  4   epsg:4326    :  0  </span>
-<span class="co">#&gt;  Median : 180   Median :1284   Median : 12   +proj=long...:  0  </span>
-<span class="co">#&gt;  Mean   : 354   Mean   :1463   Mean   : 25                      </span>
-<span class="co">#&gt;  3rd Qu.: 308   3rd Qu.:1866   3rd Qu.: 34                      </span>
-<span class="co">#&gt;  Max.   :5158   Max.   :8527   Max.   :382</span></code></pre></div>
+<span class="co">#&gt;  Min.   :   1   Min.   :  41   Min.   :  0   MULTIPOLYGON :100  </span>
+<span class="co">#&gt;  1st Qu.:  86   1st Qu.: 688   1st Qu.:  4   epsg:4326    :  0  </span>
+<span class="co">#&gt;  Median : 184   Median :1272   Median : 12   +proj=long...:  0  </span>
+<span class="co">#&gt;  Mean   : 355   Mean   :1464   Mean   : 25                      </span>
+<span class="co">#&gt;  3rd Qu.: 311   3rd Qu.:1835   3rd Qu.: 33                      </span>
+<span class="co">#&gt;  Max.   :5070   Max.   :8408   Max.   :349                      </span>
+<span class="co">#&gt;  NA&#39;s   :2      NA&#39;s   :2      NA&#39;s   :2</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(zones %&gt;%<span class="st"> </span><span class="kw">select</span>(bicycle, foot, car_driver, train))</code></pre></div>
 <p><img src="figures/unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
@@ -384,7 +386,10 @@ zones_attr =<span class="st"> </span>od %&gt;%
 </div>
 <div id="desire-line-analysis" class="section level2">
 <h2><span class="header-section-number">8.4</span> Desire line analysis</h2>
-<p>We have already loaded data representing desire lines in the dataset <code>od</code>. This origin-destination (OD) data frame object represents the number of people travelling between the zone represented in <code>geo_code1</code> and <code>geo_code2</code>, as illustrated in Table <a href="transport.html#tab:od">8.1</a>.</p>
+<p>We have already loaded data representing desire lines in the dataset <code>od</code>. This origin-destination (OD) data frame object represents the number of people travelling between the zone represented in <code>geo_code1</code> and <code>geo_code2</code>, as illustrated in Table <a href="transport.html#tab:od">8.1</a>. This subset of the data was using attribute operations described in Chatper <a href="attr.html#attr">3</a>, to arrange the OD data by all trips and then filter-out only the top 5:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">od_top5 =<span class="st"> </span>od %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(all)) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">top_n</span>(<span class="dv">5</span>, all)</code></pre></div>
 <table>
 <caption><span id="tab:od">Table 8.1: </span>Sample of the origin-destination data stored in the data frame object <code>od</code>. These represent the top 5 most common desire lines between zones in the study area.</caption>
 <thead>
@@ -446,6 +451,14 @@ zones_attr =<span class="st"> </span>od %&gt;%
 </tr>
 </tbody>
 </table>
+<p>This table provides a snapshot of Bristolian travel patterns demonstrating, for example, that walking is the most popular mode of transport among the top 5 inter-zonal origin-destination pairs. But from a policy perspective it’s useless: aside from the fact that it contains only a tiny portion of the 4,148 OD pairs, there is no way of deciding <em>where</em> policy measures are needed to boost walking and cycling. What is needed is a way to plot this origin-destination data on the map.</p>
+<p>The solution is to convert the non-geographic <code>od</code> dataset into geographical desire lines that can be plotted on a map. This conversion is done in the code below which matches the IDs in the first two columns of Table <a href="transport.html#tab:od">8.1</a> to the <code>zone_code</code> ID column in the geographic <code>zones</code> object:<a href="#fn43" class="footnoteRef" id="fnref43"><sup>43</sup></a></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">desire_lines =<span class="st"> </span><span class="kw">od2line</span>(od, zones)
+<span class="co">#&gt; Warning in st_centroid.sfc(st_geometry(x), of_largest_polygon =</span>
+<span class="co">#&gt; of_largest_polygon): st_centroid does not give correct centroids for</span>
+<span class="co">#&gt; longitude/latitude data</span></code></pre></div>
+<p>The above code generates a geographic object <code>desire_lines</code> (of class <code>sf</code>) that allows the <code>od</code> object to be plotted on the map and, vitally, used to inform geographically targetted transport policies. The <code>desire_lines</code> can now be plotted using plot commands such as that provided in the command below. The results, illustrated in Figure <a href="#fig:od"><strong>??</strong></a>, demonstrate that Bristol city centre is by far the largest trip attractor in the region. However, there are several peripheral sub-centres including Bradford Stoke to the North and Portishead to the West.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(desire_lines$geometry)</code></pre></div>
 </div>
 <div id="route-analysis" class="section level2">
 <h2><span class="header-section-number">8.5</span> Route analysis</h2>
@@ -478,6 +491,12 @@ zones_attr =<span class="st"> </span>od %&gt;%
 <div id="ref-rodrigue_geography_2013">
 <p>Rodrigue, Jean-Paul, Claude Comtois, and Brian Slack. 2013. <em>The Geography of Transport Systems</em>. 3 edition. London ; New York: Routledge.</p>
 </div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="43">
+<li id="fn43"><p>Note that the operation emits a warning: this is because the <strong>stplanr</strong> function <code>od2line()</code> used to create the desire lines works by allocating the start and end points of each origin-destination pair to the <em>centroid</em> of its zone of origin and destination. This represents a straight line between the centroid of zone <code>E02003043</code> and the centroid of <code>E02003047</code> for the first origin-destination pair represented in Table <a href="transport.html#tab:od">8.1</a>, for example. For real-world use one would use centroid values generated from projected data or, preferably, use <em>population-weighted</em> centroids. <!-- Todo: add PCT reference (RL) --><a href="transport.html#fnref43">↩</a></p></li>
+</ol>
 </div>
             </section>
 
