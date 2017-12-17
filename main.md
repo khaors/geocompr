@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve5804a9dfa4aab851
+preserveac072199add398bc
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve64d850de1c9c2306
+preserveee9308886a1bcc86
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5835,7 +5835,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve1525b660575b4305
+preserve5def1de88203725b
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6000,13 +6000,55 @@ Because Bristol is a major employer attracting travel from surrounding towns, it
 
 ```r
 region = readRDS("extdata/bristol-region.Rds")
-plot(region)
+region_ttwa = readRDS("extdata/bristol-ttwa.Rds")
+plot(region_ttwa$geometry)
+plot(region$Bristol, add = TRUE)
 ```
 
 <div class="figure" style="text-align: center">
 <img src="figures/ttwa-bristol-1.png" alt="Region definitions in Bristol" width="576" />
 <p class="caption">(\#fig:ttwa-bristol)Region definitions in Bristol</p>
 </div>
+
+
+```r
+zones = readRDS("extdata/bristol-zones.Rds")
+od = readRDS("extdata/bristol-od.Rds")
+zones_attr = od %>%
+  group_by(geo_code1) %>% 
+  summarise_if(is.numeric, sum) %>% 
+  rename(geo_code = geo_code1)
+```
+
+
+```r
+zones = left_join(zones, zones_attr)
+#> Joining, by = "geo_code"
+sum(zones$all)
+#> [1] 244489
+summary(zones)
+#>    geo_code             name                all           bicycle    
+#>  Length:100         Length:100         Min.   :   78   Min.   :   3  
+#>  Class :character   Class :character   1st Qu.: 1086   1st Qu.:  48  
+#>  Mode  :character   Mode  :character   Median : 1807   Median :  92  
+#>                                        Mean   : 2445   Mean   : 185  
+#>                                        3rd Qu.: 3261   3rd Qu.: 232  
+#>                                        Max.   :22972   Max.   :2327  
+#>       foot        car_driver       train              geometry  
+#>  Min.   :   1   Min.   :  33   Min.   :  0   MULTIPOLYGON :100  
+#>  1st Qu.:  86   1st Qu.: 690   1st Qu.:  4   epsg:4326    :  0  
+#>  Median : 180   Median :1284   Median : 12   +proj=long...:  0  
+#>  Mean   : 354   Mean   :1463   Mean   : 25                      
+#>  3rd Qu.: 308   3rd Qu.:1866   3rd Qu.: 34                      
+#>  Max.   :5158   Max.   :8527   Max.   :382
+```
+
+
+```r
+plot(zones %>% select(bicycle, foot, car_driver, train))
+```
+
+<img src="figures/unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;" />
 
 ## Nodes on the transport system
 
