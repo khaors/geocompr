@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveac072199add398bc
+preserve7cd5d341c197cd8b
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveee9308886a1bcc86
+preservedf290acc73365e55
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5835,7 +5835,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve5def1de88203725b
+preserve4b14e29e428d152a
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6057,8 +6057,22 @@ plot(zones %>% select(bicycle, foot, car_driver, train))
 rail_stations = readRDS("extdata/rail_stations.Rds")
 ```
 
-
 ## Desire line analysis
+
+We have already loaded data representing desire lines in the dataset `od`.
+This origin-destination (OD) data frame object represents the number of people travelling between the zone represented in `geo_code1` and `geo_code2`, as illustrated in Table \@ref(tab:od).
+
+
+Table: (\#tab:od)Sample of the origin-destination data stored in the data frame object `od`. These represent the top 5 most common desire lines between zones in the study area.
+
+geo_code1   geo_code2     all   bicycle   foot   car_driver   train
+----------  ----------  -----  --------  -----  -----------  ------
+E02003043   E02003047    1335       293    759          167       8
+E02003037   E02003043    1330        97   1016          127       3
+E02003036   E02003043    1273       119   1021           59       6
+E02003031   E02003043    1257       310    620          182       7
+E02003034   E02003043    1249       289    754          114       7
+
 
 ## Route analysis
 
