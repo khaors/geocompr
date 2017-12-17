@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservebda5b9ce30318104
+preserve39475cabf4653c65
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve287fec583eb95420
+preserve0384949c82b3042e
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5835,7 +5835,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve90a8bb83ba153b11
+preservef8dc272de5e0f7f6
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -5895,13 +5895,16 @@ Change the age raster accordingly, repeat the remaining analyses and compare the
 
 ## Prerequisites {-}
 
+- This chapter requires the packages **tidyverse**, **sf** and **stplanr**.
+
 
 ```r
+library(tidyverse)
 library(sf)
 library(stplanr)
-library(tidyverse)
 ```
 
+## Introduction
 
 In no other sector is geographic space more tangible than transport.
 It is the effort of moving, particularly between places that are far apart, that led to the 'first law' of geography defined by Waldo Tobler in 1970 as follows [@miller_toblers_2004]: 
