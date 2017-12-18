@@ -520,32 +520,12 @@ reclass
 <span class="co">#&gt; max values  : 8000,     3,        3,       3</span></code></pre></div>
 <!-- 
 
-```r
-tmp = mapply(FUN = function(x, y) {
-  reclassify(x = x, rcl = y, right = NA)
-}, x = as.list(input_ras), y = rcl)
-
-
-for (i in seq_len(nlayers(reclass))) {
-  reclass[[i]] = reclassify(reclass[[i]], rcl = rcl[[i]], right = NA) 
-}
-names(reclass) = names(input_ras)
-```
 -->
 </div>
 <div id="define-metropolitan-areas" class="section level3">
 <h3><span class="header-section-number">7.2.3</span> Define metropolitan areas</h3>
 <p>We define metropolitan areas as pixels of 20 km<sup>2</sup> inhabited by more than 500,000 people. Pixels at this coarse resolution can rapidly be created using <code>aggregate()</code>, as introduced in section <a href="transform.html#raster-alignment">5.3.1</a>. The command below uses the argument <code>fact = 20</code> to reduce the resolution of the result twenty-fold (recall the original raster resolution was 1 km<sup>2</sup>):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pop_agg =<span class="st"> </span><span class="kw">aggregate</span>(reclass$pop, <span class="dt">fact =</span> <span class="dv">20</span>, <span class="dt">fun =</span> sum)
-reclass
-<span class="co">#&gt; class       : RasterStack </span>
-<span class="co">#&gt; dimensions  : 868, 642, 557256, 4  (nrow, ncol, ncell, nlayers)</span>
-<span class="co">#&gt; resolution  : 1000, 1000  (x, y)</span>
-<span class="co">#&gt; extent      : 4031000, 4673000, 2684000, 3552000  (xmin, xmax, ymin, ymax)</span>
-<span class="co">#&gt; coord. ref. : +proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs </span>
-<span class="co">#&gt; names       :  pop, women, mean_age, hh_size </span>
-<span class="co">#&gt; min values  :  127,     0,        0,       0 </span>
-<span class="co">#&gt; max values  : 8000,     3,        0,       3</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pop_agg =<span class="st"> </span><span class="kw">aggregate</span>(reclass$pop, <span class="dt">fact =</span> <span class="dv">20</span>, <span class="dt">fun =</span> sum)</code></pre></div>
 <p>The next stage is to keep only cells with more than half a million people, and convert the result cells into a vector object of class <code>sf</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">polys =<span class="st"> </span><span class="kw">rasterToPolygons</span>(pop_agg[pop_agg &gt;<span class="st"> </span><span class="dv">500000</span>, <span class="dt">drop =</span> <span class="ot">FALSE</span>]) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">st_as_sf</span>(polys)</code></pre></div>
@@ -701,16 +681,7 @@ If the <code>shop</code> column were used instead of the <code>osm_id</code> col
 <p>The result of the subsequent code chunk is therefore an estimate of shop density (shops/km<sup>2</sup>). <code>st_transform()</code> is used before <code>rasterize()</code> to ensure the CRS of both inputs match.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">shops =<span class="st"> </span><span class="kw">st_transform</span>(shops, <span class="kw">proj4string</span>(reclass))
 <span class="co"># create poi raster</span>
-poi =<span class="st"> </span><span class="kw">rasterize</span>(<span class="dt">x =</span> shops, <span class="dt">y =</span> reclass, <span class="dt">field =</span> <span class="st">&quot;osm_id&quot;</span>, <span class="dt">fun =</span> <span class="st">&quot;count&quot;</span>)
-reclass
-<span class="co">#&gt; class       : RasterStack </span>
-<span class="co">#&gt; dimensions  : 868, 642, 557256, 4  (nrow, ncol, ncell, nlayers)</span>
-<span class="co">#&gt; resolution  : 1000, 1000  (x, y)</span>
-<span class="co">#&gt; extent      : 4031000, 4673000, 2684000, 3552000  (xmin, xmax, ymin, ymax)</span>
-<span class="co">#&gt; coord. ref. : +proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs </span>
-<span class="co">#&gt; names       :  pop, women, mean_age, hh_size </span>
-<span class="co">#&gt; min values  :  127,     0,        0,       0 </span>
-<span class="co">#&gt; max values  : 8000,     3,        0,       3</span></code></pre></div>
+poi =<span class="st"> </span><span class="kw">rasterize</span>(<span class="dt">x =</span> shops, <span class="dt">y =</span> reclass, <span class="dt">field =</span> <span class="st">&quot;osm_id&quot;</span>, <span class="dt">fun =</span> <span class="st">&quot;count&quot;</span>)</code></pre></div>
 <p>As with the other raster layers (population, women, mean age, household size) the <code>poi</code> raster is reclassified into four classes (see section <a href="location.html#create-census-rasters">7.2.2</a>). Defining class intervals is an arbitrary undertaking to a certain degree. One can use equal breaks, quantile breaks, fixed values or others. Here, we choose the Fisher-Jenks natural breaks approach which minimizes within-class variance, the result of which provides an input for the reclassification matrix.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># construct reclassification matrix</span>
 int =<span class="st"> </span>classInt::<span class="kw">classIntervals</span>(<span class="kw">values</span>(poi), <span class="dt">n =</span> <span class="dv">4</span>, <span class="dt">style =</span> <span class="st">&quot;fisher&quot;</span>)
@@ -728,47 +699,14 @@ poi =<span class="st"> </span><span class="kw">reclassify</span>(poi, <span clas
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># add poi raster</span>
 reclass =<span class="st"> </span><span class="kw">addLayer</span>(reclass, poi)
 <span class="co"># delete population raster</span>
-reclass =<span class="st"> </span><span class="kw">dropLayer</span>(reclass, <span class="st">&quot;pop&quot;</span>)
-reclass
-<span class="co">#&gt; class       : RasterStack </span>
-<span class="co">#&gt; dimensions  : 868, 642, 557256, 4  (nrow, ncol, ncell, nlayers)</span>
-<span class="co">#&gt; resolution  : 1000, 1000  (x, y)</span>
-<span class="co">#&gt; extent      : 4031000, 4673000, 2684000, 3552000  (xmin, xmax, ymin, ymax)</span>
-<span class="co">#&gt; coord. ref. : +proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs </span>
-<span class="co">#&gt; names       : women, mean_age, hh_size, poi </span>
-<span class="co">#&gt; min values  :     0,        0,       0,   0 </span>
-<span class="co">#&gt; max values  :     3,        0,       3,   3</span></code></pre></div>
+reclass =<span class="st"> </span><span class="kw">dropLayer</span>(reclass, <span class="st">&quot;pop&quot;</span>)</code></pre></div>
 <p>In common with other data science projects, data retrieval and ‘tidying’ have consumed much of the overall workload so far. With clean data the final step, calculating a final score by summing up all raster layers, can be accomplished in a single line.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate the total score</span>
-result =<span class="st"> </span><span class="kw">sum</span>(reclass)
-result
-<span class="co">#&gt; class       : RasterLayer </span>
-<span class="co">#&gt; dimensions  : 868, 642, 557256  (nrow, ncol, ncell)</span>
-<span class="co">#&gt; resolution  : 1000, 1000  (x, y)</span>
-<span class="co">#&gt; extent      : 4031000, 4673000, 2684000, 3552000  (xmin, xmax, ymin, ymax)</span>
-<span class="co">#&gt; coord. ref. : +proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs </span>
-<span class="co">#&gt; data source : in memory</span>
-<span class="co">#&gt; names       : layer </span>
-<span class="co">#&gt; values      : 0, 8  (min, max)</span></code></pre></div>
+result =<span class="st"> </span><span class="kw">sum</span>(reclass)</code></pre></div>
 <p>For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure <a href="location.html#fig:bikeshop-berlin">7.3</a>).</p>
-<pre><code>#&gt;         layer
-#&gt; Min.        1
-#&gt; 1st Qu.     3
-#&gt; Median      5
-#&gt; 3rd Qu.     5
-#&gt; Max.        7
-#&gt; NA&#39;s     1082
-#&gt; class       : RasterLayer 
-#&gt; dimensions  : 40, 40, 1600  (nrow, ncol, ncell)
-#&gt; resolution  : 1000, 1000  (x, y)
-#&gt; extent      : 4531000, 4571000, 3252000, 3292000  (xmin, xmax, ymin, ymax)
-#&gt; coord. ref. : +proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
-#&gt; data source : in memory
-#&gt; names       : layer 
-#&gt; values      : 1, 7  (min, max)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:bikeshop-berlin"></span>
 <div id="htmlwidget-ec897849c5c50a6f7846" style="width:576px;height:355.968px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-ec897849c5c50a6f7846">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addRasterImage","args":["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAAHElEQVRYhe3BAQEAAACCIP+vbkhAAQAAAAAAfBoZKAABpFjcSAAAAABJRU5ErkJggg==",[[52.696600856383,13.0820026147986],[52.3210740877061,13.6981591380976]],0.8,null,null,null]},{"method":"addLegend","args":[{"colors":["darkgreen"],"labels":["potential locations"],"na_color":null,"na_label":"NA","opacity":0.5,"position":"bottomright","type":"unknown","title":"Legend","extra":null,"layerId":null,"className":"info legend"}]}],"limits":{"lat":[52.3210740877061,52.696600856383],"lng":[13.0820026147986,13.6981591380976]}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-ec897849c5c50a6f7846">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addRasterImage","args":["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAAM0lEQVRYhe3SMQ0AMAwEsQcb/hTSuQSaVLIR3HAJAADfqfR0wm1dEC9VevcCq+MAAIBhB20vBvBK3JZrAAAAAElFTkSuQmCC",[[52.696600856383,13.0820026147986],[52.3210740877061,13.6981591380976]],0.8,null,null,null]},{"method":"addLegend","args":[{"colors":["darkgreen"],"labels":["potential locations"],"na_color":null,"na_label":"NA","opacity":0.5,"position":"bottomright","type":"unknown","title":"Legend","extra":null,"layerId":null,"className":"info legend"}]}],"limits":{"lat":[52.3210740877061,52.696600856383],"lng":[13.0820026147986,13.6981591380976]}},"evals":[],"jsHooks":[]}</script>
 <p class="caption">
 Figure 7.3: Suitable areas (i.e., raster cells with a score &gt; 9) in accordance with our hypothetical survey for bike stores in Berlin.
 </p>
