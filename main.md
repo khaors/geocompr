@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve18f9228e16fd6050
+preservee2f2273a12b9d39c
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve40f1ab22689b75ec
+preserve736a1b4ca4276a25
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5825,7 +5825,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve6afbda368a4aa43d
+preserve4cbd4e072a04b4ca
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -5991,7 +5991,7 @@ This approach may not always be appropriate, however: boundaries in OSM may not 
 More importantly, official administrative zones often do not relate to 'travel watersheds', areas that can are defined not by (often arbitrary) political decisions but by data on where people actually travel to.
 
 To overcome this issue for transport data analysis in the UK, the Travel to Work Areas (TTWAs) were created.
-TTWAs are contiguous zones defined roughly as areas in which 75% of the population both live and work.
+TTWAs are contiguous zones defined roughly as areas in which 75% of the population both live and work [@coombes_efficient_1986].
 Because Bristol is a major employer attracting travel from surrounding towns, its TTWA is substantially larger than its administratively defined area, as illustrated in Figure \@ref(fig:ttwa-bristol).
 
 
