@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve541522aee4353746
+preserve0620a9ec935aad4a
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveed6168ad3be5a35a
+preserveea2f19d20fd483c1
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5305,7 +5305,6 @@ Export this map to a file called `cycle_hire.html`.
 ```r
 library(osmdata)
 library(raster)
-library(sp)
 library(sf)
 library(tidyverse)
 ```
@@ -5365,7 +5364,8 @@ The following code chunk downloads, unzips and reads-in the 1 km data.
 
 
 ```r
-download.file("https://tinyurl.com/ybtpkwxz", destfile = "census.zip")
+download.file("https://tinyurl.com/ybtpkwxz", 
+              destfile = "census.zip", mode = "wb")
 unzip("census.zip") # unzip the files
 census = readr::read_csv2(list.files(pattern = "Gitter.csv"))
 ```
@@ -5516,6 +5516,15 @@ reclass = map2(as.list(input_ras), rcl, function(x, y) {
 }) %>% 
   stack
 names(reclass) = names(input_ras)
+reclass
+#> class       : RasterStack 
+#> dimensions  : 868, 642, 557256, 4  (nrow, ncol, ncell, nlayers)
+#> resolution  : 1000, 1000  (x, y)
+#> extent      : 4031000, 4673000, 2684000, 3552000  (xmin, xmax, ymin, ymax)
+#> coord. ref. : +proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
+#> names       :  pop, women, mean_age, hh_size 
+#> min values  :  127,     0,        0,       0 
+#> max values  : 8000,     3,        3,       3
 ```
 
 <!-- 
@@ -5542,6 +5551,15 @@ The command below uses the argument `fact = 20` to reduce the resolution of the 
 
 ```r
 pop_agg = aggregate(reclass$pop, fact = 20, fun = sum)
+reclass
+#> class       : RasterStack 
+#> dimensions  : 868, 642, 557256, 4  (nrow, ncol, ncell, nlayers)
+#> resolution  : 1000, 1000  (x, y)
+#> extent      : 4031000, 4673000, 2684000, 3552000  (xmin, xmax, ymin, ymax)
+#> coord. ref. : +proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
+#> names       :  pop, women, mean_age, hh_size 
+#> min values  :  127,     0,        0,       0 
+#> max values  : 8000,     3,        0,       3
 ```
 
 The next stage is to keep only cells with more than half a million people, and convert the result cells into a vector object of class `sf`.
@@ -5754,7 +5772,7 @@ shops = map(metro_names, function(x) {
     iter = iter - 1
   }
   points = st_set_crs(points$osm_points, 4326)
-}
+})
 ```
 
 It is highly unlikely that there are no shops in any of our defined metropolitan areas.
@@ -5805,6 +5823,15 @@ The result of the subsequent code chunk is therefore an estimate of shop density
 shops = st_transform(shops, proj4string(reclass))
 # create poi raster
 poi = rasterize(x = shops, y = reclass, field = "osm_id", fun = "count")
+reclass
+#> class       : RasterStack 
+#> dimensions  : 868, 642, 557256, 4  (nrow, ncol, ncell, nlayers)
+#> resolution  : 1000, 1000  (x, y)
+#> extent      : 4031000, 4673000, 2684000, 3552000  (xmin, xmax, ymin, ymax)
+#> coord. ref. : +proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
+#> names       :  pop, women, mean_age, hh_size 
+#> min values  :  127,     0,        0,       0 
+#> max values  : 8000,     3,        0,       3
 ```
 
 As with the other raster layers (population, women, mean age, household size) the `poi` raster is reclassified into four classes (see section \@ref(create-census-rasters)). 
@@ -5840,6 +5867,15 @@ This is achieved with the complimentary functions `addLayer()` and `dropLayer()`
 reclass = addLayer(reclass, poi)
 # delete population raster
 reclass = dropLayer(reclass, "pop")
+reclass
+#> class       : RasterStack 
+#> dimensions  : 868, 642, 557256, 4  (nrow, ncol, ncell, nlayers)
+#> resolution  : 1000, 1000  (x, y)
+#> extent      : 4031000, 4673000, 2684000, 3552000  (xmin, xmax, ymin, ymax)
+#> coord. ref. : +proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
+#> names       : women, mean_age, hh_size, poi 
+#> min values  :     0,        0,       0,   0 
+#> max values  :     3,        0,       3,   3
 ```
 
 In common with other data science projects, data retrieval and 'tidying' have consumed much of the overall workload so far.
@@ -5849,12 +5885,40 @@ With clean data the final step, calculating a final score by summing up all rast
 ```r
 # calculate the total score
 result = sum(reclass)
+result
+#> class       : RasterLayer 
+#> dimensions  : 868, 642, 557256  (nrow, ncol, ncell)
+#> resolution  : 1000, 1000  (x, y)
+#> extent      : 4031000, 4673000, 2684000, 3552000  (xmin, xmax, ymin, ymax)
+#> coord. ref. : +proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
+#> data source : in memory
+#> names       : layer 
+#> values      : 0, 8  (min, max)
 ```
 
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
+
+```
+#>         layer
+#> Min.        1
+#> 1st Qu.     3
+#> Median      5
+#> 3rd Qu.     5
+#> Max.        7
+#> NA's     1082
+#> class       : RasterLayer 
+#> dimensions  : 40, 40, 1600  (nrow, ncol, ncell)
+#> resolution  : 1000, 1000  (x, y)
+#> extent      : 4531000, 4571000, 3252000, 3292000  (xmin, xmax, ymin, ymax)
+#> coord. ref. : +proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
+#> data source : in memory
+#> names       : layer 
+#> values      : 1, 7  (min, max)
+```
+
 <div class="figure" style="text-align: center">
-preserve0848f51f0fff856c
+preserved7a99a62660c15ee
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
