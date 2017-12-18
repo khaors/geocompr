@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveb546828091dce6ae
+preserve39610f4da8b53598
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve76bd49eb3131efe7
+preserve44c3ef121b92bf67
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5825,7 +5825,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve8f41b833fd66367d
+preserve6da4f3290db387d8
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -5942,7 +5942,7 @@ This shows the diversity of the city's transport network, with railways, tarmac 
 
 
 <div class="figure" style="text-align: center">
-<img src="figures/bristol.png" alt="Overview map of Bristol, with key parts of the transport network represented as colored lines for active (green), public (railways, black) and private motor (red) modes of travel." width="671" />
+<img src="https://user-images.githubusercontent.com/1825120/34098583-b6daf054-e3d4-11e7-9fd6-7d71883f89e4.png" alt="Overview map of Bristol, with key parts of the transport network represented as colored lines for active (green), public (railways, black) and private motor (red) modes of travel."  />
 <p class="caption">(\#fig:bristol)Overview map of Bristol, with key parts of the transport network represented as colored lines for active (green), public (railways, black) and private motor (red) modes of travel.</p>
 </div>
 
