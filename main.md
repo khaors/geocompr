@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservee2f2273a12b9d39c
+preserve5ae4d946cab7962c
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve736a1b4ca4276a25
+preserve30ddcf5d041d2ab1
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5825,7 +5825,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve4cbd4e072a04b4ca
+preservecb87bd2aa63da73d
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -5992,30 +5992,39 @@ More importantly, official administrative zones often do not relate to 'travel w
 
 To overcome this issue for transport data analysis in the UK, the Travel to Work Areas (TTWAs) were created.
 TTWAs are contiguous zones defined roughly as areas in which 75% of the population both live and work [@coombes_efficient_1986].
-Because Bristol is a major employer attracting travel from surrounding towns, its TTWA is substantially larger than its administratively defined area, as illustrated in Figure \@ref(fig:ttwa-bristol).
+They are similar conceptually to hydrological watershed.
+Because Bristol is a major employer attracting travel from surrounding towns, its TTWA is substantially larger than its administratively defined area, as illustrated in Figure \@ref(fig:zones).
+The TTWA region is loaded in the following command:
 
 
 ```r
-region = readRDS("extdata/bristol-region.rds")
 region_ttwa = readRDS("extdata/bristol-ttwa.rds")
-plot(region_ttwa$geometry)
-plot(region$Bristol, add = TRUE)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="figures/ttwa-bristol-1.png" alt="Region definitions in Bristol" width="576" />
-<p class="caption">(\#fig:ttwa-bristol)Region definitions in Bristol</p>
-</div>
+Administrative zones are the other key zonal dataset to load.
+Where available, these zones can provide vital demographic, transport and other variables for the region, and how these change over space.
+The geographic resolution of these zones is important.
+Very small zones (which have a high level of geographic resolution) provide detailed spatial information but if they are too small this can have consequences for processing time.
+Furthermore, it is usually possible to access more socio-demographic variables for larger zones (which have a lower level of geographic resolution) due to rules preventing the disclosure of identifiable data.
+
+The zoning system represented in Figure \@ref(fig:zones) represents a suitable compromise given that the purpose of this chapter is educational rather than precision.
+The `zones` dataset, loaded in the next code chunk, contains 100 zones in Bristol.
 
 
 ```r
 zones = readRDS("extdata/bristol-zones.rds")
+```
+
+
+
+```r
 od = readRDS("extdata/bristol-od.rds")
 zones_attr = od %>%
   group_by(geo_code1) %>% 
   summarise_if(is.numeric, sum) %>% 
   rename(geo_code = geo_code1)
 ```
+
 
 
 ```r
@@ -6042,12 +6051,10 @@ summary(zones)
 #>  NA's   :2      NA's   :2      NA's   :2
 ```
 
-
-```r
-plot(zones %>% select(bicycle, foot, car_driver, train))
-```
-
-<img src="figures/unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures/zones-1.png" alt="Regional boundaries (the thick black line represents the Travel to Work Area, the thinner black boundary represents the OSM boundary) for Bristol and the percentage of inhabitants travelling by car (left) and bicycle (right)." width="576" />
+<p class="caption">(\#fig:zones)Regional boundaries (the thick black line represents the Travel to Work Area, the thinner black boundary represents the OSM boundary) for Bristol and the percentage of inhabitants travelling by car (left) and bicycle (right).</p>
+</div>
 
 ## Nodes on the transport system
 
