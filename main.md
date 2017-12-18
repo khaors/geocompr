@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve6a8a53c5e10cc5e0
+preserveb546828091dce6ae
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveed7d33f4460d5f48
+preserve76bd49eb3131efe7
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5825,7 +5825,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserved8cfef58f11df39d
+preserve8f41b833fd66367d
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -5992,8 +5992,6 @@ TTWAs are contiguous zones defined roughly as areas in which 75% of the populati
 Because Bristol is a major employer attracting travel from surrounding towns, its TTWA is substantially larger than its administratively defined area, as illustrated in Figure \@ref(fig:ttwa-bristol).
 
 
-
-
 ```r
 region = readRDS("extdata/bristol-region.rds")
 region_ttwa = readRDS("extdata/bristol-ttwa.rds")
@@ -6046,7 +6044,7 @@ summary(zones)
 plot(zones %>% select(bicycle, foot, car_driver, train))
 ```
 
-<img src="figures/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;" />
 
 ## Nodes on the transport system
 
@@ -6129,14 +6127,22 @@ To avoid having to request the data from OSM repeadetly, we'll use a locally sav
 ```r
 ways = readRDS("extdata/ways.rds")
 summary(ways)
-#>      highway        maxspeed         ref                geometry   
-#>  cycleway: 866   30 mph : 494   A38    : 136   LINESTRING   :2938  
-#>  rail    : 590   20 mph : 398   A4018  : 120   epsg:4326    :   0  
-#>  road    :1482   40 mph : 159   A420   :  65   +proj=long...:   0  
-#>                  70 mph : 153   B4054  :  64                       
-#>                  25 mph :  92   B4057  :  61                       
-#>                  (Other): 209   (Other): 961                       
-#>                  NA's   :1433   NA's   :1531
+#>      highway        maxspeed         ref      
+#>  cycleway:1259   30 mph : 822   A38    : 199  
+#>  rail    : 586   20 mph : 431   M5     : 138  
+#>  road    :2516   70 mph : 321   A432   : 128  
+#>                  40 mph : 304   A4018  : 120  
+#>                  50 mph : 127   A420   : 112  
+#>                  (Other): 315   (Other):1681  
+#>                  NA's   :2041   NA's   :1983  
+#>                      Name                 geometry   
+#>  Bristol               :4361   LINESTRING     :4350  
+#>  Aberdeen              :   0   MULTILINESTRING:  11  
+#>  Aberystwyth           :   0   epsg:4326      :   0  
+#>  Alness and Invergordon:   0   +proj=long...  :   0  
+#>  Andover               :   0                         
+#>  Arbroath and Montrose :   0                         
+#>  (Other)               :   0
 ```
 
 The above code chunk loaded a simple feature object representing around 3,000 segments on the transport network.
