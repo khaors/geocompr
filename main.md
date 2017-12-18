@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve53a7ef3320b83815
+preserve18f9228e16fd6050
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve8a53b169773c8e75
+preserve40f1ab22689b75ec
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5825,7 +5825,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve3788e82bb747cc09
+preserve6afbda368a4aa43d
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -5973,18 +5973,21 @@ These zone-level data are small but often vital for gaining a basic understandin
 
 ## Transport zones
 
-Although transport systems are inherently based on linear features and nodes --- the nodes and edges of the transport network --- it often makes sense to start with areal data.
+Although transport systems are primarily based on linear features and nodes --- including pathways and stations --- it often makes sense to start with areal data.
 Three types of zone will typically be of particular interest: the study region, origin zones (typically residential areas), and destination zones (which are often the same as the origin zones).
 
-The simplest definition of the study area is typically the first matching boundary returned by OpenStreetMap, which can be obtained using the **osmdata** package as follows:
+The simplest way to define a study area is often the first matching boundary returned by OpenStreetMap, which can be obtained using the **osmdata** package as follows:
 
 
 ```r
-region = getbb("Bristol", format_out = "polygon")[1]
+region_bb = osmdata::getbb("Bristol")
 ```
 
-OSM will will often contain valid depiction of the case study city or region of interest (in this case the result is the same as the officially defined area of the Local Authority District).
-However the approach is problematic because OSM data may not correspond to the most recent administrative areas over which transport planning authorities have control, meaning the analysis may be of limited interest to local transport planners.
+The result is a matrix representing the rectangular bounds of the largest matching city region^[
+In this case the command `getbb("Bristol", format_out = "sf_polygon")` would return the official Local Authority District boundary of Bristol, UK would returned but more commonly only rectangular bounding boxes are provided by OSM.
+In cases where the first match does not provide the right name, the country or region should be specified, for example `Bristol Tennessee`.
+]
+This approach may not always be appropriate, however: boundaries in OSM may not be the same as boundaries used by the local transport planning authority.
 More importantly, official administrative zones often do not relate to 'travel watersheds', areas that can are defined not by (often arbitrary) political decisions but by data on where people actually travel to.
 
 To overcome this issue for transport data analysis in the UK, the Travel to Work Areas (TTWAs) were created.
@@ -6067,7 +6070,6 @@ od_top5 = od %>%
 ```
 
 
-
 Table: (\#tab:od)Sample of the origin-destination data stored in the data frame object `od`. These represent the top 5 most common desire lines between zones in the study area.
 
 geo_code1   geo_code2     all   bicycle   foot   car_driver   train
@@ -6114,8 +6116,6 @@ plot(desire_lines$geometry)
 <img src="https://user-images.githubusercontent.com/1825120/34081176-74fd39c8-e341-11e7-9f3e-b98807cb113b.png" alt="Desire lines representing the centrality of Bristol City Centre in the region's transport patterns. The width of the red lines is proportional to commute trips between zones. The 5 black lines represent sample origin-destination data shown in Table 8.1."  />
 <p class="caption">(\#fig:desire)Desire lines representing the centrality of Bristol City Centre in the region's transport patterns. The width of the red lines is proportional to commute trips between zones. The 5 black lines represent sample origin-destination data shown in Table 8.1.</p>
 </div>
-
-
 
 ## Route analysis
 
