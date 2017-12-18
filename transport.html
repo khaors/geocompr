@@ -481,22 +481,14 @@ Figure 8.3: Desire lines representing the centrality of Bristol City Centre in t
 <p>The data used in this section was downloaded using <strong>osmdata</strong>. To avoid having to request the data from OSM repeadetly, we’ll use a locally saved version of the data, which contains point and line data for the case study area:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ways =<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;extdata/ways.rds&quot;</span>)
 <span class="kw">summary</span>(ways)
-<span class="co">#&gt;      highway        maxspeed         ref      </span>
-<span class="co">#&gt;  cycleway:1259   30 mph : 822   A38    : 199  </span>
-<span class="co">#&gt;  rail    : 586   20 mph : 431   M5     : 138  </span>
-<span class="co">#&gt;  road    :2516   70 mph : 321   A432   : 128  </span>
-<span class="co">#&gt;                  40 mph : 304   A4018  : 120  </span>
-<span class="co">#&gt;                  50 mph : 127   A420   : 112  </span>
-<span class="co">#&gt;                  (Other): 315   (Other):1681  </span>
-<span class="co">#&gt;                  NA&#39;s   :2041   NA&#39;s   :1983  </span>
-<span class="co">#&gt;                      Name                 geometry   </span>
-<span class="co">#&gt;  Bristol               :4361   LINESTRING     :4350  </span>
-<span class="co">#&gt;  Aberdeen              :   0   MULTILINESTRING:  11  </span>
-<span class="co">#&gt;  Aberystwyth           :   0   epsg:4326      :   0  </span>
-<span class="co">#&gt;  Alness and Invergordon:   0   +proj=long...  :   0  </span>
-<span class="co">#&gt;  Andover               :   0                         </span>
-<span class="co">#&gt;  Arbroath and Montrose :   0                         </span>
-<span class="co">#&gt;  (Other)               :   0</span></code></pre></div>
+<span class="co">#&gt;      highway        maxspeed         ref                  geometry   </span>
+<span class="co">#&gt;  cycleway:1259   30 mph : 822   A38    : 199   LINESTRING     :4575  </span>
+<span class="co">#&gt;  rail    : 813   20 mph : 435   M5     : 138   MULTILINESTRING:  13  </span>
+<span class="co">#&gt;  road    :2516   70 mph : 321   A432   : 128   epsg:4326      :   0  </span>
+<span class="co">#&gt;                  40 mph : 311   A4018  : 120   +proj=long...  :   0  </span>
+<span class="co">#&gt;                  50 mph : 131   A420   : 112                         </span>
+<span class="co">#&gt;                  (Other): 475   (Other):1681                         </span>
+<span class="co">#&gt;                  NA&#39;s   :2093   NA&#39;s   :2210</span></code></pre></div>
 <p>The above code chunk loaded a simple feature object representing around 3,000 segments on the transport network. This an easily manageable dataset size (transport datasets be large but it’s best to start small).</p>
 </div>
 <div id="agents-in-the-transport-system" class="section level2">

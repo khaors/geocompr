@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve8e4a2ee5075d7883
+preserve53a7ef3320b83815
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve4b07f6dfb3745d6b
+preserve8a53b169773c8e75
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5825,7 +5825,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve816db24b797432f0
+preserve3788e82bb747cc09
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6128,22 +6128,14 @@ To avoid having to request the data from OSM repeadetly, we'll use a locally sav
 ```r
 ways = readRDS("extdata/ways.rds")
 summary(ways)
-#>      highway        maxspeed         ref      
-#>  cycleway:1259   30 mph : 822   A38    : 199  
-#>  rail    : 586   20 mph : 431   M5     : 138  
-#>  road    :2516   70 mph : 321   A432   : 128  
-#>                  40 mph : 304   A4018  : 120  
-#>                  50 mph : 127   A420   : 112  
-#>                  (Other): 315   (Other):1681  
-#>                  NA's   :2041   NA's   :1983  
-#>                      Name                 geometry   
-#>  Bristol               :4361   LINESTRING     :4350  
-#>  Aberdeen              :   0   MULTILINESTRING:  11  
-#>  Aberystwyth           :   0   epsg:4326      :   0  
-#>  Alness and Invergordon:   0   +proj=long...  :   0  
-#>  Andover               :   0                         
-#>  Arbroath and Montrose :   0                         
-#>  (Other)               :   0
+#>      highway        maxspeed         ref                  geometry   
+#>  cycleway:1259   30 mph : 822   A38    : 199   LINESTRING     :4575  
+#>  rail    : 813   20 mph : 435   M5     : 138   MULTILINESTRING:  13  
+#>  road    :2516   70 mph : 321   A432   : 128   epsg:4326      :   0  
+#>                  40 mph : 311   A4018  : 120   +proj=long...  :   0  
+#>                  50 mph : 131   A420   : 112                         
+#>                  (Other): 475   (Other):1681                         
+#>                  NA's   :2093   NA's   :2210
 ```
 
 The above code chunk loaded a simple feature object representing around 3,000 segments on the transport network.
