@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve7c581933d4147980
+preserve3a794edbd7b4b966
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve6b20732a06f29d1b
+preserve173ed372f60c3089
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5853,7 +5853,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve9359bb8724b3e3dd
+preserve66ca3e1e2c9f96b9
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6062,9 +6062,9 @@ zones = readRDS("extdata/bristol-zones.rds")
 ```r
 od = readRDS("extdata/bristol-od.rds")
 zones_attr = od %>%
-  group_by(geo_code1) %>% 
+  group_by(o) %>% 
   summarise_if(is.numeric, sum) %>% 
-  rename(geo_code = geo_code1)
+  rename(geo_code = o)
 ```
 
 
@@ -6073,30 +6073,23 @@ zones_attr = od %>%
 zones = left_join(zones, zones_attr)
 #> Joining, by = "geo_code"
 sum(zones$all)
-#> [1] NA
-summary(zones)
-#>    geo_code             name                all           bicycle    
-#>  Length:100         Length:100         Min.   :  127   Min.   :   3  
-#>  Class :character   Class :character   1st Qu.: 1071   1st Qu.:  47  
-#>  Mode  :character   Mode  :character   Median : 1826   Median :  92  
-#>                                        Mean   : 2445   Mean   : 183  
-#>                                        3rd Qu.: 3225   3rd Qu.: 241  
-#>                                        Max.   :22453   Max.   :2186  
-#>                                        NA's   :2       NA's   :2     
-#>       foot        car_driver       train              geometry  
-#>  Min.   :   1   Min.   :  41   Min.   :  0   MULTIPOLYGON :100  
-#>  1st Qu.:  86   1st Qu.: 688   1st Qu.:  4   epsg:4326    :  0  
-#>  Median : 184   Median :1272   Median : 12   +proj=long...:  0  
-#>  Mean   : 355   Mean   :1464   Mean   : 25                      
-#>  3rd Qu.: 311   3rd Qu.:1835   3rd Qu.: 33                      
-#>  Max.   :5070   Max.   :8408   Max.   :349                      
-#>  NA's   :2      NA's   :2      NA's   :2
+#> [1] 238805
+summary(zones[c("all", "car_driver")])
+#>       all         car_driver            geometry  
+#>  Min.   : 786   Min.   : 331   MULTIPOLYGON :102  
+#>  1st Qu.:1694   1st Qu.: 890   epsg:4326    :  0  
+#>  Median :2208   Median :1178   +proj=long...:  0  
+#>  Mean   :2341   Mean   :1297                      
+#>  3rd Qu.:2777   3rd Qu.:1657                      
+#>  Max.   :4503   Max.   :2903
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/zones-1.png" alt="Regional boundaries (the thick black line represents the Travel to Work Area, the thinner black boundary represents the OSM boundary) for Bristol and the percentage of inhabitants travelling by car (left) and bicycle (right)." width="576" />
+<img src="https://user-images.githubusercontent.com/1825120/34133431-8514e494-e44c-11e7-93e2-819ff81ea5ca.png" alt="Regional boundaries (the thick black line represents the Travel to Work Area, the thinner black boundary represents the OSM boundary) for Bristol and the percentage of inhabitants travelling by car (left) and bicycle (right)."  />
 <p class="caption">(\#fig:zones)Regional boundaries (the thick black line represents the Travel to Work Area, the thinner black boundary represents the OSM boundary) for Bristol and the percentage of inhabitants travelling by car (left) and bicycle (right).</p>
 </div>
+
+
 
 ## Nodes on the transport system
 
@@ -6121,13 +6114,13 @@ od_top5 = od %>%
 
 Table: (\#tab:od)Sample of the origin-destination data stored in the data frame object `od`. These represent the top 5 most common desire lines between zones in the study area.
 
-geo_code1   geo_code2     all   bicycle   foot   car_driver   train
+o           d             all   bicycle   foot   car_driver   train
 ----------  ----------  -----  --------  -----  -----------  ------
-E02003043   E02003047    1335       293    759          167       8
-E02003037   E02003043    1330        97   1016          127       3
-E02003036   E02003043    1273       119   1021           59       6
-E02003031   E02003043    1257       310    620          182       7
-E02003034   E02003043    1249       289    754          114       7
+E02003043   E02003043    1493        66   1296           64       8
+E02003047   E02003043    1300       287    751          148       8
+E02003031   E02003043    1221       305    600          176       7
+E02003037   E02003043    1186        88    908          110       3
+E02003034   E02003043    1177       281    711          100       7
 
 This table provides a snapshot of Bristolian travel patterns demonstrating, for example, that walking is the most popular mode of transport among the top 5 inter-zonal origin-destination pairs.
 But from a policy perspective it's useless:

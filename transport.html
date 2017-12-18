@@ -353,32 +353,23 @@ Figure 8.1: Overview map of Bristol, with key parts of the transport network rep
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zones =<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;extdata/bristol-zones.rds&quot;</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">od =<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;extdata/bristol-od.rds&quot;</span>)
 zones_attr =<span class="st"> </span>od %&gt;%
-<span class="st">  </span><span class="kw">group_by</span>(geo_code1) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(o) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">summarise_if</span>(is.numeric, sum) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">rename</span>(<span class="dt">geo_code =</span> geo_code1)</code></pre></div>
+<span class="st">  </span><span class="kw">rename</span>(<span class="dt">geo_code =</span> o)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zones =<span class="st"> </span><span class="kw">left_join</span>(zones, zones_attr)
 <span class="co">#&gt; Joining, by = &quot;geo_code&quot;</span>
 <span class="kw">sum</span>(zones$all)
-<span class="co">#&gt; [1] NA</span>
-<span class="kw">summary</span>(zones)
-<span class="co">#&gt;    geo_code             name                all           bicycle    </span>
-<span class="co">#&gt;  Length:100         Length:100         Min.   :  127   Min.   :   3  </span>
-<span class="co">#&gt;  Class :character   Class :character   1st Qu.: 1071   1st Qu.:  47  </span>
-<span class="co">#&gt;  Mode  :character   Mode  :character   Median : 1826   Median :  92  </span>
-<span class="co">#&gt;                                        Mean   : 2445   Mean   : 183  </span>
-<span class="co">#&gt;                                        3rd Qu.: 3225   3rd Qu.: 241  </span>
-<span class="co">#&gt;                                        Max.   :22453   Max.   :2186  </span>
-<span class="co">#&gt;                                        NA&#39;s   :2       NA&#39;s   :2     </span>
-<span class="co">#&gt;       foot        car_driver       train              geometry  </span>
-<span class="co">#&gt;  Min.   :   1   Min.   :  41   Min.   :  0   MULTIPOLYGON :100  </span>
-<span class="co">#&gt;  1st Qu.:  86   1st Qu.: 688   1st Qu.:  4   epsg:4326    :  0  </span>
-<span class="co">#&gt;  Median : 184   Median :1272   Median : 12   +proj=long...:  0  </span>
-<span class="co">#&gt;  Mean   : 355   Mean   :1464   Mean   : 25                      </span>
-<span class="co">#&gt;  3rd Qu.: 311   3rd Qu.:1835   3rd Qu.: 33                      </span>
-<span class="co">#&gt;  Max.   :5070   Max.   :8408   Max.   :349                      </span>
-<span class="co">#&gt;  NA&#39;s   :2      NA&#39;s   :2      NA&#39;s   :2</span></code></pre></div>
+<span class="co">#&gt; [1] 238805</span>
+<span class="kw">summary</span>(zones[<span class="kw">c</span>(<span class="st">&quot;all&quot;</span>, <span class="st">&quot;car_driver&quot;</span>)])
+<span class="co">#&gt;       all         car_driver            geometry  </span>
+<span class="co">#&gt;  Min.   : 786   Min.   : 331   MULTIPOLYGON :102  </span>
+<span class="co">#&gt;  1st Qu.:1694   1st Qu.: 890   epsg:4326    :  0  </span>
+<span class="co">#&gt;  Median :2208   Median :1178   +proj=long...:  0  </span>
+<span class="co">#&gt;  Mean   :2341   Mean   :1297                      </span>
+<span class="co">#&gt;  3rd Qu.:2777   3rd Qu.:1657                      </span>
+<span class="co">#&gt;  Max.   :4503   Max.   :2903</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:zones"></span>
-<img src="figures/zones-1.png" alt="Regional boundaries (the thick black line represents the Travel to Work Area, the thinner black boundary represents the OSM boundary) for Bristol and the percentage of inhabitants travelling by car (left) and bicycle (right)." width="576" />
+<img src="https://user-images.githubusercontent.com/1825120/34133431-8514e494-e44c-11e7-93e2-819ff81ea5ca.png" alt="Regional boundaries (the thick black line represents the Travel to Work Area, the thinner black boundary represents the OSM boundary) for Bristol and the percentage of inhabitants travelling by car (left) and bicycle (right)."  />
 <p class="caption">
 Figure 8.2: Regional boundaries (the thick black line represents the Travel to Work Area, the thinner black boundary represents the OSM boundary) for Bristol and the percentage of inhabitants travelling by car (left) and bicycle (right).
 </p>
@@ -398,8 +389,8 @@ Figure 8.2: Regional boundaries (the thick black line represents the Travel to W
 <caption><span id="tab:od">Table 8.1: </span>Sample of the origin-destination data stored in the data frame object <code>od</code>. These represent the top 5 most common desire lines between zones in the study area.</caption>
 <thead>
 <tr class="header">
-<th align="left">geo_code1</th>
-<th align="left">geo_code2</th>
+<th align="left">o</th>
+<th align="left">d</th>
 <th align="right">all</th>
 <th align="right">bicycle</th>
 <th align="right">foot</th>
@@ -410,47 +401,47 @@ Figure 8.2: Regional boundaries (the thick black line represents the Travel to W
 <tbody>
 <tr class="odd">
 <td align="left">E02003043</td>
-<td align="left">E02003047</td>
-<td align="right">1335</td>
-<td align="right">293</td>
-<td align="right">759</td>
-<td align="right">167</td>
+<td align="left">E02003043</td>
+<td align="right">1493</td>
+<td align="right">66</td>
+<td align="right">1296</td>
+<td align="right">64</td>
 <td align="right">8</td>
+</tr>
+<tr class="even">
+<td align="left">E02003047</td>
+<td align="left">E02003043</td>
+<td align="right">1300</td>
+<td align="right">287</td>
+<td align="right">751</td>
+<td align="right">148</td>
+<td align="right">8</td>
+</tr>
+<tr class="odd">
+<td align="left">E02003031</td>
+<td align="left">E02003043</td>
+<td align="right">1221</td>
+<td align="right">305</td>
+<td align="right">600</td>
+<td align="right">176</td>
+<td align="right">7</td>
 </tr>
 <tr class="even">
 <td align="left">E02003037</td>
 <td align="left">E02003043</td>
-<td align="right">1330</td>
-<td align="right">97</td>
-<td align="right">1016</td>
-<td align="right">127</td>
+<td align="right">1186</td>
+<td align="right">88</td>
+<td align="right">908</td>
+<td align="right">110</td>
 <td align="right">3</td>
-</tr>
-<tr class="odd">
-<td align="left">E02003036</td>
-<td align="left">E02003043</td>
-<td align="right">1273</td>
-<td align="right">119</td>
-<td align="right">1021</td>
-<td align="right">59</td>
-<td align="right">6</td>
-</tr>
-<tr class="even">
-<td align="left">E02003031</td>
-<td align="left">E02003043</td>
-<td align="right">1257</td>
-<td align="right">310</td>
-<td align="right">620</td>
-<td align="right">182</td>
-<td align="right">7</td>
 </tr>
 <tr class="odd">
 <td align="left">E02003034</td>
 <td align="left">E02003043</td>
-<td align="right">1249</td>
-<td align="right">289</td>
-<td align="right">754</td>
-<td align="right">114</td>
+<td align="right">1177</td>
+<td align="right">281</td>
+<td align="right">711</td>
+<td align="right">100</td>
 <td align="right">7</td>
 </tr>
 </tbody>
