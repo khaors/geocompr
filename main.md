@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve39610f4da8b53598
+preserve8e4a2ee5075d7883
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve44c3ef121b92bf67
+preserve4b07f6dfb3745d6b
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5825,7 +5825,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve6da4f3290db387d8
+preserve816db24b797432f0
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6053,7 +6053,7 @@ plot(zones %>% select(bicycle, foot, car_driver, train))
 rail_stations = readRDS("extdata/rail_stations.rds")
 ```
 
-## Desire line analysis
+## Desire lines
 
 We have already loaded data representing desire lines in the dataset `od`.
 This origin-destination (OD) data frame object represents the number of people travelling between the zone represented in `geo_code1` and `geo_code2`, as illustrated in Table \@ref(tab:od).
@@ -6084,7 +6084,8 @@ aside from the fact that it contains only a tiny portion of the 4,148 OD pairs, 
 What is needed is a way to plot this origin-destination data on the map.
 
 The solution is to convert the non-geographic `od` dataset into geographical desire lines that can be plotted on a map.
-This conversion is done in the code below which matches the IDs in the first two columns of Table \@ref(tab:od) to the `zone_code` ID column in the geographic `zones` object:^[
+The geographic representation of the data presented in Table \@ref(tab:od) are displayed as straight black lines in \@ref(fig:desire): these are clearly more useful from a policy perspective.
+The conversion from `data.frame` to `sf` class is done in the code below which matches the IDs in the first two columns of the `od` object to the `zone_code` ID column in the geographic `zones` object.^[
 Note that the operation emits a warning: this is because the **stplanr** function `od2line()` used to create the desire lines works by allocating the start and end points of each origin-destination pair to the *centroid* of its zone of origin and destination.
 This represents a straight line between the centroid of zone `E02003043` and the centroid of `E02003047` for the first origin-destination pair represented in Table \@ref(tab:od), for example.
 For real-world use one would use centroid values generated from projected data or, preferably, use *population-weighted* centroids.
@@ -6110,8 +6111,8 @@ plot(desire_lines$geometry)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="https://user-images.githubusercontent.com/1825120/34081176-74fd39c8-e341-11e7-9f3e-b98807cb113b.png" alt="Desire lines representing the centrality of Bristol City Centre in the region's transport patterns."  />
-<p class="caption">(\#fig:desire)Desire lines representing the centrality of Bristol City Centre in the region's transport patterns.</p>
+<img src="https://user-images.githubusercontent.com/1825120/34081176-74fd39c8-e341-11e7-9f3e-b98807cb113b.png" alt="Desire lines representing the centrality of Bristol City Centre in the region's transport patterns. The width of the red lines is proportional to commute trips between zones. The 5 black lines represent sample origin-destination data shown in Table 8.1."  />
+<p class="caption">(\#fig:desire)Desire lines representing the centrality of Bristol City Centre in the region's transport patterns. The width of the red lines is proportional to commute trips between zones. The 5 black lines represent sample origin-destination data shown in Table 8.1.</p>
 </div>
 
 

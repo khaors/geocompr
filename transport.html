@@ -259,7 +259,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="8.2" data-path="transport.html"><a href="transport.html#bris-case"><i class="fa fa-check"></i><b>8.2</b> A case study of Bristol</a></li>
 <li class="chapter" data-level="8.3" data-path="transport.html"><a href="transport.html#transport-zones"><i class="fa fa-check"></i><b>8.3</b> Transport zones</a></li>
 <li class="chapter" data-level="8.4" data-path="transport.html"><a href="transport.html#nodes-on-the-transport-system"><i class="fa fa-check"></i><b>8.4</b> Nodes on the transport system</a></li>
-<li class="chapter" data-level="8.5" data-path="transport.html"><a href="transport.html#desire-line-analysis"><i class="fa fa-check"></i><b>8.5</b> Desire line analysis</a></li>
+<li class="chapter" data-level="8.5" data-path="transport.html"><a href="transport.html#desire-lines"><i class="fa fa-check"></i><b>8.5</b> Desire lines</a></li>
 <li class="chapter" data-level="8.6" data-path="transport.html"><a href="transport.html#route-analysis"><i class="fa fa-check"></i><b>8.6</b> Route analysis</a></li>
 <li class="chapter" data-level="8.7" data-path="transport.html"><a href="transport.html#route-networks"><i class="fa fa-check"></i><b>8.7</b> Route networks</a></li>
 <li class="chapter" data-level="8.8" data-path="transport.html"><a href="transport.html#agents-in-the-transport-system"><i class="fa fa-check"></i><b>8.8</b> Agents in the transport system</a></li>
@@ -391,8 +391,8 @@ zones_attr =<span class="st"> </span>od %&gt;%
 <h2><span class="header-section-number">8.4</span> Nodes on the transport system</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rail_stations =<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;extdata/rail_stations.rds&quot;</span>)</code></pre></div>
 </div>
-<div id="desire-line-analysis" class="section level2">
-<h2><span class="header-section-number">8.5</span> Desire line analysis</h2>
+<div id="desire-lines" class="section level2">
+<h2><span class="header-section-number">8.5</span> Desire lines</h2>
 <p>We have already loaded data representing desire lines in the dataset <code>od</code>. This origin-destination (OD) data frame object represents the number of people travelling between the zone represented in <code>geo_code1</code> and <code>geo_code2</code>, as illustrated in Table <a href="transport.html#tab:od">8.1</a>. This subset of the data was using attribute operations described in Chatper <a href="attr.html#attr">3</a>, to arrange the OD data by all trips and then filter-out only the top 5:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">od_top5 =<span class="st"> </span>od %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(all)) %&gt;%<span class="st"> </span>
@@ -459,7 +459,7 @@ zones_attr =<span class="st"> </span>od %&gt;%
 </tbody>
 </table>
 <p>This table provides a snapshot of Bristolian travel patterns demonstrating, for example, that walking is the most popular mode of transport among the top 5 inter-zonal origin-destination pairs. But from a policy perspective it’s useless: aside from the fact that it contains only a tiny portion of the 4,148 OD pairs, there is no way of deciding <em>where</em> policy measures are needed to boost walking and cycling. What is needed is a way to plot this origin-destination data on the map.</p>
-<p>The solution is to convert the non-geographic <code>od</code> dataset into geographical desire lines that can be plotted on a map. This conversion is done in the code below which matches the IDs in the first two columns of Table <a href="transport.html#tab:od">8.1</a> to the <code>zone_code</code> ID column in the geographic <code>zones</code> object:<a href="#fn43" class="footnoteRef" id="fnref43"><sup>43</sup></a></p>
+<p>The solution is to convert the non-geographic <code>od</code> dataset into geographical desire lines that can be plotted on a map. The geographic representation of the data presented in Table <a href="transport.html#tab:od">8.1</a> are displayed as straight black lines in <a href="transport.html#fig:desire">8.3</a>: these are clearly more useful from a policy perspective. The conversion from <code>data.frame</code> to <code>sf</code> class is done in the code below which matches the IDs in the first two columns of the <code>od</code> object to the <code>zone_code</code> ID column in the geographic <code>zones</code> object.<a href="#fn43" class="footnoteRef" id="fnref43"><sup>43</sup></a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">desire_lines =<span class="st"> </span><span class="kw">od2line</span>(od, zones)
 <span class="co">#&gt; Warning in st_centroid.sfc(st_geometry(x), of_largest_polygon =</span>
 <span class="co">#&gt; of_largest_polygon): st_centroid does not give correct centroids for</span>
@@ -467,9 +467,9 @@ zones_attr =<span class="st"> </span>od %&gt;%
 <p>The above code generates a geographic object <code>desire_lines</code> (of class <code>sf</code>) that allows the <code>od</code> object to be plotted on the map and, vitally, used to inform geographically targetted transport policies. The <code>desire_lines</code> can now be plotted using plot commands such as that provided in the command below. The results, illustrated in Figure <a href="transport.html#fig:desire">8.3</a>, demonstrate that Bristol city centre is by far the largest trip attractor in the region. However, there are several peripheral sub-centres including Bradford Stoke to the North and Portishead to the West.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(desire_lines$geometry)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:desire"></span>
-<img src="https://user-images.githubusercontent.com/1825120/34081176-74fd39c8-e341-11e7-9f3e-b98807cb113b.png" alt="Desire lines representing the centrality of Bristol City Centre in the region's transport patterns."  />
+<img src="https://user-images.githubusercontent.com/1825120/34081176-74fd39c8-e341-11e7-9f3e-b98807cb113b.png" alt="Desire lines representing the centrality of Bristol City Centre in the region's transport patterns. The width of the red lines is proportional to commute trips between zones. The 5 black lines represent sample origin-destination data shown in Table 8.1."  />
 <p class="caption">
-Figure 8.3: Desire lines representing the centrality of Bristol City Centre in the region’s transport patterns.
+Figure 8.3: Desire lines representing the centrality of Bristol City Centre in the region’s transport patterns. The width of the red lines is proportional to commute trips between zones. The 5 black lines represent sample origin-destination data shown in Table 8.1.
 </p>
 </div>
 </div>
