@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2017-12-17'
+date: '2017-12-18'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2017-12-17 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2017-12-18 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve8d27866a95c35575
+preserve6a8a53c5e10cc5e0
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve85719945ffc38b0a
+preserveed7d33f4460d5f48
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5825,7 +5825,7 @@ The result is a score summing up the values of all input rasters.
 For instance, a score greater 10 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserved035de57ea77f4d1
+preserved8cfef58f11df39d
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 10) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -5938,9 +5938,12 @@ This shows the diversity of the city's transport network, with railways, tarmac 
 
 
 
+
+
+
 <div class="figure" style="text-align: center">
-<img src="figures/bristol.png" alt="Overview map of Bristol, with key parts of the transport network represented as colored lines for active (green), private motor (red lines and orange) and public (black) modes of travel." width="671" />
-<p class="caption">(\#fig:bristol)Overview map of Bristol, with key parts of the transport network represented as colored lines for active (green), private motor (red lines and orange) and public (black) modes of travel.</p>
+<img src="figures/bristol.png" alt="Overview map of Bristol, with key parts of the transport network represented as colored lines for active (green), public (railways, black) and private motor (red) modes of travel." width="671" />
+<p class="caption">(\#fig:bristol)Overview map of Bristol, with key parts of the transport network represented as colored lines for active (green), public (railways, black) and private motor (red) modes of travel.</p>
 </div>
 
 Bristol is the 10^th^ largest city council in England, with a population of half a million people in the city bounds (Bristol's travel catchment area is larger though, as demonstrated in the next section).
@@ -6043,7 +6046,7 @@ summary(zones)
 plot(zones %>% select(bicycle, foot, car_driver, train))
 ```
 
-<img src="figures/unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;" />
 
 ## Nodes on the transport system
 
@@ -6062,7 +6065,7 @@ This subset of the data was using attribute operations described in Chatper \@re
 ```r
 od_top5 = od %>% 
   arrange(desc(all)) %>% 
-  top_n(5, all)
+  top_n(5, wt = all)
 ```
 
 
@@ -6128,9 +6131,9 @@ ways = readRDS("extdata/ways.rds")
 summary(ways)
 #>      highway        maxspeed         ref                geometry   
 #>  cycleway: 866   30 mph : 494   A38    : 136   LINESTRING   :2938  
-#>  motorway: 206   20 mph : 398   A4018  : 120   epsg:4326    :   0  
-#>  rail    : 590   40 mph : 159   A420   :  65   +proj=long...:   0  
-#>  road    :1276   70 mph : 153   B4054  :  64                       
+#>  rail    : 590   20 mph : 398   A4018  : 120   epsg:4326    :   0  
+#>  road    :1482   40 mph : 159   A420   :  65   +proj=long...:   0  
+#>                  70 mph : 153   B4054  :  64                       
 #>                  25 mph :  92   B4057  :  61                       
 #>                  (Other): 209   (Other): 961                       
 #>                  NA's   :1433   NA's   :1531

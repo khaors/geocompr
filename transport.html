@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2017-12-17">
+<meta name="date" content="2017-12-18">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -323,9 +323,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h2><span class="header-section-number">8.2</span> A case study of Bristol</h2>
 <p>The case study used for this chapter is a diverse city on the west of England, 30 km east of the Welsh capital Cardiff. As with any case study it is worth taking some time to consider the local geography of the area (see Figure <a href="transport.html#fig:bristol">8.1</a>). This shows the diversity of the city’s transport network, with railways, tarmac roads (consisting of ‘roads’ which bicycles can use and motorways which are exclusively for motor vehicles) and cycle paths plotted.</p>
 <div class="figure" style="text-align: center"><span id="fig:bristol"></span>
-<img src="figures/bristol.png" alt="Overview map of Bristol, with key parts of the transport network represented as colored lines for active (green), private motor (red lines and orange) and public (black) modes of travel." width="671" />
+<img src="figures/bristol.png" alt="Overview map of Bristol, with key parts of the transport network represented as colored lines for active (green), public (railways, black) and private motor (red) modes of travel." width="671" />
 <p class="caption">
-Figure 8.1: Overview map of Bristol, with key parts of the transport network represented as colored lines for active (green), private motor (red lines and orange) and public (black) modes of travel.
+Figure 8.1: Overview map of Bristol, with key parts of the transport network represented as colored lines for active (green), public (railways, black) and private motor (red) modes of travel.
 </p>
 </div>
 <p>Bristol is the 10<sup>th</sup> largest city council in England, with a population of half a million people in the city bounds (Bristol’s travel catchment area is larger though, as demonstrated in the next section). It has a vibrant economy with aerospace, media, financial service and tourism, alongside two major universities, contributing to a high average income per capita (although Bristol also has deprived, low income areas).</p>
@@ -385,7 +385,7 @@ zones_attr =<span class="st"> </span>od %&gt;%
 <span class="co">#&gt;  Max.   :5070   Max.   :8408   Max.   :349                      </span>
 <span class="co">#&gt;  NA&#39;s   :2      NA&#39;s   :2      NA&#39;s   :2</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(zones %&gt;%<span class="st"> </span><span class="kw">select</span>(bicycle, foot, car_driver, train))</code></pre></div>
-<p><img src="figures/unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="nodes-on-the-transport-system" class="section level2">
 <h2><span class="header-section-number">8.4</span> Nodes on the transport system</h2>
@@ -396,7 +396,7 @@ zones_attr =<span class="st"> </span>od %&gt;%
 <p>We have already loaded data representing desire lines in the dataset <code>od</code>. This origin-destination (OD) data frame object represents the number of people travelling between the zone represented in <code>geo_code1</code> and <code>geo_code2</code>, as illustrated in Table <a href="transport.html#tab:od">8.1</a>. This subset of the data was using attribute operations described in Chatper <a href="attr.html#attr">3</a>, to arrange the OD data by all trips and then filter-out only the top 5:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">od_top5 =<span class="st"> </span>od %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(all)) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">top_n</span>(<span class="dv">5</span>, all)</code></pre></div>
+<span class="st">  </span><span class="kw">top_n</span>(<span class="dv">5</span>, <span class="dt">wt =</span> all)</code></pre></div>
 <table>
 <caption><span id="tab:od">Table 8.1: </span>Sample of the origin-destination data stored in the data frame object <code>od</code>. These represent the top 5 most common desire lines between zones in the study area.</caption>
 <thead>
@@ -483,9 +483,9 @@ Figure 8.3: Desire lines representing the centrality of Bristol City Centre in t
 <span class="kw">summary</span>(ways)
 <span class="co">#&gt;      highway        maxspeed         ref                geometry   </span>
 <span class="co">#&gt;  cycleway: 866   30 mph : 494   A38    : 136   LINESTRING   :2938  </span>
-<span class="co">#&gt;  motorway: 206   20 mph : 398   A4018  : 120   epsg:4326    :   0  </span>
-<span class="co">#&gt;  rail    : 590   40 mph : 159   A420   :  65   +proj=long...:   0  </span>
-<span class="co">#&gt;  road    :1276   70 mph : 153   B4054  :  64                       </span>
+<span class="co">#&gt;  rail    : 590   20 mph : 398   A4018  : 120   epsg:4326    :   0  </span>
+<span class="co">#&gt;  road    :1482   40 mph : 159   A420   :  65   +proj=long...:   0  </span>
+<span class="co">#&gt;                  70 mph : 153   B4054  :  64                       </span>
 <span class="co">#&gt;                  25 mph :  92   B4057  :  61                       </span>
 <span class="co">#&gt;                  (Other): 209   (Other): 961                       </span>
 <span class="co">#&gt;                  NA&#39;s   :1433   NA&#39;s   :1531</span></code></pre></div>
