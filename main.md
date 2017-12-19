@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve5d04dfe6b0b27af3
+preserve0d3c5117f075c4c2
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveaad8ce47306be84f
+preserve4005c63245c107f1
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3634,6 +3634,8 @@ library(tidyverse)
 library(spData)
 library(spDataLarge)
 ```
+
+## Introduction
 
 The previous three chapters have demonstrated how geographic datasets are structured in R (Chapter \@ref(spatial-class)) and how to manipulate them based on their non-geographic attributes (\@ref(attr)) and spatial properties (\@ref(spatial-operations)).
 This chapter goes a step further, by showing how to modify the *geometry* underlying spatial datasets.
@@ -4663,7 +4665,7 @@ grain_poly2 = grain_poly %>%
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/raster-vectorization-1.png" alt="." width="576" /><img src="figures/raster-vectorization-2.png" alt="." width="576" /><img src="figures/raster-vectorization-3.png" alt="." width="576" />
+<img src="figures/raster-vectorization-1.png" alt="." width="576" />
 <p class="caption">(\#fig:raster-vectorization).</p>
 </div>
 
@@ -5856,7 +5858,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve0e9c827a574fa765
+preserve5e005be06f5fbb38
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
