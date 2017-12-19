@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservefe5a8f684bc41d7a
+preserve5d04dfe6b0b27af3
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveab90d06cf17ebd83
+preserveaad8ce47306be84f
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4662,7 +4662,10 @@ grain_poly2 = grain_poly %>%
   summarize()
 ```
 
-
+<div class="figure" style="text-align: center">
+<img src="figures/raster-vectorization-1.png" alt="." width="576" /><img src="figures/raster-vectorization-2.png" alt="." width="576" /><img src="figures/raster-vectorization-3.png" alt="." width="576" />
+<p class="caption">(\#fig:raster-vectorization).</p>
+</div>
 
 <!-- ```{r} -->
 <!-- nlcd2011 = raster(system.file("raster/nlcd2011.tif", package = "spDataLarge")) -->
@@ -5853,7 +5856,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve44357d2d85b360b4
+preserve0e9c827a574fa765
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
