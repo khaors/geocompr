@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveebab71e2ddc91ecd
+preservefacebbc8f2506e67
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservec68b3239e6648fb5
+preserve0a67a661ae2dc0e4
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5858,7 +5858,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveabbbd8d56dea2e36
+preserveff2e6ad18ad122aa
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6049,18 +6049,35 @@ Because Bristol is a major employer attracting travel from surrounding towns, it
 region_ttwa = readRDS("extdata/bristol-ttwa.rds")
 ```
 
-Areal data is the other key zonal dataset type.
-Where available, such administrative zones can provide vital context, with demographic, transport and other variables and their spatial distribution.
-The geographic resolution of these zones is important: small zones are usually preferable but if they are too small (their geographic resolution is too high) this can have consequences for processing time and data access:
-more socio-demographic variables are often available for large zones than small zones, due to rules preventing the disclosure of identifiable data.
+The origin and destination zones used in this chapter are the same: officially defined zones of intermediate geographic resolution (their [official](https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/bulletins/annualsmallareapopulationestimates/2014-10-23) name is Middle layer Super Output Areas or MSOAs).
+Each house around 8,000 people.
+Such administrative zones can provide vital context to transport analysis, such as the *type* of people who benefit (or loose out from) particular interventions.
 
-The zoning system illustrated in Figure \@ref(fig:zones) represents the areal units used in this chapter.
-These 102 zones, loaded in the next code chunk, are relatively large but provide sufficient resolution for the purposes of this chapter.
+The geographic resolution of these zones is important: small zones with high geographic resolution are usually preferable but their high number in large regions can have consequences for processing (especially for origin-destination analysis in which the number of possibilities increases as a non-linear function of the number of zones).
+Another issue with small zones is related to anonymity rules: more socio-demographic variables are often available for large zones.
+
+The 102 zones used are illustrated in Figure \@ref(fig:zones).
+These can be loaded from the `exdata` folder of the book:
 
 
 ```r
 zones = readRDS("extdata/bristol-zones.rds")
 ```
+
+This dataset provides a useful basis for dividing-up space into meaningful chunks, with each zone housing a similar number of people.
+However at present the dataset contains no attribute data, other than the zone name and zone code:
+
+
+```r
+names(zones)
+#> [1] "geo_code" "name"     "geometry"
+```
+
+Chapter \@ref(attr) demonstrated how to join attribute data onto geographic variables.
+This is a common task in geographic data analysis.
+Usually a table containing data per zone would be joined directly via a shared key variable: the geographic zone code or name (see the [ons.gov.uk website](https://www.ons.gov.uk/help/localstatistics) to access attribute data at a range of geographic levels in the UK).
+For the perposes of this chapter an additional stage is needed because the input data is provided at the orgin-destination level:
+before joining it to the zones we need to aggregate the OD data on mode of travel between zones in the `od` object to residential (origin) zones (the nature of this OD dataset is described in more detail in section \@ref(desire-lines)):
 
 
 ```r
@@ -6071,6 +6088,25 @@ zones_attr = od %>%
   rename(geo_code = o)
 ```
 
+The above code chunk may seem complex long but the methods have already been covered, in Chapter \@ref(attr).
+The three main operations accomplished by chaining together **dplyr** commands in this way were:
+
+- Grouping the OD pairs by the zone of origin (contained in the column `o`), ready to be summarized at this level
+- Summarizing variables in the `od` dataset *if they were numeric* to find the `sum()` total of people who live in each zone who travel by each mode of transport (the `_if` affix requires a `TRUE`/`FALSE` question to be asked of the variables, in this case 'is it numeric?' and only variables returning true are summarized)
+- Renaming the grouping variable `o` so its new name matches the ID column in the `zones` data
+
+Beyond refreshing know-how learned in Part I and building on it by demonstrating how the `_if()` modifier works, the previous code chunk has generated a useful result:
+a data frame with rows representing zones and an ID variable that matches the IDs of the `zones` dataset (this is verified below):
+
+
+```r
+summary(zones_attr$geo_code %in% zones$geo_code)
+#>    Mode    TRUE 
+#> logical     102
+```
+
+After preprocessing the attribute data it is in a format that can be joined directly onto the zones.
+As illustrated in the summary of the resulting object, the result is a geographic object with useful attributes including population of travellers (almost 1/4 of a million) and their main mode of travel (by bicycle, foot, car and train):
 
 
 ```r
@@ -6078,20 +6114,36 @@ zones = left_join(zones, zones_attr)
 #> Joining, by = "geo_code"
 sum(zones$all)
 #> [1] 238805
-summary(zones[c("all", "car_driver")])
-#>       all         car_driver            geometry  
-#>  Min.   : 786   Min.   : 331   MULTIPOLYGON :102  
-#>  1st Qu.:1694   1st Qu.: 890   epsg:4326    :  0  
-#>  Median :2208   Median :1178   +proj=long...:  0  
-#>  Mean   :2341   Mean   :1297                      
-#>  3rd Qu.:2777   3rd Qu.:1657                      
-#>  Max.   :4503   Max.   :2903
+names(zones)
+#> [1] "geo_code"   "name"       "all"        "bicycle"    "foot"      
+#> [6] "car_driver" "train"      "geometry"
 ```
 
 <div class="figure" style="text-align: center">
 <img src="https://user-images.githubusercontent.com/1825120/34133431-8514e494-e44c-11e7-93e2-819ff81ea5ca.png" alt="Regional boundaries (the thick black line represents the Travel to Work Area (TTWA), the thinner black boundary represents the OSM boundary) for Bristol and the number of people working in the (TTW) per zone."  />
 <p class="caption">(\#fig:zones)Regional boundaries (the thick black line represents the Travel to Work Area (TTWA), the thinner black boundary represents the OSM boundary) for Bristol and the number of people working in the (TTW) per zone.</p>
 </div>
+
+In the same way that OD datasets can be aggregated to the zone of origin, they can also be aggregated to provide information about destination zones.
+People tend to gravitate towards central places.
+This explains why the spatial distribution represented in Figure \@ref(fig:destzones) is relatively uneven, with the most common destination zones concentrated in Bristol city centre.
+The map was created using the following code:
+
+
+```r
+zones = od %>%
+  group_by(d) %>% 
+  summarise_if(is.numeric, sum) %>% 
+  select(geo_code = d, all_dest = all) %>% 
+  inner_join(zones, ., by = "geo_code")
+plot(zones["all_dest"])
+```
+
+<div class="figure" style="text-align: center">
+<img src="figures/destzones-1.png" alt="Destination zones" width="576" />
+<p class="caption">(\#fig:destzones)Destination zones</p>
+</div>
+
 
 ## Nodes on the transport system
 
