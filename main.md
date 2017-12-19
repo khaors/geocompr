@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2017-12-18'
+date: '2017-12-19'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2017-12-18 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2017-12-19 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve3a794edbd7b4b966
+preserve379a72a36f1f0c61
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve173ed372f60c3089
+preserve6a824fc317dac78f
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5853,7 +5853,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve66ca3e1e2c9f96b9
+preserve62ab7caa6ea0ec16
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -5974,9 +5974,8 @@ We will use input data from Bristol, a coastal city in the West of England, desc
 
 ## A case study of Bristol {#bris-case}
 
-The case study used for this chapter is a diverse city on the west of England, 30 km east of the Welsh capital Cardiff.
-As with any case study it is worth taking some time to consider the local geography of the area (see Figure \@ref(fig:bristol)).
-This shows the diversity of the city's transport network, with railways, tarmac roads (consisting of 'roads' which bicycles can use and motorways which are exclusively for motor vehicles) and cycle paths plotted.
+The case study used for this chapter is a city on the west of England, around 30 km East of the Welsh capital Cardiff.
+The area's transport network is illustrated in Figure \@ref(fig:bristol), which shows that Bristol is provided by a diverse range transport infrastructure, for travelling by bicycle, train and private motor vehicle.
 
 
 
@@ -5988,8 +5987,9 @@ This shows the diversity of the city's transport network, with railways, tarmac 
 <p class="caption">(\#fig:bristol)Overview map of Bristol, with key parts of the transport network represented as colored lines for active (green), public (railways, black) and private motor (red) modes of travel.</p>
 </div>
 
-Bristol is the 10^th^ largest city council in England, with a population of half a million people in the city bounds (Bristol's travel catchment area is larger though, as demonstrated in the next section).
-It has a vibrant economy with aerospace, media, financial service and tourism, alongside two major universities, contributing to a high average income per capita (although Bristol also has deprived, low income areas).
+Bristol is the 10^th^ largest city council in England, with a population of half a million people, although its travel catchment area is larger (see section \@ref(transport-zones)).
+It has a vibrant economy with aerospace, media, financial service and tourism, alongside two major universities.
+Bristol has high average income per capita but contains areas of severe deprivation [@bristol_city_council_deprivation_2015].
 
 In terms of transport, Bristol is well served by rail and road links, and has a relatively high level of active travel.
 19% of its citizens cycle and 88% walk at least once per month according to the [Active People Survey](https://www.gov.uk/government/statistical-data-sets/how-often-and-time-spent-walking-and-cycling-at-local-authority-level-cw010#table-cw0103) (the national average is 15% and 81% respectively).
