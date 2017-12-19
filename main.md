@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve0d3c5117f075c4c2
+preserve2af0ac0da12c457e
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve4005c63245c107f1
+preserve27e03373d9b89dd5
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5858,7 +5858,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve5e005be06f5fbb38
+preserve422b571735d474a6
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6023,16 +6023,19 @@ These zone-level data are small but often vital for gaining a basic understandin
 Although transport systems are primarily based on linear features and nodes --- including pathways and stations --- it often makes sense to start with areal data.
 Three types of zone will typically be of particular interest: the study region, origin zones (typically residential areas), and destination zones (which are often the same as the origin zones).
 
-The simplest way to define a study area is often the first matching boundary returned by OpenStreetMap, which can be obtained using the **osmdata** package as follows:
+The simplest way to define a study area is often the first matching boundary returned by OpenStreetMap, which can be obtained using the development version of **osmdata** as follows:
+
+<!-- Todo: remove 'development version' when this goes on CRAN -->
 
 
 ```r
-region_bb = osmdata::getbb("Bristol")
+region_bb = osmdata::getbb("Bristol", format_out = "sf_polygon")
 ```
 
-The result is a matrix representing the rectangular bounds of the largest matching city region^[
-In this case the command `getbb("Bristol", format_out = "sf_polygon")` would return the official Local Authority District boundary of Bristol, UK would returned but more commonly only rectangular bounding boxes are provided by OSM.
-In cases where the first match does not provide the right name, the country or region should be specified, for example `Bristol Tennessee`.
+The result is an `sf` object representing the bounds of the largest matching city region, either a rectangular polygon of the bounding box or detailed polygonal boundary (see Figure \@ref(fig:zones)).^[
+In this case the command returns a detailed polygon representing official boundary of Bristol.
+Commonly only rectangular bounding boxes are provided by OSM.
+In cases where the first match does not provide the right name, the country or region should be specified, for example `Bristol Tennessee` for an America Bristol.
 ]
 This approach may not always be appropriate, however: boundaries in OSM may not be the same as boundaries used by the local transport planning authority.
 More importantly, official administrative zones seldom relate to where people in them travel.
