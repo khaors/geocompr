@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve2af0ac0da12c457e
+preserveebab71e2ddc91ecd
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve27e03373d9b89dd5
+preservec68b3239e6648fb5
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5858,7 +5858,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve422b571735d474a6
+preserveabbbd8d56dea2e36
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -5932,7 +5932,7 @@ Change the age raster accordingly, repeat the remaining analyses and compare the
 
 ## Prerequisites {-}
 
-- This chapter requires the packages **tidyverse**, **sf** and **stplanr**.
+- This chapter requires the following packages to be loaded (it also uses **osmdata**):
 
 
 ```r
@@ -6042,7 +6042,7 @@ More importantly, official administrative zones seldom relate to where people in
 
 Travel to Work Areas (TTWAs) overcome this issue by creating a zoning system analogous to hydrological watersheds.
 TTWAs were first defined as contiguous zones within which 75% of the population travels work [@coombes_efficient_1986], and this is the definition used in this chapter.
-Because Bristol is a major employer attracting travel from surrounding towns, its TTWA --- loading in the command below --- is substantially larger than its administratively defined area (see Figure \@ref(fig:zones)).
+Because Bristol is a major employer attracting travel from surrounding towns, its TTWA --- loaded in the command below --- is substantially larger than its administratively defined area (see Figure \@ref(fig:zones)).
 
 
 ```r
