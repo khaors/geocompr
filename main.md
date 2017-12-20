@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2017-12-19'
+date: '2017-12-20'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2017-12-19 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2017-12-20 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservefacebbc8f2506e67
+preserveaf46e30bd5b839d6
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve0a67a661ae2dc0e4
+preserve9c76343b88e1cced
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4645,12 +4645,30 @@ Additionally, check out the *Multi-core functions* section in `vignette("functio
 
 ### Vectorization
 
+Vectorization is a process of converting rasters into vectors^[This term should not be confused with a code vectorization.].
+The simplest form of vectorization is a conversion from a raster to points.
+The `rasterToPoints()` function creates point representations of raster grid cell centroids.
+
+
+```r
+grain_point = rasterToPoints(grain, spatial = TRUE)
+grain_point = st_as_sf(grain_point)
+plot(grain_point)
+#> Warning in classInt::classIntervals(na.omit(values), min(nbreaks, n.unq), :
+#> n same as number of different finite values\neach different finite value is
+#> a separate class
+```
+
+<img src="figures/unnamed-chunk-60-1.png" width="576" style="display: block; margin: auto;" />
+
+<!-- ref to rasterization -->
+
 <!-- e.g. landcover map to polygonss -->
 <!-- how it's different from a vectorization in CS -->
 <!-- vectorization is used when we get raster data as an input (such as scanned map or satellite image) and we want to extract objects -->
 <!-- it could be also used when we want to add attributes -->
 <!-- rasterToPolygons() -->
-<!-- rasterToContour() -->
+<!-- spex::polygonize -->
 
 
 ```r
@@ -4664,10 +4682,16 @@ grain_poly2 = grain_poly %>%
   summarize()
 ```
 
+
 <div class="figure" style="text-align: center">
 <img src="figures/raster-vectorization-1.png" alt="." width="576" />
 <p class="caption">(\#fig:raster-vectorization).</p>
 </div>
+
+<!-- rasterToContour() -->
+
+
+
 
 <!-- ```{r} -->
 <!-- nlcd2011 = raster(system.file("raster/nlcd2011.tif", package = "spDataLarge")) -->
@@ -5858,7 +5882,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveff2e6ad18ad122aa
+preserve2e8cea44dc82cebb
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 

@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2017-12-19">
+<meta name="date" content="2017-12-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -875,12 +875,21 @@ elev_disagg =<span class="st"> </span><span class="kw">resample</span>(elev_agg,
 </div>
 <div id="vectorization" class="section level3">
 <h3><span class="header-section-number">5.4.3</span> Vectorization</h3>
+<p>Vectorization is a process of converting rasters into vectors<a href="#fn32" class="footnoteRef" id="fnref32"><sup>32</sup></a>. The simplest form of vectorization is a conversion from a raster to points. The <code>rasterToPoints()</code> function creates point representations of raster grid cell centroids.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grain_point =<span class="st"> </span><span class="kw">rasterToPoints</span>(grain, <span class="dt">spatial =</span> <span class="ot">TRUE</span>)
+grain_point =<span class="st"> </span><span class="kw">st_as_sf</span>(grain_point)
+<span class="kw">plot</span>(grain_point)
+<span class="co">#&gt; Warning in classInt::classIntervals(na.omit(values), min(nbreaks, n.unq), :</span>
+<span class="co">#&gt; n same as number of different finite values\neach different finite value is</span>
+<span class="co">#&gt; a separate class</span></code></pre></div>
+<p><img src="figures/unnamed-chunk-60-1.png" width="576" style="display: block; margin: auto;" /></p>
+<!-- ref to rasterization -->
 <!-- e.g. landcover map to polygonss -->
 <!-- how it's different from a vectorization in CS -->
 <!-- vectorization is used when we get raster data as an input (such as scanned map or satellite image) and we want to extract objects -->
 <!-- it could be also used when we want to add attributes -->
 <!-- rasterToPolygons() -->
-<!-- rasterToContour() -->
+<!-- spex::polygonize -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grain_poly =<span class="st"> </span>spex::<span class="kw">polygonize</span>(grain)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grain_poly2 =<span class="st"> </span>grain_poly %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">group_by</span>(VALUE) %&gt;%
@@ -891,6 +900,7 @@ elev_disagg =<span class="st"> </span><span class="kw">resample</span>(elev_agg,
 Figure 5.18: .
 </p>
 </div>
+<!-- rasterToContour() -->
 <!-- ```{r} -->
 <!-- nlcd2011 = raster(system.file("raster/nlcd2011.tif", package = "spDataLarge")) -->
 <!-- plot(nlcd2011) -->
@@ -973,6 +983,7 @@ Figure 5.18: .
 <li id="fn29"><p>Full list of NLCD2011 land cover classes can be found at <a href="https://www.mrlc.gov/nlcd11_leg.php" class="uri">https://www.mrlc.gov/nlcd11_leg.php</a><a href="transform.html#fnref29">↩</a></p></li>
 <li id="fn30"><p>It uses the simplify algorithm from GEOS.<a href="transform.html#fnref30">↩</a></p></li>
 <li id="fn31"><p>If the origins of two raster datasets are just marginally apart, it sometimes is sufficient to simply increase the <code>tolerance</code> argument of <code>raster::rasterOptions()</code>.<a href="transform.html#fnref31">↩</a></p></li>
+<li id="fn32"><p>This term should not be confused with a code vectorization.<a href="transform.html#fnref32">↩</a></p></li>
 </ol>
 </div>
             </section>
