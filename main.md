@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveaf46e30bd5b839d6
+preserveadfb4081ca502c0a
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve9c76343b88e1cced
+preserve3177cfd9c3bd3ad4
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5882,7 +5882,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve2e8cea44dc82cebb
+preserveb8b5d38af8f6bc5f
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6168,8 +6168,10 @@ plot(zones["all_dest"])
 <p class="caption">(\#fig:destzones)Destination zones</p>
 </div>
 
-
 ## Nodes on the transport system
+
+Nodes in geographic transport data are zero dimensional features (points) among the predominantly one dimension features (lines) that comprise the network.
+From a mathematical perspective transport networks are simply large graphs: roads and other pathways are 'edges' that join together the nodes, making some quantifiably more central than others 
 
 
 ```r
@@ -6260,6 +6262,47 @@ summary(ways)
 
 The above code chunk loaded a simple feature object representing around 3,000 segments on the transport network.
 This an easily manageable dataset size (transport datasets be large but it's best to start small).
+
+
+```r
+ways_road = ways %>% filter(highway == "road") 
+ways_sln = SpatialLinesNetwork(as(ways_road, "Spatial"))
+summary(ways_sln)
+#> Weight attribute field: lengthIGRAPH da2afbe U-W- 2483 2516 -- 
+#> + attr: x (g/n), y (g/n), n (g/n), weight (e/n)
+#> Object of class SpatialLinesDataFrame
+#> Coordinates:
+#>     min   max
+#> x -2.84 -2.26
+#> y 51.29 51.73
+#> Is projected: FALSE 
+#> proj4string :
+#> [+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0]
+#> Data attributes:
+#>      highway        maxspeed        ref           length    
+#>  cycleway:   0   30 mph :812   A38    : 199   Min.   :0.00  
+#>  rail    :   0   20 mph :429   M5     : 138   1st Qu.:0.04  
+#>  road    :2516   70 mph :318   A432   : 128   Median :0.10  
+#>                  40 mph :280   A4018  : 120   Mean   :0.28  
+#>                  50 mph :108   A420   : 112   3rd Qu.:0.29  
+#>                  (Other): 85   (Other):1623   Max.   :8.85  
+#>                  NA's   :484   NA's   : 196
+weightfield(ways_sln)
+#> [1] "length"
+# o_crds = geo_code("Lawrence Hill Bristol")
+# o_crds = geo_code("Park Street Bristol")
+# o_node = find_network_nodes(ways_sln, -2.618, 51.494)
+# d_node = find_network_nodes(ways_sln, -2.602, 51.455)
+path = sum_network_routes(ways_sln, 10, 20, "length")
+plot(ways_sln)
+plot(path, col = "red", lwd = 5, add = T)
+b = igraph::betweenness(ways_sln@g)
+length(b)
+#> [1] 2483
+```
+
+<img src="figures/unnamed-chunk-18-1.png" width="576" style="display: block; margin: auto;" />
+
 
 ## Agents in the transport system
 
