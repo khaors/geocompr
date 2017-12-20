@@ -876,13 +876,8 @@ elev_disagg =<span class="st"> </span><span class="kw">resample</span>(elev_agg,
 <div id="vectorization" class="section level3">
 <h3><span class="header-section-number">5.4.3</span> Vectorization</h3>
 <p>Vectorization is a process of converting rasters into vectors<a href="#fn32" class="footnoteRef" id="fnref32"><sup>32</sup></a>. The simplest form of vectorization is a conversion from a raster to points. The <code>rasterToPoints()</code> function creates point representations of raster grid cell centroids.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grain_point =<span class="st"> </span><span class="kw">rasterToPoints</span>(grain, <span class="dt">spatial =</span> <span class="ot">TRUE</span>)
-grain_point =<span class="st"> </span><span class="kw">st_as_sf</span>(grain_point)
-<span class="kw">plot</span>(grain_point)
-<span class="co">#&gt; Warning in classInt::classIntervals(na.omit(values), min(nbreaks, n.unq), :</span>
-<span class="co">#&gt; n same as number of different finite values\neach different finite value is</span>
-<span class="co">#&gt; a separate class</span></code></pre></div>
-<p><img src="figures/unnamed-chunk-60-1.png" width="576" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grain_point =<span class="st"> </span><span class="kw">rasterToPoints</span>(grain, <span class="dt">spatial =</span> <span class="ot">TRUE</span>) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">st_as_sf</span>()</code></pre></div>
 <!-- ref to rasterization -->
 <!-- e.g. landcover map to polygonss -->
 <!-- how it's different from a vectorization in CS -->

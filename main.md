@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveadfb4081ca502c0a
+preserve1d4c44beefd80bdf
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve3177cfd9c3bd3ad4
+preserve4aa77fba88c04147
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4651,15 +4651,9 @@ The `rasterToPoints()` function creates point representations of raster grid cel
 
 
 ```r
-grain_point = rasterToPoints(grain, spatial = TRUE)
-grain_point = st_as_sf(grain_point)
-plot(grain_point)
-#> Warning in classInt::classIntervals(na.omit(values), min(nbreaks, n.unq), :
-#> n same as number of different finite values\neach different finite value is
-#> a separate class
+grain_point = rasterToPoints(grain, spatial = TRUE) %>% 
+  st_as_sf()
 ```
-
-<img src="figures/unnamed-chunk-60-1.png" width="576" style="display: block; margin: auto;" />
 
 <!-- ref to rasterization -->
 
@@ -5882,7 +5876,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveb8b5d38af8f6bc5f
+preserve14872bfa8d16eef4
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6268,7 +6262,7 @@ This an easily manageable dataset size (transport datasets be large but it's bes
 ways_road = ways %>% filter(highway == "road") 
 ways_sln = SpatialLinesNetwork(as(ways_road, "Spatial"))
 summary(ways_sln)
-#> Weight attribute field: lengthIGRAPH da2afbe U-W- 2483 2516 -- 
+#> Weight attribute field: lengthIGRAPH 3e976bb U-W- 2483 2516 -- 
 #> + attr: x (g/n), y (g/n), n (g/n), weight (e/n)
 #> Object of class SpatialLinesDataFrame
 #> Coordinates:
