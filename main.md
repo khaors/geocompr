@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservec0f26b67ab113ebe
+preservee7d6d545d554afff
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserved0db04e30449b217
+preserved89f20f11d9cf65b
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4648,9 +4648,8 @@ Additionally, check out the *Multi-core functions* section in `vignette("functio
 <!-- ref to rasterization -->
 Vectorization is a process of converting rasters into vectors.^[This term should not be confused with a code vectorization.]
 The simplest form of vectorization is a conversion from a raster to points.
-The `rasterToPoints()` function creates point representations of every non-NA raster grid cell centroids.
+The `rasterToPoints()` function creates point representations of every non-NA raster grid cell centroids and it is usually used for data with continuous values, such as elevation.
 <!-- Spatial* class mentioned -->
-it is mostly used for coontinous values, e.g. elevation
 
 
 ```r
@@ -4662,6 +4661,8 @@ elev_point = rasterToPoints(elev, spatial = TRUE) %>%
 <img src="figures/raster-vectorization1-1.png" alt="." width="576" />
 <p class="caption">(\#fig:raster-vectorization1).</p>
 </div>
+
+On the other hand, categorical rasters represent discrete features that could occupy areas larger than only one cell.
 
 <!-- e.g. landcover map to polygonss -->
 <!-- how it's different from a vectorization in CS -->
@@ -5882,7 +5883,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve8fd2895ffee8b95a
+preserve79aa7b9999715c69
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6268,7 +6269,7 @@ This an easily manageable dataset size (transport datasets be large but it's bes
 ways_road = ways %>% filter(highway == "road") 
 ways_sln = SpatialLinesNetwork(as(ways_road, "Spatial"))
 summary(ways_sln)
-#> Weight attribute field: lengthIGRAPH 706cf91 U-W- 2483 2516 -- 
+#> Weight attribute field: lengthIGRAPH 2f0ba79 U-W- 2483 2516 -- 
 #> + attr: x (g/n), y (g/n), n (g/n), weight (e/n)
 #> Object of class SpatialLinesDataFrame
 #> Coordinates:

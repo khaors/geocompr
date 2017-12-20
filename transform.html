@@ -876,7 +876,7 @@ elev_disagg =<span class="st"> </span><span class="kw">resample</span>(elev_agg,
 <div id="vectorization" class="section level3">
 <h3><span class="header-section-number">5.4.3</span> Vectorization</h3>
 <!-- ref to rasterization -->
-<p>Vectorization is a process of converting rasters into vectors.<a href="#fn32" class="footnoteRef" id="fnref32"><sup>32</sup></a> The simplest form of vectorization is a conversion from a raster to points. The <code>rasterToPoints()</code> function creates point representations of every non-NA raster grid cell centroids. <!-- Spatial* class mentioned --> it is mostly used for coontinous values, e.g. elevation</p>
+<p>Vectorization is a process of converting rasters into vectors.<a href="#fn32" class="footnoteRef" id="fnref32"><sup>32</sup></a> The simplest form of vectorization is a conversion from a raster to points. The <code>rasterToPoints()</code> function creates point representations of every non-NA raster grid cell centroids and it is usually used for data with continuous values, such as elevation. <!-- Spatial* class mentioned --></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_point =<span class="st"> </span><span class="kw">rasterToPoints</span>(elev, <span class="dt">spatial =</span> <span class="ot">TRUE</span>) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">st_as_sf</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:raster-vectorization1"></span>
@@ -885,6 +885,7 @@ elev_disagg =<span class="st"> </span><span class="kw">resample</span>(elev_agg,
 Figure 5.18: .
 </p>
 </div>
+<p>On the other hand, categorical rasters represent discrete features that could occupy areas larger than only one cell.</p>
 <!-- e.g. landcover map to polygonss -->
 <!-- how it's different from a vectorization in CS -->
 <!-- vectorization is used when we get raster data as an input (such as scanned map or satellite image) and we want to extract objects -->
