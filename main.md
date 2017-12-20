@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve1d4c44beefd80bdf
+preservec0f26b67ab113ebe
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve4aa77fba88c04147
+preserved0db04e30449b217
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4645,17 +4645,23 @@ Additionally, check out the *Multi-core functions* section in `vignette("functio
 
 ### Vectorization
 
-Vectorization is a process of converting rasters into vectors^[This term should not be confused with a code vectorization.].
+<!-- ref to rasterization -->
+Vectorization is a process of converting rasters into vectors.^[This term should not be confused with a code vectorization.]
 The simplest form of vectorization is a conversion from a raster to points.
-The `rasterToPoints()` function creates point representations of raster grid cell centroids.
+The `rasterToPoints()` function creates point representations of every non-NA raster grid cell centroids.
+<!-- Spatial* class mentioned -->
+it is mostly used for coontinous values, e.g. elevation
 
 
 ```r
-grain_point = rasterToPoints(grain, spatial = TRUE) %>% 
+elev_point = rasterToPoints(elev, spatial = TRUE) %>% 
   st_as_sf()
 ```
 
-<!-- ref to rasterization -->
+<div class="figure" style="text-align: center">
+<img src="figures/raster-vectorization1-1.png" alt="." width="576" />
+<p class="caption">(\#fig:raster-vectorization1).</p>
+</div>
 
 <!-- e.g. landcover map to polygonss -->
 <!-- how it's different from a vectorization in CS -->
@@ -4678,8 +4684,8 @@ grain_poly2 = grain_poly %>%
 
 
 <div class="figure" style="text-align: center">
-<img src="figures/raster-vectorization-1.png" alt="." width="576" />
-<p class="caption">(\#fig:raster-vectorization).</p>
+<img src="figures/raster-vectorization2-1.png" alt="." width="576" />
+<p class="caption">(\#fig:raster-vectorization2).</p>
 </div>
 
 <!-- rasterToContour() -->
@@ -5876,7 +5882,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve14872bfa8d16eef4
+preserve8fd2895ffee8b95a
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6262,7 +6268,7 @@ This an easily manageable dataset size (transport datasets be large but it's bes
 ways_road = ways %>% filter(highway == "road") 
 ways_sln = SpatialLinesNetwork(as(ways_road, "Spatial"))
 summary(ways_sln)
-#> Weight attribute field: lengthIGRAPH 3e976bb U-W- 2483 2516 -- 
+#> Weight attribute field: lengthIGRAPH 706cf91 U-W- 2483 2516 -- 
 #> + attr: x (g/n), y (g/n), n (g/n), weight (e/n)
 #> Object of class SpatialLinesDataFrame
 #> Coordinates:
