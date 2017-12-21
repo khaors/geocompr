@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve297bf19d7e826d48
+preserveb3041793d061e1aa
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2721,14 +2721,6 @@ canterbury_height = nz_height[canterbury, ]
 
 <!-- maybe we should add to the caption that many of the high points are close to each other which is why one gets the impression in NZ there were only ca. 15 high points, but nz_height contains 101 points -->
 
-
-```
-#> Warning in plot.sf(nz_height, add = TRUE, pch = 2, col = "red"): ignoring
-#> all but the first attribute
-#> Warning in plot.sf(canterbury_height, add = TRUE, pch = 2, col = "red"):
-#> ignoring all but the first attribute
-```
-
 <div class="figure" style="text-align: center">
 <img src="figures/nz-subset-1.png" alt="Illustration of spatial subsetting with red triangles representing 101 high points in New Zealand, clustered near the central Canterbuy region. The right-hand map contains points, subset with the command `nz_height[canterbury, ]`, located in Canterbury (highlighted in grey)." width="576" />
 <p class="caption">(\#fig:nz-subset)Illustration of spatial subsetting with red triangles representing 101 high points in New Zealand, clustered near the central Canterbuy region. The right-hand map contains points, subset with the command `nz_height[canterbury, ]`, located in Canterbury (highlighted in grey).</p>
@@ -3109,7 +3101,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve855b1aeab4f318da
+preserve8166aac3bd1d55e3
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5904,7 +5896,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve2077ebf940de8baf
+preservedb816a0569a74802
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6290,7 +6282,7 @@ This an easily manageable dataset size (transport datasets be large but it's bes
 ways_road = ways %>% filter(highway == "road") 
 ways_sln = SpatialLinesNetwork(as(ways_road, "Spatial"))
 summary(ways_sln)
-#> Weight attribute field: lengthIGRAPH b80bf37 U-W- 2483 2516 -- 
+#> Weight attribute field: lengthIGRAPH f793576 U-W- 2483 2516 -- 
 #> + attr: x (g/n), y (g/n), n (g/n), weight (e/n)
 #> Object of class SpatialLinesDataFrame
 #> Coordinates:

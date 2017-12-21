@@ -323,10 +323,6 @@ It is important to note that spatial operations that use two spatial objects rel
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">canterbury =<span class="st"> </span>nz %&gt;%<span class="st"> </span><span class="kw">filter</span>(REGC2017_NAME ==<span class="st"> &quot;Canterbury Region&quot;</span>)
 canterbury_height =<span class="st"> </span>nz_height[canterbury, ]</code></pre></div>
 <!-- maybe we should add to the caption that many of the high points are close to each other which is why one gets the impression in NZ there were only ca. 15 high points, but nz_height contains 101 points -->
-<pre><code>#&gt; Warning in plot.sf(nz_height, add = TRUE, pch = 2, col = &quot;red&quot;): ignoring
-#&gt; all but the first attribute
-#&gt; Warning in plot.sf(canterbury_height, add = TRUE, pch = 2, col = &quot;red&quot;):
-#&gt; ignoring all but the first attribute</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:nz-subset"></span>
 <img src="figures/nz-subset-1.png" alt="Illustration of spatial subsetting with red triangles representing 101 high points in New Zealand, clustered near the central Canterbuy region. The right-hand map contains points, subset with the command `nz_height[canterbury, ]`, located in Canterbury (highlighted in grey)." width="576" />
 <p class="caption">
