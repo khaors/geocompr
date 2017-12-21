@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve4543556f185ddabb
+preserve23ba970dac41737a
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2723,8 +2723,6 @@ canterbury = nz %>% filter(REGC2017_NAME == "Canterbury Region")
 canterbury_height = nz_height[canterbury, ]
 ```
 
-<!-- maybe we should add to the caption that many of the high points are close to each other which is why one gets the impression in NZ there were only ca. 15 high points, but nz_height contains 101 points -->
-
 <div class="figure" style="text-align: center">
 <img src="figures/nz-subset-1.png" alt="Illustration of spatial subsetting with red triangles representing 101 high points in New Zealand, clustered near the central Canterbuy region. The right-hand map contains points, subset with the command `nz_height[canterbury, ]`, located in Canterbury (highlighted in grey)." width="576" />
 <p class="caption">(\#fig:nz-subset)Illustration of spatial subsetting with red triangles representing 101 high points in New Zealand, clustered near the central Canterbuy region. The right-hand map contains points, subset with the command `nz_height[canterbury, ]`, located in Canterbury (highlighted in grey).</p>
@@ -2821,11 +2819,11 @@ The dimensions of `sel` (returned by the base R command `dim()`) show one row pe
 The general pattern here is that `sel[i, j]` is `TRUE` if the i^th^ feature in the target object intersects with the j^th^ feature in the subsetting object.
 If there is more than one feature in `y` the resulting selection `matrix` must be converted into a `vector` before it is used for subsetting, e.g. with `rowSums(sel_matrix) > 0`.
 Another solution is to convert the default sparse matrix (`list`) output from `st_intersects()` to a `logical` vector using the function `lengths()`.
-This approach to spatial subsetting, internally also used by **sf**, is recommended because it scales, and illustrated in the code chunk below:
+This approach to spatial subsetting, used internally by **sf** (see the source code of `` sf:::`[.sf` ``), is illustrated in the code chunk below:
 
 
 ```r
-co = filter(nz, grepl("Cant|Otag", REGC2017_NAME))
+co = filter(nz, grepl("Canter|Otag", REGC2017_NAME))
 sel_sparse = st_intersects(nz_height, co)
 sel_vector = lengths(sel_sparse) > 0
 heights_co = nz_height[sel_vector, ]
@@ -2834,7 +2832,7 @@ heights_co = nz_height[sel_vector, ]
 The above code chunk results in an object, `heights_co`, that represent the high points that intersect with either Canterbury *or* Otago region (hence the object name `co`).
 It did this in four stages:
 
-1. Subset the regions of `nz` containing "Cant" or "Otago" in their names. This was done using the pattern matching function `grepl()` in combination with the `|` character, which means 'or', resulting in the subsetting object `co`.
+1. Subset the regions of `nz` containing "Canter" or "Otago" in their names. This was done using the pattern matching function `grepl()` in combination with the `|` character, which means 'or', resulting in the subsetting object `co`.
 2. Create a sparse geometry binary predicate `sgbp` object, a list representing which features of `nz_height` intersect with the regions in `co`.
 3. Convert the selection list into a `logical` 'selection vector'. `lengths()`  finds the features in `nz_height` matching *any* features in `co`.
 4. Use the result to subset `nz_heights`, creating a new object `heights_co`. 
@@ -3106,7 +3104,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservefd92d62601823ec3
+preserveff743d967cbfde7a
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5902,7 +5900,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve198c119bdb8cc664
+preserve750cada7339e2120
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6288,7 +6286,7 @@ This an easily manageable dataset size (transport datasets be large but it's bes
 ways_road = ways %>% filter(highway == "road") 
 ways_sln = SpatialLinesNetwork(as(ways_road, "Spatial"))
 summary(ways_sln)
-#> Weight attribute field: lengthIGRAPH 193b95b U-W- 2483 2516 -- 
+#> Weight attribute field: lengthIGRAPH 874eee3 U-W- 2483 2516 -- 
 #> + attr: x (g/n), y (g/n), n (g/n), weight (e/n)
 #> Object of class SpatialLinesDataFrame
 #> Coordinates:
