@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveb5804099587de6e6
+preservebfd44954eb908d61
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2681,17 +2681,21 @@ library(spData)
 Spatial operations are a vital part of geocomputation.
 This chapter shows how spatial objects can be modified in a multitude of ways based on their location and shape.
 The content builds on the previous chapter because many spatial operations have a non-spatial (attribute) equivalent.
-This is especially true for *vector* operations.
-For instance, we will extend the basics on vector attribute manipulation (covered in section \@ref(vector-attribute-manipulation)) with its spatial counterpart, namely spatial subsetting (covered in section \@ref(spatial-subsetting)) and spatial joining (section \@ref(spatial-joining)).
-Imagine you want to add an attribute of a road (such as the road number or the speed limit) to a municipality polygon.
-Equally, you might want to select all roads of a specific municipality.
-Were we in possession of an ID this would simply repeat the stuff introduced in the previous chapter. 
-But if we are missing an ID, then we can still solve these questions using the geographical location of the objects in question.
-But then we might face further questions such as: Should the road completely fall inside the polygon or is it enough if the road simply crosses the municipality or is it even okay if it is within a certain distance of it.
-When posing such questions it becomes apparent that spatial operations differ substantially from simple attribute operations on tabulated data simply because we have to take into account the spatial relationship between objects.
-The multitude of spatial neighborhood relationships are described by topological relations, a topic that is explored in section \@ref(topological-relations).
+This is especially true for *vector* operations: section \@ref(vector-attribute-manipulation) on vector attribute manipulation provides the basis for understanding its spatial counterpart, namely spatial subsetting (covered in section \@ref(spatial-subsetting)).
+Spatial joining (section \@ref(spatial-joining)) and aggregation (\@ref(spatial-data-aggregation)) also have non-spatial counterparts, covered in the previous chapter.
+
+Spatial operations differ from non-spatial operations in some ways, however.
+To illustrate the point, imagine you are researching road safety.
+Spatial joins can be used to find road speed limits related with administrative zones, even when no zone ID is provided.
+<!-- This could be a really good example that - a candidate to replace the rather contrived asia example below. -->
+But this raises the question: should the road completely fall inside a zone for its values to be joined?
+Or is simply crossing or being within a certain distance sufficent?
+When posing such questions it becomes apparent that spatial operations differ substantially from attribute operations on data frames:
+the *type* of spatial relationship between objects must be considered.
+These are covered in section \@ref(topological-relations), on topological relations.
+
 Another unique aspect of spatial objects is distance.
-As demonstrated above, all spatial objects are related through space and distance calculations can also be used to find the strength of this relationship between spatial entities (\@ref(distance-relations)).
+All spatial objects are related through space and distance calculations,covered in section \@ref(distance-relations), can be used to explore the strength of this relationship between spatial entities.
 
 Naturally, we can also subset *rasters* based on location and coordinates (section \@ref(raster-subsetting)) and merge different raster tiles into one raster (covered in section \@ref(merging-rasters)). 
 The most important spatial operation on raster data, however, is *map algebra*. 
@@ -2799,10 +2803,19 @@ identical(canterbury_height, canterbury_height3)
 </div>
 
 But what is `sel`?
-It is not, as one might imagine, a `logical` vector.
-<!-- What do you mean by two-dimensional? One can misunderstand this and believe that you are talking about 2 columns. Or are you already referring to sel_matrix? --> 
-It is a `logical` two-dimensional object, a *matrix*.
-`sel` has one row per feature in the target object (`nz_height`) and a column per feature in the subsetting object (`canterbury`).
+It is not, as one might imagine, a `logical` vector (although it can be represented as such) but a `logical` `matrix`:
+
+
+```r
+class(sel)
+#> [1] "matrix"
+typeof(sel)
+#> [1] "logical"
+dim(sel)
+#> [1] 101   1
+```
+
+ one row per feature in the target object (`nz_height`) and a column per feature in the subsetting object (`canterbury`).
 Cell `sel[i, j]` is `TRUE` if the i^th^ feature in the target object intersects with the j^th^ feature in the subsetting object.
 If there is more than one feature in `y` the resulting selection `matrix` must be converted into a `vector` before it is used for subsetting, as illustrated below:
 
@@ -3102,7 +3115,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservefd05b5c0088a133e
+preservef67e18be6ec9501d
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5897,7 +5910,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve93603021e7c31a6e
+preserve43a91a6ad3779f8e
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6283,7 +6296,7 @@ This an easily manageable dataset size (transport datasets be large but it's bes
 ways_road = ways %>% filter(highway == "road") 
 ways_sln = SpatialLinesNetwork(as(ways_road, "Spatial"))
 summary(ways_sln)
-#> Weight attribute field: lengthIGRAPH 381b8d6 U-W- 2483 2516 -- 
+#> Weight attribute field: lengthIGRAPH 8b35bb8 U-W- 2483 2516 -- 
 #> + attr: x (g/n), y (g/n), n (g/n), weight (e/n)
 #> Object of class SpatialLinesDataFrame
 #> Coordinates:
