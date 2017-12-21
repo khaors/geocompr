@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve6112f24904a6e058
+preserve7da16e0bb2164275
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3103,7 +3103,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservef0979944828566bb
+preserve9d6ff30e05c45286
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3201,9 +3201,6 @@ nz_avheight2 = st_join(nz, nz_height) %>%
 The resulting `nz_avheight` objects have the same geometry as the aggregating object `nz` but with a a new column representing the mean average height of points within each region of New Zealand (other summary functions such as `median()` and `sd()` can be used in place of `mean()`).
 Note that regions containing no points have an associated `elevation` value of `NA`.
 For aggregating operations which also create new geometries, see section \@ref(geometry-unions).
-
-<!-- One should avoid to have a single subsection, here 4.2.5.1. I would delete the heading, then spatial congruence just becomes another paragraph of spatial aggregation -->
-#### Spatial congruence and areal interpolation
 
 Spatial congruence is an important concept related to spatial aggregation.
 An *aggregating object* object (which we will refer to as `y`) is *congruent* with the target object (`x`) if the two objects have shared borders.
@@ -5893,7 +5890,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve12eb95dfb0d64569
+preservee7fdb31f88bec6e7
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6279,7 +6276,7 @@ This an easily manageable dataset size (transport datasets be large but it's bes
 ways_road = ways %>% filter(highway == "road") 
 ways_sln = SpatialLinesNetwork(as(ways_road, "Spatial"))
 summary(ways_sln)
-#> Weight attribute field: lengthIGRAPH 16dd275 U-W- 2483 2516 -- 
+#> Weight attribute field: lengthIGRAPH 46cb4f7 U-W- 2483 2516 -- 
 #> + attr: x (g/n), y (g/n), n (g/n), weight (e/n)
 #> Object of class SpatialLinesDataFrame
 #> Coordinates:
