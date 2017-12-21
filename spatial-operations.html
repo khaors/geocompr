@@ -514,7 +514,6 @@ urb =<span class="st"> </span>urban_agglomerations %&gt;%<span class="st"> </spa
 <span class="st">  </span><span class="kw">top_n</span>(<span class="dt">n =</span> <span class="dv">3</span>, <span class="dt">wt =</span> population_millions)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">joined =<span class="st"> </span><span class="kw">st_join</span>(<span class="dt">x =</span> asia, <span class="dt">y =</span> urb) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">na.omit</span>()</code></pre></div>
-<!-- The yellow point is hardly recognizable, maybe use also the border parameter? -->
 <div class="figure" style="text-align: center"><span id="fig:spatial-join"></span>
 <img src="figures/spatial-join-1.png" alt="Illustration of a spatial join: the populations of the world's 3 largest agglomerations joined onto their respective countries." width="576" />
 <p class="caption">
