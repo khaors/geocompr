@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve4faf0c31bc9ab486
+preserve4543556f185ddabb
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2817,11 +2817,11 @@ dim(sel)
 #> [1] 101   1
 ```
 
-The dimension of `sel` (returned by the base R command `dim()`) shows that has one row per feature in the target object (`nz_height`) and a column per feature in the subsetting object (`canterbury`).
+The dimensions of `sel` (returned by the base R command `dim()`) show one row per feature in the target object (`nz_height`) and a column per feature in the subsetting object (`canterbury`).
 The general pattern here is that `sel[i, j]` is `TRUE` if the i^th^ feature in the target object intersects with the j^th^ feature in the subsetting object.
 If there is more than one feature in `y` the resulting selection `matrix` must be converted into a `vector` before it is used for subsetting, e.g. with `rowSums(sel_matrix) > 0`.
-Another solution is to convert the the default sparse matrix (`list`) output from `st_intersects()` to a `logical` vector using the function `lengths()`.
-This approach to spatial subsetting, which is recommended because it scales, and is used internally by **sf**, is illustrated in the code chunk below:
+Another solution is to convert the default sparse matrix (`list`) output from `st_intersects()` to a `logical` vector using the function `lengths()`.
+This approach to spatial subsetting, internally also used by **sf**, is recommended because it scales, and illustrated in the code chunk below:
 
 
 ```r
@@ -3106,7 +3106,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveef554817e0766e8c
+preservefd92d62601823ec3
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5902,7 +5902,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservef278529ae28f8b09
+preserve198c119bdb8cc664
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6288,7 +6288,7 @@ This an easily manageable dataset size (transport datasets be large but it's bes
 ways_road = ways %>% filter(highway == "road") 
 ways_sln = SpatialLinesNetwork(as(ways_road, "Spatial"))
 summary(ways_sln)
-#> Weight attribute field: lengthIGRAPH 61ce942 U-W- 2483 2516 -- 
+#> Weight attribute field: lengthIGRAPH 193b95b U-W- 2483 2516 -- 
 #> + attr: x (g/n), y (g/n), n (g/n), weight (e/n)
 #> Object of class SpatialLinesDataFrame
 #> Coordinates:
