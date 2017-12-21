@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve6fc4702d5f101fa5
+preservedb2ef61d177c4d94
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2749,7 +2749,12 @@ nz_height[canterbury, , op = st_disjoint]
 Interested readers can see this default value of `op` set in the first line of the function call by entering its long-form name into the console `` sf:::`[.sf` ``.
 The `?sf` help page documents this also.</div>\EndKnitrBlock{rmdnote}
 
-Another way of doing spatial subsetting relies on the ability of *topological operators* to return `logical` objects by setting the `sparse` argument to `FALSE`:
+For many applications this is all you'll need to know about spatial subsetting for vector data.
+If this is the case, you can safely skip to the next section (\@ref(topological-relations)).
+If you're interested in the details, including other ways of subsetting, read-on.
+
+Another way of doing spatial subsetting uses objects returned by *topological operators*.
+This is demonstrated in the first command below which uses the `sparse = FALSE` (meaning in English 'return a dense matrix not a sparse one') argument in the topological operator `st_intersects()` to ensure a `logical` result is returned:
 
 
 ```r
@@ -2757,16 +2762,13 @@ sel = st_intersects(x = nz_height, y = canterbury, sparse = FALSE)
 canterbury_height2 = nz_height[sel, ]
 ```
 
-The preceding code chunk created an intermediary object named `sel`, short for selection, containing only `TRUE` and `FALSE` values.
-This 'selection object' also works with `filter()`, introduced in section \@ref(vector-attribute-subsetting):
+This creates `sel` (short for 'selection object') containing only `TRUE` and `FALSE` values, which are used in the second line of the pevious code chunk to create `canterbury_height2`, which is identical to `canterbury_height`.
+`sel` can also be used with `filter()`:
 
 
 ```r
 canterbury_height3 = nz_height %>% filter(sel)
 ```
-
-For many applications this is all you'll need to know about spatial subsetting and if this is the case, you can safely skip to the next section (\@ref(topological-relations)).
-If you're interested in the details --- specifically the differences between `canterbury_height3` and the other `canterbury_height` objects, and the nature of `sel` --- read-on.
 
 At this point there are three versions of `canterbury_height`, one created with spatial subsetting directly and the other two via the intermediary object `sel`.
 We can test whether they are identical as follows:
@@ -2803,8 +2805,7 @@ identical(canterbury_height, canterbury_height3)
 <p>This discarding of row names is not something that is specific to spatial data, as illustrated in the code chunk below. <strong>dplyr</strong> discards row names by design. For further discussion of this decision, and some controversy, see the (closed) issue <a href="https://github.com/tidyverse/dplyr/issues/366">#366</a> in the package's issue tracker.</p>
 </div>
 
-But what is `sel`?
-It is not, as one might imagine, a `logical` vector (although it can be represented as such) but a `logical` `matrix`:
+`sel` is not, as one might imagine, a `logical` `vector` (although it behaves as one as it only has one column) but a `logical` `matrix`:
 
 
 ```r
@@ -2816,15 +2817,17 @@ dim(sel)
 #> [1] 101   1
 ```
 
- one row per feature in the target object (`nz_height`) and a column per feature in the subsetting object (`canterbury`).
-Cell `sel[i, j]` is `TRUE` if the i^th^ feature in the target object intersects with the j^th^ feature in the subsetting object.
-If there is more than one feature in `y` the resulting selection `matrix` must be converted into a `vector` before it is used for subsetting, as illustrated below:
+The dimension of `sel` (returned by the base R command `dim()`) shows that has one row per feature in the target object (`nz_height`) and a column per feature in the subsetting object (`canterbury`).
+The general pattern here is that `sel[i, j]` is `TRUE` if the i^th^ feature in the target object intersects with the j^th^ feature in the subsetting object.
+If there is more than one feature in `y` the resulting selection `matrix` must be converted into a `vector` before it is used for subsetting, e.g. with `rowSums(sel_matrix) > 0`.
+Another solution is to convert the the default sparse matrix (`list`) output from `st_intersects()` to a `logical` vector using the function `lengths()`.
+This approach to spatial subsetting, which is recommended because it scales, and is used internally by **sf**, is illustrated in the code chunk below:
 
 
 ```r
 co = filter(nz, grepl("Cant|Otag", REGC2017_NAME))
-sel_matrix = st_intersects(nz_height, co, sparse = FALSE)
-sel_vector = rowSums(sel_matrix) > 0
+sel_sparse = st_intersects(nz_height, co)
+sel_vector = lengths(sel_sparse) > 0
 heights_co = nz_height[sel_vector, ]
 ```
 
@@ -2832,23 +2835,10 @@ The above code chunk results in an object, `heights_co`, that represent the high
 It did this in four stages:
 
 1. Subset the regions of `nz` containing "Cant" or "Otago" in their names. This was done using the pattern matching function `grepl()` in combination with the `|` character, which means 'or', resulting in the subsetting object `co`.
-2. Create a selection matrix representing which features of `nz_height` intersect with the regions in `co`.
-3. Convert the selection matrix into a `logical` 'selection vector' by using `rowSums()` to find which features matched *any* features in `co`.
+2. Create a sparse geometry binary predicate `sgbp` object, a list representing which features of `nz_height` intersect with the regions in `co`.
+3. Convert the selection list into a `logical` 'selection vector'. `lengths()`  finds the features in `nz_height` matching *any* features in `co`.
 4. Use the result to subset `nz_heights`, creating a new object `heights_co`. 
 
-The nature of `sel_matrix` is verified below:
-
-
-```r
-class(sel_matrix)
-#> [1] "matrix"
-typeof(sel_matrix)
-#> [1] "logical"
-dim(sel_matrix)
-#> [1] 101   2
-```
-
-<!-- What do you think about placing this section before the spatial subsetting section since it sets the scene for subsetting, join, etc. -->
 ### Topological relations
 
 <!-- http://lin-ear-th-inking.blogspot.com/2007/06/subtleties-of-ogc-covers-spatial.html -->
@@ -3116,7 +3106,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve7357dbf33192d746
+preservede7d31f12b297f93
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5911,7 +5901,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve937f2bd8a8d49900
+preserve4461ef36a401aaaa
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6297,7 +6287,7 @@ This an easily manageable dataset size (transport datasets be large but it's bes
 ways_road = ways %>% filter(highway == "road") 
 ways_sln = SpatialLinesNetwork(as(ways_road, "Spatial"))
 summary(ways_sln)
-#> Weight attribute field: lengthIGRAPH c5fab6d U-W- 2483 2516 -- 
+#> Weight attribute field: lengthIGRAPH a431aa7 U-W- 2483 2516 -- 
 #> + attr: x (g/n), y (g/n), n (g/n), weight (e/n)
 #> Object of class SpatialLinesDataFrame
 #> Coordinates:

@@ -339,12 +339,12 @@ Figure 4.1: Illustration of spatial subsetting with red triangles representing 1
 Note the empty argument — donoted with <code>, ,</code> — in the preceding code chunk is not necessary (<code>nz_height[canterbury, op = st_disjoint]</code> returns the same result) but is included to emphasise the fact that <code>op</code> is the third argument in <code>[</code> for <code>sf</code> objects, after arguments for subsetting rows and columns. <code>nz_height[canterbury, 2, op = st_disjoint]</code>, for example, returns the same rows but only includes the second attribute column. Interested readers can see this default value of <code>op</code> set in the first line of the function call by entering its long-form name into the console <code>sf:::`[.sf`</code>. The <code>?sf</code> help page documents this also.
 </div>
 <p></p>
-<p>Another way of doing spatial subsetting relies on the ability of <em>topological operators</em> to return <code>logical</code> objects by setting the <code>sparse</code> argument to <code>FALSE</code>:</p>
+<p>For many applications this is all you’ll need to know about spatial subsetting for vector data. If this is the case, you can safely skip to the next section (<a href="spatial-operations.html#topological-relations">4.2.2</a>). If you’re interested in the details, including other ways of subsetting, read-on.</p>
+<p>Another way of doing spatial subsetting uses objects returned by <em>topological operators</em>. This is demonstrated in the first command below which uses the <code>sparse = FALSE</code> (meaning in English ‘return a dense matrix not a sparse one’) argument in the topological operator <code>st_intersects()</code> to ensure a <code>logical</code> result is returned:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sel =<span class="st"> </span><span class="kw">st_intersects</span>(<span class="dt">x =</span> nz_height, <span class="dt">y =</span> canterbury, <span class="dt">sparse =</span> <span class="ot">FALSE</span>)
 canterbury_height2 =<span class="st"> </span>nz_height[sel, ]</code></pre></div>
-<p>The preceding code chunk created an intermediary object named <code>sel</code>, short for selection, containing only <code>TRUE</code> and <code>FALSE</code> values. This ‘selection object’ also works with <code>filter()</code>, introduced in section <a href="attr.html#vector-attribute-subsetting">3.2.1</a>:</p>
+<p>This creates <code>sel</code> (short for ‘selection object’) containing only <code>TRUE</code> and <code>FALSE</code> values, which are used in the second line of the pevious code chunk to create <code>canterbury_height2</code>, which is identical to <code>canterbury_height</code>. <code>sel</code> can also be used with <code>filter()</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">canterbury_height3 =<span class="st"> </span>nz_height %&gt;%<span class="st"> </span><span class="kw">filter</span>(sel)</code></pre></div>
-<p>For many applications this is all you’ll need to know about spatial subsetting and if this is the case, you can safely skip to the next section (<a href="spatial-operations.html#topological-relations">4.2.2</a>). If you’re interested in the details — specifically the differences between <code>canterbury_height3</code> and the other <code>canterbury_height</code> objects, and the nature of <code>sel</code> — read-on.</p>
 <p>At this point there are three versions of <code>canterbury_height</code>, one created with spatial subsetting directly and the other two via the intermediary object <code>sel</code>. We can test whether they are identical as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">identical</span>(<span class="dt">x =</span> canterbury_height, <span class="dt">y =</span> canterbury_height2)
 <span class="co">#&gt; [1] TRUE</span>
@@ -364,33 +364,25 @@ canterbury_height2 =<span class="st"> </span>nz_height[sel, ]</code></pre></div>
 This discarding of row names is not something that is specific to spatial data, as illustrated in the code chunk below. <strong>dplyr</strong> discards row names by design. For further discussion of this decision, and some controversy, see the (closed) issue <a href="https://github.com/tidyverse/dplyr/issues/366">#366</a> in the package’s issue tracker.
 </p>
 </div>
-<p>But what is <code>sel</code>? It is not, as one might imagine, a <code>logical</code> vector (although it can be represented as such) but a <code>logical</code> <code>matrix</code>:</p>
+<p><code>sel</code> is not, as one might imagine, a <code>logical</code> <code>vector</code> (although it behaves as one as it only has one column) but a <code>logical</code> <code>matrix</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(sel)
 <span class="co">#&gt; [1] &quot;matrix&quot;</span>
 <span class="kw">typeof</span>(sel)
 <span class="co">#&gt; [1] &quot;logical&quot;</span>
 <span class="kw">dim</span>(sel)
 <span class="co">#&gt; [1] 101   1</span></code></pre></div>
-<p>one row per feature in the target object (<code>nz_height</code>) and a column per feature in the subsetting object (<code>canterbury</code>). Cell <code>sel[i, j]</code> is <code>TRUE</code> if the i<sup>th</sup> feature in the target object intersects with the j<sup>th</sup> feature in the subsetting object. If there is more than one feature in <code>y</code> the resulting selection <code>matrix</code> must be converted into a <code>vector</code> before it is used for subsetting, as illustrated below:</p>
+<p>The dimension of <code>sel</code> (returned by the base R command <code>dim()</code>) shows that has one row per feature in the target object (<code>nz_height</code>) and a column per feature in the subsetting object (<code>canterbury</code>). The general pattern here is that <code>sel[i, j]</code> is <code>TRUE</code> if the i<sup>th</sup> feature in the target object intersects with the j<sup>th</sup> feature in the subsetting object. If there is more than one feature in <code>y</code> the resulting selection <code>matrix</code> must be converted into a <code>vector</code> before it is used for subsetting, e.g. with <code>rowSums(sel_matrix) &gt; 0</code>. Another solution is to convert the the default sparse matrix (<code>list</code>) output from <code>st_intersects()</code> to a <code>logical</code> vector using the function <code>lengths()</code>. This approach to spatial subsetting, which is recommended because it scales, and is used internally by <strong>sf</strong>, is illustrated in the code chunk below:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">co =<span class="st"> </span><span class="kw">filter</span>(nz, <span class="kw">grepl</span>(<span class="st">&quot;Cant|Otag&quot;</span>, REGC2017_NAME))
-sel_matrix =<span class="st"> </span><span class="kw">st_intersects</span>(nz_height, co, <span class="dt">sparse =</span> <span class="ot">FALSE</span>)
-sel_vector =<span class="st"> </span><span class="kw">rowSums</span>(sel_matrix) &gt;<span class="st"> </span><span class="dv">0</span>
+sel_sparse =<span class="st"> </span><span class="kw">st_intersects</span>(nz_height, co)
+sel_vector =<span class="st"> </span><span class="kw">lengths</span>(sel_sparse) &gt;<span class="st"> </span><span class="dv">0</span>
 heights_co =<span class="st"> </span>nz_height[sel_vector, ]</code></pre></div>
 <p>The above code chunk results in an object, <code>heights_co</code>, that represent the high points that intersect with either Canterbury <em>or</em> Otago region (hence the object name <code>co</code>). It did this in four stages:</p>
 <ol style="list-style-type: decimal">
 <li>Subset the regions of <code>nz</code> containing “Cant” or “Otago” in their names. This was done using the pattern matching function <code>grepl()</code> in combination with the <code>|</code> character, which means ‘or’, resulting in the subsetting object <code>co</code>.</li>
-<li>Create a selection matrix representing which features of <code>nz_height</code> intersect with the regions in <code>co</code>.</li>
-<li>Convert the selection matrix into a <code>logical</code> ‘selection vector’ by using <code>rowSums()</code> to find which features matched <em>any</em> features in <code>co</code>.</li>
+<li>Create a sparse geometry binary predicate <code>sgbp</code> object, a list representing which features of <code>nz_height</code> intersect with the regions in <code>co</code>.</li>
+<li>Convert the selection list into a <code>logical</code> ‘selection vector’. <code>lengths()</code> finds the features in <code>nz_height</code> matching <em>any</em> features in <code>co</code>.</li>
 <li>Use the result to subset <code>nz_heights</code>, creating a new object <code>heights_co</code>.</li>
 </ol>
-<p>The nature of <code>sel_matrix</code> is verified below:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(sel_matrix)
-<span class="co">#&gt; [1] &quot;matrix&quot;</span>
-<span class="kw">typeof</span>(sel_matrix)
-<span class="co">#&gt; [1] &quot;logical&quot;</span>
-<span class="kw">dim</span>(sel_matrix)
-<span class="co">#&gt; [1] 101   2</span></code></pre></div>
-<!-- What do you think about placing this section before the spatial subsetting section since it sets the scene for subsetting, join, etc. -->
 </div>
 <div id="topological-relations" class="section level3">
 <h3><span class="header-section-number">4.2.2</span> Topological relations</h3>
