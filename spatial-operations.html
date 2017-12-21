@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2017-12-20">
+<meta name="date" content="2017-12-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -323,10 +323,14 @@ It is important to note that spatial operations that use two spatial objects rel
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">canterbury =<span class="st"> </span>nz %&gt;%<span class="st"> </span><span class="kw">filter</span>(REGC2017_NAME ==<span class="st"> &quot;Canterbury Region&quot;</span>)
 canterbury_height =<span class="st"> </span>nz_height[canterbury, ]</code></pre></div>
 <!-- maybe we should add to the caption that many of the high points are close to each other which is why one gets the impression in NZ there were only ca. 15 high points, but nz_height contains 101 points -->
+<pre><code>#&gt; Warning in plot.sf(nz_height, add = TRUE, pch = 2, col = &quot;red&quot;): ignoring
+#&gt; all but the first attribute
+#&gt; Warning in plot.sf(canterbury_height, add = TRUE, pch = 2, col = &quot;red&quot;):
+#&gt; ignoring all but the first attribute</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:nz-subset"></span>
-<img src="figures/nz-subset-1.png" alt="Illustration of spatial subsetting with red triangles representing height points in New Zealand. The right-hand map contains only points in the Canterbury region (highlighted in grey). The points were subset with `nz_height[canterbury, ]`." width="576" />
+<img src="figures/nz-subset-1.png" alt="Illustration of spatial subsetting with red triangles representing 101 high points in New Zealand, clustered near the central Canterbuy region. The right-hand map contains points, subset with the command `nz_height[canterbury, ]`, located in Canterbury (highlighted in grey)." width="576" />
 <p class="caption">
-Figure 4.1: Illustration of spatial subsetting with red triangles representing height points in New Zealand. The right-hand map contains only points in the Canterbury region (highlighted in grey). The points were subset with <code>nz_height[canterbury, ]</code>.
+Figure 4.1: Illustration of spatial subsetting with red triangles representing 101 high points in New Zealand, clustered near the central Canterbuy region. The right-hand map contains points, subset with the command <code>nz_height[canterbury, ]</code>, located in Canterbury (highlighted in grey).
 </p>
 </div>
 <p>Like attribute subsetting <code>x[y, ]</code> subsets features of <em>target</em> object <code>x</code> using the contents of a <em>source</em> object <code>y</code>. Instead of <code>y</code> being of class <code>logical</code> or <code>integer</code> — a vector of <code>TRUE</code> and <code>FALSE</code> values or whole numbers — for spatial subsetting it is another spatial (<code>sf</code>) object.</p>
