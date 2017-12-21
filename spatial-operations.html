@@ -556,7 +556,7 @@ sel =<span class="st"> </span><span class="kw">st_is_within_distance</span>(cycl
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">capacity =</span> <span class="kw">mean</span>(capacity))
 <span class="kw">nrow</span>(z) ==<span class="st"> </span><span class="kw">nrow</span>(cycle_hire)
 <span class="co">#&gt; [1] TRUE</span></code></pre></div>
-<p>The capacity of nearby stations can be verified by comparing a plot of the capacity of the source <code>cycle_hire_osm</code> data with the results in this new object (plots not show):</p>
+<p>The capacity of nearby stations can be verified by comparing a plot of the capacity of the source <code>cycle_hire_osm</code> data with the results in this new object (plots not shown):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(cycle_hire_osm[<span class="st">&quot;capacity&quot;</span>])
 <span class="kw">plot</span>(z[<span class="st">&quot;capacity&quot;</span>])</code></pre></div>
 <!-- Nearest neighbour analysis -->
@@ -565,10 +565,7 @@ sel =<span class="st"> </span><span class="kw">st_is_within_distance</span>(cycl
 <!-- ? topological problems of joining lines/polygons? -->
 <!-- joining different types (e.g. points + polygons = geometry) -> save as GPKG? -->
 <!-- `merge()`; `st_interpolate_aw()` -->
-<!--### Modifying geometry data; still need to change the corresponding cross-references-->
-<p>The result of this join has used a spatial operation to change the attribute data associated with simple features but the geometry associated with each feature has remained unchanged. <!-- no longer true, that's why I would remove the sentence
-In the subsequent sections, we will present spatial operations that also act on and modify the underlying geometry, namely dissolving, aggregating and clipping operations.
---></p>
+<p>The result of this join has used a spatial operation to change the attribute data associated with simple features but the geometry associated with each feature has remained unchanged.</p>
 </div>
 <div id="spatial-data-aggregation" class="section level3">
 <h3><span class="header-section-number">4.2.5</span> Spatial data aggregation</h3>
