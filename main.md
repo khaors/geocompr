@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservedb2ef61d177c4d94
+preserve4faf0c31bc9ab486
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3106,7 +3106,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservede7d31f12b297f93
+preserveef554817e0766e8c
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4666,8 +4666,9 @@ Additionally, check out the *Multi-core functions* section in `vignette("functio
 <!-- ref to rasterization -->
 Vectorization is a process of converting rasters into vectors.^[This term should not be confused with a code vectorization.]
 The simplest form of vectorization is a conversion from a raster to points.
-The `rasterToPoints()` function creates point representations of every non-NA raster grid cell centroids and it is usually used for data with continuous values, such as elevation.
+The `rasterToPoints()` function creates point representations of every non-NA raster grid cell centroids and it is usually used for continuous data, such as elevation (Figure \@ref(fig:raster-vectorization1)).
 <!-- Spatial* class mentioned -->
+<!-- why? -->
 
 
 ```r
@@ -4676,18 +4677,18 @@ elev_point = rasterToPoints(elev, spatial = TRUE) %>%
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/raster-vectorization1-1.png" alt="." width="576" />
-<p class="caption">(\#fig:raster-vectorization1).</p>
+<img src="figures/raster-vectorization1-1.png" alt="Raster and point representation of the elev dataset." width="576" />
+<p class="caption">(\#fig:raster-vectorization1)Raster and point representation of the elev dataset.</p>
 </div>
 
 On the other hand, categorical rasters represent discrete features that could occupy areas larger than only one cell.
 
 <!-- e.g. landcover map to polygonss -->
-<!-- how it's different from a vectorization in CS -->
 <!-- vectorization is used when we get raster data as an input (such as scanned map or satellite image) and we want to extract objects -->
 <!-- it could be also used when we want to add attributes -->
 <!-- rasterToPolygons() -->
 <!-- spex::polygonize -->
+<!-- ref to aggregation section -->
 
 
 ```r
@@ -5901,7 +5902,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve4461ef36a401aaaa
+preservef278529ae28f8b09
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6287,7 +6288,7 @@ This an easily manageable dataset size (transport datasets be large but it's bes
 ways_road = ways %>% filter(highway == "road") 
 ways_sln = SpatialLinesNetwork(as(ways_road, "Spatial"))
 summary(ways_sln)
-#> Weight attribute field: lengthIGRAPH a431aa7 U-W- 2483 2516 -- 
+#> Weight attribute field: lengthIGRAPH 61ce942 U-W- 2483 2516 -- 
 #> + attr: x (g/n), y (g/n), n (g/n), weight (e/n)
 #> Object of class SpatialLinesDataFrame
 #> Coordinates:
