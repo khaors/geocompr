@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve049c306cd984ae31
+preserveca96b6158bbf087d
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3103,7 +3103,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveae499fe65dfec07f
+preservece3a7ca70d0ff90a
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4680,8 +4680,8 @@ grain_poly = rasterToPolygons(grain) %>%
   st_as_sf()
 ```
 
-The output (central panel in Figure \@ref(fig:raster-vectorization1)) consists of many polygons representing grid cells from the original raster object (on the left in Figure \@ref(fig:raster-vectorization1)).
-They could be aggregated into irregular polygons having the same value (on the right in Figure \@ref(fig:raster-vectorization1)). ^[see section \@ref(spatial-aggr)]
+The output consists of many polygons representing grid cells from the original raster object.
+They could be aggregated into irregular polygons having the same value (Figure \@ref(fig:raster-vectorization1)). ^[see section \@ref(spatial-aggr)]
 
 
 ```r
@@ -5887,7 +5887,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservef0d7af372336b8c7
+preserve2a4be846f1a0d66e
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6273,7 +6273,7 @@ This an easily manageable dataset size (transport datasets be large but it's bes
 ways_road = ways %>% filter(highway == "road") 
 ways_sln = SpatialLinesNetwork(as(ways_road, "Spatial"))
 summary(ways_sln)
-#> Weight attribute field: lengthIGRAPH 96db393 U-W- 2483 2516 -- 
+#> Weight attribute field: lengthIGRAPH 5137ade U-W- 2483 2516 -- 
 #> + attr: x (g/n), y (g/n), n (g/n), weight (e/n)
 #> Object of class SpatialLinesDataFrame
 #> Coordinates:
