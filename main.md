@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveb5ca158376039714
+preservef9c3d338cecceda1
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2131,8 +2131,10 @@ This is illustrated below, in which the `world` dataset is subset by columns (`n
 
 ```r
 world7 = world %>%
+  filter(continent == "Asia") %>%
   dplyr::select(name_long, continent) %>%
   slice(1:5)
+  
 ```
 
 The above chunk shows how the pipe operator allows commands to be written in a clear order:
@@ -2141,9 +2143,11 @@ Without `%>%` one would be forced to create intermediary objects or use nested f
 
 
 ```r
-world8 = dplyr::select(
-  slice(world, 1:5),
-  name_long, continent)
+world8 = slice(
+  dplyr::select(
+    filter(world, continent == "Asia"),
+    name_long, continent),
+  1:5)
 ```
 
 This generates the same result --- verify this with `identical(world7, world8)` --- in the same number of lines of code, but in a much more confusing way, starting with the function that is called last!
@@ -2174,7 +2178,7 @@ group_by(world, continent) %>%
 ```
 
 This approach is flexible, allowing the resulting columns to be named.
-Further, omitting the grouping variable puts everything on in one group.
+Further, omitting the grouping variable puts everything in one group.
 This means `summarize()` can be used to calculate Earth's total population (~7 billion) and number of countries:
 
 
@@ -2189,7 +2193,7 @@ world %>%
 #> 1 7.21e+09         177
 ```
 
-The result is a spatial data frame of class `sf` (only the non-spatial results are shown): the aggregation procedure dissolves boundaries within continental land masses.
+The result is a spatial data frame of class `sf` (only the non-spatial results are shown): the aggregation procedure dissolves boundaries within continental land masses (explained in detail in section \@ref(geometry-unions)).
 In the previous code chunk `pop` and `n_countries` are column names in the result.
 `sum()` and `n()` were the aggregating functions.
 
@@ -2391,9 +2395,9 @@ world %>%
   transmute(pop_dens = pop / area_km2)
 ```
 
-Existing columns could be also paste together using `unite()`. 
-For example, we want to stick together `continent` and `region_un` columns into a new `con_reg` column.
-We could specify a separator to use between values and if input columns should be removed:
+`unite()` pastes together existing columns. 
+For example, we want to combine the `continent` and `region_un` columns into a new column named `con_reg`.
+Additionally, we can define a separator (here: a colon `:`) which defines how the values of the input columns should be joined, and if the original columns should be removed (here: `TRUE`):
 
 <!-- todo: set eval = TRUE when travis issue resolved -->
 
@@ -2403,8 +2407,7 @@ world_unite = world %>%
   unite("con_reg", continent:region_un, sep = ":", remove = TRUE)
 ```
 
-The `separate()` function is the complement of the `unite()` function.
-Its role is to split one column into multiple columns using either a regular expression or character position.
+The `separate()` function does the exact opposite of the `unite()` function, i.e., it splits one column into multiple columns using either a regular expression or character positions.
 
 
 ```r
@@ -2414,9 +2417,9 @@ world_separate = world_unite %>%
 
 
 
-Two helper functions, `rename()` and `set_names` can be used to change columns names.
-The first one, `rename()` replace an old name with a new one.
-For example, we want to change a name of column from `name_long` to `name`:
+The two functions `rename()` and `set_names()` are useful for renaming columns.
+The first one, `rename()` replaces an old name with a new one.
+For example, to change a column name from `name_long` to `name`, we type:
 
 
 ```r
@@ -2424,8 +2427,7 @@ world %>%
   rename(name = name_long)
 ```
 
-`set_names` can be used to change names of many columns. 
-In this function, we do not need to provide old names: 
+`set_names()` changes all column names at once, which is why we only have to provide the new names in form of a vector: 
 
 
 ```r
@@ -2436,8 +2438,8 @@ world %>%
   set_names(new_names)
 ```
 
-It is important to note that the attribute data operations preserve the geometry of the simple features.
-As mentioned at the outset of the chapter, however, it can be useful to remove the geometry.
+It is important to note that attribute data operations preserve the geometry of the simple features.
+As mentioned at the outset of the chapter, it can be useful to remove the geometry.
 Do do this, you have to explicitly remove it because `sf` explicitly makes the geometry column sticky.
 This behavior ensures that data frame operations do not accidentally remove the geometry column.
 Hence, an approach such as `select(world, -geom)` will be unsuccessful instead use `st_set_geometry()`^[Note that
@@ -2470,7 +2472,7 @@ elev = raster(nrow = 6, ncol = 6, res = 0.5,
               vals = 1:36)
 ```
 
-The result is a raster object with 6 rows and 6 columns (specified by the `nrow` and `ncol` arguments), and minimum and a minimum and maximum spatial extent (specified by `xmn`, `xmx` and equivalent arguments for the y axis).
+The result is a raster object with 6 rows and 6 columns (specified by the `nrow` and `ncol` arguments), and a minimum and maximum spatial extent in x and y direction (`xmn`, `xmx`, `ymn`, `ymax`).
 The `vals` argument sets the values that each cell contains: numeric data ranging from 1 to 36 in this case.
 Raster objects can also contain categorical values of class `logical` or `factor` variables in R.
 The following code creates a raster representing grain sizes (Figure \@ref(fig:cont-cate-rasters)):
@@ -2491,9 +2493,9 @@ The `levels` argument was used in the preceding code chunk to create an ordered 
 clay < silt < sand in terms of grain size.
 See the [Data structures](http://adv-r.had.co.nz/Data-structures.html) chapter of [@wickham_advanced_2014] for further details on classes.</div>\EndKnitrBlock{rmdnote}
 
-`raster` objects represent categorical variables as integers, so `grain[1, 1]` returns a number that represents a unique identifiers, rather than "clay", "silt" or "sand". 
+`raster` objects represent categorical variables as integers, so `grain[1, 1]` returns a number that represents a unique identifier, rather than "clay", "silt" or "sand". 
 The raster object stores the corresponding look-up table or "Raster Attribute Table" (RAT) as a data frame in a new slot named `attributes`, which can be viewed with `ratify(grain)` (see `?ratify()` for more information).
-Use the function `levels()` to retrieve the attribute table and add additional factor values:
+Use the function `levels()` for retrieving and adding new factor levels to the attribute table:
 
 
 ```r
@@ -2533,7 +2535,7 @@ Raster subsetting is done with the base R operator `[`, which accepts a variety 
 - coordinates
 - another raster object
 
-The latter two represent spatial subsetting (see the next chapter).
+The latter two represent spatial subsetting (see section \@ref(raster-subsetting) in the next chapter).
 The first two subsetting options are demonstrated in the commands below ---
 both return the value of the top left pixel in the raster object `elev` (results not shown):
 
@@ -2583,7 +2585,7 @@ elev[1, 1:2] = 0
 ### Summarizing raster objects
 
 **raster** contains functions for extracting descriptive statistics for entire rasters.
-Printing a raster object to the console by default, by typing its name, returns minimum and maximum values of a raster.
+Printing a raster object to the console by typing its name, returns minimum and maximum values of a raster.
 `summary()` provides common descriptive statistics (minimum, maximum, interquartile range and number of `NA`s).
 Further summary operations such as the standard deviation (see below) or custom summary statistics can be calculated with `cellStats()`. 
 
@@ -2592,21 +2594,23 @@ Further summary operations such as the standard deviation (see below) or custom 
 cellStats(elev, sd)
 ```
 
-\BeginKnitrBlock{rmdnote}<div class="rmdnote">If you provide the `summary()` and `cellStats()` functions with a raster stack or brick object, they will summarize each layer separately, as can be illustrated by running `summary(brick(elev, grain))`.</div>\EndKnitrBlock{rmdnote}
+\BeginKnitrBlock{rmdnote}<div class="rmdnote">If you provide the `summary()` and `cellStats()` functions with a raster stack or brick object, they will summarize each layer separately, as can be illustrated by running: `summary(brick(elev, grain))`</div>\EndKnitrBlock{rmdnote}
 
 Raster value statistics can be visualized in a variety of ways.
-Raster values, e.g. returned by `values()` or `getValues()`, can be plotted in a variety of ways, including with `boxplot()`, `density()`, `hist()` and `pairs()`, which work for raster objects, as demonstrated in the histogram created with the command below (not shown):
+Specific functions such as `boxplot()`, `density()`, `hist()` and `pairs()` work also with raster objects, as demonstrated in the histogram created with the command below (not shown):
 
 
 ```r
 hist(elev)
 ```
 
+In case a visualization function does not work with raster objects, one can extract the raster data to be plotted with the help of `values()` or `getValues()`.
+
 Descriptive raster statistics belong to the so-called global raster operations.
-These and other typical raster processing operations are part of the map algebra scheme which are covered in the next chapter.
+These and other typical raster processing operations are part of the map algebra scheme which are covered in the next chapter (section \@ref(map-algebra)).
 
 <div class="rmdnote">
-<p>Some function names clash between packages (e.g., <code>select</code>, as discussed in a previous note). In addition to not loading packages by referring to functions verbosely (e.g., <code>dplyr::select()</code>) another way to prevent function names clashes is by unloading the offending package with <code>detach()</code>. The following command, for example, unloads the <strong>raster</strong> package (this can also be done in the <em>package</em> tab in the right-bottom pane in RStudio): <code>detach(&quot;package:raster&quot;, unload = TRUE, force = TRUE)</code>. The <code>force</code> argument makes sure that the package will be detached even if other packages depend on it. This, however, may lead to a restricted usability of packages depending on the detached package, and is therefore not recommended.</p>
+<p>Some function names clash between packages (e.g., <code>select</code>, as discussed in a previous note). In addition to not loading packages by referring to functions verbosely (e.g., <code>dplyr::select()</code>) another way to prevent function names clashes is by unloading the offending package with <code>detach()</code>. The following command, for example, unloads the <strong>raster</strong> package (this can also be done in the <em>package</em> tab which resides by default in the right-bottom pane in RStudio): <code>detach(&quot;package:raster&quot;, unload = TRUE, force = TRUE)</code>. The <code>force</code> argument makes sure that the package will be detached even if other packages depend on it. This, however, may lead to a restricted usability of packages depending on the detached package, and is therefore not recommended.</p>
 </div>
 
 ## Exercises
@@ -3125,7 +3129,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve29e9f74c5425d984
+preservea5ba1a7708072746
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5948,7 +5952,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve34d4ca58154316ae
+preserveaba14d5df89f6dc7
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6334,7 +6338,7 @@ This an easily manageable dataset size (transport datasets be large but it's bes
 ways_road = ways %>% filter(highway == "road") 
 ways_sln = SpatialLinesNetwork(as(ways_road, "Spatial"))
 summary(ways_sln)
-#> Weight attribute field: lengthIGRAPH 2b27d4c U-W- 2483 2516 -- 
+#> Weight attribute field: lengthIGRAPH 242610f U-W- 2483 2516 -- 
 #> + attr: x (g/n), y (g/n), n (g/n), weight (e/n)
 #> Object of class SpatialLinesDataFrame
 #> Coordinates:

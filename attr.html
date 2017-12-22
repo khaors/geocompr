@@ -440,12 +440,16 @@ world6 =<span class="st"> </span><span class="kw">filter</span>(world, lifeExp &
 <p>A benefit of <strong>dplyr</strong> is its compatibility with the <em>pipe</em> operator <code>%&gt;%</code>. This ‘R pipe’, which takes its name from the Unix pipe <code>|</code> and is part of the <strong>magrittr</strong> package, enables expressive code by ‘piping’ the output of a previous command into the first argument of the next function. This allows <em>chaining</em> data analysis commands, with the data frame being passed from one function to the next.</p>
 <p>This is illustrated below, in which the <code>world</code> dataset is subset by columns (<code>name_long</code> and <code>continent</code>) and the first five rows (result not shown).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world7 =<span class="st"> </span>world %&gt;%
+<span class="st">  </span><span class="kw">filter</span>(continent ==<span class="st"> &quot;Asia&quot;</span>) %&gt;%
 <span class="st">  </span>dplyr::<span class="kw">select</span>(name_long, continent) %&gt;%
-<span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span>:<span class="dv">5</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span>:<span class="dv">5</span>)
+  </code></pre></div>
 <p>The above chunk shows how the pipe operator allows commands to be written in a clear order: the above run from top to bottom (line-by-line) and left to right. Without <code>%&gt;%</code> one would be forced to create intermediary objects or use nested function calls, e.g.:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world8 =<span class="st"> </span>dplyr::<span class="kw">select</span>(
-  <span class="kw">slice</span>(world, <span class="dv">1</span>:<span class="dv">5</span>),
-  name_long, continent)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world8 =<span class="st"> </span><span class="kw">slice</span>(
+  dplyr::<span class="kw">select</span>(
+    <span class="kw">filter</span>(world, continent ==<span class="st"> &quot;Asia&quot;</span>),
+    name_long, continent),
+  <span class="dv">1</span>:<span class="dv">5</span>)</code></pre></div>
 <p>This generates the same result — verify this with <code>identical(world7, world8)</code> — in the same number of lines of code, but in a much more confusing way, starting with the function that is called last!</p>
 <p>There are additional advantages of pipes from a communication perspective: they encourage adding comments to self-contained functions and allow single lines <em>commented-out</em> without breaking the code.</p>
 </div>
@@ -457,12 +461,12 @@ world6 =<span class="st"> </span><span class="kw">filter</span>(world, lifeExp &
 <p><code>summarize()</code> is the <strong>dplyr</strong> equivalent of <code>aggregate()</code>, which uses the function <code>group_by()</code> to create the grouping variable. The tidy equivalent of the <code>aggregate()</code> method is as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">group_by</span>(world, continent) %&gt;%
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">pop =</span> <span class="kw">sum</span>(pop, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</code></pre></div>
-<p>This approach is flexible, allowing the resulting columns to be named. Further, omitting the grouping variable puts everything on in one group. This means <code>summarize()</code> can be used to calculate Earth’s total population (~7 billion) and number of countries:</p>
+<p>This approach is flexible, allowing the resulting columns to be named. Further, omitting the grouping variable puts everything in one group. This means <code>summarize()</code> can be used to calculate Earth’s total population (~7 billion) and number of countries:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">pop =</span> <span class="kw">sum</span>(pop, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="dt">n_countries =</span> <span class="kw">n</span>())</code></pre></div>
 <pre><code>#&gt;        pop n_countries
 #&gt; 1 7.21e+09         177</code></pre>
-<p>The result is a spatial data frame of class <code>sf</code> (only the non-spatial results are shown): the aggregation procedure dissolves boundaries within continental land masses. In the previous code chunk <code>pop</code> and <code>n_countries</code> are column names in the result. <code>sum()</code> and <code>n()</code> were the aggregating functions.</p>
+<p>The result is a spatial data frame of class <code>sf</code> (only the non-spatial results are shown): the aggregation procedure dissolves boundaries within continental land masses (explained in detail in section <a href="transform.html#geometry-unions">5.3.6</a>). In the previous code chunk <code>pop</code> and <code>n_countries</code> are column names in the result. <code>sum()</code> and <code>n()</code> were the aggregating functions.</p>
 <p>Let’s combine what we’ve learned so far about <strong>dplyr</strong> by chaining together functions to find the world’s 3 most populous continents (with <code>dplyr::n()</code> ) and the number of countries they contain. The output of the following code is presented in Table <a href="attr.html#tab:continents">3.2</a>):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world %&gt;%<span class="st"> </span>
 <span class="st">  </span>dplyr::<span class="kw">select</span>(pop, continent) %&gt;%<span class="st"> </span>
@@ -590,23 +594,23 @@ world_new$pop_dens =<span class="st"> </span>world_new$pop /<span class="st"> </
 <p>The difference between <code>mutate()</code> and <code>transmute()</code> is that the latter skips all other existing columns (except for the sticky geometry column):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">transmute</span>(<span class="dt">pop_dens =</span> pop /<span class="st"> </span>area_km2)</code></pre></div>
-<p>Existing columns could be also paste together using <code>unite()</code>. For example, we want to stick together <code>continent</code> and <code>region_un</code> columns into a new <code>con_reg</code> column. We could specify a separator to use between values and if input columns should be removed:</p>
+<p><code>unite()</code> pastes together existing columns. For example, we want to combine the <code>continent</code> and <code>region_un</code> columns into a new column named <code>con_reg</code>. Additionally, we can define a separator (here: a colon <code>:</code>) which defines how the values of the input columns should be joined, and if the original columns should be removed (here: <code>TRUE</code>):</p>
 <!-- todo: set eval = TRUE when travis issue resolved -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_unite =<span class="st"> </span>world %&gt;%
 <span class="st">  </span><span class="kw">unite</span>(<span class="st">&quot;con_reg&quot;</span>, continent:region_un, <span class="dt">sep =</span> <span class="st">&quot;:&quot;</span>, <span class="dt">remove =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<p>The <code>separate()</code> function is the complement of the <code>unite()</code> function. Its role is to split one column into multiple columns using either a regular expression or character position.</p>
+<p>The <code>separate()</code> function does the exact opposite of the <code>unite()</code> function, i.e., it splits one column into multiple columns using either a regular expression or character positions.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_separate =<span class="st"> </span>world_unite %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">separate</span>(con_reg, <span class="kw">c</span>(<span class="st">&quot;continent&quot;</span>, <span class="st">&quot;region_un&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot;:&quot;</span>)</code></pre></div>
-<p>Two helper functions, <code>rename()</code> and <code>set_names</code> can be used to change columns names. The first one, <code>rename()</code> replace an old name with a new one. For example, we want to change a name of column from <code>name_long</code> to <code>name</code>:</p>
+<p>The two functions <code>rename()</code> and <code>set_names()</code> are useful for renaming columns. The first one, <code>rename()</code> replaces an old name with a new one. For example, to change a column name from <code>name_long</code> to <code>name</code>, we type:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">rename</span>(<span class="dt">name =</span> name_long)</code></pre></div>
-<p><code>set_names</code> can be used to change names of many columns. In this function, we do not need to provide old names:</p>
+<p><code>set_names()</code> changes all column names at once, which is why we only have to provide the new names in form of a vector:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">new_names =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ISO_A2&quot;</span>, <span class="st">&quot;Name&quot;</span>, <span class="st">&quot;Continent&quot;</span>, <span class="st">&quot;Region&quot;</span>, <span class="st">&quot;Subregion&quot;</span>, 
               <span class="st">&quot;Country_type&quot;</span>, <span class="st">&quot;Area_in_km2&quot;</span>, <span class="st">&quot;Population&quot;</span>, <span class="st">&quot;Life_Expectancy&quot;</span>,
               <span class="st">&quot;GDP_per_capita&quot;</span>, <span class="st">&quot;geom&quot;</span>)
 world %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">set_names</span>(new_names)</code></pre></div>
-<p>It is important to note that the attribute data operations preserve the geometry of the simple features. As mentioned at the outset of the chapter, however, it can be useful to remove the geometry. Do do this, you have to explicitly remove it because <code>sf</code> explicitly makes the geometry column sticky. This behavior ensures that data frame operations do not accidentally remove the geometry column. Hence, an approach such as <code>select(world, -geom)</code> will be unsuccessful instead use <code>st_set_geometry()</code><a href="#fn22" class="footnoteRef" id="fnref22"><sup>22</sup></a>.</p>
+<p>It is important to note that attribute data operations preserve the geometry of the simple features. As mentioned at the outset of the chapter, it can be useful to remove the geometry. Do do this, you have to explicitly remove it because <code>sf</code> explicitly makes the geometry column sticky. This behavior ensures that data frame operations do not accidentally remove the geometry column. Hence, an approach such as <code>select(world, -geom)</code> will be unsuccessful instead use <code>st_set_geometry()</code><a href="#fn22" class="footnoteRef" id="fnref22"><sup>22</sup></a>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_data =<span class="st"> </span>world %&gt;%<span class="st"> </span><span class="kw">st_set_geometry</span>(<span class="ot">NULL</span>)
 <span class="kw">class</span>(world_data)
 <span class="co">#&gt; [1] &quot;data.frame&quot;</span></code></pre></div>
@@ -624,7 +628,7 @@ More details are provided in the help pages (which can be accessed via <code>?su
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev =<span class="st"> </span><span class="kw">raster</span>(<span class="dt">nrow =</span> <span class="dv">6</span>, <span class="dt">ncol =</span> <span class="dv">6</span>, <span class="dt">res =</span> <span class="fl">0.5</span>,
               <span class="dt">xmn =</span> -<span class="fl">1.5</span>, <span class="dt">xmx =</span> <span class="fl">1.5</span>, <span class="dt">ymn =</span> -<span class="fl">1.5</span>, <span class="dt">ymx =</span> <span class="fl">1.5</span>,
               <span class="dt">vals =</span> <span class="dv">1</span>:<span class="dv">36</span>)</code></pre></div>
-<p>The result is a raster object with 6 rows and 6 columns (specified by the <code>nrow</code> and <code>ncol</code> arguments), and minimum and a minimum and maximum spatial extent (specified by <code>xmn</code>, <code>xmx</code> and equivalent arguments for the y axis). The <code>vals</code> argument sets the values that each cell contains: numeric data ranging from 1 to 36 in this case. Raster objects can also contain categorical values of class <code>logical</code> or <code>factor</code> variables in R. The following code creates a raster representing grain sizes (Figure <a href="attr.html#fig:cont-cate-rasters">3.2</a>):</p>
+<p>The result is a raster object with 6 rows and 6 columns (specified by the <code>nrow</code> and <code>ncol</code> arguments), and a minimum and maximum spatial extent in x and y direction (<code>xmn</code>, <code>xmx</code>, <code>ymn</code>, <code>ymax</code>). The <code>vals</code> argument sets the values that each cell contains: numeric data ranging from 1 to 36 in this case. Raster objects can also contain categorical values of class <code>logical</code> or <code>factor</code> variables in R. The following code creates a raster representing grain sizes (Figure <a href="attr.html#fig:cont-cate-rasters">3.2</a>):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grain_order =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;clay&quot;</span>, <span class="st">&quot;silt&quot;</span>, <span class="st">&quot;sand&quot;</span>)
 grain_char =<span class="st"> </span><span class="kw">sample</span>(grain_order, <span class="dv">36</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 grain_fact =<span class="st"> </span><span class="kw">factor</span>(grain_char, <span class="dt">levels =</span> grain_order)
@@ -636,7 +640,7 @@ grain =<span class="st"> </span><span class="kw">raster</span>(<span class="dt">
 <code>raster</code> objects can contain values of class <code>numeric</code>, <code>integer</code>, <code>logical</code> or <code>factor</code>, but not <code>character</code>. To use character values they must first be converted into an appropriate class, for example using the function <code>factor()</code>. The <code>levels</code> argument was used in the preceding code chunk to create an ordered factor: clay &lt; silt &lt; sand in terms of grain size. See the <a href="http://adv-r.had.co.nz/Data-structures.html">Data structures</a> chapter of <span class="citation">(Wickham <a href="#ref-wickham_advanced_2014">2014</a>)</span> for further details on classes.
 </div>
 <p></p>
-<p><code>raster</code> objects represent categorical variables as integers, so <code>grain[1, 1]</code> returns a number that represents a unique identifiers, rather than “clay”, “silt” or “sand”. The raster object stores the corresponding look-up table or “Raster Attribute Table” (RAT) as a data frame in a new slot named <code>attributes</code>, which can be viewed with <code>ratify(grain)</code> (see <code>?ratify()</code> for more information). Use the function <code>levels()</code> to retrieve the attribute table and add additional factor values:</p>
+<p><code>raster</code> objects represent categorical variables as integers, so <code>grain[1, 1]</code> returns a number that represents a unique identifier, rather than “clay”, “silt” or “sand”. The raster object stores the corresponding look-up table or “Raster Attribute Table” (RAT) as a data frame in a new slot named <code>attributes</code>, which can be viewed with <code>ratify(grain)</code> (see <code>?ratify()</code> for more information). Use the function <code>levels()</code> for retrieving and adding new factor levels to the attribute table:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">levels</span>(grain)[[<span class="dv">1</span>]] =<span class="st"> </span><span class="kw">cbind</span>(<span class="kw">levels</span>(grain)[[<span class="dv">1</span>]], <span class="dt">wetness =</span> <span class="kw">c</span>(<span class="st">&quot;wet&quot;</span>, <span class="st">&quot;moist&quot;</span>, <span class="st">&quot;dry&quot;</span>))
 <span class="kw">levels</span>(grain)
 <span class="co">#&gt; [[1]]</span>
@@ -665,7 +669,7 @@ Figure 3.2: Raster with numberic values (left) and a raster with categorical val
 <li>coordinates</li>
 <li>another raster object</li>
 </ul>
-<p>The latter two represent spatial subsetting (see the next chapter). The first two subsetting options are demonstrated in the commands below — both return the value of the top left pixel in the raster object <code>elev</code> (results not shown):</p>
+<p>The latter two represent spatial subsetting (see section <a href="attr.html#raster-subsetting">3.3.1</a> in the next chapter). The first two subsetting options are demonstrated in the commands below — both return the value of the top left pixel in the raster object <code>elev</code> (results not shown):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># row 1, column 1</span>
 elev[<span class="dv">1</span>, <span class="dv">1</span>]
 <span class="co"># cell ID 1</span>
@@ -687,19 +691,20 @@ elev[]
 </div>
 <div id="summarizing-raster-objects" class="section level3">
 <h3><span class="header-section-number">3.3.2</span> Summarizing raster objects</h3>
-<p><strong>raster</strong> contains functions for extracting descriptive statistics for entire rasters. Printing a raster object to the console by default, by typing its name, returns minimum and maximum values of a raster. <code>summary()</code> provides common descriptive statistics (minimum, maximum, interquartile range and number of <code>NA</code>s). Further summary operations such as the standard deviation (see below) or custom summary statistics can be calculated with <code>cellStats()</code>.</p>
+<p><strong>raster</strong> contains functions for extracting descriptive statistics for entire rasters. Printing a raster object to the console by typing its name, returns minimum and maximum values of a raster. <code>summary()</code> provides common descriptive statistics (minimum, maximum, interquartile range and number of <code>NA</code>s). Further summary operations such as the standard deviation (see below) or custom summary statistics can be calculated with <code>cellStats()</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cellStats</span>(elev, sd)</code></pre></div>
 
 <div class="rmdnote">
-If you provide the <code>summary()</code> and <code>cellStats()</code> functions with a raster stack or brick object, they will summarize each layer separately, as can be illustrated by running <code>summary(brick(elev, grain))</code>.
+If you provide the <code>summary()</code> and <code>cellStats()</code> functions with a raster stack or brick object, they will summarize each layer separately, as can be illustrated by running: <code>summary(brick(elev, grain))</code>
 </div>
 <p></p>
-<p>Raster value statistics can be visualized in a variety of ways. Raster values, e.g. returned by <code>values()</code> or <code>getValues()</code>, can be plotted in a variety of ways, including with <code>boxplot()</code>, <code>density()</code>, <code>hist()</code> and <code>pairs()</code>, which work for raster objects, as demonstrated in the histogram created with the command below (not shown):</p>
+<p>Raster value statistics can be visualized in a variety of ways. Specific functions such as <code>boxplot()</code>, <code>density()</code>, <code>hist()</code> and <code>pairs()</code> work also with raster objects, as demonstrated in the histogram created with the command below (not shown):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(elev)</code></pre></div>
-<p>Descriptive raster statistics belong to the so-called global raster operations. These and other typical raster processing operations are part of the map algebra scheme which are covered in the next chapter.</p>
+<p>In case a visualization function does not work with raster objects, one can extract the raster data to be plotted with the help of <code>values()</code> or <code>getValues()</code>.</p>
+<p>Descriptive raster statistics belong to the so-called global raster operations. These and other typical raster processing operations are part of the map algebra scheme which are covered in the next chapter (section <a href="spatial-operations.html#map-algebra">4.3.2</a>).</p>
 <div class="rmdnote">
 <p>
-Some function names clash between packages (e.g., <code>select</code>, as discussed in a previous note). In addition to not loading packages by referring to functions verbosely (e.g., <code>dplyr::select()</code>) another way to prevent function names clashes is by unloading the offending package with <code>detach()</code>. The following command, for example, unloads the <strong>raster</strong> package (this can also be done in the <em>package</em> tab in the right-bottom pane in RStudio): <code>detach(“package:raster”, unload = TRUE, force = TRUE)</code>. The <code>force</code> argument makes sure that the package will be detached even if other packages depend on it. This, however, may lead to a restricted usability of packages depending on the detached package, and is therefore not recommended.
+Some function names clash between packages (e.g., <code>select</code>, as discussed in a previous note). In addition to not loading packages by referring to functions verbosely (e.g., <code>dplyr::select()</code>) another way to prevent function names clashes is by unloading the offending package with <code>detach()</code>. The following command, for example, unloads the <strong>raster</strong> package (this can also be done in the <em>package</em> tab which resides by default in the right-bottom pane in RStudio): <code>detach(“package:raster”, unload = TRUE, force = TRUE)</code>. The <code>force</code> argument makes sure that the package will be detached even if other packages depend on it. This, however, may lead to a restricted usability of packages depending on the detached package, and is therefore not recommended.
 </p>
 </div>
 </div>
