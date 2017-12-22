@@ -587,9 +587,9 @@ Figure 4.5: Average height of high points (stored in the <code>nz_height</code> 
 <p><em>Incongruent</em> aggregating objects, by contrast, do not share common borders with the target <span class="citation">(Qiu, Zhang, and Zhou <a href="#ref-qiu_development_2012">2012</a>)</span>. This is problematic for spatial aggregation (and other spatial operations) illustrated in Figure <a href="spatial-operations.html#fig:areal-example">4.6</a>. Areal interpolation can help to alleviate this issue. It helps to transfer data from one set of areal units to another. A number of algorithms have been developed for areal interpolation, including area weighted and pycnophylactic interpolation methods <span class="citation">(Tobler <a href="#ref-tobler_smooth_1979">1979</a>)</span>.</p>
 <!-- somehow the incongruent borders are hardly to discern in the right figure, maybe increasing the figure size could help -->
 <div class="figure" style="text-align: center"><span id="fig:areal-example"></span>
-<img src="figures/04-congruence.png" alt="Illustration of congruent (left) and incongruent (right) areal units." width="100%" />
+<img src="figures/04-congruence.png" alt="Illustration of congruent (left) and incongruent (right) areal units with respect to larger aggregating zones (translucent blue borders)." width="100%" />
 <p class="caption">
-Figure 4.6: Illustration of congruent (left) and incongruent (right) areal units.
+Figure 4.6: Illustration of congruent (left) and incongruent (right) areal units with respect to larger aggregating zones (translucent blue borders).
 </p>
 </div>
 <p>The simplest useful method for spatial interpolation is <em>area weighted</em> spatial interpolation. This is implemented in <code>st_interpolate_aw()</code>, as demonstrated in the code chunk below. In this case values from the <code>incongruent</code> object are allocated to the <code>aggregating_zones</code> in proportion to the area:</p>
