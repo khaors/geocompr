@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservef9c3d338cecceda1
+preserve9549b4e4f3f1ccd5
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2060,7 +2060,7 @@ names(world5)[names(world5) == "pop"] = "population" # rename column manually
 
 All **dplyr** functions including `select()` always return a dataframe-like object. 
 To extract a single vector, one has to explicitly use the `pull()` command.
-By contrast, base R's subsetting operator `[()` (see ?`[`) always tries to coerce to the lowest possible dimension.
+The subsetting operator in base R (see `?[`), by contrast, tries to return objects in the lowest possible dimension.
 This means selecting a single column returns a vector in base R.
 To turn off this behavior, set the `drop` argument to `FALSE`.
 
@@ -3129,7 +3129,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservea5ba1a7708072746
+preserve76684a80dc3361a6
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5952,7 +5952,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveaba14d5df89f6dc7
+preservec84c0b15b9b968c7
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6338,7 +6338,7 @@ This an easily manageable dataset size (transport datasets be large but it's bes
 ways_road = ways %>% filter(highway == "road") 
 ways_sln = SpatialLinesNetwork(as(ways_road, "Spatial"))
 summary(ways_sln)
-#> Weight attribute field: lengthIGRAPH 242610f U-W- 2483 2516 -- 
+#> Weight attribute field: lengthIGRAPH 91924e3 U-W- 2483 2516 -- 
 #> + attr: x (g/n), y (g/n), n (g/n), weight (e/n)
 #> Object of class SpatialLinesDataFrame
 #> Coordinates:
