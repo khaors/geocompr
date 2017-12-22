@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve945a5cd9172c2f56
+preserve06833c954ee8a405
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3103,7 +3103,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveda790878d2896faa
+preservebdee34bcce33b63c
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4681,7 +4681,7 @@ grain_poly = rasterToPolygons(grain) %>%
 ```
 
 The output consists of many polygons representing grid cells from the original raster object.
-They could be aggregated into irregular polygons having the same value (Figure \@ref(fig:raster-vectorization1)). ^[see section \@ref(spatial-aggr)]
+They could be aggregated (see section \@ref(spatial-aggr)) into irregular polygons having the same value (Figure \@ref(fig:raster-vectorization1)).
 
 
 ```r
@@ -4691,8 +4691,8 @@ grain_poly2 = grain_poly %>%
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/raster-vectorization2-1.png" alt="." width="576" />
-<p class="caption">(\#fig:raster-vectorization2).</p>
+<img src="figures/raster-vectorization2-1.png" alt="Iluustration of vectorization of raster (left) into polygon (center) and polygon aggregation (right)." width="576" />
+<p class="caption">(\#fig:raster-vectorization2)Iluustration of vectorization of raster (left) into polygon (center) and polygon aggregation (right).</p>
 </div>
 
 <!-- rasterToContour() -->
@@ -5887,7 +5887,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve2667970087b9e9c5
+preservea4ad28f234949f76
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6273,7 +6273,7 @@ This an easily manageable dataset size (transport datasets be large but it's bes
 ways_road = ways %>% filter(highway == "road") 
 ways_sln = SpatialLinesNetwork(as(ways_road, "Spatial"))
 summary(ways_sln)
-#> Weight attribute field: lengthIGRAPH cc3dba1 U-W- 2483 2516 -- 
+#> Weight attribute field: lengthIGRAPH 1e856ea U-W- 2483 2516 -- 
 #> + attr: x (g/n), y (g/n), n (g/n), weight (e/n)
 #> Object of class SpatialLinesDataFrame
 #> Coordinates:

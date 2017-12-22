@@ -888,14 +888,14 @@ Figure 5.18: Raster and point representation of the elev dataset.
 <p>On the other hand, categorical rasters (such as scanned maps or satellite images) represent discrete features that could occupy areas larger than only one cell. The <code>rasterToPolygons()</code> function could be used to extract these features into a <code>SpatialPolygonsDataFrame</code> object. We can also convert the result into an object of class sf.<a href="#fn33" class="footnoteRef" id="fnref33"><sup>33</sup></a> <!-- it could be also used when we want to add attributes --></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grain_poly =<span class="st"> </span><span class="kw">rasterToPolygons</span>(grain) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">st_as_sf</span>()</code></pre></div>
-<p>The output consists of many polygons representing grid cells from the original raster object. They could be aggregated into irregular polygons having the same value (Figure <a href="transform.html#fig:raster-vectorization1">5.18</a>).<a href="#fn34" class="footnoteRef" id="fnref34"><sup>34</sup></a></p>
+<p>The output consists of many polygons representing grid cells from the original raster object. They could be aggregated (see section <a href="spatial-operations.html#spatial-aggr">4.2.5</a>) into irregular polygons having the same value (Figure <a href="transform.html#fig:raster-vectorization1">5.18</a>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grain_poly2 =<span class="st"> </span>grain_poly %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">group_by</span>(layer) %&gt;%
 <span class="st">  </span><span class="kw">summarize</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:raster-vectorization2"></span>
-<img src="figures/raster-vectorization2-1.png" alt="." width="576" />
+<img src="figures/raster-vectorization2-1.png" alt="Iluustration of vectorization of raster (left) into polygon (center) and polygon aggregation (right)." width="576" />
 <p class="caption">
-Figure 5.19: .
+Figure 5.19: Iluustration of vectorization of raster (left) into polygon (center) and polygon aggregation (right).
 </p>
 </div>
 <!-- rasterToContour() -->
@@ -984,7 +984,6 @@ Figure 5.19: .
 <li id="fn31"><p>If the origins of two raster datasets are just marginally apart, it sometimes is sufficient to simply increase the <code>tolerance</code> argument of <code>raster::rasterOptions()</code>.<a href="transform.html#fnref31">↩</a></p></li>
 <li id="fn32"><p>This term should not be confused with a code vectorization.<a href="transform.html#fnref32">↩</a></p></li>
 <li id="fn33"><p>The <code>spex::polygonize()</code> function could be used as a faster alternative. It returns an sf object a default.<a href="transform.html#fnref33">↩</a></p></li>
-<li id="fn34"><p>see section <a href="spatial-operations.html#spatial-aggr">4.2.5</a><a href="transform.html#fnref34">↩</a></p></li>
 </ol>
 </div>
             </section>
