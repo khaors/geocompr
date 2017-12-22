@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2017-12-21'
+date: '2017-12-22'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2017-12-21 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2017-12-22 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve7da16e0bb2164275
+preserve049c306cd984ae31
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3103,7 +3103,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve9d6ff30e05c45286
+preserveae499fe65dfec07f
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3165,7 +3165,7 @@ plot(z["capacity"])
 
 The result of this join has used a spatial operation to change the attribute data associated with simple features but the geometry associated with each feature has remained unchanged.
 
-### Spatial data aggregation
+### Spatial data aggregation {#spatial-aggr}
 
 Like attribute data aggregation, covered in section \@ref(vector-attribute-aggregation), spatial data aggregation can be a way of *condensing* data.
 Aggregated data show some statistic about a variable (typically average or total) in relation to some kind of *grouping variable*.
@@ -4669,27 +4669,26 @@ elev_point = rasterToPoints(elev, spatial = TRUE) %>%
 <p class="caption">(\#fig:raster-vectorization1)Raster and point representation of the elev dataset.</p>
 </div>
 
-On the other hand, categorical rasters represent discrete features that could occupy areas larger than only one cell.
-
-<!-- e.g. landcover map to polygonss -->
-<!-- vectorization is used when we get raster data as an input (such as scanned map or satellite image) and we want to extract objects -->
+On the other hand, categorical rasters (such as scanned maps or satellite images) represent discrete features that could occupy areas larger than only one cell.
+The `rasterToPolygons()` function could be used to extract these features into a `SpatialPolygonsDataFrame` object.
+We can also convert the result into an object of class sf.^[The `spex::polygonize()` function could be used as a faster alternative. It returns an sf object a default.]
 <!-- it could be also used when we want to add attributes -->
-<!-- rasterToPolygons() -->
-<!-- spex::polygonize -->
-<!-- ref to aggregation section -->
 
 
 ```r
-grain_poly = spex::polygonize(grain)
+grain_poly = rasterToPolygons(grain) %>% 
+  st_as_sf()
 ```
+
+The output (central panel in Figure \@ref(fig:raster-vectorization1)) consists of many polygons representing grid cells from the original raster object (on the left in Figure \@ref(fig:raster-vectorization1)).
+They could be aggregated into irregular polygons having the same value (on the right in Figure \@ref(fig:raster-vectorization1)). ^[see section \@ref(spatial-aggr)]
 
 
 ```r
 grain_poly2 = grain_poly %>% 
-  group_by(VALUE) %>%
+  group_by(layer) %>%
   summarize()
 ```
-
 
 <div class="figure" style="text-align: center">
 <img src="figures/raster-vectorization2-1.png" alt="." width="576" />
@@ -4697,9 +4696,7 @@ grain_poly2 = grain_poly %>%
 </div>
 
 <!-- rasterToContour() -->
-
-
-
+<!-- e.g. landcover map to polygonss -->
 
 <!-- ```{r} -->
 <!-- nlcd2011 = raster(system.file("raster/nlcd2011.tif", package = "spDataLarge")) -->
@@ -5890,7 +5887,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservee7fdb31f88bec6e7
+preservef0d7af372336b8c7
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6276,7 +6273,7 @@ This an easily manageable dataset size (transport datasets be large but it's bes
 ways_road = ways %>% filter(highway == "road") 
 ways_sln = SpatialLinesNetwork(as(ways_road, "Spatial"))
 summary(ways_sln)
-#> Weight attribute field: lengthIGRAPH 46cb4f7 U-W- 2483 2516 -- 
+#> Weight attribute field: lengthIGRAPH 96db393 U-W- 2483 2516 -- 
 #> + attr: x (g/n), y (g/n), n (g/n), weight (e/n)
 #> Object of class SpatialLinesDataFrame
 #> Coordinates:

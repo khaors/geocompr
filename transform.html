@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2017-12-21">
+<meta name="date" content="2017-12-22">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -186,7 +186,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.2.2" data-path="spatial-operations.html"><a href="spatial-operations.html#topological-relations"><i class="fa fa-check"></i><b>4.2.2</b> Topological relations</a></li>
 <li class="chapter" data-level="4.2.3" data-path="spatial-operations.html"><a href="spatial-operations.html#spatial-joining"><i class="fa fa-check"></i><b>4.2.3</b> Spatial joining</a></li>
 <li class="chapter" data-level="4.2.4" data-path="spatial-operations.html"><a href="spatial-operations.html#non-overlapping-joins"><i class="fa fa-check"></i><b>4.2.4</b> Non-overlapping joins</a></li>
-<li class="chapter" data-level="4.2.5" data-path="spatial-operations.html"><a href="spatial-operations.html#spatial-data-aggregation"><i class="fa fa-check"></i><b>4.2.5</b> Spatial data aggregation</a></li>
+<li class="chapter" data-level="4.2.5" data-path="spatial-operations.html"><a href="spatial-operations.html#spatial-aggr"><i class="fa fa-check"></i><b>4.2.5</b> Spatial data aggregation</a></li>
 <li class="chapter" data-level="4.2.6" data-path="spatial-operations.html"><a href="spatial-operations.html#distance-relations"><i class="fa fa-check"></i><b>4.2.6</b> Distance relations</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="spatial-operations.html"><a href="spatial-operations.html#spatial-ras"><i class="fa fa-check"></i><b>4.3</b> Spatial operations on raster data</a><ul>
@@ -885,16 +885,12 @@ elev_disagg =<span class="st"> </span><span class="kw">resample</span>(elev_agg,
 Figure 5.18: Raster and point representation of the elev dataset.
 </p>
 </div>
-<p>On the other hand, categorical rasters represent discrete features that could occupy areas larger than only one cell.</p>
-<!-- e.g. landcover map to polygonss -->
-<!-- vectorization is used when we get raster data as an input (such as scanned map or satellite image) and we want to extract objects -->
-<!-- it could be also used when we want to add attributes -->
-<!-- rasterToPolygons() -->
-<!-- spex::polygonize -->
-<!-- ref to aggregation section -->
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grain_poly =<span class="st"> </span>spex::<span class="kw">polygonize</span>(grain)</code></pre></div>
+<p>On the other hand, categorical rasters (such as scanned maps or satellite images) represent discrete features that could occupy areas larger than only one cell. The <code>rasterToPolygons()</code> function could be used to extract these features into a <code>SpatialPolygonsDataFrame</code> object. We can also convert the result into an object of class sf.<a href="#fn33" class="footnoteRef" id="fnref33"><sup>33</sup></a> <!-- it could be also used when we want to add attributes --></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grain_poly =<span class="st"> </span><span class="kw">rasterToPolygons</span>(grain) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">st_as_sf</span>()</code></pre></div>
+<p>The output (central panel in Figure <a href="transform.html#fig:raster-vectorization1">5.18</a>) consists of many polygons representing grid cells from the original raster object (on the left in Figure <a href="transform.html#fig:raster-vectorization1">5.18</a>). They could be aggregated into irregular polygons having the same value (on the right in Figure <a href="transform.html#fig:raster-vectorization1">5.18</a>).<a href="#fn34" class="footnoteRef" id="fnref34"><sup>34</sup></a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grain_poly2 =<span class="st"> </span>grain_poly %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(VALUE) %&gt;%
+<span class="st">  </span><span class="kw">group_by</span>(layer) %&gt;%
 <span class="st">  </span><span class="kw">summarize</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:raster-vectorization2"></span>
 <img src="figures/raster-vectorization2-1.png" alt="." width="576" />
@@ -903,6 +899,7 @@ Figure 5.19: .
 </p>
 </div>
 <!-- rasterToContour() -->
+<!-- e.g. landcover map to polygonss -->
 <!-- ```{r} -->
 <!-- nlcd2011 = raster(system.file("raster/nlcd2011.tif", package = "spDataLarge")) -->
 <!-- plot(nlcd2011) -->
@@ -986,6 +983,8 @@ Figure 5.19: .
 <li id="fn30"><p>It uses the simplify algorithm from GEOS.<a href="transform.html#fnref30">↩</a></p></li>
 <li id="fn31"><p>If the origins of two raster datasets are just marginally apart, it sometimes is sufficient to simply increase the <code>tolerance</code> argument of <code>raster::rasterOptions()</code>.<a href="transform.html#fnref31">↩</a></p></li>
 <li id="fn32"><p>This term should not be confused with a code vectorization.<a href="transform.html#fnref32">↩</a></p></li>
+<li id="fn33"><p>The <code>spex::polygonize()</code> function could be used as a faster alternative. It returns an sf object a default.<a href="transform.html#fnref33">↩</a></p></li>
+<li id="fn34"><p>see section <a href="spatial-operations.html#spatial-aggr">4.2.5</a><a href="transform.html#fnref34">↩</a></p></li>
 </ol>
 </div>
             </section>
