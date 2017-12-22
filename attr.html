@@ -210,12 +210,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="transform.html"><a href="transform.html#geo-vec"><i class="fa fa-check"></i><b>5.3</b> Geometric operations on vector data</a><ul>
 <li class="chapter" data-level="5.3.1" data-path="transform.html"><a href="transform.html#simplification"><i class="fa fa-check"></i><b>5.3.1</b> Simplification</a></li>
-<li class="chapter" data-level="5.3.2" data-path="transform.html"><a href="transform.html#centroids-and-buffers"><i class="fa fa-check"></i><b>5.3.2</b> Centroids and buffers</a></li>
-<li class="chapter" data-level="5.3.3" data-path="transform.html"><a href="transform.html#affine-transformations"><i class="fa fa-check"></i><b>5.3.3</b> Affine transformations</a></li>
-<li class="chapter" data-level="5.3.4" data-path="transform.html"><a href="transform.html#clipping"><i class="fa fa-check"></i><b>5.3.4</b> Clipping</a></li>
-<li class="chapter" data-level="5.3.5" data-path="transform.html"><a href="transform.html#geometry-unions"><i class="fa fa-check"></i><b>5.3.5</b> Geometry unions</a></li>
-<li class="chapter" data-level="5.3.6" data-path="transform.html"><a href="transform.html#type-transformations"><i class="fa fa-check"></i><b>5.3.6</b> Type transformations</a></li>
-<li class="chapter" data-level="5.3.7" data-path="transform.html"><a href="transform.html#rasterization"><i class="fa fa-check"></i><b>5.3.7</b> Rasterization</a></li>
+<li class="chapter" data-level="5.3.2" data-path="transform.html"><a href="transform.html#centroids"><i class="fa fa-check"></i><b>5.3.2</b> Centroids</a></li>
+<li class="chapter" data-level="5.3.3" data-path="transform.html"><a href="transform.html#buffers"><i class="fa fa-check"></i><b>5.3.3</b> Buffers</a></li>
+<li class="chapter" data-level="5.3.4" data-path="transform.html"><a href="transform.html#affine-transformations"><i class="fa fa-check"></i><b>5.3.4</b> Affine transformations</a></li>
+<li class="chapter" data-level="5.3.5" data-path="transform.html"><a href="transform.html#clipping"><i class="fa fa-check"></i><b>5.3.5</b> Clipping</a></li>
+<li class="chapter" data-level="5.3.6" data-path="transform.html"><a href="transform.html#geometry-unions"><i class="fa fa-check"></i><b>5.3.6</b> Geometry unions</a></li>
+<li class="chapter" data-level="5.3.7" data-path="transform.html"><a href="transform.html#type-transformations"><i class="fa fa-check"></i><b>5.3.7</b> Type transformations</a></li>
+<li class="chapter" data-level="5.3.8" data-path="transform.html"><a href="transform.html#rasterization"><i class="fa fa-check"></i><b>5.3.8</b> Rasterization</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="transform.html"><a href="transform.html#geo-ras"><i class="fa fa-check"></i><b>5.4</b> Geometric operations on raster data</a><ul>
 <li class="chapter" data-level="5.4.1" data-path="transform.html"><a href="transform.html#raster-alignment"><i class="fa fa-check"></i><b>5.4.1</b> Raster alignment</a></li>
@@ -354,18 +355,16 @@ This enables geometries imported from spatial databases to have a variety of nam
 small_countries =<span class="st"> </span>world[sel_area, ]</code></pre></div>
 <p>The intermediary <code>sel_object</code> is a logical vector that shows that only seven countries match the query. A more concise command, that omits the intermediary object, generates the same result:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">small_countries =<span class="st"> </span>world[world$area_km2 &lt;<span class="st"> </span><span class="dv">10000</span>, ]</code></pre></div>
-<p>Another the base R function <code>subset()</code> provides yet another way to achieve the same result:</p>
+<p>The base R function <code>subset()</code> provides yet another way to achieve the same result:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">small_countries =<span class="st"> </span><span class="kw">subset</span>(world, area_km2 &lt;<span class="st"> </span><span class="dv">10000</span>)</code></pre></div>
-<p>You can use the <code>$</code> operator to select a specific variable by its name. The result is a vector:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world$name_long</code></pre></div>
 <!-- , after the package has been loaded: [or - it is a part of tidyverse] -->
-<p>Base R functions are mature and widely used. However, the more recent <strong>dplyr</strong> approach has several advantages. It enables intuitive workflows. It’s fast, due to its C++ backend and database integration, important when working with big data. The main <strong>dplyr</strong> subsetting functions are <code>select()</code>, <code>slice()</code>, <code>filter()</code> and <code>pull()</code>.</p>
+<p>Base R functions are mature and widely used. However, the more recent <strong>dplyr</strong> approach has several advantages. It enables intuitive workflows. It is fast, due to its C++ backend. This is especially useful when working with big data as well as <strong>dplyr</strong>’s database integration. The main <strong>dplyr</strong> subsetting functions are <code>select()</code>, <code>slice()</code>, <code>filter()</code> and <code>pull()</code>.</p>
 <div class="rmdnote">
 <p>
 <strong>raster</strong> and <strong>dplyr</strong> packages have a function called <code>select()</code>. If both packages are loaded, this can generate error messages containing the text: <code>unable to find an inherited method for function ‘select’ for signature ‘“sf”’</code>. To avoid this error message, and prevent ambiguity, we use the long-form function name, prefixed by the package name and two colons (usually omitted from R scripts for concise code): <code>dplyr::select()</code>.
 </p>
 </div>
-<p><code>select()</code> selects columns by name or position. For example, you could select only two columns, <code>name_long</code> and <code>pop</code>, with the following command (note the <code>geom</code> column remains):</p>
+<p><code>select()</code> selects columns by name or position. For example, you could select only two columns, <code>name_long</code> and <code>pop</code>, with the following command (note the sticky <code>geom</code> column remains):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world1 =<span class="st"> </span>dplyr::<span class="kw">select</span>(world, name_long, pop)
 <span class="kw">names</span>(world1)
 <span class="co">#&gt; [1] &quot;name_long&quot; &quot;pop&quot;       &quot;geom&quot;</span></code></pre></div>
@@ -381,8 +380,23 @@ world3 =<span class="st"> </span>dplyr::<span class="kw">select</span>(world, -s
 <span class="co">#&gt; [1] &quot;name_long&quot;  &quot;population&quot; &quot;geom&quot;</span></code></pre></div>
 <p>This is more concise than the base R equivalent:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world5 =<span class="st"> </span>world[, <span class="kw">c</span>(<span class="st">&quot;name_long&quot;</span>, <span class="st">&quot;pop&quot;</span>)] <span class="co"># subset columns by name</span>
-<span class="kw">names</span>(world5)[<span class="dv">2</span>] =<span class="st"> &quot;population&quot;</span> <span class="co"># rename column manually</span></code></pre></div>
+<span class="kw">names</span>(world5)[<span class="kw">names</span>(world5) ==<span class="st"> &quot;pop&quot;</span>] =<span class="st"> &quot;population&quot;</span> <span class="co"># rename column manually</span></code></pre></div>
 <p><code>select()</code> also works with ‘helper functions’ for advanced subsetting operations, including <code>contains()</code>, <code>starts_with()</code> and <code>num_range()</code> (see the help page with <code>?select</code> for details).</p>
+<p>All <strong>dplyr</strong> functions including <code>select()</code> always return a dataframe-like object. To extract a single vector, one has to explicitly use the <code>pull()</code> command. By contrast, base R’s subsetting operator <code>[()</code> (see ?<code>[</code>) always tries to coerce to the lowest possible dimension. This means selecting a single column returns a vector in base R. To turn off this behavior, set the <code>drop</code> argument to <code>FALSE</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># create throw-away dataframe</span>
+d =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">pop =</span> <span class="dv">1</span>:<span class="dv">10</span>, <span class="dt">area =</span> <span class="dv">1</span>:<span class="dv">10</span>)
+<span class="co"># return dataframe object when selecting a single column</span>
+d[, <span class="st">&quot;pop&quot;</span>, drop =<span class="st"> </span><span class="ot">FALSE</span>]
+<span class="kw">select</span>(d, pop)
+<span class="co"># return a vector when selecting a single column</span>
+d[, <span class="st">&quot;pop&quot;</span>]
+<span class="kw">pull</span>(d, pop)</code></pre></div>
+<p>Due to the sticky geometry column, selecting a single attribute from an sf-object with the help of <code>[()</code> returns also a dataframe. Contrastingly, <code>pull()</code> and <code>$</code> will give back a vector.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># dataframe object</span>
+world[, <span class="st">&quot;pop&quot;</span>]
+<span class="co"># vector objects</span>
+world$pop
+<span class="kw">pull</span>(world, pop)</code></pre></div>
 <p><code>slice()</code> is the row-equivalent of <code>select()</code>. The following code chunk, for example, selects the 3<sup>rd</sup> to 5<sup>th</sup> rows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">slice</span>(world, <span class="dv">3</span>:<span class="dv">5</span>)</code></pre></div>
 <p><code>filter()</code> is <strong>dplyr</strong>’s equivalent of base R’s <code>subset()</code> function. It keeps only rows matching given criteria, e.g., only countries with a very high average of life expectancy:</p>
@@ -424,12 +438,7 @@ world6 =<span class="st"> </span><span class="kw">filter</span>(world, lifeExp &
 <!-- add warning about = vs == -->
 <!-- add info about combination of &, |, ! -->
 <p>A benefit of <strong>dplyr</strong> is its compatibility with the <em>pipe</em> operator <code>%&gt;%</code>. This ‘R pipe’, which takes its name from the Unix pipe <code>|</code> and is part of the <strong>magrittr</strong> package, enables expressive code by ‘piping’ the output of a previous command into the first argument of the next function. This allows <em>chaining</em> data analysis commands, with the data frame being passed from one function to the next.</p>
-
-<div class="rmdnote">
-The <strong>dplyr</strong> function <code>pull()</code> extracts a single variable as a vector.
-</div>
-<p></p>
-<p>This is illustrate below, in which the <code>world</code> dataset is subset by columns (<code>name_long</code> and <code>continent</code>) and the first five rows (result not shown).</p>
+<p>This is illustrated below, in which the <code>world</code> dataset is subset by columns (<code>name_long</code> and <code>continent</code>) and the first five rows (result not shown).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world7 =<span class="st"> </span>world %&gt;%
 <span class="st">  </span>dplyr::<span class="kw">select</span>(name_long, continent) %&gt;%
 <span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span>:<span class="dv">5</span>)</code></pre></div>

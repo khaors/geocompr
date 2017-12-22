@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve98b86275e32a4925
+preserveb5ca158376039714
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -1322,7 +1322,7 @@ new_raster
 #> resolution  : 0.000833, 0.000833  (x, y)
 #> extent      : -113, -113, 37.1, 37.5  (xmin, xmax, ymin, ymax)
 #> coord. ref. : +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 
-#> data source : /home/travis/R/Library/spDataLarge/raster/srtm.tif 
+#> data source : /usr/local/lib/R/site-library/spDataLarge/raster/srtm.tif 
 #> names       : srtm 
 #> values      : 1024, 2892  (min, max)
 ```
@@ -1524,7 +1524,7 @@ r_brick
 #> resolution  : 30, 30  (x, y)
 #> extent      : 301905, 335745, 4111245, 4154085  (xmin, xmax, ymin, ymax)
 #> coord. ref. : +proj=utm +zone=12 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0 
-#> data source : /home/travis/R/Library/spDataLarge/raster/landsat.tif 
+#> data source : /usr/local/lib/R/site-library/spDataLarge/raster/landsat.tif 
 #> names       : landsat.1, landsat.2, landsat.3, landsat.4 
 #> min values  :      7550,      6404,      5678,      5252 
 #> max values  :     19071,     22051,     25780,     31961
@@ -1994,25 +1994,19 @@ A more concise command, that omits the intermediary object, generates the same r
 small_countries = world[world$area_km2 < 10000, ]
 ```
 
-Another the base R function `subset()` provides yet another way to achieve the same result:
+The base R function `subset()` provides yet another way to achieve the same result:
 
 
 ```r
 small_countries = subset(world, area_km2 < 10000)
 ```
 
-You can use the `$` operator to select a specific variable by its name. The result is a vector:
-
-
-```r
-world$name_long
-```
-
 <!-- , after the package has been loaded: [or - it is a part of tidyverse] -->
 Base R functions are mature and widely used.
 However, the more recent **dplyr** approach has several advantages.
 It enables intuitive workflows.
-It's fast, due to its C++ backend and database integration, important when working with big data.
+It is fast, due to its C++ backend.
+This is especially useful when working with big data as well as **dplyr**'s database integration.
 The main **dplyr** subsetting functions are `select()`, `slice()`, `filter()` and `pull()`.
 
 <div class="rmdnote">
@@ -2020,7 +2014,7 @@ The main **dplyr** subsetting functions are `select()`, `slice()`, `filter()` an
 </div>
 
 `select()` selects columns by name or position.
-For example, you could select only two columns, `name_long` and `pop`, with the following command (note the `geom` column remains):
+For example, you could select only two columns, `name_long` and `pop`, with the following command (note the sticky `geom` column remains):
 
 
 ```r
@@ -2059,10 +2053,40 @@ This is more concise than the base R equivalent:
 
 ```r
 world5 = world[, c("name_long", "pop")] # subset columns by name
-names(world5)[2] = "population" # rename column manually
+names(world5)[names(world5) == "pop"] = "population" # rename column manually
 ```
 
 `select()` also works with 'helper functions' for advanced subsetting operations, including `contains()`, `starts_with()` and `num_range()` (see the help page with `?select` for details).
+
+All **dplyr** functions including `select()` always return a dataframe-like object. 
+To extract a single vector, one has to explicitly use the `pull()` command.
+By contrast, base R's subsetting operator `[()` (see ?`[`) always tries to coerce to the lowest possible dimension.
+This means selecting a single column returns a vector in base R.
+To turn off this behavior, set the `drop` argument to `FALSE`.
+
+
+```r
+# create throw-away dataframe
+d = data.frame(pop = 1:10, area = 1:10)
+# return dataframe object when selecting a single column
+d[, "pop", drop = FALSE]
+select(d, pop)
+# return a vector when selecting a single column
+d[, "pop"]
+pull(d, pop)
+```
+
+Due to the sticky geometry column, selecting a single attribute from an sf-object with the help of `[()` returns also a dataframe.
+Contrastingly, `pull()` and `$` will give back a vector.
+
+
+```r
+# dataframe object
+world[, "pop"]
+# vector objects
+world$pop
+pull(world, pop)
+```
 
 `slice()` is the row-equivalent of `select()`.
 The following code chunk, for example, selects the 3^rd^ to 5^th^ rows:
@@ -2102,9 +2126,7 @@ A benefit of **dplyr** is its compatibility with the *pipe* operator ` %>% `.
 This 'R pipe', which takes its name from the Unix pipe `|` and is part of the **magrittr** package, enables expressive code by 'piping' the output of a previous command into the first argument of the next function.
 This allows *chaining* data analysis commands, with the data frame being passed from one function to the next.
 
-\BeginKnitrBlock{rmdnote}<div class="rmdnote">The **dplyr** function `pull()` extracts a single variable as a vector.</div>\EndKnitrBlock{rmdnote}
-
-This is illustrate below, in which the `world` dataset is subset by columns (`name_long` and `continent`) and the first five rows (result not shown).
+This is illustrated below, in which the `world` dataset is subset by columns (`name_long` and `continent`) and the first five rows (result not shown).
 
 
 ```r
@@ -3103,7 +3125,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservea68330366f92f22f
+preserve29e9f74c5425d984
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3754,6 +3776,14 @@ london_proj_buff = st_buffer(london_proj, 111320)
 The result in Figure \@ref(fig:crs-buf) (right panel) shows that buffers based on a projected CRS are not distorted:
 every part of the buffer's border is equidistant to London.
 
+
+```
+#> The rnaturalearthdata package needs to be installed.
+#> Installing the rnaturalearthdata package.
+#> Installing package into '/usr/local/lib/R/site-library'
+#> (as 'lib' is unspecified)
+```
+
 <div class="figure" style="text-align: center">
 <img src="figures/crs-buf-1.png" alt="Buffer on vector represenations of London with a geographic (left) and projected (right) CRS. The circular point represents London and the grey outline represents the outline of the UK." width="45%" /><img src="figures/crs-buf-2.png" alt="Buffer on vector represenations of London with a geographic (left) and projected (right) CRS. The circular point represents London and the grey outline represents the outline of the UK." width="45%" />
 <p class="caption">(\#fig:crs-buf)Buffer on vector represenations of London with a geographic (left) and projected (right) CRS. The circular point represents London and the grey outline represents the outline of the UK.</p>
@@ -4055,7 +4085,7 @@ cat_raster
 #> resolution  : 31.5, 31.5  (x, y)
 #> extent      : 301903, 335735, 4111244, 4154086  (xmin, xmax, ymin, ymax)
 #> coord. ref. : +proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
-#> data source : /home/travis/R/Library/spDataLarge/raster/nlcd2011.tif 
+#> data source : /usr/local/lib/R/site-library/spDataLarge/raster/nlcd2011.tif 
 #> names       : nlcd2011 
 #> values      : 11, 95  (min, max)
 ```
@@ -4110,7 +4140,7 @@ con_raster
 #> resolution  : 0.000833, 0.000833  (x, y)
 #> extent      : -113, -113, 37.1, 37.5  (xmin, xmax, ymin, ymax)
 #> coord. ref. : +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 
-#> data source : /home/travis/R/Library/spDataLarge/raster/srtm.tif 
+#> data source : /usr/local/lib/R/site-library/spDataLarge/raster/srtm.tif 
 #> names       : srtm 
 #> values      : 1024, 2892  (min, max)
 ```
@@ -4238,7 +4268,7 @@ Finally, the visual comparison of the original dataset and two simplified versio
 <p class="caption">(\#fig:us-simp)Comparison of the original data of the contiguous United States and two simplified versions using `st_simplify` and `ms_simplify`.</p>
 </div>
 
-### Centroids and buffers
+### Centroids
 
 <!-- centroids intro -->
 There are two main functions that create single point representations of more complex vector objects - `st_centroid()` and `st_point_on_surface()`.
@@ -4272,7 +4302,38 @@ It ensures that the created point lies on the given object (see red points on Fi
 <p class="caption">(\#fig:centr)Comparison between the outputs of `st_centroid()` (black points) and `st_point_on_surface()` (red points) on New Zeleand's regions (left) and the Seine, Marne and Yonne rivers (right).</p>
 </div>
 
+### Buffers
+
 ### Affine transformations
+
+<!-- \@ref(fig:affine-trans) -->
+<!-- affine transformation (shift, scale, rotate) -->
+
+
+```r
+nz_sfc = st_geometry(nz)
+nz_centroid_sfc = st_centroid(nz_sfc)
+```
+
+
+```r
+nz_shift = nz_sfc + 50000
+```
+
+
+```r
+nz_scale = (nz_sfc - nz_centroid_sfc) * 0.5 + nz_centroid_sfc
+```
+
+<!-- https://r-spatial.github.io/sf/articles/sf3.html#affine-transformations -->
+
+```r
+rot = function(a) matrix(c(cos(a), sin(a), -sin(a), cos(a)), 2, 2)
+nz_rotate = (nz_sfc - nz_centroid_sfc) * rot(pi / 8) + nz_centroid_sfc
+```
+
+<!-- add transparency -->
+
 
 ### Clipping 
 
@@ -4309,7 +4370,7 @@ plot(b)
 plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
 ```
 
-<img src="figures/unnamed-chunk-41-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-45-1.png" width="576" style="display: block; margin: auto;" />
 
 The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
 <!-- Todo: reference r4ds -->
@@ -4913,7 +4974,7 @@ To load such a file from the package, you need to specify the package name and t
 ```r
 world_raw_filepath = system.file("shapes/world.gpkg", package = "spData")
 world_raw = st_read(world_raw_filepath)
-#> Reading layer `wrld.gpkg' from data source `/home/travis/R/Library/spData/shapes/world.gpkg' using driver `GPKG'
+#> Reading layer `wrld.gpkg' from data source `/usr/local/lib/R/site-library/spData/shapes/world.gpkg' using driver `GPKG'
 #> Simple feature collection with 177 features and 10 fields
 #> geometry type:  MULTIPOLYGON
 #> dimension:      XY
@@ -5011,7 +5072,7 @@ In most cases, as with the ESRI Shapefile (`.shp`) or the `GeoPackage` format (`
 ```r
 vector_filepath = system.file("shapes/world.gpkg", package = "spData")
 world = st_read(vector_filepath)
-#> Reading layer `wrld.gpkg' from data source `/home/travis/R/Library/spData/shapes/world.gpkg' using driver `GPKG'
+#> Reading layer `wrld.gpkg' from data source `/usr/local/lib/R/site-library/spData/shapes/world.gpkg' using driver `GPKG'
 #> Simple feature collection with 177 features and 10 fields
 #> geometry type:  MULTIPOLYGON
 #> dimension:      XY
@@ -5887,7 +5948,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveb519ed602abed748
+preserve34d4ca58154316ae
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6273,7 +6334,7 @@ This an easily manageable dataset size (transport datasets be large but it's bes
 ways_road = ways %>% filter(highway == "road") 
 ways_sln = SpatialLinesNetwork(as(ways_road, "Spatial"))
 summary(ways_sln)
-#> Weight attribute field: lengthIGRAPH b38f9c6 U-W- 2483 2516 -- 
+#> Weight attribute field: lengthIGRAPH 2b27d4c U-W- 2483 2516 -- 
 #> + attr: x (g/n), y (g/n), n (g/n), weight (e/n)
 #> Object of class SpatialLinesDataFrame
 #> Coordinates:
