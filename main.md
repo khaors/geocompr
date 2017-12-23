@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservec9c478795261bac8
+preserve137ff1d77ca98820
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3129,7 +3129,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveb2cceb5fcc1dcb83
+preserveb189d4021e5f4adc
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3659,7 +3659,7 @@ library(sf)
 library(tidyverse)
 ```
 
-- It also relies on **spData** and **spDataLarge**, which load `cycle_hire_osm`, `nz`, `seine`, `us_states` and `world` datasets and provide external files:
+- It also relies on **spData** and **spDataLarge**, which load `cycle_hire_osm`, `elev`, `grain`, `nz`, `seine`, `us_states` and `world` datasets and provide external files:
 
 
 ```r
@@ -3680,7 +3680,7 @@ Advanced transformations of vector geometries include type transformations (from
 
 Section \@ref(geo-ras) covers geometric transformations on raster objects.
 This involves changing the size and number of the underlying pixels, and assigning them new values.
-It teaches how to change the resolution (also called raster aggregation and disaggregation), the extent and the origin of a raster.
+It teaches how to change the resolution (also called raster aggregation and disaggregation  - see section \@ref(ras-agg)), the extent and the origin of a raster.
 These operations are especially useful if one would like to align raster datasets from diverse sources (see section \@ref(raster-alignment)).
 Only making sure that these rasters share the same header information allows the jointly usage of map algebra operations (see section \@ref(map-algebra)). 
 
@@ -3779,14 +3779,6 @@ london_proj_buff = st_buffer(london_proj, 111320)
 
 The result in Figure \@ref(fig:crs-buf) (right panel) shows that buffers based on a projected CRS are not distorted:
 every part of the buffer's border is equidistant to London.
-
-
-```
-#> The rnaturalearthdata package needs to be installed.
-#> Installing the rnaturalearthdata package.
-#> Installing package into '/usr/local/lib/R/site-library'
-#> (as 'lib' is unspecified)
-```
 
 <div class="figure" style="text-align: center">
 <img src="figures/crs-buf-1.png" alt="Buffer on vector represenations of London with a geographic (left) and projected (right) CRS. The circular point represents London and the grey outline represents the outline of the UK." width="45%" /><img src="figures/crs-buf-2.png" alt="Buffer on vector represenations of London with a geographic (left) and projected (right) CRS. The circular point represents London and the grey outline represents the outline of the UK." width="45%" />
@@ -4599,6 +4591,9 @@ A transformation is then performed, which converts local image coordinates to re
 
 -->
 
+
+### Aggregation {#ras-agg}
+
 ### Raster alignment
 
 
@@ -4707,17 +4702,16 @@ Finally, if you want to align many (possibly hundreds or thousands of) images st
 Nevertheless, you may also use **raster** with very large datasets. 
 This is because **raster**:
 
-1. lets you work with raster datasets that are too large to fit into the main memory (RAM) by only processing chunks of it.
-2. tries to facilitate parallel processing.
+1. Lets you work with raster datasets that are too large to fit into the main memory (RAM) by only processing chunks of it.
+2. Tries to facilitate parallel processing.
 For more information have a look at the help pages of `beginCluster()` and `clusteR()`.
 Additionally, check out the *Multi-core functions* section in `vignette("functions", package = "raster")`.
-
-### Aggregation {#ras-agg}
 
 ### Vectorization
 
 <!-- ref to rasterization -->
 Vectorization is a process of converting rasters into vectors.^[This term should not be confused with a code vectorization.]
+It is often used when we want to connect features extracted from raster data with an attribute table.
 The simplest form of vectorization is a conversion from a raster to points.
 The `rasterToPoints()` function creates point representations of every non-NA raster grid cell centroids and it is usually used for continuous data, such as elevation (Figure \@ref(fig:raster-vectorization1)).
 <!-- Spatial* class mentioned -->
@@ -4737,7 +4731,6 @@ elev_point = rasterToPoints(elev, spatial = TRUE) %>%
 On the other hand, categorical rasters (e.g. scanned maps or satellite images) represent discrete features that could occupy areas larger than only one cell.
 The `rasterToPolygons()` function could be used to extract these features into a `SpatialPolygonsDataFrame` object.
 We can also convert the result into an object of class `sf`.^[The `spex::polygonize()` function could be used as a faster alternative. It returns an `sf` object a default.]
-<!-- it could be also used when we want to add attributes -->
 
 
 ```r
@@ -5952,7 +5945,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve203eae4dbb871c0e
+preserve0e430c6d5952d474
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6338,7 +6331,7 @@ This an easily manageable dataset size (transport datasets be large but it's bes
 ways_road = ways %>% filter(highway == "road") 
 ways_sln = SpatialLinesNetwork(as(ways_road, "Spatial"))
 summary(ways_sln)
-#> Weight attribute field: lengthIGRAPH 3aaaab2 U-W- 2483 2516 -- 
+#> Weight attribute field: lengthIGRAPH 7bcd408 U-W- 2483 2516 -- 
 #> + attr: x (g/n), y (g/n), n (g/n), weight (e/n)
 #> Object of class SpatialLinesDataFrame
 #> Coordinates:
