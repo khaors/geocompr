@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservea5dcf27a56bb7ea8
+preserve2c7330c8e0160302
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3129,7 +3129,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservef2e17cf785582af6
+preserveedbdc538f5d2e25e
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3931,7 +3931,7 @@ st_crs(cycle_hire_osm)
 #>   proj4string: "+proj=longlat +datum=WGS84 +no_defs"
 ```
 
-CRSs in the **sf** package be using their `epsg` code or a `proj4string` definition (see section \@ref(crs-in-r)).
+CRSs in the **sf** package be define using their `epsg` code or a `proj4string` definition (see section \@ref(crs-in-r)).
 
 Let's create a new version of `cycle_hire_osm` in a projected CRS, using the `epsg` number of 27700:
 
@@ -4098,7 +4098,7 @@ When reprojecting categorical raster, we need to ensure that our new estimated v
 This could be done using the nearest neighbor method (`ngb`).
 In this method, value of the output cell is calculated based on the nearest cell center of the input raster.
 
-For example, we want to change the CRS to WGS 84.  
+For example, we want to change the CRS to WGS 84. 
 It can be desired when we want to visualize a raster data on top of a web basemaps, such as the Google or OpenStreetMap map tiles.
 The first step is to obtain the proj4 definition of this CRS, which can be done using the [http://spatialreference.org](http://spatialreference.org/ref/epsg/wgs-84/) webpage. 
 The second and last step is to define the reprojection method in the `projectRaster()` function, which in case of categorical data is the nearest neighbor method (`ngb`):
@@ -5955,7 +5955,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservecbc3796386956ee9
+preserve408145af2e6e555c
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6341,7 +6341,7 @@ This an easily manageable dataset size (transport datasets be large but it's bes
 ways_road = ways %>% filter(highway == "road") 
 ways_sln = SpatialLinesNetwork(as(ways_road, "Spatial"))
 summary(ways_sln)
-#> Weight attribute field: lengthIGRAPH 93d5dee U-W- 2483 2516 -- 
+#> Weight attribute field: lengthIGRAPH a8d6bea U-W- 2483 2516 -- 
 #> + attr: x (g/n), y (g/n), n (g/n), weight (e/n)
 #> Object of class SpatialLinesDataFrame
 #> Coordinates:
