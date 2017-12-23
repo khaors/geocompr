@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve92b7b0e182d3f44a
+preserve8965a2955be9791d
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3129,7 +3129,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservebddd98c9ec9b411b
+preserve10e3899cce1ed973
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4098,7 +4098,7 @@ When reprojecting categorical raster, we need to ensure that our new estimated v
 This could be done using the nearest neighbor method (`ngb`).
 In this method, value of the output cell is calculated based on the nearest cell center of the input raster.
 
-For example, we want to change the CRS to WGS 84.  
+For example, we want to change the CRS to WGS 84. 
 It can be desired when we want to visualize a raster data on top of a web basemaps, such as the Google or OpenStreetMap map tiles.
 The first step is to obtain the proj4 definition of this CRS, which can be done using the [http://spatialreference.org](http://spatialreference.org/ref/epsg/wgs-84/) webpage. 
 The second and last step is to define the reprojection method in the `projectRaster()` function, which in case of categorical data is the nearest neighbor method (`ngb`):
@@ -4148,7 +4148,7 @@ Instead we will use the bilinear method which computes the output cell value bas
 The new value is the distance-weighted average of the values from these four cells, i.e., the closer the input cell is to the center of the output cell, the stronger is its weight.
 
 <!-- I am not really sure what the following note wants to tell the reader. -->
-\BeginKnitrBlock{rmdnote}<div class="rmdnote">All the grid cells in equal-area projections have the same size.
+\BeginKnitrBlock{rmdnote}<div class="rmdnote">All the grid cells in equal-area projections have the same size (represent the same area).
 Therefore, these projections are recommended when performing many raster operations, such as distance calculations.</div>\EndKnitrBlock{rmdnote}
 
 <!-- unclear what is meant -->
@@ -4337,8 +4337,8 @@ nz_rotate = (nz_sfc - nz_centroid_sfc) * rot(pi / 8) + nz_centroid_sfc
 
 <!-- add transparency -->
 <div class="figure" style="text-align: center">
-<img src="figures/affine-trans-1.png" alt="Ilustrations of affine transformations: shift, scale, and rotate." width="576" />
-<p class="caption">(\#fig:affine-trans)Ilustrations of affine transformations: shift, scale, and rotate.</p>
+<img src="figures/affine-trans-1.png" alt="Ilustrations of affine transformations: shift, scale and rotate." width="576" />
+<p class="caption">(\#fig:affine-trans)Ilustrations of affine transformations: shift, scale and rotate.</p>
 </div>
 
 ### Clipping 
@@ -5955,7 +5955,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveec0b5ad9c0badc0d
+preserve0f01de9b05350a95
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6341,7 +6341,7 @@ This an easily manageable dataset size (transport datasets be large but it's bes
 ways_road = ways %>% filter(highway == "road") 
 ways_sln = SpatialLinesNetwork(as(ways_road, "Spatial"))
 summary(ways_sln)
-#> Weight attribute field: lengthIGRAPH 4b6fbe9 U-W- 2483 2516 -- 
+#> Weight attribute field: lengthIGRAPH 02e3c9a U-W- 2483 2516 -- 
 #> + attr: x (g/n), y (g/n), n (g/n), weight (e/n)
 #> Object of class SpatialLinesDataFrame
 #> Coordinates:
