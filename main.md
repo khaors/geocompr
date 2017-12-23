@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservea8f14cb36f683fa3
+preservec9c478795261bac8
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3129,7 +3129,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve35028d8a96ce5961
+preserveb2cceb5fcc1dcb83
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4608,7 +4608,7 @@ Otherwise, how should we add the values of one raster with a resolution of 0.2 d
 The same problem arises when we would like to merge satellite imagery from different sensors with different projections and resolutions.
 We can deal with such mismatches by aligning the rasters.
 
-This section uses the `elev` object from \@ref(manipulating-raster-objects).
+This section uses the `elev` object from \@ref(manipulating-raster-objects), which it is available in the `spData` package.
 The `projectRaster()` function reprojects one raster to a desired projection, say from UTM to WGS84.
 Equally, map algebra operations require the same extent.
 Following code adds one row and two columns to each side of the raster while setting all new values to an elevation of 1000 meters (\@ref(fig:extend-example)).
@@ -4734,9 +4734,9 @@ elev_point = rasterToPoints(elev, spatial = TRUE) %>%
 <p class="caption">(\#fig:raster-vectorization1)Raster and point representation of the elev dataset.</p>
 </div>
 
-On the other hand, categorical rasters (such as scanned maps or satellite images) represent discrete features that could occupy areas larger than only one cell.
+On the other hand, categorical rasters (e.g. scanned maps or satellite images) represent discrete features that could occupy areas larger than only one cell.
 The `rasterToPolygons()` function could be used to extract these features into a `SpatialPolygonsDataFrame` object.
-We can also convert the result into an object of class sf.^[The `spex::polygonize()` function could be used as a faster alternative. It returns an sf object a default.]
+We can also convert the result into an object of class `sf`.^[The `spex::polygonize()` function could be used as a faster alternative. It returns an `sf` object a default.]
 <!-- it could be also used when we want to add attributes -->
 
 
@@ -5952,7 +5952,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve7e08fafb28ab983d
+preserve203eae4dbb871c0e
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6338,7 +6338,7 @@ This an easily manageable dataset size (transport datasets be large but it's bes
 ways_road = ways %>% filter(highway == "road") 
 ways_sln = SpatialLinesNetwork(as(ways_road, "Spatial"))
 summary(ways_sln)
-#> Weight attribute field: lengthIGRAPH 81cca6e U-W- 2483 2516 -- 
+#> Weight attribute field: lengthIGRAPH 3aaaab2 U-W- 2483 2516 -- 
 #> + attr: x (g/n), y (g/n), n (g/n), weight (e/n)
 #> Object of class SpatialLinesDataFrame
 #> Coordinates:

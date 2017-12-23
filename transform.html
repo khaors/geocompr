@@ -833,7 +833,7 @@ A transformation is then performed, which converts local image coordinates to re
 <div id="raster-alignment" class="section level3">
 <h3><span class="header-section-number">5.4.1</span> Raster alignment</h3>
 <p>When merging or performing map algebra on rasters, their resolution, projection, origin and/or extent has to match. Otherwise, how should we add the values of one raster with a resolution of 0.2 decimal degrees to a second with a resolution of 1 decimal degree? The same problem arises when we would like to merge satellite imagery from different sensors with different projections and resolutions. We can deal with such mismatches by aligning the rasters.</p>
-<p>This section uses the <code>elev</code> object from <a href="attr.html#manipulating-raster-objects">3.3</a>. The <code>projectRaster()</code> function reprojects one raster to a desired projection, say from UTM to WGS84. Equally, map algebra operations require the same extent. Following code adds one row and two columns to each side of the raster while setting all new values to an elevation of 1000 meters (<a href="transform.html#fig:extend-example">5.15</a>).</p>
+<p>This section uses the <code>elev</code> object from <a href="attr.html#manipulating-raster-objects">3.3</a>, which it is available in the <code>spData</code> package. The <code>projectRaster()</code> function reprojects one raster to a desired projection, say from UTM to WGS84. Equally, map algebra operations require the same extent. Following code adds one row and two columns to each side of the raster while setting all new values to an elevation of 1000 meters (<a href="transform.html#fig:extend-example">5.15</a>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_2 =<span class="st"> </span><span class="kw">extend</span>(elev, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">value =</span> <span class="dv">1000</span>)
 <span class="kw">plot</span>(elev_2)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:extend-example"></span>
@@ -903,7 +903,7 @@ elev_disagg =<span class="st"> </span><span class="kw">resample</span>(elev_agg,
 Figure 5.18: Raster and point representation of the elev dataset.
 </p>
 </div>
-<p>On the other hand, categorical rasters (such as scanned maps or satellite images) represent discrete features that could occupy areas larger than only one cell. The <code>rasterToPolygons()</code> function could be used to extract these features into a <code>SpatialPolygonsDataFrame</code> object. We can also convert the result into an object of class sf.<a href="#fn33" class="footnoteRef" id="fnref33"><sup>33</sup></a> <!-- it could be also used when we want to add attributes --></p>
+<p>On the other hand, categorical rasters (e.g. scanned maps or satellite images) represent discrete features that could occupy areas larger than only one cell. The <code>rasterToPolygons()</code> function could be used to extract these features into a <code>SpatialPolygonsDataFrame</code> object. We can also convert the result into an object of class <code>sf</code>.<a href="#fn33" class="footnoteRef" id="fnref33"><sup>33</sup></a> <!-- it could be also used when we want to add attributes --></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grain_poly =<span class="st"> </span><span class="kw">rasterToPolygons</span>(grain) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">st_as_sf</span>()</code></pre></div>
 <p>The output consists of many polygons representing grid cells from the original raster object. They could be aggregated (see section <a href="spatial-operations.html#spatial-aggr">4.2.5</a>) into irregular polygons having the same value (Figure <a href="transform.html#fig:raster-vectorization1">5.18</a>).</p>
@@ -1001,7 +1001,7 @@ Figure 5.19: Illustration of vectorization of raster (left) into polygon (center
 <li id="fn30"><p>It uses the simplify algorithm from GEOS.<a href="transform.html#fnref30">↩</a></p></li>
 <li id="fn31"><p>If the origins of two raster datasets are just marginally apart, it sometimes is sufficient to simply increase the <code>tolerance</code> argument of <code>raster::rasterOptions()</code>.<a href="transform.html#fnref31">↩</a></p></li>
 <li id="fn32"><p>This term should not be confused with a code vectorization.<a href="transform.html#fnref32">↩</a></p></li>
-<li id="fn33"><p>The <code>spex::polygonize()</code> function could be used as a faster alternative. It returns an sf object a default.<a href="transform.html#fnref33">↩</a></p></li>
+<li id="fn33"><p>The <code>spex::polygonize()</code> function could be used as a faster alternative. It returns an <code>sf</code> object a default.<a href="transform.html#fnref33">↩</a></p></li>
 </ol>
 </div>
             </section>
