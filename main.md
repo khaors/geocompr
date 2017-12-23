@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve32ad4572890964cc
+preservea5dcf27a56bb7ea8
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3129,7 +3129,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve68b25cff91761715
+preservef2e17cf785582af6
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4336,7 +4336,10 @@ nz_rotate = (nz_sfc - nz_centroid_sfc) * rot(pi / 8) + nz_centroid_sfc
 ```
 
 <!-- add transparency -->
-
+<div class="figure" style="text-align: center">
+<img src="figures/affine-trans-1.png" alt="Ilustrations of affine transformations: shift, scale, and rotate." width="576" />
+<p class="caption">(\#fig:affine-trans)Ilustrations of affine transformations: shift, scale, and rotate.</p>
+</div>
 
 ### Clipping 
 
@@ -5952,7 +5955,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve05a99097ff8300bf
+preservecbc3796386956ee9
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6338,7 +6341,7 @@ This an easily manageable dataset size (transport datasets be large but it's bes
 ways_road = ways %>% filter(highway == "road") 
 ways_sln = SpatialLinesNetwork(as(ways_road, "Spatial"))
 summary(ways_sln)
-#> Weight attribute field: lengthIGRAPH 7ea758a U-W- 2483 2516 -- 
+#> Weight attribute field: lengthIGRAPH 93d5dee U-W- 2483 2516 -- 
 #> + attr: x (g/n), y (g/n), n (g/n), weight (e/n)
 #> Object of class SpatialLinesDataFrame
 #> Coordinates:
