@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve137ff1d77ca98820
+preserve968c67a92ee2d056
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -1322,7 +1322,7 @@ new_raster
 #> resolution  : 0.000833, 0.000833  (x, y)
 #> extent      : -113, -113, 37.1, 37.5  (xmin, xmax, ymin, ymax)
 #> coord. ref. : +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 
-#> data source : /usr/local/lib/R/site-library/spDataLarge/raster/srtm.tif 
+#> data source : /home/travis/R/Library/spDataLarge/raster/srtm.tif 
 #> names       : srtm 
 #> values      : 1024, 2892  (min, max)
 ```
@@ -1524,7 +1524,7 @@ r_brick
 #> resolution  : 30, 30  (x, y)
 #> extent      : 301905, 335745, 4111245, 4154085  (xmin, xmax, ymin, ymax)
 #> coord. ref. : +proj=utm +zone=12 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0 
-#> data source : /usr/local/lib/R/site-library/spDataLarge/raster/landsat.tif 
+#> data source : /home/travis/R/Library/spDataLarge/raster/landsat.tif 
 #> names       : landsat.1, landsat.2, landsat.3, landsat.4 
 #> min values  :      7550,      6404,      5678,      5252 
 #> max values  :     19071,     22051,     25780,     31961
@@ -3129,7 +3129,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveb189d4021e5f4adc
+preserve0be164fa78a6d1e2
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4081,7 +4081,7 @@ cat_raster
 #> resolution  : 31.5, 31.5  (x, y)
 #> extent      : 301903, 335735, 4111244, 4154086  (xmin, xmax, ymin, ymax)
 #> coord. ref. : +proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
-#> data source : /usr/local/lib/R/site-library/spDataLarge/raster/nlcd2011.tif 
+#> data source : /home/travis/R/Library/spDataLarge/raster/nlcd2011.tif 
 #> names       : nlcd2011 
 #> values      : 11, 95  (min, max)
 ```
@@ -4136,7 +4136,7 @@ con_raster
 #> resolution  : 0.000833, 0.000833  (x, y)
 #> extent      : -113, -113, 37.1, 37.5  (xmin, xmax, ymin, ymax)
 #> coord. ref. : +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 
-#> data source : /usr/local/lib/R/site-library/spDataLarge/raster/srtm.tif 
+#> data source : /home/travis/R/Library/spDataLarge/raster/srtm.tif 
 #> names       : srtm 
 #> values      : 1024, 2892  (min, max)
 ```
@@ -4971,7 +4971,7 @@ To load such a file from the package, you need to specify the package name and t
 ```r
 world_raw_filepath = system.file("shapes/world.gpkg", package = "spData")
 world_raw = st_read(world_raw_filepath)
-#> Reading layer `wrld.gpkg' from data source `/usr/local/lib/R/site-library/spData/shapes/world.gpkg' using driver `GPKG'
+#> Reading layer `wrld.gpkg' from data source `/home/travis/R/Library/spData/shapes/world.gpkg' using driver `GPKG'
 #> Simple feature collection with 177 features and 10 fields
 #> geometry type:  MULTIPOLYGON
 #> dimension:      XY
@@ -5069,7 +5069,7 @@ In most cases, as with the ESRI Shapefile (`.shp`) or the `GeoPackage` format (`
 ```r
 vector_filepath = system.file("shapes/world.gpkg", package = "spData")
 world = st_read(vector_filepath)
-#> Reading layer `wrld.gpkg' from data source `/usr/local/lib/R/site-library/spData/shapes/world.gpkg' using driver `GPKG'
+#> Reading layer `wrld.gpkg' from data source `/home/travis/R/Library/spData/shapes/world.gpkg' using driver `GPKG'
 #> Simple feature collection with 177 features and 10 fields
 #> geometry type:  MULTIPOLYGON
 #> dimension:      XY
@@ -5945,7 +5945,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve0e430c6d5952d474
+preserve19c8bc206956723d
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6331,7 +6331,7 @@ This an easily manageable dataset size (transport datasets be large but it's bes
 ways_road = ways %>% filter(highway == "road") 
 ways_sln = SpatialLinesNetwork(as(ways_road, "Spatial"))
 summary(ways_sln)
-#> Weight attribute field: lengthIGRAPH 7bcd408 U-W- 2483 2516 -- 
+#> Weight attribute field: lengthIGRAPH a669471 U-W- 2483 2516 -- 
 #> + attr: x (g/n), y (g/n), n (g/n), weight (e/n)
 #> Object of class SpatialLinesDataFrame
 #> Coordinates:

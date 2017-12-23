@@ -514,7 +514,7 @@ cat_raster
 <span class="co">#&gt; resolution  : 31.5, 31.5  (x, y)</span>
 <span class="co">#&gt; extent      : 301903, 335735, 4111244, 4154086  (xmin, xmax, ymin, ymax)</span>
 <span class="co">#&gt; coord. ref. : +proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs </span>
-<span class="co">#&gt; data source : /usr/local/lib/R/site-library/spDataLarge/raster/nlcd2011.tif </span>
+<span class="co">#&gt; data source : /home/travis/R/Library/spDataLarge/raster/nlcd2011.tif </span>
 <span class="co">#&gt; names       : nlcd2011 </span>
 <span class="co">#&gt; values      : 11, 95  (min, max)</span></code></pre></div>
 <p>In this region, 14 land cover classes were distinguished<a href="#fn29" class="footnoteRef" id="fnref29"><sup>29</sup></a>:</p>
@@ -543,7 +543,7 @@ con_raster
 <span class="co">#&gt; resolution  : 0.000833, 0.000833  (x, y)</span>
 <span class="co">#&gt; extent      : -113, -113, 37.1, 37.5  (xmin, xmax, ymin, ymax)</span>
 <span class="co">#&gt; coord. ref. : +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 </span>
-<span class="co">#&gt; data source : /usr/local/lib/R/site-library/spDataLarge/raster/srtm.tif </span>
+<span class="co">#&gt; data source : /home/travis/R/Library/spDataLarge/raster/srtm.tif </span>
 <span class="co">#&gt; names       : srtm </span>
 <span class="co">#&gt; values      : 1024, 2892  (min, max)</span></code></pre></div>
 <p>This dataset has a geographic CRS and we want to transform it into a projected CRS. The nearest neighbor method should not be used for continuous raster data, as we want to preserve gradual changes in values. Instead we will use the bilinear method which computes the output cell value based on the four nearest cells in the original raster. <!-- Quadric and cubic polynomials are also popular nterpolation functions for resampling with more complexity and improved accuracy. @liu_essential_2009: 111--> The new value is the distance-weighted average of the values from these four cells, i.e., the closer the input cell is to the center of the output cell, the stronger is its weight.</p>
