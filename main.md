@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve968c67a92ee2d056
+preserve32ad4572890964cc
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3129,7 +3129,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve0be164fa78a6d1e2
+preserve68b25cff91761715
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4301,6 +4301,13 @@ It ensures that the created point lies on the given object (see red points on Fi
 ### Buffers
 
 ### Affine transformations
+
+<!-- Affine transformations are generalizations of linear transforms.  -->
+<!-- Display - All viewers use affine transforms to convert geographic coordinates into screen coordinates. -->
+<!-- Generalisation - Many transformation operations used in generalisation are affine transforms: scale, stretching, translation, rotation, etc. -->
+<!-- Registering images and rasters -->
+<!-- Datum changes -->
+<!-- http://www.quantdec.com/GIS/affine.htm -->
 
 <!-- \@ref(fig:affine-trans) -->
 <!-- affine transformation (shift, scale, rotate) -->
@@ -5945,7 +5952,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve19c8bc206956723d
+preserve05a99097ff8300bf
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6331,7 +6338,7 @@ This an easily manageable dataset size (transport datasets be large but it's bes
 ways_road = ways %>% filter(highway == "road") 
 ways_sln = SpatialLinesNetwork(as(ways_road, "Spatial"))
 summary(ways_sln)
-#> Weight attribute field: lengthIGRAPH a669471 U-W- 2483 2516 -- 
+#> Weight attribute field: lengthIGRAPH 7ea758a U-W- 2483 2516 -- 
 #> + attr: x (g/n), y (g/n), n (g/n), weight (e/n)
 #> Object of class SpatialLinesDataFrame
 #> Coordinates:
