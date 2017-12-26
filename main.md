@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve8f405ef6bb11c447
+preserve4d769a8a740395c7
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3129,7 +3129,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve5e2cb3fa506c0d1a
+preservecf84a8c7e6715bfd
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4306,29 +4306,38 @@ It ensures that the created point lies on the given object (see red points on Fi
 <!-- Affine transformations are generalizations of linear transforms.  -->
 Affine transformations include, among others, shifting (translation), scaling and rotating.
 <!-- translation, scaling, homothety, similarity transformation, reflection, rotation, shear mapping -->
-Additionally, it is possible to use any comination of those.
+Additionally, it is possible to use any combination of those.
 Affine transformations are essential part of geocomputation.
 Its application could be found when a vector dataset was created based on a distorted or wrongly projected map.
 It is also used in many regular GIS tasks, such as map display or datum changes.
 
-
-
-<!-- \@ref(fig:affine-trans) -->
-<!-- affine transformation (shift, scale, rotate) -->
+The **sf** package implements affine transformation for objects of classes `sfg` and `sfc`.
+<!-- stats sfc issue -->
 
 
 ```r
-nz_sfc = st_geometry(nz)
-nz_centroid_sfc = st_centroid(nz_sfc)
+nz_sfc = nz$geometry
 ```
+
+Shifting moves every point by the same distance in the map units.
+It could be done by adding a numerical vector to a vector object.
+For example, the code below keeps the x coordinates, while changing the y coordinates by 100,000 meters (left panel on the Fig. \@ref(fig:affine-trans). 
 
 
 ```r
 nz_shift = nz_sfc + c(0, 100000)
 ```
 
+Scaling enlarges or shrinks objects by a scale factor.
+It could be applied either globally or locally. <!-- my terms - jn-->
+Global scaling increase or decrease all coordinates values while keeping all geometries topological relations intact.^[It can by done by subtraction or multiplication of a`sfg` or `sfc` object.]
+Local scaling treats geometries independently and it requires points around which geometries are going to be scaled, e.g. centroids.
+In the example below, each geometry is shrunk by a factor of two around theirs centroids (central panel on the Fig. \@ref(fig:affine-trans).
+<!-- scaling by a two-elements vector -->
+
 
 ```r
+nz_centroid_sfc = st_centroid(nz_sfc)
 nz_scale = (nz_sfc - nz_centroid_sfc) * 0.5 + nz_centroid_sfc
 ```
 
@@ -4339,11 +4348,12 @@ rot = function(a) matrix(c(cos(a), sin(a), -sin(a), cos(a)), 2, 2)
 nz_rotate = (nz_sfc - nz_centroid_sfc) * rot(pi / 8) + nz_centroid_sfc
 ```
 
-<!-- add transparency -->
 <div class="figure" style="text-align: center">
 <img src="figures/affine-trans-1.png" alt="Ilustrations of affine transformations: shift, scale and rotate." width="576" />
 <p class="caption">(\#fig:affine-trans)Ilustrations of affine transformations: shift, scale and rotate.</p>
 </div>
+
+<!-- return to sf -->
 
 ### Clipping 
 
@@ -4807,6 +4817,7 @@ Why the new object differs from the original one?
 1. Warning messages should have been produced during the working to find the answer to the previous questions. What do these warnings mean and how could they be stopped? 
     - Bonus: rewrite code that generated the answer to the previous question using a projected CRS (suggestion: UTM).
 <!-- AFFINE TRANSFORMATION -->
+<!-- e.g.reflections -->
 <!-- CLIPPING -->
 1. Write code that subsets points that are contained within `x` *and* `y` (illustrated by the plot in the 2^nd^ row and the 1^st^ column in Figure \@ref(fig:venn-clip)).
     - Create a randomly located point with the command `st_point()` (refer back to section \@ref(sfg) to see how to create spatial data 'from scratch').
@@ -5959,7 +5970,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve020c8a2b73fb019c
+preserveb2630bc49ad1a489
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6345,7 +6356,7 @@ This an easily manageable dataset size (transport datasets be large but it's bes
 ways_road = ways %>% filter(highway == "road") 
 ways_sln = SpatialLinesNetwork(as(ways_road, "Spatial"))
 summary(ways_sln)
-#> Weight attribute field: lengthIGRAPH 91de447 U-W- 2483 2516 -- 
+#> Weight attribute field: lengthIGRAPH da80108 U-W- 2483 2516 -- 
 #> + attr: x (g/n), y (g/n), n (g/n), weight (e/n)
 #> Object of class SpatialLinesDataFrame
 #> Coordinates:
