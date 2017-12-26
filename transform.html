@@ -637,12 +637,9 @@ Figure 5.8: Comparison between the outputs of <code>st_centroid()</code> (black 
 </div>
 <div id="affine-transformations" class="section level3">
 <h3><span class="header-section-number">5.3.4</span> Affine transformations</h3>
+<!-- intro -->
 <!-- Affine transformations are generalizations of linear transforms.  -->
-<!-- Display - All viewers use affine transforms to convert geographic coordinates into screen coordinates. -->
-<!-- Generalisation - Many transformation operations used in generalisation are affine transforms: scale, stretching, translation, rotation, etc. -->
-<!-- Registering images and rasters -->
-<!-- Datum changes -->
-<!-- http://www.quantdec.com/GIS/affine.htm -->
+<p>Affine transformations include, among others, shifting (translation), scaling and rotating. <!-- translation, scaling, homothety, similarity transformation, reflection, rotation, shear mapping --> Additionally, it is possible to use any comination of those. Affine transformations are essential part of geocomputation. Its application could be found when a vector dataset was created based on a distorted or wrongly projected map. It is also used in many regular GIS tasks, such as map display or datum changes.</p>
 <!-- \@ref(fig:affine-trans) -->
 <!-- affine transformation (shift, scale, rotate) -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_sfc =<span class="st"> </span><span class="kw">st_geometry</span>(nz)

@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve48a0d3e707da293c
+preserve8f405ef6bb11c447
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3129,7 +3129,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservea830a1c615a084ec
+preserve5e2cb3fa506c0d1a
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4302,14 +4302,16 @@ It ensures that the created point lies on the given object (see red points on Fi
 
 ### Affine transformations
 
-
-
+<!-- intro -->
 <!-- Affine transformations are generalizations of linear transforms.  -->
-<!-- Display - All viewers use affine transforms to convert geographic coordinates into screen coordinates. -->
-<!-- Generalisation - Many transformation operations used in generalisation are affine transforms: scale, stretching, translation, rotation, etc. -->
-<!-- Registering images and rasters -->
-<!-- Datum changes -->
-<!-- http://www.quantdec.com/GIS/affine.htm -->
+Affine transformations include, among others, shifting (translation), scaling and rotating.
+<!-- translation, scaling, homothety, similarity transformation, reflection, rotation, shear mapping -->
+Additionally, it is possible to use any comination of those.
+Affine transformations are essential part of geocomputation.
+Its application could be found when a vector dataset was created based on a distorted or wrongly projected map.
+It is also used in many regular GIS tasks, such as map display or datum changes.
+
+
 
 <!-- \@ref(fig:affine-trans) -->
 <!-- affine transformation (shift, scale, rotate) -->
@@ -5957,7 +5959,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve4a42b0c5e674c9c1
+preserve020c8a2b73fb019c
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6343,7 +6345,7 @@ This an easily manageable dataset size (transport datasets be large but it's bes
 ways_road = ways %>% filter(highway == "road") 
 ways_sln = SpatialLinesNetwork(as(ways_road, "Spatial"))
 summary(ways_sln)
-#> Weight attribute field: lengthIGRAPH 23937f3 U-W- 2483 2516 -- 
+#> Weight attribute field: lengthIGRAPH 91de447 U-W- 2483 2516 -- 
 #> + attr: x (g/n), y (g/n), n (g/n), weight (e/n)
 #> Object of class SpatialLinesDataFrame
 #> Coordinates:
