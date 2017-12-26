@@ -644,7 +644,7 @@ Figure 5.8: Comparison between the outputs of <code>st_centroid()</code> (black 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_sfc =<span class="st"> </span>nz$geometry</code></pre></div>
 <p>Shifting moves every point by the same distance in the map units. It could be done by adding a numerical vector to a vector object. For example, the code below keeps the x coordinates, while changing the y coordinates by 100,000 meters (left panel on the Fig. <a href="transform.html#fig:affine-trans">5.9</a>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_shift =<span class="st"> </span>nz_sfc +<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">100000</span>)</code></pre></div>
-<p>Scaling enlarges or shrinks objects by a scale factor. It could be applied either globally or locally. <!-- my terms - jn--> Global scaling increase or decrease all coordinates values while keeping all geometries topological relations intact.<a href="#fn31" class="footnoteRef" id="fnref31"><sup>31</sup></a> Local scaling treats geometries independently and it requires points around which geometries are going to be scaled, e.g. centroids. In the example below, each geometry is shrunk by a factor of two around theirs centroids (central panel on the Fig. <a href="transform.html#fig:affine-trans">5.9</a>. <!-- scaling by a two-elements vector --></p>
+<p>Scaling enlarges or shrinks objects by a scale factor. It could be applied either globally or locally. <!-- my terms - jn--> Global scaling increase or decrease all coordinates values while keeping all geometries topological relations intact. It can by done by subtraction or multiplication of a<code>sfg</code> or <code>sfc</code> object. Local scaling treats geometries independently and it requires points around which geometries are going to be scaled, e.g. centroids. In the example below, each geometry is shrunk by a factor of two around theirs centroids (central panel on the Fig. <a href="transform.html#fig:affine-trans">5.9</a>. <!-- scaling by a two-elements vector --></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_centroid_sfc =<span class="st"> </span><span class="kw">st_centroid</span>(nz_sfc)
 nz_scale =<span class="st"> </span>(nz_sfc -<span class="st"> </span>nz_centroid_sfc) *<span class="st"> </span><span class="fl">0.5</span> +<span class="st"> </span>nz_centroid_sfc</code></pre></div>
 <!-- https://r-spatial.github.io/sf/articles/sf3.html#affine-transformations -->
@@ -872,7 +872,7 @@ Figure 5.17: Original raster (left). Aggregated raster (right).
 <span class="co">#&gt; [1] 0 0</span>
 <span class="kw">origin</span>(elev_agg)
 <span class="co">#&gt; [1] 0.5 0.5</span></code></pre></div>
-<p>The origin is the point closest to (0, 0) if you moved towards it in steps of x and y resolution. If two rasters have different origins, their cells do not overlap completely which would make map algebra impossible. To change the origin , use <code>origin()</code>.<a href="#fn32" class="footnoteRef" id="fnref32"><sup>32</sup></a> Looking at figure <a href="transform.html#fig:origin-example">5.18</a> reveals the effect of changing the origin.</p>
+<p>The origin is the point closest to (0, 0) if you moved towards it in steps of x and y resolution. If two rasters have different origins, their cells do not overlap completely which would make map algebra impossible. To change the origin , use <code>origin()</code>.<a href="#fn31" class="footnoteRef" id="fnref31"><sup>31</sup></a> Looking at figure <a href="transform.html#fig:origin-example">5.18</a> reveals the effect of changing the origin.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the aggregated raster</span>
 <span class="kw">plot</span>(elev_agg)
 <span class="co"># change the origin</span>
@@ -899,7 +899,7 @@ elev_disagg =<span class="st"> </span><span class="kw">resample</span>(elev_agg,
 <div id="vectorization" class="section level3">
 <h3><span class="header-section-number">5.4.3</span> Vectorization</h3>
 <!-- ref to rasterization -->
-<p>Vectorization is a process of converting rasters into vectors.<a href="#fn33" class="footnoteRef" id="fnref33"><sup>33</sup></a> It is often used when we want to connect features extracted from raster data with an attribute table. The simplest form of vectorization is a conversion from a raster to points. The <code>rasterToPoints()</code> function creates point representations of every non-NA raster grid cell centroids and it is usually used for continuous data, such as elevation (Figure <a href="transform.html#fig:raster-vectorization1">5.19</a>). <!-- Spatial* class mentioned --> <!-- why? --></p>
+<p>Vectorization is a process of converting rasters into vectors.<a href="#fn32" class="footnoteRef" id="fnref32"><sup>32</sup></a> It is often used when we want to connect features extracted from raster data with an attribute table. The simplest form of vectorization is a conversion from a raster to points. The <code>rasterToPoints()</code> function creates point representations of every non-NA raster grid cell centroids and it is usually used for continuous data, such as elevation (Figure <a href="transform.html#fig:raster-vectorization1">5.19</a>). <!-- Spatial* class mentioned --> <!-- why? --></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_point =<span class="st"> </span><span class="kw">rasterToPoints</span>(elev, <span class="dt">spatial =</span> <span class="ot">TRUE</span>) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">st_as_sf</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:raster-vectorization1"></span>
@@ -908,7 +908,7 @@ elev_disagg =<span class="st"> </span><span class="kw">resample</span>(elev_agg,
 Figure 5.19: Raster and point representation of the elev dataset.
 </p>
 </div>
-<p>On the other hand, categorical rasters (e.g. scanned maps or satellite images) represent discrete features that could occupy areas larger than only one cell. The <code>rasterToPolygons()</code> function could be used to extract these features into a <code>SpatialPolygonsDataFrame</code> object. We can also convert the result into an object of class <code>sf</code>.<a href="#fn34" class="footnoteRef" id="fnref34"><sup>34</sup></a></p>
+<p>On the other hand, categorical rasters (e.g. scanned maps or satellite images) represent discrete features that could occupy areas larger than only one cell. The <code>rasterToPolygons()</code> function could be used to extract these features into a <code>SpatialPolygonsDataFrame</code> object. We can also convert the result into an object of class <code>sf</code>.<a href="#fn33" class="footnoteRef" id="fnref33"><sup>33</sup></a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grain_poly =<span class="st"> </span><span class="kw">rasterToPolygons</span>(grain) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">st_as_sf</span>()</code></pre></div>
 <p>The output consists of many polygons representing grid cells from the original raster object. They could be aggregated (see section <a href="spatial-operations.html#spatial-aggr">4.2.5</a>) into irregular polygons having the same value (Figure <a href="transform.html#fig:raster-vectorization1">5.19</a>).</p>
@@ -1004,10 +1004,9 @@ Figure 5.20: Illustration of vectorization of raster (left) into polygon (center
 <li id="fn28"><p>This projection is used, among others, by the National Geographic Society.<a href="transform.html#fnref28">↩</a></p></li>
 <li id="fn29"><p>Full list of NLCD2011 land cover classes can be found at <a href="https://www.mrlc.gov/nlcd11_leg.php" class="uri">https://www.mrlc.gov/nlcd11_leg.php</a><a href="transform.html#fnref29">↩</a></p></li>
 <li id="fn30"><p>It uses the simplify algorithm from GEOS.<a href="transform.html#fnref30">↩</a></p></li>
-<li id="fn31"><p>It can by done by subtraction or multiplication of a<code>sfg</code> or <code>sfc</code> object.<a href="transform.html#fnref31">↩</a></p></li>
-<li id="fn32"><p>If the origins of two raster datasets are just marginally apart, it sometimes is sufficient to simply increase the <code>tolerance</code> argument of <code>raster::rasterOptions()</code>.<a href="transform.html#fnref32">↩</a></p></li>
-<li id="fn33"><p>This term should not be confused with a code vectorization.<a href="transform.html#fnref33">↩</a></p></li>
-<li id="fn34"><p>The <code>spex::polygonize()</code> function could be used as a faster alternative. It returns an <code>sf</code> object a default.<a href="transform.html#fnref34">↩</a></p></li>
+<li id="fn31"><p>If the origins of two raster datasets are just marginally apart, it sometimes is sufficient to simply increase the <code>tolerance</code> argument of <code>raster::rasterOptions()</code>.<a href="transform.html#fnref31">↩</a></p></li>
+<li id="fn32"><p>This term should not be confused with a code vectorization.<a href="transform.html#fnref32">↩</a></p></li>
+<li id="fn33"><p>The <code>spex::polygonize()</code> function could be used as a faster alternative. It returns an <code>sf</code> object a default.<a href="transform.html#fnref33">↩</a></p></li>
 </ol>
 </div>
             </section>
