@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2017-12-23">
+<meta name="date" content="2017-12-26">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -647,7 +647,7 @@ Figure 5.8: Comparison between the outputs of <code>st_centroid()</code> (black 
 <!-- affine transformation (shift, scale, rotate) -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_sfc =<span class="st"> </span><span class="kw">st_geometry</span>(nz)
 nz_centroid_sfc =<span class="st"> </span><span class="kw">st_centroid</span>(nz_sfc)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_shift =<span class="st"> </span>nz_sfc +<span class="st"> </span><span class="dv">50000</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_shift =<span class="st"> </span>nz_sfc +<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">100000</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_scale =<span class="st"> </span>(nz_sfc -<span class="st"> </span>nz_centroid_sfc) *<span class="st"> </span><span class="fl">0.5</span> +<span class="st"> </span>nz_centroid_sfc</code></pre></div>
 <!-- https://r-spatial.github.io/sf/articles/sf3.html#affine-transformations -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rot =<span class="st"> </span>function(a) <span class="kw">matrix</span>(<span class="kw">c</span>(<span class="kw">cos</span>(a), <span class="kw">sin</span>(a), -<span class="kw">sin</span>(a), <span class="kw">cos</span>(a)), <span class="dv">2</span>, <span class="dv">2</span>)
