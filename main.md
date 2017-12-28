@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2017-12-27'
+date: '2017-12-28'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2017-12-27 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2017-12-28 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveb31ffa28486867e2
+preservec212b25a868c8716
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3129,7 +3129,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve0b23f764046bbe3a
+preserve021db64417e0c11c
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4332,6 +4332,7 @@ Scaling enlarges or shrinks objects by a scale factor.
 It could be applied either globally or locally. <!-- my terms - jn-->
 Global scaling increase or decrease all coordinates values while keeping all geometries topological relations intact.
 It can by done by subtraction or multiplication of a`sfg` or `sfc` object.
+
 Local scaling treats geometries independently and it requires points around which geometries are going to be scaled, e.g. centroids.
 In the example below, each geometry is shrunk by a factor of two around theirs centroids (central panel on the Fig. \@ref(fig:affine-trans).
 <!-- scaling by a two-elements vector -->
@@ -4342,12 +4343,25 @@ nz_centroid_sfc = st_centroid(nz_sfc)
 nz_scale = (nz_sfc - nz_centroid_sfc) * 0.5 + nz_centroid_sfc
 ```
 
+$$R =
+\begin{bmatrix}
+\cos \theta & -\sin \theta \\  
+\sin \theta & \cos \theta \\
+\end{bmatrix}
+$$ 
+
+
+
+
+
+
 <!-- https://r-spatial.github.io/sf/articles/sf3.html#affine-transformations -->
 
 ```r
 rot = function(a) matrix(c(cos(a), sin(a), -sin(a), cos(a)), 2, 2)
 nz_rotate = (nz_sfc - nz_centroid_sfc) * rot(pi / 8) + nz_centroid_sfc
 ```
+
 
 <div class="figure" style="text-align: center">
 <img src="figures/affine-trans-1.png" alt="Ilustrations of affine transformations: shift, scale and rotate." width="576" />
@@ -4391,7 +4405,7 @@ plot(b)
 plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
 ```
 
-<img src="figures/unnamed-chunk-45-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-47-1.png" width="576" style="display: block; margin: auto;" />
 
 The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
 <!-- Todo: reference r4ds -->
@@ -5971,7 +5985,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve3d68b82df33866a6
+preservea425f5399e927a29
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 

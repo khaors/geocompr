@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2017-12-27">
+<meta name="date" content="2017-12-28">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -644,9 +644,16 @@ Figure 5.8: Comparison between the outputs of <code>st_centroid()</code> (black 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_sfc =<span class="st"> </span>nz$geometry</code></pre></div>
 <p>Shifting moves every point by the same distance in the map units. It could be done by adding a numerical vector to a vector object. For example, the code below keeps the x coordinates, while changing the y coordinates by 100,000 meters (left panel on the Fig. <a href="transform.html#fig:affine-trans">5.9</a>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_shift =<span class="st"> </span>nz_sfc +<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">100000</span>)</code></pre></div>
-<p>Scaling enlarges or shrinks objects by a scale factor. It could be applied either globally or locally. <!-- my terms - jn--> Global scaling increase or decrease all coordinates values while keeping all geometries topological relations intact. It can by done by subtraction or multiplication of a<code>sfg</code> or <code>sfc</code> object. Local scaling treats geometries independently and it requires points around which geometries are going to be scaled, e.g. centroids. In the example below, each geometry is shrunk by a factor of two around theirs centroids (central panel on the Fig. <a href="transform.html#fig:affine-trans">5.9</a>. <!-- scaling by a two-elements vector --></p>
+<p>Scaling enlarges or shrinks objects by a scale factor. It could be applied either globally or locally. <!-- my terms - jn--> Global scaling increase or decrease all coordinates values while keeping all geometries topological relations intact. It can by done by subtraction or multiplication of a<code>sfg</code> or <code>sfc</code> object.</p>
+<p>Local scaling treats geometries independently and it requires points around which geometries are going to be scaled, e.g. centroids. In the example below, each geometry is shrunk by a factor of two around theirs centroids (central panel on the Fig. <a href="transform.html#fig:affine-trans">5.9</a>. <!-- scaling by a two-elements vector --></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_centroid_sfc =<span class="st"> </span><span class="kw">st_centroid</span>(nz_sfc)
 nz_scale =<span class="st"> </span>(nz_sfc -<span class="st"> </span>nz_centroid_sfc) *<span class="st"> </span><span class="fl">0.5</span> +<span class="st"> </span>nz_centroid_sfc</code></pre></div>
+<p><span class="math display">\[R =
+\begin{bmatrix}
+\cos \theta &amp; -\sin \theta \\  
+\sin \theta &amp; \cos \theta \\
+\end{bmatrix}
+\]</span></p>
 <!-- https://r-spatial.github.io/sf/articles/sf3.html#affine-transformations -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rot =<span class="st"> </span>function(a) <span class="kw">matrix</span>(<span class="kw">c</span>(<span class="kw">cos</span>(a), <span class="kw">sin</span>(a), -<span class="kw">sin</span>(a), <span class="kw">cos</span>(a)), <span class="dv">2</span>, <span class="dv">2</span>)
 nz_rotate =<span class="st"> </span>(nz_sfc -<span class="st"> </span>nz_centroid_sfc) *<span class="st"> </span><span class="kw">rot</span>(pi /<span class="st"> </span><span class="dv">8</span>) +<span class="st"> </span>nz_centroid_sfc</code></pre></div>
@@ -679,7 +686,7 @@ y =<span class="st"> </span>b[<span class="dv">2</span>]
 x_and_y =<span class="st"> </span><span class="kw">st_intersection</span>(x, y)
 <span class="kw">plot</span>(b)
 <span class="kw">plot</span>(x_and_y, <span class="dt">col =</span> <span class="st">&quot;lightgrey&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>) <span class="co"># color intersecting area</span></code></pre></div>
-<p><img src="figures/unnamed-chunk-45-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-47-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>The subsequent code chunk demonstrate how this works for all combinations of the ‘Venn’ diagram representing <code>x</code> and <code>y</code>, inspired by <a href="http://r4ds.had.co.nz/transform.html#logical-operators">Figure 5.1</a> of the book R for Data Science <span class="citation">(Grolemund and Wickham <a href="#ref-grolemund_r_2016">2016</a>)</span>. <!-- Todo: reference r4ds --></p>
 <div class="figure" style="text-align: center"><span id="fig:venn-clip"></span>
 <img src="figures/venn-clip-1.png" alt="Spatial equivalents of logical operators." width="576" />
