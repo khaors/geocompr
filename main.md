@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve6a0ffb7be9478d4a
+preserveb31ffa28486867e2
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -550,13 +550,13 @@ This book uses **sf** and **raster** packages to work with vector data and raste
 ## Vector data
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">Take care when using the word 'vector' as it can have two meanings in this book:
-geographic vector data and `vector`s (note the `monospace` font) in R.
+geographic vector data and the `vector` class (note the `monospace` font) in R.
 The former is a data model, the latter is an R class just like `data.frame` and `matrix`.
 Still, there is a link between the two: the spatial coordinates which are at the heart of the geographic vector data model can be represented in R using `vector` objects.</div>\EndKnitrBlock{rmdnote}
 
 The geographic vector model is based on points located within a coordinate reference system (CRS).
 Points can represent self-standing features (e.g. the location of a bus stop) or they can be linked together to form more complex geometries such as lines and polygons.
-Most point geometries contain only two dimension (3 dimensional CRSs contain an additional $z$ value, typically representing height above sea level).
+Most point geometries contain only two dimensions (3 dimensional CRSs contain an additional $z$ value, typically representing height above sea level).
 
 In this system London, for example, can be represented by the coordinates `c(-0.1, 51.5)`.
 This means that its location is -0.1 degrees east and 55.5 degrees north of the origin.
@@ -574,8 +574,8 @@ There is more to CRSs, as described in sections \@ref(crs-intro) and \@ref(repro
 
 
 <div class="figure" style="text-align: center">
-<img src="figures/vector_lonlat.png" alt="Illustration of vector (point) data in which location of London (the red X) is represented with reference to an origin (the blue circle). The left plot represents a geographic CRS with an origin at 0° Longitude and latitude. The right plot represents a projected CRS with an origin located in the sea west of the South West Peninsula." width="49%" /><img src="figures/vector_projected.png" alt="Illustration of vector (point) data in which location of London (the red X) is represented with reference to an origin (the blue circle). The left plot represents a geographic CRS with an origin at 0° Longitude and latitude. The right plot represents a projected CRS with an origin located in the sea west of the South West Peninsula." width="49%" />
-<p class="caption">(\#fig:vectorplots)Illustration of vector (point) data in which location of London (the red X) is represented with reference to an origin (the blue circle). The left plot represents a geographic CRS with an origin at 0° Longitude and latitude. The right plot represents a projected CRS with an origin located in the sea west of the South West Peninsula.</p>
+<img src="figures/vector_lonlat.png" alt="Illustration of vector (point) data in which location of London (the red X) is represented with reference to an origin (the blue circle). The left plot represents a geographic CRS with an origin at 0° longitude and latitude. The right plot represents a projected CRS with an origin located in the sea west of the South West Peninsula." width="49%" /><img src="figures/vector_projected.png" alt="Illustration of vector (point) data in which location of London (the red X) is represented with reference to an origin (the blue circle). The left plot represents a geographic CRS with an origin at 0° longitude and latitude. The right plot represents a projected CRS with an origin located in the sea west of the South West Peninsula." width="49%" />
+<p class="caption">(\#fig:vectorplots)Illustration of vector (point) data in which location of London (the red X) is represented with reference to an origin (the blue circle). The left plot represents a geographic CRS with an origin at 0° longitude and latitude. The right plot represents a projected CRS with an origin located in the sea west of the South West Peninsula.</p>
 </div>
 
 
@@ -724,7 +724,7 @@ There are many reasons (linked to the advantages of the simple features model) i
 - **sf** function names are relatively consistent and intuitive (all begin with `st_`)
 
 Due to such advantages some spatial packages (including **tmap**, **mapview** and **tidycensus**) have added support for **sf**.
-However, it will take many years for many packages to transition, and some packages will never switch.
+However, it will take many years for most packages to transition and some will never switch.
 Fortunately these can still be used in a workflow based on `sf` objects, by converting them to the `Spatial` class used in **sp**: 
 
 
@@ -804,7 +804,7 @@ In theory this should make **sf** faster than **sp**/**rgdal**/**rgeos**, someth
 This section introduces **sf** classes in preparation for subsequent chapters which deal with vector data (in particular Chapter \@ref(spatial-operations)).
 
 As a final exercise, we will see one way of how to do a spatial overlay in **sf**.
-First, we convert the countries of the world into centroids, and then subset those in Asia. Finally, the `summary`-command tells us how many centroids (countries) are part of Asia (43) and how many are not (134).
+First, we convert the countries of the world into centroids, and then subset those in Asia. Finally, the `summary` command tells us how many centroids (countries) are part of Asia (43) and how many are not (134).
 
 
 ```r
@@ -870,7 +870,7 @@ Find the whole list of possible feature types in [the PostGIS manual ](http://po
 
 Generally, well-known binary (WKB) or well-known text (WKT) are the standard encoding for simple feature geometries.
 WKB representations are usually hexadecimal strings easily readable for computers.
-This is why, GIS and spatial databases use WKB to transfer and store geometry objects.
+This is why GIS and spatial databases use WKB to transfer and store geometry objects.
 WKT, on the other hand, is a human-readable text markup description of simple features. 
 Both formats are exchangeable, and if we present one, we will naturally choose the WKT representation.
 
@@ -919,7 +919,7 @@ Finally, a geometry collection might contain any combination of geometry types:
 The `sfg` class represents the different simple feature geometry types: point, linestring, polygon (and their 'multi' equivalents, such as multipoints) or geometry collection.
 
 Usually you are spared the tedious task of creating geometries on your own since you can simply import an already existing spatial file.
-However, there are a set of function to create simple feature geometry objects (`sfg`) from scratch if needed.
+However, there are a set of functions to create simple feature geometry objects (`sfg`) from scratch if needed.
 The names of these functions are simple and consistent, as they all start with the `st_`  prefix and end with the name of the geometry type in lowercase letters:
 
 - A point - `st_point()`
@@ -1131,7 +1131,7 @@ st_sfc(point1, point2)
 All geometries in an `sfc` object must have the same CRS. 
 
 We can add coordinate reference system as a `crs` argument of `st_sfc()`. 
-This argument accepts either an integer with the `epsg` code (e.g., `4326`)  or a `proj4string` character string (e.g., `"+proj=longlat +datum=WGS84 +no_defs"`) (see section \@ref(crs-intro)). 
+This argument accepts either an integer with the `epsg` code (for example, `4326`)  or a `proj4string` character string (for example, `"+proj=longlat +datum=WGS84 +no_defs"`) (see section \@ref(crs-intro)). 
 
 
 ```r
@@ -1203,8 +1203,8 @@ This is because there is no general method to convert from `proj4string` to `eps
 So far, we have only dealt with the pure geometries.
 Most of the time, however, these geometries come with a set of attributes describing them. 
 These attributes could represent the name of the geometry, measured values, groups to which the geometry belongs, and many more.
-For example, we measured a temperature of 25°C on Trafalgar Square in London on June 21^th^ 2017. 
-Hence, we have a specific point in space (the coordinates), the name of the location (Trafalgar Square), a temperature value, the date of the measurement.
+For example, we measured a temperature of 25°C on Trafalgar Square in London on June 21^st^ 2017. 
+Hence, we have a specific point in space (the coordinates), the name of the location (Trafalgar Square), a temperature value and the date of the measurement.
 Other attributes might include a urbanity category (city or village), or a remark if the measurement was made using an automatic station.
 
 The simple feature class, `sf`, is a combination of an attribute table (`data.frame`) and a simple feature geometry column (`sfc`).
@@ -1460,7 +1460,7 @@ raster_filepath = system.file("raster/srtm.tif", package = "spDataLarge")
 new_raster = raster(raster_filepath)
 ```
 
-The **raster** package support numerous drivers with the help of **rgdal**.
+The **raster** package supports numerous drivers with the help of **rgdal**.
 To find out which drivers are available on your system, run `raster::writeFormats()` and `rgdal::gdalDrivers()`.
 
 Aside from reading in a raster, you can also create one from scratch.
@@ -1539,7 +1539,7 @@ nlayers(r_brick)
 ```
 
 A `RasterStack` is similar to a `RasterBrick` in the sense that it consists also of multiple layers.
-However, in contrast to `RasterBrick`, `RasterStack` allows to connect several raster objects stored in different files or multiply objects in memory.
+However, in contrast to `RasterBrick`, `RasterStack` allows you to connect several raster objects stored in different files or multiply objects in memory.
 More specifically, a `RasterStack` is a list of `RasterLayer` objects with the same extent and resolution. 
 Hence, one way to create it is with the help of spatial objects already existing in R's global environment. 
 And again, one can simply specify a path to a file stored on disk.
@@ -1614,22 +1614,22 @@ Available datum definitions can be seen by executing `st_proj_info(type = "datum
 
 ### Projected coordinate systems 
 
-Projected coordinate systems are based on Cartesian coordinates (X, Y) and represent any area on a flat surface. 
-A projected coordinate system have an origin, x and y axes, and a linear unit of measure.
-All projected coordinate systems are based on geographic coordinate systems.
-Map projections are mathematical models for conversion of three-dimensional surface into a two-dimensional representation on a map.
+Projected CRSs are based on Cartesian coordinates on an implicitly flat surface.
+They have an origin, x and y axes, and a linear unit of measurement such as meters.
+All projected CRSs are based on a geographic CRS, described in the previous section, and rely on map projections to convert the three-dimensional surface of the Earth into Easting and Northing (x and y) values in a projected CRS.
+
 This transition cannot be done without adding some distortion.
 Therefore, some properties of the Earth's surface are distorted in this process, such as area, direction, distance, and shape.
 A projected coordinate system can preserve only one or two of those properties.
 Projections are often named based on a property they preserve: equal-area preserves area, azimuthal preserve direction, equidistant preserve distance, and conformal preserve local shape.
 
 There are three main groups of projection types - conic, cylindrical, and planar.
-In a conic projection the Earth surface is projected onto a cone along a single line of tangency or two lines of tangency. 
+In a conic projection, the Earth's surface is projected onto a cone along a single line of tangency or two lines of tangency. 
 Distortions are minimized along the tangency lines and rise with the distance from those lines in this projection.
 Therefore, it is the best suited for maps of mid-latitude areas.
 A cylindrical projection maps the surface onto a cylinder.
-This projection also could be created by touching the Earth's surface along a single line of tangency or two lines of tangency. 
-Cylindrical projections are the most often used in mapping of the entire world.
+This projection could also be created by touching the Earth's surface along a single line of tangency or two lines of tangency. 
+Cylindrical projections are used most often when mapping the entire world.
 A planar projection projects data onto a flat surface touching the globe at a point or along a line of tangency. 
 It is typically used in mapping polar regions.
 <!-- other projections? -->
@@ -1641,7 +1641,7 @@ It is typically used in mapping polar regions.
 <!-- maybe a new section - how to pick the best projection? -->
 <!-- https://source.opennews.org/articles/choosing-right-map-projection/ -->
 
-### CRS in R
+### CRSs in R
 
 Two main ways to describe CRS in R are an `epsg` code or a `proj4string` definition.
 Both of these approaches have advantages and disadvantages. 
@@ -1649,14 +1649,14 @@ An `epsg` code is usually shorter, and therefore easier to remember.
 The code also refers to only one, well-defined coordinate reference system. 
 On the other hand, a `proj4string` definition allows you more flexibility when it comes to specifying different parameters such as the projection type, the datum and the ellipsoid.^[Complete list of the `proj4string` parameters can be found at http://proj4.org/parameters.html#parameter-list.] 
 This way you can specify many different projections, and modify existing ones.
-This makes the `proj4string` approach also more complicated.
+This also makes the `proj4string` approach more complicated.
 <!-- ^[In the background, `sf` and `raster` use the [PROJ.4](http://proj4.org/) software, which enables transformations between different projections]. -->
 `epsg` points to exactly one particular CRS.
 
-Spatial R packages support a wide range of CRSs they use long-establish [proj4](http://proj4.org/) library.
-Other than searching for EPSG codes on-line, another quick way to find-out about available CRSs is via the `rgdal::make_EPSG()` function, which outputs a data frame of available projections.
-Before going into more detail into these, it's worth learning how to view and filter them inside R, as this could save time trawling the internet.
-The following code will show available CRSs interactively, allowing filtering of ones of interest (try filtering for the OSGB CRSs for example):
+Spatial R packages support a wide range of CRSs and they use the long-established [proj4](http://proj4.org/) library.
+Other than searching for EPSG codes online, another quick way to find out about available CRSs is via the `rgdal::make_EPSG()` function, which outputs a data frame of available projections.
+Before going into more detail, it's worth learning how to view and filter them inside R, as this could save time trawling the internet.
+The following code will show available CRSs interactively, allowing you to filter ones of interest (try filtering for the OSGB CRSs for example):
 
 
 ```r
@@ -1665,7 +1665,7 @@ View(crs_data)
 ```
 
 In **sf** the CRS of an object can be retrieved using `st_crs()`.
-For this purpose, we need to read-in a vector dataset:
+For this, we need to read-in a vector dataset:
 
 
 ```r
@@ -1690,14 +1690,14 @@ In cases when a coordinate reference system (CRS) is missing or the wrong CRS is
 new_vector = st_set_crs(new_vector, 26912) # set CRS
 ```
 
-The warning message informs that the `st_set_crs()` function do not transform data from one CRS to another.
+The warning message informs us that the `st_set_crs()` function does not transform data from one CRS to another.
 
 <div class="figure" style="text-align: center">
 <img src="figures/02_vector_crs.png" alt="Examples of geographic (WGS 84; left) and projected (NAD83 / UTM zone 12N; right) and coordinate systems for a vector data type." width="765" />
 <p class="caption">(\#fig:vector-crs)Examples of geographic (WGS 84; left) and projected (NAD83 / UTM zone 12N; right) and coordinate systems for a vector data type.</p>
 </div>
 
-The `projection()` function can be use to access a CRS information from the `Raster*` object: 
+The `projection()` function can be used to access CRS information from the `Raster*` object: 
 
 
 ```r
@@ -1706,7 +1706,7 @@ projection(new_raster) # get CRS
 ```
 
 The same function, `projection()`, is used to set a CRS for raster objects.
-The main difference, comparing to vector data, is that raster objects accepts only `proj4` definitions:
+The main difference, comparing to vector data, is that raster objects accept only `proj4` definitions:
 
 
 ```r
@@ -1770,7 +1770,7 @@ units::set_units(st_area(nigeria), km^2)
 
 <!-- Is that right? I mean, the units DESCRIPTION says "Support for measurement units in R vectors, matrices and arrays". Since raster datasets are just matrices, units might be easily used with them?-->
 Units are of equal importance in the case of raster data.
-However, so far **sf** is the only spatial package that supports units, meaning that people working on raster data should approach changes in the units of analysis (e.g., converting pixel widths from imperial to decimal units) with care.
+However, so far **sf** is the only spatial package that supports units, meaning that people working on raster data should approach changes in the units of analysis (for example, converting pixel widths from imperial to decimal units) with care.
 The `new_raster` object (see above) uses a UTM projection with meters as units.
 Consequently, its resolution is also given in meters but you have to know it, since the `res()` function simply returns a numeric vector.
 
@@ -1810,18 +1810,18 @@ Again, the `res()` command gives back a numeric vector without any unit, forcing
     - Bonus: make the country boundaries a dotted grey line.
     - Hint: `border` is an additional argument of `plot()` for **sf**  objects.
 1. What does the `cex` argument do in the `plot()` function that generates Figure \@ref(fig:contpop)?
-    - Why was `cex` passed the `sqrt(world$pop) / 10000` instead of just the population directly?
+    - Why was `cex` set to the `sqrt(world$pop) / 10000` instead of just the population directly?
     - Bonus: what equivalent arguments to `cex` exist in the dedicated vizualisation package **tmap**?
 1. Re-run the code that 'generated' Figure \@ref(fig:contpop) at the end of \@ref(base-args) and find 3 similarities and 3 differences between the plot produced on your computer and that in the book.
     - What is similar?
     - What has changed?
-    - Bonus: play around with and research base plotting arguments to make your version of Figure \@ref(fig:contpop) more attractive. Which arguments were most useful.
+    - Bonus: play around with and research base plotting arguments to make your version of Figure \@ref(fig:contpop) more attractive. Which arguments were most useful?
     - Advanced: try to reproduce the map presented in Figure \@ref(base-args). Copy-and-pasting is prohibited!
 <!-- raster exercises -->
 1. Read the `raster/nlcd2011.tif` file from the **spDataLarge** package. 
 What kind of information can you get about the properties of this file?
 <!-- (crs, ncols, nrow, ncells, bbox, navalues) -->
-1. Create an empty `RasterLayer` object called `my_raster` with 10 columns and 10 rows, and resolution of 10 units.
+1. Create an empty `RasterLayer` object called `my_raster` with 10 columns and 10 rows and resolution of 10 units.
 Assign random values between 0 and 10 to the new raster and plot it.
 <!-- crs exercises -->
 <!-- 1. pros and cons of the projection types -->
@@ -3129,7 +3129,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveefaac7b33ceb0c00
+preserve0b23f764046bbe3a
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5971,7 +5971,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve164aa289b72a2a5c
+preserve3d68b82df33866a6
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6347,58 +6347,69 @@ To avoid having to request the data from OSM repeadetly, we'll use a locally sav
 ```r
 ways = readRDS("extdata/ways.rds")
 summary(ways)
-#>      highway        maxspeed         ref                  geometry   
-#>  cycleway:1259   30 mph : 822   A38    : 199   LINESTRING     :4575  
-#>  rail    : 813   20 mph : 435   M5     : 138   MULTILINESTRING:  13  
-#>  road    :2516   70 mph : 321   A432   : 128   epsg:4326      :   0  
-#>                  40 mph : 311   A4018  : 120   +proj=long...  :   0  
-#>                  50 mph : 131   A420   : 112                         
-#>                  (Other): 475   (Other):1681                         
-#>                  NA's   :2093   NA's   :2210
+#>      highway        maxspeed         ref                geometry   
+#>  cycleway:1261   30 mph : 822   A38    : 199   LINESTRING   :4591  
+#>  rail    : 813   20 mph : 435   M5     : 138   epsg:4326    :   0  
+#>  road    :2517   70 mph : 323   A432   : 128   +proj=long...:   0  
+#>                  40 mph : 314   A4018  : 120                       
+#>                  50 mph : 131   A420   : 112                       
+#>                  (Other): 475   (Other):1681                       
+#>                  NA's   :2091   NA's   :2213
 ```
 
 The above code chunk loaded a simple feature object representing around 3,000 segments on the transport network.
 This an easily manageable dataset size (transport datasets be large but it's best to start small).
 
+As mentioned, route networks can usefully be represented as mathematical graphs, with nodes on the network connected by edges.
+A number of R packages have been developed for dealing with such graphs, notably **igraph**.
+One can manually convert a route network into an `igraph` object, but that process risks loosing the geographic attributes.
+To overcome this issue `SpatialLinesNetwork()` was developed in the **stplanr** package to represent route networks simultaneously as graphs *and* a set of geographic lines.
+This function is demonstrated below using a subset of the `ways` object used in previous sections.
+
 
 ```r
-ways_road = ways %>% filter(highway == "road") 
-ways_sln = SpatialLinesNetwork(as(ways_road, "Spatial"))
-summary(ways_sln)
-#> Weight attribute field: lengthIGRAPH ffd9ddb U-W- 2483 2516 -- 
-#> + attr: x (g/n), y (g/n), n (g/n), weight (e/n)
-#> Object of class SpatialLinesDataFrame
-#> Coordinates:
-#>     min   max
-#> x -2.84 -2.26
-#> y 51.29 51.73
-#> Is projected: FALSE 
-#> proj4string :
-#> [+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0]
-#> Data attributes:
-#>      highway        maxspeed        ref           length    
-#>  cycleway:   0   30 mph :812   A38    : 199   Min.   :0.00  
-#>  rail    :   0   20 mph :429   M5     : 138   1st Qu.:0.04  
-#>  road    :2516   70 mph :318   A432   : 128   Median :0.10  
-#>                  40 mph :280   A4018  : 120   Mean   :0.28  
-#>                  50 mph :108   A420   : 112   3rd Qu.:0.29  
-#>                  (Other): 85   (Other):1623   Max.   :8.85  
-#>                  NA's   :484   NA's   : 196
+ways_freeway = ways %>% filter(maxspeed == "70 mph") 
+ways_sln = SpatialLinesNetwork(ways_freeway)
+slotNames(ways_sln)
+#> [1] "sl"          "g"           "nb"          "weightfield"
 weightfield(ways_sln)
 #> [1] "length"
-# o_crds = geo_code("Lawrence Hill Bristol")
-# o_crds = geo_code("Park Street Bristol")
-# o_node = find_network_nodes(ways_sln, -2.618, 51.494)
-# d_node = find_network_nodes(ways_sln, -2.602, 51.455)
-path = sum_network_routes(ways_sln, 10, 20, "length")
-plot(ways_sln)
-plot(path, col = "red", lwd = 5, add = T)
-b = igraph::betweenness(ways_sln@g)
-length(b)
-#> [1] 2483
+class(ways_sln@g)
+#> [1] "igraph"
 ```
 
-<img src="figures/unnamed-chunk-18-1.png" width="576" style="display: block; margin: auto;" />
+The output of the previous code chunk shows that `ways_sln` is a composite object with various 'slots'.
+These include: the spatial component of the network (named `sl`), the graph component (`g`) and the 'weightfield', the edge variable used for shortest path calculation (by default segment distance).
+`ways_sln` is of class `sfNetwork`, defined by the S4 class system.
+This means that each component can be accessed using the `@` operator, which is used below to extract its graph component and process it using the **igraph** package, before plotting the results in geographic space.
+
+
+```r
+m = igraph::clusters(ways_sln@g)$membership
+tm = table(m)
+groups_large = names(tm[order(tm, decreasing = TRUE)])[1:3]
+m[m %in% groups_large] = 4
+
+e = igraph::edge_betweenness(ways_sln@g)
+plot(ways_sln, lwd = e / 500)
+points(igraph::graph_attr(ways_sln@g, name = "x"),
+       igraph::graph_attr(ways_sln@g, name = "y"),
+       col = m)
+```
+
+<img src="figures/unnamed-chunk-19-1.png" width="576" style="display: block; margin: auto;" />
+
+One can also find the shortest route between origins and destinations using this graph representation of the route network:
+
+
+```r
+path = sum_network_routes(ways_sln, 1, 20, "length")
+plot(path$geometry, col = "red", lwd = 10)
+plot(ways_sln@sl$geometry, add = TRUE)
+```
+
+<img src="figures/unnamed-chunk-20-1.png" width="576" style="display: block; margin: auto;" />
+
 
 
 ## Agents in the transport system
