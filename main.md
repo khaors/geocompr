@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservec212b25a868c8716
+preserve07a8ac83b0137dc9
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -619,14 +619,7 @@ Given the breadth of geographic data forms, it may come as a surprise that a cla
 development version, which may contain new features, can be installed with `devtools::install_github("r-spatial/sf").`
 ]
 **sf** incorporates the functionality of the three main packages of the **sp** paradigm (**sp** [@R-sp] for the class system, **rgdal** [@R-rgdal] for reading and writing data, **rgeos** [@R-rgeos] for spatial operations undertaken by GEOS) in a single, cohesive whole.
-This is well-documented in **sf**'s [vignettes](http://cran.rstudio.com/package=sf):
-
-
-```r
-vignette("sf1") # for an introduction to the package
-vignette("sf2") # for reading, writing and converting Simple Features
-vignette("sf3") # for manipulating Simple Features
-```
+This is well-documented in **sf**'s [vignettes](http://cran.rstudio.com/package=sf).
 
 As the first vignette explains, simple feature objects in R are stored in a data frame, with geographic data occupying a special column, a 'list-column'. This column is usually named 'geom' or 'geometry'.
 We will use the `world` dataset provided by the **spData**, loaded at the beginning of this chapter (see [nowosad.github.io/spData](https://nowosad.github.io/spData/) for a list datasets loaded by the package).
@@ -3129,7 +3122,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve021db64417e0c11c
+preserveec8aa6eeb8d30fb0
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4343,25 +4336,35 @@ nz_centroid_sfc = st_centroid(nz_sfc)
 nz_scale = (nz_sfc - nz_centroid_sfc) * 0.5 + nz_centroid_sfc
 ```
 
-$$R =
+Rotation of two-dimensional coordinates requries a rotation matrix:
+
+$$
+R =
 \begin{bmatrix}
 \cos \theta & -\sin \theta \\  
 \sin \theta & \cos \theta \\
 \end{bmatrix}
-$$ 
+$$
 
-
-
-
-
-
+It rotates points in a counterclockwise direction.
+The rotation matrix could be implemented in R as:
 <!-- https://r-spatial.github.io/sf/articles/sf3.html#affine-transformations -->
 
 ```r
-rot = function(a) matrix(c(cos(a), sin(a), -sin(a), cos(a)), 2, 2)
-nz_rotate = (nz_sfc - nz_centroid_sfc) * rot(pi / 8) + nz_centroid_sfc
+rotation = function(a){
+  r = a * pi/180 #degrees to radians
+  matrix(c(cos(r), sin(r), -sin(r), cos(r)), nrow = 2, ncol = 2)
+} 
 ```
 
+The `rotation` function accepts one argument `a` - a rotation angle in degrees.
+Rotation could be done around selected points, such as centroids (right panel on the Fig. \@ref(fig:affine-trans).
+See `vignette("sf3")` for more examples.
+
+
+```r
+nz_rotate = (nz_sfc - nz_centroid_sfc) * rotation(30) + nz_centroid_sfc
+```
 
 <div class="figure" style="text-align: center">
 <img src="figures/affine-trans-1.png" alt="Ilustrations of affine transformations: shift, scale and rotate." width="576" />
@@ -4833,6 +4836,7 @@ Why the new object differs from the original one?
     - Bonus: rewrite code that generated the answer to the previous question using a projected CRS (suggestion: UTM).
 <!-- AFFINE TRANSFORMATION -->
 <!-- e.g.reflections -->
+<!-- rotate nz as a whole -->
 <!-- CLIPPING -->
 1. Write code that subsets points that are contained within `x` *and* `y` (illustrated by the plot in the 2^nd^ row and the 1^st^ column in Figure \@ref(fig:venn-clip)).
     - Create a randomly located point with the command `st_point()` (refer back to section \@ref(sfg) to see how to create spatial data 'from scratch').
@@ -5985,7 +5989,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservea425f5399e927a29
+preserved06134899994b69a
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6396,22 +6400,19 @@ The output of the previous code chunk shows that `ways_sln` is a composite objec
 These include: the spatial component of the network (named `sl`), the graph component (`g`) and the 'weightfield', the edge variable used for shortest path calculation (by default segment distance).
 `ways_sln` is of class `sfNetwork`, defined by the S4 class system.
 This means that each component can be accessed using the `@` operator, which is used below to extract its graph component and process it using the **igraph** package, before plotting the results in geographic space.
+In the example below the 'edge betweeness' is calculated, with the results demonstrating that each graph edge represents a segment: the segments near the centre of the road network have the greatest betweeness scores.
 
 
 ```r
-m = igraph::clusters(ways_sln@g)$membership
-tm = table(m)
-groups_large = names(tm[order(tm, decreasing = TRUE)])[1:3]
-m[m %in% groups_large] = 4
-
+g = ways_sln@g
 e = igraph::edge_betweenness(ways_sln@g)
-plot(ways_sln, lwd = e / 500)
-points(igraph::graph_attr(ways_sln@g, name = "x"),
-       igraph::graph_attr(ways_sln@g, name = "y"),
-       col = m)
+plot(ways_sln@sl$geometry, lwd = e / 500)
 ```
 
 <img src="figures/unnamed-chunk-19-1.png" width="576" style="display: block; margin: auto;" />
+
+
+
 
 One can also find the shortest route between origins and destinations using this graph representation of the route network:
 
@@ -6422,7 +6423,7 @@ plot(path$geometry, col = "red", lwd = 10)
 plot(ways_sln@sl$geometry, add = TRUE)
 ```
 
-<img src="figures/unnamed-chunk-20-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-21-1.png" width="576" style="display: block; margin: auto;" />
 
 
 

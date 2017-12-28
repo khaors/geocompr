@@ -648,15 +648,21 @@ Figure 5.8: Comparison between the outputs of <code>st_centroid()</code> (black 
 <p>Local scaling treats geometries independently and it requires points around which geometries are going to be scaled, e.g. centroids. In the example below, each geometry is shrunk by a factor of two around theirs centroids (central panel on the Fig. <a href="transform.html#fig:affine-trans">5.9</a>. <!-- scaling by a two-elements vector --></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_centroid_sfc =<span class="st"> </span><span class="kw">st_centroid</span>(nz_sfc)
 nz_scale =<span class="st"> </span>(nz_sfc -<span class="st"> </span>nz_centroid_sfc) *<span class="st"> </span><span class="fl">0.5</span> +<span class="st"> </span>nz_centroid_sfc</code></pre></div>
-<p><span class="math display">\[R =
+<p>Rotation of two-dimensional coordinates requries a rotation matrix:</p>
+<p><span class="math display">\[
+R =
 \begin{bmatrix}
 \cos \theta &amp; -\sin \theta \\  
 \sin \theta &amp; \cos \theta \\
 \end{bmatrix}
 \]</span></p>
-<!-- https://r-spatial.github.io/sf/articles/sf3.html#affine-transformations -->
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rot =<span class="st"> </span>function(a) <span class="kw">matrix</span>(<span class="kw">c</span>(<span class="kw">cos</span>(a), <span class="kw">sin</span>(a), -<span class="kw">sin</span>(a), <span class="kw">cos</span>(a)), <span class="dv">2</span>, <span class="dv">2</span>)
-nz_rotate =<span class="st"> </span>(nz_sfc -<span class="st"> </span>nz_centroid_sfc) *<span class="st"> </span><span class="kw">rot</span>(pi /<span class="st"> </span><span class="dv">8</span>) +<span class="st"> </span>nz_centroid_sfc</code></pre></div>
+<p>It rotates points in a counterclockwise direction. The rotation matrix could be implemented in R as: <!-- https://r-spatial.github.io/sf/articles/sf3.html#affine-transformations --></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rotation =<span class="st"> </span>function(a){
+  r =<span class="st"> </span>a *<span class="st"> </span>pi/<span class="dv">180</span> <span class="co">#degrees to radians</span>
+  <span class="kw">matrix</span>(<span class="kw">c</span>(<span class="kw">cos</span>(r), <span class="kw">sin</span>(r), -<span class="kw">sin</span>(r), <span class="kw">cos</span>(r)), <span class="dt">nrow =</span> <span class="dv">2</span>, <span class="dt">ncol =</span> <span class="dv">2</span>)
+} </code></pre></div>
+<p>The <code>rotation</code> function accepts one argument <code>a</code> - a rotation angle in degrees. Rotation could be done around selected points, such as centroids (right panel on the Fig. <a href="transform.html#fig:affine-trans">5.9</a>. See <code>vignette(&quot;sf3&quot;)</code> for more examples.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_rotate =<span class="st"> </span>(nz_sfc -<span class="st"> </span>nz_centroid_sfc) *<span class="st"> </span><span class="kw">rotation</span>(<span class="dv">30</span>) +<span class="st"> </span>nz_centroid_sfc</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:affine-trans"></span>
 <img src="figures/affine-trans-1.png" alt="Ilustrations of affine transformations: shift, scale and rotate." width="576" />
 <p class="caption">
@@ -959,7 +965,7 @@ Figure 5.20: Illustration of vectorization of raster (left) into polygon (center
 <li><p>Assuming that people are evenly distributed across countries, estimate the population living <em>within</em> the circle created to answer the previous question.</p></li>
 <li>Warning messages should have been produced during the working to find the answer to the previous questions. What do these warnings mean and how could they be stopped?
 <ul>
-<li>Bonus: rewrite code that generated the answer to the previous question using a projected CRS (suggestion: UTM). <!-- AFFINE TRANSFORMATION --> <!-- e.g.reflections --> <!-- CLIPPING --></li>
+<li>Bonus: rewrite code that generated the answer to the previous question using a projected CRS (suggestion: UTM). <!-- AFFINE TRANSFORMATION --> <!-- e.g.reflections --> <!-- rotate nz as a whole --> <!-- CLIPPING --></li>
 </ul></li>
 <li>Write code that subsets points that are contained within <code>x</code> <em>and</em> <code>y</code> (illustrated by the plot in the 2<sup>nd</sup> row and the 1<sup>st</sup> column in Figure <a href="transform.html#fig:venn-clip">5.11</a>).
 <ul>

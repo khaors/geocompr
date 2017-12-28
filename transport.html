@@ -520,23 +520,16 @@ ways_sln =<span class="st"> </span><span class="kw">SpatialLinesNetwork</span>(w
 <span class="co">#&gt; [1] &quot;length&quot;</span>
 <span class="kw">class</span>(ways_sln@g)
 <span class="co">#&gt; [1] &quot;igraph&quot;</span></code></pre></div>
-<p>The output of the previous code chunk shows that <code>ways_sln</code> is a composite object with various ‘slots’. These include: the spatial component of the network (named <code>sl</code>), the graph component (<code>g</code>) and the ‘weightfield’, the edge variable used for shortest path calculation (by default segment distance). <code>ways_sln</code> is of class <code>sfNetwork</code>, defined by the S4 class system. This means that each component can be accessed using the <code>@</code> operator, which is used below to extract its graph component and process it using the <strong>igraph</strong> package, before plotting the results in geographic space.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m =<span class="st"> </span>igraph::<span class="kw">clusters</span>(ways_sln@g)$membership
-tm =<span class="st"> </span><span class="kw">table</span>(m)
-groups_large =<span class="st"> </span><span class="kw">names</span>(tm[<span class="kw">order</span>(tm, <span class="dt">decreasing =</span> <span class="ot">TRUE</span>)])[<span class="dv">1</span>:<span class="dv">3</span>]
-m[m %in%<span class="st"> </span>groups_large] =<span class="st"> </span><span class="dv">4</span>
-
+<p>The output of the previous code chunk shows that <code>ways_sln</code> is a composite object with various ‘slots’. These include: the spatial component of the network (named <code>sl</code>), the graph component (<code>g</code>) and the ‘weightfield’, the edge variable used for shortest path calculation (by default segment distance). <code>ways_sln</code> is of class <code>sfNetwork</code>, defined by the S4 class system. This means that each component can be accessed using the <code>@</code> operator, which is used below to extract its graph component and process it using the <strong>igraph</strong> package, before plotting the results in geographic space. In the example below the ‘edge betweeness’ is calculated, with the results demonstrating that each graph edge represents a segment: the segments near the centre of the road network have the greatest betweeness scores.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g =<span class="st"> </span>ways_sln@g
 e =<span class="st"> </span>igraph::<span class="kw">edge_betweenness</span>(ways_sln@g)
-<span class="kw">plot</span>(ways_sln, <span class="dt">lwd =</span> e /<span class="st"> </span><span class="dv">500</span>)
-<span class="kw">points</span>(igraph::<span class="kw">graph_attr</span>(ways_sln@g, <span class="dt">name =</span> <span class="st">&quot;x&quot;</span>),
-       igraph::<span class="kw">graph_attr</span>(ways_sln@g, <span class="dt">name =</span> <span class="st">&quot;y&quot;</span>),
-       <span class="dt">col =</span> m)</code></pre></div>
+<span class="kw">plot</span>(ways_sln@sl$geometry, <span class="dt">lwd =</span> e /<span class="st"> </span><span class="dv">500</span>)</code></pre></div>
 <p><img src="figures/unnamed-chunk-19-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>One can also find the shortest route between origins and destinations using this graph representation of the route network:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">path =<span class="st"> </span><span class="kw">sum_network_routes</span>(ways_sln, <span class="dv">1</span>, <span class="dv">20</span>, <span class="st">&quot;length&quot;</span>)
 <span class="kw">plot</span>(path$geometry, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lwd =</span> <span class="dv">10</span>)
 <span class="kw">plot</span>(ways_sln@sl$geometry, <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<p><img src="figures/unnamed-chunk-20-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-21-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="agents-in-the-transport-system" class="section level2">
 <h2><span class="header-section-number">8.8</span> Agents in the transport system</h2>
