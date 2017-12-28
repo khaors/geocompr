@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve4cd8930e6f2c2d2b
+preserve4b17caab9a65216e
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3122,7 +3122,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveadc01a63f7181b45
+preserve60948c034205b63b
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3663,13 +3663,13 @@ library(spDataLarge)
 ## Introduction
 
 The previous three chapters have demonstrated how geographic datasets are structured in R (Chapter \@ref(spatial-class)) and how to manipulate them based on their non-geographic attributes (\@ref(attr)) and spatial properties (\@ref(spatial-operations)).
-This chapter goes a step further, by showing how to modify the *geometry* underlying spatial datasets.
+This chapter builds on this content by demonstrating how to modify the geometry underlying spatial datasets for vector and raster objects.
 
-Section \@ref(geo-vec) covers transforming vector geometries.
-This includes simplication, buffers and centroids and even shifting/scaling/rotating single geometries using 'affine transformations' (see sections \@ref(simplification) to \@ref(affine-transformations)).
-Vector geometries can also be modified by another spatial object with 'clipping' operations, demonstrated in section \@ref(clipping).
-Geometry unions, which underlie spatial data aggregation, are covered in section \@ref(geometry-unions).
-Advanced transformations of vector geometries include type transformations (from few multipolygons to many polygons, for example) and 'rasterization', operations that are demonstrated in sections \@ref(type-transformations) and \@ref(rasterization) respectively.
+Section \@ref(geo-vec) covers transforming vector geometries with 'unary' and 'binary' operations.
+<!-- TODO: add something on n-ary ops (RL) -->
+Unary operations work on a single geometry in isolation and include simplification of lines and polygons to reduce to reduce the number of vertices in (and memory consumed by) detailed geometric shapes, buffers and centroids and shifting/scaling/rotating single geometries using 'affine transformations' (sections \@ref(simplification) to \@ref(affine-transformations)).
+Binary transformations modify one geometry based on the shape of another and include clipping (\@ref(clipping)), and geometry unions (\@ref(geometry-unions)).
+Type transformations (from few multipolygons to many polygons, for example) are demonstrated in section \@ref(type-transformations) and 'rasterization' is covered in section \@ref(rasterization) respectively.
 
 Section \@ref(geo-ras) covers geometric transformations on raster objects.
 This involves changing the size and number of the underlying pixels, and assigning them new values.
@@ -6000,7 +6000,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservea474f24c6938a6e6
+preserveb6dbcde4edd9548c
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
