@@ -642,13 +642,13 @@ Figure 5.8: Comparison between the outputs of <code>st_centroid()</code> (black 
 <p>Affine transformations include, among others, shifting (translation), scaling and rotating. <!-- translation, scaling, homothety, similarity transformation, reflection, rotation, shear mapping --> Additionally, it is possible to use any combination of those. Affine transformations are essential part of geocomputation. Its application could be found when a vector dataset was created based on a distorted or wrongly projected map. It is also used in many regular GIS tasks, such as map display or datum changes.</p>
 <p>The <strong>sf</strong> package implements affine transformation for objects of classes <code>sfg</code> and <code>sfc</code>. <!-- stats sfc issue --></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_sfc =<span class="st"> </span>nz$geometry</code></pre></div>
-<p>Shifting moves every point by the same distance in the map units. It could be done by adding a numerical vector to a vector object. For example, the code below keeps the x coordinates, while changing the y coordinates by 100,000 meters (left panel on the Fig. <a href="transform.html#fig:affine-trans">5.9</a>.</p>
+<p>Shifting moves every point by the same distance in the map units. It could be done by adding a numerical vector to a vector object. For example, the code below keeps the x coordinates, while changing the y coordinates by 100,000 meters (left panel on the Fig. <a href="transform.html#fig:affine-trans">5.9</a>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_shift =<span class="st"> </span>nz_sfc +<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">100000</span>)</code></pre></div>
-<p>Scaling enlarges or shrinks objects by a scale factor. It could be applied either globally or locally. <!-- my terms - jn--> Global scaling increase or decrease all coordinates values while keeping all geometries topological relations intact. It can by done by subtraction or multiplication of a<code>sfg</code> or <code>sfc</code> object.</p>
-<p>Local scaling treats geometries independently and it requires points around which geometries are going to be scaled, e.g. centroids. In the example below, each geometry is shrunk by a factor of two around theirs centroids (central panel on the Fig. <a href="transform.html#fig:affine-trans">5.9</a>. <!-- scaling by a two-elements vector --></p>
+<p>Scaling enlarges or shrinks objects by a scale factor. It could be applied either globally or locally. <!-- my terms - jn--> Global scaling increase or decrease all coordinates values in relation to the origin coordinates while keeping all geometries topological relations intact. It can by done by subtraction or multiplication of a<code>sfg</code> or <code>sfc</code> object.</p>
+<p>Local scaling treats geometries independently and it requires points around which geometries are going to be scaled, e.g. centroids. In the example below, each geometry is shrunk by a factor of two around theirs centroids (central panel on the Fig. <a href="transform.html#fig:affine-trans">5.9</a>). <!-- scaling by a two-elements vector --></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_centroid_sfc =<span class="st"> </span><span class="kw">st_centroid</span>(nz_sfc)
 nz_scale =<span class="st"> </span>(nz_sfc -<span class="st"> </span>nz_centroid_sfc) *<span class="st"> </span><span class="fl">0.5</span> +<span class="st"> </span>nz_centroid_sfc</code></pre></div>
-<p>Rotation of two-dimensional coordinates requries a rotation matrix:</p>
+<p>Rotation of two-dimensional coordinates requires a rotation matrix:</p>
 <p><span class="math display">\[
 R =
 \begin{bmatrix}
@@ -661,12 +661,12 @@ R =
   r =<span class="st"> </span>a *<span class="st"> </span>pi/<span class="dv">180</span> <span class="co">#degrees to radians</span>
   <span class="kw">matrix</span>(<span class="kw">c</span>(<span class="kw">cos</span>(r), <span class="kw">sin</span>(r), -<span class="kw">sin</span>(r), <span class="kw">cos</span>(r)), <span class="dt">nrow =</span> <span class="dv">2</span>, <span class="dt">ncol =</span> <span class="dv">2</span>)
 } </code></pre></div>
-<p>The <code>rotation</code> function accepts one argument <code>a</code> - a rotation angle in degrees. Rotation could be done around selected points, such as centroids (right panel on the Fig. <a href="transform.html#fig:affine-trans">5.9</a>. See <code>vignette(&quot;sf3&quot;)</code> for more examples.</p>
+<p>The <code>rotation</code> function accepts one argument <code>a</code> - a rotation angle in degrees. Rotation could be done around selected points, such as centroids (right panel on the Fig. <a href="transform.html#fig:affine-trans">5.9</a>). See <code>vignette(&quot;sf3&quot;)</code> for more examples.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_rotate =<span class="st"> </span>(nz_sfc -<span class="st"> </span>nz_centroid_sfc) *<span class="st"> </span><span class="kw">rotation</span>(<span class="dv">30</span>) +<span class="st"> </span>nz_centroid_sfc</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:affine-trans"></span>
-<img src="figures/affine-trans-1.png" alt="Ilustrations of affine transformations: shift, scale and rotate." width="576" />
+<img src="figures/affine-trans-1.png" alt="Illustrations of affine transformations: shift, scale and rotate." width="576" />
 <p class="caption">
-Figure 5.9: Ilustrations of affine transformations: shift, scale and rotate.
+Figure 5.9: Illustrations of affine transformations: shift, scale and rotate.
 </p>
 </div>
 <!-- return to sf -->

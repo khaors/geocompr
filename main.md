@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve07a8ac83b0137dc9
+preserve72820dba016c26f9
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3122,7 +3122,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveec8aa6eeb8d30fb0
+preserveb2d8590692292c59
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4314,7 +4314,7 @@ nz_sfc = nz$geometry
 
 Shifting moves every point by the same distance in the map units.
 It could be done by adding a numerical vector to a vector object.
-For example, the code below keeps the x coordinates, while changing the y coordinates by 100,000 meters (left panel on the Fig. \@ref(fig:affine-trans). 
+For example, the code below keeps the x coordinates, while changing the y coordinates by 100,000 meters (left panel on the Fig. \@ref(fig:affine-trans)). 
 
 
 ```r
@@ -4323,11 +4323,11 @@ nz_shift = nz_sfc + c(0, 100000)
 
 Scaling enlarges or shrinks objects by a scale factor.
 It could be applied either globally or locally. <!-- my terms - jn-->
-Global scaling increase or decrease all coordinates values while keeping all geometries topological relations intact.
+Global scaling increase or decrease all coordinates values in relation to the origin coordinates while keeping all geometries topological relations intact.
 It can by done by subtraction or multiplication of a`sfg` or `sfc` object.
 
 Local scaling treats geometries independently and it requires points around which geometries are going to be scaled, e.g. centroids.
-In the example below, each geometry is shrunk by a factor of two around theirs centroids (central panel on the Fig. \@ref(fig:affine-trans).
+In the example below, each geometry is shrunk by a factor of two around theirs centroids (central panel on the Fig. \@ref(fig:affine-trans)).
 <!-- scaling by a two-elements vector -->
 
 
@@ -4336,7 +4336,7 @@ nz_centroid_sfc = st_centroid(nz_sfc)
 nz_scale = (nz_sfc - nz_centroid_sfc) * 0.5 + nz_centroid_sfc
 ```
 
-Rotation of two-dimensional coordinates requries a rotation matrix:
+Rotation of two-dimensional coordinates requires a rotation matrix:
 
 $$
 R =
@@ -4358,7 +4358,7 @@ rotation = function(a){
 ```
 
 The `rotation` function accepts one argument `a` - a rotation angle in degrees.
-Rotation could be done around selected points, such as centroids (right panel on the Fig. \@ref(fig:affine-trans).
+Rotation could be done around selected points, such as centroids (right panel on the Fig. \@ref(fig:affine-trans)).
 See `vignette("sf3")` for more examples.
 
 
@@ -4367,8 +4367,8 @@ nz_rotate = (nz_sfc - nz_centroid_sfc) * rotation(30) + nz_centroid_sfc
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/affine-trans-1.png" alt="Ilustrations of affine transformations: shift, scale and rotate." width="576" />
-<p class="caption">(\#fig:affine-trans)Ilustrations of affine transformations: shift, scale and rotate.</p>
+<img src="figures/affine-trans-1.png" alt="Illustrations of affine transformations: shift, scale and rotate." width="576" />
+<p class="caption">(\#fig:affine-trans)Illustrations of affine transformations: shift, scale and rotate.</p>
 </div>
 
 <!-- return to sf -->
@@ -5989,7 +5989,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserved06134899994b69a
+preservea977ff249bbc6a63
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
