@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve72820dba016c26f9
+preserveed2fbab2277780a2
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3122,7 +3122,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveb2d8590692292c59
+preserve99242421ae0aec22
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4296,7 +4296,9 @@ It ensures that the created point lies on the given object (see red points on Fi
 ### Affine transformations
 
 <!-- intro -->
-<!-- Affine transformations are generalizations of linear transforms.  -->
+Affine transformation is any transformation that preserves lines and parallelism.
+<!-- The midpoint of a line segment remains a midpoint and all points lying on a line initially still lie on a line after an affine transformation. -->
+However, angles or length are snot necessarily preserved.
 Affine transformations include, among others, shifting (translation), scaling and rotating.
 <!-- translation, scaling, homothety, similarity transformation, reflection, rotation, shear mapping -->
 Additionally, it is possible to use any combination of those.
@@ -4371,7 +4373,16 @@ nz_rotate = (nz_sfc - nz_centroid_sfc) * rotation(30) + nz_centroid_sfc
 <p class="caption">(\#fig:affine-trans)Illustrations of affine transformations: shift, scale and rotate.</p>
 </div>
 
-<!-- return to sf -->
+
+
+
+
+Finally, the newly created geometries could replace the old ones with the `st_set_geometry()` function: 
+
+
+```r
+nz_scale_sf = st_set_geometry(nz, nz_scale)
+```
 
 ### Clipping 
 
@@ -4408,7 +4419,7 @@ plot(b)
 plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
 ```
 
-<img src="figures/unnamed-chunk-47-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-51-1.png" width="576" style="display: block; margin: auto;" />
 
 The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
 <!-- Todo: reference r4ds -->
@@ -5989,7 +6000,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservea977ff249bbc6a63
+preserve6eee18fb0c21e3eb
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 

@@ -638,8 +638,7 @@ Figure 5.8: Comparison between the outputs of <code>st_centroid()</code> (black 
 <div id="affine-transformations" class="section level3">
 <h3><span class="header-section-number">5.3.4</span> Affine transformations</h3>
 <!-- intro -->
-<!-- Affine transformations are generalizations of linear transforms.  -->
-<p>Affine transformations include, among others, shifting (translation), scaling and rotating. <!-- translation, scaling, homothety, similarity transformation, reflection, rotation, shear mapping --> Additionally, it is possible to use any combination of those. Affine transformations are essential part of geocomputation. Its application could be found when a vector dataset was created based on a distorted or wrongly projected map. It is also used in many regular GIS tasks, such as map display or datum changes.</p>
+<p>Affine transformation is any transformation that preserves lines and parallelism. <!-- The midpoint of a line segment remains a midpoint and all points lying on a line initially still lie on a line after an affine transformation. --> However, angles or length are snot necessarily preserved. Affine transformations include, among others, shifting (translation), scaling and rotating. <!-- translation, scaling, homothety, similarity transformation, reflection, rotation, shear mapping --> Additionally, it is possible to use any combination of those. Affine transformations are essential part of geocomputation. Its application could be found when a vector dataset was created based on a distorted or wrongly projected map. It is also used in many regular GIS tasks, such as map display or datum changes.</p>
 <p>The <strong>sf</strong> package implements affine transformation for objects of classes <code>sfg</code> and <code>sfc</code>. <!-- stats sfc issue --></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_sfc =<span class="st"> </span>nz$geometry</code></pre></div>
 <p>Shifting moves every point by the same distance in the map units. It could be done by adding a numerical vector to a vector object. For example, the code below keeps the x coordinates, while changing the y coordinates by 100,000 meters (left panel on the Fig. <a href="transform.html#fig:affine-trans">5.9</a>).</p>
@@ -669,7 +668,8 @@ R =
 Figure 5.9: Illustrations of affine transformations: shift, scale and rotate.
 </p>
 </div>
-<!-- return to sf -->
+<p>Finally, the newly created geometries could replace the old ones with the <code>st_set_geometry()</code> function:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_scale_sf =<span class="st"> </span><span class="kw">st_set_geometry</span>(nz, nz_scale)</code></pre></div>
 </div>
 <div id="clipping" class="section level3">
 <h3><span class="header-section-number">5.3.5</span> Clipping</h3>
@@ -692,7 +692,7 @@ y =<span class="st"> </span>b[<span class="dv">2</span>]
 x_and_y =<span class="st"> </span><span class="kw">st_intersection</span>(x, y)
 <span class="kw">plot</span>(b)
 <span class="kw">plot</span>(x_and_y, <span class="dt">col =</span> <span class="st">&quot;lightgrey&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>) <span class="co"># color intersecting area</span></code></pre></div>
-<p><img src="figures/unnamed-chunk-47-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-51-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>The subsequent code chunk demonstrate how this works for all combinations of the ‘Venn’ diagram representing <code>x</code> and <code>y</code>, inspired by <a href="http://r4ds.had.co.nz/transform.html#logical-operators">Figure 5.1</a> of the book R for Data Science <span class="citation">(Grolemund and Wickham <a href="#ref-grolemund_r_2016">2016</a>)</span>. <!-- Todo: reference r4ds --></p>
 <div class="figure" style="text-align: center"><span id="fig:venn-clip"></span>
 <img src="figures/venn-clip-1.png" alt="Spatial equivalents of logical operators." width="576" />
