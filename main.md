@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservef42981a9dbac6ac1
+preserve03baf15db8d0d732
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3122,7 +3122,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve5a13dc061570e6c0
+preserve1a7a38134028809f
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3667,9 +3667,11 @@ This chapter builds on this content by demonstrating how to modify the geometry 
 
 Section \@ref(geo-vec) covers transforming vector geometries with 'unary' and 'binary' operations.
 <!-- TODO: add something on n-ary ops (RL) -->
-Unary operations work on a single geometry in isolation and include simplification of lines and polygons to reduce to reduce the number of vertices in (and memory consumed by) detailed geometric shapes, buffers and centroids and shifting/scaling/rotating single geometries using 'affine transformations' (sections \@ref(simplification) to \@ref(affine-transformations)).
-Binary transformations modify one geometry based on the shape of another and include clipping (\@ref(clipping)), and geometry unions (\@ref(geometry-unions)).
-Type transformations (from few multipolygons to many polygons, for example) are demonstrated in section \@ref(type-transformations) and 'rasterization' is covered in section \@ref(rasterization) respectively.
+Unary operations work on a single geometry in isolation.
+This includes simplification of lines and polygons, buffers and centroids and shifting/scaling/rotating single geometries using 'affine transformations' (sections \@ref(simplification) to \@ref(affine-transformations)).
+Binary transformations modify one geometry based on the shape of another.
+This includes clipping and geometry unions, covered in sections \@ref(clipping) and \@ref(geometry-unions) respectively.
+Type transformations (from a polygon to a line, for example) are demonstrated in section \@ref(type-transformations) and 'rasterization' is covered in section \@ref(rasterization).
 
 Section \@ref(geo-ras) covers geometric transformations on raster objects.
 This involves changing the size and number of the underlying pixels, and assigning them new values.
@@ -6000,7 +6002,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve56a7c301f306ad29
+preserve716ef5fc5dcdbc0c
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
