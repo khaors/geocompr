@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve4f4e00c169cd7847
+preserve734f0ac2135d6fce
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3122,7 +3122,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve994513a9a1138d3b
+preserve481ddf4d8013e3f7
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4094,7 +4094,7 @@ This could be done using the nearest neighbor method (`ngb`).
 In this method, value of the output cell is calculated based on the nearest cell center of the input raster.
 
 For example, we want to change the CRS to WGS 84. 
-It can be desired when we want to visualize a raster data on top of a web basemaps, such as the Google or OpenStreetMap map tiles.
+It can be desired when we want to visualize a raster data on top of a web basemap, such as the Google or OpenStreetMap map tiles.
 The first step is to obtain the proj4 definition of this CRS, which can be done using the [http://spatialreference.org](http://spatialreference.org/ref/epsg/wgs-84/) webpage. 
 The second and last step is to define the reprojection method in the `projectRaster()` function, which in case of categorical data is the nearest neighbor method (`ngb`):
 
@@ -6002,7 +6002,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveb8b430c75d0b48d4
+preservec08b7d5577f069b9
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
