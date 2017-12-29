@@ -158,7 +158,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.3" data-path="spatial-class.html"><a href="spatial-class.html#crs-intro"><i class="fa fa-check"></i><b>2.3</b> Coordinate Reference Systems</a><ul>
 <li class="chapter" data-level="2.3.1" data-path="spatial-class.html"><a href="spatial-class.html#geographic-coordinate-systems"><i class="fa fa-check"></i><b>2.3.1</b> Geographic coordinate systems</a></li>
 <li class="chapter" data-level="2.3.2" data-path="spatial-class.html"><a href="spatial-class.html#projected-coordinate-systems"><i class="fa fa-check"></i><b>2.3.2</b> Projected coordinate systems</a></li>
-<li class="chapter" data-level="2.3.3" data-path="spatial-class.html"><a href="spatial-class.html#crss-in-r"><i class="fa fa-check"></i><b>2.3.3</b> CRSs in R</a></li>
+<li class="chapter" data-level="2.3.3" data-path="spatial-class.html"><a href="spatial-class.html#crs-in-r"><i class="fa fa-check"></i><b>2.3.3</b> CRSs in R</a></li>
 </ul></li>
 <li class="chapter" data-level="2.4" data-path="spatial-class.html"><a href="spatial-class.html#units"><i class="fa fa-check"></i><b>2.4</b> Units</a></li>
 <li class="chapter" data-level="2.5" data-path="spatial-class.html"><a href="spatial-class.html#ex2"><i class="fa fa-check"></i><b>2.5</b> Exercises</a></li>
@@ -422,7 +422,7 @@ Figure 5.1: Buffer on vector represenations of London with a geographic (left) a
 <span class="co">#&gt; Coordinate Reference System:</span>
 <span class="co">#&gt;   EPSG: 4326 </span>
 <span class="co">#&gt;   proj4string: &quot;+proj=longlat +datum=WGS84 +no_defs&quot;</span></code></pre></div>
-<p>CRSs in the <strong>sf</strong> package be define using their <code>epsg</code> code or a <code>proj4string</code> definition (see section <a href="#crs-in-r"><strong>??</strong></a>).</p>
+<p>CRSs in the <strong>sf</strong> package be define using their <code>epsg</code> code or a <code>proj4string</code> definition (see section <a href="spatial-class.html#crs-in-r">2.3.3</a>).</p>
 <p>Let’s create a new version of <code>cycle_hire_osm</code> in a projected CRS, using the <code>epsg</code> number of 27700:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cycle_hire_osm_projected =<span class="st"> </span><span class="kw">st_transform</span>(cycle_hire_osm, <span class="dv">27700</span>)
 <span class="kw">st_crs</span>(cycle_hire_osm_projected)
