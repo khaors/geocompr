@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve03baf15db8d0d732
+preserve74a0e1b8be955690
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3122,7 +3122,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve1a7a38134028809f
+preserveb471dad5cb62aff4
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3668,7 +3668,7 @@ This chapter builds on this content by demonstrating how to modify the geometry 
 Section \@ref(geo-vec) covers transforming vector geometries with 'unary' and 'binary' operations.
 <!-- TODO: add something on n-ary ops (RL) -->
 Unary operations work on a single geometry in isolation.
-This includes simplification of lines and polygons, buffers and centroids and shifting/scaling/rotating single geometries using 'affine transformations' (sections \@ref(simplification) to \@ref(affine-transformations)).
+This includes simplification (of lines and polygons), the creation of buffers and centroids, and shifting/scaling/rotating single geometries using 'affine transformations' (sections \@ref(simplification) to \@ref(affine-transformations)).
 Binary transformations modify one geometry based on the shape of another.
 This includes clipping and geometry unions, covered in sections \@ref(clipping) and \@ref(geometry-unions) respectively.
 Type transformations (from a polygon to a line, for example) are demonstrated in section \@ref(type-transformations) and 'rasterization' is covered in section \@ref(rasterization).
@@ -3677,7 +3677,7 @@ Section \@ref(geo-ras) covers geometric transformations on raster objects.
 This involves changing the size and number of the underlying pixels, and assigning them new values.
 It teaches how to change the resolution (also called raster aggregation and disaggregation  - see section \@ref(ras-agg)), the extent and the origin of a raster.
 These operations are especially useful if one would like to align raster datasets from diverse sources (see section \@ref(raster-alignment)).
-Only making sure that these rasters share the same header information allows the jointly usage of map algebra operations (see section \@ref(map-algebra)). 
+Aligned raster objects share the same header information, allowing them to be processed using map algebra operations, described in section \@ref(map-algebra). 
 
 A vital type of geometry transformation is *reprojecting* from one coordinate reference system (CRS) to another.
 Because of the importance of reprojection, introduced in Chapter \@ref(spatial-class), and the fact that it applies to raster and vector geometries alike, it is the topic of the first section in this chapter.
@@ -6002,7 +6002,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve716ef5fc5dcdbc0c
+preservefd514504e203adfb
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
