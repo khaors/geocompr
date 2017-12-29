@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve734f0ac2135d6fce
+preserve377be141239f18c1
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3122,7 +3122,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve481ddf4d8013e3f7
+preserve965dc76d6f08fb50
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4241,15 +4241,13 @@ On the other hand, this algorithm simplify objects on a per-geometry basis, and 
 This could be seen on the middle map in Figure \@ref(fig:us-simp), where polygons of single states are splitted creating holes or overlapping each other.
 An alternative simplification method can be used to solve this issue, such as the Visvalingam algorithm implemented in the **rmapshaper** package's function `ms_simplify()`.
 <!-- https://bost.ocks.org/mike/simplify/ -->
-In the below example, we would simplified the `us_states2163` object using only 0.1% of original data vertices (argument `keep`), and also assure that all of the original objects (states) would be be kept (argument `keep_shapes`).
+In the below example, we would simplified the `us_states2163` object using only 0.5% of original data vertices (argument `keep`), and also assure that all of the original objects (states) would be be kept (argument `keep_shapes`).
 
 
 ```r
 # proportion of points to retain (0-1; default 0.05)
 us_states_simp2 = rmapshaper::ms_simplify(us_states2163, keep = 0.005,
                                           keep_shapes = TRUE)
-#> Warning in value[[3L]](cond): Could not convert column NA to class units.
-#> Returning as numeric
 ```
 
 Finally, the visual comparison of the original dataset and two simplified versions shows differences between the Douglas-Peucker (`st_simplify`) and Visvalingam (`ms_simplify`) algorithms outputs (Figure \@ref(fig:us-simp)):
@@ -6002,7 +6000,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservec08b7d5577f069b9
+preserve0e28c8d41e3ab91e
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
