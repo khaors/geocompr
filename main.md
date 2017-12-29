@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve377be141239f18c1
+preserveebf84ecd816b7346
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3122,7 +3122,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve965dc76d6f08fb50
+preserve14a8bf22b723bbea
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6000,7 +6000,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve0e28c8d41e3ab91e
+preservef59b82327f2bb453
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6232,8 +6232,8 @@ zones_attr = group_by(od, o) %>%
   rename(geo_code = o)
 ```
 
-The preceding code chunk build-on techniques that have already been covered, in Chapter \@ref(attr).
-To consildate and extend this knowledge, it is worth outlining the three stages that the chained operation accomplished:
+What just happened?
+After the `od` dataset was read-in, the chained operation accomplished three operations:
 
 - Grouping the data by zone of origin (contained in the column `o`).
 - Aggregation of the variables in the `od` dataset *if they were numeric*. This stage calculates the total number of people living in each zone by mode of transport.^[
@@ -6241,7 +6241,8 @@ the `_if` affix requires a `TRUE`/`FALSE` question to be asked of the variables,
 ]
 - Renaming the grouping variable `o` so it matches the ID column `geo_code` in the `zones` object.
 
-The resulting object `zones_attr` is a data frame with rows representing zones and an ID variable that matches the IDs of the `zones` dataset (this is verified below):
+The resulting object `zones_attr` is a data frame with rows representing zones and an ID variable.
+We can verify that the IDs match the zone dataset with the `%in%` operator as follows:
 
 
 ```r
@@ -6250,8 +6251,7 @@ summary(zones_attr$geo_code %in% zones$geo_code)
 #> logical     102
 ```
 
-After preprocessing the attribute data it is in a format that can be joined directly onto the zones.
-As illustrated in the summary of the resulting object, the result is a geographic object with useful attributes including population of travelers (almost 1/4 of a million) and their main mode of travel (by bicycle, foot, car and train):
+Now the attribute data has been aggregated, it is in a form that can be joined onto the zones using the joining function `left_join()`:
 
 
 ```r
@@ -6263,6 +6263,12 @@ names(zones)
 #> [1] "geo_code"   "name"       "all"        "bicycle"    "foot"      
 #> [6] "car_driver" "train"      "geometry"
 ```
+
+The result is an updated `zones` dataset that contains new columns representing the total number of trips originating in each zone in the study area (almost 1/4 of a million) and their mode of travel (by bicycle, foot, car and train).
+The geographic distribution of trip origins is illustrated with a choropleth map in Figure \@ref(fig:zones).
+This shows that between 0 and 5,000 trips originate from zones in the study area, with higher numbers of trips being made by people living near the centre of Bristol and fewer on the outskirts.
+Why is this? Remember that we are only dealing with *intra-regional* trips:
+the low trip numbers in the outskirts of the region can be explained by the fact that many people in these peripheral zones will travel to other regions.
 
 <div class="figure" style="text-align: center">
 <img src="https://user-images.githubusercontent.com/1825120/34133431-8514e494-e44c-11e7-93e2-819ff81ea5ca.png" alt="Regional boundaries (the thick black line represents the Travel to Work Area (TTWA), the thinner black boundary represents the OSM boundary) for Bristol and the number of people working in the (TTW) per zone."  />
