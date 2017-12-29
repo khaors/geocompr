@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2017-12-28'
+date: '2017-12-29'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2017-12-28 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2017-12-29 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve4b17caab9a65216e
+preservef949a4f32c6f5cf8
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3122,7 +3122,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve60948c034205b63b
+preserve424a30ff70deefe3
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6000,7 +6000,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveb6dbcde4edd9548c
+preserve2e8c34473ba143c1
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6109,13 +6109,19 @@ We will explore how movement patterns can be understood at multiple geographic l
 Their features are segments which can be assigned values representing 'flow', the number of people expected to use a particular street or path.
 - **Agents**: these are the lowest-level but hardest to model entities in transport systems --- mobile entities like you and me.
 
-These six levels of analysis show that transport systems are highly complex, even before accounting for the innevitable fact that all of them are constantly evolving in continuous time.
+Much transport research use on only a few of these because models involving all six levels are complex and computationally demanding [@horni_multiagent_2016].
+Beyond geographic levels, the basic unit of analysis in most transport models is the 'trip', a single purpose journey from an orgin 'A' to a destination 'B' [@hollander_transport_2016].
+Trips join-up the six geographic levels: they are usually represented as *desire lines* connecting *zone* centroids (*nodes*), they can be allocated onto the *route network* as *routes*, and are made by people who can be represented as *agents*.
+
+An addition complication is time.
+Although many trips are regular and predictable --- such as the daily commute to work --- transport systems are dynamic and constantly evolving at many levels of temporal resolution.
 The purpose of geographic transport modelling can be interpretted as simplifying this complexity in a way that captures the essence of transport problems.
+Selecting an appropriate level of geographic analysis can help simplify this complexity, to capture the essence of a transport system without loosing its most important features and variables [@hollander_transport_2016].
 
 Typically models are designed to solve a particular problem.
 For this reason this chapter is based around a policy scenario that asks:
-how to increase walking and cycling?
-We will use input data from Bristol, a coastal city in the West of England, described in the next section.
+how to increase walking and cycling in the city of Bristol?
+The case study city is a coastal settlement in the West of England, described in the next section.
 
 <!-- Idea: make it about reducing CO2 emissions instead. Thoughts? + Multi-model - more complex -->
 

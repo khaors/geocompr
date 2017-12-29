@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2017-12-28">
+<meta name="date" content="2017-12-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -317,8 +317,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><strong>Route networks</strong>: these represent the system of roads, paths and other linear features in an area. They can be represented as purely geographic entities or as a graph. Their features are segments which can be assigned values representing ‘flow’, the number of people expected to use a particular street or path.</li>
 <li><strong>Agents</strong>: these are the lowest-level but hardest to model entities in transport systems — mobile entities like you and me.</li>
 </ul>
-<p>These six levels of analysis show that transport systems are highly complex, even before accounting for the innevitable fact that all of them are constantly evolving in continuous time. The purpose of geographic transport modelling can be interpretted as simplifying this complexity in a way that captures the essence of transport problems.</p>
-<p>Typically models are designed to solve a particular problem. For this reason this chapter is based around a policy scenario that asks: how to increase walking and cycling? We will use input data from Bristol, a coastal city in the West of England, described in the next section.</p>
+<p>Much transport research use on only a few of these because models involving all six levels are complex and computationally demanding <span class="citation">(<span class="citeproc-not-found" data-reference-id="horni_multiagent_2016"><strong>???</strong></span>)</span>. Beyond geographic levels, the basic unit of analysis in most transport models is the ‘trip’, a single purpose journey from an orgin ‘A’ to a destination ‘B’ <span class="citation">(Hollander <a href="#ref-hollander_transport_2016">2016</a>)</span>. Trips join-up the six geographic levels: they are usually represented as <em>desire lines</em> connecting <em>zone</em> centroids (<em>nodes</em>), they can be allocated onto the <em>route network</em> as <em>routes</em>, and are made by people who can be represented as <em>agents</em>.</p>
+<p>An addition complication is time. Although many trips are regular and predictable — such as the daily commute to work — transport systems are dynamic and constantly evolving at many levels of temporal resolution. The purpose of geographic transport modelling can be interpretted as simplifying this complexity in a way that captures the essence of transport problems. Selecting an appropriate level of geographic analysis can help simplify this complexity, to capture the essence of a transport system without loosing its most important features and variables <span class="citation">(Hollander <a href="#ref-hollander_transport_2016">2016</a>)</span>.</p>
+<p>Typically models are designed to solve a particular problem. For this reason this chapter is based around a policy scenario that asks: how to increase walking and cycling in the city of Bristol? The case study city is a coastal settlement in the West of England, described in the next section.</p>
 <!-- Idea: make it about reducing CO2 emissions instead. Thoughts? + Multi-model - more complex -->
 </div>
 <div id="bris-case" class="section level2">
@@ -543,6 +544,9 @@ e =<span class="st"> </span>igraph::<span class="kw">edge_betweenness</span>(way
 </div>
 <div id="ref-rodrigue_geography_2013">
 <p>Rodrigue, Jean-Paul, Claude Comtois, and Brian Slack. 2013. <em>The Geography of Transport Systems</em>. 3 edition. London ; New York: Routledge.</p>
+</div>
+<div id="ref-hollander_transport_2016">
+<p>Hollander, Yaron. 2016. <em>Transport Modelling for a Complete Beginner</em>. CTthink!</p>
 </div>
 <div id="ref-bristol_city_council_deprivation_2015">
 <p>Bristol City Council. 2015. “Deprivation in Bristol 2015.” <a href="https://www.bristol.gov.uk/statistics-census-information/deprivation" class="uri">https://www.bristol.gov.uk/statistics-census-information/deprivation</a>.</p>
