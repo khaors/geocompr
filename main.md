@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve597ba2eb7cd896ab
+preserve17f4dbe0f3c5381a
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3122,7 +3122,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveb8947005e072ad80
+preservebf150797082ace4d
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6002,7 +6002,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve5c2f4099b7115bad
+preservec602bb2984cf3b5a
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6111,7 +6111,7 @@ We will explore how movement patterns can be understood at multiple geographic l
 Their features are segments which can be assigned values representing 'flow', the number of people expected to use a particular street or path.
 - **Agents**: these are the lowest-level but hardest to model entities in transport systems --- mobile entities like you and me.
 
-Much transport research use on only a few of these because models involving all six levels, such as [MATSim](http://www.matsim.org/) are complex and computationally demanding [@horni_multi-agent_2016].
+Much transport research use on only a few of these because models involving all six levels, such as [MATSim](http://www.matsim.org/), are complex and computationally demanding [@horni_multi-agent_2016].
 Beyond geographic levels, the basic unit of analysis in most transport models is the 'trip', a single purpose journey from an orgin 'A' to a destination 'B' [@hollander_transport_2016].
 Trips join-up the six geographic levels: they are usually represented as *desire lines* connecting *zone* centroids (*nodes*), they can be allocated onto the *route network* as *routes*, and are made by people who can be represented as *agents*.
 
