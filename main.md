@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveb0061b612750cb26
+preserve6e8616b60dc00431
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservef2b5f2cbe0dd0ca4
+preservefce1ed8c22935147
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6011,7 +6011,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve4fb259b368e94a78
+preserveb2d100e49a521b2e
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6126,7 +6126,7 @@ Trips join-up the six geographic levels: they are usually represented as *desire
 
 An addition complication is time.
 Although many trips are regular and predictable --- such as the daily commute to work --- transport systems are dynamic and constantly evolving at many levels of temporal resolution.
-The purpose of geographic transport modelling can be interpreted as simplifying this complexity in a way that captures the essence of transport problems.
+The purpose of geographic transport modeling can be interpreted as simplifying this complexity in a way that captures the essence of transport problems.
 Selecting an appropriate level of geographic analysis can help simplify this complexity, to capture the essence of a transport system without loosing its most important features and variables [@hollander_transport_2016].
 
 Typically models are designed to solve a particular problem.
@@ -6169,9 +6169,9 @@ There is therefore a [plan](http://www.cyclingweekly.com/news/interview-bristols
 In this policy context the aim of this chapter, beyond demonstrating how geocomputation with R can be used to support sustainable transport planning, is to provide evidence for decision-makers in Bristol to decide how best to increase the mode share of walking and cycling in particular in the city.
 This high-level aim will be met via the following objectives:
 
-- Describe the geographical pattern of transport behaviour in the city.
+- Describe the geographical pattern of transport behavior in the city.
 - Identify key nodes and potential bottlenecks where walking and cycling potential is likely to be highest.
-- Analyse travel 'desire lines' in the city to identify those with greatest potential for modal shift.
+- Analyze travel 'desire lines' in the city to identify those with greatest potential for modal shift.
 - Building on the desire-line level analysis, identify which routes would most benefit from having dedicated cycleways and improved provision for pedestrians. 
 
 To get the wheels rolling on the practical aspects of this chapter, we begin by loading zonal data on travel patterns.
@@ -6278,7 +6278,7 @@ names(zones)
 The result is an updated `zones` dataset that contains new columns representing the total number of trips originating in each zone in the study area (almost 1/4 of a million) and their mode of travel (by bicycle, foot, car and train).
 The geographic distribution of trip origins is illustrated in the left-hand map in Figure \@ref(fig:zones).
 This shows that most zones have between 0 and 4,000 trips originating from them in the study area.
-More trips are made by people living near the centre of Bristol and fewer on the outskirts.
+More trips are made by people living near the center of Bristol and fewer on the outskirts.
 Why is this? Remember that we are only dealing trips within the study region:
 low trip numbers in the outskirts of the region can be explained by the fact that many people in these peripheral zones will travel to other regions.
 
@@ -6323,7 +6323,7 @@ rail_stations = readRDS("extdata/rail_stations.rds")
 ## Desire lines
 
 We have already loaded data representing desire lines in the dataset `od`.
-This origin-destination (OD) data frame object represents the number of people travelling between the zone represented in `o` and `d`, as illustrated in Table \@ref(tab:od).
+This origin-destination (OD) data frame object represents the number of people traveling between the zone represented in `o` and `d`, as illustrated in Table \@ref(tab:od).
 This subset of the data was using attribute operations described in Chapter \@ref(attr), to arrange the OD data by all trips and then filter-out only the top 5:
 
 
