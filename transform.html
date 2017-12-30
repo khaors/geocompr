@@ -822,7 +822,8 @@ linestring_sf2
 <div id="rasterization" class="section level3">
 <h3><span class="header-section-number">5.3.8</span> Rasterization</h3>
 <p>Rasterization is a conversion between vector objects into rasters. <!-- extended intro --></p>
-<p>The <code>rasterize()</code> function takes an <code>sp</code> object and converts it into a raster with dimensions, resolution and CRS determined by another raster object. <code>rasterize()</code> also takes a <code>fun</code> argument which specifies how attributes are transferred to the raster object.</p>
+<p>The <code>rasterize()</code> function takes an <code>sp</code> of <code>sf</code> object and converts it into a raster with dimensions, resolution and CRS determined by another raster object.</p>
+<p><code>rasterize()</code> also takes a <code>fun</code> argument which specifies how attributes are transferred to the raster object.</p>
 <!-- - vector to raster -->
 <!-- why? map tilling, simple analysis of terrain? -->
 <!-- rasterize() -->
@@ -831,6 +832,7 @@ linestring_sf2
 </div>
 <div id="geo-ras" class="section level2">
 <h2><span class="header-section-number">5.4</span> Geometric operations on raster data</h2>
+<!-- add intro -->
 <!-- two useful citations for into on geometric operations on raster:
 
 > Geometric operations include the shift, rotation and warping of images to a given shape or framework.

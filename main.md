@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve6e8616b60dc00431
+preserve3f8cf161244a27a9
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservefce1ed8c22935147
+preservee004040cc50581ea
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4628,7 +4628,8 @@ linestring_sf2
 Rasterization is a conversion between vector objects into rasters.
 <!-- extended intro -->
 
-The `rasterize()` function takes an `sp` object and converts it into a raster with dimensions, resolution and CRS determined by another raster object.
+The `rasterize()` function takes an `sp` of `sf` object and converts it into a raster with dimensions, resolution and CRS determined by another raster object.
+
 `rasterize()` also takes a `fun` argument which specifies how attributes are transferred to the raster object.
 
 <!-- - vector to raster -->
@@ -4637,6 +4638,8 @@ The `rasterize()` function takes an `sp` object and converts it into a raster wi
 <!-- https://github.com/ecohealthalliance/fasterize -->
 
 ## Geometric operations on raster data {#geo-ras}
+
+<!-- add intro -->
 
 <!-- two useful citations for into on geometric operations on raster:
 
@@ -5948,7 +5951,7 @@ It would have been easier to simply use `map_dfr()`.
 Unfortunately, so far it does not work in harmony with `sf` objects.
 
 The only thing left to do is to convert the spatial point object into a raster (see section \@ref(rasterization)).
-The `sf` object, `shops` is converted into a raster having the same parameters (dimensions, resolution, CRS) as the `reclass` object.
+The `sf` object, `shops`, is converted into a raster having the same parameters (dimensions, resolution, CRS) as the `reclass` object.
 Importantly, the `count()` function is used here to calculate the number shops in each cell.
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">If the `shop` column were used instead of the `osm_id` column, we would have retrieved fewer shops per grid cell. 
@@ -6011,7 +6014,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveb2d100e49a521b2e
+preserve653ff956a2a7d806
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 

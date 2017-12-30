@@ -674,7 +674,7 @@ if (<span class="kw">any</span>(ind)) {
 shops =<span class="st"> </span><span class="kw">map</span>(shops, dplyr::select, osm_id, shop) %&gt;%
 <span class="st">  </span><span class="kw">reduce</span>(rbind)</code></pre></div>
 <p>It would have been easier to simply use <code>map_dfr()</code>. Unfortunately, so far it does not work in harmony with <code>sf</code> objects.</p>
-<p>The only thing left to do is to convert the spatial point object into a raster (see section <a href="transform.html#rasterization">5.3.8</a>). The <code>sf</code> object, <code>shops</code> is converted into a raster having the same parameters (dimensions, resolution, CRS) as the <code>reclass</code> object. Importantly, the <code>count()</code> function is used here to calculate the number shops in each cell.</p>
+<p>The only thing left to do is to convert the spatial point object into a raster (see section <a href="transform.html#rasterization">5.3.8</a>). The <code>sf</code> object, <code>shops</code>, is converted into a raster having the same parameters (dimensions, resolution, CRS) as the <code>reclass</code> object. Importantly, the <code>count()</code> function is used here to calculate the number shops in each cell.</p>
 
 <div class="rmdnote">
 If the <code>shop</code> column were used instead of the <code>osm_id</code> column, we would have retrieved fewer shops per grid cell. This is because the <code>shop</code> column contains <code>NA</code> values, which the <code>count()</code> function omits when rasterizing vector objects.
