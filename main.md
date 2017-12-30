@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservee4c80defe609bbd7
+preserve7c32f7ab15015842
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve6ee725faf27eeda0
+preserve1066495ce0578eb7
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4623,7 +4623,14 @@ linestring_sf2
 <!-- sp -> sf -->
 <!-- stars; https://github.com/r-spatial/stars/blob/master/vignettes/blog1.Rmd -->
 
-### Rasterization
+### Rasterization {#rasterization}
+
+Rasterization is a conversion between vector objects into rasters.
+<!-- extended intro -->
+
+The `rasterize()` function takes an `sp` object and converts it into a raster with dimensions, resolution and CRS determined by another raster object.
+`rasterize()` also takes a `fun` argument which specifies how attributes are transferred to the raster object.
+
 <!-- - vector to raster -->
 <!-- why? map tilling, simple analysis of terrain? -->
 <!-- rasterize() -->
@@ -5940,10 +5947,9 @@ shops = map(shops, dplyr::select, osm_id, shop) %>%
 It would have been easier to simply use `map_dfr()`. 
 Unfortunately, so far it does not work in harmony with `sf` objects.
 
-The only thing left to do is to convert the spatial point object into a raster.
-`rasterize()` does exactly this.
-This **raster** function takes an `sp` or `sf` object (`shops` in this case), and converts it into a raster with dimensions, resolution and CRS determined by another raster object (the raster stack `reclass` in this case).
-`rasterize()` also takes a `fun` argument which specifies how attributes are transferred to the raster object (`count()` is used in this case to calculate the number shops in each cell).
+The only thing left to do is to convert the spatial point object into a raster (see section \@ref(rasterization)).
+The `sf` object, `shops` is converted into a raster having the same parameters (dimensions, resolution, CRS) as the `reclass` object.
+Importantly, the `count()` function is used here to calculate the number shops in each cell.
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">If the `shop` column were used instead of the `osm_id` column, we would have retrieved fewer shops per grid cell. 
 This is because the `shop` column contains `NA` values, which the `count()` function omits when rasterizing vector objects.</div>\EndKnitrBlock{rmdnote}
@@ -6005,7 +6011,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservecf22150221a1dae9
+preserve27a74f062fedf644
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
