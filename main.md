@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve3f8cf161244a27a9
+preservef39435ba7e4dd119
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservee004040cc50581ea
+preserved52c1ffcd50db804
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4192,7 +4192,7 @@ summary(con_raster_ea)
 
 This section is about operations that in some way change the geometry of vector (`sf`) objects.
 It is more advanced than the spatial data operations presented in the previous Chapter (in section \@ref(spatial-vec)) because here we drill down into the geometry:
-the functions discussed in this section work on objects of class `sfc` (simple feature geometry collections) in addition to objects of class `sf`.
+the functions discussed in this section work on objects of class `sfc` in addition to objects of class `sf`.
 
 ### Simplification
 
@@ -6014,7 +6014,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve653ff956a2a7d806
+preserve438eea00be9c1626
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
