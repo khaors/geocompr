@@ -573,7 +573,7 @@ sel =<span class="st"> </span><span class="kw">st_is_within_distance</span>(cycl
 <p>Like attribute data aggregation, covered in section <a href="attr.html#vector-attribute-aggregation">3.2.2</a>, spatial data aggregation can be a way of <em>condensing</em> data. Aggregated data show some statistic about a variable (typically average or total) in relation to some kind of <em>grouping variable</em>. Section <a href="attr.html#vector-attribute-aggregation">3.2.2</a> demonstrated how <code>aggregate()</code> and <code>group_by() %&gt;% summarize()</code> condense data based on attribute variables. This section demonstrates how the same functions work using spatial grouping variables.</p>
 <p>Returning to the example of New Zealand, imagine you want to find out the average height of high points in each region. This is a good example of spatial aggregation: it is the geometry of the source (<code>y</code> or <code>nz</code> in this case) that defines how values in the target object (<code>x</code> or <code>nz_height</code>) are grouped. This is illustrated using the base <code>aggregate()</code> function below:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_avheight =<span class="st"> </span><span class="kw">aggregate</span>(<span class="dt">x =</span> nz_height, nz, <span class="dt">FUN =</span> mean)</code></pre></div>
-<p>The result of the previous command is an <code>sf</code> object with the same geometry as the (spatial) aggregating object (<code>nz</code>).<a href="#fn23" class="footnoteRef" id="fnref23"><sup>23</sup></a> The result of the previous operation is illustrated in Figure <a href="spatial-operations.html#fig:spatial-aggregation">4.5</a>. The same result can also be generated using the ‘tidy’ functions <code>group_by()</code> and <code>summarize()</code> (used in combination with <code>st_join()</code>):</p>
+<p>The result of the previous command is an <code>sf</code> object with the same geometry as the (spatial) aggregating object (<code>nz</code>).<a href="#fn24" class="footnoteRef" id="fnref24"><sup>24</sup></a> The result of the previous operation is illustrated in Figure <a href="spatial-operations.html#fig:spatial-aggregation">4.5</a>. The same result can also be generated using the ‘tidy’ functions <code>group_by()</code> and <code>summarize()</code> (used in combination with <code>st_join()</code>):</p>
 <div class="figure" style="text-align: center"><span id="fig:spatial-aggregation"></span>
 <img src="figures/spatial-aggregation-1.png" alt="Average height of high points (stored in the `nz_height` object) across the regions of New Zealand (stored in `nz`." width="576" />
 <p class="caption">
@@ -814,8 +814,8 @@ aut_ch =<span class="st"> </span><span class="kw">merge</span>(aut, ch)</code></
 </div>
 <div class="footnotes">
 <hr />
-<ol start="23">
-<li id="fn23"><p>This can be verified with <code>identical(nz$geometry, nz_avheight$geometry)</code>.<a href="spatial-operations.html#fnref23">↩</a></p></li>
+<ol start="24">
+<li id="fn24"><p>This can be verified with <code>identical(nz$geometry, nz_avheight$geometry)</code>.<a href="spatial-operations.html#fnref24">↩</a></p></li>
 </ol>
 </div>
             </section>
