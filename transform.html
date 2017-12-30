@@ -824,10 +824,15 @@ linestring_sf2
 <p>Rasterization is a conversion between vector objects into rasters. <!-- extended intro --></p>
 <p>The <code>rasterize()</code> function takes an <code>sp</code> of <code>sf</code> object and converts it into a raster with dimensions, resolution and CRS determined by another raster object.</p>
 <p><code>rasterize()</code> also takes a <code>fun</code> argument which specifies how attributes are transferred to the raster object.</p>
+<!-- explain dependency of the pixel size -->
+<!-- polygon rasterization is based on the position of the center of the pixel -->
+<!-- different fun options -->
 <!-- - vector to raster -->
 <!-- why? map tilling, simple analysis of terrain? -->
+<!-- suited for mathematical modeling and quantitative analysis -->
 <!-- rasterize() -->
 <!-- https://github.com/ecohealthalliance/fasterize -->
+<!-- gdal_rasterize -->
 </div>
 </div>
 <div id="geo-ras" class="section level2">

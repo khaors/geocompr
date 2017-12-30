@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservef39435ba7e4dd119
+preserve732d74f5bc15c055
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserved52c1ffcd50db804
+preserve631f2df07536c11b
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4632,10 +4632,15 @@ The `rasterize()` function takes an `sp` of `sf` object and converts it into a r
 
 `rasterize()` also takes a `fun` argument which specifies how attributes are transferred to the raster object.
 
+<!-- explain dependency of the pixel size -->
+<!-- polygon rasterization is based on the position of the center of the pixel -->
+<!-- different fun options -->
 <!-- - vector to raster -->
 <!-- why? map tilling, simple analysis of terrain? -->
+<!-- suited for mathematical modeling and quantitative analysis -->
 <!-- rasterize() -->
 <!-- https://github.com/ecohealthalliance/fasterize -->
+<!-- gdal_rasterize -->
 
 ## Geometric operations on raster data {#geo-ras}
 
@@ -6014,7 +6019,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve438eea00be9c1626
+preserve15b5ee875432abf3
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
