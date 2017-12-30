@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve59fb378e7ea16a15
+preservee4c80defe609bbd7
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve1594dcd49edd84fd
+preserve6ee725faf27eeda0
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4389,7 +4389,7 @@ Finally, the newly created geometries could replace the old ones with the `st_se
 nz_scale_sf = st_set_geometry(nz, nz_scale)
 ```
 
-### Clipping 
+### Clipping {#clipping}
 
 Spatial clipping is a form of spatial subsetting that involves changes to the `geometry` columns of at least some of the affected features.
 
@@ -5706,7 +5706,7 @@ polys = rasterToPolygons(pop_agg[pop_agg > 500000, drop = FALSE]) %>%
 Plotting these polygons reveals eight metropolitan regions (Fig. \@ref(fig:metro-areas)).
 Each region consists of one or more polygons (raster cells).
 It would be nice if we could join all polygons belonging to one region.
-One approach is to union the polygons (see section \@ref(spatial-data-aggregation)).
+One approach is to union the polygons (see section \@ref(clipping)).
 
 
 ```r
@@ -6005,7 +6005,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservea01a3d3c7b920bc6
+preservecf22150221a1dae9
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
