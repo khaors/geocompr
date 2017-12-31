@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2017-12-30">
+<meta name="date" content="2017-12-31">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -205,7 +205,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.1" data-path="transform.html"><a href="transform.html#introduction-2"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
 <li class="chapter" data-level="5.2" data-path="transform.html"><a href="transform.html#reproj-geo-data"><i class="fa fa-check"></i><b>5.2</b> Reprojecting geographic data</a><ul>
 <li class="chapter" data-level="5.2.1" data-path="transform.html"><a href="transform.html#which-crs-to-use"><i class="fa fa-check"></i><b>5.2.1</b> Which CRS to use?</a></li>
-<li class="chapter" data-level="5.2.2" data-path="transform.html"><a href="transform.html#reprojecting-vector-geometries"><i class="fa fa-check"></i><b>5.2.2</b> Reprojecting vector geometries</a></li>
+<li class="chapter" data-level="5.2.2" data-path="transform.html"><a href="transform.html#reproj-vec-geom"><i class="fa fa-check"></i><b>5.2.2</b> Reprojecting vector geometries</a></li>
 <li class="chapter" data-level="5.2.3" data-path="transform.html"><a href="transform.html#reprojecting-raster-geometries"><i class="fa fa-check"></i><b>5.2.3</b> Reprojecting raster geometries</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="transform.html"><a href="transform.html#geo-vec"><i class="fa fa-check"></i><b>5.3</b> Geometric operations on vector data</a><ul>
@@ -391,7 +391,7 @@ Figure 5.1: Buffer on vector represenations of London with a geographic (left) a
 <!-- lnd_utm = st_transform(london, crs = epsg_utm) -->
 <!-- ``` -->
 <p>Another approach to automatically selecting a projected CRS specific to a local dataset is to create an azimuthal equidistant (<a href="https://en.wikipedia.org/wiki/Azimuthal_equidistant_projection">AEQD</a>) projection for the centre-point of the study area. This involves creating a custom CRS (with no EPSG code) with units of meters based on the centrepoint of a dataset. This approach should be used with caution: no other datasets will be compatible with the custom CRS created and results may not be accurate when used on extensive datasets covering hundreds of kilomtres.</p>
-<p>Although we used vector datasets to illustrate the points outlined in this section, the principles apply equally to raster datasets. The subsequent sections explain features of CRS transformation that are unique to each geographic data model, continuing with vector data in section <a href="transform.html#reprojecting-vector-geometries">5.2.2</a> and moving-on to explain how raster transformation is different, in section <a href="transform.html#reprojecting-raster-geometries">5.2.3</a>.</p>
+<p>Although we used vector datasets to illustrate the points outlined in this section, the principles apply equally to raster datasets. The subsequent sections explain features of CRS transformation that are unique to each geographic data model, continuing with vector data in section <a href="#reprojecting-vector-geometries"><strong>??</strong></a> and moving-on to explain how raster transformation is different, in section <a href="transform.html#reprojecting-raster-geometries">5.2.3</a>.</p>
 <!-- This approach is used in the **stplanr** function `geo_select_crs()` which returns a CRS object that can be used in other functions (see `?stplanr::geo_select_aeq` for further details): -->
 <!-- ```{r} -->
 <!-- stplanr::geo_select_aeq(london) -->
@@ -408,7 +408,7 @@ Figure 5.1: Buffer on vector represenations of London with a geographic (left) a
 <!--   qtm(london_buff) -->
 <!-- ``` -->
 </div>
-<div id="reprojecting-vector-geometries" class="section level3">
+<div id="reproj-vec-geom" class="section level3">
 <h3><span class="header-section-number">5.2.2</span> Reprojecting vector geometries</h3>
 <p>Chapter <a href="spatial-class.html#spatial-class">2</a> demonstrated how vector geometries are made-up of points, which combine to create more complex objects such as lines and polygons. Reprojecting vectors thus consists of transforming the coordinates of these points.</p>
 <!-- Depending on projections used, reprojection could be either lossy or lossless. -->
@@ -822,12 +822,19 @@ linestring_sf2
 <div id="rasterization" class="section level3">
 <h3><span class="header-section-number">5.3.8</span> Rasterization</h3>
 <p>Rasterization is a conversion between vector objects into rasters. <!-- extended intro --></p>
-<p>The <code>rasterize()</code> function takes an <code>sp</code> of <code>sf</code> object and converts it into a raster with dimensions, resolution and CRS determined by another raster object.</p>
-<p><code>rasterize()</code> also takes a <code>fun</code> argument which specifies how attributes are transferred to the raster object.</p>
-<!-- explain dependency of the pixel size -->
+<p>The <code>rasterize()</code> function takes an <code>sp</code> of <code>sf</code> object and converts it into a raster with dimensions, resolution and CRS determined by another raster object. <!-- explain dependency of the pixel size --> <!-- \@ref(reproj-vec-geom) --> <!-- point examples --></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">raster_template =<span class="st"> </span><span class="kw">raster</span>(<span class="kw">extent</span>(cycle_hire_osm_projected), <span class="dt">resolution =</span> <span class="dv">1000</span>,
+                         <span class="dt">crs =</span> <span class="kw">st_crs</span>(cycle_hire_osm_projected)$proj4string)
+
+ch_raster1 =<span class="st"> </span><span class="kw">rasterize</span>(cycle_hire_osm_projected, raster_template, <span class="dt">field =</span> <span class="dv">1</span>)
+ch_raster2 =<span class="st"> </span><span class="kw">rasterize</span>(cycle_hire_osm_projected, raster_template, 
+                       <span class="dt">field =</span> <span class="st">&quot;osm_id&quot;</span>, <span class="dt">fun =</span> <span class="st">&quot;count&quot;</span>)
+ch_raster3 =<span class="st"> </span><span class="kw">rasterize</span>(cycle_hire_osm_projected, raster_template, 
+                       <span class="dt">field =</span> <span class="st">&quot;capacity&quot;</span>, <span class="dt">fun =</span> sum)</code></pre></div>
+<p><img src="figures/vector-rasterization1-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><code>rasterize()</code> also takes a <code>fun</code> argument which specifies how attributes are transferred to the raster object. <!-- different fun options --> <!-- filed option - present/absent --></p>
 <!-- polygon rasterization is based on the position of the center of the pixel -->
-<!-- different fun options -->
-<!-- - vector to raster -->
+<!-- getCover? -->
 <!-- why? map tilling, simple analysis of terrain? -->
 <!-- suited for mathematical modeling and quantitative analysis -->
 <!-- rasterize() -->

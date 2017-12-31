@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2017-12-30'
+date: '2017-12-31'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2017-12-30 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2017-12-31 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve732d74f5bc15c055
+preservefc72e676b49617d6
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve631f2df07536c11b
+preservea5651bdba772c0b6
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3908,7 +3908,7 @@ The subsequent sections explain features of CRS transformation that are unique t
 <!-- ``` -->
 
 
-### Reprojecting vector geometries
+### Reprojecting vector geometries {#reproj-vec-geom}
 
 Chapter \@ref(spatial-class) demonstrated how vector geometries are made-up of points, which combine to create more complex objects such as lines and polygons.
 Reprojecting vectors thus consists of transforming the coordinates of these points.
@@ -4629,13 +4629,29 @@ Rasterization is a conversion between vector objects into rasters.
 <!-- extended intro -->
 
 The `rasterize()` function takes an `sp` of `sf` object and converts it into a raster with dimensions, resolution and CRS determined by another raster object.
+<!-- explain dependency of the pixel size -->
+<!-- \@ref(reproj-vec-geom) -->
+<!-- point examples -->
+
+```r
+raster_template = raster(extent(cycle_hire_osm_projected), resolution = 1000,
+                         crs = st_crs(cycle_hire_osm_projected)$proj4string)
+
+ch_raster1 = rasterize(cycle_hire_osm_projected, raster_template, field = 1)
+ch_raster2 = rasterize(cycle_hire_osm_projected, raster_template, 
+                       field = "osm_id", fun = "count")
+ch_raster3 = rasterize(cycle_hire_osm_projected, raster_template, 
+                       field = "capacity", fun = sum)
+```
+
+<img src="figures/vector-rasterization1-1.png" width="576" style="display: block; margin: auto;" />
 
 `rasterize()` also takes a `fun` argument which specifies how attributes are transferred to the raster object.
-
-<!-- explain dependency of the pixel size -->
-<!-- polygon rasterization is based on the position of the center of the pixel -->
 <!-- different fun options -->
-<!-- - vector to raster -->
+<!-- filed option - present/absent -->
+
+<!-- polygon rasterization is based on the position of the center of the pixel -->
+<!-- getCover? -->
 <!-- why? map tilling, simple analysis of terrain? -->
 <!-- suited for mathematical modeling and quantitative analysis -->
 <!-- rasterize() -->
@@ -6019,7 +6035,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve15b5ee875432abf3
+preserve40b380a9763f4d1f
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
