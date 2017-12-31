@@ -822,17 +822,16 @@ linestring_sf2
 <div id="rasterization" class="section level3">
 <h3><span class="header-section-number">5.3.8</span> Rasterization</h3>
 <p>Rasterization is a conversion between vector objects into rasters. <!-- extended intro --></p>
-<p>The <code>rasterize()</code> function takes an <code>sp</code> of <code>sf</code> object and converts it into a raster with dimensions, resolution and CRS determined by another raster object. <!-- explain dependency of the pixel size --> <!-- \@ref(reproj-vec-geom) --> <!-- point examples --></p>
+<p>The <code>rasterize()</code> function takes an <code>sp</code> of <code>sf</code> object and converts it into a raster with dimensions, resolution and CRS determined by another raster object.</p>
+<p><code>rasterize()</code> also takes a <code>fun</code> argument which specifies how attributes are transferred to the raster object. <!-- different fun options --> <!-- filed option - present/absent --> <!-- explain dependency of the pixel size --> <!-- \@ref(reproj-vec-geom) --> <!-- point examples --></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">raster_template =<span class="st"> </span><span class="kw">raster</span>(<span class="kw">extent</span>(cycle_hire_osm_projected), <span class="dt">resolution =</span> <span class="dv">1000</span>,
-                         <span class="dt">crs =</span> <span class="kw">st_crs</span>(cycle_hire_osm_projected)$proj4string)
-
-ch_raster1 =<span class="st"> </span><span class="kw">rasterize</span>(cycle_hire_osm_projected, raster_template, <span class="dt">field =</span> <span class="dv">1</span>)
-ch_raster2 =<span class="st"> </span><span class="kw">rasterize</span>(cycle_hire_osm_projected, raster_template, 
-                       <span class="dt">field =</span> <span class="st">&quot;osm_id&quot;</span>, <span class="dt">fun =</span> <span class="st">&quot;count&quot;</span>)
-ch_raster3 =<span class="st"> </span><span class="kw">rasterize</span>(cycle_hire_osm_projected, raster_template, 
+                         <span class="dt">crs =</span> <span class="kw">st_crs</span>(cycle_hire_osm_projected)$proj4string)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ch_raster1 =<span class="st"> </span><span class="kw">rasterize</span>(cycle_hire_osm_projected, raster_template, <span class="dt">field =</span> <span class="dv">1</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ch_raster2 =<span class="st"> </span><span class="kw">rasterize</span>(cycle_hire_osm_projected, raster_template, 
+                       <span class="dt">field =</span> <span class="st">&quot;osm_id&quot;</span>, <span class="dt">fun =</span> <span class="st">&quot;count&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ch_raster3 =<span class="st"> </span><span class="kw">rasterize</span>(cycle_hire_osm_projected, raster_template, 
                        <span class="dt">field =</span> <span class="st">&quot;capacity&quot;</span>, <span class="dt">fun =</span> sum)</code></pre></div>
 <p><img src="figures/vector-rasterization1-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p><code>rasterize()</code> also takes a <code>fun</code> argument which specifies how attributes are transferred to the raster object. <!-- different fun options --> <!-- filed option - present/absent --></p>
 <!-- polygon rasterization is based on the position of the center of the pixel -->
 <!-- getCover? -->
 <!-- why? map tilling, simple analysis of terrain? -->

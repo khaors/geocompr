@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservefc72e676b49617d6
+preservee974423ba92cdc3a
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservea5651bdba772c0b6
+preserve497393f3c898cf57
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4629,6 +4629,10 @@ Rasterization is a conversion between vector objects into rasters.
 <!-- extended intro -->
 
 The `rasterize()` function takes an `sp` of `sf` object and converts it into a raster with dimensions, resolution and CRS determined by another raster object.
+
+`rasterize()` also takes a `fun` argument which specifies how attributes are transferred to the raster object.
+<!-- different fun options -->
+<!-- filed option - present/absent -->
 <!-- explain dependency of the pixel size -->
 <!-- \@ref(reproj-vec-geom) -->
 <!-- point examples -->
@@ -4636,19 +4640,26 @@ The `rasterize()` function takes an `sp` of `sf` object and converts it into a r
 ```r
 raster_template = raster(extent(cycle_hire_osm_projected), resolution = 1000,
                          crs = st_crs(cycle_hire_osm_projected)$proj4string)
+```
 
+
+```r
 ch_raster1 = rasterize(cycle_hire_osm_projected, raster_template, field = 1)
+```
+
+
+```r
 ch_raster2 = rasterize(cycle_hire_osm_projected, raster_template, 
                        field = "osm_id", fun = "count")
+```
+
+
+```r
 ch_raster3 = rasterize(cycle_hire_osm_projected, raster_template, 
                        field = "capacity", fun = sum)
 ```
 
 <img src="figures/vector-rasterization1-1.png" width="576" style="display: block; margin: auto;" />
-
-`rasterize()` also takes a `fun` argument which specifies how attributes are transferred to the raster object.
-<!-- different fun options -->
-<!-- filed option - present/absent -->
 
 <!-- polygon rasterization is based on the position of the center of the pixel -->
 <!-- getCover? -->
@@ -6035,7 +6046,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve40b380a9763f4d1f
+preserve346600bd218701a2
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
