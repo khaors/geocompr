@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveacecd3b9e7810e27
+preserve43c01e60da5b700d
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservee94010cf1838e72c
+preserve2c7e39abd7d60001
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4639,7 +4639,7 @@ raster_template = raster(extent(cycle_hire_osm_projected), resolution = 1000,
 
 Rasterization is very flexible operation and depends not only on a template raster, but also on the type of an input vector (e.g. points, polygons) and given arguments.
 
-Let's try three different approaches to rasterize points - cycle hire locations across London.
+Let's try three different approaches to rasterize points - cycle hire locations across London (Figure \@ref(reproj-vec-geom):A).
 Decision about arguments used should depend on a rasterization purpose.
 The simplest case is when we want to create a raster containing areas with cycle hire points (also known as a presence/absence raster).
 In this situation, `rasterize()` expects only three arguments - an input vector data, a raster template, and a value to be transferred to all non-empty cells (Figure \@ref(reproj-vec-geom):B).
@@ -6059,7 +6059,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve53963d3f058abb6d
+preservea6c7389d49088ca6
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
