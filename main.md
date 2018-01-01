@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservea03327fedf9044ee
+preserveec9aa8f2b5c2af3d
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve8b15de7e0b60c8f7
+preserve093c601ca52fbd9c
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6059,7 +6059,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve3c714594e38f5545
+preserve0aa26abf45b117d1
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6412,26 +6412,93 @@ plot(desire_lines$geometry)
 <p class="caption">(\#fig:desire)Desire lines representing the centrality of Bristol City Centre in the region's transport patterns. The width of the red lines is proportional to commute trips between zones. The 5 black lines represent sample origin-destination data shown in Table 8.1.</p>
 </div>
 
-## Route analysis
+## Routes
 
 ## Nodes on the transport system
 
-Nodes in geographic transport data are zero dimensional features (points) among the predominantly one dimension features (lines) that comprise the network.
+Nodes in geographic transport data are zero dimensional features (points) among the predominantly one dimensional features (lines) that comprise the network.
 There are two types of transport nodes:
 
 1. Nodes not directly on the network such as zone centroids  --- covered in the next section --- or individual origins and destinations such as houses and workplaces.
 2. Nodes that are a part of transport networks, representing individual pathways, intersections between pathways (junctions) and points for entering or exiting a transport network such as bus stops and train stations.
 
 From a mathematical perspective transport networks are simply large graphs.
+The first type of node can be connected to the network with "centroid connectors" [@hollander_transport_2016], the geographic location of which can influence model results, by simulating excessive traffic on streets surrounding zone centroids [@jafari_investigation_2015].
 The second type of nodes are nodes on this graph, each of which is connected by one or more straight 'edges' that represent individual segments on the network.
 We will see how transport networks can be represented as mathematical graphs in section \@ref(route-networks).
 
-The first type of node can be connected to the network with "centroid connectors" [@hollander_transport_2016], the geographic location of which can influence model results, by simulating excessive traffic on streets surrounding zone centroids [@jafari_investigation_2015].
+Public transport stops are particularly important nodes that can represented as either type of node: a bus stop that is part of a road, or a large rail station that is represented by its pedestrian entry point hundreds of meters from railway tracks, to take a couple of examples.
+We will use railway stations to illustrate public transport nodes, in relation to the research question of increasing cycling in Bristol.
+These stations are loaded as follows:
 
 
 ```r
 rail_stations = readRDS("extdata/rail_stations.rds")
 ```
+
+A common barrier preventing people from switching away from cars for commuting to work is that the distance from home to work is too far to walk or cycle.
+Public transport can reduce this barrier by providing an fast and high-volume option for common routes into cities.
+From an active travel perspective public transport 'legs' of longer journeys divide trips into three: 
+
+<!-- Add image to show this if needs be (RL) -->
+- The origin leg, typically from residential areas to public transport stations.
+- The public transport leg, which typically goes from the station nearest a trip's origin to the station nearest its destination.
+- The destination leg, from the station of alighting to the destination.
+
+Building on the analysis conducted in section \@ref(desire-lines), public transport nodes can be used to construct three-part desire lines for trips that can be taken by bus and (the mode used in this example) rail.
+The first stage is to identify the desire lines with most public transport travel, which in this case can be directly because number of trips by train is a variable in the desire lines (the public transport potential could also be estimated using public transport routing services such as [OpenTripPlanner](http://www.opentripplanner.org/)).
+For clarity of method we'll select just the top three desire lines in terms of rails use:
+
+
+```r
+desire_rail = top_n(desire_lines, n = 3, wt = train)
+```
+
+The challenge now is to 'break-up' each of these lines into three pieces, representing travel via public transport nodes.
+This can be done by converting multiline objects in which each feature contains 3 line geometries representing origin, public transport and destination legs of the trip.
+The first leg of the journey can be represented geographically as lines from origin zones to the nearest stations:
+
+
+```r
+od_matrix = as.matrix(line2df(desire_rail))
+rail_matrix = st_coordinates(rail_stations)
+knn_orig = nabor::knn(rail_matrix, query = od_matrix[, c("fx", "fy")], k = 1)
+knn_dest = nabor::knn(rail_matrix, query = od_matrix[, c("tx", "ty")], k = 1)
+```
+
+
+```r
+leg_orig = cbind(od_matrix[, c("fx", "fy")], rail_matrix[knn_orig$nn.idx, ])
+leg_rail = cbind(rail_matrix[knn_orig$nn.idx, ], rail_matrix[knn_dest$nn.idx, ])
+leg_dest = cbind(od_matrix[, c("tx", "ty")], rail_matrix[knn_dest$nn.idx, ])
+```
+
+
+```r
+multi = vector(mode = "list", length = nrow(desire_rail))
+for(i in 1:nrow(desire_rail)) {
+  multi[[i]] = st_multilinestring(list(
+    rbind(leg_orig[i, 1:2], leg_orig[i, 3:4]), 
+    rbind(leg_rail[i, 1:2], leg_rail[i, 3:4]), 
+    rbind(leg_dest[i, 1:2], leg_dest[i, 3:4]) 
+    ))
+}
+legs = st_sf(st_sfc(multi), crs = 4326)
+plot(legs)
+```
+
+<img src="figures/unnamed-chunk-21-1.png" width="576" style="display: block; margin: auto;" />
+
+
+
+
+
+```
+#> tmap mode set to interactive viewing
+```
+
+preserveddf008ae0374ec12
+
 
 ## Route networks
 
@@ -6486,7 +6553,7 @@ e = igraph::edge_betweenness(ways_sln@g)
 plot(ways_sln@sl$geometry, lwd = e / 500)
 ```
 
-<img src="figures/unnamed-chunk-20-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-24-1.png" width="576" style="display: block; margin: auto;" />
 
 
 
@@ -6500,7 +6567,7 @@ plot(path$geometry, col = "red", lwd = 10)
 plot(ways_sln@sl$geometry, add = TRUE)
 ```
 
-<img src="figures/unnamed-chunk-22-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-26-1.png" width="576" style="display: block; margin: auto;" />
 
 
 
