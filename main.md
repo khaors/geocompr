@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve9f7931aa4a486d55
+preserve4b4d7515d39ad15f
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve0304ca970b98ef36
+preserveb9385c08b2dbedcd
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4628,7 +4628,7 @@ linestring_sf2
 Rasterization is a conversion between vector objects into rasters.
 <!-- extended intro -->
 
-The `rasterize()` function takes an `sp` of `sf` object and converts it into a raster with dimensions, resolution and CRS determined by another raster object.
+The `rasterize()` function takes a vector object and converts it into a raster with dimensions, resolution and CRS determined by another raster object.
 
 `rasterize()` also takes a `fun` argument which specifies how attributes are transferred to the raster object.
 <!-- different fun options -->
@@ -4659,7 +4659,10 @@ ch_raster3 = rasterize(cycle_hire_osm_projected, raster_template,
                        field = "capacity", fun = sum)
 ```
 
-<img src="figures/vector-rasterization1-1.png" width="576" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures/vector-rasterization1-1.png" alt="Examples of point's rasterization" width="576" />
+<p class="caption">(\#fig:vector-rasterization1)Examples of point's rasterization</p>
+</div>
 
 <!-- polygon rasterization is based on the position of the center of the pixel -->
 <!-- getCover? -->
@@ -6046,7 +6049,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve1a170ae707642969
+preservee6bb50989d600096
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 

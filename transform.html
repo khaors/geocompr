@@ -822,7 +822,7 @@ linestring_sf2
 <div id="rasterization" class="section level3">
 <h3><span class="header-section-number">5.3.8</span> Rasterization</h3>
 <p>Rasterization is a conversion between vector objects into rasters. <!-- extended intro --></p>
-<p>The <code>rasterize()</code> function takes an <code>sp</code> of <code>sf</code> object and converts it into a raster with dimensions, resolution and CRS determined by another raster object.</p>
+<p>The <code>rasterize()</code> function takes a vector object and converts it into a raster with dimensions, resolution and CRS determined by another raster object.</p>
 <p><code>rasterize()</code> also takes a <code>fun</code> argument which specifies how attributes are transferred to the raster object. <!-- different fun options --> <!-- filed option - present/absent --> <!-- explain dependency of the pixel size --> <!-- \@ref(reproj-vec-geom) --> <!-- point examples --></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">raster_template =<span class="st"> </span><span class="kw">raster</span>(<span class="kw">extent</span>(cycle_hire_osm_projected), <span class="dt">resolution =</span> <span class="dv">1000</span>,
                          <span class="dt">crs =</span> <span class="kw">st_crs</span>(cycle_hire_osm_projected)$proj4string)</code></pre></div>
@@ -831,7 +831,12 @@ linestring_sf2
                        <span class="dt">field =</span> <span class="st">&quot;osm_id&quot;</span>, <span class="dt">fun =</span> <span class="st">&quot;count&quot;</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ch_raster3 =<span class="st"> </span><span class="kw">rasterize</span>(cycle_hire_osm_projected, raster_template, 
                        <span class="dt">field =</span> <span class="st">&quot;capacity&quot;</span>, <span class="dt">fun =</span> sum)</code></pre></div>
-<p><img src="figures/vector-rasterization1-1.png" width="576" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span id="fig:vector-rasterization1"></span>
+<img src="figures/vector-rasterization1-1.png" alt="Examples of point's rasterization" width="576" />
+<p class="caption">
+Figure 5.16: Examples of point’s rasterization
+</p>
+</div>
 <!-- polygon rasterization is based on the position of the center of the pixel -->
 <!-- getCover? -->
 <!-- why? map tilling, simple analysis of terrain? -->
@@ -867,13 +872,13 @@ A transformation is then performed, which converts local image coordinates to re
 <div id="raster-alignment" class="section level3">
 <h3><span class="header-section-number">5.4.2</span> Raster alignment</h3>
 <p>When merging or performing map algebra on rasters, their resolution, projection, origin and/or extent has to match. Otherwise, how should we add the values of one raster with a resolution of 0.2 decimal degrees to a second with a resolution of 1 decimal degree? The same problem arises when we would like to merge satellite imagery from different sensors with different projections and resolutions. We can deal with such mismatches by aligning the rasters.</p>
-<p>This section uses the <code>elev</code> object from <a href="attr.html#manipulating-raster-objects">3.3</a>, which it is available in the <code>spData</code> package. The <code>projectRaster()</code> function reprojects one raster to a desired projection, say from UTM to WGS84. Equally, map algebra operations require the same extent. Following code adds one row and two columns to each side of the raster while setting all new values to an elevation of 1000 meters (<a href="transform.html#fig:extend-example">5.16</a>).</p>
+<p>This section uses the <code>elev</code> object from <a href="attr.html#manipulating-raster-objects">3.3</a>, which it is available in the <code>spData</code> package. The <code>projectRaster()</code> function reprojects one raster to a desired projection, say from UTM to WGS84. Equally, map algebra operations require the same extent. Following code adds one row and two columns to each side of the raster while setting all new values to an elevation of 1000 meters (<a href="transform.html#fig:extend-example">5.17</a>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_2 =<span class="st"> </span><span class="kw">extend</span>(elev, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">value =</span> <span class="dv">1000</span>)
 <span class="kw">plot</span>(elev_2)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:extend-example"></span>
 <img src="figures/extend-example-1.png" alt="Original raster extended by 1 one row on each side (top, bottom) and two columns on each side (right, left)." width="576" />
 <p class="caption">
-Figure 5.16: Original raster extended by 1 one row on each side (top, bottom) and two columns on each side (right, left).
+Figure 5.17: Original raster extended by 1 one row on each side (top, bottom) and two columns on each side (right, left).
 </p>
 </div>
 <p>Performing an algebraic operation on two objects with differing extents in R, the <strong>raster</strong> package returns the result for the intersection, and says so in a warning.</p>
@@ -882,7 +887,7 @@ Figure 5.16: Original raster extended by 1 one row on each side (top, bottom) an
 <span class="co">#&gt; their intersection is returned</span></code></pre></div>
 <p>However, we can also align the extent of two rasters with the <code>extend()</code> command. Here, we extend the <code>elev</code> object to the extend of <code>elev_2</code>. The newly added rows and column receive the default value of the <code>value</code> parameter, i.e., <code>NA</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_4 =<span class="st"> </span><span class="kw">extend</span>(elev, elev_2)</code></pre></div>
-<p>The <code>aggregate()</code> and <code>disaggregate()</code> functions help to change the cell size resolution of a raster. For instance, let us aggregate <code>elev</code> from a resolution of 0.5 to a resolution of 1, that means we aggregate by a factor of 2 (Fig. <a href="transform.html#fig:aggregate-example">5.17</a>). Additionally, the output cell value should correspond to the mean of the input cells (but one could use other functions as well such as <code>median()</code>, <code>sum()</code>, etc.):</p>
+<p>The <code>aggregate()</code> and <code>disaggregate()</code> functions help to change the cell size resolution of a raster. For instance, let us aggregate <code>elev</code> from a resolution of 0.5 to a resolution of 1, that means we aggregate by a factor of 2 (Fig. <a href="transform.html#fig:aggregate-example">5.18</a>). Additionally, the output cell value should correspond to the mean of the input cells (but one could use other functions as well such as <code>median()</code>, <code>sum()</code>, etc.):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_agg =<span class="st"> </span><span class="kw">aggregate</span>(elev, <span class="dt">fact =</span> <span class="dv">2</span>, <span class="dt">fun =</span> mean)
 <span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
 <span class="kw">plot</span>(elev)
@@ -890,7 +895,7 @@ Figure 5.16: Original raster extended by 1 one row on each side (top, bottom) an
 <div class="figure" style="text-align: center"><span id="fig:aggregate-example"></span>
 <img src="figures/aggregate-example-1.png" alt="Original raster (left). Aggregated raster (right)." width="576" />
 <p class="caption">
-Figure 5.17: Original raster (left). Aggregated raster (right).
+Figure 5.18: Original raster (left). Aggregated raster (right).
 </p>
 </div>
 <p>Note that the origin of <code>elev_agg</code> has changed, too.</p>
@@ -898,7 +903,7 @@ Figure 5.17: Original raster (left). Aggregated raster (right).
 <span class="co">#&gt; [1] 0 0</span>
 <span class="kw">origin</span>(elev_agg)
 <span class="co">#&gt; [1] 0.5 0.5</span></code></pre></div>
-<p>The origin is the point closest to (0, 0) if you moved towards it in steps of x and y resolution. If two rasters have different origins, their cells do not overlap completely which would make map algebra impossible. To change the origin , use <code>origin()</code>.<a href="#fn32" class="footnoteRef" id="fnref32"><sup>32</sup></a> Looking at figure <a href="transform.html#fig:origin-example">5.18</a> reveals the effect of changing the origin.</p>
+<p>The origin is the point closest to (0, 0) if you moved towards it in steps of x and y resolution. If two rasters have different origins, their cells do not overlap completely which would make map algebra impossible. To change the origin , use <code>origin()</code>.<a href="#fn32" class="footnoteRef" id="fnref32"><sup>32</sup></a> Looking at figure <a href="transform.html#fig:origin-example">5.19</a> reveals the effect of changing the origin.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the aggregated raster</span>
 <span class="kw">plot</span>(elev_agg)
 <span class="co"># change the origin</span>
@@ -908,7 +913,7 @@ Figure 5.17: Original raster (left). Aggregated raster (right).
 <div class="figure" style="text-align: center"><span id="fig:origin-example"></span>
 <img src="figures/origin-example-1.png" alt="Plotting rasters with the same values but different origins." width="576" />
 <p class="caption">
-Figure 5.18: Plotting rasters with the same values but different origins.
+Figure 5.19: Plotting rasters with the same values but different origins.
 </p>
 </div>
 <p>The <code>resample()</code> command lets you align several raster properties in one go, namely origin, extent and resolution. Let us resample an extended <code>elev_agg</code> to the properties of <code>elev</code> again.</p>
@@ -925,26 +930,26 @@ elev_disagg =<span class="st"> </span><span class="kw">resample</span>(elev_agg,
 <div id="vectorization" class="section level3">
 <h3><span class="header-section-number">5.4.3</span> Vectorization</h3>
 <!-- ref to rasterization -->
-<p>Vectorization is a process of converting rasters into vectors.<a href="#fn33" class="footnoteRef" id="fnref33"><sup>33</sup></a> It is often used when we want to connect features extracted from raster data with an attribute table. The simplest form of vectorization is a conversion from a raster to points. The <code>rasterToPoints()</code> function creates point representations of every non-NA raster grid cell centroids and it is usually used for continuous data, such as elevation (Figure <a href="transform.html#fig:raster-vectorization1">5.19</a>). <!-- Spatial* class mentioned --> <!-- why? --></p>
+<p>Vectorization is a process of converting rasters into vectors.<a href="#fn33" class="footnoteRef" id="fnref33"><sup>33</sup></a> It is often used when we want to connect features extracted from raster data with an attribute table. The simplest form of vectorization is a conversion from a raster to points. The <code>rasterToPoints()</code> function creates point representations of every non-NA raster grid cell centroids and it is usually used for continuous data, such as elevation (Figure <a href="transform.html#fig:raster-vectorization1">5.20</a>). <!-- Spatial* class mentioned --> <!-- why? --></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_point =<span class="st"> </span><span class="kw">rasterToPoints</span>(elev, <span class="dt">spatial =</span> <span class="ot">TRUE</span>) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">st_as_sf</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:raster-vectorization1"></span>
 <img src="figures/raster-vectorization1-1.png" alt="Raster and point representation of the elev dataset." width="576" />
 <p class="caption">
-Figure 5.19: Raster and point representation of the elev dataset.
+Figure 5.20: Raster and point representation of the elev dataset.
 </p>
 </div>
 <p>On the other hand, categorical rasters (e.g. scanned maps or satellite images) represent discrete features that could occupy areas larger than only one cell. The <code>rasterToPolygons()</code> function could be used to extract these features into a <code>SpatialPolygonsDataFrame</code> object. We can also convert the result into an object of class <code>sf</code>.<a href="#fn34" class="footnoteRef" id="fnref34"><sup>34</sup></a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grain_poly =<span class="st"> </span><span class="kw">rasterToPolygons</span>(grain) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">st_as_sf</span>()</code></pre></div>
-<p>The output consists of many polygons representing grid cells from the original raster object. They could be aggregated (see section <a href="spatial-operations.html#spatial-aggr">4.2.5</a>) into irregular polygons having the same value (Figure <a href="transform.html#fig:raster-vectorization1">5.19</a>).</p>
+<p>The output consists of many polygons representing grid cells from the original raster object. They could be aggregated (see section <a href="spatial-operations.html#spatial-aggr">4.2.5</a>) into irregular polygons having the same value (Figure <a href="transform.html#fig:raster-vectorization1">5.20</a>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grain_poly2 =<span class="st"> </span>grain_poly %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">group_by</span>(layer) %&gt;%
 <span class="st">  </span><span class="kw">summarize</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:raster-vectorization2"></span>
 <img src="figures/raster-vectorization2-1.png" alt="Illustration of vectorization of raster (left) into polygon (center) and polygon aggregation (right)." width="576" />
 <p class="caption">
-Figure 5.20: Illustration of vectorization of raster (left) into polygon (center) and polygon aggregation (right).
+Figure 5.21: Illustration of vectorization of raster (left) into polygon (center) and polygon aggregation (right).
 </p>
 </div>
 <!-- rasterToContour() -->
