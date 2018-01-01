@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve4b4d7515d39ad15f
+preserveacecd3b9e7810e27
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveb9385c08b2dbedcd
+preservee94010cf1838e72c
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4629,29 +4629,39 @@ Rasterization is a conversion between vector objects into rasters.
 <!-- extended intro -->
 
 The `rasterize()` function takes a vector object and converts it into a raster with dimensions, resolution and CRS determined by another raster object.
-
-`rasterize()` also takes a `fun` argument which specifies how attributes are transferred to the raster object.
-<!-- different fun options -->
-<!-- filed option - present/absent -->
 <!-- explain dependency of the pixel size -->
-<!-- \@ref(reproj-vec-geom) -->
-<!-- point examples -->
+
 
 ```r
 raster_template = raster(extent(cycle_hire_osm_projected), resolution = 1000,
                          crs = st_crs(cycle_hire_osm_projected)$proj4string)
 ```
 
+Rasterization is very flexible operation and depends not only on a template raster, but also on the type of an input vector (e.g. points, polygons) and given arguments.
+
+Let's try three different approaches to rasterize points - cycle hire locations across London.
+Decision about arguments used should depend on a rasterization purpose.
+The simplest case is when we want to create a raster containing areas with cycle hire points (also known as a presence/absence raster).
+In this situation, `rasterize()` expects only three arguments - an input vector data, a raster template, and a value to be transferred to all non-empty cells (Figure \@ref(reproj-vec-geom):B).
+
 
 ```r
 ch_raster1 = rasterize(cycle_hire_osm_projected, raster_template, field = 1)
 ```
 
+`rasterize()` also could take a `fun` argument which specifies how attributes are transferred to the raster object.
+For example, the `fun = "count"` argument counts the number of points in each grid cell (Figure \@ref(reproj-vec-geom):C).
+
 
 ```r
 ch_raster2 = rasterize(cycle_hire_osm_projected, raster_template, 
-                       field = "osm_id", fun = "count")
+                       field = 1, fun = "count")
 ```
+
+The new output, `ch_raster2`, shows the number of cycle hire points in each grid cell.
+However, the cycle hire locations have different numbers of bicycles, which is described by the `capacity` variable.
+We need to select a field (`"capacity"`) and a function (`sum`) to determine a cycle hire capacity in each grid cell (Figure \@ref(reproj-vec-geom):D).
+In the same way another statistics could be calculated, such as an average capacity for each grid cell, etc.
 
 
 ```r
@@ -6049,7 +6059,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservee6bb50989d600096
+preserve53963d3f058abb6d
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
