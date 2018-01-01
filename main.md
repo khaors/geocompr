@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve7d5a1f6d0602b086
+preserve8cfacf214ea61c1b
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve1a2eb9b34c749eb1
+preservec6bd9ae9aa48d369
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6059,7 +6059,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve5af508427186b771
+preservec901669916e10d57
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6484,12 +6484,11 @@ for(i in 1:nrow(desire_rail)) {
     ))
 }
 legs = st_sf(st_sfc(multi), crs = 4326)
-plot(legs)
+plot(desire_rail$geometry)
+plot(legs$st_sfc.multi., add = T, col = "red")
 ```
 
 <img src="figures/unnamed-chunk-21-1.png" width="576" style="display: block; margin: auto;" />
-
-
 
 
 
@@ -6497,7 +6496,7 @@ plot(legs)
 #> tmap mode set to interactive viewing
 ```
 
-preserve053bc49e0a9fdfe4
+preserveb0fe806f3ad5bfdc
 
 
 ## Route networks
