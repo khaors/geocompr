@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve199ac01b0a507cbc
+preservea03327fedf9044ee
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservec0d6e396f5caa89d
+preserve8b15de7e0b60c8f7
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6059,7 +6059,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservebf1ff0e2c6a017e6
+preserve3c714594e38f5545
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6161,9 +6161,9 @@ This chapter provides an introduction to geographic analysis of transport system
 We will explore how movement patterns can be understood at multiple geographic levels, including:
 
 - **Areal units**: transport can be understood simply in terms of zonal aggregates such as the main mode and average distance of trips made people living in a particular zone.
-- **Nodes**: these are points in the transport system that can represent common origins and destinations (e.g. with one centroid per zone) and public transport stations such as bus stops and rail stations.
 - **Desire lines**: straight lines that represent 'origin-destination' data that records how many people travel (or could travel) between places (points or zones) in geographic space.
 - **Routes**: these are circuitous (non-straight) routes, typically representing the 'optimal' path along the route network between origins and destinations along the desire lines defined in the previous bullet point.
+- **Nodes**: these are points in the transport system that can represent common origins and destinations (e.g. with one centroid per zone) and public transport stations such as bus stops and rail stations.
 - **Route networks**: these represent the system of roads, paths and other linear features in an area. They can be represented as purely geographic entities or as a graph.
 Their features are segments which can be assigned values representing 'flow', the number of people expected to use a particular street or path.
 - **Agents**: these are the lowest-level but hardest to model entities in transport systems --- mobile entities like you and me.
@@ -6348,29 +6348,10 @@ zones = group_by(od, d) %>%
 <p class="caption">(\#fig:zones)Number of trips (commuters) living and working in the region. The left map shows zone of origin of commute trips; the right map shows zone of destination.</p>
 </div>
 
-
-## Nodes on the transport system
-
-Nodes in geographic transport data are zero dimensional features (points) among the predominantly one dimension features (lines) that comprise the network.
-There are two types of transport nodes:
-
-1. Nodes not directly on the network such as zone centroids  --- covered in the next section --- or individual origins and destinations such as houses and workplaces.
-2. Nodes that are a part of transport networks, representing individual pathways, intersections between pathways (junctions) and points for entering or exiting a transport network such as bus stops and train stations.
-
-From a mathematical perspective transport networks are simply large graphs.
-The second type of nodes are nodes on this graph, each of which is connected by one or more straight 'edges' that represent individual segments on the network.
-We will see how transport networks can be represented as mathematical graphs in section \@ref(route-networks).
-
-The first type of node can be connected to the network with "centroid connectors" [@hollander_transport_2016], the geographic location of which can influence model results, by simulating excessive traffic on streets surrounding zone centroids [@jafari_investigation_2015].
-
-
-```r
-rail_stations = readRDS("extdata/rail_stations.rds")
-```
-
-
-
 ## Desire lines
+
+Unlike zones, which represent trip origins and destinations, desire lines represent where people *desire* to go between zones.
+If it were not for obstacles such as buildings and windy roads, people would travel in a 'bee-line' from one place to the next, explaining why desire lines are straight (we will see how to convert desire lines into routes in the next section).
 
 We have already loaded data representing desire lines in the dataset `od`.
 This origin-destination (OD) data frame object represents the number of people traveling between the zone represented in `o` and `d`, as illustrated in Table \@ref(tab:od).
@@ -6432,6 +6413,25 @@ plot(desire_lines$geometry)
 </div>
 
 ## Route analysis
+
+## Nodes on the transport system
+
+Nodes in geographic transport data are zero dimensional features (points) among the predominantly one dimension features (lines) that comprise the network.
+There are two types of transport nodes:
+
+1. Nodes not directly on the network such as zone centroids  --- covered in the next section --- or individual origins and destinations such as houses and workplaces.
+2. Nodes that are a part of transport networks, representing individual pathways, intersections between pathways (junctions) and points for entering or exiting a transport network such as bus stops and train stations.
+
+From a mathematical perspective transport networks are simply large graphs.
+The second type of nodes are nodes on this graph, each of which is connected by one or more straight 'edges' that represent individual segments on the network.
+We will see how transport networks can be represented as mathematical graphs in section \@ref(route-networks).
+
+The first type of node can be connected to the network with "centroid connectors" [@hollander_transport_2016], the geographic location of which can influence model results, by simulating excessive traffic on streets surrounding zone centroids [@jafari_investigation_2015].
+
+
+```r
+rail_stations = readRDS("extdata/rail_stations.rds")
+```
 
 ## Route networks
 

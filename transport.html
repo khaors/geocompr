@@ -260,9 +260,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="8.1" data-path="transport.html"><a href="transport.html#introduction-5"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
 <li class="chapter" data-level="8.2" data-path="transport.html"><a href="transport.html#bris-case"><i class="fa fa-check"></i><b>8.2</b> A case study of Bristol</a></li>
 <li class="chapter" data-level="8.3" data-path="transport.html"><a href="transport.html#transport-zones"><i class="fa fa-check"></i><b>8.3</b> Transport zones</a></li>
-<li class="chapter" data-level="8.4" data-path="transport.html"><a href="transport.html#nodes-on-the-transport-system"><i class="fa fa-check"></i><b>8.4</b> Nodes on the transport system</a></li>
-<li class="chapter" data-level="8.5" data-path="transport.html"><a href="transport.html#desire-lines"><i class="fa fa-check"></i><b>8.5</b> Desire lines</a></li>
-<li class="chapter" data-level="8.6" data-path="transport.html"><a href="transport.html#route-analysis"><i class="fa fa-check"></i><b>8.6</b> Route analysis</a></li>
+<li class="chapter" data-level="8.4" data-path="transport.html"><a href="transport.html#desire-lines"><i class="fa fa-check"></i><b>8.4</b> Desire lines</a></li>
+<li class="chapter" data-level="8.5" data-path="transport.html"><a href="transport.html#route-analysis"><i class="fa fa-check"></i><b>8.5</b> Route analysis</a></li>
+<li class="chapter" data-level="8.6" data-path="transport.html"><a href="transport.html#nodes-on-the-transport-system"><i class="fa fa-check"></i><b>8.6</b> Nodes on the transport system</a></li>
 <li class="chapter" data-level="8.7" data-path="transport.html"><a href="transport.html#route-networks"><i class="fa fa-check"></i><b>8.7</b> Route networks</a></li>
 <li class="chapter" data-level="8.8" data-path="transport.html"><a href="transport.html#agents-in-the-transport-system"><i class="fa fa-check"></i><b>8.8</b> Agents in the transport system</a></li>
 </ul></li>
@@ -311,9 +311,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>This chapter provides an introduction to geographic analysis of transport systems. We will explore how movement patterns can be understood at multiple geographic levels, including:</p>
 <ul>
 <li><strong>Areal units</strong>: transport can be understood simply in terms of zonal aggregates such as the main mode and average distance of trips made people living in a particular zone.</li>
-<li><strong>Nodes</strong>: these are points in the transport system that can represent common origins and destinations (e.g. with one centroid per zone) and public transport stations such as bus stops and rail stations.</li>
 <li><strong>Desire lines</strong>: straight lines that represent ‘origin-destination’ data that records how many people travel (or could travel) between places (points or zones) in geographic space.</li>
 <li><strong>Routes</strong>: these are circuitous (non-straight) routes, typically representing the ‘optimal’ path along the route network between origins and destinations along the desire lines defined in the previous bullet point.</li>
+<li><strong>Nodes</strong>: these are points in the transport system that can represent common origins and destinations (e.g. with one centroid per zone) and public transport stations such as bus stops and rail stations.</li>
 <li><strong>Route networks</strong>: these represent the system of roads, paths and other linear features in an area. They can be represented as purely geographic entities or as a graph. Their features are segments which can be assigned values representing ‘flow’, the number of people expected to use a particular street or path.</li>
 <li><strong>Agents</strong>: these are the lowest-level but hardest to model entities in transport systems — mobile entities like you and me.</li>
 </ul>
@@ -358,7 +358,7 @@ Figure 8.1: Overview map of the case study region surrounding Bristol. The trans
 <p>This dataset provides a useful basis for dividing-up space into meaningful chunks, with each zone housing a similar number of people. However at present the dataset contains no attribute data, other than the zone name and zone code:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(zones)
 <span class="co">#&gt; [1] &quot;geo_code&quot; &quot;name&quot;     &quot;geometry&quot;</span></code></pre></div>
-<p>Chapter <a href="attr.html#attr">3</a> demonstrated how to join attribute data onto geographic variables. This is a common task usually involved joining a table containing official zonal statistics to a geographic object via a shared key variable (<a href="https://www.ons.gov.uk/help/localstatistics">ons.gov.uk</a> contains datasets at various geographic levels in the UK, for example). For this chapter an additional stage is needed: aggregation of the origin-destination (OD) data to the level of residential zones (the nature of this OD dataset is described in more detail in section <a href="transport.html#desire-lines">8.5</a>), as demonstrated below:</p>
+<p>Chapter <a href="attr.html#attr">3</a> demonstrated how to join attribute data onto geographic variables. This is a common task usually involved joining a table containing official zonal statistics to a geographic object via a shared key variable (<a href="https://www.ons.gov.uk/help/localstatistics">ons.gov.uk</a> contains datasets at various geographic levels in the UK, for example). For this chapter an additional stage is needed: aggregation of the origin-destination (OD) data to the level of residential zones (the nature of this OD dataset is described in more detail in section <a href="transport.html#desire-lines">8.4</a>), as demonstrated below:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">od =<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;extdata/bristol-od.rds&quot;</span>)
 zones_attr =<span class="st"> </span><span class="kw">group_by</span>(od, o) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">summarise_if</span>(is.numeric, sum) %&gt;%<span class="st"> </span>
@@ -394,19 +394,9 @@ Figure 8.2: Number of trips (commuters) living and working in the region. The le
 </p>
 </div>
 </div>
-<div id="nodes-on-the-transport-system" class="section level2">
-<h2><span class="header-section-number">8.4</span> Nodes on the transport system</h2>
-<p>Nodes in geographic transport data are zero dimensional features (points) among the predominantly one dimension features (lines) that comprise the network. There are two types of transport nodes:</p>
-<ol style="list-style-type: decimal">
-<li>Nodes not directly on the network such as zone centroids — covered in the next section — or individual origins and destinations such as houses and workplaces.</li>
-<li>Nodes that are a part of transport networks, representing individual pathways, intersections between pathways (junctions) and points for entering or exiting a transport network such as bus stops and train stations.</li>
-</ol>
-<p>From a mathematical perspective transport networks are simply large graphs. The second type of nodes are nodes on this graph, each of which is connected by one or more straight ‘edges’ that represent individual segments on the network. We will see how transport networks can be represented as mathematical graphs in section <a href="transport.html#route-networks">8.7</a>.</p>
-<p>The first type of node can be connected to the network with “centroid connectors” <span class="citation">(Hollander <a href="#ref-hollander_transport_2016">2016</a>)</span>, the geographic location of which can influence model results, by simulating excessive traffic on streets surrounding zone centroids <span class="citation">(<span class="citeproc-not-found" data-reference-id="jafari_investigation_2015"><strong>???</strong></span>)</span>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rail_stations =<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;extdata/rail_stations.rds&quot;</span>)</code></pre></div>
-</div>
 <div id="desire-lines" class="section level2">
-<h2><span class="header-section-number">8.5</span> Desire lines</h2>
+<h2><span class="header-section-number">8.4</span> Desire lines</h2>
+<p>Unlike zones, which represent trip origins and destinations, desire lines represent where people <em>desire</em> to go between zones. If it were not for obstacles such as buildings and windy roads, people would travel in a ‘bee-line’ from one place to the next, explaining why desire lines are straight (we will see how to convert desire lines into routes in the next section).</p>
 <p>We have already loaded data representing desire lines in the dataset <code>od</code>. This origin-destination (OD) data frame object represents the number of people traveling between the zone represented in <code>o</code> and <code>d</code>, as illustrated in Table <a href="transport.html#tab:od">8.1</a>. This subset of the data was using attribute operations described in Chapter <a href="attr.html#attr">3</a>, to arrange the OD data by all trips and then filter-out only the top 5:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">od_top5 =<span class="st"> </span>od %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(all)) %&gt;%<span class="st"> </span>
@@ -488,7 +478,18 @@ Figure 8.3: Desire lines representing the centrality of Bristol City Centre in t
 </div>
 </div>
 <div id="route-analysis" class="section level2">
-<h2><span class="header-section-number">8.6</span> Route analysis</h2>
+<h2><span class="header-section-number">8.5</span> Route analysis</h2>
+</div>
+<div id="nodes-on-the-transport-system" class="section level2">
+<h2><span class="header-section-number">8.6</span> Nodes on the transport system</h2>
+<p>Nodes in geographic transport data are zero dimensional features (points) among the predominantly one dimension features (lines) that comprise the network. There are two types of transport nodes:</p>
+<ol style="list-style-type: decimal">
+<li>Nodes not directly on the network such as zone centroids — covered in the next section — or individual origins and destinations such as houses and workplaces.</li>
+<li>Nodes that are a part of transport networks, representing individual pathways, intersections between pathways (junctions) and points for entering or exiting a transport network such as bus stops and train stations.</li>
+</ol>
+<p>From a mathematical perspective transport networks are simply large graphs. The second type of nodes are nodes on this graph, each of which is connected by one or more straight ‘edges’ that represent individual segments on the network. We will see how transport networks can be represented as mathematical graphs in section <a href="transport.html#route-networks">8.7</a>.</p>
+<p>The first type of node can be connected to the network with “centroid connectors” <span class="citation">(Hollander <a href="#ref-hollander_transport_2016">2016</a>)</span>, the geographic location of which can influence model results, by simulating excessive traffic on streets surrounding zone centroids <span class="citation">(<span class="citeproc-not-found" data-reference-id="jafari_investigation_2015"><strong>???</strong></span>)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rail_stations =<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;extdata/rail_stations.rds&quot;</span>)</code></pre></div>
 </div>
 <div id="route-networks" class="section level2">
 <h2><span class="header-section-number">8.7</span> Route networks</h2>
