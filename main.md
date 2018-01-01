@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve43c01e60da5b700d
+preserve7a1a769f1fa0b1d6
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve2c7e39abd7d60001
+preserveaa1a7d59d4f056ba
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6059,7 +6059,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservea6c7389d49088ca6
+preserve05bf1fe5b2e23265
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6333,12 +6333,11 @@ low trip numbers in the outskirts of the region can be explained by the fact tha
 In the same way that OD datasets can be aggregated to the zone of origin, they can also be aggregated to provide information about destination zones.
 People tend to gravitate towards central places.
 This explains why the spatial distribution represented in the right panel in Figure \@ref(fig:zones) is relatively uneven, with the most common destination zones concentrated in Bristol city center.
-The map was created using the following code:
+The updated `zones` dataset, which contains a new column reporting number of trip destinations by any mode, is created as follows:
 
 
 ```r
-zones = od %>%
-  group_by(d) %>% 
+zones = group_by(od, d) %>% 
   summarise_if(is.numeric, sum) %>% 
   select(geo_code = d, all_dest = all) %>% 
   inner_join(zones, ., by = "geo_code")
