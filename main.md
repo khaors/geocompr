@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve7a1a769f1fa0b1d6
+preserve199ac01b0a507cbc
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveaa1a7d59d4f056ba
+preservec0d6e396f5caa89d
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6059,7 +6059,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve05bf1fe5b2e23265
+preservebf1ff0e2c6a017e6
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6359,6 +6359,9 @@ There are two types of transport nodes:
 
 From a mathematical perspective transport networks are simply large graphs.
 The second type of nodes are nodes on this graph, each of which is connected by one or more straight 'edges' that represent individual segments on the network.
+We will see how transport networks can be represented as mathematical graphs in section \@ref(route-networks).
+
+The first type of node can be connected to the network with "centroid connectors" [@hollander_transport_2016], the geographic location of which can influence model results, by simulating excessive traffic on streets surrounding zone centroids [@jafari_investigation_2015].
 
 
 ```r

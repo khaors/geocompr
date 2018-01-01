@@ -401,7 +401,8 @@ Figure 8.2: Number of trips (commuters) living and working in the region. The le
 <li>Nodes not directly on the network such as zone centroids — covered in the next section — or individual origins and destinations such as houses and workplaces.</li>
 <li>Nodes that are a part of transport networks, representing individual pathways, intersections between pathways (junctions) and points for entering or exiting a transport network such as bus stops and train stations.</li>
 </ol>
-<p>From a mathematical perspective transport networks are simply large graphs. The second type of nodes are nodes on this graph, each of which is connected by one or more straight ‘edges’ that represent individual segments on the network.</p>
+<p>From a mathematical perspective transport networks are simply large graphs. The second type of nodes are nodes on this graph, each of which is connected by one or more straight ‘edges’ that represent individual segments on the network. We will see how transport networks can be represented as mathematical graphs in section <a href="transport.html#route-networks">8.7</a>.</p>
+<p>The first type of node can be connected to the network with “centroid connectors” <span class="citation">(Hollander <a href="#ref-hollander_transport_2016">2016</a>)</span>, the geographic location of which can influence model results, by simulating excessive traffic on streets surrounding zone centroids <span class="citation">(<span class="citeproc-not-found" data-reference-id="jafari_investigation_2015"><strong>???</strong></span>)</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rail_stations =<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;extdata/rail_stations.rds&quot;</span>)</code></pre></div>
 </div>
 <div id="desire-lines" class="section level2">
