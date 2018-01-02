@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveded742646da09449
+preserve42b24753bbd9ae80
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservea6389564eb7c34d0
+preservea1a5beeca1408d2f
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4131,12 +4131,12 @@ cat_raster_wgs84
 ```
 
 Many properties of the new object differs from the previous one, which include the number of columns and rows (and therefore number of cells), resolution (transformed from meters into degrees), and extent.
-In the same time, it keeps the same land cover classes - `unique(cat_raster_wgs84)`.
+However, the algorithm makes sure to keep the same (land cover) classes as provided by the input raster - `unique(cat_raster_wgs84)`.
 <!-- freq(cat_raster_wgs84) -->
 <!-- freq(cat_raster) -->
 
-This process of reprojection is almost identical for continuous data.
-The `srtm.tif` file contains digital elevation model for the same area in Utah from [the Shuttle Radar Topography Mission (SRTM)](https://www2.jpl.nasa.gov/srtm/).
+Reprojecting continous data is almost identical.
+The `srtm.tif` file contains a digital elevation model for the same area in Utah from [the Shuttle Radar Topography Mission (SRTM)](https://www2.jpl.nasa.gov/srtm/).
 Each value in this raster represents elevation measured in meters.
 
 
@@ -4159,9 +4159,10 @@ Instead we will use the bilinear method which computes the output cell value bas
 <!-- Quadric and cubic polynomials are also popular nterpolation functions for resampling with more complexity and improved accuracy. @liu_essential_2009: 111-->
 The new value is the distance-weighted average of the values from these four cells, i.e., the closer the input cell is to the center of the output cell, the stronger is its weight.
 
-<!-- I am not really sure what the following note wants to tell the reader. -->
+<!-- I still don't know what the following note wants to tell the reader. Pls clarify -->
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">All the grid cells in equal-area projections have the same size (represent the same area).
 Therefore, these projections are recommended when performing many raster operations, such as distance calculations.</div>\EndKnitrBlock{rmdnote}
+
 
 <!-- unclear what is meant -->
 In the fist step we need to obtain the proj4 definition of the existing projected CRS appropriate for this area or create a new one using the [Projection Wizard](http://projectionwizard.org/) online tool [@savric_projection_2016].
@@ -6071,7 +6072,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve91d1fa43091ab8e3
+preserve2ca047f25e55562c
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
