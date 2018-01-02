@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservefd8f7c4515118cfa
+preserve55b25c198e5077ba
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservecc16bece4c590ac2
+preserve8122f3feb8cf8c99
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3745,7 +3745,7 @@ note how the buffer is elongated in the north-south direction.
 This is because lines of longitude converge towards the Earth's poles making them closer together.
 In fact, the distance between two meridians is a bit more than 111 km at the equator.
 This distance shrinks to zero for the same two meridians at the poles.
-Lines of latitude, by contrast, always have the same distance from each other irrespective of their location, see Figures \@ref(fig:crs-buf) and \@ref(fig:wintriproj) for a visual illustration).  
+Lines of latitude, by contrast, always have the same distance from each other irrespective of their location, that means they are a bit more than 111 km apart both at the equator and near the poles (see Figures \@ref(fig:crs-buf) and \@ref(fig:wintriproj) for a visual illustration).  
 
 Do not interpret the warning about the geographic (`longitude/latitude`) CRS as "the CRS should not be set": it almost always should be!
 It is better understood as a suggestion to *reproject* the data onto a projected CRS.
@@ -3770,7 +3770,7 @@ st_crs(london_proj)
 #>   proj4string: "+proj=tmerc +lat_0=49 +lon_0=-2 ... +units=m +no_defs"
 ```
 
-Notable components of this CRS description include the EPSG code (`EPSG: 27700`), the projection (transverse mercator, `+proj=tmerc`), the origin (`+lat_0=49 +lon_0=-2`) and units (`+units=m`).^[For a short description of the most relevatn projection parameters, please visit [http://www.geography.hunter.cuny.edu/~jochen/GTECH361/lectures/lecture04/concepts/Map%20coordinate%20systems/Projection%20parameters.htm](http://www.geography.hunter.cuny.edu/~jochen/GTECH361/lectures/lecture04/concepts/Map%20coordinate%20systems/Projection%20parameters.htm). 
+Notable components of this CRS description include the EPSG code (`EPSG: 27700`), the projection (transverse mercator, `+proj=tmerc`), the origin (`+lat_0=49 +lon_0=-2`) and units (`+units=m`).^[For a short description of the most relevant projection parameters and related concepts, see the fourth lecture by Jochen Albrecht: [geography.hunter.cuny.edu/~jochen/GTECH361/lectures/](http://www.geography.hunter.cuny.edu/~jochen/GTECH361/lectures/lecture04/concepts/Map%20coordinate%20systems/Projection%20parameters.htm) as well as [http://proj4.org/parameters.html](http://proj4.org/parameters.html). 
 Another great resource on projection definitions is [http://spatialreference.org/](http://spatialreference.org/).]
 The fact that the units of the CRS are meters (rather than degrees) tells us that this is a projected CRS: geometry operations on `london_proj` will work without a warning, meaning buffers can be produced from it using proper units of distance.
 <!-- 
@@ -3780,7 +3780,7 @@ but 1 degree converted into m distance at the latitude of London:
 coords = st_coordinates(london)
 geosphere::alongTrackDistance(coords, coords + c(1, 0), coords + c(1, 0))
 -->
-As pointed out above, moving one degree means moving a bit more than 111 km at the equator (to be precise: 111,320 meters; to verify this, check out also `geosphere::alongTrackDistance(c(0, 0), c(0, 1), c(0, 1))`).
+As pointed out above, moving one degree means moving a bit more than 111 km at the equator (to be precise: 111,320 meters; to verify this, check out also `geosphere::alongTrackDistance(c(0, 0), c(1, 0), c(1, 0))`).
 This is used as the new buffer distance:
 
 
@@ -6071,7 +6071,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve64a940e5eb7ccef7
+preserve1a3fe28231c71147
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
