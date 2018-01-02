@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve42b24753bbd9ae80
+preserved7f2d8cfebf09484
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservea1a5beeca1408d2f
+preserve30809524c8e54cfc
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6072,7 +6072,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve2ca047f25e55562c
+preservecfe82b12572aa2a4
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6201,8 +6201,6 @@ The case study city is a coastal settlement in the West of England, described in
 
 The case study used for this chapter is a city on the west of England, around 30 km East of the Welsh capital Cardiff.
 An overview of the region's transport network is illustrated in Figure \@ref(fig:bristol), which shows a diversity of transport infrastructure, for cycling, public transport, and private motor vehicle.
-
-
 
 
 
@@ -6593,7 +6591,7 @@ e = igraph::edge_betweenness(ways_sln@g)
 plot(ways_sln@sl$geometry, lwd = e / 500)
 ```
 
-<img src="figures/unnamed-chunk-26-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-25-1.png" width="576" style="display: block; margin: auto;" />
 
 
 
@@ -6607,7 +6605,7 @@ plot(path$geometry, col = "red", lwd = 10)
 plot(ways_sln@sl$geometry, add = TRUE)
 ```
 
-<img src="figures/unnamed-chunk-28-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-27-1.png" width="576" style="display: block; margin: auto;" />
 
 
 

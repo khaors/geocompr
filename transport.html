@@ -561,12 +561,12 @@ ways_sln =<span class="st"> </span><span class="kw">SpatialLinesNetwork</span>(w
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g =<span class="st"> </span>ways_sln@g
 e =<span class="st"> </span>igraph::<span class="kw">edge_betweenness</span>(ways_sln@g)
 <span class="kw">plot</span>(ways_sln@sl$geometry, <span class="dt">lwd =</span> e /<span class="st"> </span><span class="dv">500</span>)</code></pre></div>
-<p><img src="figures/unnamed-chunk-26-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-25-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>One can also find the shortest route between origins and destinations using this graph representation of the route network:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">path =<span class="st"> </span><span class="kw">sum_network_routes</span>(ways_sln, <span class="dv">1</span>, <span class="dv">20</span>, <span class="st">&quot;length&quot;</span>)
 <span class="kw">plot</span>(path$geometry, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lwd =</span> <span class="dv">10</span>)
 <span class="kw">plot</span>(ways_sln@sl$geometry, <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<p><img src="figures/unnamed-chunk-28-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-27-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="agents-in-the-transport-system" class="section level2">
 <h2><span class="header-section-number">8.8</span> Agents in the transport system</h2>
