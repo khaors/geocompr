@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve38ba2a372968caeb
+preservefd8f7c4515118cfa
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve154fd5adce571152
+preservecc16bece4c590ac2
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3667,8 +3667,8 @@ library(spDataLarge)
 
 ## Introduction
 
-The previous three chapters have demonstrated how geographic datasets are structured in R (Chapter \@ref(spatial-class)) and how to manipulate them based on their non-geographic attributes (\@ref(attr)) and spatial properties (\@ref(spatial-operations)).
-This chapter builds on this content by demonstrating how to modify the geometry underlying spatial datasets for vector and raster objects.
+The previous three chapters have demonstrated how geographic datasets are structured in R (Chapter \@ref(spatial-class)) and how to manipulate them based on their non-geographic attributes (Chapter \@ref(attr)) and spatial properties (Chapter \@ref(spatial-operations)).
+This chapter builds on these contents by demonstrating how to modify the geometry underlying spatial datasets for vector and raster objects.
 
 Section \@ref(geo-vec) covers transforming vector geometries with 'unary' and 'binary' operations.
 <!-- TODO: add something on n-ary ops (RL) -->
@@ -3848,8 +3848,8 @@ st_distance(london2, london_proj)
 The question of *which CRS* is tricky, and there is often no 'right' answer:
 "There exist no all-purpose projections, all involve distortion when far from the centre of the specified frame" [@bivand_applied_2013].
 For geographic CRSs the answer is often [WGS84](https://en.wikipedia.org/wiki/World_Geodetic_System#A_new_World_Geodetic_System:_WGS_84), not only for web mapping (covered in the previous paragraph) but also because GPS datasets and thousands of raster and vector datasets are provided in this CRS by default.
-WGS84 is the most common CRS in the world so it is worth knowing it's EPSG code: 4326.
-This 'magic number' can be used to convert objects with unusual projected CRSs something that is widely understood.
+WGS84 is the most common CRS in the world, so it is worth knowing its EPSG code: 4326.
+This 'magic number' can be used to convert objects with unusual projected CRSs into something that is widely understood.
 
 What about when a projected CRS is required?
 In some cases it is not something that we are free to decide:
@@ -3859,7 +3859,7 @@ The example of London was easy to answer because a) the CRS 'BNG' (with its asso
 
 What about when a projected CRS is needed but the study region lacks a well-known CRS?
 Again, although there is no universal answer there is a sensible default CRS: Universal Transverse Mercator ([UTM](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system)).
-UTM is not actually a single CRS but a system of CRSs that covers the entire world, and breaks it into 60 segments, each containing 6 lines of longitude.
+UTM is not actually a single CRS but a system of CRSs that covers the entire world, and breaks it into 60 segments, each containing 6 degrees of longitude.
 All UTM projections have the same datum (WGS84) and their EPSG codes run sequentially from 32601 to 32660.
 This makes it possible to create a function (we'll call it `lonlat2UTM`) to calculate the EPSG code associated with any point on the planet as follows:^[
 Thanks to Josh O'Brien who provided the basis for this function in an answer to a question on [stackoverflow](https://stackoverflow.com/questions/9186496).
@@ -3897,7 +3897,7 @@ This involves creating a custom CRS (with no EPSG code) with units of meters bas
 This approach should be used with caution: no other datasets will be compatible with the custom CRS created and results may not be accurate when used on extensive datasets covering hundreds of kilomtres.
 
 Although we used vector datasets to illustrate the points outlined in this section, the principles apply equally to raster datasets.
-The subsequent sections explain features of CRS transformation that are unique to each geographic data model, continuing with vector data in section \@ref(reprojecting-vector-geometries) and moving-on to explain how raster transformation is different, in section \@ref(reprojecting-raster-geometries).
+The subsequent sections explain features of CRS transformation that are unique to each geographic data model, continuing with vector data in the next section (section \@ref(reproj-vec-geom)) and moving-on to explain how raster transformation is different, in section \@ref(reprojecting-raster-geometries).
 
 <!-- This approach is used in the **stplanr** function `geo_select_crs()` which returns a CRS object that can be used in other functions (see `?stplanr::geo_select_aeq` for further details): -->
 
@@ -6071,7 +6071,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve1948352bd348ca24
+preserve64a940e5eb7ccef7
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
