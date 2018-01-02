@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve91d9f41d3d8678e6
+preserve4f6740dfe44b4b02
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve4ad8c5d9dc96870a
+preserve5d7803d710c0875d
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4230,7 +4230,7 @@ seine_simp = st_simplify(seine, dTolerance = 2000)  # 2000 m
 <p class="caption">(\#fig:seine-simp)Comparison of the original data of the Seine, Marne and Yonne rivers and its simplified version using `st_simplify`.</p>
 </div>
 
-The new object, `seine_simp`, is not only visually generalized (on the right in Figure \@ref(fig:seine-simp)), but also has twice smaller size than the original object:
+The new object, `seine_simp`, is not only visually generalized (on the right in Figure \@ref(fig:seine-simp)), but also uses less than half the memory size of the original object:
 
 
 ```r
@@ -4254,14 +4254,14 @@ The `st_simplify` function uses the standard Douglas-Peucker algorithm, which is
 
 
 ```r
-us_states_simp1 = st_simplify(us_states2163, dTolerance = 100000) #100 km
+us_states_simp1 = st_simplify(us_states2163, dTolerance = 100000)  # 100 km
 ```
 
-On the other hand, this algorithm simplify objects on a per-geometry basis, and therefore does not preserve topology.
-This could be seen on the middle map in Figure \@ref(fig:us-simp), where polygons of single states are splitted creating holes or overlapping each other.
-An alternative simplification method can be used to solve this issue, such as the Visvalingam algorithm implemented in the **rmapshaper** package's function `ms_simplify()`.
+On the other hand, this algorithm simplifies objects on a per-geometry basis, and therefore does not preserve topology.
+This can be seen on the middle map in Figure \@ref(fig:us-simp), where polygons overlap or have holes in between them.
+An alternative simplification method can be used to solve this issue such as the Visvalingam algorithm implemented in the **rmapshaper** package's function `ms_simplify()`.
 <!-- https://bost.ocks.org/mike/simplify/ -->
-In the below example, we would simplified the `us_states2163` object using only 0.5% of original data vertices (argument `keep`), and also assure that all of the original objects (states) would be be kept (argument `keep_shapes`).
+In the example below, we simplify the `us_states2163` object using only 0.5% of the original data vertices (argument `keep`), while also assuring that the original topology stays intact (argument `keep_shapes`).
 
 
 ```r
@@ -6074,7 +6074,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservea2c0ae4bab20a871
+preserve8eaa859805ffce7a
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
