@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve55b25c198e5077ba
+preserveec46fac18c4d5071
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -1695,7 +1695,7 @@ The warning message informs us that the `st_set_crs()` function does not transfo
 <p class="caption">(\#fig:vector-crs)Examples of geographic (WGS 84; left) and projected (NAD83 / UTM zone 12N; right) and coordinate systems for a vector data type.</p>
 </div>
 
-The `projection()` function can be used to access CRS information from the `Raster*` object: 
+The `projection()` function can be used to access CRS information from a `Raster*` object: 
 
 
 ```r
@@ -1704,7 +1704,7 @@ projection(new_raster) # get CRS
 ```
 
 The same function, `projection()`, is used to set a CRS for raster objects.
-The main difference, comparing to vector data, is that raster objects accept only `proj4` definitions:
+The main difference, compared to vector data, is that raster objects only accept `proj4` definitions:
 
 
 ```r
@@ -1716,7 +1716,7 @@ projection(new_raster) = "+proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0
 <p class="caption">(\#fig:raster-crs)Examples of geographic (WGS 84; left) and projected (NAD83 / UTM zone 12N; right) and coordinate systems for a raster data type</p>
 </div>
 
-More information on CRS and spatial transformation is in chapter \@ref(transform).
+We will expand on CRSs and how to project from one CRS to another in much more detail in chapter \@ref(transform).
 <!-- comparing projections? == -->
 <!-- - st_as_sf(x, coords = c("x","y")) -->
 <!-- - st_bbox -->
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve8122f3feb8cf8c99
+preserveef8efa5f164114a5
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6071,7 +6071,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve1a3fe28231c71147
+preserve9e524efd37b9f88c
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
