@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveec46fac18c4d5071
+preserve71801d322b032d6b
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveef8efa5f164114a5
+preserve8fac6d6d4e06eff0
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3922,7 +3922,7 @@ The subsequent sections explain features of CRS transformation that are unique t
 
 ### Reprojecting vector geometries {#reproj-vec-geom}
 
-Chapter \@ref(spatial-class) demonstrated how vector geometries are made-up of points, which combine to create more complex objects such as lines and polygons.
+Chapter \@ref(spatial-class) demonstrated how vector geometries are made-up of points, and how points form the basis of more complex objects such as lines and polygons.
 Reprojecting vectors thus consists of transforming the coordinates of these points.
 
 <!-- Depending on projections used, reprojection could be either lossy or lossless. -->
@@ -3932,7 +3932,7 @@ Reprojecting vectors thus consists of transforming the coordinates of these poin
 <!-- The precision could be also lost when transforming coordinate systems with different datums - in those situations approximations are used. -->
 <!-- However, in most cases CRS vector transformation is lossless. -->
 
-To illustrate this point we'll use the dataset `cycle_hire_osm` from **spData**, representing cycle hire locations across London.
+To illustrate this we will use the dataset `cycle_hire_osm` from **spData**, representing cycle hire locations across London.
 Its CRS can be queried as follows:
 
 
@@ -3943,7 +3943,7 @@ st_crs(cycle_hire_osm)
 #>   proj4string: "+proj=longlat +datum=WGS84 +no_defs"
 ```
 
-CRSs in the **sf** package be define using their `epsg` code or a `proj4string` definition (see section \@ref(crs-in-r)).
+CRSs in the **sf** package can be defined using the corresponding `epsg` code or a `proj4string` definition (see section \@ref(crs-in-r)).
 
 Let's create a new version of `cycle_hire_osm` in a projected CRS, using the `epsg` number of 27700:
 
@@ -3956,7 +3956,7 @@ st_crs(cycle_hire_osm_projected)
 #>   proj4string: "+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs"
 ```
 
-Note that the result shows that the `epsg` has been updated and that `proj4string` element of the CRS now contains, among other things `+proj=tmerc` (meaning it is a projected CRS using the [tranverse Mercator](https://en.wikipedia.org/wiki/Transverse_Mercator_projection) projection) and `+units=m` (meaning the units of the coordinates are meters).
+Note that the result shows that the `epsg` has been updated and that the `proj4string` element of the CRS now contains, among other things `+proj=tmerc` (meaning it is a projected CRS using the [tranverse Mercator](https://en.wikipedia.org/wiki/Transverse_Mercator_projection) projection) and `+units=m` (meaning the units of the coordinates are meters).
 Another function, from the **rgdal** library, provides a note containing the name of the CRS:
 
 
@@ -3976,8 +3976,8 @@ st_crs(27700)$proj4string
 #> [1] "+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs"
 ```
 
-\BeginKnitrBlock{rmdnote}<div class="rmdnote">The EPSG code can be found inside the `crs` attribute of the object's geometry.
-It is hidden from view for most of the time except when the object is printed but can be can identified and set using the `st_crs` function, for example `st_crs(cycle_hire_osm)$epsg`.</div>\EndKnitrBlock{rmdnote}
+\BeginKnitrBlock{rmdnote}<div class="rmdnote">Printing a spatial object in the console, automatically returns its coordinate reference system.
+To access and modify it explicitly, use the `st_crs` function, for example, `st_crs(cycle_hire_osm)`.</div>\EndKnitrBlock{rmdnote}
 
 Existing CRS are well suited for most purposes.
 <!-- examples -->
@@ -6071,7 +6071,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve9e524efd37b9f88c
+preserve85625c5da86f7131
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 

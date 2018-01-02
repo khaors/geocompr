@@ -416,26 +416,26 @@ Figure 5.1: Buffer on vector represenations of London with a geographic (left) a
 </div>
 <div id="reproj-vec-geom" class="section level3">
 <h3><span class="header-section-number">5.2.2</span> Reprojecting vector geometries</h3>
-<p>Chapter <a href="spatial-class.html#spatial-class">2</a> demonstrated how vector geometries are made-up of points, which combine to create more complex objects such as lines and polygons. Reprojecting vectors thus consists of transforming the coordinates of these points.</p>
+<p>Chapter <a href="spatial-class.html#spatial-class">2</a> demonstrated how vector geometries are made-up of points, and how points form the basis of more complex objects such as lines and polygons. Reprojecting vectors thus consists of transforming the coordinates of these points.</p>
 <!-- Depending on projections used, reprojection could be either lossy or lossless. -->
 <!-- I don't understand the following sentence -->
 <!-- For example, loss of spatial information could occur when the new CRS is only adequate for smaller area than input vector. -->
 <!-- Do you have an example for the next sentence? -->
 <!-- The precision could be also lost when transforming coordinate systems with different datums - in those situations approximations are used. -->
 <!-- However, in most cases CRS vector transformation is lossless. -->
-<p>To illustrate this point we’ll use the dataset <code>cycle_hire_osm</code> from <strong>spData</strong>, representing cycle hire locations across London. Its CRS can be queried as follows:</p>
+<p>To illustrate this we will use the dataset <code>cycle_hire_osm</code> from <strong>spData</strong>, representing cycle hire locations across London. Its CRS can be queried as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">st_crs</span>(cycle_hire_osm)
 <span class="co">#&gt; Coordinate Reference System:</span>
 <span class="co">#&gt;   EPSG: 4326 </span>
 <span class="co">#&gt;   proj4string: &quot;+proj=longlat +datum=WGS84 +no_defs&quot;</span></code></pre></div>
-<p>CRSs in the <strong>sf</strong> package be define using their <code>epsg</code> code or a <code>proj4string</code> definition (see section <a href="spatial-class.html#crs-in-r">2.3.3</a>).</p>
+<p>CRSs in the <strong>sf</strong> package can be defined using the corresponding <code>epsg</code> code or a <code>proj4string</code> definition (see section <a href="spatial-class.html#crs-in-r">2.3.3</a>).</p>
 <p>Let’s create a new version of <code>cycle_hire_osm</code> in a projected CRS, using the <code>epsg</code> number of 27700:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cycle_hire_osm_projected =<span class="st"> </span><span class="kw">st_transform</span>(cycle_hire_osm, <span class="dv">27700</span>)
 <span class="kw">st_crs</span>(cycle_hire_osm_projected)
 <span class="co">#&gt; Coordinate Reference System:</span>
 <span class="co">#&gt;   EPSG: 27700 </span>
 <span class="co">#&gt;   proj4string: &quot;+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs&quot;</span></code></pre></div>
-<p>Note that the result shows that the <code>epsg</code> has been updated and that <code>proj4string</code> element of the CRS now contains, among other things <code>+proj=tmerc</code> (meaning it is a projected CRS using the <a href="https://en.wikipedia.org/wiki/Transverse_Mercator_projection">tranverse Mercator</a> projection) and <code>+units=m</code> (meaning the units of the coordinates are meters). Another function, from the <strong>rgdal</strong> library, provides a note containing the name of the CRS:</p>
+<p>Note that the result shows that the <code>epsg</code> has been updated and that the <code>proj4string</code> element of the CRS now contains, among other things <code>+proj=tmerc</code> (meaning it is a projected CRS using the <a href="https://en.wikipedia.org/wiki/Transverse_Mercator_projection">tranverse Mercator</a> projection) and <code>+units=m</code> (meaning the units of the coordinates are meters). Another function, from the <strong>rgdal</strong> library, provides a note containing the name of the CRS:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">crs_codes =<span class="st"> </span>rgdal::<span class="kw">make_EPSG</span>()[<span class="dv">1</span>:<span class="dv">2</span>]
 dplyr::<span class="kw">filter</span>(crs_codes, code ==<span class="st"> </span><span class="dv">27700</span>)
 <span class="co">#&gt;    code                                note</span>
@@ -445,7 +445,7 @@ dplyr::<span class="kw">filter</span>(crs_codes, code ==<span class="st"> </span
 <span class="co">#&gt; [1] &quot;+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs&quot;</span></code></pre></div>
 
 <div class="rmdnote">
-The EPSG code can be found inside the <code>crs</code> attribute of the object’s geometry. It is hidden from view for most of the time except when the object is printed but can be can identified and set using the <code>st_crs</code> function, for example <code>st_crs(cycle_hire_osm)$epsg</code>.
+Printing a spatial object in the console, automatically returns its coordinate reference system. To access and modify it explicitly, use the <code>st_crs</code> function, for example, <code>st_crs(cycle_hire_osm)</code>.
 </div>
 <p></p>
 <p>Existing CRS are well suited for most purposes. <!-- examples --> In the same time, <code>proj4string</code> definitions are highly modifiable and allow for CRS customization. <!-- as we mentioned in section \@ref(crs-in-r). --> We can present that using selected world projections. The Mollweide projection is recommended when it is important to preserve areas <span class="citation">(Jenny et al. <a href="#ref-jenny_guide_2017">2017</a>)</span> (Figure <a href="transform.html#fig:mollproj">5.2</a>). To use this projection, we need to specify it using the <code>proj4string</code> element, <code>&quot;+proj=moll&quot;</code>, in the <code>st_transform</code> function:</p>
