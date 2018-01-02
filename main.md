@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-01-01'
+date: '2018-01-02'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2018-01-01 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-01-02 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve8cfacf214ea61c1b
+preservef42a9b7e6b3d16a5
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservec6bd9ae9aa48d369
+preservea4c782c103bcc69e
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6059,7 +6059,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservec901669916e10d57
+preservebdbb8d1429a23be6
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6456,21 +6456,32 @@ desire_rail = top_n(desire_lines, n = 3, wt = train)
 
 The challenge now is to 'break-up' each of these lines into three pieces, representing travel via public transport nodes.
 This can be done by converting multiline objects in which each feature contains 3 line geometries representing origin, public transport and destination legs of the trip.
-The first leg of the journey can be represented geographically as lines from origin zones to the nearest stations:
+The first stage is to create matrices of coordinates that will subsequently be used to create matrices representing each leg:
 
 
 ```r
-od_matrix = as.matrix(line2df(desire_rail))
+orig_matrix = as.matrix(line2df(desire_rail)[c("fx", "fy")])
+dest_matrix = as.matrix(line2df(desire_rail)[c("tx", "ty")])
 rail_matrix = st_coordinates(rail_stations)
-knn_orig = nabor::knn(rail_matrix, query = od_matrix[, c("fx", "fy")], k = 1)
-knn_dest = nabor::knn(rail_matrix, query = od_matrix[, c("tx", "ty")], k = 1)
+```
+
+The outputs are three matrices representing the starting points of the trips, their destinations and possible intermediary points at public transport nodes (named `orig`, `dest` and `rail` respectively).
+But how to identify *which* intermediary points to use for each desire line?
+The `knn()` function from the **nabor** package (which is used internally by **stplanr** so it should already be installed) solves this problem by finding *k nearest neighbors* between two sets of coordinates.
+The function can find any number of nearest neighbors by setting the `k` parameter, in this case to one:
+
+
+
+```r
+knn_orig = nabor::knn(rail_matrix, query = orig_matrix, k = 1)$nn.idx
+knn_dest = nabor::knn(rail_matrix, query = dest_matrix, k = 1)$nn.idx
 ```
 
 
 ```r
-leg_orig = cbind(od_matrix[, c("fx", "fy")], rail_matrix[knn_orig$nn.idx, ])
-leg_rail = cbind(rail_matrix[knn_orig$nn.idx, ], rail_matrix[knn_dest$nn.idx, ])
-leg_dest = cbind(od_matrix[, c("tx", "ty")], rail_matrix[knn_dest$nn.idx, ])
+leg_orig = cbind(orig_matrix, rail_matrix[knn_orig, ])
+leg_rail = cbind(rail_matrix[knn_orig, ], rail_matrix[knn_dest, ])
+leg_dest = cbind(dest_matrix, rail_matrix[knn_dest, ])
 ```
 
 
@@ -6488,7 +6499,7 @@ plot(desire_rail$geometry)
 plot(legs$st_sfc.multi., add = T, col = "red")
 ```
 
-<img src="figures/unnamed-chunk-21-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-22-1.png" width="576" style="display: block; margin: auto;" />
 
 
 
@@ -6496,7 +6507,7 @@ plot(legs$st_sfc.multi., add = T, col = "red")
 #> tmap mode set to interactive viewing
 ```
 
-preserveb0fe806f3ad5bfdc
+preservef6da844ca5bc5e91
 
 
 ## Route networks
@@ -6552,7 +6563,7 @@ e = igraph::edge_betweenness(ways_sln@g)
 plot(ways_sln@sl$geometry, lwd = e / 500)
 ```
 
-<img src="figures/unnamed-chunk-24-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-25-1.png" width="576" style="display: block; margin: auto;" />
 
 
 
@@ -6566,7 +6577,7 @@ plot(path$geometry, col = "red", lwd = 10)
 plot(ways_sln@sl$geometry, add = TRUE)
 ```
 
-<img src="figures/unnamed-chunk-26-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-27-1.png" width="576" style="display: block; margin: auto;" />
 
 
 
