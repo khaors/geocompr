@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve2d32421e0ecf48dc
+preserve321fb98f80e6f079
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservedc7814fd38f5e58d
+preserve2d8c12e9ec47d453
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6072,7 +6072,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve4f8a30e4826d9e35
+preserveb0e7f76bfa8d62d1
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6385,15 +6385,17 @@ E02003031   E02003043    1221       305    600          176       7
 E02003037   E02003043    1186        88    908          110       3
 E02003034   E02003043    1177       281    711          100       7
 
-This table provides a snapshot of Bristolian travel patterns demonstrating, for example, that walking is the most popular mode of transport among the top 5 origin-destination pairs and that zone `E02003043` is a popular destination (Bristol city centre, the destination of all the top 5 OD pairs).
+This table provides a snapshot of Bristolian travel patterns.
+It demonstrates that walking is the most popular mode of transport among the top 5 origin-destination pairs, that zone `E02003043` is a popular destination (Bristol city centre, the destination of all the top 5 OD pairs), and that the *intrazonal* trips, from one part of zone `E02003043` to another, constitute the most travelled OD pair in the dataset.
 But from a policy perspective \@ref(tab:od) is of limited use:
 aside from the fact that it contains only a tiny portion of the 2910 OD pairs, it tells us little about *where* policy measures are needed.
 What is needed is a way to plot this origin-destination data on the map.
 
 The solution is to convert the non-geographic `od` dataset into geographical desire lines that can be plotted on a map.
-The geographic representation of the data presented in Table \@ref(tab:od) are displayed as straight black lines in \@ref(fig:desire): these are clearly more useful from a policy perspective.
-The conversion from `data.frame` to `sf` class is done in the code below which matches the IDs in the first two columns of the `od` object to the `zone_code` ID column in the geographic `zones` object.^[
-Note that the operation emits a warning: this is because the **stplanr** function `od2line()` used to create the desire lines works by allocating the start and end points of each origin-destination pair to the *centroid* of its zone of origin and destination.
+The geographic representation of the *interzonal* OD pairs (in which the destination is different from the origin) presented in Table \@ref(tab:od) are displayed as straight black lines in \@ref(fig:desire).
+These are clearly more useful from a policy perspective.
+The conversion from `data.frame` to `sf` class is done by the **stplanr** function `od2line()`, which matches the IDs in the first two columns of the `od` object to the `zone_code` ID column in the geographic `zones` object.^[
+Note that the operation emits a warning: this is `od2line()` works by allocating the start and end points of each origin-destination pair to the *centroid* of its zone of origin and destination.
 This represents a straight line between the centroid of zone `E02003047` and the centroid of `E02003043` for the second origin-destination pair represented in Table \@ref(tab:od), for example.
 For real-world use one would use centroid values generated from projected data or, preferably, use *population-weighted* centroids.
 <!-- Todo: add PCT reference (RL) -->
@@ -6401,13 +6403,15 @@ For real-world use one would use centroid values generated from projected data o
 
 
 ```r
-desire_lines = od2line(od, zones)
+od_intra = filter(od, o == d)
+od_inter = filter(od, o != d)
+desire_lines = od2line(od_inter, zones)
 #> Warning in st_centroid.sfc(st_geometry(x), of_largest_polygon =
 #> of_largest_polygon): st_centroid does not give correct centroids for
 #> longitude/latitude data
 ```
 
-The above code generates a geographic object `desire_lines` (of class `sf`) that allows the `od` object to be plotted on the map and, vitally, used to inform geographically targeted transport policies.
+The above code generates a geographic object `desire_lines` (of class `sf`) that allows the interzone OD pairs, stored in `od_inter` to be plotted on the map and, vitally, used to inform geographically targeted transport policies.
 The `desire_lines` can now be plotted using plot commands such as that provided in the command below.
 The results, illustrated in Figure \@ref(fig:desire), demonstrate that Bristol city center is by far the largest trip attractor in the region.
 However, there are several peripheral sub-centers including Bradford Stoke to the North and Portishead to the West.
