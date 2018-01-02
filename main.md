@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserved7f2d8cfebf09484
+preserve2d32421e0ecf48dc
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve30809524c8e54cfc
+preservedc7814fd38f5e58d
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6072,7 +6072,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservecfe82b12572aa2a4
+preserve4f8a30e4826d9e35
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6370,8 +6370,7 @@ This subset of the data was using attribute operations described in Chapter \@re
 
 
 ```r
-od_top5 = od %>% 
-  arrange(desc(all)) %>% 
+od_top5 = arrange(od, desc(all)) %>% 
   top_n(5, wt = all)
 ```
 
@@ -6386,9 +6385,9 @@ E02003031   E02003043    1221       305    600          176       7
 E02003037   E02003043    1186        88    908          110       3
 E02003034   E02003043    1177       281    711          100       7
 
-This table provides a snapshot of Bristolian travel patterns demonstrating, for example, that walking is the most popular mode of transport among the top 5 inter-zonal origin-destination pairs and that zone `E02003043` is a popular destination.
-But from a policy perspective it's useless:
-aside from the fact that it contains only a tiny portion of the 2910 OD pairs, there is no way of deciding *where* policy measures are needed to boost walking and cycling.
+This table provides a snapshot of Bristolian travel patterns demonstrating, for example, that walking is the most popular mode of transport among the top 5 origin-destination pairs and that zone `E02003043` is a popular destination (Bristol city centre, the destination of all the top 5 OD pairs).
+But from a policy perspective \@ref(tab:od) is of limited use:
+aside from the fact that it contains only a tiny portion of the 2910 OD pairs, it tells us little about *where* policy measures are needed.
 What is needed is a way to plot this origin-destination data on the map.
 
 The solution is to convert the non-geographic `od` dataset into geographical desire lines that can be plotted on a map.
