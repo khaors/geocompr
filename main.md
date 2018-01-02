@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservec12abb4e8f0f92b3
+preserve7504a2d195f2dbde
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve74fbd6ea564177a1
+preserveaef62df7ecee5f9f
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3808,6 +3808,7 @@ There are no clear-cut answers to these questions and CRS selection always invol
 However there are some general principles, provided in this section, that can help decide. 
 
 The question of *when to transform* is easier to answer.
+<!-- sth. wrong in the next sentence -->
 Transformation to a projected CRS may be vital, for instance when planned geometric operations --- those involving distance measurements or area calculations, for example --- require meaningful units of distance by the object has be provided with a geographic CRS.
 Conversely if the outputs of a project are to be published in an on-line map, it may be necessary to convert them to a geographic CRS.
 If the visualization phase of a project involves publishing results using [leaflet](https://github.com/Leaflet/Leaflet) via the common format [GeoJSON](http://geojson.org/) (a common scenario) projected data should probably be transformed to WGS84. 
@@ -6070,7 +6071,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve6466fb5659d2a245
+preserve740251ab7d6c845a
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
