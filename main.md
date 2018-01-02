@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve9fe42edd3b68d348
+preserve7a19156fe5fa3109
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservec2686cdc5a626721
+preserve92bf60b88adbb525
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4270,7 +4270,7 @@ us_states_simp2 = rmapshaper::ms_simplify(us_states2163, keep = 0.005,
                                           keep_shapes = TRUE)
 ```
 
-Finally, the visual comparison of the original dataset and two simplified versions shows differences between the Douglas-Peucker (`st_simplify`) and Visvalingam (`ms_simplify`) algorithms outputs (Figure \@ref(fig:us-simp)):
+Finally, the visual comparison of the original dataset and the two simplified versions shows differences between the Douglas-Peucker (`st_simplify`) and Visvalingam (`ms_simplify`) algorithm outputs (Figure \@ref(fig:us-simp)):
 
 <div class="figure" style="text-align: center">
 <img src="figures/us-simp-1.png" alt="Comparison of the original data of the contiguous United States and two simplified versions using `st_simplify` and `ms_simplify`." width="576" />
@@ -6074,7 +6074,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve7a9f165ea63bd11d
+preservec206a0a8491454a5
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 

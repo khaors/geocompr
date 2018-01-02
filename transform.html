@@ -613,7 +613,7 @@ Figure 5.6: Comparison of the original data of the Seine, Marne and Yonne rivers
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># proportion of points to retain (0-1; default 0.05)</span>
 us_states_simp2 =<span class="st"> </span>rmapshaper::<span class="kw">ms_simplify</span>(us_states2163, <span class="dt">keep =</span> <span class="fl">0.005</span>,
                                           <span class="dt">keep_shapes =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<p>Finally, the visual comparison of the original dataset and two simplified versions shows differences between the Douglas-Peucker (<code>st_simplify</code>) and Visvalingam (<code>ms_simplify</code>) algorithms outputs (Figure <a href="transform.html#fig:us-simp">5.7</a>):</p>
+<p>Finally, the visual comparison of the original dataset and the two simplified versions shows differences between the Douglas-Peucker (<code>st_simplify</code>) and Visvalingam (<code>ms_simplify</code>) algorithm outputs (Figure <a href="transform.html#fig:us-simp">5.7</a>):</p>
 <div class="figure" style="text-align: center"><span id="fig:us-simp"></span>
 <img src="figures/us-simp-1.png" alt="Comparison of the original data of the contiguous United States and two simplified versions using `st_simplify` and `ms_simplify`." width="576" />
 <p class="caption">
