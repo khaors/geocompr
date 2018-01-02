@@ -622,7 +622,7 @@ canterbury_centroid =<span class="st"> </span><span class="kw">st_centroid</span
 </div>
 <div id="spatial-ras" class="section level2">
 <h2><span class="header-section-number">4.3</span> Spatial operations on raster data</h2>
-<p>This section builds on <a href="attr.html#manipulating-raster-objects">3.3</a>, which highlights various basic methods for manipulating raster datasets, to demonstrate more advanced and explicitly spatial raster operations, and uses the same object <code>elev</code> and <code>grain</code>.</p>
+<p>This section builds on section <a href="attr.html#manipulating-raster-objects">3.3</a>, which highlights various basic methods for manipulating raster datasets, to demonstrate more advanced and explicitly spatial raster operations, and uses the same object <code>elev</code> and <code>grain</code>.</p>
 <div id="raster-subsetting" class="section level3">
 <h3><span class="header-section-number">4.3.1</span> Spatial subsetting</h3>
 <p>In the previous chapter (section <a href="attr.html#manipulating-raster-objects">3.3</a>) we have already learned how to subset raster datasets using cell IDs and matrix indexing. Naturally, we can subset rasters also with the help of coordinates and spatial objects. To use coordinates for subsetting, we have to ‘translate’ them into the corresponding cell ID(s) or by using the <code>extract()</code> command. This operation is also known as extracting values/attributes to points.</p>
@@ -776,17 +776,14 @@ aut_ch =<span class="st"> </span><span class="kw">merge</span>(aut, ch)</code></
 <ol style="list-style-type: decimal">
 <li><p>It was established in section <a href="spatial-operations.html#spatial-vec">4.2</a> that Canterbury was the region of New Zealand containing most of 100 highest points in the country. How many of these high points does Canterbury Region contain?</p></li>
 <li><p>Which region has the second highest number of <code>nz_height</code> points in, and how many does it have?</p></li>
-</ol>
-<!-- something wrong with - topo 100 highest points? -->
-<ol style="list-style-type: decimal">
-<li>Generalizing the question to all regions: how many of New Zealand’s 16 regions contain points in the topo 100 highest points in the country? Which regions?
+<li>Generalizing the question to all regions: how many of New Zealand’s 16 regions contain points which belong to the top 100 highest points in the country? Which regions?
 <ul>
 <li>Bonus: create a table listing these regions in order of the number of points and their name. <!-- Raster exercises--></li>
 </ul></li>
 <li>Use <code>data(dem, package = &quot;RQGIS&quot;)</code>, and reclassify the elevation in three classes: low, middle and high. Secondly, compute the NDVI (<code>data(ndvi, package = &quot;RQGIS&quot;)</code>) and the mean elevation for each altitudinal class.</li>
 <li>Apply a line detection filter to <code>data(dem, package = &quot;RQGIS&quot;)</code>.</li>
 <li>Calculate the NDVI of a Landsat image. Use the Landsat image provided by the <strong>spDataLarge</strong> package (<code>system.file(&quot;raster/landsat.tif&quot;, package=&quot;spDataLarge&quot;)</code>).</li>
-<li>This <a href="https://stackoverflow.com/questions/35555709/global-raster-of-geographic-distances">post</a> shows how to compute distances to the nearest coastline using <code>raster::distance()</code>. Retrieve a digital elevation model of Spain, and compute a raster which represents the distance to the coast. (Hint: Have a look at <code>getData()</code> to retrieve a digital elevation model and administrative boundaries for Spain.) Before, computing the distance raster, you might want to increase the resolution of the input dem raster, otherwise computing time might become too long. Secondly, weight the distance raster with elevation. Every 100 altitudinal meters should increase the distance to the coast by 10 km. Finally, compute the difference between the raster using the euclidean distance and the raster weighted by elevation. (Note that this is a very simple weighting approach. A more advanced approach might instead weight by flow direction, i.e. favor the steepest drop or the slightest increase in elevation.)</li>
+<li><p>This <a href="https://stackoverflow.com/questions/35555709/global-raster-of-geographic-distances">post</a> shows how to compute distances to the nearest coastline using <code>raster::distance()</code>. Retrieve a digital elevation model of Spain, and compute a raster which represents the distance to the coast. (Hint: Have a look at <code>getData()</code> to retrieve a digital elevation model and administrative boundaries for Spain.) Before, computing the distance raster, you might want to increase the resolution of the input dem raster, otherwise computing time might become too long. Secondly, weight the distance raster with elevation. Every 100 altitudinal meters should increase the distance to the coast by 10 km. Finally, compute the difference between the raster using the euclidean distance and the raster weighted by elevation. (Note that this is a very simple weighting approach. A more advanced approach might instead weight by flow direction, i.e. favor the steepest drop or the slightest increase in elevation.)</p></li>
 </ol>
 
 </div>

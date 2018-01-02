@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve321fb98f80e6f079
+preserveecdbc0a2783e6849
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve2d8c12e9ec47d453
+preserve203a3c4c284cb5d7
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3304,7 +3304,7 @@ plot(nz_height$geometry[2:3], add = TRUE)
 
 ## Spatial operations on raster data {#spatial-ras}
 
-This section builds on \@ref(manipulating-raster-objects), which highlights various basic methods for manipulating raster datasets, to demonstrate more advanced and explicitly spatial raster operations,
+This section builds on section \@ref(manipulating-raster-objects), which highlights various basic methods for manipulating raster datasets, to demonstrate more advanced and explicitly spatial raster operations,
 and uses the same object `elev` and `grain`.
 
 
@@ -3622,8 +3622,7 @@ The packages **landsat** (`histmatch()`, `relnorm()`, `PIF()`), **satellite** (`
 
 1. Which region has the second highest number of `nz_height` points in, and how many does it have?
 
-<!-- something wrong with - topo 100 highest points? -->
-1. Generalizing the question to all regions: how many of New Zealand's 16 regions contain points in the topo 100 highest points in the country? Which regions?
+1. Generalizing the question to all regions: how many of New Zealand's 16 regions contain points which belong to the top 100 highest points in the country? Which regions?
     - Bonus: create a table listing these regions in order of the number of points and their name.
 <!-- Raster exercises-->
 1. Use `data(dem, package = "RQGIS")`, and reclassify the elevation in three classes: low, middle and high.
@@ -4135,9 +4134,9 @@ However, the algorithm makes sure to keep the same (land cover) classes as provi
 <!-- freq(cat_raster_wgs84) -->
 <!-- freq(cat_raster) -->
 
-Reprojecting continous data is almost identical.
-The `srtm.tif` file contains a digital elevation model for the same area in Utah from [the Shuttle Radar Topography Mission (SRTM)](https://www2.jpl.nasa.gov/srtm/).
-Each value in this raster represents elevation measured in meters.
+Reprojecting continous data follows an almost identical procedure.
+The `srtm.tif` file contains a digital elevation model from [the Shuttle Radar Topography Mission (SRTM)](https://www2.jpl.nasa.gov/srtm/), nad is located in the same area in Utah as the previoulsy used land cover dataset.
+Each srtm raster pixel represents elevation measured in meters.
 
 
 ```r
@@ -4153,21 +4152,25 @@ con_raster
 #> values      : 1024, 2892  (min, max)
 ```
 
-This dataset has a geographic CRS and we want to transform it into a projected CRS.
+Here, we will reproject from the geographic CRS of the srtm dataset into a projected CRS.
 The nearest neighbor method should not be used for continuous raster data, as we want to preserve gradual changes in values.
-Instead we will use the bilinear method which computes the output cell value based on the four nearest cells in the original raster. 
-<!-- Quadric and cubic polynomials are also popular nterpolation functions for resampling with more complexity and improved accuracy. @liu_essential_2009: 111-->
+Instead we will use the bilinear method which computes the output cell value based on the four nearest cells in the original raster.
+<!--
+"Quadric and cubic polynomials are also popular interpolation functions for resampling with more complexity and improved accuracy" [@liu_essential_2009].
+However, these interpolation methods are still unavailable in the **raster** package.
+-->
 The new value is the distance-weighted average of the values from these four cells, i.e., the closer the input cell is to the center of the output cell, the stronger is its weight.
 
-<!-- I still don't know what the following note wants to tell the reader. Pls clarify -->
+<!-- I still don't know what the following note wants to tell the reader, and how it fits to the surrounding text. Pls clarify -->
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">All the grid cells in equal-area projections have the same size (represent the same area).
 Therefore, these projections are recommended when performing many raster operations, such as distance calculations.</div>\EndKnitrBlock{rmdnote}
 
+To use the `bilinear` method, we say so in the corresponding function argument of `projectRaster()`.
+Of course, we need to also specify a projection, here we will reproject into the Oblique Lambert azimuthal equal-area projection.
 
-<!-- unclear what is meant -->
-In the fist step we need to obtain the proj4 definition of the existing projected CRS appropriate for this area or create a new one using the [Projection Wizard](http://projectionwizard.org/) online tool [@savric_projection_2016].
-For this example, we used the Oblique Lambert azimuthal equal-area projection.
-The second step is to define the `bilinear` reprojection method:
+<!-- nice link, but does not fit into the text here in my opinion
+First, we need to obtain the proj4 definition of the existing projected CRS appropriate for this area or create a new one using the [Projection Wizard](http://projectionwizard.org/) online tool [@savric_projection_2016].
+-->
 
 
 ```r
@@ -4184,7 +4187,6 @@ con_raster_ea
 #> values      : 1027, 2891  (min, max)
 ```
 
-<!-- we have said so before, so maybe we can delete? -->
 Reprojecting (continuous) rasters also changes spatial properties, such as the number of cells, resolution, and extent.
 Moreover, it slightly modifies values in the new raster, which can be seen by comparing the outputs of the `summary()` function between `con_raster` and `con_raster_ea`.
 
@@ -6072,7 +6074,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveb0e7f76bfa8d62d1
+preserve9caa9a7b7b1bd046
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 

@@ -540,7 +540,7 @@ cat_raster_wgs84
 <span class="co">#&gt; names       : nlcd2011 </span>
 <span class="co">#&gt; values      : 11, 95  (min, max)</span></code></pre></div>
 <p>Many properties of the new object differs from the previous one, which include the number of columns and rows (and therefore number of cells), resolution (transformed from meters into degrees), and extent. However, the algorithm makes sure to keep the same (land cover) classes as provided by the input raster - <code>unique(cat_raster_wgs84)</code>. <!-- freq(cat_raster_wgs84) --> <!-- freq(cat_raster) --></p>
-<p>Reprojecting continous data is almost identical. The <code>srtm.tif</code> file contains a digital elevation model for the same area in Utah from <a href="https://www2.jpl.nasa.gov/srtm/">the Shuttle Radar Topography Mission (SRTM)</a>. Each value in this raster represents elevation measured in meters.</p>
+<p>Reprojecting continous data follows an almost identical procedure. The <code>srtm.tif</code> file contains a digital elevation model from <a href="https://www2.jpl.nasa.gov/srtm/">the Shuttle Radar Topography Mission (SRTM)</a>, nad is located in the same area in Utah as the previoulsy used land cover dataset. Each srtm raster pixel represents elevation measured in meters.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">con_raster =<span class="st"> </span><span class="kw">raster</span>(<span class="kw">system.file</span>(<span class="st">&quot;raster/srtm.tif&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;spDataLarge&quot;</span>))
 con_raster
 <span class="co">#&gt; class       : RasterLayer </span>
@@ -551,15 +551,20 @@ con_raster
 <span class="co">#&gt; data source : /home/travis/R/Library/spDataLarge/raster/srtm.tif </span>
 <span class="co">#&gt; names       : srtm </span>
 <span class="co">#&gt; values      : 1024, 2892  (min, max)</span></code></pre></div>
-<p>This dataset has a geographic CRS and we want to transform it into a projected CRS. The nearest neighbor method should not be used for continuous raster data, as we want to preserve gradual changes in values. Instead we will use the bilinear method which computes the output cell value based on the four nearest cells in the original raster. <!-- Quadric and cubic polynomials are also popular nterpolation functions for resampling with more complexity and improved accuracy. @liu_essential_2009: 111--> The new value is the distance-weighted average of the values from these four cells, i.e., the closer the input cell is to the center of the output cell, the stronger is its weight.</p>
-<!-- I still don't know what the following note wants to tell the reader. Pls clarify -->
+<p>Here, we will reproject from the geographic CRS of the srtm dataset into a projected CRS. The nearest neighbor method should not be used for continuous raster data, as we want to preserve gradual changes in values. Instead we will use the bilinear method which computes the output cell value based on the four nearest cells in the original raster. <!--
+"Quadric and cubic polynomials are also popular interpolation functions for resampling with more complexity and improved accuracy" [@liu_essential_2009].
+However, these interpolation methods are still unavailable in the **raster** package.
+--> The new value is the distance-weighted average of the values from these four cells, i.e., the closer the input cell is to the center of the output cell, the stronger is its weight.</p>
+<!-- I still don't know what the following note wants to tell the reader, and how it fits to the surrounding text. Pls clarify -->
 
 <div class="rmdnote">
 All the grid cells in equal-area projections have the same size (represent the same area). Therefore, these projections are recommended when performing many raster operations, such as distance calculations.
 </div>
 <p></p>
-<!-- unclear what is meant -->
-<p>In the fist step we need to obtain the proj4 definition of the existing projected CRS appropriate for this area or create a new one using the <a href="http://projectionwizard.org/">Projection Wizard</a> online tool <span class="citation">(Šavrič, Jenny, and Jenny <a href="#ref-savric_projection_2016">2016</a>)</span>. For this example, we used the Oblique Lambert azimuthal equal-area projection. The second step is to define the <code>bilinear</code> reprojection method:</p>
+<p>To use the <code>bilinear</code> method, we say so in the corresponding function argument of <code>projectRaster()</code>. Of course, we need to also specify a projection, here we will reproject into the Oblique Lambert azimuthal equal-area projection.</p>
+<!-- nice link, but does not fit into the text here in my opinion
+First, we need to obtain the proj4 definition of the existing projected CRS appropriate for this area or create a new one using the [Projection Wizard](http://projectionwizard.org/) online tool [@savric_projection_2016].
+-->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">equalarea =<span class="st"> &quot;+proj=laea +lat_0=37.32 +lon_0=-113.04&quot;</span>
 con_raster_ea =<span class="st"> </span><span class="kw">projectRaster</span>(con_raster, <span class="dt">crs =</span> equalarea, <span class="dt">method =</span> <span class="st">&quot;bilinear&quot;</span>)
 con_raster_ea
@@ -571,7 +576,6 @@ con_raster_ea
 <span class="co">#&gt; data source : in memory</span>
 <span class="co">#&gt; names       : srtm </span>
 <span class="co">#&gt; values      : 1027, 2891  (min, max)</span></code></pre></div>
-<!-- we have said so before, so maybe we can delete? -->
 <p>Reprojecting (continuous) rasters also changes spatial properties, such as the number of cells, resolution, and extent. Moreover, it slightly modifies values in the new raster, which can be seen by comparing the outputs of the <code>summary()</code> function between <code>con_raster</code> and <code>con_raster_ea</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(con_raster)
 <span class="kw">summary</span>(con_raster_ea)</code></pre></div>
@@ -1026,9 +1030,6 @@ Figure 5.21: Illustration of vectorization of raster (left) into polygon (center
 </div>
 <div id="ref-jenny_guide_2017">
 <p>Jenny, Bernhard, Bojan Šavrič, Nicholas D Arnold, Brooke E Marston, and Charles A Preppernau. 2017. “A Guide to Selecting Map Projections for World and Hemisphere Maps.” In <em>Choosing a Map Projection</em>, 213–28. Springer.</p>
-</div>
-<div id="ref-savric_projection_2016">
-<p>Šavrič, Bojan, Bernhard Jenny, and Helen Jenny. 2016. “Projection Wizard – An Online Map Projection Selection Tool.” <em>The Cartographic Journal</em> 53 (2): 177–85. doi:<a href="https://doi.org/10.1080/00087041.2015.1131938">10.1080/00087041.2015.1131938</a>.</p>
 </div>
 <div id="ref-grolemund_r_2016">
 <p>Grolemund, Garrett, and Hadley Wickham. 2016. <em>R for Data Science</em>. 1 edition. O’Reilly Media.</p>
