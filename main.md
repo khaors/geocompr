@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve7504a2d195f2dbde
+preserve38ba2a372968caeb
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveaef62df7ecee5f9f
+preserve154fd5adce571152
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3808,9 +3808,9 @@ There are no clear-cut answers to these questions and CRS selection always invol
 However there are some general principles, provided in this section, that can help decide. 
 
 The question of *when to transform* is easier to answer.
-<!-- sth. wrong in the next sentence -->
-Transformation to a projected CRS may be vital, for instance when planned geometric operations --- those involving distance measurements or area calculations, for example --- require meaningful units of distance by the object has be provided with a geographic CRS.
-Conversely if the outputs of a project are to be published in an on-line map, it may be necessary to convert them to a geographic CRS.
+In some cases transformation to a projected CRS is essential for geocomputational work.
+An example is when geometric operations involving distance measurements or area calculations are required.
+Conversely, if the outputs of a project are to be published in an on-line map, it may be necessary to convert them to a geographic CRS.
 If the visualization phase of a project involves publishing results using [leaflet](https://github.com/Leaflet/Leaflet) via the common format [GeoJSON](http://geojson.org/) (a common scenario) projected data should probably be transformed to WGS84. 
 Another case is when two objects with different CRSs must be compared or combined: performing a geometric operation on two objects with different CRSs results in an error.
 This is demonstrated in the code chunk below, which attempts to find the distance between the projected and unprojected versions of `london`:
@@ -6071,7 +6071,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve740251ab7d6c845a
+preserve1948352bd348ca24
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
