@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve150f6cec7a3c6c09
+preserve9394de108a09a825
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveab795bd16c049074
+preservea4a9a333cebfe890
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4214,8 +4214,11 @@ the functions discussed in this section work on objects of class `sfc` in additi
 Simplification is a process for generalization of vector objects (lines and polygons) usually for its use in smaller scale maps.
 Additional reason for simplification is reduction of the object size and therefore the size of a saved file.
 Therefore, data is often simplified before its use in interactive maps. 
-The **sf** package provides the `st_simplify()` function^[It uses the simplify algorithm from GEOS.] whose `dTolerance` parameter controls the level of generalization given as a value in map units.
+The **sf** package provides the `st_simplify()` function^[It uses the simplify algorithm from GEOS.] whose `dTolerance` parameter controls the level of generalization given as a value in map units [@douglas_algorithms_1973].
 <!-- I have no idea what the next sentence means -->
+
+
+
 As a result, all vertices in the simplified geometry will be within this value from the original ones.
 
 We can use data of the Seine, Marne and Yonne rivers (on the left in Figure \@ref(fig:seine-simp)) as an example of line vector data simplification:
@@ -6074,7 +6077,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservefeb2e48a91177100
+preserve9fb29913e0134d90
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
