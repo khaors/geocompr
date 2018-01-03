@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservea9b5ec27a3741bf3
+preservec7922cbfcbf34d02
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveb216093fc0cf6cc4
+preserveb12486134c39806a
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6074,7 +6074,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve83ce59e86f8e468b
+preserve547c95231d9c2548
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6482,6 +6482,7 @@ plot(desire_carshort$geom_car, col = "red", add = TRUE)
 <p class="caption">(\#fig:routes)Routes along which many (200+) short (<5km Euclidean distance) car journeys are made (red) overlaying desire lines representing the same trips (black).</p>
 </div>
 
+There are many benefits of converting travel desire lines into likely routes of travel from a policy perspective.
 
 
 ## Nodes on the transport system
@@ -6666,9 +6667,32 @@ plot(ways_sln@sl$geometry, add = TRUE)
 
 <img src="figures/unnamed-chunk-29-1.png" width="576" style="display: block; margin: auto;" />
 
+## Future directions of travel
 
+This chapter has provided a taster of the possibilities of using geocomputation for transport research.
+It has explored some of key geographic features of the travel patterns in a major city using open data to identify where investment in sustainable transport options may be most urgently needed.
+More importantly from a learning perspective, it has demonstrated how representing transport systems at multiple interacting geographical levels can lead to new insights about how they work, and how to change them.
+However there is much more that could be done in this area.
+Geocomputation for transport applications is a small but rapidly growing field and space requirements mean that we have only scratched the surface of what is possible, while emphasising the principles and key methods of implementation in R.
 
-## Agents in the transport system
+It is possible to build on the foundations presented in this chapter in many directions.
+Transport is the fastest growing source of greenhouse gas emissions in many countries.
+Because of the highly unequal distribution of transport-related emissions across society, and the fact that transport (unlike food and heating) is not essential for wellbeing, there is great potential for the sector to rapidly decarbonise through demand reduction, electrification of the vehicle fleet and the uptake of active travel modes such as walking and cycling.
+Further exploration of such 'transport futures' represents a particularly promising future direction of travel from a policy perspective.
+
+From a methods perspective there are also many directions one could go in.
+<!-- Something on lines, routes, route networks (RL) -->
+Characteristics of the route such as speed limits, busyness and the provision of protected cycling and walking paths may be able to help explain differences in 'mode-split' (the proportion of trips made by different modes of transport).
+By aggregating OpenStreetMap data (downloaded using methods presented in Chapter \@ref(read-write)) using buffers and spatial data methods presented in Chapters \@ref(attr) and \@ref(spatial-operations), for example, it would be possible to detect the presence of green space in close proximity to parks.
+Using R's statistical modelling capabilities this could then be used to predict the current number of using a certain mode along particular desire lines, and how that may switch under scenarios of change.
+A similar approach was used to create the Propensity to Cycle Tool (PCT), a publicly accessible mapping tool developed in R to prioritize investment in cycling, available at [pct.bike/](http://www.pct.bike/) [@lovelace_propensity_2017].
+Similar tools could be used to encourage evidence-based policies around other modes, not just cycling.
+
+One growing area of interest surrounds the simulation of individual people and vehicles on the road network using techniques such as spatial microsimulation and agent-based modelling (ABM).
+R has the capability to model people in zones, and interface with ABM software such as NetLogo.
+Combined with its geographical capabilities, demonstrated in this book, R would seem an appropriate language for such developments to take place.
+Of course this should be done in ways that build-on and extend existing work in the area.
+R's 'ecological niche' in transport modelling software could be around the integration of detailed geographic analysis techniques with more widely known and used statistical techniques used in transport research.
 
 <!--chapter:end:08-transport.Rmd-->
 
