@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve5d21bdb83f1feec9
+preserveb49dfe9b7da62509
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve128cc26ecc5035ae
+preserve14fb33c27fb895e6
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4689,6 +4689,27 @@ ch_raster3 = rasterize(cycle_hire_osm_projected, raster_template,
 <p class="caption">(\#fig:vector-rasterization1)Examples of point's rasterization</p>
 </div>
 
+
+
+```r
+california = filter(us_states, NAME == "California")
+raster_template2 = raster(extent(california), resolution = 0.5,
+                         crs = st_crs(california)$proj4string)
+
+california_raster1 = rasterize(california, raster_template2)
+```
+
+
+```r
+california_raster2 = rasterize(california, raster_template2, getCover = TRUE)
+```
+
+<div class="figure" style="text-align: center">
+<img src="figures/vector-rasterization2-1.png" alt="Examples of polygon rasterization" width="576" />
+<p class="caption">(\#fig:vector-rasterization2)Examples of polygon rasterization</p>
+</div>
+
+
 <!-- polygon rasterization is based on the position of the center of the pixel -->
 <!-- getCover? -->
 <!-- why? map tilling, simple analysis of terrain? -->
@@ -6074,7 +6095,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservec9f58763747468a6
+preservea1c19fb6a4046a32
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
