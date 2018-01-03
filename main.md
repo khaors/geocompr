@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve7228820f9097c23d
+preservea2d009ca2dd21db8
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve51063abcca43679c
+preservec54e5ead17bd7445
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4161,10 +4161,6 @@ However, these interpolation methods are still unavailable in the **raster** pac
 -->
 The new value is the distance-weighted average of the values from these four cells, i.e., the closer the input cell is to the center of the output cell, the stronger is its weight.
 
-<!-- I still don't know what the following note wants to tell the reader, and how it fits to the surrounding text. Pls clarify -->
-\BeginKnitrBlock{rmdnote}<div class="rmdnote">All the grid cells in equal-area projections have the same size (represent the same area).
-Therefore, these projections are recommended when performing many raster operations, such as distance calculations.</div>\EndKnitrBlock{rmdnote}
-
 To use the `bilinear` method, we say so in the corresponding function argument of `projectRaster()`.
 Of course, we need to also specify a projection, here we will reproject into the Oblique Lambert azimuthal equal-area projection.
 
@@ -4195,6 +4191,11 @@ Moreover, it slightly modifies values in the new raster, which can be seen by co
 summary(con_raster)
 summary(con_raster_ea)
 ```
+
+\BeginKnitrBlock{rmdnote}<div class="rmdnote">Of course, the limitations of 2D Earth projections apply as much to vector as to raster data.
+At best we can comply with two out of three spatial properties (distance, area, direction).
+Therefore, the task at hand determines which projection to choose. 
+For instance, if we are interested in a density (points per grid cell or inhabitants per grid cell) we should use an equal-area projection (see also chapter \@ref(location)).</div>\EndKnitrBlock{rmdnote}
 
 <!-- why new na? -->
 
@@ -6106,7 +6107,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve90988eee7c263130
+preservec2b990a323eb972c
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 

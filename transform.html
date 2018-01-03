@@ -555,12 +555,6 @@ con_raster
 "Quadric and cubic polynomials are also popular interpolation functions for resampling with more complexity and improved accuracy" [@liu_essential_2009].
 However, these interpolation methods are still unavailable in the **raster** package.
 --> The new value is the distance-weighted average of the values from these four cells, i.e., the closer the input cell is to the center of the output cell, the stronger is its weight.</p>
-<!-- I still don't know what the following note wants to tell the reader, and how it fits to the surrounding text. Pls clarify -->
-
-<div class="rmdnote">
-All the grid cells in equal-area projections have the same size (represent the same area). Therefore, these projections are recommended when performing many raster operations, such as distance calculations.
-</div>
-<p></p>
 <p>To use the <code>bilinear</code> method, we say so in the corresponding function argument of <code>projectRaster()</code>. Of course, we need to also specify a projection, here we will reproject into the Oblique Lambert azimuthal equal-area projection.</p>
 <!-- nice link, but does not fit into the text here in my opinion
 First, we need to obtain the proj4 definition of the existing projected CRS appropriate for this area or create a new one using the [Projection Wizard](http://projectionwizard.org/) online tool [@savric_projection_2016].
@@ -579,6 +573,11 @@ con_raster_ea
 <p>Reprojecting (continuous) rasters also changes spatial properties, such as the number of cells, resolution, and extent. Moreover, it slightly modifies values in the new raster, which can be seen by comparing the outputs of the <code>summary()</code> function between <code>con_raster</code> and <code>con_raster_ea</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(con_raster)
 <span class="kw">summary</span>(con_raster_ea)</code></pre></div>
+
+<div class="rmdnote">
+Of course, the limitations of 2D Earth projections apply as much to vector as to raster data. At best we can comply with two out of three spatial properties (distance, area, direction). Therefore, the task at hand determines which projection to choose. For instance, if we are interested in a density (points per grid cell or inhabitants per grid cell) we should use an equal-area projection (see also chapter <a href="location.html#location">7</a>).
+</div>
+<p></p>
 <!-- why new na? -->
 <!-- res option in projectRaster? -->
 <!-- note1: in most of the cases reproject vector, not raster-->
