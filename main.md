@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservea2d009ca2dd21db8
+preserve81c04305b780103b
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2485,6 +2485,8 @@ grain = raster(nrow = 6, ncol = 6, res = 0.5,
                vals = grain_fact)
 ```
 
+
+
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">`raster` objects can contain values of class `numeric`, `integer`, `logical` or `factor`, but not `character`.
 To use character values they must first be converted into an appropriate class, for example using the function `factor()`. 
 The `levels` argument was used in the preceding code chunk to create an ordered factor:
@@ -2507,21 +2509,21 @@ levels(grain)
 ```
 
 This behavior demonstrates that raster cells can only possess one value, an identifier which can be used to look up the attributes in the corresponding attribute table (stored in a slot named `attributes`).
-This is illustrated in command below, which returns the grain size and wetness of cell IDs 1, 12 and 36, we can run:
+This is illustrated in command below, which returns the grain size and wetness of cell IDs 1, 11 and 35, we can run:
 
 
 ```r
-factorValues(grain, grain[c(1, 12, 36)])
+factorValues(grain, grain[c(1, 11, 35)])
 #>   VALUE wetness
 #> 1  sand     dry
-#> 2  clay     wet
-#> 3  silt   moist
+#> 2  silt   moist
+#> 3  clay     wet
 ```
 
 
 <div class="figure" style="text-align: center">
-<img src="figures/03_cont_categ_rasters.png" alt="Raster with numberic values (left) and a raster with categorical values (right)." width="765" />
-<p class="caption">(\#fig:cont-cate-rasters)Raster with numberic values (left) and a raster with categorical values (right).</p>
+<img src="figures/cont-cate-rasters-1.png" alt="Raster datasets with numeric (left) and categorical values (right)." width="672" />
+<p class="caption">(\#fig:cont-cate-rasters)Raster datasets with numeric (left) and categorical values (right).</p>
 </div>
 
 ### Raster subsetting
@@ -3127,7 +3129,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservec54e5ead17bd7445
+preserve595bf4ec8d146f03
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3304,10 +3306,15 @@ plot(nz_height$geometry[2:3], add = TRUE)
 
 ## Spatial operations on raster data {#spatial-ras}
 
-This section builds on section \@ref(manipulating-raster-objects), which highlights various basic methods for manipulating raster datasets, to demonstrate more advanced and explicitly spatial raster operations,
-and uses the same object `elev` and `grain`.
+This section builds on section \@ref(manipulating-raster-objects), which highlights various basic methods for manipulating raster datasets, to demonstrate more advanced and explicitly spatial raster operations, and uses the objects `elev` and `grain` manually created in section \@ref(manipulating-raster-objects).
+These datasets can be also found in the **spData** package.
 
 
+```r
+library(spData)
+data(elev)
+data(grain)
+```
 
 ### Spatial subsetting {#raster-subsetting}
 
@@ -6107,7 +6114,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservec2b990a323eb972c
+preservef8b697e004d225b8
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 

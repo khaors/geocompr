@@ -648,16 +648,16 @@ grain =<span class="st"> </span><span class="kw">raster</span>(<span class="dt">
 <span class="co">#&gt; 1  1  clay     wet</span>
 <span class="co">#&gt; 2  2  silt   moist</span>
 <span class="co">#&gt; 3  3  sand     dry</span></code></pre></div>
-<p>This behavior demonstrates that raster cells can only possess one value, an identifier which can be used to look up the attributes in the corresponding attribute table (stored in a slot named <code>attributes</code>). This is illustrated in command below, which returns the grain size and wetness of cell IDs 1, 12 and 36, we can run:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">factorValues</span>(grain, grain[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">12</span>, <span class="dv">36</span>)])
+<p>This behavior demonstrates that raster cells can only possess one value, an identifier which can be used to look up the attributes in the corresponding attribute table (stored in a slot named <code>attributes</code>). This is illustrated in command below, which returns the grain size and wetness of cell IDs 1, 11 and 35, we can run:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">factorValues</span>(grain, grain[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">11</span>, <span class="dv">35</span>)])
 <span class="co">#&gt;   VALUE wetness</span>
 <span class="co">#&gt; 1  sand     dry</span>
-<span class="co">#&gt; 2  clay     wet</span>
-<span class="co">#&gt; 3  silt   moist</span></code></pre></div>
+<span class="co">#&gt; 2  silt   moist</span>
+<span class="co">#&gt; 3  clay     wet</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:cont-cate-rasters"></span>
-<img src="figures/03_cont_categ_rasters.png" alt="Raster with numberic values (left) and a raster with categorical values (right)." width="765" />
+<img src="figures/cont-cate-rasters-1.png" alt="Raster datasets with numeric (left) and categorical values (right)." width="672" />
 <p class="caption">
-Figure 3.2: Raster with numberic values (left) and a raster with categorical values (right).
+Figure 3.2: Raster datasets with numeric (left) and categorical values (right).
 </p>
 </div>
 <div id="raster-subsetting" class="section level3">

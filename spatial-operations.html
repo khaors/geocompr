@@ -622,7 +622,10 @@ canterbury_centroid =<span class="st"> </span><span class="kw">st_centroid</span
 </div>
 <div id="spatial-ras" class="section level2">
 <h2><span class="header-section-number">4.3</span> Spatial operations on raster data</h2>
-<p>This section builds on section <a href="attr.html#manipulating-raster-objects">3.3</a>, which highlights various basic methods for manipulating raster datasets, to demonstrate more advanced and explicitly spatial raster operations, and uses the same object <code>elev</code> and <code>grain</code>.</p>
+<p>This section builds on section <a href="attr.html#manipulating-raster-objects">3.3</a>, which highlights various basic methods for manipulating raster datasets, to demonstrate more advanced and explicitly spatial raster operations, and uses the objects <code>elev</code> and <code>grain</code> manually created in section <a href="attr.html#manipulating-raster-objects">3.3</a>. These datasets can be also found in the <strong>spData</strong> package.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(spData)
+<span class="kw">data</span>(elev)
+<span class="kw">data</span>(grain)</code></pre></div>
 <div id="raster-subsetting" class="section level3">
 <h3><span class="header-section-number">4.3.1</span> Spatial subsetting</h3>
 <p>In the previous chapter (section <a href="attr.html#manipulating-raster-objects">3.3</a>) we have already learned how to subset raster datasets using cell IDs and matrix indexing. Naturally, we can subset rasters also with the help of coordinates and spatial objects. To use coordinates for subsetting, we have to ‘translate’ them into the corresponding cell ID(s) or by using the <code>extract()</code> command. This operation is also known as extracting values/attributes to points.</p>
