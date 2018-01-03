@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservec5830dd76cb9940c
+preserve5d21bdb83f1feec9
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservebee68ae027cf445b
+preserve128cc26ecc5035ae
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6074,7 +6074,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve28bfa494dd75b40d
+preservec9f58763747468a6
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6479,8 +6479,8 @@ plot(desire_carshort$geom_car, col = "red", add = TRUE)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/routes-1.png" alt="Routes along which many (200+) short (&lt;5km Euclidean distance) car journeys are made (red) overlaying desire lines representing the same trips (black)." width="576" />
-<p class="caption">(\#fig:routes)Routes along which many (200+) short (<5km Euclidean distance) car journeys are made (red) overlaying desire lines representing the same trips (black).</p>
+<img src="figures/routes-1.png" alt="Routes along which many (300+) short (&lt;5km Euclidean distance) car journeys are made (red) overlaying desire lines representing the same trips (black)." width="576" />
+<p class="caption">(\#fig:routes)Routes along which many (300+) short (<5km Euclidean distance) car journeys are made (red) overlaying desire lines representing the same trips (black).</p>
 </div>
 
 The results show that the short desire lines along which most people travel by car are geographically clustered.
@@ -6490,7 +6490,11 @@ The proliferation of short car journeys in this area can also be understood in t
 
 > Bradley Stoke housing development of 8500 homes constructed by volume house builders; and major transport nodes such as junctions on both the M4 and M5 motorways [@tallon_bristol_2007].
 
-<!-- There are many benefits of converting travel desire lines into likely routes of travel from a policy perspective. -->
+There are many benefits of converting travel desire lines into likely routes of travel from a policy perspective, primary among them the ability to understand what it is about the surrounding environment that makes people travel by a particular mode.
+We discuss future directions of research building on the routes in section \@ref(future-directions-of-travel).
+For the purposes of this case study, suffice to say that the roads along which these short car journeys travel should be prioritised for investigation to understand how they can be made more conducive to sustainable transport modes.
+One option would be to add new public transport nodes to the network.
+Such nodes are described in the next section.
 
 ## Nodes on the transport system
 

@@ -491,16 +491,16 @@ route_carshort =<span class="st"> </span><span class="kw">line2route</span>(desi
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(desire_carshort$geometry)
 <span class="kw">plot</span>(desire_carshort$geom_car, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:routes"></span>
-<img src="figures/routes-1.png" alt="Routes along which many (200+) short (&lt;5km Euclidean distance) car journeys are made (red) overlaying desire lines representing the same trips (black)." width="576" />
+<img src="figures/routes-1.png" alt="Routes along which many (300+) short (&lt;5km Euclidean distance) car journeys are made (red) overlaying desire lines representing the same trips (black)." width="576" />
 <p class="caption">
-Figure 8.4: Routes along which many (200+) short (&lt;5km Euclidean distance) car journeys are made (red) overlaying desire lines representing the same trips (black).
+Figure 8.4: Routes along which many (300+) short (&lt;5km Euclidean distance) car journeys are made (red) overlaying desire lines representing the same trips (black).
 </p>
 </div>
 <p>The results show that the short desire lines along which most people travel by car are geographically clustered. Plotting the results on an interactive map, for example with <code>mapview::mapview(desire_carshort)</code>, reveals that these car trips take place in and around Bradley Stoke. According to <a href="https://en.wikipedia.org/wiki/Bradley_Stoke">Wikipedia</a>, Bradley Stoke is “Europe’s largest new town built with private investment”, which may help why its high level of car dependency via limitted public transport provision. The proliferation of short car journeys in this area can also be understood in terms of the surrounding transport infrastructure:</p>
 <blockquote>
 <p>Bradley Stoke housing development of 8500 homes constructed by volume house builders; and major transport nodes such as junctions on both the M4 and M5 motorways <span class="citation">(Tallon <a href="#ref-tallon_bristol_2007">2007</a>)</span>.</p>
 </blockquote>
-<!-- There are many benefits of converting travel desire lines into likely routes of travel from a policy perspective. -->
+<p>There are many benefits of converting travel desire lines into likely routes of travel from a policy perspective, primary among them the ability to understand what it is about the surrounding environment that makes people travel by a particular mode. We discuss future directions of research building on the routes in section <a href="transport.html#future-directions-of-travel">8.8</a>. For the purposes of this case study, suffice to say that the roads along which these short car journeys travel should be prioritised for investigation to understand how they can be made more conducive to sustainable transport modes. One option would be to add new public transport nodes to the network. Such nodes are described in the next section.</p>
 </div>
 <div id="nodes-on-the-transport-system" class="section level2">
 <h2><span class="header-section-number">8.6</span> Nodes on the transport system</h2>
