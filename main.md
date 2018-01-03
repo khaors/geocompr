@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve2bdff21419a4cf0c
+preserve565f7df3a8992d86
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve1901994b06f27552
+preserve7b70bc4a197b967f
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6074,7 +6074,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveeaca750d59f70581
+preserve885c8ffde47e13d5
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6414,18 +6414,19 @@ desire_lines = od2line(od_inter, zones)
 ```
 
 The first two lines of the preceding code chunk split the `od` dataset into two mutually exclusive objects, `od_intra` (which only contrains OD pairs representing intrazone trips) and `od_inter` (which represents interzonal travel).
-The third line generates a geographic object `desire_lines` (of class `sf`) that allows the interzone trips to be plotted on the map, using plot commands such as that provided in the command below.
-The results, illustrated in Figure \@ref(fig:desire), are more useful than the OD data because they can inform geographically targeted transport policies.
-Bristol city center is by far the largest trip attractor in the region, suggesting policies should be prioritised there. Peripheral sub-centers can be seen including Bradford Stoke to the North and Portishead to the West.
+The third line generates a geographic object `desire_lines` (of class `sf`) that allows the interzone trips to be visualized geographically, using plot commands such as that provided in the command below.
+An illustration of the results are presented in Figure \@ref(fig:desire) (we will cover the visualization methods that produced this plot in a subsequent chapter).
+The map shows that city center is by far the largest trip attractor in the region, suggesting policies should be prioritised there, althou a number of peripheral sub-centers can also be seen.
+<!-- These include Bradford Stoke to the North and Portishead to the West. -->
 
 
 ```r
-plot(desire_lines$geometry)
+plot(desire_lines$geometry, lwd = desire_lines$all / 500)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="https://user-images.githubusercontent.com/1825120/34081176-74fd39c8-e341-11e7-9f3e-b98807cb113b.png" alt="Desire lines representing the centrality of Bristol City Centre in the region's transport patterns. The width of the red lines is proportional to commute trips between zones. The 5 black lines represent sample origin-destination data shown in Table 8.1."  />
-<p class="caption">(\#fig:desire)Desire lines representing the centrality of Bristol City Centre in the region's transport patterns. The width of the red lines is proportional to commute trips between zones. The 5 black lines represent sample origin-destination data shown in Table 8.1.</p>
+<img src="figures/desire-1.png" alt="Desire lines representing trip patterns in the Bristol Travel to Work Area. The 4 black lines represent interzonal OD pairs in Table 8.1." width="576" />
+<p class="caption">(\#fig:desire)Desire lines representing trip patterns in the Bristol Travel to Work Area. The 4 black lines represent interzonal OD pairs in Table 8.1.</p>
 </div>
 
 ## Routes
