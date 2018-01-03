@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve236aaba9158caca2
+preserve33ce35620139ffc3
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve91300f0e82b89ae1
+preserve9d623f77a215d23a
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6074,7 +6074,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve50150b654bec63d3
+preserve1c8c0f88e3227cd8
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6430,6 +6430,18 @@ plot(desire_lines$geometry, lwd = desire_lines$all / 500)
 </div>
 
 ## Routes
+
+From a geographical perspective routes are simple desire lines that are no longer straight:
+the origin and destination points are the same, but the pathway to get from A to B is more complex.
+Desire lines contain only two vertices (their beginning and end points) but routes can contain hundreds of vertices if they cover a large distance or represent travel patterns on an intricate road network (routes on simple grid-based road networks require relatively few vertices).
+
+Routes are generated from desire lines using routing algorithms.
+Routing algorithms can either run locally or remotely.
+Local routing is computationally intensive because requires having a representation of the route network stored on your computer (we will see how in section \@ref(route-networks)).
+Remote routing services use an API to receive queries about origin and destination points, and then return the results over the internet.
+There are many advantages of using remote routing services, including the fact that they can be up-to-date, have global coverage, and run on a set-up that was designed for the job, explaining this section's focus on online routing services.
+Before proceeding, however, you should be aware of the disadvantages of online routing services: they can be slow due to their reliance on internet connections and expensive.
+<!-- Todo: add link to Mark's presentation on dodgr vs Google routing costs (RL) -->
 
 ## Nodes on the transport system
 
