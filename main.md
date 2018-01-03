@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-01-02'
+date: '2018-01-03'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2018-01-02 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-01-03 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve7a19156fe5fa3109
+preserve2bdff21419a4cf0c
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -356,15 +356,15 @@ See the [r-spatial](https://github.com/r-spatial/) organisation and conversation
 ] and a growing number of actively developed packages which are designed to work in harmony with **sf** (Table \@ref(tab:revdep)). 
 
 
-Table: (\#tab:revdep)The top 5 most downloaded packages that depend on sf, in terms of average number of downloads per day over the previous month. As of 2017-12-25 there are 48 packages which import sf.
+Table: (\#tab:revdep)The top 5 most downloaded packages that depend on sf, in terms of average number of downloads per day over the previous month. As of 2017-12-31 there are 48 packages which import sf.
 
 package    Downloads
 --------  ----------
-plotly          2033
-raster          1546
-spdep            867
-spData           819
-leaflet          598
+plotly          1768
+raster          1263
+spdep            677
+spData           649
+leaflet          511
 
 ## The history of R-spatial
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve92bf60b88adbb525
+preserve1901994b06f27552
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4654,10 +4654,10 @@ raster_template = raster(extent(cycle_hire_osm_projected), resolution = 1000,
 
 Rasterization is very flexible operation and depends not only on a template raster, but also on the type of an input vector (e.g. points, polygons) and given arguments.
 
-Let's try three different approaches to rasterize points - cycle hire locations across London (Figure \@ref(reproj-vec-geom):A).
+Let's try three different approaches to rasterize points - cycle hire locations across London (Figure \@ref(fig:vector-rasterization1):A).
 Decision about arguments used should depend on a rasterization purpose.
 The simplest case is when we want to create a raster containing areas with cycle hire points (also known as a presence/absence raster).
-In this situation, `rasterize()` expects only three arguments - an input vector data, a raster template, and a value to be transferred to all non-empty cells (Figure \@ref(reproj-vec-geom):B).
+In this situation, `rasterize()` expects only three arguments - an input vector data, a raster template, and a value to be transferred to all non-empty cells (Figure \@ref(fig:vector-rasterization1):B).
 
 
 ```r
@@ -4665,7 +4665,7 @@ ch_raster1 = rasterize(cycle_hire_osm_projected, raster_template, field = 1)
 ```
 
 `rasterize()` also could take a `fun` argument which specifies how attributes are transferred to the raster object.
-For example, the `fun = "count"` argument counts the number of points in each grid cell (Figure \@ref(reproj-vec-geom):C).
+For example, the `fun = "count"` argument counts the number of points in each grid cell (Figure \@ref(fig:vector-rasterization1):C).
 
 
 ```r
@@ -4675,7 +4675,7 @@ ch_raster2 = rasterize(cycle_hire_osm_projected, raster_template,
 
 The new output, `ch_raster2`, shows the number of cycle hire points in each grid cell.
 However, the cycle hire locations have different numbers of bicycles, which is described by the `capacity` variable.
-We need to select a field (`"capacity"`) and a function (`sum`) to determine a cycle hire capacity in each grid cell (Figure \@ref(reproj-vec-geom):D).
+We need to select a field (`"capacity"`) and a function (`sum`) to determine a cycle hire capacity in each grid cell (Figure \@ref(fig:vector-rasterization1):D).
 In the same way another statistics could be calculated, such as an average capacity for each grid cell, etc.
 
 
@@ -6074,7 +6074,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservec206a0a8491454a5
+preserveeaca750d59f70581
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
