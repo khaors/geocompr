@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservefa6317e2bf09ad6f
+preservec5830dd76cb9940c
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve1a6f90ea150ba5d5
+preservebee68ae027cf445b
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6074,7 +6074,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveae386b023825a0db
+preserve28bfa494dd75b40d
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6450,12 +6450,12 @@ The benefits of cycling trips are greatest when they replace car trips.
 Clearly not all car trips can realistically be replaced by cycling, but 5 km Euclidean distance (or around 6-8 km of route distance) is easily accessible within 30 minutes for most people.
 Based on this reasoning
 <!-- Todo: add references supporting this (RL) -->
-we will only route desire lines along which a high number of car trips take place that are up to 5 km in distance:
+we will only route desire lines along which a high (300+) number of car trips take place that are up to 5 km in distance:
 
 
 ```r
 desire_lines$distance = as.numeric(st_length(desire_lines))
-desire_carshort = filter(desire_lines, car_driver > 200, distance < 5000)
+desire_carshort = filter(desire_lines, car_driver > 300, distance < 5000)
 route_carshort = line2route(desire_carshort, route_fun = route_osrm)
 ```
 
@@ -6483,8 +6483,14 @@ plot(desire_carshort$geom_car, col = "red", add = TRUE)
 <p class="caption">(\#fig:routes)Routes along which many (200+) short (<5km Euclidean distance) car journeys are made (red) overlaying desire lines representing the same trips (black).</p>
 </div>
 
-There are many benefits of converting travel desire lines into likely routes of travel from a policy perspective.
+The results show that the short desire lines along which most people travel by car are geographically clustered.
+Plotting the results on an interactive map, for example with `mapview::mapview(desire_carshort)`, reveals that these car trips take place in and around Bradley Stoke.
+According to [Wikipedia](https://en.wikipedia.org/wiki/Bradley_Stoke), Bradley Stoke is "Europe's largest new town built with private investment", which may help why its high level of car dependency via limitted public transport provision.
+The proliferation of short car journeys in this area can also be understood in terms of the surrounding transport infrastructure:
 
+> Bradley Stoke housing development of 8500 homes constructed by volume house builders; and major transport nodes such as junctions on both the M4 and M5 motorways [@tallon_bristol_2007].
+
+<!-- There are many benefits of converting travel desire lines into likely routes of travel from a policy perspective. -->
 
 ## Nodes on the transport system
 
