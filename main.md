@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveb95509166107f059
+preservec5d664bba8e47924
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve3755f2aa955c2407
+preserve32188ea8af72cb43
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6074,7 +6074,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve7f74f1d1671a8a84
+preserve6d0b3edd495bd436
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6182,9 +6182,10 @@ We will explore how movement patterns can be understood at multiple geographic l
 - **Route networks**: these represent the system of roads, paths and other linear features in an area. They can be represented as purely geographic entities or as a graph.
 Their features are segments which can be assigned values representing 'flow', the number of people expected to use a particular street or path.
 
-An addition level is agents, the lowest-level but hardest to model entities in transport systems --- mobile entities like you and me.
-Some models built using software such as [MATSim](http://www.matsim.org/) can effectively captue the dynamics of transport systems using agents operating at high spatial and temporal resolution, but these tend to be complex and computationally demanding [@horni_multi-agent_2016], meaning they are inaccessible to most people.
-Beyond geographic levels and agents, the basic unit of analysis in most transport models is the 'trip', a single purpose journey from an groin 'A' to a destination 'B' [@hollander_transport_2016].
+The lowest but hardest-to-model level in transport systems is **agents**, mobile entities like you and me.
+Some models built using software such as [MATSim](http://www.matsim.org/) can effectively captue the dynamics of transport systems using an agent-based modelling (ABM) approach at high spatial and temporal resolution.
+These tend to be complex and computationally demanding [@horni_multi-agent_2016], meaning they are inaccessible to most people.
+Beyond geographic levels and agents, the basic unit of analysis in most transport models is the **trip**, a single purpose journey from an groin 'A' to a destination 'B' [@hollander_transport_2016].
 Trips join-up the different levels of transport systems: they are usually represented as *desire lines* connecting *zone* centroids (*nodes*), they can be allocated onto the *route network* as *routes*, and are made by people who can be represented as *agents*.
 
 Another complication is time.
