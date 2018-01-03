@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve6a9f3328a797b89f
+preservea08a15c67915755f
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservef22f6bf172f60155
+preserve679876f4f5a16153
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4214,11 +4214,12 @@ the functions discussed in this section work on objects of class `sfc` in additi
 Simplification is a process for generalization of vector objects (lines and polygons) usually for its use in smaller scale maps.
 Additional reason for simplification is reduction of the object size and therefore the size of a saved file.
 Therefore, data is often simplified before its use in interactive maps. 
-The **sf** package provides the `st_simplify()` function^[It uses the simplify algorithm from GEOS.] whose `dTolerance` parameter controls the level of generalization given as a value in map units [@douglas_algorithms_1973].
+The **sf** package provides `st_simplify()`, which uses the GEOS implementation of the Douglas-Peucker algorithm, to reduce the vertex count.
+`st_simplify()` uses the `dTolerance` to control the level of generalization in map units [see @douglas_algorithms_1973 for details].
 <!-- I have no idea what the next sentence means -->
 <!-- As a result, all vertices in the simplified geometry will be within this value from the original ones. -->
-
-We can use data of the Seine, Marne and Yonne rivers (on the left in Figure \@ref(fig:seine-simp)) as an example of line vector data simplification:
+Figure \@ref(fig:seine-simp) illustrates simplification of a `LINESTRING` geometry representing the river Seine and tributaries.
+The simplified geometry was creating by the following command:
 
 
 ```r
@@ -4230,7 +4231,8 @@ seine_simp = st_simplify(seine, dTolerance = 2000)  # 2000 m
 <p class="caption">(\#fig:seine-simp)Comparison of the original data of the Seine, Marne and Yonne rivers and its simplified version using `st_simplify`.</p>
 </div>
 
-The new object, `seine_simp`, is not only visually generalized (on the right in Figure \@ref(fig:seine-simp)), but also uses less than half the memory size of the original object:
+The resulting `seine_simp` object is a copy of the original `seine` but with fewer vertices.
+This is apparent, with the result being visually simpler (Figure \@ref(fig:seine-simp), right) and consuming less memory than the original object, as verified below:
 
 
 ```r
@@ -4240,8 +4242,8 @@ object.size(seine_simp)
 #> 7808 bytes
 ```
 
-Let's take a look at the second example of simplification.
-It will use, `us_states`, polygons representing the contiguous United States.
+Simplification is also applicable for polygons.
+This is illustrated using `us_states`, representing the contiguous United States.
 As we showed in section \@ref(reproj-geo-data), GEOS assumes that the data is in a projected CRS and this could lead to unexpected results when using a geographic CRS.
 Therefore, the first step is to project the data into some adequate projected CRS, such as US National Atlas Equal Area (epsg = 2163) (on the left in Figure \@ref(fig:us-simp)):
 
@@ -4250,18 +4252,20 @@ Therefore, the first step is to project the data into some adequate projected CR
 us_states2163 = st_transform(us_states, 2163)
 ```
 
-The `st_simplify` function uses the standard Douglas-Peucker algorithm, which is realatively fast.
+`st_simplify()` works equally well with projected polygons:
 
 
 ```r
 us_states_simp1 = st_simplify(us_states2163, dTolerance = 100000)  # 100 km
 ```
 
-On the other hand, this algorithm simplifies objects on a per-geometry basis, and therefore does not preserve topology.
-This can be seen on the middle map in Figure \@ref(fig:us-simp), where polygons overlap or have holes in between them.
-An alternative simplification method can be used to solve this issue such as the Visvalingam algorithm implemented in the **rmapshaper** package's function `ms_simplify()`.
+A limitation with `st_simplify()` is that it simplifies objects on a per-geometry basis.
+This means the 'topology' is lost, resulting in overlapping and 'holy' areal units illustrated in Figure \@ref(fig:us-simp) (middle panel).
+`ms_simplify()` from **rmapshaper** provides an alternative that overcomes this issue.
+By default it uses the Visvalingam algorithm, which overcomes some limitations of the Douglas-Peucker algorithm [@visvalingam_line_1993].
 <!-- https://bost.ocks.org/mike/simplify/ -->
-In the example below, we simplify the `us_states2163` object using only 0.5% of the original data vertices (argument `keep`), while also assuring that the original topology stays intact (argument `keep_shapes`).
+The following code chunk uses this function to simplify `us_states2163`.
+The result has only 0.5% of the vertices of the input (set using the argument `keep`) but its topology remains intact because we set `keep_shapes = TRUE`:
 
 
 ```r
@@ -5720,6 +5724,10 @@ input_ras
 #> max values  :   6,     5,        5,       5
 ```
 
+\BeginKnitrBlock{rmdnote}<div class="rmdnote">Note that we are using an equal-area projection (EPSG:3035; Lambert Equal Area Europe), i.e., a projected CRS where each grid cell has the same area, here 1000 x 1000 square meters. 
+Since we are using mainly densities such as the number of inhabitants or the portion of women per grid cell, it is of utmost importance that the area of each grid cell is the same to avoid 'apple and oranges comparisons'.
+Be careful with geographic CRS where grid cell areas constantly decrease in poleward directions (see also sections \@ref(crs-intro) and \@ref(reproj-geo-data)). </div>\EndKnitrBlock{rmdnote}
+
 <div class="figure" style="text-align: center">
 <img src="figures/08_census_stack.png" alt="Gridded German census data of 2011. See Table \@ref(tab:census-desc) for a description of the classes." width="765" />
 <p class="caption">(\#fig:census-stack)Gridded German census data of 2011. See Table \@ref(tab:census-desc) for a description of the classes.</p>
@@ -5751,7 +5759,7 @@ rcl_hh = rcl_women
 rcl = list(rcl_pop, rcl_women, rcl_age, rcl_hh)
 ```
 
-We can loop with `map2()`, the **purrr** version of base R's `mapply()`, in parallel over two vectors (here `lists`;for more information please refer to @wickham_advanced_2014 and @grolemund_r_2016).
+We can loop with `map2()`, the **purrr** version of base R's `mapply()`, in parallel over two vectors (here `lists`; for more information please refer to @wickham_advanced_2014 and @grolemund_r_2016).
 Note that we have to transform the raster brick into a list for the loop to work.
 Finally, we convert the output list back into a raster stack. 
 
@@ -6098,7 +6106,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve38971feed333ecbc
+preserve0d5d5543f239e6a9
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
