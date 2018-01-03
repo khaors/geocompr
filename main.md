@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservec5d664bba8e47924
+preservefa6317e2bf09ad6f
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve32188ea8af72cb43
+preserve1a6f90ea150ba5d5
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6074,7 +6074,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve6d0b3edd495bd436
+preserveae386b023825a0db
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6417,7 +6417,7 @@ desire_lines = od2line(od_inter, zones)
 The first two lines of the preceding code chunk split the `od` dataset into two mutually exclusive objects, `od_intra` (which only contrains OD pairs representing intrazone trips) and `od_inter` (which represents interzonal travel).
 The third line generates a geographic object `desire_lines` (of class `sf`) that allows the interzone trips to be visualized geographically, using plot commands such as that provided in the command below.
 An illustration of the results are presented in Figure \@ref(fig:desire) (we will cover the visualization methods that produced this plot in a subsequent chapter).
-The map shows that city center is by far the largest trip attractor in the region, suggesting policies should be prioritised there, althou a number of peripheral sub-centers can also be seen.
+The map shows the city center dominate transport patterns in the region, suggesting policies should be prioritised there, although a number of peripheral sub-centers can also be seen.
 <!-- These include Bradford Stoke to the North and Portishead to the West. -->
 
 
