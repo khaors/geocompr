@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveb49dfe9b7da62509
+preserve6a9f3328a797b89f
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve14fb33c27fb895e6
+preservef22f6bf172f60155
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4695,7 +4695,10 @@ ch_raster3 = rasterize(cycle_hire_osm_projected, raster_template,
 california = filter(us_states, NAME == "California")
 raster_template2 = raster(extent(california), resolution = 0.5,
                          crs = st_crs(california)$proj4string)
+```
 
+
+```r
 california_raster1 = rasterize(california, raster_template2)
 ```
 
@@ -6095,7 +6098,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservea1c19fb6a4046a32
+preserve38971feed333ecbc
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 

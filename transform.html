@@ -852,9 +852,8 @@ Figure 5.16: Examples of point’s rasterization
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">california =<span class="st"> </span><span class="kw">filter</span>(us_states, NAME ==<span class="st"> &quot;California&quot;</span>)
 raster_template2 =<span class="st"> </span><span class="kw">raster</span>(<span class="kw">extent</span>(california), <span class="dt">resolution =</span> <span class="fl">0.5</span>,
-                         <span class="dt">crs =</span> <span class="kw">st_crs</span>(california)$proj4string)
-
-california_raster1 =<span class="st"> </span><span class="kw">rasterize</span>(california, raster_template2)</code></pre></div>
+                         <span class="dt">crs =</span> <span class="kw">st_crs</span>(california)$proj4string)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">california_raster1 =<span class="st"> </span><span class="kw">rasterize</span>(california, raster_template2)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">california_raster2 =<span class="st"> </span><span class="kw">rasterize</span>(california, raster_template2, <span class="dt">getCover =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:vector-rasterization2"></span>
 <img src="figures/vector-rasterization2-1.png" alt="Examples of polygon rasterization" width="576" />
