@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveb2d2a9361a575216
+preservea9b5ec27a3741bf3
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3127,7 +3127,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservef6e5a7247b0301d6
+preserveb216093fc0cf6cc4
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6074,7 +6074,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve89556f98472aad83
+preserve83ce59e86f8e468b
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6443,6 +6443,47 @@ There are many advantages of using remote routing services, including the fact t
 Before proceeding, however, you should be aware of the disadvantages of online routing services: they can be slow due to their reliance on internet connections and expensive.
 <!-- Todo: add link to Mark's presentation on dodgr vs Google routing costs (RL) -->
 
+A popular and free (for limited uses) routing service is the Open Source Routing Machine ([OSRM](http://project-osrm.org/)).
+Instead of routing *all* desire lines generated in the previous section, which would be time and memory-consuming, we will focus attention on only the desire lines of policy interest.
+The benefits of cycling trips are greatest when they replace car trips.
+Clearly not all car trips can realistically be replaced by cycling, but 5 km Euclidean distance (or around 6-8 km of route distance) is easily accessible within 30 minutes for most people.
+Based on this reasoning
+<!-- Todo: add references supporting this (RL) -->
+we will only route desire lines along which a high number of car trips take place that are up to 5 km in distance:
+
+
+```r
+desire_lines$distance = as.numeric(st_length(desire_lines))
+desire_carshort = filter(desire_lines, car_driver > 200, distance < 5000)
+route_carshort = line2route(desire_carshort, route_fun = route_osrm)
+```
+
+We could keep the new `route_carshort` object separate from the straight line representation of the same trip in `desire_carshort` but, from a data management perspective, it makes more sense to combine them: they represent the same trip.
+The new route dataset contains `distance` (referring to route distance this time) and `duration` fields (in seconds) which could be useful.
+However, for the purposes of this chapter we are only interested in the geometry, from which route distance can be calculated.
+The following command makes use of the ability of simple features objects to contain multiple geographic columns:
+
+
+```r
+desire_carshort$geom_car = route_carshort$geometry
+```
+
+This allows for the desire lines along which many short car journeys take place to be plotted alongside likely routes travelled by cars, with the width of the routes proportional to the number of car journeys that could potentially be replaced.
+The code below results in Figure \@ref(fig:routes), which demonstrates along which routes people are driving short distances:
+
+
+```r
+plot(desire_carshort$geometry)
+plot(desire_carshort$geom_car, col = "red", add = TRUE)
+```
+
+<div class="figure" style="text-align: center">
+<img src="figures/routes-1.png" alt="Routes along which many (200+) short (&lt;5km Euclidean distance) car journeys are made (red) overlaying desire lines representing the same trips (black)." width="576" />
+<p class="caption">(\#fig:routes)Routes along which many (200+) short (<5km Euclidean distance) car journeys are made (red) overlaying desire lines representing the same trips (black).</p>
+</div>
+
+
+
 ## Nodes on the transport system
 
 Nodes in geographic transport data are zero dimensional features (points) among the predominantly one dimensional features (lines) that comprise the network.
@@ -6609,7 +6650,7 @@ e = igraph::edge_betweenness(ways_sln@g)
 plot(ways_sln@sl$geometry, lwd = e / 500)
 ```
 
-<img src="figures/unnamed-chunk-25-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-27-1.png" width="576" style="display: block; margin: auto;" />
 
 
 
@@ -6623,7 +6664,7 @@ plot(path$geometry, col = "red", lwd = 10)
 plot(ways_sln@sl$geometry, add = TRUE)
 ```
 
-<img src="figures/unnamed-chunk-27-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-29-1.png" width="576" style="display: block; margin: auto;" />
 
 
 

@@ -482,6 +482,21 @@ Figure 8.3: Desire lines representing trip patterns in the Bristol Travel to Wor
 <h2><span class="header-section-number">8.5</span> Routes</h2>
 <p>From a geographical perspective routes are desire lines that are no longer straight: the origin and destination points are the same, but the pathway to get from A to B is more complex. Desire lines contain only two vertices (their beginning and end points) but routes can contain hundreds of vertices if they cover a large distance or represent travel patterns on an intricate road network (routes on simple grid-based road networks require relatively few vertices).</p>
 <p>Routes are generated from desire lines — or more commonly origin-destination pairs — using routing algorithms. Routing algorithms can either run locally or remotely. Local routing is computationally intensive because requires having a representation of the route network stored on your computer (we will see how in section <a href="transport.html#route-networks">8.7</a>). Remote routing services use an API to receive queries about origin and destination points, and then return the results over the internet. There are many advantages of using remote routing services, including the fact that they can be up-to-date, have global coverage, and run on a set-up that was designed for the job, explaining this section’s focus on online routing services. Before proceeding, however, you should be aware of the disadvantages of online routing services: they can be slow due to their reliance on internet connections and expensive. <!-- Todo: add link to Mark's presentation on dodgr vs Google routing costs (RL) --></p>
+<p>A popular and free (for limited uses) routing service is the Open Source Routing Machine (<a href="http://project-osrm.org/">OSRM</a>). Instead of routing <em>all</em> desire lines generated in the previous section, which would be time and memory-consuming, we will focus attention on only the desire lines of policy interest. The benefits of cycling trips are greatest when they replace car trips. Clearly not all car trips can realistically be replaced by cycling, but 5 km Euclidean distance (or around 6-8 km of route distance) is easily accessible within 30 minutes for most people. Based on this reasoning <!-- Todo: add references supporting this (RL) --> we will only route desire lines along which a high number of car trips take place that are up to 5 km in distance:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">desire_lines$distance =<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">st_length</span>(desire_lines))
+desire_carshort =<span class="st"> </span><span class="kw">filter</span>(desire_lines, car_driver &gt;<span class="st"> </span><span class="dv">200</span>, distance &lt;<span class="st"> </span><span class="dv">5000</span>)
+route_carshort =<span class="st"> </span><span class="kw">line2route</span>(desire_carshort, <span class="dt">route_fun =</span> route_osrm)</code></pre></div>
+<p>We could keep the new <code>route_carshort</code> object separate from the straight line representation of the same trip in <code>desire_carshort</code> but, from a data management perspective, it makes more sense to combine them: they represent the same trip. The new route dataset contains <code>distance</code> (referring to route distance this time) and <code>duration</code> fields (in seconds) which could be useful. However, for the purposes of this chapter we are only interested in the geometry, from which route distance can be calculated. The following command makes use of the ability of simple features objects to contain multiple geographic columns:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">desire_carshort$geom_car =<span class="st"> </span>route_carshort$geometry</code></pre></div>
+<p>This allows for the desire lines along which many short car journeys take place to be plotted alongside likely routes travelled by cars, with the width of the routes proportional to the number of car journeys that could potentially be replaced. The code below results in Figure <a href="transport.html#fig:routes">8.4</a>, which demonstrates along which routes people are driving short distances:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(desire_carshort$geometry)
+<span class="kw">plot</span>(desire_carshort$geom_car, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:routes"></span>
+<img src="figures/routes-1.png" alt="Routes along which many (200+) short (&lt;5km Euclidean distance) car journeys are made (red) overlaying desire lines representing the same trips (black)." width="576" />
+<p class="caption">
+Figure 8.4: Routes along which many (200+) short (&lt;5km Euclidean distance) car journeys are made (red) overlaying desire lines representing the same trips (black).
+</p>
+</div>
 </div>
 <div id="nodes-on-the-transport-system" class="section level2">
 <h2><span class="header-section-number">8.6</span> Nodes on the transport system</h2>
@@ -529,11 +544,11 @@ for(i in <span class="dv">1</span>:<span class="kw">nrow</span>(desire_rail)) {
     ))
 }
 legs =<span class="st"> </span><span class="kw">st_sf</span>(<span class="dt">geometry =</span> <span class="kw">st_sfc</span>(multi), <span class="dt">crs =</span> <span class="dv">4326</span>)</code></pre></div>
-<p>Now we are in a position to visualize the results, in Figure <a href="transport.html#fig:stations">8.4</a>: the three initial <code>desire_rail</code> lines have been converted into a new simple features object <code>legs</code> representing travel from home to the origin station, from there to the destination, and finally from the destination station to the destination. In this case the destination leg is very short (walking distance) but the origin legs may be sufficiently far to justify investment in cycling infrastructure to encourage people to cycle to the stations on the outward leg of peoples’ journey to work in the residential areas surrounding the three origin stations in Figure <a href="transport.html#fig:stations">8.4</a>.</p>
+<p>Now we are in a position to visualize the results, in Figure <a href="transport.html#fig:stations">8.5</a>: the three initial <code>desire_rail</code> lines have been converted into a new simple features object <code>legs</code> representing travel from home to the origin station, from there to the destination, and finally from the destination station to the destination. In this case the destination leg is very short (walking distance) but the origin legs may be sufficiently far to justify investment in cycling infrastructure to encourage people to cycle to the stations on the outward leg of peoples’ journey to work in the residential areas surrounding the three origin stations in Figure <a href="transport.html#fig:stations">8.5</a>.</p>
 <div class="figure" style="text-align: center"><span id="fig:stations"></span>
 <img src="figures/stations-1.png" alt="Illustration of station nodes on the network (red dots) used as intermediary points that convert the straight desire lines into three desire lines representing origin, public transport and destination legs of a journey by public transport and other modes." width="576" />
 <p class="caption">
-Figure 8.4: Illustration of station nodes on the network (red dots) used as intermediary points that convert the straight desire lines into three desire lines representing origin, public transport and destination legs of a journey by public transport and other modes.
+Figure 8.5: Illustration of station nodes on the network (red dots) used as intermediary points that convert the straight desire lines into three desire lines representing origin, public transport and destination legs of a journey by public transport and other modes.
 </p>
 </div>
 </div>
@@ -564,12 +579,12 @@ ways_sln =<span class="st"> </span><span class="kw">SpatialLinesNetwork</span>(w
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g =<span class="st"> </span>ways_sln@g
 e =<span class="st"> </span>igraph::<span class="kw">edge_betweenness</span>(ways_sln@g)
 <span class="kw">plot</span>(ways_sln@sl$geometry, <span class="dt">lwd =</span> e /<span class="st"> </span><span class="dv">500</span>)</code></pre></div>
-<p><img src="figures/unnamed-chunk-25-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-27-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>One can also find the shortest route between origins and destinations using this graph representation of the route network:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">path =<span class="st"> </span><span class="kw">sum_network_routes</span>(ways_sln, <span class="dv">1</span>, <span class="dv">20</span>, <span class="st">&quot;length&quot;</span>)
 <span class="kw">plot</span>(path$geometry, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lwd =</span> <span class="dv">10</span>)
 <span class="kw">plot</span>(ways_sln@sl$geometry, <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<p><img src="figures/unnamed-chunk-27-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-29-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="agents-in-the-transport-system" class="section level2">
 <h2><span class="header-section-number">8.8</span> Agents in the transport system</h2>
