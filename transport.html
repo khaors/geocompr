@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-01-03">
+<meta name="date" content="2018-01-04">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -550,9 +550,9 @@ for(i in <span class="dv">1</span>:<span class="kw">nrow</span>(desire_rail)) {
 legs =<span class="st"> </span><span class="kw">st_sf</span>(<span class="dt">geometry =</span> <span class="kw">st_sfc</span>(multi), <span class="dt">crs =</span> <span class="dv">4326</span>)</code></pre></div>
 <p>Now we are in a position to visualize the results, in Figure <a href="transport.html#fig:stations">8.5</a>: the three initial <code>desire_rail</code> lines have been converted into a new simple features object <code>legs</code> representing travel from home to the origin station, from there to the destination, and finally from the destination station to the destination. In this case the destination leg is very short (walking distance) but the origin legs may be sufficiently far to justify investment in cycling infrastructure to encourage people to cycle to the stations on the outward leg of peoples’ journey to work in the residential areas surrounding the three origin stations in Figure <a href="transport.html#fig:stations">8.5</a>.</p>
 <div class="figure" style="text-align: center"><span id="fig:stations"></span>
-<img src="figures/stations-1.png" alt="Illustration of station nodes on the network (red dots) used as intermediary points that convert the straight desire lines into three desire lines representing origin, public transport and destination legs of a journey by public transport and other modes." width="576" />
+<img src="figures/stations-1.png" alt="Station nodes (red dots) used as intermediary points that convert straight desire lines with high rail usage (black) into three legs (red)." width="576" />
 <p class="caption">
-Figure 8.5: Illustration of station nodes on the network (red dots) used as intermediary points that convert the straight desire lines into three desire lines representing origin, public transport and destination legs of a journey by public transport and other modes.
+Figure 8.5: Station nodes (red dots) used as intermediary points that convert straight desire lines with high rail usage (black) into three legs (red).
 </p>
 </div>
 </div>
