@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve34fe0ef02537d392
+preserve2f04baa0e22c799a
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3129,7 +3129,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservec35dd83a38c18ccd
+preserve6f126bd694c6831a
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6114,7 +6114,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservece58b5c4d6545b34
+preserve209977025b4662a7
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6582,9 +6582,9 @@ The first stage is to create matrices of coordinates that will subsequently be u
 
 
 ```r
-orig_matrix = as.matrix(line2df(desire_rail)[c("fx", "fy")])
-dest_matrix = as.matrix(line2df(desire_rail)[c("tx", "ty")])
-rail_matrix = st_coordinates(rail_stations)
+mat_orig = as.matrix(line2df(desire_rail)[c("fx", "fy")])
+mat_dest = as.matrix(line2df(desire_rail)[c("tx", "ty")])
+mat_rail = st_coordinates(rail_stations)
 ```
 
 The outputs are three matrices representing the starting points of the trips, their destinations and possible intermediary points at public transport nodes (named `orig`, `dest` and `rail` respectively).
@@ -6594,11 +6594,11 @@ The function can find any number of nearest neighbors by setting the `k` paramet
 
 
 ```r
-knn_orig = nabor::knn(rail_matrix, query = orig_matrix, k = 1)$nn.idx
-knn_dest = nabor::knn(rail_matrix, query = dest_matrix, k = 1)$nn.idx
+knn_orig = nabor::knn(mat_rail, query = mat_orig, k = 1)$nn.idx
+knn_dest = nabor::knn(mat_rail, query = mat_dest, k = 1)$nn.idx
 ```
 
-This results not in matrices of coordinates, but row indices that can subsequently be used to subset the `rail_matrix`.
+This results not in matrices of coordinates, but row indices that can subsequently be used to subset the `mat_rail`.
 It is worth taking a look at the results to ensure that the process has worked properly and explain what has happened:
 
 
@@ -6612,13 +6612,12 @@ as.numeric(knn_dest)
 The output demonstrates that each object contains three whole numbers (the number of rows in `desire_rail`) representing the rail station closest to the origin and destination of each desire line.
 Note that while each 'origin station' is different, the destination (station `30`) is the same for all desire lines.
 This is to be expected because rail travel in cities tends to converge on a single large station (in this case Bristol Temple Meads).
-The indices can now be used to create matrices representing each leg of the journey as follows:
+The indices can now be used to create matrices representing the rail station of origin and destination:
 
 
 ```r
-leg_orig = cbind(orig_matrix, rail_matrix[knn_orig, ])
-leg_rail = cbind(rail_matrix[knn_orig, ], rail_matrix[knn_dest, ])
-leg_dest = cbind(dest_matrix, rail_matrix[knn_dest, ])
+mat_rail_o = mat_rail[knn_orig, ]
+mat_rail_d = mat_rail[knn_dest, ]
 ```
 
 The final stage is to convert these matrices into meaningful geographic objects, in this case 'multilinestrings' that capture the fact that each stage is a separate line, but part of the same overall trip which can be represented as a simple feature:
@@ -6627,27 +6626,25 @@ The final stage is to convert these matrices into meaningful geographic objects,
 
 
 ```r
-multi = vector(mode = "list", length = nrow(desire_rail))
-for(i in 1:nrow(desire_rail)) {
-  multi[[i]] = st_multilinestring(list(
-    rbind(leg_orig[i, 1:2], leg_orig[i, 3:4]), 
-    rbind(leg_rail[i, 1:2], leg_rail[i, 3:4]), 
-    rbind(leg_dest[i, 1:2], leg_dest[i, 3:4]) 
-    ))
+mats2line = function(mat1, mat2) {
+  lapply(1:nrow(mat1), function(i) {
+    rbind(mat1[i, ], mat2[i, ]) %>%
+    st_linestring()
+  }) %>% st_sfc()
 }
-legs = st_sf(geometry = st_sfc(multi), crs = 4326)
+desire_rail$leg_orig = mats2line(mat_orig, mat_rail_o)
+desire_rail$leg_rail = mats2line(mat_rail_o, mat_rail_d)
+desire_rail$leg_dest = mats2line(mat_rail_d, mat_dest)
 ```
 
 Now we are in a position to visualize the results, in Figure \@ref(fig:stations):
-the three initial `desire_rail` lines have been converted into a new simple features object `legs` representing travel from home to the origin station, from there to the destination, and finally from the destination station to the destination.
+the three initial `desire_rail` lines now have three additional geometry list-columns representing travel from home to the origin station, from there to the destination, and finally from the destination station to the destination.
 In this case the destination leg is very short (walking distance) but the origin legs may be sufficiently far to justify investment in cycling infrastructure to encourage people to cycle to the stations on the outward leg of peoples' journey to work in the residential areas surrounding the three origin stations in Figure \@ref(fig:stations).
 
-
 <div class="figure" style="text-align: center">
-<img src="figures/stations-1.png" alt="Station nodes (red dots) used as intermediary points that convert straight desire lines with high rail usage (black) into three legs (red)." width="576" />
-<p class="caption">(\#fig:stations)Station nodes (red dots) used as intermediary points that convert straight desire lines with high rail usage (black) into three legs (red).</p>
+<img src="figures/stations-1.png" alt="Station nodes (red dots) used as intermediary points that convert straight desire lines with high rail usage (black) into three legs: to the origin station (red) via public transport (grey) and to the destination (a very short blue line)." width="576" />
+<p class="caption">(\#fig:stations)Station nodes (red dots) used as intermediary points that convert straight desire lines with high rail usage (black) into three legs: to the origin station (red) via public transport (grey) and to the destination (a very short blue line).</p>
 </div>
-
 
 ## Route networks
 
