@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve2f04baa0e22c799a
+preserve84f309101e54bdf4
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3129,7 +3129,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve6f126bd694c6831a
+preserve379d848b1d3172bc
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6114,7 +6114,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve209977025b4662a7
+preservea8ba27a8488a17e1
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6714,6 +6714,13 @@ plot(ways_sln@sl$geometry, add = TRUE)
 ```
 
 <img src="figures/unnamed-chunk-29-1.png" width="576" style="display: block; margin: auto;" />
+
+## Prioritizing new infrastructure
+
+Chapter \@ref(location) concluded the case study by identifying locations for creating new bike shops.
+After researched Bristol's transport system at multiple levels we're now in a position to tie together the strands covered in sections \@ref(transport-zones) to \@ref(route-networks).
+The aim is to prioritize places and pathways for investment in cycling:
+if the company described in the previous chapter is successful, perhaps it can expand internationally to provide bikes to all the new people who will start cycling in Bristol as a result of this new infrastructure!
 
 ## Future directions of travel
 
