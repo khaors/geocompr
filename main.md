@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-01-04'
+date: '2018-01-05'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2018-01-04 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-01-05 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve84f309101e54bdf4
+preservea1cc633fa4897c45
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -698,8 +698,8 @@ world[1:2, 1:3]
 #> epsg (SRID):    4326
 #> proj4string:    +proj=longlat +datum=WGS84 +no_defs
 #>   iso_a2   name_long continent                           geom
-#> 1     AF Afghanistan      Asia MULTIPOLYGON (((61.21081709...
-#> 2     AO      Angola    Africa MULTIPOLYGON (((16.32652835...
+#> 1     AF Afghanistan      Asia MULTIPOLYGON (((61.2 35.7, ...
+#> 2     AO      Angola    Africa MULTIPOLYGON (((16.3 -5.88,...
 ```
 
 All this may seem rather complex, especially for a class system that is supposed to be simple.
@@ -3129,7 +3129,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve379d848b1d3172bc
+preserve549266f2e1994c70
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4654,6 +4654,8 @@ linestring_sf2
 
 Rasterization is a conversion between vector objects into rasters.
 <!-- extended intro -->
+<!-- why? map tilling, simple analysis of terrain? -->
+<!-- suited for mathematical modeling and quantitative analysis -->
 
 The `rasterize()` function takes a vector object and converts it into a raster with dimensions, resolution and CRS determined by another raster object.
 <!-- explain dependency of the pixel size -->
@@ -4701,6 +4703,7 @@ ch_raster3 = rasterize(cycle_hire_osm_projected, raster_template,
 <p class="caption">(\#fig:vector-rasterization1)Examples of point's rasterization</p>
 </div>
 
+<!-- polygon rasterization intro -->
 
 
 ```r
@@ -4708,6 +4711,8 @@ california = filter(us_states, NAME == "California")
 raster_template2 = raster(extent(california), resolution = 0.5,
                          crs = st_crs(california)$proj4string)
 ```
+
+<!-- polygon rasterization is based on the position of the center of the pixel -->
 
 
 ```r
@@ -4719,17 +4724,15 @@ california_raster1 = rasterize(california, raster_template2)
 california_raster2 = rasterize(california, raster_template2, getCover = TRUE)
 ```
 
+<!-- getCover? -->
+<!-- the fraction of each grid cell that is covered by the polygons-->
+
 <div class="figure" style="text-align: center">
 <img src="figures/vector-rasterization2-1.png" alt="Examples of polygon rasterization" width="576" />
 <p class="caption">(\#fig:vector-rasterization2)Examples of polygon rasterization</p>
 </div>
 
-
-<!-- polygon rasterization is based on the position of the center of the pixel -->
-<!-- getCover? -->
-<!-- why? map tilling, simple analysis of terrain? -->
-<!-- suited for mathematical modeling and quantitative analysis -->
-<!-- rasterize() -->
+<!-- Mention alternatives -->
 <!-- https://github.com/ecohealthalliance/fasterize -->
 <!-- gdal_rasterize -->
 
@@ -6114,7 +6117,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservea8ba27a8488a17e1
+preserve884f194861e7673d
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
