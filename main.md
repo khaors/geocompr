@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve1394b256b3b6e83d
+preserved46a67d460a8556e
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3129,7 +3129,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve42c4593e232347fe
+preserve5895835797800d78
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4704,7 +4704,7 @@ ch_raster3 = rasterize(cycle_hire_osm_projected, raster_template,
 </div>
 
 <!-- Rasterization of lines and polygons is different than of points. -->
-We will ilustrate polygons and lines rasterizations using California's polygons (`california`) and borders (`california_borders`):
+We will illustrate polygons and lines rasterizations using California's polygons (`california`) and borders (`california_borders`):
 <!-- polygon rasterization intro -->
 
 
@@ -4745,8 +4745,8 @@ california_raster2 = rasterize(california, raster_template2)
 It is also possible to use the `field` or `fun` arguments for lines and polygons rasterizations.
 
 <div class="figure" style="text-align: center">
-<img src="figures/vector-rasterization2-1.png" alt="Examples of polygon rasterization" width="576" />
-<p class="caption">(\#fig:vector-rasterization2)Examples of polygon rasterization</p>
+<img src="figures/vector-rasterization2-1.png" alt="Examples of line and polygon rasterizations" width="576" />
+<p class="caption">(\#fig:vector-rasterization2)Examples of line and polygon rasterizations</p>
 </div>
 
 <!-- Mention alternatives -->
@@ -6134,7 +6134,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve4011b8a80e0509b7
+preserve430364b5ceeeaa06
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6757,7 +6757,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preserve4674c466de4a2c65
+preserve966d940e53c96fcb
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 

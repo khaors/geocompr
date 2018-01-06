@@ -851,7 +851,7 @@ Figure 5.16: Examples of point’s rasterization
 </p>
 </div>
 <!-- Rasterization of lines and polygons is different than of points. -->
-<p>We will ilustrate polygons and lines rasterizations using California’s polygons (<code>california</code>) and borders (<code>california_borders</code>): <!-- polygon rasterization intro --></p>
+<p>We will illustrate polygons and lines rasterizations using California’s polygons (<code>california</code>) and borders (<code>california_borders</code>): <!-- polygon rasterization intro --></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">california =<span class="st"> </span><span class="kw">filter</span>(us_states, NAME ==<span class="st"> &quot;California&quot;</span>)
 california_borders =<span class="st"> </span><span class="kw">st_cast</span>(california, <span class="st">&quot;MULTILINESTRING&quot;</span>)
 raster_template2 =<span class="st"> </span><span class="kw">raster</span>(<span class="kw">extent</span>(california), <span class="dt">resolution =</span> <span class="fl">0.5</span>,
@@ -873,9 +873,9 @@ raster_template2 =<span class="st"> </span><span class="kw">raster</span>(<span 
 <!-- ``` -->
 <p>It is also possible to use the <code>field</code> or <code>fun</code> arguments for lines and polygons rasterizations.</p>
 <div class="figure" style="text-align: center"><span id="fig:vector-rasterization2"></span>
-<img src="figures/vector-rasterization2-1.png" alt="Examples of polygon rasterization" width="576" />
+<img src="figures/vector-rasterization2-1.png" alt="Examples of line and polygon rasterizations" width="576" />
 <p class="caption">
-Figure 5.17: Examples of polygon rasterization
+Figure 5.17: Examples of line and polygon rasterizations
 </p>
 </div>
 <!-- Mention alternatives -->
