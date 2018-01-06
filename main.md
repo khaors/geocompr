@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve412a662e0ede48b7
+preserve0864cd199fbec754
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3129,7 +3129,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveab6357d6501173d5
+preserve91a45ca51cf50301
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4749,9 +4749,10 @@ It is also possible to use the `field` or `fun` arguments for lines and polygons
 <p class="caption">(\#fig:vector-rasterization2)Examples of line and polygon rasterizations</p>
 </div>
 
-<!-- Mention alternatives -->
-<!-- https://github.com/ecohealthalliance/fasterize -->
-<!-- gdal_rasterize -->
+While `rasterize` works well for most cases, it is not performance optimized. 
+Fortunately, there are several alternatives, including the `fasterize::fasterize()`^[The **fasterize** package is avaiable at https://github.com/ecohealthalliance/fasterize.] and `gdalUtils::gdal_rasterize()`. 
+The former is 100s times faster than `rasterize()`, however it is currently limited to polygon rasterization.
+The latter is part of GDAL and therefore requires a vector file, instead of an `sf` object, as an input and rasterization parameters, instead of a `Raster*` template object.^[See more at http://www.gdal.org/gdal_rasterize.html.]
 
 ## Geometric operations on raster data {#geo-ras}
 
@@ -6134,7 +6135,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve38bcb17fba0e2379
+preserve5cf3ed44dfce7795
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6757,7 +6758,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preserveb4353101c7516e22
+preserveadf5bfc15e0dba0e
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
