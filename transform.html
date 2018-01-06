@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-01-05">
+<meta name="date" content="2018-01-06">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -836,7 +836,7 @@ linestring_sf2
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">raster_template =<span class="st"> </span><span class="kw">raster</span>(<span class="kw">extent</span>(cycle_hire_osm_projected), <span class="dt">resolution =</span> <span class="dv">1000</span>,
                          <span class="dt">crs =</span> <span class="kw">st_crs</span>(cycle_hire_osm_projected)$proj4string)</code></pre></div>
 <p>Rasterization is very flexible operation and depends not only on a template raster, but also on the type of an input vector (e.g. points, polygons) and given arguments.</p>
-<p>Let’s try three different approaches to rasterize points - cycle hire locations across London (Figure <a href="transform.html#fig:vector-rasterization1">5.16</a>:A). Decision about arguments used should depend on a rasterization purpose. The simplest case is when we want to create a raster containing areas with cycle hire points (also known as a presence/absence raster). In this situation, <code>rasterize()</code> expects only three arguments - an input vector data, a raster template, and a value to be transferred to all non-empty cells (Figure <a href="transform.html#fig:vector-rasterization1">5.16</a>:B).</p>
+<p>Let’s try three different approaches to rasterize points - cycle hire locations across London (Figure <a href="transform.html#fig:vector-rasterization1">5.16</a>:A). <!-- Decision about arguments used should depend on a rasterization purpose. --> The simplest case is when we want to create a raster containing areas with cycle hire points (also known as a presence/absence raster). In this situation, <code>rasterize()</code> expects only three arguments - an input vector data, a raster template, and a value to be transferred to all non-empty cells (Figure <a href="transform.html#fig:vector-rasterization1">5.16</a>:B).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ch_raster1 =<span class="st"> </span><span class="kw">rasterize</span>(cycle_hire_osm_projected, raster_template, <span class="dt">field =</span> <span class="dv">1</span>)</code></pre></div>
 <p><code>rasterize()</code> also could take a <code>fun</code> argument which specifies how attributes are transferred to the raster object. For example, the <code>fun = &quot;count&quot;</code> argument counts the number of points in each grid cell (Figure <a href="transform.html#fig:vector-rasterization1">5.16</a>:C).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ch_raster2 =<span class="st"> </span><span class="kw">rasterize</span>(cycle_hire_osm_projected, raster_template, 
@@ -850,15 +850,19 @@ linestring_sf2
 Figure 5.16: Examples of point’s rasterization
 </p>
 </div>
-<!-- polygon rasterization intro -->
+<!-- Rasterization of lines and polygons is different than of points. -->
+<p>We will ilustrate polygons and lines rasterizations using California’s polygons (<code>california</code>) and borders (<code>california_borders</code>): <!-- polygon rasterization intro --></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">california =<span class="st"> </span><span class="kw">filter</span>(us_states, NAME ==<span class="st"> &quot;California&quot;</span>)
+california_borders =<span class="st"> </span><span class="kw">st_cast</span>(california, <span class="st">&quot;MULTILINESTRING&quot;</span>)
 raster_template2 =<span class="st"> </span><span class="kw">raster</span>(<span class="kw">extent</span>(california), <span class="dt">resolution =</span> <span class="fl">0.5</span>,
                          <span class="dt">crs =</span> <span class="kw">st_crs</span>(california)$proj4string)</code></pre></div>
-<!-- polygon rasterization is based on the position of the center of the pixel -->
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">california_raster1 =<span class="st"> </span><span class="kw">rasterize</span>(california, raster_template2)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">california_raster2 =<span class="st"> </span><span class="kw">rasterize</span>(california, raster_template2, <span class="dt">getCover =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p>All cells that are touched by a line get a value in a line rasterization (Figure <a href="transform.html#fig:vector-rasterization1">5.16</a>:A).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">california_raster1 =<span class="st"> </span><span class="kw">rasterize</span>(california_borders, raster_template2)</code></pre></div>
+<p>On the other hand, polygon rasterization is based on the positions of cells’ centers (points on Figure <a href="transform.html#fig:vector-rasterization1">5.16</a>:B). Values are only given when the center on the cell lies inside of the input polygon (Figure <a href="transform.html#fig:vector-rasterization1">5.16</a>:B).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">california_raster2 =<span class="st"> </span><span class="kw">rasterize</span>(california, raster_template2)</code></pre></div>
 <!-- getCover? -->
 <!-- the fraction of each grid cell that is covered by the polygons-->
+<p>It is also possible to use the <code>field</code> or <code>fun</code> arguments for lines and polygons rasterizations.</p>
 <div class="figure" style="text-align: center"><span id="fig:vector-rasterization2"></span>
 <img src="figures/vector-rasterization2-1.png" alt="Examples of polygon rasterization" width="576" />
 <p class="caption">

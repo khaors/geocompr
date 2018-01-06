@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-01-05'
+date: '2018-01-06'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2018-01-05 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-01-06 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservea6ba03817d574268
+preserve9a8758d5074ac7fe
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3129,7 +3129,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve6aaeed9eaf6c8554
+preserve81151e51df1dc7ef
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4669,7 +4669,7 @@ raster_template = raster(extent(cycle_hire_osm_projected), resolution = 1000,
 Rasterization is very flexible operation and depends not only on a template raster, but also on the type of an input vector (e.g. points, polygons) and given arguments.
 
 Let's try three different approaches to rasterize points - cycle hire locations across London (Figure \@ref(fig:vector-rasterization1):A).
-Decision about arguments used should depend on a rasterization purpose.
+<!-- Decision about arguments used should depend on a rasterization purpose. -->
 The simplest case is when we want to create a raster containing areas with cycle hire points (also known as a presence/absence raster).
 In this situation, `rasterize()` expects only three arguments - an input vector data, a raster template, and a value to be transferred to all non-empty cells (Figure \@ref(fig:vector-rasterization1):B).
 
@@ -4703,29 +4703,39 @@ ch_raster3 = rasterize(cycle_hire_osm_projected, raster_template,
 <p class="caption">(\#fig:vector-rasterization1)Examples of point's rasterization</p>
 </div>
 
+<!-- Rasterization of lines and polygons is different than of points. -->
+We will ilustrate polygons and lines rasterizations using California's polygons (`california`) and borders (`california_borders`):
 <!-- polygon rasterization intro -->
 
 
 ```r
 california = filter(us_states, NAME == "California")
+california_borders = st_cast(california, "MULTILINESTRING")
 raster_template2 = raster(extent(california), resolution = 0.5,
                          crs = st_crs(california)$proj4string)
 ```
 
-<!-- polygon rasterization is based on the position of the center of the pixel -->
+All cells that are touched by a line get a value in a line rasterization (Figure \@ref(fig:vector-rasterization1):A).
 
 
 ```r
-california_raster1 = rasterize(california, raster_template2)
+california_raster1 = rasterize(california_borders, raster_template2)
 ```
 
+On the other hand, polygon rasterization is based on the positions of cells' centers (points on Figure \@ref(fig:vector-rasterization1):B).
+Values are only given when the center on the cell lies inside of the input polygon (Figure \@ref(fig:vector-rasterization1):B).
+
 
 ```r
-california_raster2 = rasterize(california, raster_template2, getCover = TRUE)
+california_raster2 = rasterize(california, raster_template2)
 ```
 
 <!-- getCover? -->
 <!-- the fraction of each grid cell that is covered by the polygons-->
+
+
+
+It is also possible to use the `field` or `fun` arguments for lines and polygons rasterizations.
 
 <div class="figure" style="text-align: center">
 <img src="figures/vector-rasterization2-1.png" alt="Examples of polygon rasterization" width="576" />
@@ -6117,7 +6127,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservedbb5b6f177bdd955
+preservefb23d8c30c2aabc2
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6740,7 +6750,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preserve3deca15624def551
+preservedf5e31e8275ab5db
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
