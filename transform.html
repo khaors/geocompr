@@ -862,6 +862,15 @@ raster_template2 =<span class="st"> </span><span class="kw">raster</span>(<span 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">california_raster2 =<span class="st"> </span><span class="kw">rasterize</span>(california, raster_template2)</code></pre></div>
 <!-- getCover? -->
 <!-- the fraction of each grid cell that is covered by the polygons-->
+<!-- ```{r, echo=FALSE, eval=FALSE} -->
+<!-- california_raster3 = rasterize(california, raster_template2, getCover = TRUE) -->
+<!-- r3po = tm_shape(california_raster3) + -->
+<!--   tm_raster(legend.show = TRUE, title = "Values: ", style = "fixed", breaks = c(0, 1, 25, 50, 75, 100)) + -->
+<!--   tm_shape(california) + -->
+<!--   tm_borders() + -->
+<!--   tm_layout(outer.margins = rep(0.01, 4), -->
+<!--             inner.margins = rep(0, 4)) -->
+<!-- ``` -->
 <p>It is also possible to use the <code>field</code> or <code>fun</code> arguments for lines and polygons rasterizations.</p>
 <div class="figure" style="text-align: center"><span id="fig:vector-rasterization2"></span>
 <img src="figures/vector-rasterization2-1.png" alt="Examples of polygon rasterization" width="576" />

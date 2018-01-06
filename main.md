@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve9a8758d5074ac7fe
+preserve1394b256b3b6e83d
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3129,7 +3129,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve81151e51df1dc7ef
+preserve42c4593e232347fe
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4732,8 +4732,15 @@ california_raster2 = rasterize(california, raster_template2)
 
 <!-- getCover? -->
 <!-- the fraction of each grid cell that is covered by the polygons-->
-
-
+<!-- ```{r, echo=FALSE, eval=FALSE} -->
+<!-- california_raster3 = rasterize(california, raster_template2, getCover = TRUE) -->
+<!-- r3po = tm_shape(california_raster3) + -->
+<!--   tm_raster(legend.show = TRUE, title = "Values: ", style = "fixed", breaks = c(0, 1, 25, 50, 75, 100)) + -->
+<!--   tm_shape(california) + -->
+<!--   tm_borders() + -->
+<!--   tm_layout(outer.margins = rep(0.01, 4), -->
+<!--             inner.margins = rep(0, 4)) -->
+<!-- ``` -->
 
 It is also possible to use the `field` or `fun` arguments for lines and polygons rasterizations.
 
@@ -6127,7 +6134,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservefb23d8c30c2aabc2
+preserve4011b8a80e0509b7
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6750,7 +6757,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preservedf5e31e8275ab5db
+preserve4674c466de4a2c65
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
