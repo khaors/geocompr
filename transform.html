@@ -856,9 +856,9 @@ Figure 5.16: Examples of point’s rasterization
 california_borders =<span class="st"> </span><span class="kw">st_cast</span>(california, <span class="st">&quot;MULTILINESTRING&quot;</span>)
 raster_template2 =<span class="st"> </span><span class="kw">raster</span>(<span class="kw">extent</span>(california), <span class="dt">resolution =</span> <span class="fl">0.5</span>,
                          <span class="dt">crs =</span> <span class="kw">st_crs</span>(california)$proj4string)</code></pre></div>
-<p>All cells that are touched by a line get a value in a line rasterization (Figure <a href="transform.html#fig:vector-rasterization1">5.16</a>:A).</p>
+<p>All cells that are touched by a line get a value in a line rasterization (Figure <a href="transform.html#fig:vector-rasterization2">5.17</a>:A).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">california_raster1 =<span class="st"> </span><span class="kw">rasterize</span>(california_borders, raster_template2)</code></pre></div>
-<p>On the other hand, polygon rasterization is based on the positions of cells’ centers (points on Figure <a href="transform.html#fig:vector-rasterization1">5.16</a>:B). Values are only given when the center on the cell lies inside of the input polygon (Figure <a href="transform.html#fig:vector-rasterization1">5.16</a>:B).</p>
+<p>On the other hand, polygon rasterization is based on the positions of cells’ centers (points on Figure <a href="transform.html#fig:vector-rasterization2">5.17</a>:B). Values are only given when the center on the cell lies inside of the input polygon (Figure <a href="transform.html#fig:vector-rasterization2">5.17</a>:B).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">california_raster2 =<span class="st"> </span><span class="kw">rasterize</span>(california, raster_template2)</code></pre></div>
 <!-- getCover? -->
 <!-- the fraction of each grid cell that is covered by the polygons-->

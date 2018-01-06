@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserved46a67d460a8556e
+preserve412a662e0ede48b7
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3129,7 +3129,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve5895835797800d78
+preserveab6357d6501173d5
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4715,15 +4715,15 @@ raster_template2 = raster(extent(california), resolution = 0.5,
                          crs = st_crs(california)$proj4string)
 ```
 
-All cells that are touched by a line get a value in a line rasterization (Figure \@ref(fig:vector-rasterization1):A).
+All cells that are touched by a line get a value in a line rasterization (Figure \@ref(fig:vector-rasterization2):A).
 
 
 ```r
 california_raster1 = rasterize(california_borders, raster_template2)
 ```
 
-On the other hand, polygon rasterization is based on the positions of cells' centers (points on Figure \@ref(fig:vector-rasterization1):B).
-Values are only given when the center on the cell lies inside of the input polygon (Figure \@ref(fig:vector-rasterization1):B).
+On the other hand, polygon rasterization is based on the positions of cells' centers (points on Figure \@ref(fig:vector-rasterization2):B).
+Values are only given when the center on the cell lies inside of the input polygon (Figure \@ref(fig:vector-rasterization2):B).
 
 
 ```r
@@ -6134,7 +6134,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve430364b5ceeeaa06
+preserve38bcb17fba0e2379
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6757,7 +6757,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preserve966d940e53c96fcb
+preserveb4353101c7516e22
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
