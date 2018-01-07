@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-01-06'
+date: '2018-01-07'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2018-01-06 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-01-07 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve0864cd199fbec754
+preserveeb67c41f04dd4d94
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3129,7 +3129,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve91a45ca51cf50301
+preserveb7a59f2daa17432e
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4532,7 +4532,7 @@ regions2 = us_states %>%
   summarize(sum(pop = total_pop_15, na.rm = TRUE))
 ```
 
-### Type transformations
+### Type transformations {#type-trans}
 
 Geometry casting is powerful operation which enable transformation of the geometry type.
 It is implemented in the `st_cast` function from the `sf` package.
@@ -4652,13 +4652,13 @@ linestring_sf2
 
 ### Rasterization {#rasterization}
 
-Rasterization is a conversion between vector objects into rasters.
-<!-- extended intro -->
-<!-- why? map tilling, simple analysis of terrain? -->
-<!-- suited for mathematical modeling and quantitative analysis -->
+Rasterization is a conversion from vector objects into rasters.
+Usually, the output raster is used for quantitative analysis (e.g. anlysis of terrain) or modeling.
 
-The `rasterize()` function takes a vector object and converts it into a raster with dimensions, resolution and CRS determined by another raster object.
-<!-- explain dependency of the pixel size -->
+The `rasterize()` function takes a vector object and converts it into a raster with extent, resolution and CRS determined by another raster object.
+Parameters of a template raster have big impact on rasterization output -- coarse resolution could not capture all of important spatial objects, while high resolution could increase computation times.
+However, there is no simple rules for parameters selection as it depends on the input data and rasterization purpose.
+For the first group of examples, we will use a template raster having the same extent and CRS as `cycle_hire_osm_projected` and spatial resolution of 1000 meters:
 
 
 ```r
@@ -4666,10 +4666,9 @@ raster_template = raster(extent(cycle_hire_osm_projected), resolution = 1000,
                          crs = st_crs(cycle_hire_osm_projected)$proj4string)
 ```
 
-Rasterization is very flexible operation and depends not only on a template raster, but also on the type of an input vector (e.g. points, polygons) and given arguments.
+Rasterization is very flexible operation and gives different results based not only on a template raster, but also on the type of an input vector (e.g. points, polygons) and given arguments.
 
 Let's try three different approaches to rasterize points - cycle hire locations across London (Figure \@ref(fig:vector-rasterization1):A).
-<!-- Decision about arguments used should depend on a rasterization purpose. -->
 The simplest case is when we want to create a raster containing areas with cycle hire points (also known as a presence/absence raster).
 In this situation, `rasterize()` expects only three arguments - an input vector data, a raster template, and a value to be transferred to all non-empty cells (Figure \@ref(fig:vector-rasterization1):B).
 
@@ -4703,9 +4702,8 @@ ch_raster3 = rasterize(cycle_hire_osm_projected, raster_template,
 <p class="caption">(\#fig:vector-rasterization1)Examples of point's rasterization</p>
 </div>
 
-<!-- Rasterization of lines and polygons is different than of points. -->
-We will illustrate polygons and lines rasterizations using California's polygons (`california`) and borders (`california_borders`):
-<!-- polygon rasterization intro -->
+Additionally, we will illustrate polygons and lines rasterizations using California's polygons (`california`) and borders (`california_borders`).
+A template raster here will have the resolution of a 0.5 degree:
 
 
 ```r
@@ -6135,7 +6133,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve5cf3ed44dfce7795
+preserve80385d6424207a08
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6758,7 +6756,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preserveadf5bfc15e0dba0e
+preserve30e94fba447d4065
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
