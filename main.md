@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveeb67c41f04dd4d94
+preserve4a5992dc09562936
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3129,7 +3129,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveb7a59f2daa17432e
+preserveb79fec2c88fc4185
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4653,7 +4653,7 @@ linestring_sf2
 ### Rasterization {#rasterization}
 
 Rasterization is a conversion from vector objects into rasters.
-Usually, the output raster is used for quantitative analysis (e.g. anlysis of terrain) or modeling.
+Usually, the output raster is used for quantitative analysis (e.g. analysis of terrain) or modeling.
 
 The `rasterize()` function takes a vector object and converts it into a raster with extent, resolution and CRS determined by another raster object.
 Parameters of a template raster have big impact on rasterization output -- coarse resolution could not capture all of important spatial objects, while high resolution could increase computation times.
@@ -6133,7 +6133,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve80385d6424207a08
+preserve698bce135b8bb7ce
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6756,7 +6756,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preserve30e94fba447d4065
+preserveea8874fb232da954
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 

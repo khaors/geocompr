@@ -831,7 +831,7 @@ linestring_sf2
 </div>
 <div id="rasterization" class="section level3">
 <h3><span class="header-section-number">5.3.8</span> Rasterization</h3>
-<p>Rasterization is a conversion from vector objects into rasters. Usually, the output raster is used for quantitative analysis (e.g. anlysis of terrain) or modeling.</p>
+<p>Rasterization is a conversion from vector objects into rasters. Usually, the output raster is used for quantitative analysis (e.g. analysis of terrain) or modeling.</p>
 <p>The <code>rasterize()</code> function takes a vector object and converts it into a raster with extent, resolution and CRS determined by another raster object. Parameters of a template raster have big impact on rasterization output – coarse resolution could not capture all of important spatial objects, while high resolution could increase computation times. However, there is no simple rules for parameters selection as it depends on the input data and rasterization purpose. For the first group of examples, we will use a template raster having the same extent and CRS as <code>cycle_hire_osm_projected</code> and spatial resolution of 1000 meters:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">raster_template =<span class="st"> </span><span class="kw">raster</span>(<span class="kw">extent</span>(cycle_hire_osm_projected), <span class="dt">resolution =</span> <span class="dv">1000</span>,
                          <span class="dt">crs =</span> <span class="kw">st_crs</span>(cycle_hire_osm_projected)$proj4string)</code></pre></div>
