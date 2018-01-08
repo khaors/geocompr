@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveb48a2190caca4468
+preserve3da339adfbde49c4
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3129,7 +3129,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve71a2701b9d26a316
+preservee0fd684eec55059e
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4325,6 +4325,24 @@ It ensures that the created point lies on the given object (see red points on Fi
 
 ### Buffers
 
+Buffers are polygons representing the area within a given distance of a geometric features.
+Regardless of whether the input is a set of points, lines or polygons, the output is a polygon.
+This can be seen in Figure \@ref(fig:buffs), which demonstrates buffers of different sizes surrounding the river Seine and tributaries.
+These buffers were created with commands below:
+
+
+```r
+seine_buff_5km = st_buffer(seine, dist = 5000)
+seine_buff_20km = st_buffer(seine, dist = 20000)
+```
+
+<div class="figure" style="text-align: center">
+<img src="figures/buffs-1.png" alt="Buffers around the `seine` datasets of 5km (left) and 20km (right). Note the colors, which reflect the fact that 1 buffer is created per geometry feature." width="50%" /><img src="figures/buffs-2.png" alt="Buffers around the `seine` datasets of 5km (left) and 20km (right). Note the colors, which reflect the fact that 1 buffer is created per geometry feature." width="50%" />
+<p class="caption">(\#fig:buffs)Buffers around the `seine` datasets of 5km (left) and 20km (right). Note the colors, which reflect the fact that 1 buffer is created per geometry feature.</p>
+</div>
+
+
+
 ### Affine transformations
 
 <!-- intro -->
@@ -4451,7 +4469,7 @@ plot(b)
 plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
 ```
 
-<img src="figures/unnamed-chunk-51-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-52-1.png" width="576" style="display: block; margin: auto;" />
 
 The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
 <!-- Todo: reference r4ds -->
@@ -6133,7 +6151,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve31b3941e611e60ed
+preserve49e50be874bafe40
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6756,7 +6774,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preserve73d85fe6271ad70c
+preservedacdfcb4afd9139d
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
