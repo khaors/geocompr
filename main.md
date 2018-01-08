@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-01-07'
+date: '2018-01-08'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2018-01-07 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-01-08 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve4a5992dc09562936
+preserve350b9eadd3b7b1fa
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3129,7 +3129,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveb79fec2c88fc4185
+preserveb55660d748afbafd
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3776,7 +3776,7 @@ st_crs(london_proj)
 #>   proj4string: "+proj=tmerc +lat_0=49 +lon_0=-2 ... +units=m +no_defs"
 ```
 
-Notable components of this CRS description include the EPSG code (`EPSG: 27700`), the projection (transverse mercator, `+proj=tmerc`), the origin (`+lat_0=49 +lon_0=-2`) and units (`+units=m`).^[For a short description of the most relevant projection parameters and related concepts, see the fourth lecture by Jochen Albrecht: [geography.hunter.cuny.edu/~jochen/GTECH361/lectures/](http://www.geography.hunter.cuny.edu/~jochen/GTECH361/lectures/lecture04/concepts/Map%20coordinate%20systems/Projection%20parameters.htm) as well as [http://proj4.org/parameters.html](http://proj4.org/parameters.html). 
+Notable components of this CRS description include the EPSG code (`EPSG: 27700`), the projection (transverse Mercator, `+proj=tmerc`), the origin (`+lat_0=49 +lon_0=-2`) and units (`+units=m`).^[For a short description of the most relevant projection parameters and related concepts, see the fourth lecture by Jochen Albrecht: [geography.hunter.cuny.edu/~jochen/GTECH361/lectures/](http://www.geography.hunter.cuny.edu/~jochen/GTECH361/lectures/lecture04/concepts/Map%20coordinate%20systems/Projection%20parameters.htm) as well as [http://proj4.org/parameters.html](http://proj4.org/parameters.html). 
 Another great resource on projection definitions is [http://spatialreference.org/](http://spatialreference.org/).]
 The fact that the units of the CRS are meters (rather than degrees) tells us that this is a projected CRS: geometry operations on `london_proj` will work without a warning, meaning buffers can be produced from it using proper units of distance.
 <!-- 
@@ -3810,7 +3810,7 @@ The subsequent sections go into more depth, exploring which CRS to use and the d
 While CRSs can be set manually --- as illustrated in the previous section with `st_set_crs(london, 4326)` --- it is more common in real world applications for CRSs to be set automatically when data is read-in.
 The main task involving CRSs is often to *transform* objects provided in one CRS into another.
 But when should data be transformed? And into which CRS?
-There are no clear-cut answers to these questions and CRS selection always involves tradeoffs [@maling_coordinate_1992].
+There are no clear-cut answers to these questions and CRS selection always involves trade-offs [@maling_coordinate_1992].
 However there are some general principles, provided in this section, that can help decide. 
 
 The question of *when to transform* is easier to answer.
@@ -3852,7 +3852,7 @@ st_distance(london2, london_proj)
 ```
 
 The question of *which CRS* is tricky, and there is often no 'right' answer:
-"There exist no all-purpose projections, all involve distortion when far from the centre of the specified frame" [@bivand_applied_2013].
+"There exist no all-purpose projections, all involve distortion when far from the center of the specified frame" [@bivand_applied_2013].
 For geographic CRSs the answer is often [WGS84](https://en.wikipedia.org/wiki/World_Geodetic_System#A_new_World_Geodetic_System:_WGS_84), not only for web mapping (covered in the previous paragraph) but also because GPS datasets and thousands of raster and vector datasets are provided in this CRS by default.
 WGS84 is the most common CRS in the world, so it is worth knowing its EPSG code: 4326.
 This 'magic number' can be used to convert objects with unusual projected CRSs into something that is widely understood.
@@ -3898,9 +3898,9 @@ As expected by viewing a map of UTM zones (such as that provided by [dmap.co.uk]
 <!-- lnd_utm = st_transform(london, crs = epsg_utm) -->
 <!-- ``` -->
 
-Another approach to automatically selecting a projected CRS specific to a local dataset is to create an azimuthal equidistant ([AEQD](https://en.wikipedia.org/wiki/Azimuthal_equidistant_projection)) projection for the centre-point of the study area.
+Another approach to automatically selecting a projected CRS specific to a local dataset is to create an azimuthal equidistant ([AEQD](https://en.wikipedia.org/wiki/Azimuthal_equidistant_projection)) projection for the center-point of the study area.
 This involves creating a custom CRS (with no EPSG code) with units of meters based on the centrepoint of a dataset.
-This approach should be used with caution: no other datasets will be compatible with the custom CRS created and results may not be accurate when used on extensive datasets covering hundreds of kilomtres.
+This approach should be used with caution: no other datasets will be compatible with the custom CRS created and results may not be accurate when used on extensive datasets covering hundreds of kilometers.
 
 Although we used vector datasets to illustrate the points outlined in this section, the principles apply equally to raster datasets.
 The subsequent sections explain features of CRS transformation that are unique to each geographic data model, continuing with vector data in the next section (section \@ref(reproj-vec-geom)) and moving-on to explain how raster transformation is different, in section \@ref(reprojecting-raster-geometries).
@@ -3990,7 +3990,7 @@ Existing CRS are well suited for most purposes.
 At the same time, `proj4string` definitions are highly modifiable and allow for greater customization.
 <!-- as we mentioned in section \@ref(crs-in-r). -->
 To illustrate this, w will show existing CRS and how to modify `proj4string` specifications.
-When mapping the world while preserving areal relationshipd, the Mollweide projection is a good choice [@jenny_guide_2017] (Figure \@ref(fig:mollproj)).
+When mapping the world while preserving areal relationships, the Mollweide projection is a good choice [@jenny_guide_2017] (Figure \@ref(fig:mollproj)).
 To use this projection, we need to specify it using the `proj4string` element, `"+proj=moll"`, in the `st_transform` function:
 
 
@@ -4007,7 +4007,7 @@ world_mollweide = st_transform(world, crs = "+proj=moll")
 
 On the other hand, when mapping the world, it is often desirable to have as little distortion as possible for all spatial properties (area, direction, distance).
 One of the most popular projections to achieve this is the Winkel tripel projection (Figure \@ref(fig:wintriproj)).^[This projection is used, among others, by the National Geographic Society.]
-`st_transform_proj()` from the **lwgeom** package allows for coordinate transformations to a wide range of CRSs, inluding the Winkel tripel projection: 
+`st_transform_proj()` from the **lwgeom** package allows for coordinate transformations to a wide range of CRSs, including the Winkel tripel projection: 
 
 
 ```r
@@ -4141,9 +4141,9 @@ However, the algorithm makes sure to keep the same (land cover) classes as provi
 <!-- freq(cat_raster_wgs84) -->
 <!-- freq(cat_raster) -->
 
-Reprojecting continous data follows an almost identical procedure.
-The `srtm.tif` file contains a digital elevation model from [the Shuttle Radar Topography Mission (SRTM)](https://www2.jpl.nasa.gov/srtm/), nad is located in the same area in Utah as the previoulsy used land cover dataset.
-Each srtm raster pixel represents elevation measured in meters.
+Reprojecting continuous data follows an almost identical procedure.
+The `srtm.tif` file contains a digital elevation model from [the Shuttle Radar Topography Mission (SRTM)](https://www2.jpl.nasa.gov/srtm/), nad is located in the same area in Utah as the previously used land cover dataset.
+Each SRTM raster pixel represents elevation measured in meters.
 
 
 ```r
@@ -4159,7 +4159,7 @@ con_raster
 #> values      : 1024, 2892  (min, max)
 ```
 
-Here, we will reproject from the geographic CRS of the srtm dataset into a projected CRS.
+Here, we will reproject from the geographic CRS of the SRTM dataset into a projected CRS.
 The nearest neighbor method should not be used for continuous raster data, as we want to preserve gradual changes in values.
 Instead we will use the bilinear method which computes the output cell value based on the four nearest cells in the original raster.
 <!--
@@ -4576,7 +4576,7 @@ However, only the first element of the old object would remain in the second gro
 
 
 Geometry casting of simple feature geometry column (`sfc`) and simple features objects works the same as for single geometries in most of the cases. 
-One imporant difference is conversion between multi to non-multi types.
+One important difference is conversion between multi to non-multi types.
 As a result of this process, multi-objects are split into many non-multi objects.
 
 We would use a new object, `multilinestring_sf`, as an example (on the left in Figure \@ref(fig:line-cast)):
@@ -4625,7 +4625,7 @@ linestring_sf2
 <p class="caption">(\#fig:line-cast)Examples of type casting between MULTILINESTRING (left) and LINESTRING (right).</p>
 </div>
 
-The newely created object allows for attributes creation (see more in section \@ref(vec-attr-creation)) and length measurement:
+The newel created object allows for attributes creation (see more in section \@ref(vec-attr-creation)) and length measurement:
 
 
 ```r
@@ -4748,7 +4748,7 @@ It is also possible to use the `field` or `fun` arguments for lines and polygons
 </div>
 
 While `rasterize` works well for most cases, it is not performance optimized. 
-Fortunately, there are several alternatives, including the `fasterize::fasterize()`^[The **fasterize** package is avaiable at https://github.com/ecohealthalliance/fasterize.] and `gdalUtils::gdal_rasterize()`. 
+Fortunately, there are several alternatives, including the `fasterize::fasterize()`^[The **fasterize** package is available at https://github.com/ecohealthalliance/fasterize.] and `gdalUtils::gdal_rasterize()`. 
 The former is 100s times faster than `rasterize()`, however it is currently limited to polygon rasterization.
 The latter is part of GDAL and therefore requires a vector file, instead of an `sf` object, as an input and rasterization parameters, instead of a `Raster*` template object.^[See more at http://www.gdal.org/gdal_rasterize.html.]
 
@@ -6133,7 +6133,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve698bce135b8bb7ce
+preserve6a71cf885e7263de
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6756,7 +6756,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preserveea8874fb232da954
+preserve2809991b0b8e87e0
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
