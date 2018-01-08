@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve4be24ec0e285bef9
+preservefb325456450122c0
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3129,7 +3129,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve12c6f703e134cae2
+preserve0bfa2198153ecbe8
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4326,8 +4326,9 @@ It ensures that the created point lies on the given object (see red points on Fi
 ### Buffers
 
 Buffers are polygons representing the area within a given distance of a geometric features.
+<!-- why we want/should use buffers? -->
 Regardless of whether the input is a set of points, lines or polygons, the output is a polygon.
-This can be seen in Figure \@ref(fig:buffs), which demonstrates buffers of different sizes surrounding the river Seine and tributaries.
+This can be seen in Figure \@ref(fig:buffs), which demonstrates buffers of different sizes (5 and 20 km) surrounding the river Seine and tributaries.
 These buffers were created with commands below:
 
 
@@ -4337,18 +4338,15 @@ seine_buff_20km = st_buffer(seine, dist = 20000)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/buffs-1.png" alt="Buffers around the `seine` datasets of 5km (left) and 20km (right). Note the colors, which reflect the fact that 1 buffer is created per geometry feature." width="50%" /><img src="figures/buffs-2.png" alt="Buffers around the `seine` datasets of 5km (left) and 20km (right). Note the colors, which reflect the fact that 1 buffer is created per geometry feature." width="50%" />
-<p class="caption">(\#fig:buffs)Buffers around the `seine` datasets of 5km (left) and 20km (right). Note the colors, which reflect the fact that 1 buffer is created per geometry feature.</p>
+<img src="figures/buffs-1.png" alt="Buffers around the `seine` datasets of 5km (left) and 20km (right). Note the colors, which reflect the fact that one buffer is created per geometry feature." width="50%" /><img src="figures/buffs-2.png" alt="Buffers around the `seine` datasets of 5km (left) and 20km (right). Note the colors, which reflect the fact that one buffer is created per geometry feature." width="50%" />
+<p class="caption">(\#fig:buffs)Buffers around the `seine` datasets of 5km (left) and 20km (right). Note the colors, which reflect the fact that one buffer is created per geometry feature.</p>
 </div>
-
-
 
 ### Affine transformations
 
-<!-- intro -->
 Affine transformation is any transformation that preserves lines and parallelism.
 <!-- The midpoint of a line segment remains a midpoint and all points lying on a line initially still lie on a line after an affine transformation. -->
-However, angles or length are snot necessarily preserved.
+However, angles or length are not necessarily preserved.
 Affine transformations include, among others, shifting (translation), scaling and rotating.
 <!-- translation, scaling, homothety, similarity transformation, reflection, rotation, shear mapping -->
 Additionally, it is possible to use any combination of those.
@@ -6151,7 +6149,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve9d8775b0aaf39a53
+preserveba6345f89dbfe013
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6774,7 +6772,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preserved63b84e86517ab27
+preservec2f5da586e2d08c9
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
