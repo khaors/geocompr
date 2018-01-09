@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve34762c74ec2bdfa1
+preserve78f2c0f645f42d0c
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3124,7 +3124,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservee1eebe56e0aeab04
+preservee1e1ffe19900f850
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4320,11 +4320,15 @@ It ensures that the created point lies on the given object (see red points on Fi
 
 ### Buffers
 
-Buffers are polygons representing the area within a given distance of a geometric features.
-<!-- why we want/should use buffers? -->
-Regardless of whether the input is a set of points, lines or polygons, the output is a polygon.
-This can be seen in Figure \@ref(fig:buffs), which demonstrates buffers of different sizes (5 and 20 km) surrounding the river Seine and tributaries.
-These buffers were created with commands below:
+Buffers are polygons representing the area within a given distance of a geometric features:
+regardless of whether the input is a point, line or polygon, the output is polygon.
+Unlike simplification (which is often used for visualization and reducing file size) buffering tends to be used for geographic data analysis.
+How many points are within a given distance of this line?
+Which demographic groups are within travel distance of this new shop?
+These kinds of questions can be answered and visualized by creating buffers around the geographic entities of interest.
+
+Figure \@ref(fig:buffs) illustrates buffers of different sizes (5 and 20 km) surrounding the river Seine and tributaries.
+These buffers were created with commands below, which show that the command `st_buffer()` requires at least two arguments: an input geometry and a distance:
 
 
 ```r
@@ -6138,7 +6142,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservefc9d8de5667683ce
+preserveb39efa6d5b19ab79
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6761,7 +6765,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preservebb7350d8fce6a5f4
+preserve340297f28a4c41e5
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
