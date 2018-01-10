@@ -746,12 +746,18 @@ Figure 5.13: Randomly distributed points within the bounding box enclosing circl
 <p>Spatial aggregation can also be done in the <strong>tidyverse</strong>, using <strong>dplyr</strong> functions as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">group_by</span>(us_states, REGION) %&gt;%
 <span class="st">  </span><span class="kw">summarize</span>(<span class="kw">sum</span>(<span class="dt">pop =</span> total_pop_15, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</code></pre></div>
-<p>For attribute data aggregation the grouping variable is another variable, typically one with few unique values relative to the number of rows (see section <a href="attr.html#vector-attribute-aggregation">3.2.2</a>). What we did not cover in that section was that attribute data aggregation dissolves the geometries of touching polygons. The <code>REGION</code> variable in the <code>us_states</code> dataset is a good example: there are 49 states (excluding Hawaii and Alaska) which can be aggregated into four regions. This is demonstrated in the code chunk below, the results of which are illustrated in Figure <a href="#fig:us-regions"><strong>??</strong></a>:</p>
+<p>For attribute data aggregation the grouping variable is another variable, typically one with few unique values relative to the number of rows (see section <a href="attr.html#vector-attribute-aggregation">3.2.2</a>). What we did not cover in that section was that attribute data aggregation dissolves the geometries of touching polygons. The <code>REGION</code> variable in the <code>us_states</code> dataset is a good example: there are 49 states (excluding Hawaii and Alaska) which can be aggregated into four regions. This is demonstrated in the code chunk below, the results of which are illustrated in Figure <a href="transform.html#fig:us-regions">5.14</a>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">regions =<span class="st"> </span><span class="kw">aggregate</span>(<span class="dt">x =</span> us_states[, <span class="st">&quot;total_pop_15&quot;</span>], <span class="dt">by =</span> <span class="kw">list</span>(us_states$REGION),
                     <span class="dt">FUN =</span> sum, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <!--
 show also tidyverse way, so what you are doing is basically a spatial join and a subsequent aggregation without a grouping variable. Didactically, it might be better to present a grouping variable.
 -->
+<div class="figure" style="text-align: center"><span id="fig:us-regions"></span>
+<img src="figures/us-regions-1.png" alt="Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions, with population represented by color. Note the operation automatically dissolves boundaries between states." width="100%" />
+<p class="caption">
+Figure 5.14: Spatial aggregation on contiguous polygons, illustrated by aggregating the population of US states into regions, with population represented by color. Note the operation automatically dissolves boundaries between states.
+</p>
+</div>
 <p>The equivalent result can be achieved using <strong>tidyverse</strong> functions as follows (result not shown):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">regions2 =<span class="st"> </span>us_states %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">group_by</span>(REGION) %&gt;%
@@ -762,14 +768,14 @@ show also tidyverse way, so what you are doing is basically a spatial join and a
 <p>Geometry casting is powerful operation which enable transformation of the geometry type. It is implemented in the <code>st_cast</code> function from the <code>sf</code> package. Importantly, <code>st_cast</code> behaves differently on single simple feature geometry (<code>sfg</code>) objects, and simple feature geometry column (<code>sfc</code>) and simple features objects.</p>
 <p>Let’s create a multipoint to illustrate how geometry casting works on simple feature geometry (<code>sfg</code>) objects:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">multipoint =<span class="st"> </span><span class="kw">st_multipoint</span>(<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">1</span>), <span class="dt">ncol =</span> <span class="dv">2</span>))</code></pre></div>
-<p>In this case, <code>st_cast</code> can be useful to transform the new object into linestring or polygon (Figure <a href="transform.html#fig:single-cast">5.14</a>):</p>
+<p>In this case, <code>st_cast</code> can be useful to transform the new object into linestring or polygon (Figure <a href="transform.html#fig:single-cast">5.15</a>):</p>
 <!-- a/ points -> lines -> polygons  -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">linestring =<span class="st"> </span><span class="kw">st_cast</span>(multipoint, <span class="st">&quot;LINESTRING&quot;</span>)
 polyg =<span class="st"> </span><span class="kw">st_cast</span>(multipoint, <span class="st">&quot;POLYGON&quot;</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:single-cast"></span>
 <img src="figures/single-cast-1.png" alt="Examples of linestring and polygon created based on multipoint using the `st_cast` function" width="576" />
 <p class="caption">
-Figure 5.14: Examples of linestring and polygon created based on multipoint using the <code>st_cast</code> function
+Figure 5.15: Examples of linestring and polygon created based on multipoint using the <code>st_cast</code> function
 </p>
 </div>
 <p>This process can be also reversed using <code>st_cast</code>:</p>
@@ -783,7 +789,7 @@ For single simple feature geometries (<code>sfg</code>), <code>st_cast</code> pr
 </div>
 <p></p>
 <p>Geometry casting of simple feature geometry column (<code>sfc</code>) and simple features objects works the same as for single geometries in most of the cases. One important difference is conversion between multi to non-multi types. As a result of this process, multi-objects are split into many non-multi objects.</p>
-<p>We would use a new object, <code>multilinestring_sf</code>, as an example (on the left in Figure <a href="transform.html#fig:line-cast">5.15</a>):</p>
+<p>We would use a new object, <code>multilinestring_sf</code>, as an example (on the left in Figure <a href="transform.html#fig:line-cast">5.16</a>):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">multilinestring_list =<span class="st"> </span><span class="kw">list</span>(<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">3</span>), <span class="dt">ncol =</span> <span class="dv">2</span>), 
                             <span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>), <span class="dt">ncol =</span> <span class="dv">2</span>),
                             <span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">2</span>), <span class="dt">ncol =</span> <span class="dv">2</span>))
@@ -814,7 +820,7 @@ linestring_sf2
 <div class="figure" style="text-align: center"><span id="fig:line-cast"></span>
 <img src="figures/line-cast-1.png" alt="Examples of type casting between MULTILINESTRING (left) and LINESTRING (right)." width="576" />
 <p class="caption">
-Figure 5.15: Examples of type casting between MULTILINESTRING (left) and LINESTRING (right).
+Figure 5.16: Examples of type casting between MULTILINESTRING (left) and LINESTRING (right).
 </p>
 </div>
 <p>The newel created object allows for attributes creation (see more in section <a href="attr.html#vec-attr-creation">3.2.4</a>) and length measurement:</p>
@@ -844,18 +850,18 @@ linestring_sf2
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">raster_template =<span class="st"> </span><span class="kw">raster</span>(<span class="kw">extent</span>(cycle_hire_osm_projected), <span class="dt">resolution =</span> <span class="dv">1000</span>,
                          <span class="dt">crs =</span> <span class="kw">st_crs</span>(cycle_hire_osm_projected)$proj4string)</code></pre></div>
 <p>Rasterization is very flexible operation and gives different results based not only on a template raster, but also on the type of an input vector (e.g. points, polygons) and given arguments.</p>
-<p>Let’s try three different approaches to rasterize points - cycle hire locations across London (Figure <a href="transform.html#fig:vector-rasterization1">5.16</a>:A). The simplest case is when we want to create a raster containing areas with cycle hire points (also known as a presence/absence raster). In this situation, <code>rasterize()</code> expects only three arguments - an input vector data, a raster template, and a value to be transferred to all non-empty cells (Figure <a href="transform.html#fig:vector-rasterization1">5.16</a>:B).</p>
+<p>Let’s try three different approaches to rasterize points - cycle hire locations across London (Figure <a href="transform.html#fig:vector-rasterization1">5.17</a>:A). The simplest case is when we want to create a raster containing areas with cycle hire points (also known as a presence/absence raster). In this situation, <code>rasterize()</code> expects only three arguments - an input vector data, a raster template, and a value to be transferred to all non-empty cells (Figure <a href="transform.html#fig:vector-rasterization1">5.17</a>:B).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ch_raster1 =<span class="st"> </span><span class="kw">rasterize</span>(cycle_hire_osm_projected, raster_template, <span class="dt">field =</span> <span class="dv">1</span>)</code></pre></div>
-<p><code>rasterize()</code> also could take a <code>fun</code> argument which specifies how attributes are transferred to the raster object. For example, the <code>fun = &quot;count&quot;</code> argument counts the number of points in each grid cell (Figure <a href="transform.html#fig:vector-rasterization1">5.16</a>:C).</p>
+<p><code>rasterize()</code> also could take a <code>fun</code> argument which specifies how attributes are transferred to the raster object. For example, the <code>fun = &quot;count&quot;</code> argument counts the number of points in each grid cell (Figure <a href="transform.html#fig:vector-rasterization1">5.17</a>:C).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ch_raster2 =<span class="st"> </span><span class="kw">rasterize</span>(cycle_hire_osm_projected, raster_template, 
                        <span class="dt">field =</span> <span class="dv">1</span>, <span class="dt">fun =</span> <span class="st">&quot;count&quot;</span>)</code></pre></div>
-<p>The new output, <code>ch_raster2</code>, shows the number of cycle hire points in each grid cell. However, the cycle hire locations have different numbers of bicycles, which is described by the <code>capacity</code> variable. We need to select a field (<code>&quot;capacity&quot;</code>) and a function (<code>sum</code>) to determine a cycle hire capacity in each grid cell (Figure <a href="transform.html#fig:vector-rasterization1">5.16</a>:D). In the same way another statistics could be calculated, such as an average capacity for each grid cell, etc.</p>
+<p>The new output, <code>ch_raster2</code>, shows the number of cycle hire points in each grid cell. However, the cycle hire locations have different numbers of bicycles, which is described by the <code>capacity</code> variable. We need to select a field (<code>&quot;capacity&quot;</code>) and a function (<code>sum</code>) to determine a cycle hire capacity in each grid cell (Figure <a href="transform.html#fig:vector-rasterization1">5.17</a>:D). In the same way another statistics could be calculated, such as an average capacity for each grid cell, etc.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ch_raster3 =<span class="st"> </span><span class="kw">rasterize</span>(cycle_hire_osm_projected, raster_template, 
                        <span class="dt">field =</span> <span class="st">&quot;capacity&quot;</span>, <span class="dt">fun =</span> sum)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:vector-rasterization1"></span>
 <img src="figures/vector-rasterization1-1.png" alt="Examples of point's rasterization" width="576" />
 <p class="caption">
-Figure 5.16: Examples of point’s rasterization
+Figure 5.17: Examples of point’s rasterization
 </p>
 </div>
 <p>Additionally, we will illustrate polygons and lines rasterizations using California’s polygons (<code>california</code>) and borders (<code>california_borders</code>). A template raster here will have the resolution of a 0.5 degree:</p>
@@ -863,9 +869,9 @@ Figure 5.16: Examples of point’s rasterization
 california_borders =<span class="st"> </span><span class="kw">st_cast</span>(california, <span class="st">&quot;MULTILINESTRING&quot;</span>)
 raster_template2 =<span class="st"> </span><span class="kw">raster</span>(<span class="kw">extent</span>(california), <span class="dt">resolution =</span> <span class="fl">0.5</span>,
                          <span class="dt">crs =</span> <span class="kw">st_crs</span>(california)$proj4string)</code></pre></div>
-<p>All cells that are touched by a line get a value in a line rasterization (Figure <a href="transform.html#fig:vector-rasterization2">5.17</a>:A).</p>
+<p>All cells that are touched by a line get a value in a line rasterization (Figure <a href="transform.html#fig:vector-rasterization2">5.18</a>:A).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">california_raster1 =<span class="st"> </span><span class="kw">rasterize</span>(california_borders, raster_template2)</code></pre></div>
-<p>On the other hand, polygon rasterization is based on the positions of cells’ centers (points on Figure <a href="transform.html#fig:vector-rasterization2">5.17</a>:B). Values are only given when the center on the cell lies inside of the input polygon (Figure <a href="transform.html#fig:vector-rasterization2">5.17</a>:B).</p>
+<p>On the other hand, polygon rasterization is based on the positions of cells’ centers (points on Figure <a href="transform.html#fig:vector-rasterization2">5.18</a>:B). Values are only given when the center on the cell lies inside of the input polygon (Figure <a href="transform.html#fig:vector-rasterization2">5.18</a>:B).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">california_raster2 =<span class="st"> </span><span class="kw">rasterize</span>(california, raster_template2)</code></pre></div>
 <!-- getCover? -->
 <!-- the fraction of each grid cell that is covered by the polygons-->
@@ -882,7 +888,7 @@ raster_template2 =<span class="st"> </span><span class="kw">raster</span>(<span 
 <div class="figure" style="text-align: center"><span id="fig:vector-rasterization2"></span>
 <img src="figures/vector-rasterization2-1.png" alt="Examples of line and polygon rasterizations" width="576" />
 <p class="caption">
-Figure 5.17: Examples of line and polygon rasterizations
+Figure 5.18: Examples of line and polygon rasterizations
 </p>
 </div>
 <p>While <code>rasterize</code> works well for most cases, it is not performance optimized. Fortunately, there are several alternatives, including the <code>fasterize::fasterize()</code><a href="#fn32" class="footnoteRef" id="fnref32"><sup>32</sup></a> and <code>gdalUtils::gdal_rasterize()</code>. The former is 100s times faster than <code>rasterize()</code>, however it is currently limited to polygon rasterization. The latter is part of GDAL and therefore requires a vector file, instead of an <code>sf</code> object, as an input and rasterization parameters, instead of a <code>Raster*</code> template object.<a href="#fn33" class="footnoteRef" id="fnref33"><sup>33</sup></a></p>
@@ -914,13 +920,13 @@ A transformation is then performed, which converts local image coordinates to re
 <div id="raster-alignment" class="section level3">
 <h3><span class="header-section-number">5.4.2</span> Raster alignment</h3>
 <p>When merging or performing map algebra on rasters, their resolution, projection, origin and/or extent has to match. Otherwise, how should we add the values of one raster with a resolution of 0.2 decimal degrees to a second with a resolution of 1 decimal degree? The same problem arises when we would like to merge satellite imagery from different sensors with different projections and resolutions. We can deal with such mismatches by aligning the rasters.</p>
-<p>This section uses the <code>elev</code> object from <a href="attr.html#manipulating-raster-objects">3.3</a>, which it is available in the <code>spData</code> package. The <code>projectRaster()</code> function reprojects one raster to a desired projection, say from UTM to WGS84. Equally, map algebra operations require the same extent. Following code adds one row and two columns to each side of the raster while setting all new values to an elevation of 1000 meters (<a href="transform.html#fig:extend-example">5.18</a>).</p>
+<p>This section uses the <code>elev</code> object from <a href="attr.html#manipulating-raster-objects">3.3</a>, which it is available in the <code>spData</code> package. The <code>projectRaster()</code> function reprojects one raster to a desired projection, say from UTM to WGS84. Equally, map algebra operations require the same extent. Following code adds one row and two columns to each side of the raster while setting all new values to an elevation of 1000 meters (<a href="transform.html#fig:extend-example">5.19</a>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_2 =<span class="st"> </span><span class="kw">extend</span>(elev, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">value =</span> <span class="dv">1000</span>)
 <span class="kw">plot</span>(elev_2)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:extend-example"></span>
 <img src="figures/extend-example-1.png" alt="Original raster extended by 1 one row on each side (top, bottom) and two columns on each side (right, left)." width="576" />
 <p class="caption">
-Figure 5.18: Original raster extended by 1 one row on each side (top, bottom) and two columns on each side (right, left).
+Figure 5.19: Original raster extended by 1 one row on each side (top, bottom) and two columns on each side (right, left).
 </p>
 </div>
 <p>Performing an algebraic operation on two objects with differing extents in R, the <strong>raster</strong> package returns the result for the intersection, and says so in a warning.</p>
@@ -929,7 +935,7 @@ Figure 5.18: Original raster extended by 1 one row on each side (top, bottom) an
 <span class="co">#&gt; their intersection is returned</span></code></pre></div>
 <p>However, we can also align the extent of two rasters with the <code>extend()</code> command. Here, we extend the <code>elev</code> object to the extend of <code>elev_2</code>. The newly added rows and column receive the default value of the <code>value</code> parameter, i.e., <code>NA</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_4 =<span class="st"> </span><span class="kw">extend</span>(elev, elev_2)</code></pre></div>
-<p>The <code>aggregate()</code> and <code>disaggregate()</code> functions help to change the cell size resolution of a raster. For instance, let us aggregate <code>elev</code> from a resolution of 0.5 to a resolution of 1, that means we aggregate by a factor of 2 (Fig. <a href="transform.html#fig:aggregate-example">5.19</a>). Additionally, the output cell value should correspond to the mean of the input cells (but one could use other functions as well such as <code>median()</code>, <code>sum()</code>, etc.):</p>
+<p>The <code>aggregate()</code> and <code>disaggregate()</code> functions help to change the cell size resolution of a raster. For instance, let us aggregate <code>elev</code> from a resolution of 0.5 to a resolution of 1, that means we aggregate by a factor of 2 (Fig. <a href="transform.html#fig:aggregate-example">5.20</a>). Additionally, the output cell value should correspond to the mean of the input cells (but one could use other functions as well such as <code>median()</code>, <code>sum()</code>, etc.):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_agg =<span class="st"> </span><span class="kw">aggregate</span>(elev, <span class="dt">fact =</span> <span class="dv">2</span>, <span class="dt">fun =</span> mean)
 <span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
 <span class="kw">plot</span>(elev)
@@ -937,7 +943,7 @@ Figure 5.18: Original raster extended by 1 one row on each side (top, bottom) an
 <div class="figure" style="text-align: center"><span id="fig:aggregate-example"></span>
 <img src="figures/aggregate-example-1.png" alt="Original raster (left). Aggregated raster (right)." width="576" />
 <p class="caption">
-Figure 5.19: Original raster (left). Aggregated raster (right).
+Figure 5.20: Original raster (left). Aggregated raster (right).
 </p>
 </div>
 <p>Note that the origin of <code>elev_agg</code> has changed, too.</p>
@@ -945,7 +951,7 @@ Figure 5.19: Original raster (left). Aggregated raster (right).
 <span class="co">#&gt; [1] 0 0</span>
 <span class="kw">origin</span>(elev_agg)
 <span class="co">#&gt; [1] 0.5 0.5</span></code></pre></div>
-<p>The origin is the point closest to (0, 0) if you moved towards it in steps of x and y resolution. If two rasters have different origins, their cells do not overlap completely which would make map algebra impossible. To change the origin , use <code>origin()</code>.<a href="#fn34" class="footnoteRef" id="fnref34"><sup>34</sup></a> Looking at figure <a href="transform.html#fig:origin-example">5.20</a> reveals the effect of changing the origin.</p>
+<p>The origin is the point closest to (0, 0) if you moved towards it in steps of x and y resolution. If two rasters have different origins, their cells do not overlap completely which would make map algebra impossible. To change the origin , use <code>origin()</code>.<a href="#fn34" class="footnoteRef" id="fnref34"><sup>34</sup></a> Looking at figure <a href="transform.html#fig:origin-example">5.21</a> reveals the effect of changing the origin.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the aggregated raster</span>
 <span class="kw">plot</span>(elev_agg)
 <span class="co"># change the origin</span>
@@ -955,7 +961,7 @@ Figure 5.19: Original raster (left). Aggregated raster (right).
 <div class="figure" style="text-align: center"><span id="fig:origin-example"></span>
 <img src="figures/origin-example-1.png" alt="Plotting rasters with the same values but different origins." width="576" />
 <p class="caption">
-Figure 5.20: Plotting rasters with the same values but different origins.
+Figure 5.21: Plotting rasters with the same values but different origins.
 </p>
 </div>
 <p>The <code>resample()</code> command lets you align several raster properties in one go, namely origin, extent and resolution. Let us resample an extended <code>elev_agg</code> to the properties of <code>elev</code> again.</p>
@@ -972,26 +978,26 @@ elev_disagg =<span class="st"> </span><span class="kw">resample</span>(elev_agg,
 <div id="vectorization" class="section level3">
 <h3><span class="header-section-number">5.4.3</span> Vectorization</h3>
 <!-- ref to rasterization -->
-<p>Vectorization is a process of converting rasters into vectors.<a href="#fn35" class="footnoteRef" id="fnref35"><sup>35</sup></a> It is often used when we want to connect features extracted from raster data with an attribute table. The simplest form of vectorization is a conversion from a raster to points. The <code>rasterToPoints()</code> function creates point representations of every non-NA raster grid cell centroids and it is usually used for continuous data, such as elevation (Figure <a href="transform.html#fig:raster-vectorization1">5.21</a>). <!-- Spatial* class mentioned --> <!-- why? --></p>
+<p>Vectorization is a process of converting rasters into vectors.<a href="#fn35" class="footnoteRef" id="fnref35"><sup>35</sup></a> It is often used when we want to connect features extracted from raster data with an attribute table. The simplest form of vectorization is a conversion from a raster to points. The <code>rasterToPoints()</code> function creates point representations of every non-NA raster grid cell centroids and it is usually used for continuous data, such as elevation (Figure <a href="transform.html#fig:raster-vectorization1">5.22</a>). <!-- Spatial* class mentioned --> <!-- why? --></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_point =<span class="st"> </span><span class="kw">rasterToPoints</span>(elev, <span class="dt">spatial =</span> <span class="ot">TRUE</span>) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">st_as_sf</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:raster-vectorization1"></span>
 <img src="figures/raster-vectorization1-1.png" alt="Raster and point representation of the elev dataset." width="576" />
 <p class="caption">
-Figure 5.21: Raster and point representation of the elev dataset.
+Figure 5.22: Raster and point representation of the elev dataset.
 </p>
 </div>
 <p>On the other hand, categorical rasters (e.g. scanned maps or satellite images) represent discrete features that could occupy areas larger than only one cell. The <code>rasterToPolygons()</code> function could be used to extract these features into a <code>SpatialPolygonsDataFrame</code> object. We can also convert the result into an object of class <code>sf</code>.<a href="#fn36" class="footnoteRef" id="fnref36"><sup>36</sup></a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grain_poly =<span class="st"> </span><span class="kw">rasterToPolygons</span>(grain) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">st_as_sf</span>()</code></pre></div>
-<p>The output consists of many polygons representing grid cells from the original raster object. They could be aggregated (see section <a href="spatial-operations.html#spatial-aggr">4.2.5</a>) into irregular polygons having the same value (Figure <a href="transform.html#fig:raster-vectorization1">5.21</a>).</p>
+<p>The output consists of many polygons representing grid cells from the original raster object. They could be aggregated (see section <a href="spatial-operations.html#spatial-aggr">4.2.5</a>) into irregular polygons having the same value (Figure <a href="transform.html#fig:raster-vectorization1">5.22</a>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grain_poly2 =<span class="st"> </span>grain_poly %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">group_by</span>(layer) %&gt;%
 <span class="st">  </span><span class="kw">summarize</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:raster-vectorization2"></span>
 <img src="figures/raster-vectorization2-1.png" alt="Illustration of vectorization of raster (left) into polygon (center) and polygon aggregation (right)." width="576" />
 <p class="caption">
-Figure 5.22: Illustration of vectorization of raster (left) into polygon (center) and polygon aggregation (right).
+Figure 5.23: Illustration of vectorization of raster (left) into polygon (center) and polygon aggregation (right).
 </p>
 </div>
 <!-- rasterToContour() -->
