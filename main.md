@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve4295f3f6eb700572
+preserve0c77587ee3ae998e
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3124,7 +3124,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve52480c2eb10d154b
+preservee240f9b099edaa46
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5005,7 +5005,11 @@ How it influences the results?
 
 <!-- CENTROIDS AND BUFFERS-->
 <!-- AFFINE TRANSFORMATION -->
-<!-- e.g.reflections -->
+1. Most of the world maps have a north-up orientation.
+A world map with a south-up orientation could be created by a reflection (one of affine transformation not mentioned in \@ref(affine-transformations)) of the `world` object's geometry.
+Write code to do so.
+Hint: you need to use a two-element vector for this transformation.
+    - Bonus: create a upside down map of your country.
 
 <!-- CLIPPING -->
 1. Write code that subsets points that are contained within `x` *and* `y` (illustrated by the plot in the 2^nd^ row and the 1^st^ column in Figure \@ref(fig:venn-clip)).
@@ -6157,7 +6161,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve803af71e69bb06d5
+preserveade6e3411b25c47c
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6780,7 +6784,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preserve099357af637ba8e6
+preserve95ee13a55c621c5a
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
