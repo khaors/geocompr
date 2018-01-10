@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveb94a91f5f20c2826
+preserve4295f3f6eb700572
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3124,7 +3124,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve4240622f81c9e129
+preserve52480c2eb10d154b
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6157,7 +6157,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve5559b1eb6985375a
+preserve803af71e69bb06d5
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6579,7 +6579,7 @@ For the purposes of this case study, suffice to say that the roads along which t
 One option would be to add new public transport nodes to the network.
 Such nodes are described in the next section.
 
-## Nodes on the transport system
+## Nodes
 
 Nodes in geographic transport data are zero dimensional features (points) among the predominantly one dimensional features (lines) that comprise the network.
 There are two types of transport nodes:
@@ -6767,7 +6767,7 @@ There is another between the chapters:
 if the new infrastructure succeeds in getting people walking and cycling perhaps sustainable transport companies --- like the chain of German cycling shops described in Chapter \@ref(location) --- will be encouraged to expand internationally and set-up in Bristol!
 
 In fact we have already done all the hard work needed to priorities cycling infrastructure:
-we have short but car-dependent commuting routes (generated from desire lines) created in section \@ref(routes), desire lines representing the first leg to public transport nodes created in section \@ref(nodes-on-the-transport-network) and the ability to analyse route networks in terms of 'betweenness' and other conceptions for graph theory, covered in the previous section.
+we have short but car-dependent commuting routes (generated from desire lines) created in section \@ref(routes), desire lines representing the first leg to public transport nodes created in section \@ref(nodes) and the ability to analyse route networks in terms of 'betweenness' and other conceptions for graph theory, covered in the previous section.
 Rather than describe how each of these elements will be combined the final code chunk should speak for itself:
 
 
@@ -6780,7 +6780,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preserveb8176c08f0e579da
+preserve099357af637ba8e6
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
