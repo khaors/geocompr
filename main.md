@@ -148,7 +148,7 @@ Over the last few decades free and open source software for geospatial data ('FO
 Thanks to FOSS4G and the wider open source movement geospatial analysis is no longer the preserve of those with expensive hardware and software: anyone can now download high performance spatial libraries on their computer.
 However, despite the growth of geospatial software that is *open source*, much of it is still not easy to script.
 Open source Geographic Information Systems (GIS) such as QGIS (see [qgis.org](http://qgis.org/en/site/)) have greatly reduced the 'barrier to entry' but their emphasis on the Graphical User Interface (GUI) can discourage reproducibility.
-This book focusses on the Command Line Interface (CLI), enabling reproducible, and 'computational' workflows, something we will expand on in Chapter 13.
+This book focuses on the Command Line Interface (CLI), enabling reproducible, and 'computational' workflows, something we will expand on in Chapter 13.
 <!--\@ref(gis) --><!-- REF NEEDS TO BE FIXED IN FUTURE-->
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">Reproducibility is a major advantage of command-line interfaces, but what does it mean in practice?
@@ -231,7 +231,7 @@ In this book we treat R as a 'tool for the trade' for the latter.
 R is a multi-platform, open source language and environment for statistical computing and graphics ([https://www.r-project.org/](https://www.r-project.org/)).
 With a wide range of packages R also supports advanced geospatial statistics, modeling and visualization.^[The integrated development environment (IDE) [RStudio](https://www.rstudio.com/) deserves mention here from a user perspective as it has made the interactive use of R more accessible].
 At its core R is an object-oriented, [functional programming language](http://adv-r.had.co.nz/Functional-programming.html) [@wickham_advanced_2014], and was specifically designed as an interactive interface to other software [@chambers_extending_2016]. 
-The latter also includes many 'bridges' to a treasure trove of GIS software, geolibraries and functions.
+The latter also includes many 'bridges' to a treasure trove of GIS software, 'geolibraries' and functions.
 <!-- todo - add this reference to ref(gis) -->
 It is thus ideal for quickly creating 'geo-tools', without needing to master lower level languages (compared to R) such as C, FORTRAN and Java (see section \@ref(software-for-geocomputation)). 
 This can feel like breaking free from the metaphorical 'glass ceiling' imposed by GUI-based proprietary geographic information systems (see Table \@ref(tab:gdsl) for a definition of GUI).
@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve77bdd94079ff0209
+preservee66bbc6e93421868
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -273,7 +273,7 @@ Therefore knowing what else is out there can also be useful from an R-spatial pe
 With this motivation in mind this section briefly introduces the languages [C++](https://isocpp.org/), [Java](https://www.oracle.com/java/index.html) and [Python](https://www.python.org/) for geocomputation, with reference to R.
 
 A natural choice for geocomputation would be C++ since major GIS packages (e.g., [GDAL](http://www.gdal.org/), [QGIS](www.qgis.org), [GRASS](https://grass.osgeo.org/), [SAGA](www.saga-gis.org), and even [ArcGIS](https://www.arcgis.com/)) often rely in great parts on it.
-This is because well-written C++ can be blazingly fast, which makes it a good choice for performance-critical applications such as the processing of large spatial data.
+This is because well-written C++ can be blazing fast, which makes it a good choice for performance-critical applications such as the processing of large spatial data.
 Usually, people find it harder to learn than Python or R.
 It is also likely that you have to invest a lot of time to code things that are readily available in R.
 Therefore, we would recommend to learn R, and subsequently to learn C++ through **Rcpp** if a need for performance optimization arises.
@@ -304,7 +304,7 @@ Due to their similarities there is much on-line discussion framing the relative 
 In practice both languages have their strengths and to some extent which you use is less important than the domain of application and communication of results.
 Learning either will provide a head-start in learning the other.
 However, there are major advantages of R over Python for geocomputation which explains its prominence in this book.
-R has unparalled support for statistics, including spatial statistics, with hundreds of packages (unmatched by Python) supporting thousands of statistical methods.
+R has unparalleled support for statistics, including spatial statistics, with hundreds of packages (unmatched by Python) supporting thousands of statistical methods.
 
 The major advantage of Python is that it is a *general-purpose* programming language.
 It is well-suited to many applications, including desktop software, computer games, websites and data science.
@@ -3124,7 +3124,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservefbcd24df29c28202
+preserve842cabff1ad8b7da
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4333,13 +4333,21 @@ These buffers were created with commands below, which show that the command `st_
 
 ```r
 seine_buff_5km = st_buffer(seine, dist = 5000)
-seine_buff_20km = st_buffer(seine, dist = 20000)
+seine_buff_50km = st_buffer(seine, dist = 50000)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/buffs-1.png" alt="Buffers around the `seine` datasets of 5km (left) and 20km (right). Note the colors, which reflect the fact that one buffer is created per geometry feature." width="50%" /><img src="figures/buffs-2.png" alt="Buffers around the `seine` datasets of 5km (left) and 20km (right). Note the colors, which reflect the fact that one buffer is created per geometry feature." width="50%" />
-<p class="caption">(\#fig:buffs)Buffers around the `seine` datasets of 5km (left) and 20km (right). Note the colors, which reflect the fact that one buffer is created per geometry feature.</p>
+<img src="figures/buffs-1.png" alt="Buffers around the `seine` datasets of 5km (left) and 50km (right). Note the colors, which reflect the fact that one buffer is created per geometry feature." width="50%" /><img src="figures/buffs-2.png" alt="Buffers around the `seine` datasets of 5km (left) and 50km (right). Note the colors, which reflect the fact that one buffer is created per geometry feature." width="50%" />
+<p class="caption">(\#fig:buffs)Buffers around the `seine` datasets of 5km (left) and 50km (right). Note the colors, which reflect the fact that one buffer is created per geometry feature.</p>
 </div>
+
+\BeginKnitrBlock{rmdnote}<div class="rmdnote">The third and final argument of `st_buffer()` is `nQuadSegs`, which means 'number of segments per quadrant' and is set by default to 30 (meaning circles created by buffers are composed of $4 \times 30 = 120$ lines).
+This argument rarely needs be set.
+Unusual cases where it may be useful include when the memory consumed by the output of a buffer operation is a major concern (in which case it should be reduced) or when very high precision is needed (in which case it should be increased).</div>\EndKnitrBlock{rmdnote}
+
+
+
+
 
 ### Affine transformations
 
@@ -4466,7 +4474,7 @@ plot(b)
 plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
 ```
 
-<img src="figures/unnamed-chunk-52-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-53-1.png" width="576" style="display: block; margin: auto;" />
 
 The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
 <!-- Todo: reference r4ds -->
@@ -6146,7 +6154,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve5ff3651922a6ca5b
+preserve8206c196b3b48e08
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6769,7 +6777,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preserve5875c5417d00fc84
+preserveb1287ed3cc1da80d
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
