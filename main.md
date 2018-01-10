@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-01-09'
+date: '2018-01-10'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2018-01-09 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-01-10 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservee0eb7b00122293c9
+preserve9058b1f91fb937a2
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3124,7 +3124,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve13262ecd5238dbb7
+preserve30793f1b6c338df7
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4991,8 +4991,10 @@ How it influences the results?
 
 <!-- SIMPLIFICATION-->
 <!-- new zeleand example -->
+
 <!-- CENTROIDS AND BUFFERS-->
 <!-- AFFINE TRANSFORMATION -->
+
 <!-- e.g.reflections -->
 <!-- rotate nz as a whole -->
 <!-- CLIPPING -->
@@ -5008,6 +5010,7 @@ How it influences the results?
 1. Advanced challenge: find the point with the highest number of people within a 10 degree radius.    
 <!-- TYPE TRANS. -->
 <!-- RASTERIZATION -->
+<!-- advances exercise - union new zeleand and rotate it around its centroid by 180 degrees -->
 <!-- RASTER AGGREGATION -->
 <!-- RASTER ALIGNMENT -->
 <!-- VECTORIZATION -->
@@ -6142,7 +6145,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve9e254d1a6b1bda55
+preserve8bdbfda2ae2bffb3
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6765,7 +6768,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preserve55f46050785bce96
+preserve6f1e6359016940b3
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
