@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-01-10">
+<meta name="date" content="2018-01-11">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -823,7 +823,7 @@ linestring_sf2
 Figure 5.16: Examples of type casting between MULTILINESTRING (left) and LINESTRING (right).
 </p>
 </div>
-<p>The newel created object allows for attributes creation (see more in section <a href="attr.html#vec-attr-creation">3.2.4</a>) and length measurement:</p>
+<p>The newel created object allows for attributes creation (see more in section <a href="attr.html#vec-attr-creation">3.2.4</a>) and length measurements:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">linestring_sf2$name =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Riddle Rd&quot;</span>, <span class="st">&quot;Marshall Ave&quot;</span>, <span class="st">&quot;Foulke St&quot;</span>)
 linestring_sf2$length =<span class="st"> </span><span class="kw">st_length</span>(linestring_sf2)
 linestring_sf2
@@ -1053,7 +1053,7 @@ Figure 5.23: Illustration of vectorization of raster (left) into polygon (center
 <li>Bonus: rewrite code that generated the answer to the previous question using a projected CRS (suggestion: UTM).</li>
 </ul></li>
 <li><p>Advanced challenge: find the point with the highest number of people within a 10 degree radius.<br />
-<!-- TYPE TRANS. --></p></li>
+<!-- TYPE TRANS. -->1. Calculate the length of the boundary lines of US states in meters. Which state has the longest border and which has the shorter border? Hint: The <code>st_length</code> function computes the length of a <code>LINESTRING</code> or <code>MULTILINESTRING</code> geometry.</p></li>
 </ol>
 <!-- RASTERIZATION-->
 <!-- advances exercise - rotate nz as a whole - union new zeleand and rotate it around its centroid by 180 degrees -->

@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-01-10'
+date: '2018-01-11'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2018-01-10 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-01-11 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve806e5bb74fcd4d43
+preservea7f46e42186a7e48
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3124,7 +3124,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservebf6f52f8eaa0cb5f
+preserve68ae63fd7f7326de
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4648,7 +4648,7 @@ linestring_sf2
 <p class="caption">(\#fig:line-cast)Examples of type casting between MULTILINESTRING (left) and LINESTRING (right).</p>
 </div>
 
-The newel created object allows for attributes creation (see more in section \@ref(vec-attr-creation)) and length measurement:
+The newel created object allows for attributes creation (see more in section \@ref(vec-attr-creation)) and length measurements:
 
 
 ```r
@@ -5004,15 +5004,13 @@ How it influences the results?
 <!-- new zeleand example -->
 
 <!-- CENTROIDS AND BUFFERS-->
-<!-- AFFINE TRANSFORMATION -->
-1. Most of the world maps have a north-up orientation.
+<!-- AFFINE TRANSFORMATION -->1. Most of the world maps have a north-up orientation.
 A world map with a south-up orientation could be created by a reflection (one of affine transformations not mentioned in \@ref(affine-transformations)) of the `world` object's geometry.
 Write code to do so.
 Hint: you need to use a two-element vector for this transformation.
     - Bonus: create a upside down map of your country.
 
-<!-- CLIPPING -->
-1. Write code that subsets points that are contained within `x` *and* `y` (illustrated by the plot in the 2^nd^ row and the 1^st^ column in Figure \@ref(fig:venn-clip)).
+<!-- CLIPPING -->1. Write code that subsets points that are contained within `x` *and* `y` (illustrated by the plot in the 2^nd^ row and the 1^st^ column in Figure \@ref(fig:venn-clip)).
     - Create a randomly located point with the command `st_point()` (refer back to section \@ref(sfg) to see how to create spatial data 'from scratch').
 <!-- GEOMETRY UNIONS -->
 1. Write code that uses functions `aggregate()` and `st_buffer()` to answers the following question: What proportion of the world's population lives in countries that intersect a circle with a 10 degree radius of the intersection between the equator and the [9^th^ meridian](https://en.wikipedia.org/wiki/9th_meridian_east)?
@@ -5021,8 +5019,10 @@ Hint: you need to use a two-element vector for this transformation.
 
 1. Warning messages should have been produced during the working to find the answer to the previous questions. What do these warnings mean and how could they be stopped? 
     - Bonus: rewrite code that generated the answer to the previous question using a projected CRS (suggestion: UTM).
-1. Advanced challenge: find the point with the highest number of people within a 10 degree radius.    
-<!-- TYPE TRANS. -->
+1. Advanced challenge: find the point with the highest number of people within a 10 degree radius.  
+<!-- TYPE TRANS. -->1. Calculate the length of the boundary lines of US states in meters.
+Which state has the longest border and which has the shorter border?
+Hint: The `st_length` function computes the length of a `LINESTRING` or `MULTILINESTRING` geometry.
 
 <!-- RASTERIZATION-->
 
@@ -6161,7 +6161,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservee5f9aedaf7613ff9
+preserve7a2c90a253ebf5d4
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6784,7 +6784,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preserve178f72e45d5fe058
+preserve84b170fb174fcb65
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
