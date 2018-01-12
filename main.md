@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-01-11'
+date: '2018-01-12'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2018-01-11 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-01-12 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserved8e4ec271b782b99
+preserve07c1ae2d45bb8352
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3124,7 +3124,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveb960f6d87592ee47
+preservea7bb510d454067c3
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5027,6 +5027,10 @@ Which state has the longest border and which has the shorter border?
 Hint: The `st_length` function computes the length of a `LINESTRING` or `MULTILINESTRING` geometry.
 
 <!-- RASTERIZATION-->
+1. Subset points higher than 3100 meters a.s.l in New Zealand (the `nz_height` object). 
+Using the new object:
+    - Count numbers of the highest points in grid cells of 3 km resolution.
+    - Find the maximum elevation value for grid cells of 3 km resolution..
 
 <!-- advances exercise - rotate nz as a whole - union new zeleand and rotate it around its centroid by 180 degrees -->
 <!-- RASTER AGGREGATION -->
@@ -6163,7 +6167,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservee92885089610b98d
+preservef3422a8caa05398d
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6786,7 +6790,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preserve9a5f28ed7a6cbd66
+preserve4c3dd526ce8cfcb5
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 

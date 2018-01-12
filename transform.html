@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-01-11">
+<meta name="date" content="2018-01-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1056,6 +1056,13 @@ Figure 5.23: Illustration of vectorization of raster (left) into polygon (center
 <li><p>Calculate the length of the boundary lines of US states in meters. Which state has the longest border and which has the shorter border? Hint: The <code>st_length</code> function computes the length of a <code>LINESTRING</code> or <code>MULTILINESTRING</code> geometry.</p></li>
 </ol>
 <!-- RASTERIZATION-->
+<ol style="list-style-type: decimal">
+<li>Subset points higher than 3100 meters a.s.l in New Zealand (the <code>nz_height</code> object). Using the new object:
+<ul>
+<li>Count numbers of the highest points in grid cells of 3 km resolution.</li>
+<li>Find the maximum elevation value for grid cells of 3 km resolution..</li>
+</ul></li>
+</ol>
 <!-- advances exercise - rotate nz as a whole - union new zeleand and rotate it around its centroid by 180 degrees -->
 <!-- RASTER AGGREGATION -->
 <!-- RASTER ALIGNMENT -->
