@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve430d729ff8ab77c8
+preserve9131852dae6b26f2
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3124,7 +3124,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve58687b800b440dd6
+preserve9a6d72c7f09338c0
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6167,7 +6167,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservedfb6281b53fa8fbf
+preserveb64926b4158a4a48
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6619,8 +6619,7 @@ There are two types of transport nodes:
 1. Nodes not directly on the network such as zone centroids  --- covered in the next section --- or individual origins and destinations such as houses and workplaces.
 2. Nodes that are a part of transport networks, representing individual pathways, intersections between pathways (junctions) and points for entering or exiting a transport network such as bus stops and train stations.
 
-From a mathematical perspective transport networks are simply large graphs.
-<!-- not entirely sure what you mean here: are you talking about connecting a node outside of the network by finding the closest node of the graph network? -->
+From a mathematical perspective transport networks can be represented as graphs, in which each segment is connected (via edges representing geographic lines) to one or more other edges in the network.
 The first type of node can be connected to the network with "centroid connectors" [@hollander_transport_2016], the geographic location of which can influence model results, by simulating excessive traffic on streets surrounding zone centroids [@jafari_investigation_2015].
 The second type of nodes are nodes on this graph, each of which is connected by one or more straight 'edges' that represent individual segments on the network.
 We will see how transport networks can be represented as mathematical graphs in section \@ref(route-networks).
@@ -6830,7 +6829,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preserve5b4bf6ba856d8366
+preserve5cf5ab5b07fdb9c5
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
