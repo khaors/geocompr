@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve4c84ab1e6a321751
+preservec1dc6dd4bf7f15d2
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3124,7 +3124,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve044c2b04750f2e75
+preserve9ce1a6dde2ae8d03
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6167,7 +6167,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservea8a2667217bace6c
+preserve823d4d535f1e1922
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6828,14 +6828,14 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 
 
 <div class="figure" style="text-align: center">
-preserve921af877e35ff0cf
+preserve3eeca08ad9c3bf1e
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
 The result of this code, visualized in Figure \@ref(fig:cycleways), identifies routes of interest terms of car dependency and key opportunities to invest in public transport-cycling integration.
 Although other routes between zones are possible and likely --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
-Further work would be needed to create a regional cycling and walking strategy in the Bristol region.
-However, it provides a demonstration of how geocomputational skills, combined with open access data and a strong policy motivation, can provide a powerful, transparent and reproducible evidence base for transport applications.
+Clearly further work is needed to create a regional cycling and walking strategy in the Bristol region.
+However, the chapter demonstrates how geocomputational skills, combined with open access data and a strong policy motivation, can provide a powerful, transparent and reproducible evidence base for transport applications.
 
 The wider point is that transport systems are intimately linked to the wider economic and social context.
 The example of Stokes Bradley is a case in point:
@@ -6852,7 +6852,7 @@ However, there is much more that could be done in this area.
 Geocomputation for transport applications is a small but rapidly growing field and space requirements mean that we have only scratched the surface of what is possible, while emphasizing the principles and key methods of implementation in R.
 
 It is possible to build on the foundations presented in this chapter in many directions.
-Transport is the fastest growing source of greenhouse gas emissions in many countries <!-- reference -->.
+Transport is the fastest growing source of greenhouse gas emissions in many countries, and is set to become according to become "the largest GHG emitting sector, especially in developed countries" according to a recent article in the online platform [EURACTIV](https://www.euractiv.com/section/agriculture-food/opinion/transport-needs-to-do-a-lot-more-to-fight-climate-change/).
 Because of the highly unequal distribution of transport-related emissions across society, and the fact that transport (unlike food and heating) is not essential for well-being, there is great potential for the sector to rapidly decarbonize through demand reduction, electrification of the vehicle fleet and the uptake of active travel modes such as walking and cycling.
 Further exploration of such 'transport futures' represents a particularly promising future direction of travel from a policy perspective.
 
@@ -6868,7 +6868,7 @@ One growing area of interest surrounds the simulation of individual people and v
 R has the capability to model people in zones, and interface with ABM software such as NetLogo.
 Combined with its geographical capabilities, demonstrated in this book, R would seem an appropriate language for such developments to take place.
 Of course this should be done in ways that build-on and extend existing work in the area.
-R's 'ecological niche' in transport modelling software could be around the integration of detailed geographic analysis techniques with more widely known and used statistical techniques used in transport research.<!-- and advanced statistical technical so far less commonly applied.-->
+R's 'ecological niche' in transport modelling software could be around the integration of detailed geographic and advanced statistical analysis methods with techniques already used in transport research.
 
 ## Exercises {#ex-transport}
 
