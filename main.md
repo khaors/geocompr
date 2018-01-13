@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveec8cde9429b726dc
+preserve430d729ff8ab77c8
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3124,7 +3124,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve26f41e3ea0dea97b
+preserve58687b800b440dd6
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6167,7 +6167,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservee9c3425d378c1474
+preservedfb6281b53fa8fbf
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6580,22 +6580,22 @@ desire_carshort$geom_car = route_carshort$geometry
 ```
 
 This allows plotting the desire lines along which many short car journeys take place alongside likely routes traveled by cars, with the width of the routes proportional to the number of car journeys that could potentially be replaced.
-The code below results in Figure \@ref(fig:routes), which demonstrates along which routes people are driving short distances:
+The code below results in Figure \@ref(fig:routes), which demonstrates along which routes people are driving short distances:^[
+In this plot the origins of the red routes and black desire lines are not identical.
+This is because zone centroids rarely lie on the route network: instead the route originate from the transport network node nearest the centroid.
+Note also that routes are assumed to originate in the zone centroids, a simplifying assumption which is used in transport models to reduce the computational resources needed to calculate the shortest path between all combinations of possible origins and destinations [@hollander_transport_2016].
+]
 
-<!--
-1. Why is the starting point for both routes different (shouldn't it be the polygon centroid)? Or the centroid is in the middle of nowhere. Then say so in the caption and/or use leaflet in the background.
-2. Caption: car journeys are made (red); As far as I understood you used polygon centroids as starting points. Then you computed the route between centroids. I wouldn't say that this route is representative or the most used route. It is just the shortest route between two centroids. Since we have only aggregated data on the polygon level, we simply have no clue what the most frequent point origins and destinations are. 
-3. Plotting the centroids and/or the polygons would also help visual inspection.
--->
 
 ```r
 plot(desire_carshort$geometry)
 plot(desire_carshort$geom_car, col = "red", add = TRUE)
+plot(st_centroid(zones)$geometry, add = TRUE)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/routes-1.png" alt="Routes along which many (300+) short (&lt;5km Euclidean distance) car journeys are made (red) overlaying desire lines representing the same trips (black)." width="576" />
-<p class="caption">(\#fig:routes)Routes along which many (300+) short (<5km Euclidean distance) car journeys are made (red) overlaying desire lines representing the same trips (black).</p>
+<img src="figures/routes-1.png" alt="Routes along which many (300+) short (&lt;5km Euclidean distance) car journeys are made (red) overlaying desire lines representing the same trips (black) and zone centroids (dots)." width="576" />
+<p class="caption">(\#fig:routes)Routes along which many (300+) short (<5km Euclidean distance) car journeys are made (red) overlaying desire lines representing the same trips (black) and zone centroids (dots).</p>
 </div>
 
 The results show that the short desire lines along which most people travel by car are geographically clustered.
@@ -6830,7 +6830,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preserved739aec5b4531ad6
+preserve5b4bf6ba856d8366
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
