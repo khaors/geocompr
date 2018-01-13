@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve277b1a2545170213
+preserve6413a9b447fc0869
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3124,7 +3124,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve39d406c65a3feab1
+preserve2caa80a2712e178c
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6167,7 +6167,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve8ff7caaea6efc6b2
+preserve646eeead7ef56ee2
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6546,7 +6546,7 @@ In any case, local routing requires the route network to be stored on a local co
 By contrast, remote routing services use a web API to receive queries about origin and destination points, run the routing on the route network on a powerful server and return just the results, the routes, to the user, the so-called client.
 There are many advantages of using remote routing services, including the fact that they can be up-to-date, have global coverage, and run on a set-up that was designed for the job, explaining this section's focus on online routing services.
 Before proceeding, however, you should be aware of the disadvantages of online routing services: they are slow or even inaccessible when accessed with a bad internet connection and can be expensive, i.e., not all services are free of charge.
-For instance, the Google routing API sets the limit to 2500 free queries per day ^[`ggmap::route()` lets you use Google's routing API through R.].
+For instance, the Google routing API sets the limit to 2500 free queries per day.^[`ggmap::route()` lets you use Google's routing API through R and the **dodgr** package allows for rapid routing on locally stored route network data.]
 <!-- Todo: add link to Mark's presentation on dodgr vs Google routing costs (RL) -->
 
 A popular and free (for limited uses) routing service is the Open Source Routing Machine ([OSRM](http://project-osrm.org/)).^[Another popular OSM routing API is https://openrouteservice.org/.]
@@ -6831,7 +6831,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preserve3473d02db22c4881
+preserve003f9d582a0240d8
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
