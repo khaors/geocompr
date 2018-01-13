@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve7352fdb52c9bb0b4
+preserveafd825bfc4e4ae3a
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3124,7 +3124,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve284f8122f05e2731
+preserve8d4fba72aa121380
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6167,7 +6167,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve07301a5c476c0b3d
+preserveb9a167b1eff469b8
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6252,16 +6252,14 @@ library(tidyverse)
 
 ## Introduction
 
-<!-- I would tone down, why should geographic space be more tangible in transport than in remote sensing, location analysis, ecological modeling, etc.? --> 
-In no other sector is geographic space more tangible than transport.
-<!-- I am not 100% sure but I think the first law of geography was the basis for spatial dependence, spatial autocorrelation, and therefore the foundation for spatial interpolation. Not sure how 'moving' relates to this but this just might be because I am not a transportation guy. -->
-It is the effort of moving, particularly between places that are far apart, that led to the 'first law' of geography defined by Waldo Tobler in 1970 as follows [@miller_toblers_2004]: 
+In few other sectors is geographic space more tangible than transport.
+The effort of moving (overcoming distance) is central to the 'first law' of geography, defined by Waldo Tobler in 1970 as follows [@miller_toblers_2004]: 
 
 > Everything  is related  to  everything  else,  but  near  things  are more  related  than  distant  things
 
-This 'law' applies to phenomena as diverse as friendship networks and ecological diversity and can be explained by the costs of transport --- in terms of time, energy and money.
-These costs are known as the 'friction of distance'.
-Thus transport technologies disrupt geographic relationships from the perspective of mobile humans and goods: "the purpose of transportation is to overcome space" [@rodrigue_geography_2013].
+This 'law' is the basis for spatial autocorrelation and other key geographic concepts.
+It applies  to phenomena as diverse as friendship networks and ecological diversity and can be explained by the costs of transport --- in terms of time, energy and money --- which constitute the 'friction of distance'.
+From this perspective transport technologies are disruptive, changing geographic relationships between geographic entities including mobile humans and goods: "the purpose of transportation is to overcome space" [@rodrigue_geography_2013].
 
 Transport is an inherently geospatial activity.
 It involves traversing continuous geographic space between A and B, and infinite localities in between.
@@ -6842,7 +6840,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preservee83c7b35b0b80189
+preserve4bcc14b74a17763c
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
