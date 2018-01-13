@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserved5fd0fe4e70103f0
+preserve1aad7bbbee65fccb
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3124,7 +3124,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveb3c50fd8a05fdccd
+preserve0a1286f22f637ceb
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6167,7 +6167,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservea9e69a85dac5cfb4
+preserve77c8a1acb47c9a2b
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6491,7 +6491,7 @@ E02003031   E02003043    1221       305    600          176       7
 E02003037   E02003043    1186        88    908          110       3
 E02003034   E02003043    1177       281    711          100       7
 
-The resulting table provides a snapshot of Bristolian travel patterns.
+The resulting table provides a snapshot of Bristolian travel patterns in terms of commuting, travel to work.
 It demonstrates that walking is the most popular mode of transport among the top 5 origin-destination pairs, that zone `E02003043` is a popular destination (Bristol city center, the destination of all the top 5 OD pairs), and that the *intrazonal* trips, from one part of zone `E02003043` to another (first row of table \@ref(tab:od)), constitute the most traveled OD pair in the dataset.
 But from a policy perspective \@ref(tab:od) is of limited use:
 aside from the fact that it contains only a tiny portion of the 2910 OD pairs, it tells us little about *where* policy measures are needed.
@@ -6833,7 +6833,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preservec151378a4f471dc7
+preserve7988346e3691abcd
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
