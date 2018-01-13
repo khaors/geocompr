@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve9131852dae6b26f2
+preserve82f89dbbcf972062
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3124,7 +3124,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve9a6d72c7f09338c0
+preserve96242d02088f5122
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6167,7 +6167,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveb64926b4158a4a48
+preserve281982fd666133ee
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6700,11 +6700,6 @@ mat_rail_d = mat_rail[knn_dest, ]
 
 The final stage is to convert these matrices into meaningful geographic objects, in this case simple feature 'multilinestrings' that capture the fact that each stage is a separate line, but part of the same overall trip:
 
-<!-- Would the subsequent code chunck be better as `lapply()` or `map()` command? -->
-
-<!-- 
-Interesting, normally, I would expect the leg_orig, leg_rail and leg_dest be part of one multi-line-string. Do you do that commonly in transportation or is this more or less a quick work-around to be able to colour the legs differently (though this could be also done by list subsetting if you had one multilinestring).
--->
 
 ```r
 mats2line = function(mat1, mat2) {
@@ -6718,7 +6713,6 @@ desire_rail$leg_rail = mats2line(mat_rail_o, mat_rail_d)
 desire_rail$leg_dest = mats2line(mat_rail_d, mat_dest)
 ```
 
-<!-- ok, not really easier, though there might be a simpler solution... -->
 
 
 Now we are in a position to visualize the results, in Figure \@ref(fig:stations):
@@ -6829,7 +6823,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preserve5cf5ab5b07fdb9c5
+preserve191fa08554759e36
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
