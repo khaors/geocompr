@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserved52560245c3910dd
+preserveafd8dd051349fc1a
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3124,7 +3124,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserved0256824ed8b0652
+preserve01d2203c05ca2a34
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6167,7 +6167,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve27db0d739c366487
+preserve0515c35e76234be3
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6299,13 +6299,11 @@ The case study city is a coastal settlement in the West of England, described in
 The case study used for this chapter is located in Bristol - a city in the west of England, around 30 km East of the Welsh capital Cardiff.
 An overview of the region's transport network is illustrated in Figure \@ref(fig:bristol), which shows a diversity of transport infrastructure, for cycling, public transport, and private motor vehicles.
 
-<!-- there should be a legend for the study borders (blue lines) as well. I would also reduce the length of the caption since it is basically repeating the content of the legend. -->
-
 
 
 <div class="figure" style="text-align: center">
-<img src="https://user-images.githubusercontent.com/1825120/34452756-985267de-ed3e-11e7-9f59-fda1f3852253.png" alt="Overview map of the case study region surrounding Bristol. The transport network is represented as colored lines for active (green), public (railways, black) and private motor (red) modes of travel. The blue borders represent the inner city boundary and the larger Travel To Work Area (TTWA)."  />
-<p class="caption">(\#fig:bristol)Overview map of the case study region surrounding Bristol. The transport network is represented as colored lines for active (green), public (railways, black) and private motor (red) modes of travel. The blue borders represent the inner city boundary and the larger Travel To Work Area (TTWA).</p>
+<img src="https://user-images.githubusercontent.com/1825120/34452756-985267de-ed3e-11e7-9f59-fda1f3852253.png" alt="Bristol's transport network represented by colored lines for active (green), public (railways, black) and private motor (red) modes of travel. Blue border lines represent the inner city boundary and the larger Travel To Work Area (TTWA)."  />
+<p class="caption">(\#fig:bristol)Bristol's transport network represented by colored lines for active (green), public (railways, black) and private motor (red) modes of travel. Blue border lines represent the inner city boundary and the larger Travel To Work Area (TTWA).</p>
 </div>
 
 Bristol is the 10^th^ largest city council in England, with a population of half a million people, although its travel catchment area is larger (see section \@ref(transport-zones)).
@@ -6837,7 +6835,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preserveae9d546f4ee72c98
+preservec0eb045aa65b6498
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
