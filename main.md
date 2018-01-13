@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve4774d1ebda2f2881
+preserveec8cde9429b726dc
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3124,7 +3124,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve1d87449d0efce0ee
+preserve26f41e3ea0dea97b
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6167,7 +6167,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve5f942aad8cac9893
+preservee9c3425d378c1474
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6556,6 +6556,7 @@ Clearly not all car trips can realistically be replaced by cycling, but 5 km Euc
 Based on this reasoning
 <!-- Todo: add references supporting this (RL) -->
 we will only route desire lines along which a high (300+) number of car trips take place that are up to 5 km in distance.
+This routing is done by the **stplanr** function `line2route()` which takes straight lines in `Spatial` or `sf` objects, and returns 'bendy' lines representing routes on the transport network in the same class as the input.
 
 
 ```r
@@ -6565,7 +6566,6 @@ route_carshort = line2route(desire_carshort, route_fun = route_osrm)
 ```
 
 `st_length()` determines the length of a linestring, and falls into the distance relations category (see also section \@ref(distance-relations)).
-<!-- could you pls explain a bit more in detail what kind of input the line2route function expects. In the help it says it expects from and to coordinates. But here you use a simple feature. Since this is a line I am not sure what coordinates the function uses. -->
 Subsequently, we apply a simple attribute filter operation (see section \@ref(vector-attribute-subsetting)) before letting the OSRM service do the routing on a remote server.
 Note that the routing only works with a working internet connection.
 
@@ -6830,7 +6830,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preservefcb4a6d22c172a0e
+preserved739aec5b4531ad6
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
