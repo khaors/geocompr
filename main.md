@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve82f89dbbcf972062
+preserve5fce2a617160fd5c
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3124,7 +3124,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve96242d02088f5122
+preservecb72fdeacd9ea825
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6167,7 +6167,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve281982fd666133ee
+preserve9a0a66f8c6ad97b1
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6768,8 +6768,8 @@ The output of the previous code chunk shows that `ways_sln` is a composite objec
 These include: the spatial component of the network (named `sl`), the graph component (`g`) and the 'weightfield', the edge variable used for shortest path calculation (by default segment distance).
 `ways_sln` is of class `sfNetwork`, defined by the S4 class system.
 This means that each component can be accessed using the `@` operator, which is used below to extract its graph component and process it using the **igraph** package, before plotting the results in geographic space.
-<!-- This might be a knowledge gap, but I have no idea what the edge betweeness is and what it is used for. Could you add a short explanation? -->
-In the example below the 'edge betweeness' is calculated, with the results demonstrating that each graph edge represents a segment: the segments near the center of the road network have the greatest betweeness scores.
+In the example below the 'edge betweeness', meaning the number of shortest paths passing through each edge, is calculated (see `?igraph::betweenness` for further details).
+The results demonstrating that each graph edge represents a segment: the segments near the center of the road network have the greatest betweeness scores.
 
 <!-- figure caption is missing -->
 
@@ -6823,7 +6823,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preserve191fa08554759e36
+preserveabc2169c75496bc7
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
