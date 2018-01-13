@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservec7f2d0372248d767
+preserve3b93ee604f97db2e
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3124,7 +3124,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservedc78c2e2e82ad09e
+preserve472d3c6c479b4f46
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6167,7 +6167,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve9076083fb653aaa8
+preserve2b8933fa3cae10fc
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6443,7 +6443,6 @@ The result is an updated `zones` dataset that contains new columns representing 
 The geographic distribution of trip origins is illustrated in the left-hand map in Figure \@ref(fig:zones).
 This shows that most zones have between 0 and 4,000 trips originating from them in the study area.
 More trips are made by people living near the center of Bristol and fewer on the outskirts.
-<!-- What is the reasoning for this? I mean since it is an aggregate we could also consider all trips made regardless of the fact if the destiation is within the study area. -->
 Why is this? Remember that we are only dealing with trips within the study region:
 low trip numbers in the outskirts of the region can be explained by the fact that many people in these peripheral zones will travel to other regions outside of the study area.
 
@@ -6836,7 +6835,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preserved3c2b6c54f05c085
+preserve48896587583d4f22
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
