@@ -366,9 +366,7 @@ Figure 2.2: The subset of the Simple Features class hierarchy supported by sf.
 <span class="co">#&gt;  [6] &quot;type&quot;      &quot;area_km2&quot;  &quot;pop&quot;       &quot;lifeExp&quot;   &quot;gdpPercap&quot;</span>
 <span class="co">#&gt; [11] &quot;geom&quot;</span></code></pre></div>
 <p>It is the contents of this modest-looking <code>geom</code> column that gives <code>sf</code> objects their spatial powers, a ‘list-column’ that contains all the coordinates. The <strong>sf</strong> package provides a <code>plot()</code> method for visualizing geographic data: the follow command creates Figure <a href="spatial-class.html#fig:world-all">2.3</a>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(world)
-<span class="co">#&gt; Warning: plotting the first 9 out of 10 attributes; use max.plot = 10 to</span>
-<span class="co">#&gt; plot all</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(world)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:world-all"></span>
 <img src="figures/world-all-1.png" alt="A spatial plot of the world using the sf package, with a facet for each attribute." width="576" />
 <p class="caption">
@@ -459,7 +457,7 @@ Sorry for commenting on this again but just to clarify africa[0] selects zero co
 </div>
 <div id="base-args" class="section level3">
 <h3><span class="header-section-number">2.1.4</span> Base plot arguments</h3>
-<p><strong>sf</strong> simplifies spatial data objects compared with <strong>sp</strong> and provides a near-direct interface to GDAL and GEOS C++ functions. In theory this should make <strong>sf</strong> faster than <strong>sp</strong>/<strong>rgdal</strong>/<strong>rgeos</strong>, something that is tested in Chapter 5 for data I/O. This section introduces <strong>sf</strong> classes in preparation for subsequent chapters which deal with vector data (in particular Chapter <a href="spatial-operations.html#spatial-operations">4</a>).</p>
+<p><strong>sf</strong> simplifies spatial data objects compared with <strong>sp</strong> and provides a near-direct interface to GDAL and GEOS C++ functions. In theory this should make <strong>sf</strong> faster than <strong>sp</strong>/<strong>rgdal</strong>/<strong>rgeos</strong>. This section introduces <strong>sf</strong> classes in preparation for subsequent chapters which deal with vector data (in particular Chapter <a href="spatial-operations.html#spatial-operations">4</a>).</p>
 <p>As a final exercise, we will see one way of how to do a spatial overlay in <strong>sf</strong>. First, we convert the countries of the world into centroids, and then subset those in Asia. Finally, the <code>summary</code> command tells us how many centroids (countries) are part of Asia (43) and how many are not (134).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_centroids =<span class="st"> </span><span class="kw">st_centroid</span>(world)
 <span class="co">#&gt; Warning in st_centroid.sfc(st_geometry(x), of_largest_polygon =</span>
