@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve32e3a1735ac3d8b5
+preserve9393087e88cd5aaf
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3124,7 +3124,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve38dfb61ab12c5bf5
+preserveece5260a451ad146
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6167,7 +6167,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve3b0b984bd6b8e250
+preserved3a0923bffe75412
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6403,7 +6403,7 @@ zones_attr = group_by(od, o) %>%
 ```
 
 What just happened?
-The code first read-in data to create `od`, a data frame object representing movement between zones in which the first column is the ID of the zone of origin and the second column is the zone of destination (`od` is described more fully in the next section).
+The code first read-in data to create `od`, a data frame object representing travel to work between zones from the UK's 2011 Census in which the first column is the ID of the zone of origin and the second column is the zone of destination (`od` is described more fully in the next section).
 Then the chained operation performed three main steps:
 
 - Grouped the data by zone of origin (contained in the column `o`).
@@ -6460,8 +6460,6 @@ zones = group_by(od, d) %>%
   inner_join(zones, ., by = "geo_code")
 ```
 
-
-<!-- so od contains commute trips? As I have mentioned before it might be a good idea to already explain the dataset in this section. -->
 <div class="figure" style="text-align: center">
 <img src="figures/zones-1.png" alt="Number of trips (commuters) living and working in the region. The left map shows zone of origin of commute trips; the right map shows zone of destination." width="576" />
 <p class="caption">(\#fig:zones)Number of trips (commuters) living and working in the region. The left map shows zone of origin of commute trips; the right map shows zone of destination.</p>
@@ -6836,7 +6834,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preserve3c1c2e58a09cde16
+preserve937967f831dff6ae
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
