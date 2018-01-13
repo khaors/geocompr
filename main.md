@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve197ec97fca77f502
+preserved48a20ceff4972b3
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3124,7 +3124,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve4ce96346df2b1ed2
+preserved59986a2f43545ec
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6167,7 +6167,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve303988bf7567f292
+preserveae2a3cac968fe1c4
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6403,7 +6403,8 @@ zones_attr = group_by(od, o) %>%
 ```
 
 What just happened?
-After the `od` dataset was read-in<!-- I think a short description of the od dataset might be helpful here -->, the chained operation:
+The code first read-in data to create `od`, a data frame object representing movement between zones in which the first column is the ID of the zone of origin and the second column is the zone of destination (`od` is described more fully in the next section).
+Then the chained operation performed three main steps:
 
 - Grouped the data by zone of origin (contained in the column `o`).
 - Aggregated the variables in the `od` dataset *if* they were numeric, to find the total number of people living in each zone by mode of transport.^[
@@ -6838,7 +6839,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preserve37012b89479dbbeb
+preservec22cc470c6699b90
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 

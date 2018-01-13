@@ -369,7 +369,7 @@ Another issue with small zones is related to anonymity rules. To make it impossi
 zones_attr =<span class="st"> </span><span class="kw">group_by</span>(od, o) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">summarize_if</span>(is.numeric, sum) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">rename</span>(<span class="dt">geo_code =</span> o)</code></pre></div>
-<p>What just happened? After the <code>od</code> dataset was read-in<!-- I think a short description of the od dataset might be helpful here -->, the chained operation:</p>
+<p>What just happened? The code first read-in data to create <code>od</code>, a data frame object representing movement between zones in which the first column is the ID of the zone of origin and the second column is the zone of destination (<code>od</code> is described more fully in the next section). Then the chained operation performed three main steps:</p>
 <ul>
 <li>Grouped the data by zone of origin (contained in the column <code>o</code>).</li>
 <li>Aggregated the variables in the <code>od</code> dataset <em>if</em> they were numeric, to find the total number of people living in each zone by mode of transport.<a href="#fn50" class="footnoteRef" id="fnref50"><sup>50</sup></a></li>
