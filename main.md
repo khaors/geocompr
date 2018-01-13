@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve92ee0e42c42b8d0b
+preserve277b1a2545170213
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3124,7 +3124,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve5f29b4b6dd87ed99
+preserve39d406c65a3feab1
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6167,7 +6167,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve8fdcdcf6f3776cbc
+preserve8ff7caaea6efc6b2
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6528,10 +6528,9 @@ Next it would be interesting to have a look at the distribution of interzonal mo
 plot(desire_lines$geometry, lwd = desire_lines$all / 500)
 ```
 
-<!-- might be a bit confusing that the four black lines are shown but not created in the code chunk, maybe add clarification -->
 <div class="figure" style="text-align: center">
-<img src="figures/desire-1.png" alt="Desire lines representing trip patterns in the Bristol Travel to Work Area. The four black lines represent interzonal OD pairs in Table 8.1." width="576" />
-<p class="caption">(\#fig:desire)Desire lines representing trip patterns in the Bristol Travel to Work Area. The four black lines represent interzonal OD pairs in Table 8.1.</p>
+<img src="figures/desire-1.png" alt="Desire lines representing trip patterns in the Bristol Travel to Work Area. The four black lines represent the object `od_top5` created previously and illustrated in Table 8.1." width="576" />
+<p class="caption">(\#fig:desire)Desire lines representing trip patterns in the Bristol Travel to Work Area. The four black lines represent the object `od_top5` created previously and illustrated in Table 8.1.</p>
 </div>
 
 ## Routes
@@ -6832,7 +6831,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preserveb93eb11b0d7cb9a2
+preserve3473d02db22c4881
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
