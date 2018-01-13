@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve3b93ee604f97db2e
+preserve32e3a1735ac3d8b5
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3124,7 +3124,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve472d3c6c479b4f46
+preserve38dfb61ab12c5bf5
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6167,7 +6167,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve2b8933fa3cae10fc
+preserve3b0b984bd6b8e250
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6445,6 +6445,7 @@ This shows that most zones have between 0 and 4,000 trips originating from them 
 More trips are made by people living near the center of Bristol and fewer on the outskirts.
 Why is this? Remember that we are only dealing with trips within the study region:
 low trip numbers in the outskirts of the region can be explained by the fact that many people in these peripheral zones will travel to other regions outside of the study area.
+Trips outside the study region can be included in regional model by a special destination ID covering any trips that go to a zone not represented in the model, for example to a different travel region or a different country [@hollander_transport_2016], but are simply ignored in this chapter.
 
 In the same way that OD datasets can be aggregated to the zone of origin, they can also be aggregated to provide information about destination zones.
 People tend to gravitate towards central places.
@@ -6835,7 +6836,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preserve48896587583d4f22
+preserve3c1c2e58a09cde16
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
