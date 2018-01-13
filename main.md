@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve71c681f3d96454a3
+preserve4c84ab1e6a321751
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3124,7 +3124,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve480f9c36e25d9c60
+preserve044c2b04750f2e75
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6167,7 +6167,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserved068d299ccb92953
+preservea8a2667217bace6c
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6813,7 +6813,7 @@ This section ties-together the various strands that explored some geographic fea
 
 Geocomputational methods to prioritize cycling infrastructure have been demonstrated (these would be supplemented with other methods for assessing the social, economic and environmental impacts of different options for a real case study):
 short but car-dependent commuting routes (generated from desire lines) were created in section \@ref(routes); desire lines representing the first leg to public transport nodes were created in section \@ref(nodes); and the ability to analyze route networks using concepts from graph theory were demonstrated in the previous section.
-The final code chunk of this chapter combines car-dependent routes in `route_carshort` with a newly-created object, `route_rail`, and adds a new column representing the amount of travel along the desire lines they represent:
+The final code chunk of this chapter combines car-dependent routes in `route_carshort` with a newly-created object, `route_rail`, and adds a new column representing the amount of travel along the centroid-to-centroid desire lines they represent:
 
 
 ```r
@@ -6828,13 +6828,12 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 
 
 <div class="figure" style="text-align: center">
-preserveb3f58d16d03c3422
+preserve921af877e35ff0cf
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
-<!-- Maybe we should mention and/or justify why we think that the route between polygon centroids is probably also the most used one. What if most travellers travel from the northwestern part of polygon A to the northeastern part of polygon B?  -->
 The result of this code, visualized in Figure \@ref(fig:cycleways), identifies routes of interest terms of car dependency and key opportunities to invest in public transport-cycling integration.
-This is only part of the picture.
+Although other routes between zones are possible and likely --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 Further work would be needed to create a regional cycling and walking strategy in the Bristol region.
 However, it provides a demonstration of how geocomputational skills, combined with open access data and a strong policy motivation, can provide a powerful, transparent and reproducible evidence base for transport applications.
 
