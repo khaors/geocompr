@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve09197a2b7be3c601
+preserveb0ba8513c0a92bdf
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3124,7 +3124,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve08c14097aa6354b5
+preserve9324c2589377a8b9
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6167,7 +6167,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve01e0bf37bd34f762
+preservef21865cc197d360d
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6334,8 +6334,9 @@ These zone-level data are small but often vital for gaining a basic understandin
 
 ## Transport zones
 
-Although transport systems are primarily based on linear features and nodes --- including pathways and stations --- it often makes sense to start with areal data <!-- source and/or example -->.
-Three zone types will typically be of particular interest: the study region, origin zones (typically residential areas), and destination zones (which are often the same as the origin zones). <!-- this implies people are going from their origin to the origin possibly via a detour (which might be work/supermarket/etc.--> 
+Although transport systems are primarily based on linear features and nodes --- including pathways and stations --- it often makes sense to start with areal data, to break continuous space into tangible units [@hollander_transport_2016].
+Two zone types will typically be of particular interest: the study region and origin (typically residential areas) and destination (typically containing 'trip attractors' such as schools and shops) zones.
+Often the geographic units of destinations are the geographic units that comprise the origins, but a different zoning system may be appropriate to represent the increased density of jobs in city centres (such as Workplace Zones, areal units introduced by the UK [Office for National Statistics in 2014](https://data.gov.uk/dataset/workplace-zones-a-new-geography-for-workplace-statistics3)).
 
 The simplest way to define a study area is often the first matching boundary returned by OpenStreetMap, which can be obtained using **osmdata** as follows:
 
@@ -6834,7 +6835,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preserve7538000f1e9fb848
+preservecb5d49e92b367716
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
