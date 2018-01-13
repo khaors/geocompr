@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveafd825bfc4e4ae3a
+preserve8c779d8768d1956c
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3124,7 +3124,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve8d4fba72aa121380
+preserve011ab47656b4931e
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6167,7 +6167,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveb9a167b1eff469b8
+preserve9d8d83da1252adbd
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6268,14 +6268,12 @@ It is therefore unsurprising that transport researchers have long turned to geoc
 This chapter provides an introduction to geographic analysis of transport systems.
 We will explore how movement patterns can be understood at multiple geographic levels, including:
 
-<!-- What is the main mode? I don't know the term. -->
-- **Areal units**: transport can be understood simply in terms of zonal aggregates such as the main mode and average distance of trips made by people living in a particular zone.
+- **Areal units**: transport patterns can be understood with reference to zonal aggregates such as the main mode of travel (by car, bike or foot, for example) and average distance of trips made by people living in a particular zone.
 - **Desire lines**: straight lines that represent 'origin-destination' data that records how many people travel (or could travel) between places (points or zones) in geographic space.
 - **Routes**: these are circuitous (non-straight) routes, typically representing the 'optimal' path along the route network between origins and destinations along the desire lines defined in the previous bullet point.
 - **Nodes**: these are points in the transport system that can represent common origins and destinations (e.g., with one centroid per zone) and public transport stations such as bus stops and rail stations.
-- **Route networks**: these represent the system of roads, paths and other linear features in an area. They can be represented as purely geographic entities or as a graph.
-<!-- Not sure but maybe a word is missing, to me values representing 'flow' sounds a bit awkward (but then again I am not a native speaker --> 
-Their features are segments which can be assigned values representing 'flow', the number of people expected to use a particular street or path.
+- **Route networks**: these represent the system of roads, paths and other linear features in an area. They can be represented as geographic features (representing route segments) or structured as an interconnected graph.
+Each can be assigned values representing the level of traffic on different parts of the network, referred to as 'flow' by transport modellers [@hollander_transport_2016].
 
 The lowest but hardest-to-model level in transport systems is **agents**, mobile entities like you and me.
 Some models can effectively capture the dynamics of transport systems using an agent-based modelling (ABM) approach at high spatial and temporal resolution, e.g., [MATSim models](http://www.matsim.org/).
@@ -6840,7 +6838,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preserve4bcc14b74a17763c
+preserved864fe5145bb6852
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
