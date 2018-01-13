@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve8c779d8768d1956c
+preserved52560245c3910dd
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3124,7 +3124,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve011ab47656b4931e
+preserved0256824ed8b0652
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6167,7 +6167,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve9d8d83da1252adbd
+preserve27db0d739c366487
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6275,10 +6275,9 @@ We will explore how movement patterns can be understood at multiple geographic l
 - **Route networks**: these represent the system of roads, paths and other linear features in an area. They can be represented as geographic features (representing route segments) or structured as an interconnected graph.
 Each can be assigned values representing the level of traffic on different parts of the network, referred to as 'flow' by transport modellers [@hollander_transport_2016].
 
-The lowest but hardest-to-model level in transport systems is **agents**, mobile entities like you and me.
-Some models can effectively capture the dynamics of transport systems using an agent-based modelling (ABM) approach at high spatial and temporal resolution, e.g., [MATSim models](http://www.matsim.org/).
-<!-- is that true? More inaccessible than geocomputation or geostats with R? -->
-These tend to be complex and computationally demanding [@horni_multi-agent_2016], meaning they are inaccessible to most people.
+Another key level is **agents**, mobile entities like you and me.
+These can be represented computationally thanks to software such as [MATSim](http://www.matsim.org/), which captures the dynamics of transport systems using an agent-based modelling (ABM) approach at high spatial and temporal resolution [@horni_multi-agent_2016].
+ABM is a powerful approach to transport research with great potential for integration with the geospatial approach outlined in this book, but is outside the scope of this chapter [see @Thiele_2014 for further details of R-ABM bridges].
 Beyond geographic levels and agents, the basic unit of analysis in most transport models is the **trip**, a single purpose journey from an origin 'A' to a destination 'B' [@hollander_transport_2016].
 Trips join-up the different levels of transport systems: they are usually represented as *desire lines* connecting *zone* centroids (*nodes*), they can be allocated onto the *route network* as *routes*, and are made by people who can be represented as *agents*.
 
@@ -6838,7 +6837,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preserved864fe5145bb6852
+preserveae9d546f4ee72c98
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
