@@ -353,7 +353,12 @@ Figure 8.1: Bristol’s transport network represented by colored lines for activ
 <p>Travel to Work Areas (TTWAs) overcome the second issue by creating a zoning system analogous to hydrological watersheds. TTWAs were first defined as contiguous zones within which 75% of the population travels to work <span class="citation">(Coombes, Green, and Openshaw <a href="#ref-coombes_efficient_1986">1986</a>)</span>, and this is the definition used in this chapter. Because Bristol is a major employer attracting travel from surrounding towns, its TTWA — loaded in the command below — is substantially larger than the city bounds (see Figure <a href="transport.html#fig:bristol">8.1</a>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">region_ttwa =<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;extdata/bristol-ttwa.rds&quot;</span>)</code></pre></div>
 <p>The origin and destination zones used in this chapter are the same: officially defined zones of intermediate geographic resolution (their <a href="https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/bulletins/annualsmallareapopulationestimates/2014-10-23">official</a> name is Middle layer Super Output Areas or MSOAs). Each house around 8,000 people. Such administrative zones can provide vital context to transport analysis, such as the type of people who might benefit most from particular interventions <span class="citation">(e.g. <span class="citeproc-not-found" data-reference-id="moreno-monroy_public_2017"><strong>???</strong></span>)</span>.</p>
-<p>The geographic resolution of these zones is important: small zones with high geographic resolution are usually preferable but their high number in large regions can have consequences for processing (especially for origin-destination analysis in which the number of possibilities increases as a non-linear function of the number of zones) <!-- reference -->. Another issue with small zones is related to anonymity rules, that means data will usually only be made available in such such a form that it is impossible to infer from them the identity of individuals. In any case, fine-scale socio-demographic variables are often hard to collect or expensive which is why a common approach is to use sociodemographic data from coarser resolutions <!-- such as? And also think of the socio-demographic data we are using in the location chapter, 1 km^2 is already pretty fine and some data is even available for a 100 m resolution -->.</p>
+<p>The geographic resolution of these zones is important: small zones with high geographic resolution are usually preferable but their high number in large regions can have consequences for processing (especially for origin-destination analysis in which the number of possibilities increases as a non-linear function of the number of zones) <span class="citation">(Hollander <a href="#ref-hollander_transport_2016">2016</a>)</span>.</p>
+<div class="rmdnote">
+<p>
+Another issue with small zones is related to anonymity rules. To make it impossible to infer the identity of individuals in zones detailed socio-demographic variables are often only available at low geographic resolution. Breakdowns of travel mode by age and sex, for example, are available at the Local Authority level in the UK, but not at the much higher Output Area level, each of which contains around 100 households — see <a href="https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeography">ons.gov.uk</a> for further details.
+</p>
+</div>
 <p>The 102 zones used are illustrated in Figure <a href="transport.html#fig:zones">8.2</a>. These can be loaded from the <code>exdata</code> folder of the book:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zones =<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;extdata/bristol-zones.rds&quot;</span>)</code></pre></div>
 <p>This dataset provides a useful basis for dividing-up space into meaningful chunks, with each zone housing a similar number of people. However at present the dataset contains no attribute data, other than the zone name and zone code:</p>
@@ -604,7 +609,7 @@ ways_sln =<span class="st"> </span><span class="kw">SpatialLinesNetwork</span>(w
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g =<span class="st"> </span>ways_sln@g
 e =<span class="st"> </span>igraph::<span class="kw">edge_betweenness</span>(ways_sln@g)
 <span class="kw">plot</span>(ways_sln@sl$geometry, <span class="dt">lwd =</span> e /<span class="st"> </span><span class="dv">500</span>)</code></pre></div>
-<p><img src="figures/unnamed-chunk-28-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-29-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>One can also find the shortest route between origins and destinations using this graph representation of the route network:</p>
 <!-- 
 1. figure caption is missing 
@@ -615,7 +620,7 @@ e =<span class="st"> </span>igraph::<span class="kw">edge_betweenness</span>(way
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">path =<span class="st"> </span><span class="kw">sum_network_routes</span>(ways_sln, <span class="dv">1</span>, <span class="dv">20</span>, <span class="st">&quot;length&quot;</span>)
 <span class="kw">plot</span>(path$geometry, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lwd =</span> <span class="dv">10</span>)
 <span class="kw">plot</span>(ways_sln@sl$geometry, <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<p><img src="figures/unnamed-chunk-30-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-31-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="prioritizing-new-infrastructure" class="section level2">
 <h2><span class="header-section-number">8.8</span> Prioritizing new infrastructure</h2>

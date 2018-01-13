@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve8a5a4dd3bcc65733
+preserveed1fe4dbebb8ab96
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3124,7 +3124,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserved6e4037e8dc9a13c
+preserve6291d7a038bb7426
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6167,7 +6167,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservea3c754d6c9623796
+preserve417d7e17c116b405
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6365,9 +6365,12 @@ The origin and destination zones used in this chapter are the same: officially d
 Each house around 8,000 people.
 Such administrative zones can provide vital context to transport analysis, such as the type of people who might benefit most from particular interventions [e.g. @moreno-monroy_public_2017].
 
-The geographic resolution of these zones is important: small zones with high geographic resolution are usually preferable but their high number in large regions can have consequences for processing (especially for origin-destination analysis in which the number of possibilities increases as a non-linear function of the number of zones) <!-- reference -->.
-Another issue with small zones is related to anonymity rules, that means data will usually only be made available in such such a form that it is impossible to infer from them the identity of individuals. 
-In any case, fine-scale socio-demographic variables are often hard to collect or expensive which is why a common approach is to use sociodemographic data from coarser resolutions <!-- such as? And also think of the socio-demographic data we are using in the location chapter, 1 km^2 is already pretty fine and some data is even available for a 100 m resolution -->.
+The geographic resolution of these zones is important: small zones with high geographic resolution are usually preferable but their high number in large regions can have consequences for processing (especially for origin-destination analysis in which the number of possibilities increases as a non-linear function of the number of zones) [@hollander_transport_2016].
+
+
+<div class="rmdnote">
+<p>Another issue with small zones is related to anonymity rules. To make it impossible to infer the identity of individuals in zones detailed socio-demographic variables are often only available at low geographic resolution. Breakdowns of travel mode by age and sex, for example, are available at the Local Authority level in the UK, but not at the much higher Output Area level, each of which contains around 100 households --- see <a href="https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeography">ons.gov.uk</a> for further details.</p>
+</div>
 
 The 102 zones used are illustrated in Figure \@ref(fig:zones).
 These can be loaded from the `exdata` folder of the book:
@@ -6791,7 +6794,7 @@ e = igraph::edge_betweenness(ways_sln@g)
 plot(ways_sln@sl$geometry, lwd = e / 500)
 ```
 
-<img src="figures/unnamed-chunk-28-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-29-1.png" width="576" style="display: block; margin: auto;" />
 
 
 
@@ -6810,7 +6813,7 @@ plot(path$geometry, col = "red", lwd = 10)
 plot(ways_sln@sl$geometry, add = TRUE)
 ```
 
-<img src="figures/unnamed-chunk-30-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-31-1.png" width="576" style="display: block; margin: auto;" />
 
 ## Prioritizing new infrastructure
 
@@ -6835,7 +6838,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preserve31a5831e6ec3db14
+preservef92a42380f3d9525
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
