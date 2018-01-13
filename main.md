@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserved48a20ceff4972b3
+preservec7f2d0372248d767
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3124,7 +3124,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserved59986a2f43545ec
+preservedc78c2e2e82ad09e
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6167,7 +6167,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveae2a3cac968fe1c4
+preserve9076083fb653aaa8
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6413,7 +6413,7 @@ the `_if` affix requires a `TRUE`/`FALSE` question to be asked of the variables,
 - Renamed the grouping variable `o` so it matches the ID column `geo_code` in the `zones` object.
 
 The resulting object `zones_attr` is a data frame with rows representing zones and an ID variable.
-We can verify that the IDs match the zone dataset with the `%in%` operator as follows:
+We can verify that the IDs match those in the `zones` dataset using `%in%` operator as follows:
 
 
 ```r
@@ -6422,13 +6422,10 @@ summary(zones_attr$geo_code %in% zones$geo_code)
 #> logical     102
 ```
 
-<!-- but this way you only check if a is in b but not if b is also in a, i.e., you won't notice if zones has more elements in geo_code than zones_attr, what I always do is:
-setdiff(zones_attr$geo_code, zones$geo_code)
-setdiff(zones$geo_code, zones_attr$geo_code)
-Additionally, one might add that not checking for id consistentcy might lead to unexpected/unwanted results in the subsequent join operation
--->
-
-The attribute data is now in a form that can be joined onto the zones.
+The results show that all 102 zones are present in the new object and that `zone_attr` is in a form that can be joined onto the zones.^[
+It would also be important to check that IDs match in the opposite direction on real data.
+This could be done by reversing the order of the ID's in the commend --- `summary(zones$geo_code %in% zones_attr$geo_code)` --- or by using `setdiff()` as follows: `setdiff(zones$geo_code, zones_attr$geo_code)`.
+]
 This is done using the joining function `left_join()` (note that `inner_join()` would produce here the same result):
 
 
@@ -6839,7 +6836,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preservec22cc470c6699b90
+preserved3c2b6c54f05c085
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
