@@ -457,15 +457,12 @@ Sorry for commenting on this again but just to clarify africa[0] selects zero co
 </div>
 <div id="base-args" class="section level3">
 <h3><span class="header-section-number">2.1.4</span> Base plot arguments</h3>
-<p><strong>sf</strong> simplifies spatial data objects compared with <strong>sp</strong> and provides a near-direct interface to GDAL and GEOS C++ functions. In theory this should make <strong>sf</strong> faster than <strong>sp</strong>/<strong>rgdal</strong>/<strong>rgeos</strong>. This section introduces <strong>sf</strong> classes in preparation for subsequent chapters which deal with vector data (in particular Chapter <a href="spatial-operations.html#spatial-operations">4</a>).</p>
+<p><strong>sf</strong> simplifies spatial data objects compared with <strong>sp</strong> and provides a near-direct interface to GDAL and GEOS C++ functions. In theory this should make <strong>sf</strong> faster than <strong>sp</strong>/<strong>rgdal</strong>/<strong>rgeos</strong>. This section introduces <strong>sf</strong> classes in preparation for subsequent chapters which deal with vector data (in particular Chapters <a href="spatial-operations.html#spatial-operations">4</a> and <a href="transform.html#transform">5</a>).</p>
 <p>As a final exercise, we will see one way of how to do a spatial overlay in <strong>sf</strong>. First, we convert the countries of the world into centroids, and then subset those in Asia. Finally, the <code>summary</code> command tells us how many centroids (countries) are part of Asia (43) and how many are not (134).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_centroids =<span class="st"> </span><span class="kw">st_centroid</span>(world)
-<span class="co">#&gt; Warning in st_centroid.sfc(st_geometry(x), of_largest_polygon =</span>
-<span class="co">#&gt; of_largest_polygon): st_centroid does not give correct centroids for</span>
-<span class="co">#&gt; longitude/latitude data</span>
 sel_asia =<span class="st"> </span><span class="kw">st_intersects</span>(world_centroids, asia, <span class="dt">sparse =</span> <span class="ot">FALSE</span>)
-<span class="co">#&gt; although coordinates are longitude/latitude, st_intersects assumes that they are planar</span>
-<span class="kw">summary</span>(sel_asia)
+<span class="co">#&gt; although coordinates are longitude/latitude, st_intersects assumes that they are planar</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(sel_asia)
 <span class="co">#&gt;      V1         </span>
 <span class="co">#&gt;  Mode :logical  </span>
 <span class="co">#&gt;  FALSE:134      </span>

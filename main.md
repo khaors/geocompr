@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve0a68674489c0ce8e
+preservea6b70369ba8fc209
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -797,7 +797,7 @@ Sorry for commenting on this again but just to clarify africa[0] selects zero co
 
 **sf** simplifies spatial data objects compared with **sp** and provides a near-direct interface to GDAL and GEOS C++ functions.
 In theory this should make **sf** faster than **sp**/**rgdal**/**rgeos**.
-This section introduces **sf** classes in preparation for subsequent chapters which deal with vector data (in particular Chapter \@ref(spatial-operations)).
+This section introduces **sf** classes in preparation for subsequent chapters which deal with vector data (in particular Chapters \@ref(spatial-operations) and \@ref(transform)).
 
 As a final exercise, we will see one way of how to do a spatial overlay in **sf**.
 First, we convert the countries of the world into centroids, and then subset those in Asia. Finally, the `summary` command tells us how many centroids (countries) are part of Asia (43) and how many are not (134).
@@ -805,11 +805,12 @@ First, we convert the countries of the world into centroids, and then subset tho
 
 ```r
 world_centroids = st_centroid(world)
-#> Warning in st_centroid.sfc(st_geometry(x), of_largest_polygon =
-#> of_largest_polygon): st_centroid does not give correct centroids for
-#> longitude/latitude data
 sel_asia = st_intersects(world_centroids, asia, sparse = FALSE)
 #> although coordinates are longitude/latitude, st_intersects assumes that they are planar
+```
+
+
+```r
 summary(sel_asia)
 #>      V1         
 #>  Mode :logical  
@@ -3122,7 +3123,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve4e346469293db1f2
+preserve4b2884e1eae71530
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6165,7 +6166,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve1dd8c4ef18b51431
+preserveaa846edce6bf26ab
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6826,7 +6827,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 
 
 <div class="figure" style="text-align: center">
-preservec53b4d9f88a759ca
+preserve071b2f2b0df84b6d
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
