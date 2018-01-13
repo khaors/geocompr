@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve6413a9b447fc0869
+preservee843d1895d4c8b00
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3124,7 +3124,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve2caa80a2712e178c
+preserve48efc811d7ea75b0
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6167,7 +6167,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve646eeead7ef56ee2
+preserve639df02016a1454b
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6549,7 +6549,7 @@ Before proceeding, however, you should be aware of the disadvantages of online r
 For instance, the Google routing API sets the limit to 2500 free queries per day.^[`ggmap::route()` lets you use Google's routing API through R and the **dodgr** package allows for rapid routing on locally stored route network data.]
 <!-- Todo: add link to Mark's presentation on dodgr vs Google routing costs (RL) -->
 
-A popular and free (for limited uses) routing service is the Open Source Routing Machine ([OSRM](http://project-osrm.org/)).^[Another popular OSM routing API is https://openrouteservice.org/.]
+A popular and free routing service is the Open Source Routing Machine ([OSRM](http://project-osrm.org/)).^[Another popular OSM routing API is https://openrouteservice.org/.]
 Instead of routing *all* desire lines generated in the previous section, which would be time and memory-consuming, we will focus on the desire lines of policy interest.
 The benefits of cycling trips are greatest when they replace car trips.
 Clearly not all car trips can realistically be replaced by cycling, but 5 km Euclidean distance (or around 6-8 km of route distance) is easily accessible within 30 minutes for most people.
@@ -6831,7 +6831,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preserve003f9d582a0240d8
+preserve6c047a19ac1756ca
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
