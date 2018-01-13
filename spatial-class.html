@@ -751,9 +751,6 @@ sf_points =<span class="st"> </span><span class="kw">st_sf</span>(our_attributes
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(sf_points)
 <span class="co">#&gt; [1] &quot;sf&quot;         &quot;data.frame&quot;</span></code></pre></div>
 <p>The result shows that <code>sf</code> objects actually have two classes, <code>sf</code> and <code>data.frame</code>. Simple features are simply data frames (square tables), but with spatial attributes (usually stored in a special <code>geom</code> list-column in the data frame). This duality is central to the concept of simple features: most of the time a <code>sf</code> can be treated as and behaves like a <code>data.frame</code>. Simple features are, in essence, data frames with a spatial extension.</p>
-<!-- methods -->
-<!-- methods(class = "sf") -->
-<!-- plots -->
 <!-- https://r-spatial.github.io/sf/articles/sf1.html#how-attributes-relate-to-geometries -->
 </div>
 </div>
@@ -953,7 +950,7 @@ Operations on <code>RasterBrick</code> and <code>RasterStack</code> objects will
 </div>
 <div id="crs-intro" class="section level2">
 <h2><span class="header-section-number">2.3</span> Coordinate Reference Systems</h2>
-<p>Vector and raster spatial data types share concepts intrinsic to spatial data. Perhaps the most fundamental of these is the Coordinate Reference System (CRS), which defines how the spatial elements of the data relate to the surface of the Earth (or other bodies). <!-- Coordinates are meaningles without a CRS, as we don't know theirs units (meters, feets, degrees) or what's the origin --> <!-- (-12579102, 4439107) = (-113, 37) --> CRSs are either geographic or projected, as introduced at the beginning of this chapter (see Figure (<a href="spatial-class.html#fig:vectorplots">2.1</a>). This section will will explain each type, laying the foundations for section <a href="transform.html#reproj-geo-data">5.2</a> on CRS transformations.</p>
+<p>Vector and raster spatial data types share concepts intrinsic to spatial data. Perhaps the most fundamental of these is the Coordinate Reference System (CRS), which defines how the spatial elements of the data relate to the surface of the Earth (or other bodies). <!-- Coordinates are meaningles without a CRS, as we don't know theirs units (meters, feets, degrees) or what's the origin --> <!-- (-12579102, 4439107) = (-113, 37) --> CRSs are either geographic or projected, as introduced at the beginning of this chapter (see Figure <a href="spatial-class.html#fig:vectorplots">2.1</a>). This section will will explain each type, laying the foundations for section <a href="transform.html#reproj-geo-data">5.2</a> on CRS transformations.</p>
 <div id="geographic-coordinate-systems" class="section level3">
 <h3><span class="header-section-number">2.3.1</span> Geographic coordinate systems</h3>
 <p>Geographic coordinate systems identify any location on the Earth’s surface using two values — longitude and latitude. <em>Longitude</em> is location in the East-West direction in angular distance from the Prime Meridian plane. <em>Latitude</em> is angular distance North or South of the equatorial plane. Distance in geographic CRSs are therefore not measured in meters. This has important consequences, as demonstrated in section <a href="transform.html#reproj-geo-data">5.2</a>.</p>

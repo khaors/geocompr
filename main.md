@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservea6b70369ba8fc209
+preserved48ea1baf7d61153
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -1259,9 +1259,6 @@ This duality is central to the concept of simple features:
 most of the time a `sf` can be treated as and behaves like a `data.frame`.
 Simple features are, in essence, data frames with a spatial extension.
 
-<!-- methods -->
-<!-- methods(class = "sf") -->
-<!-- plots -->
 <!-- https://r-spatial.github.io/sf/articles/sf1.html#how-attributes-relate-to-geometries -->
 
 ## Raster data
@@ -1577,7 +1574,7 @@ Vector and raster spatial data types share concepts intrinsic to spatial data.
 Perhaps the most fundamental of these is the Coordinate Reference System (CRS), which defines how the spatial elements of the data relate to the surface of the Earth (or other bodies).
 <!-- Coordinates are meaningles without a CRS, as we don't know theirs units (meters, feets, degrees) or what's the origin -->
 <!-- (-12579102, 4439107) = (-113, 37) -->
-CRSs are either geographic or projected, as introduced at the beginning of this chapter (see Figure (\@ref(fig:vectorplots)).
+CRSs are either geographic or projected, as introduced at the beginning of this chapter (see Figure \@ref(fig:vectorplots)).
 This section will will explain each type, laying the foundations for section \@ref(reproj-geo-data) on CRS transformations.
 
 ### Geographic coordinate systems
@@ -3123,7 +3120,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve4b2884e1eae71530
+preservef291ecdb3f4a7f75
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6166,7 +6163,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveaa846edce6bf26ab
+preserve2739de3316de43f9
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6827,7 +6824,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 
 
 <div class="figure" style="text-align: center">
-preserve071b2f2b0df84b6d
+preservec72f17a8f44bba76
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
