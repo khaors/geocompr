@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve5fce2a617160fd5c
+preserve9f12669148ffb1c3
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3124,7 +3124,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservecb72fdeacd9ea825
+preserve789030dc82801a5e
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6167,7 +6167,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve9a0a66f8c6ad97b1
+preserve7bb8faaff501d4b6
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6771,7 +6771,7 @@ This means that each component can be accessed using the `@` operator, which is 
 In the example below the 'edge betweeness', meaning the number of shortest paths passing through each edge, is calculated (see `?igraph::betweenness` for further details).
 The results demonstrating that each graph edge represents a segment: the segments near the center of the road network have the greatest betweeness scores.
 
-<!-- figure caption is missing -->
+<!-- Todo (optional): make this section use potential cycle routes around Stokes Bradley not freeway data (RL) -->
 
 ```r
 g = ways_sln@g
@@ -6779,26 +6779,31 @@ e = igraph::edge_betweenness(ways_sln@g)
 plot(ways_sln@sl$geometry, lwd = e / 500)
 ```
 
-<img src="figures/unnamed-chunk-29-1.png" width="576" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures/unnamed-chunk-29-1.png" alt="Illustration of a small route network, with segment thickness proportional to its betweeness, generated using the **igraph** package and described in the text." width="576" />
+<p class="caption">(\#fig:unnamed-chunk-29)Illustration of a small route network, with segment thickness proportional to its betweeness, generated using the **igraph** package and described in the text.</p>
+</div>
 
 
 
-One can also find the shortest route between origins and destinations using this graph representation of the route network:
+One can also find the shortest route between origins and destinations using this graph representation of the route network.
+This is can be done using the `sum_network_routes()` function from **stplanr**, which uses local route network data instead of the online routing service described in section \@ref(routes).
+This finds the shortest path between arbitrary nodes 1 and 20, on the network ---
+'shortest' with reference to the `weightfield` slot of `ways_sln` (route distance by default).^[
+To select nodes by geographic location the **stplanr** function `find_network_nodes()` can be used.
+]
+The result is a spatial linestring object that can be plotted using **sf** plotting methods (result not shown --- readers are encouraged to plot the result locally):
 
-<!-- 
-1. figure caption is missing 
-2. not really clear what you are doing here, what is sum_network_routes doing, why 1 and 20, what is length referring to?
-3. Since this is the local routing we should back-reference remote routing
-4. Why is there a section routes and a separate section route networks?
--->
 
 ```r
 path = sum_network_routes(ways_sln, 1, 20, "length")
+```
+
+```r
 plot(path$geometry, col = "red", lwd = 10)
 plot(ways_sln@sl$geometry, add = TRUE)
 ```
 
-<img src="figures/unnamed-chunk-31-1.png" width="576" style="display: block; margin: auto;" />
 
 ## Prioritizing new infrastructure
 
@@ -6823,7 +6828,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
 
 <div class="figure" style="text-align: center">
-preserveabc2169c75496bc7
+preserve89f56ab9054140e0
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
