@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve1b1ebac7e89a821a
+preservebb7bdc23408e796a
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3112,7 +3112,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve856ea778ebdf7e7e
+preserve7b313183acdaeae4
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4114,8 +4114,8 @@ Table: (\#tab:catraster)Key attributes original `cat_raster` and projected `cat_
 
 CRS      nrow   ncol     ncell   resolution   unique_categories
 ------  -----  -----  --------  -----------  ------------------
-NAD83    1359   1073   1458207         31.5                  14
-WGS84    1394   1111   1548734          0.0                  15
+NAD83    1359   1073   1458207      31.5275                  14
+WGS84    1394   1111   1548734       0.0003                  15
 
 Reprojecting raster data with continuous (`numeric` or in this case `integer`) values follows an almost identical procedure.
 `srtm.tif` in **spDataLarge** contains a digital elevation model from [the Shuttle Radar Topography Mission (SRTM)](https://www2.jpl.nasa.gov/srtm/) representing height above sea level (elevation) in meters.
@@ -4164,8 +4164,8 @@ Table: (\#tab:rastercrs)Key attributes original `con_raster` and projected `con_
 
 CRS           nrow   ncol    ncell   resolution   mean
 -----------  -----  -----  -------  -----------  -----
-WGS84          457    465   212505         31.5   1843
-Equal-area     467    478   223226          0.0   1842
+WGS84          457    465   212505      31.5275   1843
+Equal-area     467    478   223226       0.0003   1842
 
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">Of course, the limitations of 2D Earth projections apply as much to vector as to raster data.
@@ -6141,7 +6141,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservee95c60ec97b2f7ec
+preserve20a6d111c653fa0a
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6802,7 +6802,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 
 
 <div class="figure" style="text-align: center">
-preserve46a56f11693b18d4
+preserve73fb4a9958f785a6
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
