@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-01-13'
+date: '2018-01-14'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2018-01-13 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-01-14 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve5395e1531a34d2ff
+preserve8c43097e5ca3ee13
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -1839,7 +1839,7 @@ library(raster)
 library(tidyverse)
 ```
 
-- It also relies on **spData**, which loads `world`, `worldbank_df` and `us_states` datasets:
+- It also relies on **spData**, which loads datasets used in the code examples of this chapter:
 
 
 ```r
@@ -2128,7 +2128,6 @@ world7 = world %>%
   filter(continent == "Asia") %>%
   dplyr::select(name_long, continent) %>%
   slice(1:5)
-  
 ```
 
 The above chunk shows how the pipe operator allows commands to be written in a clear order:
@@ -2214,6 +2213,8 @@ Africa       1.15e+09            51
 Asia         4.31e+09            47
 Europe       7.39e+08            39
 
+\BeginKnitrBlock{rmdnote}<div class="rmdnote">More details are provided in the help pages (which can be accessed via `?summarize` and `vignette(package = "dplyr")` and Chapter 5 of [R for Data Science](http://r4ds.had.co.nz/transform.html#grouped-summaries-with-summarize). </div>\EndKnitrBlock{rmdnote}
+
 <!-- `sf` objects are well-integrated with the **tidyverse**, as illustrated by the fact that the aggregated objects preserve the geometry of the original `world` object. -->
 <!-- Here, we even had to make some efforts to prevent a spatial operation. -->
 <!-- When `aggregate()`ing the population we have just used the population vector.  -->
@@ -2265,7 +2266,6 @@ north_america = world %>%
 north_america$name_long
 #> [1] "Canada"        "Greenland"     "United States"
 ```
-
 
 
 ```r
@@ -2436,10 +2436,7 @@ It is important to note that attribute data operations preserve the geometry of 
 As mentioned at the outset of the chapter, it can be useful to remove the geometry.
 Do do this, you have to explicitly remove it because `sf` explicitly makes the geometry column sticky.
 This behavior ensures that data frame operations do not accidentally remove the geometry column.
-Hence, an approach such as `select(world, -geom)` will be unsuccessful instead use `st_set_geometry()`^[Note that
-`st_geometry(world_st) = NULL`
-also works to remove the geometry from `world` but overwrites the original object.
-].
+Hence, an approach such as `select(world, -geom)` will be unsuccessful instead use `st_set_geometry()`.^[Note that `st_geometry(world_st) = NULL` also works to remove the geometry from `world` but overwrites the original object.]
 
 
 ```r
@@ -2447,8 +2444,6 @@ world_data = world %>% st_set_geometry(NULL)
 class(world_data)
 #> [1] "data.frame"
 ```
-
-\BeginKnitrBlock{rmdnote}<div class="rmdnote">More details are provided in the help pages (which can be accessed via `?summarize` and `vignette(package = "dplyr")` and Chapter 5 of [R for Data Science](http://r4ds.had.co.nz/transform.html#grouped-summaries-with-summarize). </div>\EndKnitrBlock{rmdnote}
 
 ## Manipulating raster objects
 
@@ -2487,7 +2482,7 @@ grain = raster(nrow = 6, ncol = 6, res = 0.5,
 To use character values they must first be converted into an appropriate class, for example using the function `factor()`. 
 The `levels` argument was used in the preceding code chunk to create an ordered factor:
 clay < silt < sand in terms of grain size.
-See the [Data structures](http://adv-r.had.co.nz/Data-structures.html) chapter of [@wickham_advanced_2014] for further details on classes.</div>\EndKnitrBlock{rmdnote}
+See the [Data structures](http://adv-r.had.co.nz/Data-structures.html) chapter of @wickham_advanced_2014 for further details on classes.</div>\EndKnitrBlock{rmdnote}
 
 `raster` objects represent categorical variables as integers, so `grain[1, 1]` returns a number that represents a unique identifier, rather than "clay", "silt" or "sand". 
 The raster object stores the corresponding look-up table or "Raster Attribute Table" (RAT) as a data frame in a new slot named `attributes`, which can be viewed with `ratify(grain)` (see `?ratify()` for more information).
@@ -2515,7 +2510,6 @@ factorValues(grain, grain[c(1, 11, 35)])
 #> 2  silt   moist
 #> 3  clay     wet
 ```
-
 
 <div class="figure" style="text-align: center">
 <img src="figures/cont-cate-rasters-1.png" alt="Raster datasets with numeric (left) and categorical values (right)." width="672" />
@@ -3120,7 +3114,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve62c3ee4c160c2de5
+preserve09fca9129501a3fe
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6163,7 +6157,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveef0a1580e0dbed86
+preservea731f6c3bcfe8fcd
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6824,7 +6818,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 
 
 <div class="figure" style="text-align: center">
-preserve8c9714bebf3c9504
+preserve2fb1e33231919564
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
