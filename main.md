@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve8c43097e5ca3ee13
+preserve1b1ebac7e89a821a
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2393,8 +2393,6 @@ world %>%
 For example, we want to combine the `continent` and `region_un` columns into a new column named `con_reg`.
 Additionally, we can define a separator (here: a colon `:`) which defines how the values of the input columns should be joined, and if the original columns should be removed (here: `TRUE`):
 
-<!-- todo: set eval = TRUE when travis issue resolved -->
-
 
 ```r
 world_unite = world %>%
@@ -3114,7 +3112,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve09fca9129501a3fe
+preserve856ea778ebdf7e7e
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4078,15 +4076,10 @@ The `nlcd2011.tif` file provides information for a small area in Utah, USA obtai
 
 ```r
 cat_raster = raster(system.file("raster/nlcd2011.tif", package = "spDataLarge"))
-cat_raster
-#> class       : RasterLayer 
-#> dimensions  : 1359, 1073, 1458207  (nrow, ncol, ncell)
-#> resolution  : 31.5, 31.5  (x, y)
-#> extent      : 301903, 335735, 4111244, 4154086  (xmin, xmax, ymin, ymax)
-#> coord. ref. : +proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
-#> data source : /home/travis/R/Library/spDataLarge/raster/nlcd2011.tif 
-#> names       : nlcd2011 
-#> values      : 11, 95  (min, max)
+crs(cat_raster)
+#> CRS arguments:
+#>  +proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m
+#> +no_defs
 ```
 
 In this region, 14 land cover classes were distinguished^[Full list of NLCD2011 land cover classes can be found at https://www.mrlc.gov/nlcd11_leg.php]:
@@ -4110,51 +4103,41 @@ The second and last step is to define the reprojection method in the `projectRas
 ```r
 wgs84 = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
 cat_raster_wgs84 = projectRaster(cat_raster, crs = wgs84, method = "ngb")
-cat_raster_wgs84
-#> class       : RasterLayer 
-#> dimensions  : 1394, 1111, 1548734  (nrow, ncol, ncell)
-#> resolution  : 0.000356, 0.000284  (x, y)
-#> extent      : -113, -113, 37.1, 37.5  (xmin, xmax, ymin, ymax)
-#> coord. ref. : +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0 
-#> data source : in memory
-#> names       : nlcd2011 
-#> values      : 11, 95  (min, max)
 ```
 
-Many properties of the new object differs from the previous one, which include the number of columns and rows (and therefore number of cells), resolution (transformed from meters into degrees), and extent.
-However, the algorithm makes sure to keep the same (land cover) classes as provided by the input raster - `unique(cat_raster_wgs84)`.
+Many properties of the new object differs from the previous one, which include the number of columns and rows (and therefore number of cells), resolution (transformed from meters into degrees), and extent, as illustrated in Table \@ref(tab:catraster) (note that the number of categories increases from 14 to 15 because of the addition of `NA` values, not because a new category has been created --- the land cover classes are preserved).
 <!-- freq(cat_raster_wgs84) -->
 <!-- freq(cat_raster) -->
 
-Reprojecting continuous data follows an almost identical procedure.
-The `srtm.tif` file contains a digital elevation model from [the Shuttle Radar Topography Mission (SRTM)](https://www2.jpl.nasa.gov/srtm/), nad is located in the same area in Utah as the previously used land cover dataset.
-Each SRTM raster pixel represents elevation measured in meters.
+
+Table: (\#tab:catraster)Key attributes original `cat_raster` and projected `cat_raster_wgs84` raster datasets.
+
+CRS      nrow   ncol     ncell   resolution   unique_categories
+------  -----  -----  --------  -----------  ------------------
+NAD83    1359   1073   1458207         31.5                  14
+WGS84    1394   1111   1548734          0.0                  15
+
+Reprojecting raster data with continuous (`numeric` or in this case `integer`) values follows an almost identical procedure.
+`srtm.tif` in **spDataLarge** contains a digital elevation model from [the Shuttle Radar Topography Mission (SRTM)](https://www2.jpl.nasa.gov/srtm/) representing height above sea level (elevation) in meters.
+Its CRS is WGS84:
 
 
 ```r
 con_raster = raster(system.file("raster/srtm.tif", package = "spDataLarge"))
-con_raster
-#> class       : RasterLayer 
-#> dimensions  : 457, 465, 212505  (nrow, ncol, ncell)
-#> resolution  : 0.000833, 0.000833  (x, y)
-#> extent      : -113, -113, 37.1, 37.5  (xmin, xmax, ymin, ymax)
-#> coord. ref. : +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 
-#> data source : /home/travis/R/Library/spDataLarge/raster/srtm.tif 
-#> names       : srtm 
-#> values      : 1024, 2892  (min, max)
+crs(con_raster)
+#> CRS arguments:
+#>  +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0
 ```
 
-Here, we will reproject from the geographic CRS of the SRTM dataset into a projected CRS.
-The nearest neighbor method should not be used for continuous raster data, as we want to preserve gradual changes in values.
+We will reproject this dataset into a projected CRS, but *not* with the nearest neighbor method which is appropriate for categorical data.
 Instead we will use the bilinear method which computes the output cell value based on the four nearest cells in the original raster.
 <!--
 "Quadric and cubic polynomials are also popular interpolation functions for resampling with more complexity and improved accuracy" [@liu_essential_2009].
 However, these interpolation methods are still unavailable in the **raster** package.
 -->
-The new value is the distance-weighted average of the values from these four cells, i.e., the closer the input cell is to the center of the output cell, the stronger is its weight.
-
-To use the `bilinear` method, we say so in the corresponding function argument of `projectRaster()`.
-Of course, we need to also specify a projection, here we will reproject into the Oblique Lambert azimuthal equal-area projection.
+The values in the projected dataset are the distance-weighted average of the values from these four cells:
+the closer the input cell is to the center of the output cell, the greater its weight.
+The following commands create a text string representing the Oblique Lambert azimuthal equal-area projection, and reproject the raster into this CRS, using the `bilinear` method:
 
 <!-- nice link, but does not fit into the text here in my opinion
 First, we need to obtain the proj4 definition of the existing projected CRS appropriate for this area or create a new one using the [Projection Wizard](http://projectionwizard.org/) online tool [@savric_projection_2016].
@@ -4164,25 +4147,26 @@ First, we need to obtain the proj4 definition of the existing projected CRS appr
 ```r
 equalarea = "+proj=laea +lat_0=37.32 +lon_0=-113.04"
 con_raster_ea = projectRaster(con_raster, crs = equalarea, method = "bilinear")
-con_raster_ea
-#> class       : RasterLayer 
-#> dimensions  : 467, 478, 223226  (nrow, ncol, ncell)
-#> resolution  : 73.9, 92.5  (x, y)
-#> extent      : -18178, 17146, -21306, 21892  (xmin, xmax, ymin, ymax)
-#> coord. ref. : +proj=laea +lat_0=37.32 +lon_0=-113.04 +ellps=WGS84 
-#> data source : in memory
-#> names       : srtm 
-#> values      : 1027, 2891  (min, max)
+crs(con_raster_ea)
+#> CRS arguments:
+#>  +proj=laea +lat_0=37.32 +lon_0=-113.04 +ellps=WGS84
 ```
 
-Reprojecting (continuous) rasters also changes spatial properties, such as the number of cells, resolution, and extent.
-Moreover, it slightly modifies values in the new raster, which can be seen by comparing the outputs of the `summary()` function between `con_raster` and `con_raster_ea`.
+Raster reprojection on numeric variables also leads to small changes values and spatial properties, such as the number of cells, resolution, and extent.
+These changes small changes are demonstrated in Table \@ref(tab:rastercrs):^[
+Another minor change, that is not represented in Table \@ref(tab:rastercrs), is that the class of the values in the new projected raster dataset is `numeric`.
+This is because the `bilinear` method works with continuous data and the results are rarely coerced into whole integer values.
+This can have implications for file sizes when raster datasets are saved.
+]
 
 
-```r
-summary(con_raster)
-summary(con_raster_ea)
-```
+Table: (\#tab:rastercrs)Key attributes original `con_raster` and projected `con_raster_ea` raster datasets.
+
+CRS           nrow   ncol    ncell   resolution   mean
+-----------  -----  -----  -------  -----------  -----
+WGS84          457    465   212505         31.5   1843
+Equal-area     467    478   223226          0.0   1842
+
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">Of course, the limitations of 2D Earth projections apply as much to vector as to raster data.
 At best we can comply with two out of three spatial properties (distance, area, direction).
@@ -4464,7 +4448,7 @@ plot(b)
 plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
 ```
 
-<img src="figures/unnamed-chunk-53-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-52-1.png" width="576" style="display: block; margin: auto;" />
 
 The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
 <!-- Todo: reference r4ds -->
@@ -4986,7 +4970,7 @@ Why the new object differs from the original one?
 What has changed?
 How it influences the results?
 
-1. Try to transform the categorical raster (`cat_raster`) into WGS 84 using the bi-linear interpolation method. 
+1. Try to transform the categorical raster (`cat_raster`) into WGS 84 using the bi-linear interpolation method.
 What has changed?
 How it influences the results?
 
@@ -6157,7 +6141,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservea731f6c3bcfe8fcd
+preservee95c60ec97b2f7ec
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6818,7 +6802,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 
 
 <div class="figure" style="text-align: center">
-preserve2fb1e33231919564
+preserve46a56f11693b18d4
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 

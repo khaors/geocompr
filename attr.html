@@ -601,7 +601,6 @@ world_new$pop_dens =<span class="st"> </span>world_new$pop /<span class="st"> </
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">transmute</span>(<span class="dt">pop_dens =</span> pop /<span class="st"> </span>area_km2)</code></pre></div>
 <p><code>unite()</code> pastes together existing columns. For example, we want to combine the <code>continent</code> and <code>region_un</code> columns into a new column named <code>con_reg</code>. Additionally, we can define a separator (here: a colon <code>:</code>) which defines how the values of the input columns should be joined, and if the original columns should be removed (here: <code>TRUE</code>):</p>
-<!-- todo: set eval = TRUE when travis issue resolved -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_unite =<span class="st"> </span>world %&gt;%
 <span class="st">  </span><span class="kw">unite</span>(<span class="st">&quot;con_reg&quot;</span>, continent:region_un, <span class="dt">sep =</span> <span class="st">&quot;:&quot;</span>, <span class="dt">remove =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p>The <code>separate()</code> function does the exact opposite of the <code>unite()</code> function, i.e., it splits one column into multiple columns using either a regular expression or character positions.</p>

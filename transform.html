@@ -516,65 +516,98 @@ It is possible to use a EPSG code in a <code>proj4string</code> definition with 
 <p></p>
 <p>Let’s take a look at two examples of raster transformation - using categorical and continuous data. Land cover data are usually represented by categorical maps. The <code>nlcd2011.tif</code> file provides information for a small area in Utah, USA obtained from <a href="https://www.mrlc.gov/nlcd2011.php">National Land Cover Database 2011</a> in the NAD83 / UTM zone 12N CRS.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cat_raster =<span class="st"> </span><span class="kw">raster</span>(<span class="kw">system.file</span>(<span class="st">&quot;raster/nlcd2011.tif&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;spDataLarge&quot;</span>))
-cat_raster
-<span class="co">#&gt; class       : RasterLayer </span>
-<span class="co">#&gt; dimensions  : 1359, 1073, 1458207  (nrow, ncol, ncell)</span>
-<span class="co">#&gt; resolution  : 31.5, 31.5  (x, y)</span>
-<span class="co">#&gt; extent      : 301903, 335735, 4111244, 4154086  (xmin, xmax, ymin, ymax)</span>
-<span class="co">#&gt; coord. ref. : +proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs </span>
-<span class="co">#&gt; data source : /home/travis/R/Library/spDataLarge/raster/nlcd2011.tif </span>
-<span class="co">#&gt; names       : nlcd2011 </span>
-<span class="co">#&gt; values      : 11, 95  (min, max)</span></code></pre></div>
+<span class="kw">crs</span>(cat_raster)
+<span class="co">#&gt; CRS arguments:</span>
+<span class="co">#&gt;  +proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m</span>
+<span class="co">#&gt; +no_defs</span></code></pre></div>
 <p>In this region, 14 land cover classes were distinguished<a href="#fn31" class="footnoteRef" id="fnref31"><sup>31</sup></a>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">unique</span>(cat_raster)
 <span class="co">#&gt;  [1] 11 21 22 23 31 41 42 43 52 71 81 82 90 95</span></code></pre></div>
 <p>When reprojecting categorical raster, we need to ensure that our new estimated values would still have values of our original classes. This could be done using the nearest neighbor method (<code>ngb</code>). In this method, value of the output cell is calculated based on the nearest cell center of the input raster.</p>
 <p>For example, we want to change the CRS to WGS 84. It can be desired when we want to visualize a raster data on top of a web basemap, such as the Google or OpenStreetMap map tiles. The first step is to obtain the proj4 definition of this CRS, which can be done using the <a href="http://spatialreference.org/ref/epsg/wgs-84/">http://spatialreference.org</a> webpage. The second and last step is to define the reprojection method in the <code>projectRaster()</code> function, which in case of categorical data is the nearest neighbor method (<code>ngb</code>):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wgs84 =<span class="st"> &quot;+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs&quot;</span>
-cat_raster_wgs84 =<span class="st"> </span><span class="kw">projectRaster</span>(cat_raster, <span class="dt">crs =</span> wgs84, <span class="dt">method =</span> <span class="st">&quot;ngb&quot;</span>)
-cat_raster_wgs84
-<span class="co">#&gt; class       : RasterLayer </span>
-<span class="co">#&gt; dimensions  : 1394, 1111, 1548734  (nrow, ncol, ncell)</span>
-<span class="co">#&gt; resolution  : 0.000356, 0.000284  (x, y)</span>
-<span class="co">#&gt; extent      : -113, -113, 37.1, 37.5  (xmin, xmax, ymin, ymax)</span>
-<span class="co">#&gt; coord. ref. : +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0 </span>
-<span class="co">#&gt; data source : in memory</span>
-<span class="co">#&gt; names       : nlcd2011 </span>
-<span class="co">#&gt; values      : 11, 95  (min, max)</span></code></pre></div>
-<p>Many properties of the new object differs from the previous one, which include the number of columns and rows (and therefore number of cells), resolution (transformed from meters into degrees), and extent. However, the algorithm makes sure to keep the same (land cover) classes as provided by the input raster - <code>unique(cat_raster_wgs84)</code>. <!-- freq(cat_raster_wgs84) --> <!-- freq(cat_raster) --></p>
-<p>Reprojecting continuous data follows an almost identical procedure. The <code>srtm.tif</code> file contains a digital elevation model from <a href="https://www2.jpl.nasa.gov/srtm/">the Shuttle Radar Topography Mission (SRTM)</a>, nad is located in the same area in Utah as the previously used land cover dataset. Each SRTM raster pixel represents elevation measured in meters.</p>
+cat_raster_wgs84 =<span class="st"> </span><span class="kw">projectRaster</span>(cat_raster, <span class="dt">crs =</span> wgs84, <span class="dt">method =</span> <span class="st">&quot;ngb&quot;</span>)</code></pre></div>
+<p>Many properties of the new object differs from the previous one, which include the number of columns and rows (and therefore number of cells), resolution (transformed from meters into degrees), and extent, as illustrated in Table <a href="transform.html#tab:catraster">5.1</a> (note that the number of categories increases from 14 to 15 because of the addition of <code>NA</code> values, not because a new category has been created — the land cover classes are preserved). <!-- freq(cat_raster_wgs84) --> <!-- freq(cat_raster) --></p>
+<table>
+<caption><span id="tab:catraster">Table 5.1: </span>Key attributes original <code>cat_raster</code> and projected <code>cat_raster_wgs84</code> raster datasets.</caption>
+<thead>
+<tr class="header">
+<th align="left">CRS</th>
+<th align="right">nrow</th>
+<th align="right">ncol</th>
+<th align="right">ncell</th>
+<th align="right">resolution</th>
+<th align="right">unique_categories</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">NAD83</td>
+<td align="right">1359</td>
+<td align="right">1073</td>
+<td align="right">1458207</td>
+<td align="right">31.5</td>
+<td align="right">14</td>
+</tr>
+<tr class="even">
+<td align="left">WGS84</td>
+<td align="right">1394</td>
+<td align="right">1111</td>
+<td align="right">1548734</td>
+<td align="right">0.0</td>
+<td align="right">15</td>
+</tr>
+</tbody>
+</table>
+<p>Reprojecting raster data with continuous (<code>numeric</code> or in this case <code>integer</code>) values follows an almost identical procedure. <code>srtm.tif</code> in <strong>spDataLarge</strong> contains a digital elevation model from <a href="https://www2.jpl.nasa.gov/srtm/">the Shuttle Radar Topography Mission (SRTM)</a> representing height above sea level (elevation) in meters. Its CRS is WGS84:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">con_raster =<span class="st"> </span><span class="kw">raster</span>(<span class="kw">system.file</span>(<span class="st">&quot;raster/srtm.tif&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;spDataLarge&quot;</span>))
-con_raster
-<span class="co">#&gt; class       : RasterLayer </span>
-<span class="co">#&gt; dimensions  : 457, 465, 212505  (nrow, ncol, ncell)</span>
-<span class="co">#&gt; resolution  : 0.000833, 0.000833  (x, y)</span>
-<span class="co">#&gt; extent      : -113, -113, 37.1, 37.5  (xmin, xmax, ymin, ymax)</span>
-<span class="co">#&gt; coord. ref. : +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 </span>
-<span class="co">#&gt; data source : /home/travis/R/Library/spDataLarge/raster/srtm.tif </span>
-<span class="co">#&gt; names       : srtm </span>
-<span class="co">#&gt; values      : 1024, 2892  (min, max)</span></code></pre></div>
-<p>Here, we will reproject from the geographic CRS of the SRTM dataset into a projected CRS. The nearest neighbor method should not be used for continuous raster data, as we want to preserve gradual changes in values. Instead we will use the bilinear method which computes the output cell value based on the four nearest cells in the original raster. <!--
+<span class="kw">crs</span>(con_raster)
+<span class="co">#&gt; CRS arguments:</span>
+<span class="co">#&gt;  +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0</span></code></pre></div>
+<p>We will reproject this dataset into a projected CRS, but <em>not</em> with the nearest neighbor method which is appropriate for categorical data. Instead we will use the bilinear method which computes the output cell value based on the four nearest cells in the original raster. <!--
 "Quadric and cubic polynomials are also popular interpolation functions for resampling with more complexity and improved accuracy" [@liu_essential_2009].
 However, these interpolation methods are still unavailable in the **raster** package.
---> The new value is the distance-weighted average of the values from these four cells, i.e., the closer the input cell is to the center of the output cell, the stronger is its weight.</p>
-<p>To use the <code>bilinear</code> method, we say so in the corresponding function argument of <code>projectRaster()</code>. Of course, we need to also specify a projection, here we will reproject into the Oblique Lambert azimuthal equal-area projection.</p>
+--> The values in the projected dataset are the distance-weighted average of the values from these four cells: the closer the input cell is to the center of the output cell, the greater its weight. The following commands create a text string representing the Oblique Lambert azimuthal equal-area projection, and reproject the raster into this CRS, using the <code>bilinear</code> method:</p>
 <!-- nice link, but does not fit into the text here in my opinion
 First, we need to obtain the proj4 definition of the existing projected CRS appropriate for this area or create a new one using the [Projection Wizard](http://projectionwizard.org/) online tool [@savric_projection_2016].
 -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">equalarea =<span class="st"> &quot;+proj=laea +lat_0=37.32 +lon_0=-113.04&quot;</span>
 con_raster_ea =<span class="st"> </span><span class="kw">projectRaster</span>(con_raster, <span class="dt">crs =</span> equalarea, <span class="dt">method =</span> <span class="st">&quot;bilinear&quot;</span>)
-con_raster_ea
-<span class="co">#&gt; class       : RasterLayer </span>
-<span class="co">#&gt; dimensions  : 467, 478, 223226  (nrow, ncol, ncell)</span>
-<span class="co">#&gt; resolution  : 73.9, 92.5  (x, y)</span>
-<span class="co">#&gt; extent      : -18178, 17146, -21306, 21892  (xmin, xmax, ymin, ymax)</span>
-<span class="co">#&gt; coord. ref. : +proj=laea +lat_0=37.32 +lon_0=-113.04 +ellps=WGS84 </span>
-<span class="co">#&gt; data source : in memory</span>
-<span class="co">#&gt; names       : srtm </span>
-<span class="co">#&gt; values      : 1027, 2891  (min, max)</span></code></pre></div>
-<p>Reprojecting (continuous) rasters also changes spatial properties, such as the number of cells, resolution, and extent. Moreover, it slightly modifies values in the new raster, which can be seen by comparing the outputs of the <code>summary()</code> function between <code>con_raster</code> and <code>con_raster_ea</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(con_raster)
-<span class="kw">summary</span>(con_raster_ea)</code></pre></div>
+<span class="kw">crs</span>(con_raster_ea)
+<span class="co">#&gt; CRS arguments:</span>
+<span class="co">#&gt;  +proj=laea +lat_0=37.32 +lon_0=-113.04 +ellps=WGS84</span></code></pre></div>
+<p>Raster reprojection on numeric variables also leads to small changes values and spatial properties, such as the number of cells, resolution, and extent. These changes small changes are demonstrated in Table <a href="transform.html#tab:rastercrs">5.2</a>:<a href="#fn32" class="footnoteRef" id="fnref32"><sup>32</sup></a></p>
+<table>
+<caption><span id="tab:rastercrs">Table 5.2: </span>Key attributes original <code>con_raster</code> and projected <code>con_raster_ea</code> raster datasets.</caption>
+<thead>
+<tr class="header">
+<th align="left">CRS</th>
+<th align="right">nrow</th>
+<th align="right">ncol</th>
+<th align="right">ncell</th>
+<th align="right">resolution</th>
+<th align="right">mean</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">WGS84</td>
+<td align="right">457</td>
+<td align="right">465</td>
+<td align="right">212505</td>
+<td align="right">31.5</td>
+<td align="right">1843</td>
+</tr>
+<tr class="even">
+<td align="left">Equal-area</td>
+<td align="right">467</td>
+<td align="right">478</td>
+<td align="right">223226</td>
+<td align="right">0.0</td>
+<td align="right">1842</td>
+</tr>
+</tbody>
+</table>
 
 <div class="rmdnote">
 Of course, the limitations of 2D Earth projections apply as much to vector as to raster data. At best we can comply with two out of three spatial properties (distance, area, direction). Therefore, the task at hand determines which projection to choose. For instance, if we are interested in a density (points per grid cell or inhabitants per grid cell) we should use an equal-area projection (see also chapter <a href="location.html#location">7</a>).
@@ -714,7 +747,7 @@ y =<span class="st"> </span>b[<span class="dv">2</span>]
 x_and_y =<span class="st"> </span><span class="kw">st_intersection</span>(x, y)
 <span class="kw">plot</span>(b)
 <span class="kw">plot</span>(x_and_y, <span class="dt">col =</span> <span class="st">&quot;lightgrey&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>) <span class="co"># color intersecting area</span></code></pre></div>
-<p><img src="figures/unnamed-chunk-53-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-52-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>The subsequent code chunk demonstrate how this works for all combinations of the ‘Venn’ diagram representing <code>x</code> and <code>y</code>, inspired by <a href="http://r4ds.had.co.nz/transform.html#logical-operators">Figure 5.1</a> of the book R for Data Science <span class="citation">(Grolemund and Wickham <a href="#ref-grolemund_r_2016">2016</a>)</span>. <!-- Todo: reference r4ds --></p>
 <div class="figure" style="text-align: center"><span id="fig:venn-clip"></span>
 <img src="figures/venn-clip-1.png" alt="Spatial equivalents of logical operators." width="576" />
@@ -891,7 +924,7 @@ raster_template2 =<span class="st"> </span><span class="kw">raster</span>(<span 
 Figure 5.18: Examples of line and polygon rasterizations
 </p>
 </div>
-<p>While <code>rasterize</code> works well for most cases, it is not performance optimized. Fortunately, there are several alternatives, including the <code>fasterize::fasterize()</code><a href="#fn32" class="footnoteRef" id="fnref32"><sup>32</sup></a> and <code>gdalUtils::gdal_rasterize()</code>. The former is 100s times faster than <code>rasterize()</code>, however it is currently limited to polygon rasterization. The latter is part of GDAL and therefore requires a vector file, instead of an <code>sf</code> object, as an input and rasterization parameters, instead of a <code>Raster*</code> template object.<a href="#fn33" class="footnoteRef" id="fnref33"><sup>33</sup></a></p>
+<p>While <code>rasterize</code> works well for most cases, it is not performance optimized. Fortunately, there are several alternatives, including the <code>fasterize::fasterize()</code><a href="#fn33" class="footnoteRef" id="fnref33"><sup>33</sup></a> and <code>gdalUtils::gdal_rasterize()</code>. The former is 100s times faster than <code>rasterize()</code>, however it is currently limited to polygon rasterization. The latter is part of GDAL and therefore requires a vector file, instead of an <code>sf</code> object, as an input and rasterization parameters, instead of a <code>Raster*</code> template object.<a href="#fn34" class="footnoteRef" id="fnref34"><sup>34</sup></a></p>
 </div>
 </div>
 <div id="geo-ras" class="section level2">
@@ -951,7 +984,7 @@ Figure 5.20: Original raster (left). Aggregated raster (right).
 <span class="co">#&gt; [1] 0 0</span>
 <span class="kw">origin</span>(elev_agg)
 <span class="co">#&gt; [1] 0.5 0.5</span></code></pre></div>
-<p>The origin is the point closest to (0, 0) if you moved towards it in steps of x and y resolution. If two rasters have different origins, their cells do not overlap completely which would make map algebra impossible. To change the origin , use <code>origin()</code>.<a href="#fn34" class="footnoteRef" id="fnref34"><sup>34</sup></a> Looking at figure <a href="transform.html#fig:origin-example">5.21</a> reveals the effect of changing the origin.</p>
+<p>The origin is the point closest to (0, 0) if you moved towards it in steps of x and y resolution. If two rasters have different origins, their cells do not overlap completely which would make map algebra impossible. To change the origin , use <code>origin()</code>.<a href="#fn35" class="footnoteRef" id="fnref35"><sup>35</sup></a> Looking at figure <a href="transform.html#fig:origin-example">5.21</a> reveals the effect of changing the origin.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the aggregated raster</span>
 <span class="kw">plot</span>(elev_agg)
 <span class="co"># change the origin</span>
@@ -978,7 +1011,7 @@ elev_disagg =<span class="st"> </span><span class="kw">resample</span>(elev_agg,
 <div id="vectorization" class="section level3">
 <h3><span class="header-section-number">5.4.3</span> Vectorization</h3>
 <!-- ref to rasterization -->
-<p>Vectorization is a process of converting rasters into vectors.<a href="#fn35" class="footnoteRef" id="fnref35"><sup>35</sup></a> It is often used when we want to connect features extracted from raster data with an attribute table. The simplest form of vectorization is a conversion from a raster to points. The <code>rasterToPoints()</code> function creates point representations of every non-NA raster grid cell centroids and it is usually used for continuous data, such as elevation (Figure <a href="transform.html#fig:raster-vectorization1">5.22</a>). <!-- Spatial* class mentioned --> <!-- why? --></p>
+<p>Vectorization is a process of converting rasters into vectors.<a href="#fn36" class="footnoteRef" id="fnref36"><sup>36</sup></a> It is often used when we want to connect features extracted from raster data with an attribute table. The simplest form of vectorization is a conversion from a raster to points. The <code>rasterToPoints()</code> function creates point representations of every non-NA raster grid cell centroids and it is usually used for continuous data, such as elevation (Figure <a href="transform.html#fig:raster-vectorization1">5.22</a>). <!-- Spatial* class mentioned --> <!-- why? --></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_point =<span class="st"> </span><span class="kw">rasterToPoints</span>(elev, <span class="dt">spatial =</span> <span class="ot">TRUE</span>) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">st_as_sf</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:raster-vectorization1"></span>
@@ -987,7 +1020,7 @@ elev_disagg =<span class="st"> </span><span class="kw">resample</span>(elev_agg,
 Figure 5.22: Raster and point representation of the elev dataset.
 </p>
 </div>
-<p>On the other hand, categorical rasters (e.g. scanned maps or satellite images) represent discrete features that could occupy areas larger than only one cell. The <code>rasterToPolygons()</code> function could be used to extract these features into a <code>SpatialPolygonsDataFrame</code> object. We can also convert the result into an object of class <code>sf</code>.<a href="#fn36" class="footnoteRef" id="fnref36"><sup>36</sup></a></p>
+<p>On the other hand, categorical rasters (e.g. scanned maps or satellite images) represent discrete features that could occupy areas larger than only one cell. The <code>rasterToPolygons()</code> function could be used to extract these features into a <code>SpatialPolygonsDataFrame</code> object. We can also convert the result into an object of class <code>sf</code>.<a href="#fn37" class="footnoteRef" id="fnref37"><sup>37</sup></a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grain_poly =<span class="st"> </span><span class="kw">rasterToPolygons</span>(grain) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">st_as_sf</span>()</code></pre></div>
 <p>The output consists of many polygons representing grid cells from the original raster object. They could be aggregated (see section <a href="spatial-operations.html#spatial-aggr">4.2.5</a>) into irregular polygons having the same value (Figure <a href="transform.html#fig:raster-vectorization1">5.22</a>).</p>
@@ -1101,11 +1134,12 @@ Figure 5.23: Illustration of vectorization of raster (left) into polygon (center
 <li id="fn29"><p>Thanks to Josh O’Brien who provided the basis for this function in an answer to a question on <a href="https://stackoverflow.com/questions/9186496">stackoverflow</a>.<a href="transform.html#fnref29">↩</a></p></li>
 <li id="fn30"><p>This projection is used, among others, by the National Geographic Society.<a href="transform.html#fnref30">↩</a></p></li>
 <li id="fn31"><p>Full list of NLCD2011 land cover classes can be found at <a href="https://www.mrlc.gov/nlcd11_leg.php" class="uri">https://www.mrlc.gov/nlcd11_leg.php</a><a href="transform.html#fnref31">↩</a></p></li>
-<li id="fn32"><p>The <strong>fasterize</strong> package is available at <a href="https://github.com/ecohealthalliance/fasterize" class="uri">https://github.com/ecohealthalliance/fasterize</a>.<a href="transform.html#fnref32">↩</a></p></li>
-<li id="fn33"><p>See more at <a href="http://www.gdal.org/gdal_rasterize.html" class="uri">http://www.gdal.org/gdal_rasterize.html</a>.<a href="transform.html#fnref33">↩</a></p></li>
-<li id="fn34"><p>If the origins of two raster datasets are just marginally apart, it sometimes is sufficient to simply increase the <code>tolerance</code> argument of <code>raster::rasterOptions()</code>.<a href="transform.html#fnref34">↩</a></p></li>
-<li id="fn35"><p>This term should not be confused with a code vectorization.<a href="transform.html#fnref35">↩</a></p></li>
-<li id="fn36"><p>The <code>spex::polygonize()</code> function could be used as a faster alternative. It returns an <code>sf</code> object a default.<a href="transform.html#fnref36">↩</a></p></li>
+<li id="fn32"><p>Another minor change, that is not represented in Table <a href="transform.html#tab:rastercrs">5.2</a>, is that the class of the values in the new projected raster dataset is <code>numeric</code>. This is because the <code>bilinear</code> method works with continuous data and the results are rarely coerced into whole integer values. This can have implications for file sizes when raster datasets are saved.<a href="transform.html#fnref32">↩</a></p></li>
+<li id="fn33"><p>The <strong>fasterize</strong> package is available at <a href="https://github.com/ecohealthalliance/fasterize" class="uri">https://github.com/ecohealthalliance/fasterize</a>.<a href="transform.html#fnref33">↩</a></p></li>
+<li id="fn34"><p>See more at <a href="http://www.gdal.org/gdal_rasterize.html" class="uri">http://www.gdal.org/gdal_rasterize.html</a>.<a href="transform.html#fnref34">↩</a></p></li>
+<li id="fn35"><p>If the origins of two raster datasets are just marginally apart, it sometimes is sufficient to simply increase the <code>tolerance</code> argument of <code>raster::rasterOptions()</code>.<a href="transform.html#fnref35">↩</a></p></li>
+<li id="fn36"><p>This term should not be confused with a code vectorization.<a href="transform.html#fnref36">↩</a></p></li>
+<li id="fn37"><p>The <code>spex::polygonize()</code> function could be used as a faster alternative. It returns an <code>sf</code> object a default.<a href="transform.html#fnref37">↩</a></p></li>
 </ol>
 </div>
             </section>
