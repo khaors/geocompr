@@ -314,7 +314,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Naturally, we can also subset <em>rasters</em> based on location and coordinates (section <a href="attr.html#raster-subsetting">3.3.1</a>) and merge different raster tiles into one raster (covered in section <a href="spatial-operations.html#merging-rasters">4.3.7</a>). The most important spatial operation on raster data, however, is <em>map algebra</em>. Map algebra makes raster processing really elegant and fast (covered in sections <a href="spatial-operations.html#map-algebra">4.3.2</a> to <a href="spatial-operations.html#global-operations-and-distances">4.3.6</a>). Map algebra is also the prerequisite for distance calculations on rasters <a href="spatial-operations.html#global-operations-and-distances">4.3.6</a>.</p>
 
 <div class="rmdnote">
-It is important to note that spatial operations that use two spatial objects rely on both objects having the same coordinate reference system, a topic that was introduced in <a href="spatial-class.html#crs-intro">2.3</a> and which will be covered in more depth in Chapter 6.
+It is important to note that spatial operations that use two spatial objects rely on both objects having the same coordinate reference system, a topic that was introduced in <a href="spatial-class.html#crs-intro">2.3</a> and which will be covered in more depth in Chapter <a href="transform.html#transform">5</a>.
 </div>
 <p></p>
 </div>
@@ -518,9 +518,9 @@ urb =<span class="st"> </span>urban_agglomerations %&gt;%<span class="st"> </spa
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">joined =<span class="st"> </span><span class="kw">st_join</span>(<span class="dt">x =</span> asia, <span class="dt">y =</span> urb) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">na.omit</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:spatial-join"></span>
-<img src="figures/spatial-join-1.png" alt="Illustration of a spatial join: the populations of the world's 3 largest agglomerations joined onto their respective countries." width="576" />
+<img src="figures/spatial-join-1.png" alt="Illustration of a spatial join: the populations of the world's three largest agglomerations joined onto their respective countries." width="576" />
 <p class="caption">
-Figure 4.3: Illustration of a spatial join: the populations of the world’s 3 largest agglomerations joined onto their respective countries.
+Figure 4.3: Illustration of a spatial join: the populations of the world’s three largest agglomerations joined onto their respective countries.
 </p>
 </div>
 <p>This operation is also know as spatial overlay. By default, <code>st_join()</code> performs a left join (see section <a href="attr.html#vector-attribute-joining">3.2.3</a>), but it can also do inner joins by setting the argument <code>left = FALSE</code>. Like spatial subsetting, the default topological operator used by <code>st_join()</code> is <code>st_intersects()</code>. This can be changed with the <code>join</code> argument (see <code>?st_join</code> for details). In the example above, we have added features of a point layer to a polygon layer but there might be multiple point matches per polygon. Had we chosen to select the four (instead of three) most populous cities in the world, two of them would have belonged to China (Shanghai and Beijing, give it a try yourself). In such a case <code>st_join()</code> simply adds a new row. In our example we would have ended up with two polygons representing China.</p>
@@ -577,9 +577,9 @@ sel =<span class="st"> </span><span class="kw">st_is_within_distance</span>(cycl
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_avheight =<span class="st"> </span><span class="kw">aggregate</span>(<span class="dt">x =</span> nz_height, nz, <span class="dt">FUN =</span> mean)</code></pre></div>
 <p>The result of the previous command is an <code>sf</code> object with the same geometry as the (spatial) aggregating object (<code>nz</code>).<a href="#fn24" class="footnoteRef" id="fnref24"><sup>24</sup></a> The result of the previous operation is illustrated in Figure <a href="spatial-operations.html#fig:spatial-aggregation">4.5</a>. The same result can also be generated using the ‘tidy’ functions <code>group_by()</code> and <code>summarize()</code> (used in combination with <code>st_join()</code>):</p>
 <div class="figure" style="text-align: center"><span id="fig:spatial-aggregation"></span>
-<img src="figures/spatial-aggregation-1.png" alt="Average height of high points (stored in the `nz_height` object) across the regions of New Zealand (stored in `nz`." width="576" />
+<img src="figures/spatial-aggregation-1.png" alt="Average height of high points (stored in the `nz_height` object) across the regions of New Zealand (stored in `nz`.)" width="576" />
 <p class="caption">
-Figure 4.5: Average height of high points (stored in the <code>nz_height</code> object) across the regions of New Zealand (stored in <code>nz</code>.
+Figure 4.5: Average height of high points (stored in the <code>nz_height</code> object) across the regions of New Zealand (stored in <code>nz</code>.)
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_avheight2 =<span class="st"> </span><span class="kw">st_join</span>(nz, nz_height) %&gt;%
@@ -625,9 +625,6 @@ canterbury_centroid =<span class="st"> </span><span class="kw">st_centroid</span
 <div id="spatial-ras" class="section level2">
 <h2><span class="header-section-number">4.3</span> Spatial operations on raster data</h2>
 <p>This section builds on section <a href="attr.html#manipulating-raster-objects">3.3</a>, which highlights various basic methods for manipulating raster datasets, to demonstrate more advanced and explicitly spatial raster operations, and uses the objects <code>elev</code> and <code>grain</code> manually created in section <a href="attr.html#manipulating-raster-objects">3.3</a>. These datasets can be also found in the <strong>spData</strong> package.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(spData)
-<span class="kw">data</span>(elev)
-<span class="kw">data</span>(grain)</code></pre></div>
 <div id="raster-subsetting" class="section level3">
 <h3><span class="header-section-number">4.3.1</span> Spatial subsetting</h3>
 <p>In the previous chapter (section <a href="attr.html#manipulating-raster-objects">3.3</a>) we have already learned how to subset raster datasets using cell IDs and matrix indexing. Naturally, we can subset rasters also with the help of coordinates and spatial objects. To use coordinates for subsetting, we have to ‘translate’ them into the corresponding cell ID(s) or by using the <code>extract()</code> command. This operation is also known as extracting values/attributes to points.</p>
@@ -635,7 +632,7 @@ canterbury_centroid =<span class="st"> </span><span class="kw">st_centroid</span
 elev[<span class="kw">cellFromXY</span>(elev, <span class="dt">xy =</span> <span class="kw">c</span>(-<span class="fl">1.5</span>, <span class="fl">1.5</span>))]
 <span class="co"># the same as</span>
 <span class="kw">extract</span>(elev, <span class="kw">data.frame</span>(<span class="dt">x =</span> -<span class="fl">1.5</span>, <span class="dt">y =</span> <span class="fl">1.5</span>))</code></pre></div>
-<p>The <code>cellFromXY()</code> and the <code>extract()</code> command accept also a <code>SpatialPoints</code> or <code>SpatialPointsDataFrame</code> object (though not an <strong>sf</strong> object). We can also use a raster object to subset another raster object (Figure <a href="spatial-operations.html#fig:raster-subset">4.7</a> left panel).</p>
+<p>The <code>cellFromXY()</code> and the <code>extract()</code> command also accept <strong>sf</strong> objects. Moreover, we can use a raster object to subset another raster object (Figure <a href="spatial-operations.html#fig:raster-subset">4.7</a> left panel).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">clip =<span class="st"> </span><span class="kw">raster</span>(<span class="dt">nrow =</span> <span class="dv">3</span>, <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">res =</span> <span class="fl">0.3</span>, <span class="dt">xmn =</span> <span class="fl">0.9</span>, <span class="dt">xmx =</span> <span class="fl">1.8</span>, 
               <span class="dt">ymn =</span> -<span class="fl">0.45</span>, <span class="dt">ymx =</span> <span class="fl">0.45</span>, <span class="dt">vals =</span> <span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">9</span>))
 elev[clip]

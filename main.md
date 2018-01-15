@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserved0109cd626a15574
+preserve2749d74bae9e521f
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2711,7 +2711,7 @@ The most important spatial operation on raster data, however, is *map algebra*.
 Map algebra makes raster processing really elegant and fast (covered in sections \@ref(map-algebra) to \@ref(global-operations-and-distances)).
 Map algebra is also the prerequisite for distance calculations on rasters \@ref(global-operations-and-distances).
 
-\BeginKnitrBlock{rmdnote}<div class="rmdnote">It is important to note that spatial operations that use two spatial objects rely on both objects having the same coordinate reference system, a topic that was introduced in \@ref(crs-intro) and which will be covered in more depth in Chapter 6.</div>\EndKnitrBlock{rmdnote}
+\BeginKnitrBlock{rmdnote}<div class="rmdnote">It is important to note that spatial operations that use two spatial objects rely on both objects having the same coordinate reference system, a topic that was introduced in \@ref(crs-intro) and which will be covered in more depth in Chapter \@ref(transform).</div>\EndKnitrBlock{rmdnote}
 
 ## Spatial operations on vector data {#spatial-vec}
 
@@ -3076,8 +3076,8 @@ joined = st_join(x = asia, y = urb) %>%
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/spatial-join-1.png" alt="Illustration of a spatial join: the populations of the world's 3 largest agglomerations joined onto their respective countries." width="576" />
-<p class="caption">(\#fig:spatial-join)Illustration of a spatial join: the populations of the world's 3 largest agglomerations joined onto their respective countries.</p>
+<img src="figures/spatial-join-1.png" alt="Illustration of a spatial join: the populations of the world's three largest agglomerations joined onto their respective countries." width="576" />
+<p class="caption">(\#fig:spatial-join)Illustration of a spatial join: the populations of the world's three largest agglomerations joined onto their respective countries.</p>
 </div>
 
 This operation is also know as spatial overlay.
@@ -3112,7 +3112,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve458879d6abfd4292
+preserve67f1f548b758ad94
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3195,8 +3195,8 @@ The result of the previous operation is illustrated in Figure \@ref(fig:spatial-
 The same result can also be generated using the 'tidy' functions `group_by()` and `summarize()` (used in combination with `st_join()`):
 
 <div class="figure" style="text-align: center">
-<img src="figures/spatial-aggregation-1.png" alt="Average height of high points (stored in the `nz_height` object) across the regions of New Zealand (stored in `nz`." width="576" />
-<p class="caption">(\#fig:spatial-aggregation)Average height of high points (stored in the `nz_height` object) across the regions of New Zealand (stored in `nz`.</p>
+<img src="figures/spatial-aggregation-1.png" alt="Average height of high points (stored in the `nz_height` object) across the regions of New Zealand (stored in `nz`.)" width="576" />
+<p class="caption">(\#fig:spatial-aggregation)Average height of high points (stored in the `nz_height` object) across the regions of New Zealand (stored in `nz`.)</p>
 </div>
 
 
@@ -3292,13 +3292,6 @@ plot(nz_height$geometry[2:3], add = TRUE)
 This section builds on section \@ref(manipulating-raster-objects), which highlights various basic methods for manipulating raster datasets, to demonstrate more advanced and explicitly spatial raster operations, and uses the objects `elev` and `grain` manually created in section \@ref(manipulating-raster-objects).
 These datasets can be also found in the **spData** package.
 
-
-```r
-library(spData)
-data(elev)
-data(grain)
-```
-
 ### Spatial subsetting {#raster-subsetting}
 
 In the previous chapter (section \@ref(manipulating-raster-objects)) we have already learned how to subset raster datasets using cell IDs and matrix indexing.
@@ -3314,8 +3307,8 @@ elev[cellFromXY(elev, xy = c(-1.5, 1.5))]
 extract(elev, data.frame(x = -1.5, y = 1.5))
 ```
 
-The `cellFromXY()` and the `extract()` command accept also a `SpatialPoints` or `SpatialPointsDataFrame` object (though not an **sf** object).
-We can also use a raster object to subset another raster object (Figure \@ref(fig:raster-subset) left panel).
+The `cellFromXY()` and the `extract()` command also accept **sf** objects.
+Moreover, we can use a raster object to subset another raster object (Figure \@ref(fig:raster-subset) left panel).
 
 
 ```r
@@ -6141,7 +6134,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservec99cce88f694ff75
+preserve65db9e607eb97de3
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6802,7 +6795,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 
 
 <div class="figure" style="text-align: center">
-preserve25ef94b2ef3923ec
+preservea704da6646ff79ee
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
