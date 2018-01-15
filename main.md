@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve2749d74bae9e521f
+preservef88509eef39bb5d7
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3112,7 +3112,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve67f1f548b758ad94
+preserve0f67311623ebf752
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3477,7 +3477,7 @@ Check the `focal()` help page how to use them in R.
 
 Also, terrain processing uses heavily focal functions.
 Think, for instance, of the calculation of the slope, aspect and flow directions.
-The `terrain()` function lets you compute a few of these terrain characteristics but has not implemented all popular methods
+The `terrain()` function lets you compute a few of these terrain characteristics but has not implemented all popular methods.
 For example, the Zevenbergen and Thorne method to compute the slope is missing.
 Equally, many other terrain and GIS functions are **not** implemented in R such as curvatures, contributing areas, different wetness indexes, and many more.
 Fortunately, desktop GIS commonly provide these algorithms.
@@ -3532,6 +3532,7 @@ However, zonal operations might be the better raster equivalent compared to chan
 Zonal operations can dissolve the cells of one raster in accordance with the zones (categories) of another raster using an aggregation function (see above).
 
 ### Merging rasters
+
 Suppose we would like to compute the NDVI (see section \@ref(local-operations)), and additionally want to compute terrain attributes from elevation data for observations within a study area.
 Before such computations we would have to acquire airborne or remotely sensed information.
 The corresponding imagery is often divided into scenes covering a specific spatial extent.
@@ -6134,7 +6135,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve65db9e607eb97de3
+preserve9dff23eba195632f
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6795,7 +6796,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 
 
 <div class="figure" style="text-align: center">
-preservea704da6646ff79ee
+preserve3ab2ad96b4fa10fb
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
