@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservef88509eef39bb5d7
+preserve090cc33bc5899a42
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3112,7 +3112,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve0f67311623ebf752
+preserve91f2ab3c61c0ae42
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3307,8 +3307,8 @@ elev[cellFromXY(elev, xy = c(-1.5, 1.5))]
 extract(elev, data.frame(x = -1.5, y = 1.5))
 ```
 
-The `cellFromXY()` and the `extract()` command also accept **sf** objects.
-Moreover, we can use a raster object to subset another raster object (Figure \@ref(fig:raster-subset) left panel).
+**raster** functions `cellFromXY()` and `extract()` also accept objects of class `sf`.
+Raster objects can also be subset with another raster object, as illustrated in Figure \@ref(fig:raster-subset) (left panel) and demonstrated in the code chunk below:
 
 
 ```r
@@ -6135,7 +6135,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve9dff23eba195632f
+preservecae6a5455086ddb9
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6796,7 +6796,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 
 
 <div class="figure" style="text-align: center">
-preserve3ab2ad96b4fa10fb
+preservefc3f0c61b391f66d
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
