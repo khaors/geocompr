@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve94982cdf5e3f97a9
+preserve4ea812b8d7781eec
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3112,7 +3112,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve900aa5d24a3e8064
+preserve8539cacb93f50059
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3711,7 +3711,7 @@ st_is_longlat(london)
 #> [1] TRUE
 ```
 
-Spatial operations on objects without a CRS run on the implicit assumption that they are projected, even when in reality they are not.
+Many spatial operations assume that input vector objects are projected, even when in reality they are not.
 This can lead to problems, as illustrated by the following code chunk, which creates a buffer of one degree around `london`:
 
 
@@ -3722,13 +3722,16 @@ london_buff = st_buffer(london, dist = 1)
 #> dist is assumed to be in decimal degrees (arc_degrees).
 ```
 
-Note the warning that informs us that the result has limited use because distances in geographic CRSs are in degrees, rather than meters or some other suitable measure of distance.
+The message stating that `dist is assumed to be in decimal degrees` is useful: it warns that the result may be of limited use because it is in units of latitude and longitude, rather meters or some other suitable measure of distance.
 The consequences of a failure to work on projected data are illustrated in Figure \@ref(fig:crs-buf) (left panel):
-note how the buffer is elongated in the north-south direction.
-This is because lines of longitude converge towards the Earth's poles making them closer together.
-In fact, the distance between two meridians is a bit more than 111 km at the equator.
-This distance shrinks to zero for the same two meridians at the poles.
-Lines of latitude, by contrast, always have the same distance from each other irrespective of their location, that means they are a bit more than 111 km apart both at the equator and near the poles (see Figures \@ref(fig:crs-buf) and \@ref(fig:wintriproj) for a visual illustration).  
+the buffer is elongated in the north-south direction because lines of longitude converge towards the Earth's poles.
+
+\BeginKnitrBlock{rmdnote}<div class="rmdnote">The distance between two lines of longitude, called meridians, is around 111 km at the equator (execute `geosphere::distGeo(c(0, 0), c(1, 0))` to find the precise distance).
+This shrinks to zero at the poles.
+At the latitude of London, for example, meridians are less 70 km apart (challenge: execute code that verifies this).
+<!-- `geosphere::distGeo(c(0, 51.5), c(1, 51.5))` -->
+Lines of latitude, by contrast, have are of constant distance from each other irrespective of latitude: they are always around 111 km apart, including at the equator and near the poles.
+This is illustrated in Figures \@ref(fig:crs-buf) and \@ref(fig:wintriproj).  </div>\EndKnitrBlock{rmdnote}
 
 Do not interpret the warning about the geographic (`longitude/latitude`) CRS as "the CRS should not be set": it almost always should be!
 It is better understood as a suggestion to *reproject* the data onto a projected CRS.
@@ -3753,9 +3756,11 @@ st_crs(london_proj)
 #>   proj4string: "+proj=tmerc +lat_0=49 +lon_0=-2 ... +units=m +no_defs"
 ```
 
-Notable components of this CRS description include the EPSG code (`EPSG: 27700`), the projection (transverse Mercator, `+proj=tmerc`), the origin (`+lat_0=49 +lon_0=-2`) and units (`+units=m`).^[For a short description of the most relevant projection parameters and related concepts, see the fourth lecture by Jochen Albrecht: [geography.hunter.cuny.edu/~jochen/GTECH361/lectures/](http://www.geography.hunter.cuny.edu/~jochen/GTECH361/lectures/lecture04/concepts/Map%20coordinate%20systems/Projection%20parameters.htm) as well as [http://proj4.org/parameters.html](http://proj4.org/parameters.html). 
-Another great resource on projection definitions is [http://spatialreference.org/](http://spatialreference.org/).]
-The fact that the units of the CRS are meters (rather than degrees) tells us that this is a projected CRS: geometry operations on `london_proj` will work without a warning, meaning buffers can be produced from it using proper units of distance.
+Notable components of this CRS description include the EPSG code (`EPSG: 27700`), the projection (transverse Mercator, `+proj=tmerc`), the origin (`+lat_0=49 +lon_0=-2`) and units (`+units=m`).^[
+For a short description of the most relevant projection parameters and related concepts, see the fourth lecture by Jochen Albrecht: [geography.hunter.cuny.edu/~jochen/GTECH361/lectures/](http://www.geography.hunter.cuny.edu/~jochen/GTECH361/lectures/lecture04/concepts/Map%20coordinate%20systems/Projection%20parameters.htm) as well as [http://proj4.org/parameters.html](http://proj4.org/parameters.html). 
+Another great resource on projection definitions is [http://spatialreference.org/](http://spatialreference.org/).
+]
+The fact that the units of the CRS are meters (rather than degrees) tells us that this is a projected CRS: `st_is_longlat(london_proj)` now returns `FALSE` and geometry operations on `london_proj` will work without a warning, meaning buffers can be produced from it using proper units of distance.
 <!-- 
 1 degree distance (great circle distance) at the equator:
 geosphere::alongTrackDistance(c(0, 0), c(0, 1), c(0, 1)) 
@@ -3857,11 +3862,12 @@ lonlat2UTM = function(lonlat) {
 }
 ```
 
-Let's use this function to identify the UTM zone and associated EPSG code for London:
+The following command uses this function to identify the UTM zone and associated EPSG code for London:
 
 
 ```r
-epsg_utm = lonlat2UTM(st_coordinates(london))
+(epsg_utm = lonlat2UTM(st_coordinates(london)))
+#> [1] 32630
 st_crs(epsg_utm)
 #> Coordinate Reference System:
 #>   EPSG: 32630 
@@ -3927,20 +3933,19 @@ st_crs(cycle_hire_osm)
 ```
 
 CRSs in the **sf** package can be defined using the corresponding `epsg` code or a `proj4string` definition (see section \@ref(crs-in-r)).
-
-Let's create a new version of `cycle_hire_osm` in a projected CRS, using the `epsg` number of 27700:
+The following command creates a projected version of `cycle_hire_osm` using the EPSG code 27700:
 
 
 ```r
 cycle_hire_osm_projected = st_transform(cycle_hire_osm, 27700)
-st_crs(cycle_hire_osm_projected)
-#> Coordinate Reference System:
-#>   EPSG: 27700 
-#>   proj4string: "+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs"
 ```
 
-Note that the result shows that the `epsg` has been updated and that the `proj4string` element of the CRS now contains, among other things `+proj=tmerc` (meaning it is a projected CRS using the [tranverse Mercator](https://en.wikipedia.org/wiki/Transverse_Mercator_projection) projection) and `+units=m` (meaning the units of the coordinates are meters).
-Another function, from the **rgdal** library, provides a note containing the name of the CRS:
+The resulting object has a new CRS the characteristics of which can be seen by executing
+`st_crs(cycle_hire_osm_projected)`.
+The result of this command contains `+proj=tmerc` (meaning it is a projected CRS using the [tranverse Mercator](https://en.wikipedia.org/wiki/Transverse_Mercator_projection) projection) and `+units=m` (meaning the units of the coordinates are meters).
+But how to find out more details about this EPSG code, or any code?
+One option is to search for it online.
+Another option is to use a function from the **rgdal** package to find the name of the CRS:
 
 
 ```r
@@ -4442,7 +4447,7 @@ plot(b)
 plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
 ```
 
-<img src="figures/unnamed-chunk-52-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-53-1.png" width="576" style="display: block; margin: auto;" />
 
 The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
 <!-- Todo: reference r4ds -->
@@ -6135,7 +6140,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservea7df404ed6ff41ea
+preserve51641a3a1bd63ca0
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6796,7 +6801,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 
 
 <div class="figure" style="text-align: center">
-preserve662afc76226502bd
+preserve521ae23dac02742f
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
