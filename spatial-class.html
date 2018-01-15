@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-01-14">
+<meta name="date" content="2018-01-15">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -299,8 +299,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <!-- Another option is to use the RStudio project provided in the root directory of the [`geocompr`](https://github.com/Robinlovelace/geocompr) GitHub repository. -->
 <!-- This will make it easier to run this book's worked examples on your computer. -->
 <p>After you’ve checked you R installation and brushed-up on your R skills where appropriate, the next step is to install and load the packages used in this chapter. Packages are installed with <code>install.packages(&quot;package_name&quot;)</code>. We will use the two packages that provide functions for handling spatial data, loaded with <code>library(package_name)</code> as follows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(raster)      <span class="co"># classes and functions for raster data</span>
-<span class="kw">library</span>(sf)          <span class="co"># classes and functions for vector data</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sf)          <span class="co"># classes and functions for vector data</span>
+<span class="kw">library</span>(raster)      <span class="co"># classes and functions for raster data</span></code></pre></div>
 <p>The chapter also relies on two data packages: <strong>spData</strong> and <strong>spDataLarge</strong>, the latter of which must be installed after <strong>spData</strong> is loaded:<a href="#fn14" class="footnoteRef" id="fnref14"><sup>14</sup></a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(spData)        <span class="co"># load geographic data</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;spDataLarge&quot;</span>) <span class="co"># after loading spData</span></code></pre></div>

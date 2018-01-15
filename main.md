@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-01-14'
+date: '2018-01-15'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2018-01-14 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-01-15 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservebb7bdc23408e796a
+preserved0109cd626a15574
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -504,8 +504,8 @@ We will use the two packages that provide functions for handling spatial data, l
 
 
 ```r
-library(raster)      # classes and functions for raster data
 library(sf)          # classes and functions for vector data
+library(raster)      # classes and functions for raster data
 ```
 
 The chapter also relies on two data packages: **spData** and **spDataLarge**, the latter of which must be installed after **spData** is loaded:^[**spDataLarge** can also be installed with the following command: `install.packages("spDataLarge", repos = "https://nowosad.github.io/drat/", type = "source")`.]
@@ -1830,7 +1830,7 @@ Assign random values between 0 and 10 to the new raster and plot it.
 
 ## Prerequisites {-}
 
-- This chapter requires the packages **tidyverse**, **sf** and **raster**:
+- This chapter requires the packages **sf**, **raster** and **tidyverse**: 
 
 
 ```r
@@ -2669,13 +2669,13 @@ Create a raster stack using `dem` and `ndvi`, and make a `pairs()` plot
 
 ## Prerequisites {-}
 
-- This chapter requires the packages **tidyverse**, **sf** and **raster**. 
+- This chapter requires the packages **sf**, **raster** and **tidyverse**: 
 
 
 ```r
 library(sf)
-library(tidyverse)
 library(raster)
+library(tidyverse)
 ```
 
 - It also relies on **spData**, which loads datasets used in the code examples of this chapter:
@@ -3112,7 +3112,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve7b313183acdaeae4
+preserve458879d6abfd4292
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3641,8 +3641,8 @@ A more advanced approach might instead weight by flow direction, i.e. favor the 
 
 
 ```r
-library(raster)
 library(sf)
+library(raster)
 library(tidyverse)
 ```
 
@@ -5022,10 +5022,10 @@ Using the new object:
 
 
 ```r
-library(tidyverse)
 library(sf)
-library(spData)
 library(raster)
+library(tidyverse)
+library(spData)
 ```
 
 ## Introduction
@@ -6141,7 +6141,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve20a6d111c653fa0a
+preservec99cce88f694ff75
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6802,7 +6802,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 
 
 <div class="figure" style="text-align: center">
-preserve73fb4a9958f785a6
+preserve25ef94b2ef3923ec
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
