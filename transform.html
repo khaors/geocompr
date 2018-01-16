@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-01-15">
+<meta name="date" content="2018-01-16">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -356,7 +356,7 @@ The distance between two lines of longitude, called meridians, is around 111 km 
 <span class="co">#&gt; Coordinate Reference System:</span>
 <span class="co">#&gt;   EPSG: 27700 </span>
 <span class="co">#&gt;   proj4string: &quot;+proj=tmerc +lat_0=49 +lon_0=-2 ... +units=m +no_defs&quot;</span></code></pre></div>
-<p>Notable components of this CRS description include the EPSG code (<code>EPSG: 27700</code>), the projection (transverse Mercator, <code>+proj=tmerc</code>), the origin (<code>+lat_0=49 +lon_0=-2</code>) and units (<code>+units=m</code>).<a href="#fn27" class="footnoteRef" id="fnref27"><sup>27</sup></a> The fact that the units of the CRS are meters (rather than degrees) tells us that this is a projected CRS: <code>st_is_longlat(london_proj)</code> now returns <code>FALSE</code> and geometry operations on <code>london_proj</code> will work without a warning, meaning buffers can be produced from it using proper units of distance. <!-- 
+<p>Notable components of this CRS description include the EPSG code (<code>EPSG: 27700</code>), the projection (<a href="https://en.wikipedia.org/wiki/Transverse_Mercator_projection">transverse Mercator</a>, <code>+proj=tmerc</code>), the origin (<code>+lat_0=49 +lon_0=-2</code>) and units (<code>+units=m</code>).<a href="#fn27" class="footnoteRef" id="fnref27"><sup>27</sup></a> The fact that the units of the CRS are meters (rather than degrees) tells us that this is a projected CRS: <code>st_is_longlat(london_proj)</code> now returns <code>FALSE</code> and geometry operations on <code>london_proj</code> will work without a warning, meaning buffers can be produced from it using proper units of distance. <!-- 
 1 degree distance (great circle distance) at the equator:
 geosphere::alongTrackDistance(c(0, 0), c(0, 1), c(0, 1)) 
 but 1 degree converted into m distance at the latitude of London:
@@ -436,9 +436,9 @@ Figure 5.1: Buffer on vector represenations of London with a geographic (left) a
 <span class="co">#&gt; Coordinate Reference System:</span>
 <span class="co">#&gt;   EPSG: 4326 </span>
 <span class="co">#&gt;   proj4string: &quot;+proj=longlat +datum=WGS84 +no_defs&quot;</span></code></pre></div>
-<p>CRSs in the <strong>sf</strong> package can be defined using the corresponding <code>epsg</code> code or a <code>proj4string</code> definition (see section <a href="spatial-class.html#crs-in-r">2.3.3</a>). The following command creates a projected version of <code>cycle_hire_osm</code> using the EPSG code 27700:</p>
+<p>CRSs in the <strong>sf</strong> package can be defined using the corresponding <code>epsg</code> code or a <code>proj4string</code> definition (see section <a href="spatial-class.html#crs-in-r">2.3.3</a>). The following command creates a projected version of <code>cycle_hire_osm</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cycle_hire_osm_projected =<span class="st"> </span><span class="kw">st_transform</span>(cycle_hire_osm, <span class="dv">27700</span>)</code></pre></div>
-<p>The resulting object has a new CRS the characteristics of which can be seen by executing <code>st_crs(cycle_hire_osm_projected)</code>. The result of this command contains <code>+proj=tmerc</code> (meaning it is a projected CRS using the <a href="https://en.wikipedia.org/wiki/Transverse_Mercator_projection">tranverse Mercator</a> projection) and <code>+units=m</code> (meaning the units of the coordinates are meters). But how to find out more details about this EPSG code, or any code? One option is to search for it online. Another option is to use a function from the <strong>rgdal</strong> package to find the name of the CRS:</p>
+<p>The resulting object has a new CRS with an EPSG code 27700, details of which can be seen by executing <code>st_crs(cycle_hire_osm_projected)</code>, and for <code>london_proj</code> in the previous section. But how to find out more details about this EPSG code, or any code? One option is to search for it online. Another option is to use a function from the <strong>rgdal</strong> package to find the name of the CRS:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">crs_codes =<span class="st"> </span>rgdal::<span class="kw">make_EPSG</span>()[<span class="dv">1</span>:<span class="dv">2</span>]
 dplyr::<span class="kw">filter</span>(crs_codes, code ==<span class="st"> </span><span class="dv">27700</span>)
 <span class="co">#&gt;    code                                note</span>
