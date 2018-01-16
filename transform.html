@@ -449,7 +449,8 @@ Printing a spatial object in the console, automatically returns its coordinate r
 </div>
 <div id="modifying-map-projections" class="section level3">
 <h3><span class="header-section-number">5.2.3</span> Modifying map projections</h3>
-<p>Established CRSs captured by EPSG codes are well-suited for many applications. However in some cases it is desirable to create a new CRS, using a custom <code>proj4string</code>. This system allows a very wide range of projections to be created, as we’ll see in some of the custom map projections in this section. <!-- as we mentioned in section \@ref(crs-in-r). --> To illustrate this, w will show existing CRS and how to modify <code>proj4string</code> specifications. When mapping the world while preserving areal relationships, the Mollweide projection is a good choice <span class="citation">(Jenny et al. <a href="#ref-jenny_guide_2017">2017</a>)</span> (Figure <a href="transform.html#fig:mollproj">5.2</a>). To use this projection, we need to specify it using the <code>proj4string</code> element, <code>&quot;+proj=moll&quot;</code>, in the <code>st_transform</code> function:</p>
+<p>Established CRSs captured by EPSG codes are well-suited for many applications. However in some cases it is desirable to create a new CRS, using a custom <code>proj4string</code>. This system allows a very wide range of projections to be created, as we’ll see in some of the custom map projections in this section. <!-- as we mentioned in section \@ref(crs-in-r). --></p>
+<p>A long and growing list of projections has been developed and many of these these can be set with the <code>proj=</code> element of <code>proj4string</code>s.<a href="#fn30" class="footnoteRef" id="fnref30"><sup>30</sup></a> When mapping the world while preserving areal relationships, the Mollweide projection is a good choice <span class="citation">(Jenny et al. <a href="#ref-jenny_guide_2017">2017</a>)</span> (Figure <a href="transform.html#fig:mollproj">5.2</a>). To use this projection, we need to specify it using the <code>proj4string</code> element, <code>&quot;+proj=moll&quot;</code>, in the <code>st_transform</code> function:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_mollweide =<span class="st"> </span><span class="kw">st_transform</span>(world, <span class="dt">crs =</span> <span class="st">&quot;+proj=moll&quot;</span>)</code></pre></div>
 <!-- plot(world_mollweide$geom) -->
 <!-- plot(world_mollweide$geom, graticule = TRUE) -->
@@ -459,7 +460,7 @@ Printing a spatial object in the console, automatically returns its coordinate r
 Figure 5.2: Mollweide projection of the world
 </p>
 </div>
-<p>On the other hand, when mapping the world, it is often desirable to have as little distortion as possible for all spatial properties (area, direction, distance). One of the most popular projections to achieve this is the Winkel tripel projection (Figure <a href="transform.html#fig:wintriproj">5.3</a>).<a href="#fn30" class="footnoteRef" id="fnref30"><sup>30</sup></a> <code>st_transform_proj()</code> from the <strong>lwgeom</strong> package allows for coordinate transformations to a wide range of CRSs, including the Winkel tripel projection:</p>
+<p>On the other hand, when mapping the world, it is often desirable to have as little distortion as possible for all spatial properties (area, direction, distance). One of the most popular projections to achieve this is the Winkel tripel projection (Figure <a href="transform.html#fig:wintriproj">5.3</a>).<a href="#fn31" class="footnoteRef" id="fnref31"><sup>31</sup></a> <code>st_transform_proj()</code> from the <strong>lwgeom</strong> package allows for coordinate transformations to a wide range of CRSs, including the Winkel tripel projection:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_wintri =<span class="st"> </span>lwgeom::<span class="kw">st_transform_proj</span>(world, <span class="dt">crs =</span> <span class="st">&quot;+proj=wintri&quot;</span>)</code></pre></div>
 <!-- plot(world_wintri$geom) -->
 <!-- plot(world_wintri$geom, graticule = TRUE) -->
@@ -519,7 +520,7 @@ It is possible to use a EPSG code in a <code>proj4string</code> definition with 
 <span class="co">#&gt; CRS arguments:</span>
 <span class="co">#&gt;  +proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m</span>
 <span class="co">#&gt; +no_defs</span></code></pre></div>
-<p>In this region, 14 land cover classes were distinguished<a href="#fn31" class="footnoteRef" id="fnref31"><sup>31</sup></a>:</p>
+<p>In this region, 14 land cover classes were distinguished<a href="#fn32" class="footnoteRef" id="fnref32"><sup>32</sup></a>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">unique</span>(cat_raster)
 <span class="co">#&gt;  [1] 11 21 22 23 31 41 42 43 52 71 81 82 90 95</span></code></pre></div>
 <p>When reprojecting categorical raster, we need to ensure that our new estimated values would still have values of our original classes. This could be done using the nearest neighbor method (<code>ngb</code>). In this method, value of the output cell is calculated based on the nearest cell center of the input raster.</p>
@@ -575,7 +576,7 @@ con_raster_ea =<span class="st"> </span><span class="kw">projectRaster</span>(co
 <span class="kw">crs</span>(con_raster_ea)
 <span class="co">#&gt; CRS arguments:</span>
 <span class="co">#&gt;  +proj=laea +lat_0=37.32 +lon_0=-113.04 +ellps=WGS84</span></code></pre></div>
-<p>Raster reprojection on numeric variables also leads to small changes values and spatial properties, such as the number of cells, resolution, and extent. These changes small changes are demonstrated in Table <a href="transform.html#tab:rastercrs">5.2</a>:<a href="#fn32" class="footnoteRef" id="fnref32"><sup>32</sup></a></p>
+<p>Raster reprojection on numeric variables also leads to small changes values and spatial properties, such as the number of cells, resolution, and extent. These changes small changes are demonstrated in Table <a href="transform.html#tab:rastercrs">5.2</a>:<a href="#fn33" class="footnoteRef" id="fnref33"><sup>33</sup></a></p>
 <table>
 <caption><span id="tab:rastercrs">Table 5.2: </span>Key attributes original <code>con_raster</code> and projected <code>con_raster_ea</code> raster datasets.</caption>
 <thead>
@@ -923,7 +924,7 @@ raster_template2 =<span class="st"> </span><span class="kw">raster</span>(<span 
 Figure 5.18: Examples of line and polygon rasterizations
 </p>
 </div>
-<p>While <code>rasterize</code> works well for most cases, it is not performance optimized. Fortunately, there are several alternatives, including the <code>fasterize::fasterize()</code><a href="#fn33" class="footnoteRef" id="fnref33"><sup>33</sup></a> and <code>gdalUtils::gdal_rasterize()</code>. The former is 100s times faster than <code>rasterize()</code>, however it is currently limited to polygon rasterization. The latter is part of GDAL and therefore requires a vector file, instead of an <code>sf</code> object, as an input and rasterization parameters, instead of a <code>Raster*</code> template object.<a href="#fn34" class="footnoteRef" id="fnref34"><sup>34</sup></a></p>
+<p>While <code>rasterize</code> works well for most cases, it is not performance optimized. Fortunately, there are several alternatives, including the <code>fasterize::fasterize()</code><a href="#fn34" class="footnoteRef" id="fnref34"><sup>34</sup></a> and <code>gdalUtils::gdal_rasterize()</code>. The former is 100s times faster than <code>rasterize()</code>, however it is currently limited to polygon rasterization. The latter is part of GDAL and therefore requires a vector file, instead of an <code>sf</code> object, as an input and rasterization parameters, instead of a <code>Raster*</code> template object.<a href="#fn35" class="footnoteRef" id="fnref35"><sup>35</sup></a></p>
 </div>
 </div>
 <div id="geo-ras" class="section level2">
@@ -983,7 +984,7 @@ Figure 5.20: Original raster (left). Aggregated raster (right).
 <span class="co">#&gt; [1] 0 0</span>
 <span class="kw">origin</span>(elev_agg)
 <span class="co">#&gt; [1] 0.5 0.5</span></code></pre></div>
-<p>The origin is the point closest to (0, 0) if you moved towards it in steps of x and y resolution. If two rasters have different origins, their cells do not overlap completely which would make map algebra impossible. To change the origin , use <code>origin()</code>.<a href="#fn35" class="footnoteRef" id="fnref35"><sup>35</sup></a> Looking at figure <a href="transform.html#fig:origin-example">5.21</a> reveals the effect of changing the origin.</p>
+<p>The origin is the point closest to (0, 0) if you moved towards it in steps of x and y resolution. If two rasters have different origins, their cells do not overlap completely which would make map algebra impossible. To change the origin , use <code>origin()</code>.<a href="#fn36" class="footnoteRef" id="fnref36"><sup>36</sup></a> Looking at figure <a href="transform.html#fig:origin-example">5.21</a> reveals the effect of changing the origin.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the aggregated raster</span>
 <span class="kw">plot</span>(elev_agg)
 <span class="co"># change the origin</span>
@@ -1010,7 +1011,7 @@ elev_disagg =<span class="st"> </span><span class="kw">resample</span>(elev_agg,
 <div id="vectorization" class="section level3">
 <h3><span class="header-section-number">5.4.3</span> Vectorization</h3>
 <!-- ref to rasterization -->
-<p>Vectorization is a process of converting rasters into vectors.<a href="#fn36" class="footnoteRef" id="fnref36"><sup>36</sup></a> It is often used when we want to connect features extracted from raster data with an attribute table. The simplest form of vectorization is a conversion from a raster to points. The <code>rasterToPoints()</code> function creates point representations of every non-NA raster grid cell centroids and it is usually used for continuous data, such as elevation (Figure <a href="transform.html#fig:raster-vectorization1">5.22</a>). <!-- Spatial* class mentioned --> <!-- why? --></p>
+<p>Vectorization is a process of converting rasters into vectors.<a href="#fn37" class="footnoteRef" id="fnref37"><sup>37</sup></a> It is often used when we want to connect features extracted from raster data with an attribute table. The simplest form of vectorization is a conversion from a raster to points. The <code>rasterToPoints()</code> function creates point representations of every non-NA raster grid cell centroids and it is usually used for continuous data, such as elevation (Figure <a href="transform.html#fig:raster-vectorization1">5.22</a>). <!-- Spatial* class mentioned --> <!-- why? --></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_point =<span class="st"> </span><span class="kw">rasterToPoints</span>(elev, <span class="dt">spatial =</span> <span class="ot">TRUE</span>) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">st_as_sf</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:raster-vectorization1"></span>
@@ -1019,7 +1020,7 @@ elev_disagg =<span class="st"> </span><span class="kw">resample</span>(elev_agg,
 Figure 5.22: Raster and point representation of the elev dataset.
 </p>
 </div>
-<p>On the other hand, categorical rasters (e.g. scanned maps or satellite images) represent discrete features that could occupy areas larger than only one cell. The <code>rasterToPolygons()</code> function could be used to extract these features into a <code>SpatialPolygonsDataFrame</code> object. We can also convert the result into an object of class <code>sf</code>.<a href="#fn37" class="footnoteRef" id="fnref37"><sup>37</sup></a></p>
+<p>On the other hand, categorical rasters (e.g. scanned maps or satellite images) represent discrete features that could occupy areas larger than only one cell. The <code>rasterToPolygons()</code> function could be used to extract these features into a <code>SpatialPolygonsDataFrame</code> object. We can also convert the result into an object of class <code>sf</code>.<a href="#fn38" class="footnoteRef" id="fnref38"><sup>38</sup></a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grain_poly =<span class="st"> </span><span class="kw">rasterToPolygons</span>(grain) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">st_as_sf</span>()</code></pre></div>
 <p>The output consists of many polygons representing grid cells from the original raster object. They could be aggregated (see section <a href="spatial-operations.html#spatial-aggr">4.2.5</a>) into irregular polygons having the same value (Figure <a href="transform.html#fig:raster-vectorization1">5.22</a>).</p>
@@ -1131,14 +1132,15 @@ Figure 5.23: Illustration of vectorization of raster (left) into polygon (center
 <li id="fn27"><p>For a short description of the most relevant projection parameters and related concepts, see the fourth lecture by Jochen Albrecht: <a href="http://www.geography.hunter.cuny.edu/~jochen/GTECH361/lectures/lecture04/concepts/Map%20coordinate%20systems/Projection%20parameters.htm">geography.hunter.cuny.edu/~jochen/GTECH361/lectures/</a> as well as <a href="http://proj4.org/parameters.html" class="uri">http://proj4.org/parameters.html</a>. Another great resource on projection definitions is <a href="http://spatialreference.org/" class="uri">http://spatialreference.org/</a>.<a href="transform.html#fnref27">↩</a></p></li>
 <li id="fn28"><p>The difference in location between the two points is not due to imperfections in the transforming operation (which is in fact very accurate) but the low precision of the manually-created coordinates that created <code>london</code> and <code>london_proj</code>. Also surprising may be that the result is provided in a matrix with units of meters. This is because <code>st_distance()</code> can provide distances between many features and because the CRS has units of meters. Use <code>as.numeric()</code> to coerce the result into a regular number.<a href="transform.html#fnref28">↩</a></p></li>
 <li id="fn29"><p>Thanks to Josh O’Brien who provided the basis for this function in an answer to a question on <a href="https://stackoverflow.com/questions/9186496">stackoverflow</a>.<a href="transform.html#fnref29">↩</a></p></li>
-<li id="fn30"><p>This projection is used, among others, by the National Geographic Society.<a href="transform.html#fnref30">↩</a></p></li>
-<li id="fn31"><p>Full list of NLCD2011 land cover classes can be found at <a href="https://www.mrlc.gov/nlcd11_leg.php" class="uri">https://www.mrlc.gov/nlcd11_leg.php</a><a href="transform.html#fnref31">↩</a></p></li>
-<li id="fn32"><p>Another minor change, that is not represented in Table <a href="transform.html#tab:rastercrs">5.2</a>, is that the class of the values in the new projected raster dataset is <code>numeric</code>. This is because the <code>bilinear</code> method works with continuous data and the results are rarely coerced into whole integer values. This can have implications for file sizes when raster datasets are saved.<a href="transform.html#fnref32">↩</a></p></li>
-<li id="fn33"><p>The <strong>fasterize</strong> package is available at <a href="https://github.com/ecohealthalliance/fasterize" class="uri">https://github.com/ecohealthalliance/fasterize</a>.<a href="transform.html#fnref33">↩</a></p></li>
-<li id="fn34"><p>See more at <a href="http://www.gdal.org/gdal_rasterize.html" class="uri">http://www.gdal.org/gdal_rasterize.html</a>.<a href="transform.html#fnref34">↩</a></p></li>
-<li id="fn35"><p>If the origins of two raster datasets are just marginally apart, it sometimes is sufficient to simply increase the <code>tolerance</code> argument of <code>raster::rasterOptions()</code>.<a href="transform.html#fnref35">↩</a></p></li>
-<li id="fn36"><p>This term should not be confused with a code vectorization.<a href="transform.html#fnref36">↩</a></p></li>
-<li id="fn37"><p>The <code>spex::polygonize()</code> function could be used as a faster alternative. It returns an <code>sf</code> object a default.<a href="transform.html#fnref37">↩</a></p></li>
+<li id="fn30"><p>See the Wikepedia page ‘<a href="https://en.wikipedia.org/wiki/List_of_map_projections">List of map projections</a>’ for 70+ projections, and illustrations.<a href="transform.html#fnref30">↩</a></p></li>
+<li id="fn31"><p>This projection is used, among others, by the National Geographic Society.<a href="transform.html#fnref31">↩</a></p></li>
+<li id="fn32"><p>Full list of NLCD2011 land cover classes can be found at <a href="https://www.mrlc.gov/nlcd11_leg.php" class="uri">https://www.mrlc.gov/nlcd11_leg.php</a><a href="transform.html#fnref32">↩</a></p></li>
+<li id="fn33"><p>Another minor change, that is not represented in Table <a href="transform.html#tab:rastercrs">5.2</a>, is that the class of the values in the new projected raster dataset is <code>numeric</code>. This is because the <code>bilinear</code> method works with continuous data and the results are rarely coerced into whole integer values. This can have implications for file sizes when raster datasets are saved.<a href="transform.html#fnref33">↩</a></p></li>
+<li id="fn34"><p>The <strong>fasterize</strong> package is available at <a href="https://github.com/ecohealthalliance/fasterize" class="uri">https://github.com/ecohealthalliance/fasterize</a>.<a href="transform.html#fnref34">↩</a></p></li>
+<li id="fn35"><p>See more at <a href="http://www.gdal.org/gdal_rasterize.html" class="uri">http://www.gdal.org/gdal_rasterize.html</a>.<a href="transform.html#fnref35">↩</a></p></li>
+<li id="fn36"><p>If the origins of two raster datasets are just marginally apart, it sometimes is sufficient to simply increase the <code>tolerance</code> argument of <code>raster::rasterOptions()</code>.<a href="transform.html#fnref36">↩</a></p></li>
+<li id="fn37"><p>This term should not be confused with a code vectorization.<a href="transform.html#fnref37">↩</a></p></li>
+<li id="fn38"><p>The <code>spex::polygonize()</code> function could be used as a faster alternative. It returns an <code>sf</code> object a default.<a href="transform.html#fnref38">↩</a></p></li>
 </ol>
 </div>
             </section>
