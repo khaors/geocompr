@@ -450,7 +450,7 @@ Printing a spatial object in the console, automatically returns its coordinate r
 <div id="modifying-map-projections" class="section level3">
 <h3><span class="header-section-number">5.2.3</span> Modifying map projections</h3>
 <p>Established CRSs captured by EPSG codes are well-suited for many applications. However in some cases it is desirable to create a new CRS, using a custom <code>proj4string</code>. This system allows a very wide range of projections to be created, as we’ll see in some of the custom map projections in this section. <!-- as we mentioned in section \@ref(crs-in-r). --></p>
-<p>A long and growing list of projections has been developed and many of these these can be set with the <code>proj=</code> element of <code>proj4string</code>s.<a href="#fn30" class="footnoteRef" id="fnref30"><sup>30</sup></a> When mapping the world while preserving areal relationships, the Mollweide projection is a good choice <span class="citation">(Jenny et al. <a href="#ref-jenny_guide_2017">2017</a>)</span> (Figure <a href="transform.html#fig:mollproj">5.2</a>). To use this projection, we need to specify it using the <code>proj4string</code> element, <code>&quot;+proj=moll&quot;</code>, in the <code>st_transform</code> function:</p>
+<p>A long and growing list of projections has been developed and many of these these can be set with the <code>+proj=</code> element of <code>proj4string</code>s.<a href="#fn30" class="footnoteRef" id="fnref30"><sup>30</sup></a> When mapping the world while preserving areal relationships, the Mollweide projection is a good choice <span class="citation">(Jenny et al. <a href="#ref-jenny_guide_2017">2017</a>)</span> (Figure <a href="transform.html#fig:mollproj">5.2</a>). To use this projection, we need to specify it using the <code>proj4string</code> element, <code>&quot;+proj=moll&quot;</code>, in the <code>st_transform</code> function:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_mollweide =<span class="st"> </span><span class="kw">st_transform</span>(world, <span class="dt">crs =</span> <span class="st">&quot;+proj=moll&quot;</span>)</code></pre></div>
 <!-- plot(world_mollweide$geom) -->
 <!-- plot(world_mollweide$geom, graticule = TRUE) -->
@@ -576,7 +576,7 @@ con_raster_ea =<span class="st"> </span><span class="kw">projectRaster</span>(co
 <span class="kw">crs</span>(con_raster_ea)
 <span class="co">#&gt; CRS arguments:</span>
 <span class="co">#&gt;  +proj=laea +lat_0=37.32 +lon_0=-113.04 +ellps=WGS84</span></code></pre></div>
-<p>Raster reprojection on numeric variables also leads to small changes values and spatial properties, such as the number of cells, resolution, and extent. These changes small changes are demonstrated in Table <a href="transform.html#tab:rastercrs">5.2</a>:<a href="#fn33" class="footnoteRef" id="fnref33"><sup>33</sup></a></p>
+<p>Raster reprojection on numeric variables also leads to small changes values and spatial properties, such as the number of cells, resolution, and extent. These changes small changes are demonstrated in Table <a href="transform.html#tab:rastercrs">5.2</a><a href="#fn33" class="footnoteRef" id="fnref33"><sup>33</sup></a>:</p>
 <table>
 <caption><span id="tab:rastercrs">Table 5.2: </span>Key attributes original <code>con_raster</code> and projected <code>con_raster_ea</code> raster datasets.</caption>
 <thead>

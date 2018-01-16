@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve4453b1166bb87b86
+preserve57983fd907a2ccfe
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3112,7 +3112,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveb01d0b7d785a62f7
+preserve8bd338a89001197f
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3978,7 +3978,7 @@ However in some cases it is desirable to create a new CRS, using a custom `proj4
 This system allows a very wide range of projections to be created, as we'll see in some of the custom map projections in this section.
 <!-- as we mentioned in section \@ref(crs-in-r). -->
 
-A long and growing list of projections has been developed and many of these these can be set with the `proj=` element of `proj4string`s.^[See the Wikepedia page '[List of map projections](https://en.wikipedia.org/wiki/List_of_map_projections)' for 70+ projections, and illustrations.]
+A long and growing list of projections has been developed and many of these these can be set with the `+proj=` element of `proj4string`s.^[See the Wikepedia page '[List of map projections](https://en.wikipedia.org/wiki/List_of_map_projections)' for 70+ projections, and illustrations.]
 When mapping the world while preserving areal relationships, the Mollweide projection is a good choice [@jenny_guide_2017] (Figure \@ref(fig:mollproj)).
 To use this projection, we need to specify it using the `proj4string` element, `"+proj=moll"`, in the `st_transform` function:
 
@@ -4159,11 +4159,11 @@ crs(con_raster_ea)
 ```
 
 Raster reprojection on numeric variables also leads to small changes values and spatial properties, such as the number of cells, resolution, and extent.
-These changes small changes are demonstrated in Table \@ref(tab:rastercrs):^[
+These changes small changes are demonstrated in Table \@ref(tab:rastercrs)^[
 Another minor change, that is not represented in Table \@ref(tab:rastercrs), is that the class of the values in the new projected raster dataset is `numeric`.
 This is because the `bilinear` method works with continuous data and the results are rarely coerced into whole integer values.
 This can have implications for file sizes when raster datasets are saved.
-]
+]:
 
 
 Table: (\#tab:rastercrs)Key attributes original `con_raster` and projected `con_raster_ea` raster datasets.
@@ -6147,7 +6147,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveec83915eaad3a6c8
+preserve052dd2e4b38f2e3c
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6808,7 +6808,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 
 
 <div class="figure" style="text-align: center">
-preserve939cbb1bc7f9700a
+preservee34e2c66435f02dc
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
