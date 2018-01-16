@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve4b94da4ba3509131
+preserve4c67718e6d8be06d
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3112,7 +3112,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve6207529d04e70574
+preserve86cdf3893f330c92
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3971,9 +3971,11 @@ st_crs(27700)$proj4string
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">Printing a spatial object in the console, automatically returns its coordinate reference system.
 To access and modify it explicitly, use the `st_crs` function, for example, `st_crs(cycle_hire_osm)`.</div>\EndKnitrBlock{rmdnote}
 
-Existing CRS are well suited for most purposes.
-<!-- examples -->
-At the same time, `proj4string` definitions are highly modifiable and allow for greater customization.
+### Modifying map projections
+
+Established CRSs captured by EPSG codes are well-suited for many applications.
+However in some cases it is desirable to create a new CRS, using a custom `proj4string`.
+This system allows a very wide range of projections to be created, as we'll see in some of the custom map projections in this section.
 <!-- as we mentioned in section \@ref(crs-in-r). -->
 To illustrate this, w will show existing CRS and how to modify `proj4string` specifications.
 When mapping the world while preserving areal relationships, the Mollweide projection is a good choice [@jenny_guide_2017] (Figure \@ref(fig:mollproj)).
@@ -6144,7 +6146,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve4753a5fb0a4a1cbd
+preserve448454aee1e14f58
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6805,7 +6807,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 
 
 <div class="figure" style="text-align: center">
-preserve3b127077d1132986
+preserve171a2e4354c3e43f
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
