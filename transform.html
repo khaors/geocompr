@@ -455,9 +455,9 @@ Printing a spatial object in the console, automatically returns its coordinate r
 <!-- plot(world_mollweide$geom) -->
 <!-- plot(world_mollweide$geom, graticule = TRUE) -->
 <div class="figure" style="text-align: center"><span id="fig:mollproj"></span>
-<img src="figures/mollproj-1.png" alt="Mollweide projection of the world" width="576" />
+<img src="figures/mollproj-1.png" alt="Mollweide projection of the world." width="576" />
 <p class="caption">
-Figure 5.2: Mollweide projection of the world
+Figure 5.2: Mollweide projection of the world.
 </p>
 </div>
 <p>On the other hand, when mapping the world, it is often desirable to have as little distortion as possible for all spatial properties (area, direction, distance). One of the most popular projections to achieve this is the Winkel tripel projection (Figure <a href="transform.html#fig:wintriproj">5.3</a>).<a href="#fn31" class="footnoteRef" id="fnref31"><sup>31</sup></a> <code>st_transform_proj()</code> from the <strong>lwgeom</strong> package allows for coordinate transformations to a wide range of CRSs, including the Winkel tripel projection:</p>
@@ -465,9 +465,9 @@ Figure 5.2: Mollweide projection of the world
 <!-- plot(world_wintri$geom) -->
 <!-- plot(world_wintri$geom, graticule = TRUE) -->
 <div class="figure" style="text-align: center"><span id="fig:wintriproj"></span>
-<img src="figures/wintriproj-1.png" alt="Winkel tripel projection of the world" width="576" />
+<img src="figures/wintriproj-1.png" alt="Winkel tripel projection of the world." width="576" />
 <p class="caption">
-Figure 5.3: Winkel tripel projection of the world
+Figure 5.3: Winkel tripel projection of the world.
 </p>
 </div>
 
@@ -480,9 +480,9 @@ The two main functions for transformation of simple features coordinates are <co
 <!-- plot(world_laea1$geom) -->
 <!-- plot(world_laea1$geom, graticule = TRUE) -->
 <div class="figure" style="text-align: center"><span id="fig:laeaproj1"></span>
-<img src="figures/laeaproj1-1.png" alt="Lambert azimuthal equal-area projection of the world centered on longitude and latitude of 0" width="576" />
+<img src="figures/laeaproj1-1.png" alt="Lambert azimuthal equal-area projection of the world centered on longitude and latitude of 0." width="576" />
 <p class="caption">
-Figure 5.4: Lambert azimuthal equal-area projection of the world centered on longitude and latitude of 0
+Figure 5.4: Lambert azimuthal equal-area projection of the world centered on longitude and latitude of 0.
 </p>
 </div>
 <p>We can change the PROJ.4 parameters, for example the center of the projection using the <code>+lon_0</code> and <code>+lat_0</code> parameters. The code below gives the map centered on New York City (Figure <a href="transform.html#fig:laeaproj2">5.5</a>).</p>
@@ -490,9 +490,9 @@ Figure 5.4: Lambert azimuthal equal-area projection of the world centered on lon
 <!-- plot(world_laea2$geom) -->
 <!-- plot(world_laea2$geom, graticule = TRUE) -->
 <div class="figure" style="text-align: center"><span id="fig:laeaproj2"></span>
-<img src="figures/laeaproj2-1.png" alt="Lambert azimuthal equal-area projection of the world centered on New York City" width="576" />
+<img src="figures/laeaproj2-1.png" alt="Lambert azimuthal equal-area projection of the world centered on New York City." width="576" />
 <p class="caption">
-Figure 5.5: Lambert azimuthal equal-area projection of the world centered on New York City
+Figure 5.5: Lambert azimuthal equal-area projection of the world centered on New York City.
 </p>
 </div>
 <p>More information on CRS modifications can be found in the <a href="http://proj4.org/usage/index.html">Using PROJ.4</a> documentation.</p>
@@ -892,9 +892,9 @@ linestring_sf2
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ch_raster3 =<span class="st"> </span><span class="kw">rasterize</span>(cycle_hire_osm_projected, raster_template, 
                        <span class="dt">field =</span> <span class="st">&quot;capacity&quot;</span>, <span class="dt">fun =</span> sum)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:vector-rasterization1"></span>
-<img src="figures/vector-rasterization1-1.png" alt="Examples of point's rasterization" width="576" />
+<img src="figures/vector-rasterization1-1.png" alt="Examples of point's rasterization." width="576" />
 <p class="caption">
-Figure 5.17: Examples of point’s rasterization
+Figure 5.17: Examples of point’s rasterization.
 </p>
 </div>
 <p>Additionally, we will illustrate polygons and lines rasterizations using California’s polygons (<code>california</code>) and borders (<code>california_borders</code>). A template raster here will have the resolution of a 0.5 degree:</p>
@@ -919,9 +919,9 @@ raster_template2 =<span class="st"> </span><span class="kw">raster</span>(<span 
 <!-- ``` -->
 <p>It is also possible to use the <code>field</code> or <code>fun</code> arguments for lines and polygons rasterizations.</p>
 <div class="figure" style="text-align: center"><span id="fig:vector-rasterization2"></span>
-<img src="figures/vector-rasterization2-1.png" alt="Examples of line and polygon rasterizations" width="576" />
+<img src="figures/vector-rasterization2-1.png" alt="Examples of line and polygon rasterizations." width="576" />
 <p class="caption">
-Figure 5.18: Examples of line and polygon rasterizations
+Figure 5.18: Examples of line and polygon rasterizations.
 </p>
 </div>
 <p>While <code>rasterize</code> works well for most cases, it is not performance optimized. Fortunately, there are several alternatives, including the <code>fasterize::fasterize()</code><a href="#fn34" class="footnoteRef" id="fnref34"><sup>34</sup></a> and <code>gdalUtils::gdal_rasterize()</code>. The former is 100s times faster than <code>rasterize()</code>, however it is currently limited to polygon rasterization. The latter is part of GDAL and therefore requires a vector file, instead of an <code>sf</code> object, as an input and rasterization parameters, instead of a <code>Raster*</code> template object.<a href="#fn35" class="footnoteRef" id="fnref35"><sup>35</sup></a></p>

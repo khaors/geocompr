@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve1748793541f058e2
+preserve4453b1166bb87b86
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3112,7 +3112,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve29c7f1c8eb82a88a
+preserveb01d0b7d785a62f7
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3990,8 +3990,8 @@ world_mollweide = st_transform(world, crs = "+proj=moll")
 <!-- plot(world_mollweide$geom, graticule = TRUE) -->
 
 <div class="figure" style="text-align: center">
-<img src="figures/mollproj-1.png" alt="Mollweide projection of the world" width="576" />
-<p class="caption">(\#fig:mollproj)Mollweide projection of the world</p>
+<img src="figures/mollproj-1.png" alt="Mollweide projection of the world." width="576" />
+<p class="caption">(\#fig:mollproj)Mollweide projection of the world.</p>
 </div>
 
 On the other hand, when mapping the world, it is often desirable to have as little distortion as possible for all spatial properties (area, direction, distance).
@@ -4006,8 +4006,8 @@ world_wintri = lwgeom::st_transform_proj(world, crs = "+proj=wintri")
 <!-- plot(world_wintri$geom, graticule = TRUE) -->
 
 <div class="figure" style="text-align: center">
-<img src="figures/wintriproj-1.png" alt="Winkel tripel projection of the world" width="576" />
-<p class="caption">(\#fig:wintriproj)Winkel tripel projection of the world</p>
+<img src="figures/wintriproj-1.png" alt="Winkel tripel projection of the world." width="576" />
+<p class="caption">(\#fig:wintriproj)Winkel tripel projection of the world.</p>
 </div>
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">The two main functions for transformation of simple features coordinates are `sf::st_transform()` and `sf::sf_project()`. 
@@ -4028,8 +4028,8 @@ world_laea1 = st_transform(world, crs = "+proj=laea +x_0=0 +y_0=0 +lon_0=0 +lat_
 <!-- plot(world_laea1$geom, graticule = TRUE) -->
 
 <div class="figure" style="text-align: center">
-<img src="figures/laeaproj1-1.png" alt="Lambert azimuthal equal-area projection of the world centered on longitude and latitude of 0" width="576" />
-<p class="caption">(\#fig:laeaproj1)Lambert azimuthal equal-area projection of the world centered on longitude and latitude of 0</p>
+<img src="figures/laeaproj1-1.png" alt="Lambert azimuthal equal-area projection of the world centered on longitude and latitude of 0." width="576" />
+<p class="caption">(\#fig:laeaproj1)Lambert azimuthal equal-area projection of the world centered on longitude and latitude of 0.</p>
 </div>
 
 We can change the PROJ.4 parameters, for example the center of the projection using the `+lon_0` and `+lat_0` parameters. 
@@ -4043,8 +4043,8 @@ world_laea2 = st_transform(world, crs = "+proj=laea +x_0=0 +y_0=0 +lon_0=-74 +la
 <!-- plot(world_laea2$geom, graticule = TRUE) -->
 
 <div class="figure" style="text-align: center">
-<img src="figures/laeaproj2-1.png" alt="Lambert azimuthal equal-area projection of the world centered on New York City" width="576" />
-<p class="caption">(\#fig:laeaproj2)Lambert azimuthal equal-area projection of the world centered on New York City</p>
+<img src="figures/laeaproj2-1.png" alt="Lambert azimuthal equal-area projection of the world centered on New York City." width="576" />
+<p class="caption">(\#fig:laeaproj2)Lambert azimuthal equal-area projection of the world centered on New York City.</p>
 </div>
 
 More information on CRS modifications can be found in the [Using PROJ.4](http://proj4.org/usage/index.html) documentation.
@@ -4701,8 +4701,8 @@ ch_raster3 = rasterize(cycle_hire_osm_projected, raster_template,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/vector-rasterization1-1.png" alt="Examples of point's rasterization" width="576" />
-<p class="caption">(\#fig:vector-rasterization1)Examples of point's rasterization</p>
+<img src="figures/vector-rasterization1-1.png" alt="Examples of point's rasterization." width="576" />
+<p class="caption">(\#fig:vector-rasterization1)Examples of point's rasterization.</p>
 </div>
 
 Additionally, we will illustrate polygons and lines rasterizations using California's polygons (`california`) and borders (`california_borders`).
@@ -4746,8 +4746,8 @@ california_raster2 = rasterize(california, raster_template2)
 It is also possible to use the `field` or `fun` arguments for lines and polygons rasterizations.
 
 <div class="figure" style="text-align: center">
-<img src="figures/vector-rasterization2-1.png" alt="Examples of line and polygon rasterizations" width="576" />
-<p class="caption">(\#fig:vector-rasterization2)Examples of line and polygon rasterizations</p>
+<img src="figures/vector-rasterization2-1.png" alt="Examples of line and polygon rasterizations." width="576" />
+<p class="caption">(\#fig:vector-rasterization2)Examples of line and polygon rasterizations.</p>
 </div>
 
 While `rasterize` works well for most cases, it is not performance optimized. 
@@ -6147,7 +6147,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve87354d9f616084d2
+preserveec83915eaad3a6c8
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6808,7 +6808,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 
 
 <div class="figure" style="text-align: center">
-preserve78a2341656aa5c18
+preserve939cbb1bc7f9700a
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
