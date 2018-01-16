@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve2785bfd514ad97c7
+preserve4b94da4ba3509131
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3112,7 +3112,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve1abb66ad6cb59403
+preserve6207529d04e70574
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3913,35 +3913,38 @@ The subsequent sections explain features of CRS transformation that are unique t
 
 Chapter \@ref(spatial-class) demonstrated how vector geometries are made-up of points, and how points form the basis of more complex objects such as lines and polygons.
 Reprojecting vectors thus consists of transforming the coordinates of these points.
-
 <!-- Depending on projections used, reprojection could be either lossy or lossless. -->
 <!-- I don't understand the following sentence -->
 <!-- For example, loss of spatial information could occur when the new CRS is only adequate for smaller area than input vector. -->
 <!-- Do you have an example for the next sentence? -->
 <!-- The precision could be also lost when transforming coordinate systems with different datums - in those situations approximations are used. -->
 <!-- However, in most cases CRS vector transformation is lossless. -->
-
-To illustrate this we will use the dataset `cycle_hire_osm` from **spData**, representing cycle hire locations across London.
-Its CRS can be queried as follows:
+This is illustrated by `cycle_hire_osm`, an `sf` object from **spData** that represents cycle hire locations across London.
+The previous section showed how the CRS of vector data can be queried with `st_crs()`.
+Although the output of this function is printed as a single entity, the result is in fact a named list of class `crs`, with names `proj4string` (which contains full details of the CRS) and `epsg` for its code.
+This is demonstrated below:
 
 
 ```r
-st_crs(cycle_hire_osm)
-#> Coordinate Reference System:
-#>   EPSG: 4326 
-#>   proj4string: "+proj=longlat +datum=WGS84 +no_defs"
+crs_lnd = st_crs(cycle_hire_osm)
+class(crs_lnd)
+#> [1] "crs"
+crs_lnd$epsg
+#> [1] 4326
 ```
 
-CRSs in the **sf** package can be defined using the corresponding `epsg` code or a `proj4string` definition (see section \@ref(crs-in-r)).
-The following command creates a projected version of `cycle_hire_osm`:
+This duality of CRS objects means that they can be set either using an EPSG code or a `proj4string`.
+This means that `st_crs("+proj=longlat +datum=WGS84 +no_defs")` is equivalent to `st_crs(4326)`, although not all `proj4string`s have an associated EPSG code.
+Both elements of the CRS are changed by transforming the object to a projected CRS:
+
+
 
 
 ```r
 cycle_hire_osm_projected = st_transform(cycle_hire_osm, 27700)
 ```
 
-The resulting object has a new CRS with an EPSG code 27700, details of which can be seen by executing
-`st_crs(cycle_hire_osm_projected)`, and for `london_proj` in the previous section.
+The resulting object has a new CRS with an EPSG code 27700.
 But how to find out more details about this EPSG code, or any code?
 One option is to search for it online.
 Another option is to use a function from the **rgdal** package to find the name of the CRS:
@@ -3954,13 +3957,15 @@ dplyr::filter(crs_codes, code == 27700)
 #> 1 27700 # OSGB 1936 / British National Grid
 ```
 
-The result shows that the EPSG code 27700 represents the British National Grid, a result that could have been found by searching online for "[CRS 27700](https://www.google.com/search?q=CRS+27700)".
-The formula that converts a geographic point into a point on the surface of the Earth is provided by the `proj4string` element of the `crs` (see [proj4.org](http://proj4.org/) for further details):
+The result shows that the EPSG code 27700 represents the British National Grid, a result that could have been found by searching online for "[EPSG 27700](https://www.google.com/search?q=CRS+27700)".
+But what about the `proj4string` element?
+`proj4string`s are text strings in a particular format the describe the CRS.
+They can be seen as formulas for converting a projected point into a point on the surface of the Earth and can be accessed from `crs` objects as follows (see [proj4.org](http://proj4.org/) for further details of what the output means):
 
 
 ```r
 st_crs(27700)$proj4string
-#> [1] "+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs"
+#> [1] "+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 ...
 ```
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">Printing a spatial object in the console, automatically returns its coordinate reference system.
@@ -4446,7 +4451,7 @@ plot(b)
 plot(x_and_y, col = "lightgrey", add = TRUE) # color intersecting area
 ```
 
-<img src="figures/unnamed-chunk-53-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-54-1.png" width="576" style="display: block; margin: auto;" />
 
 The subsequent code chunk demonstrate how this works for all combinations of the 'Venn' diagram representing `x` and `y`, inspired by [Figure 5.1](http://r4ds.had.co.nz/transform.html#logical-operators) of the book R for Data Science [@grolemund_r_2016].
 <!-- Todo: reference r4ds -->
@@ -6139,7 +6144,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveb986eaf475d09b19
+preserve4753a5fb0a4a1cbd
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6800,7 +6805,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 
 
 <div class="figure" style="text-align: center">
-preservef6a3e0c83dd83a21
+preserve3b127077d1132986
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 

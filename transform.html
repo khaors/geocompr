@@ -424,28 +424,22 @@ Figure 5.1: Buffer on vector represenations of London with a geographic (left) a
 </div>
 <div id="reproj-vec-geom" class="section level3">
 <h3><span class="header-section-number">5.2.2</span> Reprojecting vector geometries</h3>
-<p>Chapter <a href="spatial-class.html#spatial-class">2</a> demonstrated how vector geometries are made-up of points, and how points form the basis of more complex objects such as lines and polygons. Reprojecting vectors thus consists of transforming the coordinates of these points.</p>
-<!-- Depending on projections used, reprojection could be either lossy or lossless. -->
-<!-- I don't understand the following sentence -->
-<!-- For example, loss of spatial information could occur when the new CRS is only adequate for smaller area than input vector. -->
-<!-- Do you have an example for the next sentence? -->
-<!-- The precision could be also lost when transforming coordinate systems with different datums - in those situations approximations are used. -->
-<!-- However, in most cases CRS vector transformation is lossless. -->
-<p>To illustrate this we will use the dataset <code>cycle_hire_osm</code> from <strong>spData</strong>, representing cycle hire locations across London. Its CRS can be queried as follows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">st_crs</span>(cycle_hire_osm)
-<span class="co">#&gt; Coordinate Reference System:</span>
-<span class="co">#&gt;   EPSG: 4326 </span>
-<span class="co">#&gt;   proj4string: &quot;+proj=longlat +datum=WGS84 +no_defs&quot;</span></code></pre></div>
-<p>CRSs in the <strong>sf</strong> package can be defined using the corresponding <code>epsg</code> code or a <code>proj4string</code> definition (see section <a href="spatial-class.html#crs-in-r">2.3.3</a>). The following command creates a projected version of <code>cycle_hire_osm</code>:</p>
+<p>Chapter <a href="spatial-class.html#spatial-class">2</a> demonstrated how vector geometries are made-up of points, and how points form the basis of more complex objects such as lines and polygons. Reprojecting vectors thus consists of transforming the coordinates of these points. <!-- Depending on projections used, reprojection could be either lossy or lossless. --> <!-- I don't understand the following sentence --> <!-- For example, loss of spatial information could occur when the new CRS is only adequate for smaller area than input vector. --> <!-- Do you have an example for the next sentence? --> <!-- The precision could be also lost when transforming coordinate systems with different datums - in those situations approximations are used. --> <!-- However, in most cases CRS vector transformation is lossless. --> This is illustrated by <code>cycle_hire_osm</code>, an <code>sf</code> object from <strong>spData</strong> that represents cycle hire locations across London. The previous section showed how the CRS of vector data can be queried with <code>st_crs()</code>. Although the output of this function is printed as a single entity, the result is in fact a named list of class <code>crs</code>, with names <code>proj4string</code> (which contains full details of the CRS) and <code>epsg</code> for its code. This is demonstrated below:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">crs_lnd =<span class="st"> </span><span class="kw">st_crs</span>(cycle_hire_osm)
+<span class="kw">class</span>(crs_lnd)
+<span class="co">#&gt; [1] &quot;crs&quot;</span>
+crs_lnd$epsg
+<span class="co">#&gt; [1] 4326</span></code></pre></div>
+<p>This duality of CRS objects means that they can be set either using an EPSG code or a <code>proj4string</code>. This means that <code>st_crs(&quot;+proj=longlat +datum=WGS84 +no_defs&quot;)</code> is equivalent to <code>st_crs(4326)</code>, although not all <code>proj4string</code>s have an associated EPSG code. Both elements of the CRS are changed by transforming the object to a projected CRS:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cycle_hire_osm_projected =<span class="st"> </span><span class="kw">st_transform</span>(cycle_hire_osm, <span class="dv">27700</span>)</code></pre></div>
-<p>The resulting object has a new CRS with an EPSG code 27700, details of which can be seen by executing <code>st_crs(cycle_hire_osm_projected)</code>, and for <code>london_proj</code> in the previous section. But how to find out more details about this EPSG code, or any code? One option is to search for it online. Another option is to use a function from the <strong>rgdal</strong> package to find the name of the CRS:</p>
+<p>The resulting object has a new CRS with an EPSG code 27700. But how to find out more details about this EPSG code, or any code? One option is to search for it online. Another option is to use a function from the <strong>rgdal</strong> package to find the name of the CRS:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">crs_codes =<span class="st"> </span>rgdal::<span class="kw">make_EPSG</span>()[<span class="dv">1</span>:<span class="dv">2</span>]
 dplyr::<span class="kw">filter</span>(crs_codes, code ==<span class="st"> </span><span class="dv">27700</span>)
 <span class="co">#&gt;    code                                note</span>
 <span class="co">#&gt; 1 27700 # OSGB 1936 / British National Grid</span></code></pre></div>
-<p>The result shows that the EPSG code 27700 represents the British National Grid, a result that could have been found by searching online for “<a href="https://www.google.com/search?q=CRS+27700">CRS 27700</a>”. The formula that converts a geographic point into a point on the surface of the Earth is provided by the <code>proj4string</code> element of the <code>crs</code> (see <a href="http://proj4.org/">proj4.org</a> for further details):</p>
+<p>The result shows that the EPSG code 27700 represents the British National Grid, a result that could have been found by searching online for “<a href="https://www.google.com/search?q=CRS+27700">EPSG 27700</a>”. But what about the <code>proj4string</code> element? <code>proj4string</code>s are text strings in a particular format the describe the CRS. They can be seen as formulas for converting a projected point into a point on the surface of the Earth and can be accessed from <code>crs</code> objects as follows (see <a href="http://proj4.org/">proj4.org</a> for further details of what the output means):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">st_crs</span>(<span class="dv">27700</span>)$proj4string
-<span class="co">#&gt; [1] &quot;+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs&quot;</span></code></pre></div>
+<span class="co">#&gt; [1] &quot;+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 ...</span></code></pre></div>
 
 <div class="rmdnote">
 Printing a spatial object in the console, automatically returns its coordinate reference system. To access and modify it explicitly, use the <code>st_crs</code> function, for example, <code>st_crs(cycle_hire_osm)</code>.
@@ -748,7 +742,7 @@ y =<span class="st"> </span>b[<span class="dv">2</span>]
 x_and_y =<span class="st"> </span><span class="kw">st_intersection</span>(x, y)
 <span class="kw">plot</span>(b)
 <span class="kw">plot</span>(x_and_y, <span class="dt">col =</span> <span class="st">&quot;lightgrey&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>) <span class="co"># color intersecting area</span></code></pre></div>
-<p><img src="figures/unnamed-chunk-53-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-54-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>The subsequent code chunk demonstrate how this works for all combinations of the ‘Venn’ diagram representing <code>x</code> and <code>y</code>, inspired by <a href="http://r4ds.had.co.nz/transform.html#logical-operators">Figure 5.1</a> of the book R for Data Science <span class="citation">(Grolemund and Wickham <a href="#ref-grolemund_r_2016">2016</a>)</span>. <!-- Todo: reference r4ds --></p>
 <div class="figure" style="text-align: center"><span id="fig:venn-clip"></span>
 <img src="figures/venn-clip-1.png" alt="Spatial equivalents of logical operators." width="576" />
