@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservebb40b97c6ce4f470
+preservea56b848ebc77be71
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3112,7 +3112,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservee17ffd7da1043a13
+preserve9b9be582751b8139
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3290,7 +3290,7 @@ plot(nz_height$geometry[2:3], add = TRUE)
 ## Spatial operations on raster data {#spatial-ras}
 
 This section builds on section \@ref(manipulating-raster-objects), which highlights various basic methods for manipulating raster datasets, to demonstrate more advanced and explicitly spatial raster operations, and uses the objects `elev` and `grain` manually created in section \@ref(manipulating-raster-objects).
-These datasets can be also found in the **spData** package.
+For the reader's convenience, these datasets can be also found in the **spData** package.
 
 ### Spatial subsetting {#raster-subsetting}
 
@@ -3307,7 +3307,7 @@ elev[cellFromXY(elev, xy = c(-1.5, 1.5))]
 extract(elev, data.frame(x = -1.5, y = 1.5))
 ```
 
-**raster** functions `cellFromXY()` and `extract()` also accept objects of class `sf`.
+It is convenient that both functions also accept objects of class `SpatialObjects` and `sf`.
 Raster objects can also be subset with another raster object, as illustrated in Figure \@ref(fig:raster-subset) (left panel) and demonstrated in the code chunk below:
 
 
@@ -3389,7 +3389,7 @@ Most often the output cell value is the result of a 3 x 3 input cell block.
 4. *Global* or per-raster operations, that means the output cell derives its value potentially from one or several entire rasters.
 
 This classification scheme uses basically the number of cells involved in a processing step as distinguishing feature.
-Raster operations can also be classified by discipline, for example terrain, hydrological analysis or image classifications.
+For the sake of completeness, we should mention that raster operations can also be classified by discipline such as terrain, hydrological analysis or image classification.
 The following sections explain how each type of map algebra operations can be used, with reference to worked examples (also see `vignette("Raster")` for a technical description of map algebra).
 
 ### Local operations
@@ -3405,6 +3405,8 @@ Here, we assign the raster values in the ranges 0--12, 12--24 and 24--36 are *re
 rcl = matrix(c(0, 12, 1, 12, 24, 2, 24, 36, 3), ncol = 3, byrow = TRUE)
 recl = reclassify(elev, rcl = rcl)
 ```
+
+We will perform several reclassifactions in chapter \@ref(location).
 
 Raster algebra is another classical use case of local operations.
 This includes adding, subtracting and squaring two rasters.
@@ -3436,7 +3438,7 @@ where NIR = near infrared channel
       Red = red channel
 
 Predictive mapping is another interesting application of local raster operations.
-The response variable correspond to measured or observed points in space, for example, species richness, the presence of landslides, tree disease or crop yield.
+The response variable corresponds to measured or observed points in space, for example, species richness, the presence of landslides, tree disease or crop yield.
 Consequently, we can easily retrieve space- or airborne predictor variables from various rasters (elevation, pH, precipitation, temperature, landcover, soil class, etc.).
 Subsequently, we model our response as a function of our predictors using `lm`, `glm`, `gam` or a machine-learning technique. 
 To make a spatial prediction, all we have to do, is to apply the estimated coefficients to the predictor rasters, and summing up the resulting output rasters (<!--Chapter ??; -->see also @muenchow_predictive_2013).
@@ -3473,7 +3475,7 @@ Low-pass or smoothing filters use the mean function to remove extremes.
 In the case of categorical data, we can replace the mean with the mode, which is the most common value.
 By contrast, high-pass filters accentuate features.
 The line detection Laplace and Sobel filters might serve as an example here.
-Check the `focal()` help page how to use them in R.
+Check the `focal()` help page how to use them in R (will be used in the excercises at the end of this chapter).
 
 Also, terrain processing uses heavily focal functions.
 Think, for instance, of the calculation of the slope, aspect and flow directions.
@@ -3523,7 +3525,7 @@ Computing a distance raster (zonal operation) while only considering a maximum d
 Reclassifying raster data (either local or zonal function depending on the input) is equivalent to dissolving vector data (section \@ref(spatial-joining)). 
 Overlaying two rasters (local operation), where one contains `NULL` or `NA` values representing a mask, is similar to vector clipping (section \@ref(clipping)).
 Quite similar to spatial clipping is intersecting two layers (section \@ref(spatial-subsetting)). 
-The difference is that two these two layers (vector or raster) simply share an overlapping area (see Figure \@ref(fig:venn-clip) for an example).
+The difference is that these two layers (vector or raster) simply share an overlapping area (see Figure \@ref(fig:venn-clip) for an example).
 However, be careful with the wording.
 Sometimes the same words have slightly different meanings for raster and vector data models.
 Aggregating in the case of vector data refers to dissolving polygons while it means increasing the resolution in the case of raster data.
@@ -4334,12 +4336,10 @@ Unusual cases where it may be useful include when the memory consumed by the out
 Affine transformation is any transformation that preserves lines and parallelism.
 <!-- The midpoint of a line segment remains a midpoint and all points lying on a line initially still lie on a line after an affine transformation. -->
 However, angles or length are not necessarily preserved.
-Affine transformations include, among others, shifting (translation), scaling and rotating.
+Affine transformations include, among others, shifting (translation), scaling and rotation
 <!-- translation, scaling, homothety, similarity transformation, reflection, rotation, shear mapping -->
 Additionally, it is possible to use any combination of those.
-Affine transformations are essential part of geocomputation.
-Its application could be found when a vector dataset was created based on a distorted or wrongly projected map.
-It is also used in many regular GIS tasks, such as map display or datum changes.
+Affine transformations are an essential part of geocomputation, e.g., when reprojecting or when improving the geometry of a vector dataset that was created based on a distorted or wrongly projected map.
 
 The **sf** package implements affine transformation for objects of classes `sfg` and `sfc`.
 <!-- stats sfc issue -->
@@ -4349,18 +4349,18 @@ The **sf** package implements affine transformation for objects of classes `sfg`
 nz_sfc = nz$geometry
 ```
 
-Shifting moves every point by the same distance in the map units.
+Shifting moves every point by the same distance in map units.
 It could be done by adding a numerical vector to a vector object.
-For example, the code below keeps the x coordinates, while changing the y coordinates by 100,000 meters (left panel on the Fig. \@ref(fig:affine-trans)). 
+For example, the code below shifts all y-coordinates by 100,000 meters to the north but leaves the x-coordinates untouchted (left panel on the Fig. \@ref(fig:affine-trans)). 
 
 
 ```r
 nz_shift = nz_sfc + c(0, 100000)
 ```
 
-Scaling enlarges or shrinks objects by a scale factor.
+Scaling enlarges or shrinks objects by a factor.
 It could be applied either globally or locally. <!-- my terms - jn-->
-Global scaling increase or decrease all coordinates values in relation to the origin coordinates while keeping all geometries topological relations intact.
+Global scaling increases or decreases all coordinates values in relation to the origin coordinates while keeping all geometries topological relations intact.
 It can by done by subtraction or multiplication of a`sfg` or `sfc` object.
 
 Local scaling treats geometries independently and it requires points around which geometries are going to be scaled, e.g. centroids.
@@ -4758,8 +4758,10 @@ The latter is part of GDAL and therefore requires a vector file, instead of an `
 ## Geometric operations on raster data {#geo-ras}
 
 <!-- add intro -->
+Geometric operations on raster data refer mainly to the shift, the rotation or warping of images (to account for distortions due to lens distortions, earth curvature, etc.).
+These operations are especially useful when we want to combine overlapping images or images with differing resolutions and/or different projections (co-registration of images).
 
-<!-- two useful citations for into on geometric operations on raster:
+<!-- two useful citations for intro on geometric operations on raster:
 
 > Geometric operations include the shift, rotation and warping of images to a given shape or framework.
 In remote sensing applications, geometric operations are mainly used for the co-registration of images of the same scene acquired by different sensor systems or at different times or from different positions, and for rectifying an image to fit a particular coordinate system (geocoding).
@@ -4778,8 +4780,6 @@ A transformation is then performed, which converts local image coordinates to re
 -->
 
 
-### Aggregation {#ras-agg}
-
 ### Raster alignment
 
 
@@ -4789,7 +4789,7 @@ Otherwise, how should we add the values of one raster with a resolution of 0.2 d
 The same problem arises when we would like to merge satellite imagery from different sensors with different projections and resolutions.
 We can deal with such mismatches by aligning the rasters.
 
-This section uses the `elev` object from \@ref(manipulating-raster-objects), which it is available in the `spData` package.
+This section uses the `elev` object from section \@ref(manipulating-raster-objects) and which is also available from the `spData` package.
 The `projectRaster()` function reprojects one raster to a desired projection, say from UTM to WGS84.
 Equally, map algebra operations require the same extent.
 Following code adds one row and two columns to each side of the raster while setting all new values to an elevation of 1000 meters (\@ref(fig:extend-example)).
@@ -4815,7 +4815,7 @@ elev_3 = elev + elev_2
 ```
 
 However, we can also align the extent of two rasters with the `extend()` command.
-Here, we extend the `elev` object to the extend of `elev_2`. 
+Here, we extend the `elev` object to the extent of `elev_2`. 
 The newly added rows and column receive the default value of the `value` parameter, i.e., `NA`.
 
 
@@ -6147,7 +6147,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve5d289d5280d34a57
+preservedb1c32ed62a70ca4
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6809,7 +6809,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 
 
 <div class="figure" style="text-align: center">
-preserve31b65cabd538f2b9
+preserve5ee8dab81a54783e
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
