@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-01-16'
+date: '2018-01-17'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2018-01-16 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-01-17 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservee0de7870c4b91c18
+preserve5cb52c201e8d14fa
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3112,7 +3112,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve58dfe1b8085da04c
+preserve3e7eda0eecfba743
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3631,7 +3631,7 @@ A more advanced approach might instead weight by flow direction, i.e. favor the 
 
 ## Prerequisites {-}
 
-- This chapter requires the following packages:^[**lwgeom** is also needed for a couple of more advanced transformations.]
+- This chapter requires the following packages (**lwgeom** is also used but does not need to loaded):
 
 
 ```r
@@ -4976,21 +4976,23 @@ Why the new object differs from the original one?
 What has changed?
 How it influences the results?
 
-1. Try to transform the categorical raster (`cat_raster`) into WGS 84 using the bi-linear interpolation method.
+1. Try to transform the categorical raster (`cat_raster`) into WGS 84 using the bilinear interpolation method.
 What has changed?
 How it influences the results?
 
-<!-- SIMPLIFICATION-->
-<!-- new zeleand example -->
+1. Generate and plot simplified versions of the `nz` dataset.
+Experiment with different values of `keep` (ranging from 0.5 to 0.00005) for `ms_simplify()` and `dTolerance` (from 100 to 100,000) `st_simplify()` .
+    - At what value does the form of the result start to break-down for each method, making New Zealand unrecognizable?
+    - Advanced: What is different about the geometry type of the results from `st_simplify()` compared with the geometry type of `ms_simplify()`? What problems does this create and how can this be resolved? 
 
-<!-- CENTROIDS AND BUFFERS-->
-<!-- AFFINE TRANSFORMATION -->1. Most of the world maps have a north-up orientation.
+1. Centroids and buffers
+1. Most world maps have a north-up orientation.
 A world map with a south-up orientation could be created by a reflection (one of affine transformations not mentioned in \@ref(affine-transformations)) of the `world` object's geometry.
 Write code to do so.
 Hint: you need to use a two-element vector for this transformation.
     - Bonus: create a upside down map of your country.
 
-<!-- CLIPPING -->
+1. Clipping
 1. Write code that subsets points that are contained within `x` *and* `y` (illustrated by the plot in the 2^nd^ row and the 1^st^ column in Figure \@ref(fig:venn-clip)).
     - Create a randomly located point with the command `st_point()` (refer back to section \@ref(sfg) to see how to create spatial data 'from scratch').
 <!-- GEOMETRY UNIONS -->
@@ -5001,12 +5003,10 @@ Hint: you need to use a two-element vector for this transformation.
 1. Warning messages should have been produced during the working to find the answer to the previous questions. What do these warnings mean and how could they be stopped? 
     - Bonus: rewrite code that generated the answer to the previous question using a projected CRS (suggestion: UTM).
 1. Advanced challenge: find the point with the highest number of people within a 10 degree radius.
-<!-- TYPE TRANS. -->
 1. Calculate the length of the boundary lines of US states in meters.
 Which state has the longest border and which has the shorter border?
 Hint: The `st_length` function computes the length of a `LINESTRING` or `MULTILINESTRING` geometry.
 
-<!-- RASTERIZATION-->
 1. Subset points higher than 3100 meters a.s.l in New Zealand (the `nz_height` object). 
 Using the new object:
     - Count numbers of the highest points in grid cells of 3 km resolution.
@@ -6147,7 +6147,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve8593752c735dcc3f
+preservea086596261eed528
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6809,7 +6809,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 
 
 <div class="figure" style="text-align: center">
-preserve26837285f504b54c
+preserve160b8b1dbd308d42
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
