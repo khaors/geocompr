@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve5cb52c201e8d14fa
+preserveccfd8a14d07064c4
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3112,7 +3112,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve3e7eda0eecfba743
+preserve561f9741d8b382b9
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5089,7 +5089,7 @@ Specific R packages providing an interface to spatial libraries or geoportals ar
 
 <!-- add sentinel2 package as soon as it is published on CRAN https://github.com/IVFL-BOKU/sentinel2-->
 
-Table: (\#tab:datapackages)Selected R packages for spatial data retrieval
+Table: (\#tab:datapackages)Selected R packages for spatial data retrieval.
 
 Package name    Description                                                                                                  
 --------------  -------------------------------------------------------------------------------------------------------------
@@ -5156,14 +5156,14 @@ parks = opq(bbox = "leeds uk") %>%
 
 OpenStreetMap is a vast global database of crowd-sourced data and it is growing by the minute.
 Although the quality is not as spatially consistent as many official datasets, OSM data have many advantages: they are globally available free of charge and using crowd-source data can encourage 'citizen science' and contributions back to the digital commons.
-Further examples of **osmdata** in action are provided in Chapters \@ref(location) and \@ref(transport).
+Further examples of **osmdata** in action are provided in Chapters \@ref(transport) and  \@ref(location).
 <!-- Todo: Replace the above with "Chapters \@ref(location) and \@ref(gis)." when gis is online (RL) -->
 
 Finally, R packages might contain or just consist of spatial data (e.g., package **spData**).
 You can access such data with the `data()` function.
 For example, you can get a list of dataset in a package, `data(package = "spData")`.
 To attach the dataset to the global environment specify the name of a dataset (`data("cycle_hire", package = "spData")`).
-Sometimes, packages come also with the original files.^[Data loaded with `data()` often is a R dataset (`.Rdata` ord `.rda`)].
+Sometimes, packages come also with the original files.^[Data loaded with `data()` often is a R dataset (`.Rdata` ord `.rda`).]
 To load such a file from the package, you need to specify the package name and the relative path to the dataset, for example:
 
 
@@ -5193,7 +5193,7 @@ Subsequently, many open and proprietary GIS software (e.g., GRASS, QGIS, ArcGIS,
 <!-- GDAL (it's great - you can read, convert, and very often (though not always) write) -->
 <!-- GDAL info "it is possible to have smaller number of supported formats than there are on the GDAL webpage; you may need to recompile..." -->
 
-Another change for spatial data formats came with the foundation of the Open Geospatial Consortium (OGC)^[http://www.opengeospatial.org].
+Another change for spatial data formats came with the foundation of the Open Geospatial Consortium (OGC).^[http://www.opengeospatial.org]
 This organization collaborates on the development and implementation of open standards for geospatial content including file formats such as the KML and GeoPackage formats as well as the simple feature standard. 
 Developing and maintaining spatial file formats in an open model provides several benefits over the proprietary formats <!-- such as??-->, and eases interoperability.
 
@@ -5282,7 +5282,7 @@ For some drivers, `dsn` could be provided as a folder name, access credentials f
 Some vector driver formats can store multiple data layers.
 By default, `st_read` automatically reads the first layer of the file specified in `dsn`, however, using the `layer` argument you can specify any other layer.
 
-Naturally, some options are specific to certain drivers[^1]. 
+Naturally, some options are specific to certain drivers.[^1]
 For example, think of coordinates stored in a spreadsheet format (`.csv`).
 To read in such files as spatial objects, we naturally have to specify the names of the columns (`X` and `Y` in our example below) representing the coordinates.
 We can do this with the help of the `options` parameter.
@@ -5461,7 +5461,7 @@ The `writeRaster()` function saves `Raster*` objects to files on disk.
 The function expects input regarding output datatype, file format, but also accepts GDAL options specific to a selected file format (see `?writeRaster` for more details).
 
 <!-- datatypes -->
-The **raster** package offers nine datatypes when saving a raster: LOG1S, INT1S, INT1U, INT2S, INT2U, INT4S, INT4U, FLT4S, and FLT8S^[Using INT4U is not recommended as R does not support 32-bit unsigned integers.<!--recheck this info-->].
+The **raster** package offers nine datatypes when saving a raster: LOG1S, INT1S, INT1U, INT2S, INT2U, INT4S, INT4U, FLT4S, and FLT8S.^[Using INT4U is not recommended as R does not support 32-bit unsigned integers.<!--recheck this info-->]
 The datatype determines the bit representation of the raster object written to disk (\@ref(tab:datatypes)).
 Which datatype to use depends on the range of the values of your raster object.
 The more values a datatype can represent, the larger the file will get on disk.
@@ -5472,7 +5472,7 @@ While this works in most cases, the size of the output file will be unnecessarly
 Therefore, we would recommend to use the datatype that needs the least storing space but is still able to represent all values (check the range of values with the `summary()` function).
 
 
-Table: (\#tab:datatypes)Datatypes supported by the raster package
+Table: (\#tab:datatypes)Datatypes supported by the raster package.
 
 Datatype   Minimum value    Maximum value 
 ---------  ---------------  --------------
@@ -5498,7 +5498,7 @@ writeRaster(x = single_layer,
 
 The `raster` file format (native to the `raster` package) is used when a file extension is invalid or missing. 
 Some raster file formats come with additional options.
-You can use them with the `options` parameter[^2].
+You can use them with the `options` parameter.[^2]
 For example, GeoTIFF allows to compress the output raster with the `COMPRESS` option^[Find out about GeoTIFF options under http://www.gdal.org/frmt_gtiff.html.]:
 
 
@@ -5579,7 +5579,7 @@ Export this map to a file called `cycle_hire.html`.
 
 [^1]: A list of supported vector formats and theirs options can be found at http://www.gdal.org/ogr_formats.html.
 
-[^2]: Full list of supported raster formats with theirs options can be found at http://www.gdal.org/formats_list.html
+[^2]: Full list of supported raster formats with theirs options can be found at http://www.gdal.org/formats_list.html.
 
 <!--chapter:end:06-read-write-plot.Rmd-->
 
@@ -6147,7 +6147,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservea086596261eed528
+preserve3e043b7643e0863c
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6809,7 +6809,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 
 
 <div class="figure" style="text-align: center">
-preserve160b8b1dbd308d42
+preserve54c1d07b287edcd8
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
