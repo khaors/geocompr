@@ -934,6 +934,7 @@ Figure 5.18: Examples of line and polygon rasterizations.
 <li>Orthorectification also georeferences an image but additionally takes into account local topography.</li>
 <li>Image (co-)registration is the process of aligning one image with another (in terms of CRS and resolution). Registration becomes necessary for images from the same scene but shot from different sensors or from different angles or at different points in time.</li>
 </ul>
+<p>In this section we will exclusively deal with the co-registration (alignment) of images since only a matching resolution, projection and origin enables map algebra or the merging of raster images. Otherwise, how should we add the values of one raster with a resolution of 0.2 decimal degrees to a second with a resolution of 1 decimal degree? <!-- list raster operations: aggregation, origin, etc. and rename sections accordingly, i.e., dismiss section header raster alignment --></p>
 <!-- two useful citations for intro on geometric operations on raster:
 
 > Geometric operations include the shift, rotation and warping of images to a given shape or framework.
@@ -953,7 +954,6 @@ A transformation is then performed, which converts local image coordinates to re
 -->
 <div id="raster-alignment" class="section level3">
 <h3><span class="header-section-number">5.4.1</span> Raster alignment</h3>
-<p>When merging or performing map algebra on rasters, their resolution, projection, origin and/or extent has to match. Otherwise, how should we add the values of one raster with a resolution of 0.2 decimal degrees to a second with a resolution of 1 decimal degree? The same problem arises when we would like to merge satellite imagery from different sensors with different projections and resolutions. We can deal with such mismatches by aligning the rasters.</p>
 <p>This section uses the <code>elev</code> object from section <a href="attr.html#manipulating-raster-objects">3.3</a> and which is also available from the <code>spData</code> package. The <code>projectRaster()</code> function reprojects one raster to a desired projection, say from UTM to WGS84. Equally, map algebra operations require the same extent. Following code adds one row and two columns to each side of the raster while setting all new values to an elevation of 1000 meters (<a href="transform.html#fig:extend-example">5.19</a>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_2 =<span class="st"> </span><span class="kw">extend</span>(elev, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">value =</span> <span class="dv">1000</span>)
 <span class="kw">plot</span>(elev_2)</code></pre></div>

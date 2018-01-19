@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservec5d24f493cfa5f1a
+preserve9ff4e08576ed7d22
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3112,7 +3112,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservee7653f4d7c972a62
+preserve66227a4e1a8786ee
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4766,6 +4766,10 @@ Geolocating requires the rectification of the image, which includes one or sever
 - Image (co-)registration is the process of aligning one image with another (in terms of CRS and resolution). 
 Registration becomes necessary for images from the same scene but shot from different sensors or from different angles or at different points in time.
 
+In this section we will exclusively deal with the co-registration (alignment) of images since only a matching resolution, projection and origin enables map algebra or the merging of raster images.
+Otherwise, how should we add the values of one raster with a resolution of 0.2 decimal degrees to a second with a resolution of 1 decimal degree?
+<!-- list raster operations: aggregation, origin, etc. and rename sections accordingly, i.e., dismiss section header raster alignment -->
+
 <!-- two useful citations for intro on geometric operations on raster:
 
 > Geometric operations include the shift, rotation and warping of images to a given shape or framework.
@@ -4789,10 +4793,6 @@ A transformation is then performed, which converts local image coordinates to re
 
 
 
-When merging or performing map algebra on rasters, their resolution, projection, origin and/or extent has to match.
-Otherwise, how should we add the values of one raster with a resolution of 0.2 decimal degrees to a second with a resolution of 1 decimal degree?
-The same problem arises when we would like to merge satellite imagery from different sensors with different projections and resolutions.
-We can deal with such mismatches by aligning the rasters.
 
 This section uses the `elev` object from section \@ref(manipulating-raster-objects) and which is also available from the `spData` package.
 The `projectRaster()` function reprojects one raster to a desired projection, say from UTM to WGS84.
@@ -5613,8 +5613,8 @@ Export this map to a file called `cycle_hire.html`.
 
 
 ```r
-library(raster)
 library(sf)
+library(raster)
 library(tidyverse)
 library(osmdata)
 ```
@@ -6166,7 +6166,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve154eab7141fa65c6
+preserve92126c6fbdc3aae9
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6828,7 +6828,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 
 
 <div class="figure" style="text-align: center">
-preserve592f0c6a06c6b031
+preservecb2fc5f4bf554c04
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
