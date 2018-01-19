@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservec8ea2ed21f0d5bc4
+preserve8f8ab3ec1a151fae
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3112,7 +3112,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve37f748e6d64c8c92
+preserved06750185515069b
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5000,9 +5000,23 @@ Write code to do so.
 Hint: you need to use a two-element vector for this transformation.
     - Bonus: create a upside down map of your country.
 
-1. Clipping
-1. Write code that subsets points that are contained within `x` *and* `y` (illustrated by the plot in the 2^nd^ row and the 1^st^ column in Figure \@ref(fig:venn-clip)).
-    - Create a randomly located point with the command `st_point()` (refer back to section \@ref(sfg) to see how to create spatial data 'from scratch').
+1. Subset the point in `p` that contained within `x` *and* `y` (see section \@ref(clipping) and Figure \@ref(fig:venn-clip)).
+    - Using base subsetting operators.
+    - Using an intermediary object created with `st_intersection()`
+
+```r
+p_in_y = p[y]
+p_in_xy = p_in_y[x]
+x_and_y = st_intersection(x, y)
+p[x_and_y]
+#> Geometry set for 1 feature 
+#> geometry type:  POINT
+#> dimension:      XY
+#> bbox:           xmin: 0.305 ymin: 1.43 xmax: 0.305 ymax: 1.43
+#> epsg (SRID):    NA
+#> proj4string:    NA
+#> POINT (0.305 1.43)
+```
 1. Write code that uses functions `aggregate()` and `st_buffer()` to answers the following question: What proportion of the world's population lives in countries that intersect a circle with a 10 degree radius of the intersection between the equator and the [9^th^ meridian](https://en.wikipedia.org/wiki/9th_meridian_east)?
 
 1. Assuming that people are evenly distributed across countries, estimate the population living *within* the circle created to answer the previous question.
@@ -6154,7 +6168,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveca6ee99f20b83d75
+preserveba70a22674187f85
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6816,7 +6830,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 
 
 <div class="figure" style="text-align: center">
-preservea489c912a0c33e6f
+preservec6c24a81048fc574
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
