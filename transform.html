@@ -1102,16 +1102,23 @@ p[x_and_y]
 </ul></li>
 <li>Advanced challenge: find the point with the highest number of people within a 10 degree radius.</li>
 <li><p>Calculate the length of the boundary lines of US states in meters. Which state has the longest border and which has the shorter border? Hint: The <code>st_length</code> function computes the length of a <code>LINESTRING</code> or <code>MULTILINESTRING</code> geometry.</p></li>
-<li>Subset points higher than 3100 meters a.s.l in New Zealand (the <code>nz_height</code> object). Using the new object:
+<li>Subset points higher than 3100 meters in New Zealand (the <code>nz_height</code> object). Using the new object:
 <ul>
 <li>Count numbers of the highest points in grid cells of 3 km resolution.</li>
 <li>Find maximum elevation value for grid cells of 3 km resolution.</li>
 </ul></li>
+<li>Aggregate the raster counting high points in New Zealand created in the previous exercise reduce its geographic resolution by half (so cells are 6 by 6 km) and plot the result.
+<ul>
+<li>Resample the lower resolution raster back to the 3 km resolution of the orginal. How have the results changed?</li>
+<li>Name two advantages and two disadvantages of reducing raster resolution in this way.</li>
+</ul></li>
+<li>Polygonize the the <code>grain</code> dataset and filter-out all the squares representing clay.
+<ul>
+<li>Name 2 advantages and 2 disadvantages of vector data over raster data.</li>
+<li>At which points would it be useful to convert rasters to vectors in your research?</li>
+</ul></li>
 </ol>
 <!-- advances exercise - rotate nz as a whole - union new zeleand and rotate it around its centroid by 180 degrees -->
-<!-- RASTER AGGREGATION -->
-<!-- RASTER ALIGNMENT -->
-<!-- VECTORIZATION -->
 
 </div>
 </div>

@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve8f8ab3ec1a151fae
+preserve549e1006fe859fde
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3112,7 +3112,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserved06750185515069b
+preserve4f0fcfbd1397bfc7
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5028,15 +5028,21 @@ p[x_and_y]
 Which state has the longest border and which has the shorter border?
 Hint: The `st_length` function computes the length of a `LINESTRING` or `MULTILINESTRING` geometry.
 
-1. Subset points higher than 3100 meters a.s.l in New Zealand (the `nz_height` object). 
+1. Subset points higher than 3100 meters in New Zealand (the `nz_height` object). 
 Using the new object:
     - Count numbers of the highest points in grid cells of 3 km resolution.
     - Find maximum elevation value for grid cells of 3 km resolution.
 
+1. Aggregate the raster counting high points in New Zealand created in the previous exercise reduce its geographic resolution by half (so cells are 6 by 6 km) and plot the result.
+    - Resample the lower resolution raster back to the 3 km resolution of the orginal. How have the results changed?
+    - Name two advantages and two disadvantages of reducing raster resolution in this way.
+
+1. Polygonize the the `grain` dataset and filter-out all the squares representing clay.
+    - Name 2 advantages and 2 disadvantages of vector data over raster data.
+    - At which points would it be useful to convert rasters to vectors in your research?
+
+
 <!-- advances exercise - rotate nz as a whole - union new zeleand and rotate it around its centroid by 180 degrees -->
-<!-- RASTER AGGREGATION -->
-<!-- RASTER ALIGNMENT -->
-<!-- VECTORIZATION -->
 
 <!--chapter:end:05-transform.Rmd-->
 
@@ -6168,7 +6174,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveba70a22674187f85
+preserve5bbd18075960e4e2
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6830,7 +6836,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 
 
 <div class="figure" style="text-align: center">
-preservec6c24a81048fc574
+preserve53e5618ef856fad3
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
