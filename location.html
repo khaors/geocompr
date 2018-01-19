@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-01-17">
+<meta name="date" content="2018-01-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -298,10 +298,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <ul>
 <li>This chapter requires the following packages (<strong>ggmap</strong> must also be installed):</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(osmdata)
-<span class="kw">library</span>(raster)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(raster)
 <span class="kw">library</span>(sf)
-<span class="kw">library</span>(tidyverse)</code></pre></div>
+<span class="kw">library</span>(tidyverse)
+<span class="kw">library</span>(osmdata)</code></pre></div>
 <ul>
 <li>Required data will be downloaded in due course.</li>
 </ul>
@@ -730,7 +730,7 @@ Figure 7.3: Suitable areas (i.e., raster cells with a score &gt; 9) in accordanc
 <li>We used equal weights when calculating the final scores. But is, for example, the household size as important as the portion of men or the mean age?</li>
 <li>We used all points of interest. Maybe it would be wiser to use only those which might be interesting for bike shops such as do-it-yourself, hardware, bicycle, fishing, hunting, motorcycles, outdoor and sports shops (see the range of shop values available on the <a href="http://wiki.openstreetmap.org/wiki/Map_Features#Shop">OSM Wiki</a>).</li>
 <li>Maybe data at a better resolution changes and improves the output. For example, there is also population data at a finer resolution (100 m; see exercises).</li>
-<li>We have used only a limited set of variables. For example, the <a href="http://inspire-geoportal.ec.europa.eu/discovery/">INSPIRE geoportal</a> might contain much more data of possible interest to our analysis (see also section<a href="read-write.html#retrieving-data">6.2</a>. The bike paths density might be another interesting variable as well as the purchasing power or even better the retail purchasing power for bikes.</li>
+<li>We have used only a limited set of variables. For example, the <a href="http://inspire-geoportal.ec.europa.eu/discovery/">INSPIRE geoportal</a> might contain much more data of possible interest to our analysis (see also section <a href="read-write.html#retrieving-data">6.2</a>. The bike paths density might be another interesting variable as well as the purchasing power or even better the retail purchasing power for bikes.</li>
 <li>Interactions remained unconsidered such as a possible interaction between the portion of men and single households. However, to find out about such an interaction we would need customer data.</li>
 </ul>
 <p>In short, the presented analysis is far from perfect. Nevertheless, it should have given you a first impression and understanding of how to obtain, and deal with spatial data in R within a location analysis context.</p>
