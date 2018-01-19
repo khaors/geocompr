@@ -1056,6 +1056,12 @@ Figure 5.23: Illustration of vectorization of raster (left) into polygon (center
 <!-- CRS CONVERSION -->
 <!-- 1. vector reprojection exercise (e.g. modification of proj4) -->
 <ol style="list-style-type: decimal">
+<li>Create a new object called <code>nz_wgs</code> by transforming <code>nz</code> object into the WGS84 CRS.
+<ul>
+<li>Create an object of class <code>crs</code> for both and use this to query their CRSs.</li>
+<li>With reference to the bounding box of each object, what units does each CRS use?</li>
+<li>Remove the CRS from <code>nz_wgs</code> and plot the result: what is wrong with this map of New Zealand and why?</li>
+</ul></li>
 <li><p>Transform the <code>world</code> dataset to the transverse Mercator projection (<code>&quot;+proj=tmerc&quot;</code>) and plot the result. What has changed and why? Try to transform it back into WGS 84 and plot the new object. Why the new object differs from the original one?</p></li>
 <li><p>Transform the continuous raster (<code>cat_raster</code>) into WGS 84 using the nearest neighbor interpolation method. What has changed? How it influences the results?</p></li>
 <li><p>Try to transform the categorical raster (<code>cat_raster</code>) into WGS 84 using the bilinear interpolation method. What has changed? How it influences the results?</p></li>

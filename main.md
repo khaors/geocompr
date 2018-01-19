@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservef221f25744f78e30
+preserve5818ef14b4856bc2
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3112,7 +3112,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve420387e9f6131e07
+preserveb5152f27c4cefe94
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4967,6 +4967,11 @@ grain_poly2 = grain_poly %>%
 
 <!-- CRS CONVERSION -->
 <!-- 1. vector reprojection exercise (e.g. modification of proj4) -->
+1. Create a new object called `nz_wgs` by transforming `nz` object into the WGS84 CRS.
+    - Create an object of class `crs` for both and use this to query their CRSs.
+    - With reference to the bounding box of each object, what units does each CRS use?
+    - Remove the CRS from `nz_wgs` and plot the result: what is wrong with this map of New Zealand and why?
+
 1. Transform the `world` dataset to the transverse Mercator projection (`"+proj=tmerc"`) and plot the result.
 What has changed and why?
 Try to transform it back into WGS 84 and plot the new object.
@@ -6147,7 +6152,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve5f81dd5f5831895a
+preserve41e63d2887143ee4
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6809,7 +6814,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 
 
 <div class="figure" style="text-align: center">
-preserve6649f22d3cdfc151
+preserve49415065210fa716
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
