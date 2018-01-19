@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservea383e461d8d03be7
+preservecbf9925654783070
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3112,7 +3112,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve80bcc91f383d283f
+preserve2f8c54581c2cc15c
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6161,7 +6161,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve70a761e94a06ad92
+preserve9595f97bed5ff487
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6240,8 +6240,8 @@ Change the age raster accordingly, repeat the remaining analyses and compare the
 
 ```r
 library(sf)
-library(stplanr)
 library(tidyverse)
+library(stplanr)
 ```
 
 ## Introduction
@@ -6512,7 +6512,7 @@ desire_lines = od2line(od_inter, zones)
 
 The first two lines of the preceding code chunk split the `od` dataset into two mutually exclusive objects, `od_intra` (which only contains OD pairs representing intrazone trips) and `od_inter` (which represents interzonal travel).
 The third line generates a geographic object `desire_lines` (of class `sf`) that allows a subsequent geographic visualization of interzone trips.
-An illustration of the results are presented in Figure \@ref(fig:desire) (we will cover the visualization methods that produced this plot in a subsequent chapter) <!-- to do: add reference to chapter -->.
+An illustration of the results are presented in Figure \@ref(fig:desire) (we will cover the visualization methods that produced this plot in a subsequent chapter)<!-- to do: add reference to chapter -->.
 The map shows the city center dominates transport patterns in the region, suggesting policies should be prioritized there, although a number of peripheral sub-centers can also be seen.
 Next it would be interesting to have a look at the distribution of interzonal modes, e.g., between which zones is cycling the least, the most common means of transport. <!-- maybe an idea for an exercise? -->
 <!-- These include Bradford Stoke to the North and Portishead to the West. -->
@@ -6574,11 +6574,11 @@ desire_carshort$geom_car = route_carshort$geometry
 ```
 
 This allows plotting the desire lines along which many short car journeys take place alongside likely routes traveled by cars, with the width of the routes proportional to the number of car journeys that could potentially be replaced.
-The code below results in Figure \@ref(fig:routes), which demonstrates along which routes people are driving short distances:^[
+The code below results in Figure \@ref(fig:routes), which demonstrates along which routes people are driving short distances^[
 In this plot the origins of the red routes and black desire lines are not identical.
 This is because zone centroids rarely lie on the route network: instead the route originate from the transport network node nearest the centroid.
 Note also that routes are assumed to originate in the zone centroids, a simplifying assumption which is used in transport models to reduce the computational resources needed to calculate the shortest path between all combinations of possible origins and destinations [@hollander_transport_2016].
-]
+]:
 
 
 ```r
@@ -6823,7 +6823,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 
 
 <div class="figure" style="text-align: center">
-preserve9476c414dbc46aaf
+preserve035deffc8dc13b4e
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
