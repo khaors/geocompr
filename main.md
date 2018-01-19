@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveed556320bae3331a
+preservec5d24f493cfa5f1a
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3112,7 +3112,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve6c2be104d8ed942c
+preservee7653f4d7c972a62
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4757,9 +4757,14 @@ The latter is part of GDAL and therefore requires a vector file, instead of an `
 
 ## Geometric operations on raster data {#geo-ras}
 
-<!-- add intro -->
-Geometric operations on raster data refer mainly to the shift, the rotation or warping of images (to account for distortions due to lens distortions, earth curvature, etc.).
-These operations are especially useful when we want to combine overlapping images or images with differing resolutions and/or different projections (co-registration of images).
+Geometric raster operations include the shift, flipping, mirroring, scaling, rotation or warping of images.
+These operations are necessary when geolocating a raster image.
+Geolocating requires the rectification of the image, which includes one or several of the following steps depending on the task at hand [see also @liu_essential_2009]:
+
+- Georeferencing with ground control points
+- Orthorectification also georeferences an image but additionally takes into account local topography.
+- Image (co-)registration is the process of aligning one image with another (in terms of CRS and resolution). 
+Registration becomes necessary for images from the same scene but shot from different sensors or from different angles or at different points in time.
 
 <!-- two useful citations for intro on geometric operations on raster:
 
@@ -6161,7 +6166,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve9449686d072e19b7
+preserve154eab7141fa65c6
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6823,7 +6828,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 
 
 <div class="figure" style="text-align: center">
-preservef6ad08d516d995e0
+preserve592f0c6a06c6b031
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 

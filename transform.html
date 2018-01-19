@@ -928,8 +928,12 @@ Figure 5.18: Examples of line and polygon rasterizations.
 </div>
 <div id="geo-ras" class="section level2">
 <h2><span class="header-section-number">5.4</span> Geometric operations on raster data</h2>
-<!-- add intro -->
-<p>Geometric operations on raster data refer mainly to the shift, the rotation or warping of images (to account for distortions due to lens distortions, earth curvature, etc.). These operations are especially useful when we want to combine overlapping images or images with differing resolutions and/or different projections (co-registration of images).</p>
+<p>Geometric raster operations include the shift, flipping, mirroring, scaling, rotation or warping of images. These operations are necessary when geolocating a raster image. Geolocating requires the rectification of the image, which includes one or several of the following steps depending on the task at hand <span class="citation">(see also Liu and Mason <a href="#ref-liu_essential_2009">2009</a>)</span>:</p>
+<ul>
+<li>Georeferencing with ground control points</li>
+<li>Orthorectification also georeferences an image but additionally takes into account local topography.</li>
+<li>Image (co-)registration is the process of aligning one image with another (in terms of CRS and resolution). Registration becomes necessary for images from the same scene but shot from different sensors or from different angles or at different points in time.</li>
+</ul>
 <!-- two useful citations for intro on geometric operations on raster:
 
 > Geometric operations include the shift, rotation and warping of images to a given shape or framework.
@@ -1128,6 +1132,9 @@ Figure 5.23: Illustration of vectorization of raster (left) into polygon (center
 </div>
 <div id="ref-grolemund_r_2016">
 <p>Grolemund, Garrett, and Hadley Wickham. 2016. <em>R for Data Science</em>. 1 edition. O’Reilly Media.</p>
+</div>
+<div id="ref-liu_essential_2009">
+<p>Liu, Jian-Guo, and Philippa J. Mason. 2009. <em>Essential Image Processing and GIS for Remote Sensing</em>. Chichester, West Sussex, UK ; Hoboken, NJ: Wiley-Blackwell.</p>
 </div>
 </div>
 <div class="footnotes">
