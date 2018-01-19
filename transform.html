@@ -1081,19 +1081,6 @@ Figure 5.23: Illustration of vectorization of raster (left) into polygon (center
 <li>Using base subsetting operators.</li>
 <li>Using an intermediary object created with <code>st_intersection()</code></li>
 </ul></li>
-</ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_in_y =<span class="st"> </span>p[y]
-p_in_xy =<span class="st"> </span>p_in_y[x]
-x_and_y =<span class="st"> </span><span class="kw">st_intersection</span>(x, y)
-p[x_and_y]
-<span class="co">#&gt; Geometry set for 1 feature </span>
-<span class="co">#&gt; geometry type:  POINT</span>
-<span class="co">#&gt; dimension:      XY</span>
-<span class="co">#&gt; bbox:           xmin: 0.305 ymin: 1.43 xmax: 0.305 ymax: 1.43</span>
-<span class="co">#&gt; epsg (SRID):    NA</span>
-<span class="co">#&gt; proj4string:    NA</span>
-<span class="co">#&gt; POINT (0.305 1.43)</span></code></pre></div>
-<ol style="list-style-type: decimal">
 <li><p>Write code that uses functions <code>aggregate()</code> and <code>st_buffer()</code> to answers the following question: What proportion of the world’s population lives in countries that intersect a circle with a 10 degree radius of the intersection between the equator and the <a href="https://en.wikipedia.org/wiki/9th_meridian_east">9<sup>th</sup> meridian</a>?</p></li>
 <li><p>Assuming that people are evenly distributed across countries, estimate the population living <em>within</em> the circle created to answer the previous question.</p></li>
 <li>Warning messages should have been produced during the working to find the answer to the previous questions. What do these warnings mean and how could they be stopped?

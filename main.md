@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve549e1006fe859fde
+preservea383e461d8d03be7
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3112,7 +3112,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve4f0fcfbd1397bfc7
+preserve80bcc91f383d283f
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5004,19 +5004,6 @@ Hint: you need to use a two-element vector for this transformation.
     - Using base subsetting operators.
     - Using an intermediary object created with `st_intersection()`
 
-```r
-p_in_y = p[y]
-p_in_xy = p_in_y[x]
-x_and_y = st_intersection(x, y)
-p[x_and_y]
-#> Geometry set for 1 feature 
-#> geometry type:  POINT
-#> dimension:      XY
-#> bbox:           xmin: 0.305 ymin: 1.43 xmax: 0.305 ymax: 1.43
-#> epsg (SRID):    NA
-#> proj4string:    NA
-#> POINT (0.305 1.43)
-```
 1. Write code that uses functions `aggregate()` and `st_buffer()` to answers the following question: What proportion of the world's population lives in countries that intersect a circle with a 10 degree radius of the intersection between the equator and the [9^th^ meridian](https://en.wikipedia.org/wiki/9th_meridian_east)?
 
 1. Assuming that people are evenly distributed across countries, estimate the population living *within* the circle created to answer the previous question.
@@ -6174,7 +6161,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve5bbd18075960e4e2
+preserve70a761e94a06ad92
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6836,7 +6823,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 
 
 <div class="figure" style="text-align: center">
-preserve53e5618ef856fad3
+preserve9476c414dbc46aaf
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
