@@ -1070,7 +1070,8 @@ Figure 5.23: Illustration of vectorization of raster (left) into polygon (center
 <li>At what value does the form of the result start to break-down for each method, making New Zealand unrecognizable?</li>
 <li>Advanced: What is different about the geometry type of the results from <code>st_simplify()</code> compared with the geometry type of <code>ms_simplify()</code>? What problems does this create and how can this be resolved?</li>
 </ul></li>
-<li>Centroids and buffers</li>
+<li><p>In the first exercise in Chapter <a href="spatial-operations.html#spatial-operations">4</a> it was established that Canterbury region had 61 of the 101 highest points in New Zealand. Using <code>st_buffer()</code>, how many points in <code>nz_height</code> are within 100 km of Canturbury?</p></li>
+<li><p>Find the geographic centroid of New Zealand. How far is it from the geographic centroid of Canterbury?</p></li>
 <li>Most world maps have a north-up orientation. A world map with a south-up orientation could be created by a reflection (one of affine transformations not mentioned in <a href="transform.html#affine-transformations">5.3.4</a>) of the <code>world</code> object’s geometry. Write code to do so. Hint: you need to use a two-element vector for this transformation.
 <ul>
 <li>Bonus: create a upside down map of your country.</li>
