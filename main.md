@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve535061f79145fcec
+preserve3b5a4a35fe27d3b3
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3112,7 +3112,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve06969d4fc3dbd719
+preservebbffdc731154d60b
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4904,12 +4904,6 @@ plot(rasterToContour(dem), add = TRUE)
 
 Use `contour()` or `rasterVis::contourplot()` if you want to add contour lines to a plot with (altitude) labels (Fig. \@ref(fig:contour)).
 
-
-```
-#> Warning: could not determine whether palette is sequential or diverging.
-#> auto.palette.mapping will be set to FALSE.
-```
-
 <div class="figure" style="text-align: center">
 <img src="figures/contour-1.png" alt="DEM hillshade of the southern flank of Mt. Mongón overlaid with contour lines." width="576" />
 <p class="caption">(\#fig:contour)DEM hillshade of the southern flank of Mt. Mongón overlaid with contour lines.</p>
@@ -6153,7 +6147,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveab3ebebdb7675530
+preserve638d953aebe3b7b3
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6815,7 +6809,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 
 
 <div class="figure" style="text-align: center">
-preserve8e6eed11e6d43afa
+preservea77a0f661aec2ac8
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 

@@ -47,7 +47,7 @@
 
 
 
-<script src="libs/htmlwidgets-0.9/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.0/htmlwidgets.js"></script>
 <link href="libs/leaflet-0.7.7/leaflet.css" rel="stylesheet" />
 <script src="libs/leaflet-0.7.7/leaflet.js"></script>
 <link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
@@ -1006,8 +1006,6 @@ Figure 5.22: Raster and point representation of <code>elev</code>.
 <span class="kw">plot</span>(dem, <span class="dt">axes =</span> <span class="ot">FALSE</span>)
 <span class="kw">plot</span>(<span class="kw">rasterToContour</span>(dem), <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p>Use <code>contour()</code> or <code>rasterVis::contourplot()</code> if you want to add contour lines to a plot with (altitude) labels (Fig. <a href="transform.html#fig:contour">5.23</a>).</p>
-<pre><code>#&gt; Warning: could not determine whether palette is sequential or diverging.
-#&gt; auto.palette.mapping will be set to FALSE.</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:contour"></span>
 <img src="figures/contour-1.png" alt="DEM hillshade of the southern flank of Mt. Mongón overlaid with contour lines." width="576" />
 <p class="caption">
