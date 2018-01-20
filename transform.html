@@ -1005,8 +1005,16 @@ Figure 5.22: Raster and point representation of <code>elev</code>.
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(dem, <span class="dt">package =</span> <span class="st">&quot;RQGIS&quot;</span>)
 <span class="kw">plot</span>(dem, <span class="dt">axes =</span> <span class="ot">FALSE</span>)
 <span class="kw">plot</span>(<span class="kw">rasterToContour</span>(dem), <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<p>Use <code>contour()</code> or <code>rasterVis::contourplot()</code> if you want to add contour lines to a plot with (altitude) labels (Fig. <a href="#fig:contour"><strong>??</strong></a>).</p>
-<p>Finally, <code>rasterToPolygons()</code> converts each raster cell into one polygon consisting of five coordinates all of which need to be explicitly stored. Hence, be careful with this approach when using large raster datasets since you might run into memory problems. Here, we convert <code>grain</code> into polygons and subsequently dissolve the output in accordance with the grain size categories which <code>rasterToPolygons()</code> stored in an attribute named <code>layer</code> (see section <a href="transform.html#geometry-unions">5.3.6</a> and Figure <a href="transform.html#fig:raster-vectorization2">5.23</a>). A convenient alternative for converting rasters into polygons is <code>spex::polygonize()</code> which by default returns an <code>sf</code> object.</p>
+<p>Use <code>contour()</code> or <code>rasterVis::contourplot()</code> if you want to add contour lines to a plot with (altitude) labels (Fig. <a href="transform.html#fig:contour">5.23</a>).</p>
+<pre><code>#&gt; Warning: could not determine whether palette is sequential or diverging.
+#&gt; auto.palette.mapping will be set to FALSE.</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:contour"></span>
+<img src="figures/contour-1.png" alt="DEM hillshade of the southern flank of Mt. Mongón overlaid with contour lines." width="576" />
+<p class="caption">
+Figure 5.23: DEM hillshade of the southern flank of Mt. Mongón overlaid with contour lines.
+</p>
+</div>
+<p>Finally, <code>rasterToPolygons()</code> converts each raster cell into one polygon consisting of five coordinates all of which need to be explicitly stored. Hence, be careful with this approach when using large raster datasets since you might run into memory problems. Here, we convert <code>grain</code> into polygons and subsequently dissolve the output in accordance with the grain size categories which <code>rasterToPolygons()</code> stored in an attribute named <code>layer</code> (see section <a href="transform.html#geometry-unions">5.3.6</a> and Figure <a href="transform.html#fig:raster-vectorization2">5.24</a>). A convenient alternative for converting rasters into polygons is <code>spex::polygonize()</code> which by default returns an <code>sf</code> object.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grain_poly =<span class="st"> </span><span class="kw">rasterToPolygons</span>(grain) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">st_as_sf</span>()
 grain_poly2 =<span class="st"> </span>grain_poly %&gt;%<span class="st"> </span>
@@ -1015,7 +1023,7 @@ grain_poly2 =<span class="st"> </span>grain_poly %&gt;%<span class="st"> </span>
 <div class="figure" style="text-align: center"><span id="fig:raster-vectorization2"></span>
 <img src="figures/raster-vectorization2-1.png" alt="Illustration of vectorization of raster (left) into polygon (center) and polygon aggregation (right)." width="576" />
 <p class="caption">
-Figure 5.23: Illustration of vectorization of raster (left) into polygon (center) and polygon aggregation (right).
+Figure 5.24: Illustration of vectorization of raster (left) into polygon (center) and polygon aggregation (right).
 </p>
 </div>
 <!-- ```{r} -->
