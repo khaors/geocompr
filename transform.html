@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-01-19">
+<meta name="date" content="2018-01-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -220,8 +220,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.3.8" data-path="transform.html"><a href="transform.html#rasterization"><i class="fa fa-check"></i><b>5.3.8</b> Rasterization</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="transform.html"><a href="transform.html#geo-ras"><i class="fa fa-check"></i><b>5.4</b> Geometric operations on raster data</a><ul>
-<li class="chapter" data-level="5.4.1" data-path="transform.html"><a href="transform.html#raster-alignment"><i class="fa fa-check"></i><b>5.4.1</b> Raster alignment</a></li>
-<li class="chapter" data-level="5.4.2" data-path="transform.html"><a href="transform.html#vectorization"><i class="fa fa-check"></i><b>5.4.2</b> Vectorization</a></li>
+<li class="chapter" data-level="5.4.1" data-path="transform.html"><a href="transform.html#raster-alignment"><i class="fa fa-check"></i><b>5.4.1</b> Image co-registration (image alignment)</a></li>
+<li class="chapter" data-level="5.4.2" data-path="transform.html"><a href="transform.html#spatial-vectorization"><i class="fa fa-check"></i><b>5.4.2</b> Spatial vectorization</a></li>
 </ul></li>
 <li class="chapter" data-level="5.5" data-path="transform.html"><a href="transform.html#exercises-3"><i class="fa fa-check"></i><b>5.5</b> Exercises</a></li>
 </ul></li>
@@ -311,22 +311,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h2><span class="header-section-number">5.1</span> Introduction</h2>
 <p>The previous three chapters have demonstrated how geographic datasets are structured in R (Chapter <a href="spatial-class.html#spatial-class">2</a>) and how to manipulate them based on their non-geographic attributes (Chapter <a href="attr.html#attr">3</a>) and spatial properties (Chapter <a href="spatial-operations.html#spatial-operations">4</a>). This chapter builds on these contents by demonstrating how to modify the geometry underlying spatial datasets for vector and raster objects.</p>
 <p>Section <a href="transform.html#geo-vec">5.3</a> covers transforming vector geometries with ‘unary’ and ‘binary’ operations. <!-- TODO: add something on n-ary ops (RL) --> Unary operations work on a single geometry in isolation. This includes simplification (of lines and polygons), the creation of buffers and centroids, and shifting/scaling/rotating single geometries using ‘affine transformations’ (sections <a href="transform.html#simplification">5.3.1</a> to <a href="transform.html#affine-transformations">5.3.4</a>). Binary transformations modify one geometry based on the shape of another. This includes clipping and geometry unions, covered in sections <a href="transform.html#clipping">5.3.5</a> and <a href="transform.html#geometry-unions">5.3.6</a> respectively. Type transformations (from a polygon to a line, for example) are demonstrated in section <a href="transform.html#type-trans">5.3.7</a> and ‘rasterization’ is covered in section <a href="transform.html#rasterization">5.3.8</a>.</p>
-<p>Section <a href="transform.html#geo-ras">5.4</a> covers geometric transformations on raster objects. This involves changing the size and number of the underlying pixels, and assigning them new values. It teaches how to change the resolution (also called raster aggregation and disaggregation - see section <a href="#ras-agg"><strong>??</strong></a>), the extent and the origin of a raster. These operations are especially useful if one would like to align raster datasets from diverse sources (see section <a href="transform.html#raster-alignment">5.4.1</a>). Aligned raster objects share the same header information, allowing them to be processed using map algebra operations, described in section <a href="spatial-operations.html#map-algebra">4.3.2</a>.</p>
+<p>Section <a href="transform.html#geo-ras">5.4</a> covers geometric transformations on raster objects. This involves changing the size and number of the underlying pixels, and assigning them new values. It teaches how to change the resolution (also called raster aggregation and disaggregation, the extent and the origin of a raster. These operations are especially useful if one would like to align raster datasets from diverse sources (see section <a href="transform.html#raster-alignment">5.4.1</a>). Aligned raster objects share the same header information, allowing them to be processed using map algebra operations, described in section <a href="spatial-operations.html#map-algebra">4.3.2</a>.</p>
 <p>A vital type of geometry transformation is <em>reprojecting</em> from one coordinate reference system (CRS) to another. Because of the importance of reprojection, introduced in Chapter <a href="spatial-class.html#spatial-class">2</a>, and the fact that it applies to raster and vector geometries alike, it is the topic of the first section in this chapter.</p>
 </div>
 <div id="reproj-geo-data" class="section level2">
 <h2><span class="header-section-number">5.2</span> Reprojecting geographic data</h2>
-<!-- So far this intro mainly shows examples how to reproject vector data, and a few exemplarily pitfalls.
-And though the pitfall examples are good, I wonder if we can keep them a bit more general (so far only related to vector data) or if at times a coding example is necessary, maybe only a figure would be sufficient.
-We should especially point out that since we project from 3D to 2D we can only keep two out of three spherical (real-world) properties: angle, length, area (-> could be also part of which CRS to use or even better we refer to this explanation in "which CRS to use").
-So a specific use case determines which projection to use. 
-In sea navigation we need angles and lengths, real estate is especially interested in correct areas, etc.
-
-Hence, maybe we should move parts from c2 to c5 since the stuff in c2 is already rather specific, and not a short intro to CRS anymore. 
-Another solution would be to leave the intro crs stuff in c2 (extended by when to use which CRS) and in c5 we don't have a joint vector-raster projection section but have a repojection section in the vector and raster section.
-(In the case of raster this would make perfectly sense since for reprojecting one needs all the geometric operations in section raster alignment (warp, shift, scale, aggregate, etc.).
-Maybe (not sure) a few figures would also help (conic, azimuthal projection; ellipsoids, etc.)
--->
 <p>Section <a href="spatial-class.html#crs-intro">2.3</a> introduced coordinate reference systems (CRSs) and demonstrated their importance for geocomputation. This section goes further, by demonstrating some problems that can arise when using an inappropriate CRS and how to <em>transform</em> geometries from one CRS to another.</p>
 <p>Many spatial operations assume that you are using a <em>projected</em> CRS. The GEOS engine underlying most spatial operations in <strong>sf</strong>, for example, assumes your data is in a projected CRS. For this reason <strong>sf</strong> contains a function for checking if geometries have a geographic or projected CRS. This is illustrated below using the example of London introduced in section <a href="spatial-class.html#vector-data">2.1</a>, which is created by <em>coercing</em> a <code>data.frame</code> into an <code>sf</code> object (the <code>coords</code> argument specifies the coordinates):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">london =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">lon =</span> -<span class="fl">0.1</span>, <span class="dt">lat =</span> <span class="fl">51.5</span>) %&gt;%<span class="st"> </span>
@@ -345,7 +334,7 @@ Maybe (not sure) a few figures would also help (conic, azimuthal projection; ell
 <p>The message stating that <code>dist is assumed to be in decimal degrees</code> is useful: it warns that the result may be of limited use because it is in units of latitude and longitude, rather meters or some other suitable measure of distance. The consequences of a failure to work on projected data are illustrated in Figure <a href="transform.html#fig:crs-buf">5.1</a> (left panel): the buffer is elongated in the north-south direction because lines of longitude converge towards the Earth’s poles.</p>
 
 <div class="rmdnote">
-The distance between two lines of longitude, called meridians, is around 111 km at the equator (execute <code>geosphere::distGeo(c(0, 0), c(1, 0))</code> to find the precise distance). This shrinks to zero at the poles. At the latitude of London, for example, meridians are less 70 km apart (challenge: execute code that verifies this). <!-- `geosphere::distGeo(c(0, 51.5), c(1, 51.5))` --> Lines of latitude, by contrast, have are of constant distance from each other irrespective of latitude: they are always around 111 km apart, including at the equator and near the poles. This is illustrated in Figures <a href="transform.html#fig:crs-buf">5.1</a> and <a href="transform.html#fig:wintriproj">5.3</a>.
+The distance between two lines of longitude, called meridians, is around 111 km at the equator (execute <code>geosphere::distGeo(c(0, 0), c(1, 0))</code> to find the precise distance). This shrinks to zero at the poles. At the latitude of London, for example, meridians are less than 70 km apart (challenge: execute code that verifies this). <!-- `geosphere::distGeo(c(0, 51.5), c(1, 51.5))` --> Lines of latitude, by contrast, have are of constant distance from each other irrespective of latitude: they are always around 111 km apart, including at the equator and near the poles. This is illustrated in Figures <a href="transform.html#fig:crs-buf">5.1</a> and <a href="transform.html#fig:wintriproj">5.3</a>.
 </div>
 <p></p>
 <p>Do not interpret the warning about the geographic (<code>longitude/latitude</code>) CRS as “the CRS should not be set”: it almost always should be! It is better understood as a suggestion to <em>reproject</em> the data onto a projected CRS. This suggestion does not always need to be heeded: performing spatial and geometric operations makes little or no difference in some cases (e.g., spatial subsetting). But for operations involving distances such as buffering, the only way to ensure a good result is to create a projected copy of the data and run the operation on that. This is done in the code chunk below:</p>
@@ -389,6 +378,7 @@ Figure 5.1: Buffer on vector represenations of London with a geographic (left) a
 <p>What about when a projected CRS is required? In some cases it is not something that we are free to decide: “often the choice of projection is made by a public mapping agency” <span class="citation">(Bivand, Pebesma, and Gómez-Rubio <a href="#ref-bivand_applied_2013">2013</a>)</span>. This means that when working with local data sources, it is likely preferable to work with the CRS in which the data was provided, to ensure compatibility, even if the ‘official’ CRS is not the most accurate. The example of London was easy to answer because a) the CRS ‘BNG’ (with its associated EPSG code 27700) is well-known and b) the original dataset (<code>london</code>) already had that CRS.</p>
 <p>What about when a projected CRS is needed but the study region lacks a well-known CRS? Again, although there is no universal answer there is a sensible default CRS: Universal Transverse Mercator (<a href="https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system">UTM</a>). UTM is not actually a single CRS but a system of CRSs that covers the entire world, and breaks it into 60 segments, each containing 6 degrees of longitude. All UTM projections have the same datum (WGS84) and their EPSG codes run sequentially from 32601 to 32660. This makes it possible to create a function (we’ll call it <code>lonlat2UTM</code>) to calculate the EPSG code associated with any point on the planet as follows:<a href="#fn28" class="footnoteRef" id="fnref28"><sup>28</sup></a></p>
 <!-- Idea: create full function with message and flexibility in later chapter (RL) -->
+<!-- I think this code needs a short description (JM)-->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lonlat2UTM =<span class="st"> </span>function(lonlat) {
   utm =<span class="st"> </span>(<span class="kw">floor</span>((lonlat[<span class="dv">1</span>] +<span class="st"> </span><span class="dv">180</span>) /<span class="st"> </span><span class="dv">6</span>) %%<span class="st"> </span><span class="dv">60</span>) +<span class="st"> </span><span class="dv">1</span>
   utm +<span class="st"> </span><span class="dv">32600</span>
@@ -932,30 +922,15 @@ Figure 5.18: Examples of line and polygon rasterizations.
 <ul>
 <li>Georeferencing with ground control points</li>
 <li>Orthorectification also georeferences an image but additionally takes into account local topography.</li>
-<li>Image (co-)registration is the process of aligning one image with another (in terms of CRS and resolution). Registration becomes necessary for images from the same scene but shot from different sensors or from different angles or at different points in time.</li>
+<li>Image (co-)registration is the process of aligning one image with another (in terms of CRS, origin and resolution). Registration becomes necessary for images from the same scene but shot from different sensors or from different angles or at different points in time.</li>
 </ul>
-<p>In this section we will exclusively deal with the co-registration (alignment) of images since only a matching resolution, projection and origin enables map algebra or the merging of raster images. Otherwise, how should we add the values of one raster with a resolution of 0.2 decimal degrees to a second with a resolution of 1 decimal degree? <!-- list raster operations: aggregation, origin, etc. and rename sections accordingly, i.e., dismiss section header raster alignment --></p>
-<!-- two useful citations for intro on geometric operations on raster:
-
-> Geometric operations include the shift, rotation and warping of images to a given shape or framework.
-In remote sensing applications, geometric operations are mainly used for the co-registration of images of the same scene acquired by different sensor systems or at different times or from different positions, and for rectifying an image to fit a particular coordinate system (geocoding).
-Image mosaic is a geometric operation that was commonly used in the early days of remote sensing image processing when computer power was inadequate for the massive demands of the geocoding process, but this is no longer the case.
-Once a set of adjacent images is accurately rectified to a map projection system, such as a UTM coordinate system (see Chapter 13 in Part Two for details) the images, though separate, are effectively in a mosaic.
-
-@liu_essential_2009: 105
-
-> Vector data store their coordinate information implicitly with each node position in real-world coordinates and these are used directly to plot positions and to re-project from one coordinate system to another.
-Raster data on the other hand have a regular local row and column number system for each pixel so that, internally, the geometry and position of a pixel’s location are implicit.
-Externally, however, a world geographic reference must be explicitly stated; this requires the geographic location of the image origin and the ground distance represented by each pixel.
-A transformation is then performed, which converts local image coordinates to realworld coordinates for each pixel location using the geometric operations described in Chapter 9. This transformation information is also stored explicitly.
-
-@liu_essential_2009: 173-74
-
--->
+<p>In this section we will mainly deal with the co-registration (alignment) of images including a matching resolution, extent and origin. A matching projection is of course also required but has been already covered in section <a href="#reprojection-raster-geometries"><strong>??</strong></a>. Secondly, we will show how to convert raster images into the spatial vector model.</p>
 <div id="raster-alignment" class="section level3">
-<h3><span class="header-section-number">5.4.1</span> Raster alignment</h3>
-<p>This section uses the <code>elev</code> object from section <a href="attr.html#manipulating-raster-objects">3.3</a> and which is also available from the <code>spData</code> package. The <code>projectRaster()</code> function reprojects one raster to a desired projection, say from UTM to WGS84. Equally, map algebra operations require the same extent. Following code adds one row and two columns to each side of the raster while setting all new values to an elevation of 1000 meters (<a href="transform.html#fig:extend-example">5.19</a>).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_2 =<span class="st"> </span><span class="kw">extend</span>(elev, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">value =</span> <span class="dv">1000</span>)
+<h3><span class="header-section-number">5.4.1</span> Image co-registration (image alignment)</h3>
+<p>When merging or performing map algebra on rasters, their resolution, projection, origin and/or extent has to match. Otherwise, how should we add the values of one raster with a resolution of 0.2 decimal degrees to a second with a resolution of 1 decimal degree? The same problem arises when we would like to merge satellite imagery from different sensors with different projections and resolutions. We can deal with such mismatches by aligning the rasters.</p>
+<p>In the simplest case, two images only differ in a mismatch in extent. <!--The `projectRaster()` function reprojects one raster to a desired projection, say from UTM to WGS84.--> Following code adds one row and two columns to each side of the raster while setting all new values to an elevation of 1000 meters (<a href="transform.html#fig:extend-example">5.19</a>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(elev, <span class="dt">package =</span> <span class="st">&quot;spData&quot;</span>)
+elev_2 =<span class="st"> </span><span class="kw">extend</span>(elev, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">value =</span> <span class="dv">1000</span>)
 <span class="kw">plot</span>(elev_2)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:extend-example"></span>
 <img src="figures/extend-example-1.png" alt="Original raster extended by 1 one row on each side (top, bottom) and two columns on each side (right, left)." width="576" />
@@ -967,9 +942,9 @@ Figure 5.19: Original raster extended by 1 one row on each side (top, bottom) an
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_3 =<span class="st"> </span>elev +<span class="st"> </span>elev_2
 <span class="co">#&gt; Warning in elev + elev_2: Raster objects have different extents. Result for</span>
 <span class="co">#&gt; their intersection is returned</span></code></pre></div>
-<p>However, we can also align the extent of two rasters with the <code>extend()</code> command. Here, we extend the <code>elev</code> object to the extent of <code>elev_2</code>. The newly added rows and column receive the default value of the <code>value</code> parameter, i.e., <code>NA</code>.</p>
+<p>However, we can also align the extent of two rasters with <code>extend()</code>. Instead of telling the function how many rows or columns should be added (as done before), we let it figure it out by itself using another raster object. Here, we extend the <code>elev</code> object to the extent of <code>elev_2</code>. The newly added rows and column receive the default value of the <code>value</code> parameter, i.e., <code>NA</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_4 =<span class="st"> </span><span class="kw">extend</span>(elev, elev_2)</code></pre></div>
-<p>The <code>aggregate()</code> and <code>disaggregate()</code> functions help to change the cell size resolution of a raster. For instance, let us aggregate <code>elev</code> from a resolution of 0.5 to a resolution of 1, that means we aggregate by a factor of 2 (Fig. <a href="transform.html#fig:aggregate-example">5.20</a>). Additionally, the output cell value should correspond to the mean of the input cells (but one could use other functions as well such as <code>median()</code>, <code>sum()</code>, etc.):</p>
+<p>Matching different resolutions is computationally more complicated, but functions <code>aggregate()</code> and <code>disaggregate()</code> help with that. For instance, let us aggregate <code>elev</code> from a resolution of 0.5 to a resolution of 1, that means aggregating by a factor of 2 (Fig. <a href="transform.html#fig:aggregate-example">5.20</a>). Additionally, the output cell value should correspond to the mean of the input cells (but one could use other functions as well such as <code>median()</code>, <code>sum()</code>, etc.):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_agg =<span class="st"> </span><span class="kw">aggregate</span>(elev, <span class="dt">fact =</span> <span class="dv">2</span>, <span class="dt">fun =</span> mean)
 <span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
 <span class="kw">plot</span>(elev)
@@ -1009,10 +984,17 @@ elev_disagg =<span class="st"> </span><span class="kw">resample</span>(elev_agg,
 <li>Tries to facilitate parallel processing. For more information have a look at the help pages of <code>beginCluster()</code> and <code>clusteR()</code>. Additionally, check out the <em>Multi-core functions</em> section in <code>vignette(&quot;functions&quot;, package = &quot;raster&quot;)</code>.</li>
 </ol>
 </div>
-<div id="vectorization" class="section level3">
-<h3><span class="header-section-number">5.4.2</span> Vectorization</h3>
-<!-- ref to rasterization -->
-<p>Vectorization is a process of converting rasters into vectors.<a href="#fn36" class="footnoteRef" id="fnref36"><sup>36</sup></a> It is often used when we want to connect features extracted from raster data with an attribute table. The simplest form of vectorization is a conversion from a raster to points. The <code>rasterToPoints()</code> function creates point representations of every non-NA raster grid cell centroids and it is usually used for continuous data, such as elevation (Figure <a href="transform.html#fig:raster-vectorization1">5.22</a>). <!-- Spatial* class mentioned --> <!-- why? --></p>
+<div id="spatial-vectorization" class="section level3">
+<h3><span class="header-section-number">5.4.2</span> Spatial vectorization</h3>
+<p>Spatial vectorization is the counterpart of rasterization <a href="transform.html#rasterization">5.3.8</a>, and hence the process of converting continuous raster data into discrete vector data such as points, lines or polygons.</p>
+
+<div class="rmdnote">
+Be careful with the wording! In R vectorization refers to the possibility of replacing <code>for</code>-loops and alike by doing things like <code>1:10 / 2</code> (see also <span class="citation">Wickham (<a href="#ref-wickham_advanced_2014">2014</a>)</span>).
+</div>
+<p></p>
+<!-- well, we should rephrase, the here described is extract values to points (JM)-->
+<!--Spatial vectorization is often used when we want to connect features extracted from raster data with an attribute table.-->
+<p>The simplest form of vectorization is to convert a raster into points. The <code>rasterToPoints()</code> function creates point representations of every non-NA raster grid cell centroids and it is usually used for continuous data, such as elevation (Figure <a href="transform.html#fig:raster-vectorization1">5.22</a>). <!-- Spatial* class mentioned --> <!-- why? --></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_point =<span class="st"> </span><span class="kw">rasterToPoints</span>(elev, <span class="dt">spatial =</span> <span class="ot">TRUE</span>) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">st_as_sf</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:raster-vectorization1"></span>
@@ -1021,7 +1003,12 @@ elev_disagg =<span class="st"> </span><span class="kw">resample</span>(elev_agg,
 Figure 5.22: Raster and point representation of the elev dataset.
 </p>
 </div>
-<p>On the other hand, categorical rasters (e.g. scanned maps or satellite images) represent discrete features that could occupy areas larger than only one cell. The <code>rasterToPolygons()</code> function could be used to extract these features into a <code>SpatialPolygonsDataFrame</code> object. We can also convert the result into an object of class <code>sf</code>.<a href="#fn37" class="footnoteRef" id="fnref37"><sup>37</sup></a></p>
+<p>Another common application is the representation of a digital elevation model as contour lines, hence, converting raster data into spatial lines. Here, we will us a real-world DEM since our artificial raster <code>elev</code> produces parallel lines because when creating it we made the upper left corner the lowest and the lower right corner the highest value while increasing the value always by one from left to right (give it a try yourself).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(dem, <span class="dt">package =</span> <span class="st">&quot;RQGIS&quot;</span>)
+<span class="kw">plot</span>(dem)
+<span class="kw">plot</span>(<span class="kw">rasterToContour</span>(dem), <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p><img src="figures/unnamed-chunk-82-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>On the other hand, categorical rasters (e.g., scanned maps or satellite images) represent discrete features that could occupy areas larger than only one cell. The <code>rasterToPolygons()</code> function could be used to extract these features into a <code>SpatialPolygonsDataFrame</code> object. We can also convert the result into an object of class <code>sf</code>.<a href="#fn36" class="footnoteRef" id="fnref36"><sup>36</sup></a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grain_poly =<span class="st"> </span><span class="kw">rasterToPolygons</span>(grain) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">st_as_sf</span>()</code></pre></div>
 <p>The output consists of many polygons representing grid cells from the original raster object. They could be aggregated (see section <a href="spatial-operations.html#spatial-aggr">4.2.5</a>) into irregular polygons having the same value (Figure <a href="transform.html#fig:raster-vectorization1">5.22</a>).</p>
@@ -1136,6 +1123,9 @@ Figure 5.23: Illustration of vectorization of raster (left) into polygon (center
 <div id="ref-liu_essential_2009">
 <p>Liu, Jian-Guo, and Philippa J. Mason. 2009. <em>Essential Image Processing and GIS for Remote Sensing</em>. Chichester, West Sussex, UK ; Hoboken, NJ: Wiley-Blackwell.</p>
 </div>
+<div id="ref-wickham_advanced_2014">
+<p>Wickham, Hadley. 2014. <em>Advanced R</em>. CRC Press. <a href="http://www.crcpress.com/product/isbn/9781466586963 http://adv-r.had.co.nz http://www.crcpress.com/product/isbn/9781466586963 http://adv-r.had.co.nz" class="uri">http://www.crcpress.com/product/isbn/9781466586963 http://adv-r.had.co.nz http://www.crcpress.com/product/isbn/9781466586963 http://adv-r.had.co.nz</a>.</p>
+</div>
 </div>
 <div class="footnotes">
 <hr />
@@ -1151,8 +1141,7 @@ Figure 5.23: Illustration of vectorization of raster (left) into polygon (center
 <li id="fn33"><p>The <strong>fasterize</strong> package is available at <a href="https://github.com/ecohealthalliance/fasterize" class="uri">https://github.com/ecohealthalliance/fasterize</a>.<a href="transform.html#fnref33">↩</a></p></li>
 <li id="fn34"><p>See more at <a href="http://www.gdal.org/gdal_rasterize.html" class="uri">http://www.gdal.org/gdal_rasterize.html</a>.<a href="transform.html#fnref34">↩</a></p></li>
 <li id="fn35"><p>If the origins of two raster datasets are just marginally apart, it sometimes is sufficient to simply increase the <code>tolerance</code> argument of <code>raster::rasterOptions()</code>.<a href="transform.html#fnref35">↩</a></p></li>
-<li id="fn36"><p>This term should not be confused with a code vectorization.<a href="transform.html#fnref36">↩</a></p></li>
-<li id="fn37"><p>The <code>spex::polygonize()</code> function could be used as a faster alternative. It returns an <code>sf</code> object a default.<a href="transform.html#fnref37">↩</a></p></li>
+<li id="fn36"><p>The <code>spex::polygonize()</code> function could be used as a faster alternative. It returns an <code>sf</code> object as a default.<a href="transform.html#fnref36">↩</a></p></li>
 </ol>
 </div>
             </section>
