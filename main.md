@@ -35,7 +35,7 @@ The book's development can be divided into four main phases:
 3. Geocomputation methods
 4. Advanced applications
 
-Currently the focus is on Part 2, which we aim to be complete by December.
+Currently the focus is on Part 2, which we aim to be complete by February.
 New chapters will be added to this website as the project progresses, hosted at [geocompr.robinlovelace.net](https://geocompr.robinlovelace.net) and kept up-to-date thanks to [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 Currently the build is:
 
@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve98926b2161e8a6e9
+preserve0f55f13b780d0db8
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3112,7 +3112,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve120b76e832dcc352
+preserve13968853f83c4dc2
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4750,12 +4750,12 @@ Geometric raster operations include the shift, flipping, mirroring, scaling, rot
 These operations are necessary when geolocating a raster image.
 Geolocating requires the rectification of the image, which includes one or several of the following steps depending on the task at hand [see also @liu_essential_2009]:
 
-- Georeferencing with ground control points
+- Georeferencing with ground control points.
 - Orthorectification also georeferences an image but additionally takes into account local topography.
 - Image (co-)registration is the process of aligning one image with another (in terms of CRS, origin and resolution). Registration becomes necessary for images from the same scene but shot from different sensors or from different angles or at different points in time.
 
 In this section we will mainly deal with the co-registration (alignment) of images including a matching resolution, extent and origin.
-A matching projection is of course also required but has been already covered  in section \@ref(reprojection-raster-geometries).
+A matching projection is of course also required but has been already covered in section \@ref(reprojecting-raster-geometries).
 Secondly, we will show how to convert raster images into the spatial vector model.
 
 ### Image co-registration (image alignment) {#raster-alignment}
@@ -4876,12 +4876,9 @@ Spatial vectorization is the counterpart of rasterization \@ref(rasterization), 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">Be careful with the wording!
 In R vectorization refers to the possibility of replacing `for`-loops and alike by doing things like `1:10 / 2` (see also @wickham_advanced_2014).</div>\EndKnitrBlock{rmdnote}
 
-<!-- well, we should rephrase, the here described is extract values to points (JM)-->
-<!--Spatial vectorization is often used when we want to connect features extracted from raster data with an attribute table.-->
-The simplest form of vectorization is to convert a raster into points.
-The `rasterToPoints()` function creates point representations of every non-NA raster grid cell centroids and it is usually used for continuous data, such as elevation (Figure \@ref(fig:raster-vectorization1)).
-<!-- Spatial* class mentioned -->
-<!-- why? -->
+The simplest form of vectorization is to convert a raster into points by keeping the cell values and replacing the grid cells by its centroids.
+The `rasterToPoints()` does exactly this for all non-`NA` raster grid cells (Figure \@ref(fig:raster-vectorization1)).
+Setting the `spatial` parameter to `TRUE` makes sure that the output is a spatial object, otherwise a matrix is returned.
 
 
 ```r
@@ -4890,38 +4887,34 @@ elev_point = rasterToPoints(elev, spatial = TRUE) %>%
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/raster-vectorization1-1.png" alt="Raster and point representation of the elev dataset." width="576" />
-<p class="caption">(\#fig:raster-vectorization1)Raster and point representation of the elev dataset.</p>
+<img src="figures/raster-vectorization1-1.png" alt="Raster and point representation of `elev`." width="576" />
+<p class="caption">(\#fig:raster-vectorization1)Raster and point representation of `elev`.</p>
 </div>
 
 Another common application is the representation of a digital elevation model as contour lines, hence, converting raster data into spatial lines. 
-Here, we will us a real-world DEM since our artificial raster `elev` produces parallel lines because when creating it we made the upper left corner the lowest and the lower right corner the highest value while increasing the value always by one from left to right (give it a try yourself).
+Here, we will us a real-world DEM since our artificial raster `elev` produces parallel lines (give it a try yourself) because when creating it we made the upper left corner the lowest and the lower right corner the highest value while increasing cell values by one from left to right.
+`rasterToContour()` is a wrapper around `contourLines()`, which is why we 
 
 
 ```r
 data(dem, package = "RQGIS")
-plot(dem)
+plot(dem, axes = FALSE)
 plot(rasterToContour(dem), add = TRUE)
 ```
 
-<img src="figures/unnamed-chunk-82-1.png" width="576" style="display: block; margin: auto;" />
+Use `contour()` or `rasterVis::contourplot()` if you want to add contour lines to a plot with (altitude) labels (Fig. \@ref(fig:contour)).
 
 
-On the other hand, categorical rasters (e.g., scanned maps or satellite images) represent discrete features that could occupy areas larger than only one cell.
-The `rasterToPolygons()` function could be used to extract these features into a `SpatialPolygonsDataFrame` object.
-We can also convert the result into an object of class `sf`.^[The `spex::polygonize()` function could be used as a faster alternative. It returns an `sf` object as a default.]
+
+Finally, `rasterToPolygons()` converts each raster cell into one polygon consisting of five coordinates all of which need to be explicitly stored.
+Hence, be careful with this approach when using large raster datasets since you might run into memory problems.
+Here, we convert `grain` into polygons and subsequently dissolve the output in accordance with the grain size categories which `rasterToPolygons()` stored in an attribute named `layer` (see section \@ref(geometry-unions) and Figure \@ref(fig:raster-vectorization2)).
+A convenient alternative for converting rasters into polygons is `spex::polygonize()` which by default returns an `sf` object.
 
 
 ```r
 grain_poly = rasterToPolygons(grain) %>% 
   st_as_sf()
-```
-
-The output consists of many polygons representing grid cells from the original raster object.
-They could be aggregated (see section \@ref(spatial-aggr)) into irregular polygons having the same value (Figure \@ref(fig:raster-vectorization1)).
-
-
-```r
 grain_poly2 = grain_poly %>% 
   group_by(layer) %>%
   summarize()
@@ -4931,9 +4924,6 @@ grain_poly2 = grain_poly %>%
 <img src="figures/raster-vectorization2-1.png" alt="Illustration of vectorization of raster (left) into polygon (center) and polygon aggregation (right)." width="576" />
 <p class="caption">(\#fig:raster-vectorization2)Illustration of vectorization of raster (left) into polygon (center) and polygon aggregation (right).</p>
 </div>
-
-<!-- rasterToContour() -->
-<!-- e.g. landcover map to polygonss -->
 
 <!-- ```{r} -->
 <!-- nlcd2011 = raster(system.file("raster/nlcd2011.tif", package = "spDataLarge")) -->
@@ -6154,7 +6144,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve8a9182c9b6b4b434
+preserve09da2c95a5ecc384
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6816,7 +6806,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 
 
 <div class="figure" style="text-align: center">
-preserveffae7406237172c2
+preserve6eb3944c835efe4b
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
