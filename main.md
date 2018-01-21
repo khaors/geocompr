@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-01-20'
+date: '2018-01-21'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2018-01-20 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-01-21 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve5ac737a236519bb3
+preserve6313348ddd73b749
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -1859,7 +1859,7 @@ Unlike vector data, the raster data model stores the coordinate of the grid cell
 There is a less clear distinction between attribute and spatial information in raster data.
 Say, we are in the 3^rd^ row and the 4^th^ column of a raster matrix.
 To derive the corresponding coordinate, we have to move from the origin three cells in x-direction and four cells in y-direction with the cell resolution defining the distance for each x- and y-step.
-The raster header gives the matrix a spatial dimension which we need when plotting the raster or when we want to combine two rasters, think, for instance, of adding the values of one raster to another (see also next Chapter).
+The raster header gives the matrix a spatial dimension which we need when plotting the raster or when we want to combine two rasters, think, for instance, of adding the values of one raster to another (see also next chapter).
 <!-- should we somewhere add a table comparing advantages/disadvantages of using the vector or raster data model, would fit nicely into chapter 2 -->
 
 This chapter focuses on non-geographic operations on vector and raster data.
@@ -1867,9 +1867,9 @@ For vector data, we will introduce subsetting, aggregating and joining attribute
 Note that the corresponding functions also have a geographic equivalent.
 Sometimes you can even use the same functions for attribute and spatial operations.
 This is the case for subsetting as base R's `[` and tidyverse's `filter()` let you also subset spatial data based on the spatial extent of another spatial object (see Chapter \@ref(spatial-operations)).
-Therefore the skills you learn here are cross-transferable which is also why this chapter lays the foundation for the next chapter (Chapter \@ref(spatial-operations)) which extends the here presented methods to the spatial world.
+Therefore the skills you learn here are cross-transferable which is why this chapter lays the foundation for the next (Chapter \@ref(spatial-operations)) which extends the methods presented here to the spatial world.
 
-Raster attribute data operations are covered in Section \@ref(manipulating-raster-objects), which covers the creating continuous and categorical raster layers and extracting cell values from one layer and multiple layers (raster subsetting). 
+Raster attribute data operations are covered in Section \@ref(manipulating-raster-objects), which covers creating continuous and categorical raster layers and extracting cell values from one layer and multiple layers (raster subsetting). 
 Section \@ref(summarizing-raster-objects) provides an overview of 'global' raster operations which can be used to characterize entire raster datasets.
 
 ## Vector attribute manipulation
@@ -1909,7 +1909,7 @@ This enables geometries imported from spatial databases to have a variety of nam
 `sf` objects also support `tibble` and `tbl` classes used in the tidyverse, allowing 'tidy' data analysis workflows for spatial data.
 Thus **sf** enables the full power of R's data analysis capabilities to be unleashed on geographic data.
 Before using these capabilities it's worth re-capping how to discover the basic properties of vector data objects.
-Let's start by using base R functions for to get a measure of the `world` dataset:
+Let's start by using base R functions to get a measure of the `world` dataset:
 
 
 ```r
@@ -1932,7 +1932,7 @@ class(world_df)
 #> [1] "data.frame"
 ```
 
-This can be useful if the geometry column causes problems, e.g., by occupying large amounts of RAM, or to focus the attention on the attribute data.
+This can be useful if the geometry column causes problems, e.g. by occupying large amounts of RAM, or to focus the attention on the attribute data.
 For most cases, however, there is no harm in keeping the geometry column because non-spatial data operations on `sf` objects only change an object's geometry when appropriate (e.g. by dissolving borders between adjacent polygons following aggregation).
 This means that proficiency with attribute data in `sf` objects equates to proficiency with data frames in R.
 For many applications, the tidyverse package **dplyr** offers the most effective and intuitive approach of working with data frames, hence the focus on this approach in this section.^[
@@ -1947,7 +1947,7 @@ Base R subsetting functions include `[`, `subset()` and  `$`.
 Both sets of functions preserve the spatial components of attribute data in `sf` objects.
 
 The `[` operator can subset both rows and columns. 
-You use indices to specify the elements you wish to extract from an object, e.g., `object[i, j]`, with `i` and `j` typically being numbers or logical vectors --- `TRUE`s and `FALSE`s --- representing rows and columns (they can also be character strings, indicating row or column names).
+You use indices to specify the elements you wish to extract from an object, e.g. `object[i, j]`, with `i` and `j` typically being numbers or logical vectors --- `TRUE`s and `FALSE`s --- representing rows and columns (they can also be character strings, indicating row or column names).
 <!-- you can also use `[`(world, 1:6, 1) -->
 Leaving `i` or `j` empty returns all rows or columns, so `world[1:5, ]` returns the first five rows and all columns.
 The examples below demonstrate subsetting with base R.
@@ -2091,7 +2091,7 @@ slice(world, 3:5)
 ```
 
 `filter()` is **dplyr**'s equivalent of base R's `subset()` function.
-It keeps only rows matching given criteria, e.g., only countries with a very high average of life expectancy:
+It keeps only rows matching given criteria, e.g. only countries with a very high average of life expectancy:
 
 
 ```r
@@ -2149,7 +2149,7 @@ There are additional advantages of pipes from a communication perspective: they 
 
 ### Vector attribute aggregation
 
-Aggregation operations summarize datasets by a grouping variable, which can be either another attribute column or a spatial object.
+Aggregation operations summarize datasets by a grouping variables, which can be either another attribute column or a spatial object.
 Imagine we would like to calculate the number of people per continent. 
 Fortunately, our `world` dataset has the necessary ingredients, with the `pop` column containing the population per country and the grouping variable `continent`.
 In base R this can be done with `aggregate()` as follows:
@@ -2172,7 +2172,7 @@ group_by(world, continent) %>%
 
 This approach is flexible, allowing the resulting columns to be named.
 Further, omitting the grouping variable puts everything in one group.
-This means `summarize()` can be used to calculate Earth's total population (~7 billion) and number of countries:
+This means `summarize()` can be used to calculate the Earth's total population (~7 billion) and number of countries:
 
 
 ```r
@@ -2399,7 +2399,7 @@ world_unite = world %>%
   unite("con_reg", continent:region_un, sep = ":", remove = TRUE)
 ```
 
-The `separate()` function does the exact opposite of the `unite()` function, i.e., it splits one column into multiple columns using either a regular expression or character positions.
+The `separate()` function does the exact opposite of the `unite()` function, i.e. it splits one column into multiple columns using either a regular expression or character positions.
 
 
 ```r
@@ -2432,9 +2432,9 @@ world %>%
 
 It is important to note that attribute data operations preserve the geometry of the simple features.
 As mentioned at the outset of the chapter, it can be useful to remove the geometry.
-Do do this, you have to explicitly remove it because `sf` explicitly makes the geometry column sticky.
+To do this, you have to explicitly remove it because `sf` explicitly makes the geometry column sticky.
 This behavior ensures that data frame operations do not accidentally remove the geometry column.
-Hence, an approach such as `select(world, -geom)` will be unsuccessful instead use `st_set_geometry()`.^[Note that `st_geometry(world_st) = NULL` also works to remove the geometry from `world` but overwrites the original object.]
+Hence, an approach such as `select(world, -geom)` will be unsuccessful and you should instead use `st_set_geometry()`.^[Note that `st_geometry(world_st) = NULL` also works to remove the geometry from `world` but overwrites the original object.]
 
 
 ```r
@@ -2598,7 +2598,7 @@ Descriptive raster statistics belong to the so-called global raster operations.
 These and other typical raster processing operations are part of the map algebra scheme which are covered in the next chapter (section \@ref(map-algebra)).
 
 <div class="rmdnote">
-<p>Some function names clash between packages (e.g., <code>select</code>, as discussed in a previous note). In addition to not loading packages by referring to functions verbosely (e.g., <code>dplyr::select()</code>) another way to prevent function names clashes is by unloading the offending package with <code>detach()</code>. The following command, for example, unloads the <strong>raster</strong> package (this can also be done in the <em>package</em> tab which resides by default in the right-bottom pane in RStudio): <code>detach(&quot;package:raster&quot;, unload = TRUE, force = TRUE)</code>. The <code>force</code> argument makes sure that the package will be detached even if other packages depend on it. This, however, may lead to a restricted usability of packages depending on the detached package, and is therefore not recommended.</p>
+<p>Some function names clash between packages (e.g. <code>select</code>, as discussed in a previous note). In addition to not loading packages by referring to functions verbosely (e.g. <code>dplyr::select()</code>) another way to prevent function names clashes is by unloading the offending package with <code>detach()</code>. The following command, for example, unloads the <strong>raster</strong> package (this can also be done in the <em>package</em> tab which resides by default in the right-bottom pane in RStudio): <code>detach(&quot;package:raster&quot;, unload = TRUE, force = TRUE)</code>. The <code>force</code> argument makes sure that the package will be detached even if other packages depend on it. This, however, may lead to a restricted usability of packages depending on the detached package, and is therefore not recommended.</p>
 </div>
 
 ## Exercises
@@ -2638,7 +2638,7 @@ What function did you use and why?
 Which variable is the key in both datasets?
 What is the class of the new object?
 1. `us_states_df` has two more variables than `us_states`.
-How you can find them? (hint: try to use the `dplyr::anti_join` function)
+How can you find them? (hint: try to use the `dplyr::anti_join` function)
 <!-- Attribute creation -->
 1. What was the population density in 2015 in each state?
 What was the population density in 2010 in each state?
@@ -3112,7 +3112,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve79f6d7a5a6695c6a
+preserve890389974a061a2a
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6147,7 +6147,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve931c34719265b707
+preserve155e1a3822f3cc06
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6809,7 +6809,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 
 
 <div class="figure" style="text-align: center">
-preservef5f68cbfac72f45b
+preservee03269b479609356
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
