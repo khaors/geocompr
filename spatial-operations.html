@@ -544,7 +544,7 @@ sel =<span class="st"> </span><span class="kw">st_is_within_distance</span>(cycl
 <span class="kw">summary</span>(<span class="kw">lengths</span>(sel) &gt;<span class="st"> </span><span class="dv">0</span>)
 <span class="co">#&gt;    Mode   FALSE    TRUE </span>
 <span class="co">#&gt; logical     304     438</span></code></pre></div>
-<p>This shows that there are 438 points in the target object <code>cycle_hire_P</code> within the threshold distance of <code>cycle_hire_osm_P</code>. How to retrieve the <em>values</em> associated with the respective <code>cycle_hire_osm_P</code> points? The solution is again with <code>st_join()</code> although the additional dist argument must be specified: <!-- should 'dist' be in another font? --></p>
+<p>This shows that there are 438 points in the target object <code>cycle_hire_P</code> within the threshold distance of <code>cycle_hire_osm_P</code>. How to retrieve the <em>values</em> associated with the respective <code>cycle_hire_osm_P</code> points? The solution is again with <code>st_join()</code>, but with an addition <code>dist</code> argument (set to 20 m below):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">z =<span class="st"> </span><span class="kw">st_join</span>(cycle_hire_P, cycle_hire_osm_P, st_is_within_distance, <span class="dt">dist =</span> <span class="dv">20</span>)
 <span class="kw">nrow</span>(cycle_hire)
 <span class="co">#&gt; [1] 742</span>
