@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveeaa6176121383f33
+preserveef06f04fd11f6b2c
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -1849,8 +1849,7 @@ library(spData)
 ## Introduction
 
 Attribute data is non-spatial information associated with geographic (geometry) data.
-A bus stop provides a simple example.
-In a spatial vector object its position would typically be represented by latitude and longitude coordinates (geometry data), in addition to its name.
+A bus stop provides a simple example: its position would typically be represented by latitude and longitude coordinates (geometry data), in addition to its name.
 The name is an *attribute* of the feature (to use Simple Features terminology) that bears no relation to its geometry.
 <!-- idea: add an example of a bus stop (or modify a previous example so it represents a bus stop) in the previous chapter  -->
 
@@ -1862,12 +1861,12 @@ To derive the corresponding coordinate, we have to move from the origin three ce
 The raster header gives the matrix a spatial dimension which we need when plotting the raster or when we want to combine two rasters, think, for instance, of adding the values of one raster to another (see also next chapter).
 <!-- should we somewhere add a table comparing advantages/disadvantages of using the vector or raster data model, would fit nicely into chapter 2 -->
 
-This chapter focuses on non-geographic operations on vector and raster data.
-For vector data, we will introduce subsetting, aggregating and joining attribute data in the next section.
-Note that the corresponding functions also have a geographic equivalent.
-Sometimes you can even use the same functions for attribute and spatial operations.
-This is the case for subsetting as base R's `[` and tidyverse's `filter()` let you also subset spatial data based on the spatial extent of another spatial object (see Chapter \@ref(spatial-operations)).
-Therefore the skills you learn here are cross-transferable which is why this chapter lays the foundation for the next (Chapter \@ref(spatial-operations)) which extends the methods presented here to the spatial world.
+Manipulating geographic objects based on attributes such as name and elevation is the focus of this chapter.
+For vector data this means operations such as subsetting and aggregation (see sections \@ref(vector-attribute-subsetting) and \@ref(vector-attribute-aggregation)).
+These non-spatial operations have spatial equivalents:
+the `[` operator in base R, for example, works equally for subsetting objects based on their attribute and spatial objects, as we will see in Chapter \@ref(spatial-operations).
+This is good news: skills developed here are cross-transferable, meaning that this chapter lays the foundation for Chapter \@ref(spatial-operations), which extends the methods presented here to the spatial world.
+Sections \@ref(vector-attribute-joining) and \@ref(#vec-attr-creation) demonstrate how to join data onto simple feature objects using a shared ID and how to create new variables, respectively.
 
 Raster attribute data operations are covered in Section \@ref(manipulating-raster-objects), which covers creating continuous and categorical raster layers and extracting cell values from one layer and multiple layers (raster subsetting). 
 Section \@ref(summarizing-raster-objects) provides an overview of 'global' raster operations which can be used to characterize entire raster datasets.
@@ -3106,7 +3105,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve19fb8073a0a2ead6
+preservea004d0e255968459
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6141,7 +6140,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve906578454d2f5c2e
+preserve7bbb858b40928a16
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6803,7 +6802,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 
 
 <div class="figure" style="text-align: center">
-preserve62c088a2b2a758a2
+preserve578a156e440f1a6c
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
