@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve5f4ef2686fa4d2ad
+preserve2b09ab522af05846
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2148,10 +2148,11 @@ There are additional advantages of pipes from a communication perspective: they 
 
 ### Vector attribute aggregation
 
-Aggregation operations summarize datasets by a grouping variables, which can be either another attribute column or a spatial object.
+Aggregation operations summarize datasets by a 'grouping variable' (typically an attribute column) or a spatial object.
 Imagine we would like to calculate the number of people per continent. 
-Fortunately, our `world` dataset has the necessary ingredients, with the `pop` column containing the population per country and the grouping variable `continent`.
-In base R this can be done with `aggregate()` as follows:
+The `world` dataset contains the necessary ingredients, with the `pop` column containing the population per country and the grouping variable `continent`.
+Aggregation in this context finding the `sum()` of country populations for each continent.
+In base R this is done with `aggregate()` as follows:
 
 
 ```r
@@ -3105,7 +3106,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve2923a7176f2118f7
+preserveb9b842ea16b698c4
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6140,7 +6141,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserved2b4e4e623582112
+preserve9eb60f2256471bbe
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6802,7 +6803,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 
 
 <div class="figure" style="text-align: center">
-preserve8a85fa4955214126
+preserve63dfa789226e4665
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
