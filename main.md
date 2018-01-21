@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve2b09ab522af05846
+preserve9f2931f1e4db5ac3
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2399,7 +2399,7 @@ world_unite = world %>%
   unite("con_reg", continent:region_un, sep = ":", remove = TRUE)
 ```
 
-The `separate()` function does the exact opposite of the `unite()` function, i.e. it splits one column into multiple columns using either a regular expression or character positions.
+The `separate()` function does the opposite of `unite()`: it splits one column into multiple columns using either a regular expression or character positions.
 
 
 ```r
@@ -2410,8 +2410,8 @@ world_separate = world_unite %>%
 
 
 The two functions `rename()` and `set_names()` are useful for renaming columns.
-The first one, `rename()` replaces an old name with a new one.
-For example, to change a column name from `name_long` to `name`, we type:
+The first replaces an old name with a new one.
+The following command, for example, renames the lengthy `name_long` column to simply `name`:
 
 
 ```r
@@ -2419,13 +2419,14 @@ world %>%
   rename(name = name_long)
 ```
 
-`set_names()` changes all column names at once, which is why we only have to provide the new names in form of a vector: 
+`set_names()` changes all column names at once, and requires a character vector with a name matching each column.
+This is illustrated below, which outputs the same `world` object, but with very short names: 
+
+
 
 
 ```r
-new_names = c("ISO_A2", "Name", "Continent", "Region", "Subregion", 
-              "Country_type", "Area_in_km2", "Population", "Life_Expectancy",
-              "GDP_per_capita", "geom")
+new_names = c("i", "n", "c", "r", "s", "t", "a", "p", "l", "gP", "geom")
 world %>% 
   set_names(new_names)
 ```
@@ -3106,7 +3107,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveb9b842ea16b698c4
+preserve59598390625e1d84
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6141,7 +6142,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve9eb60f2256471bbe
+preservea1ea758d81b14ced
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6803,7 +6804,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 
 
 <div class="figure" style="text-align: center">
-preserve63dfa789226e4665
+preserve2f0b0eb6e3c47ebb
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
