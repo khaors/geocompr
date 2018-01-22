@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-01-21">
+<meta name="date" content="2018-01-22">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1002,10 +1002,11 @@ Figure 5.22: Raster and point representation of <code>elev</code>.
 </p>
 </div>
 <p>Another common application is the representation of a digital elevation model as contour lines, hence, converting raster data into spatial lines. Here, we will us a real-world DEM since our artificial raster <code>elev</code> produces parallel lines (give it a try yourself) because when creating it we made the upper left corner the lowest and the lower right corner the highest value while increasing cell values by one from left to right. <code>rasterToContour()</code> is a wrapper around <code>contourLines()</code>, which is why we</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(dem, <span class="dt">package =</span> <span class="st">&quot;RQGIS&quot;</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># not shown</span>
+<span class="kw">data</span>(dem, <span class="dt">package =</span> <span class="st">&quot;RQGIS&quot;</span>)
 <span class="kw">plot</span>(dem, <span class="dt">axes =</span> <span class="ot">FALSE</span>)
 <span class="kw">plot</span>(<span class="kw">rasterToContour</span>(dem), <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<p>Use <code>contour()</code> or <code>rasterVis::contourplot()</code> if you want to add contour lines to a plot with (altitude) labels (Fig. <a href="transform.html#fig:contour">5.23</a>).</p>
+<p>Use <code>contour()</code> or <code>rasterVis::contourplot()</code> if you want to add contour lines to a plot with isoline labels (Fig. <a href="transform.html#fig:contour">5.23</a>).</p>
 <div class="figure" style="text-align: center"><span id="fig:contour"></span>
 <img src="figures/contour-1.png" alt="DEM hillshade of the southern flank of Mt. Mongón overlaid with contour lines." width="576" />
 <p class="caption">
