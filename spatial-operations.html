@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-01-22">
+<meta name="date" content="2018-01-24">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -537,7 +537,7 @@ Figure 4.3: Illustration of a spatial join: the populations of the world’s thr
 Figure 4.4: The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).
 </p>
 </div>
-<p>Imagine that we need to join the <code>capacity</code> variable in <code>cycle_hire_osm</code> onto the official ‘target’ data contained in <code>cycle_hire</code>. This is when a non-overlapping join is needed. The simplest method is to use the topological operator <code>st_within_distance()</code> shown in section <a href="spatial-operations.html#topological-relations">4.2.2</a>, using a threshold distance of 20 m. Note that before performing the relation both datasets must be transformed into a projected CRS, saved as new objects denoted by the affix <code>P</code> (for projected) below:</p>
+<p>Imagine that we need to join the <code>capacity</code> variable in <code>cycle_hire_osm</code> onto the official ‘target’ data contained in <code>cycle_hire</code>. This is when a non-overlapping join is needed. The simplest method is to use the topological operator <code>st_is_within_distance()</code> shown in section <a href="spatial-operations.html#topological-relations">4.2.2</a>, using a threshold distance of 20 m. Note that before performing the relation both datasets must be transformed into a projected CRS, saved as new objects denoted by the affix <code>P</code> (for projected) below:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cycle_hire_P =<span class="st"> </span><span class="kw">st_transform</span>(cycle_hire, <span class="dv">27700</span>)
 cycle_hire_osm_P =<span class="st"> </span><span class="kw">st_transform</span>(cycle_hire_osm, <span class="dv">27700</span>)
 sel =<span class="st"> </span><span class="kw">st_is_within_distance</span>(cycle_hire_P, cycle_hire_osm_P, <span class="dt">dist =</span> <span class="dv">20</span>)
