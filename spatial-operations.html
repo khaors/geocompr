@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Geocomputation with R</title>
   <meta name="description" content="Forthcoming book on geographic data with R.">
-  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.6 and GitBook 2.6.7">
 
   <meta property="og:title" content="Geocomputation with R" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-01-24">
+<meta name="date" content="2018-01-25">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -624,11 +624,11 @@ canterbury_centroid =<span class="st"> </span><span class="kw">st_centroid</span
 <p>This section builds on section <a href="attr.html#manipulating-raster-objects">3.3</a>, which highlights various basic methods for manipulating raster datasets, to demonstrate more advanced and explicitly spatial raster operations, and uses the objects <code>elev</code> and <code>grain</code> manually created in section <a href="attr.html#manipulating-raster-objects">3.3</a>. For the reader’s convenience, these datasets can be also found in the <strong>spData</strong> package.</p>
 <div id="raster-subsetting" class="section level3">
 <h3><span class="header-section-number">4.3.1</span> Spatial subsetting</h3>
-<p>In the previous chapter (section <a href="attr.html#manipulating-raster-objects">3.3</a>) we have already learned how to subset raster datasets using cell IDs and matrix indexing. Naturally, we can subset rasters also with the help of coordinates and spatial objects. To use coordinates for subsetting, we have to ‘translate’ them into the corresponding cell ID(s) or by using the <code>extract()</code> command. This operation is also known as extracting values/attributes to points.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># point within the top left pixel</span>
-elev[<span class="kw">cellFromXY</span>(elev, <span class="dt">xy =</span> <span class="kw">c</span>(-<span class="fl">1.5</span>, <span class="fl">1.5</span>))]
+<p>The previous chapter (section <a href="attr.html#manipulating-raster-objects">3.3</a>) demonstrated how to subset raster datasets using cell IDs. Raster cell values can also be extracted by location (coordinates) and other spatial objects. To use coordinates for subsetting, one can ‘translate’ the coordinates into a cell ID with the <strong>raster</strong> function <code>cellFromXY()</code>. An alternative is to use <code>raster::extract()</code> (there is also a function called <code>extract()</code> in the <strong>tidyverse</strong>) to extract values. Both methods are demonstrated below to find the value of the cell that covers a point located 0.1 units from the origin.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">id =<span class="st"> </span><span class="kw">cellFromXY</span>(elev, <span class="dt">xy =</span> <span class="kw">c</span>(<span class="fl">0.1</span>, <span class="fl">0.1</span>))
+elev[id]
 <span class="co"># the same as</span>
-<span class="kw">extract</span>(elev, <span class="kw">data.frame</span>(<span class="dt">x =</span> -<span class="fl">1.5</span>, <span class="dt">y =</span> <span class="fl">1.5</span>))</code></pre></div>
+raster::<span class="kw">extract</span>(elev, <span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="fl">0.1</span>, <span class="dt">y =</span> <span class="fl">0.1</span>))</code></pre></div>
 <p>It is convenient that both functions also accept objects of class <code>SpatialObjects</code> and <code>sf</code>. Raster objects can also be subset with another raster object, as illustrated in Figure <a href="spatial-operations.html#fig:raster-subset">4.7</a> (left panel) and demonstrated in the code chunk below:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">clip =<span class="st"> </span><span class="kw">raster</span>(<span class="dt">nrow =</span> <span class="dv">3</span>, <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">res =</span> <span class="fl">0.3</span>, <span class="dt">xmn =</span> <span class="fl">0.9</span>, <span class="dt">xmx =</span> <span class="fl">1.8</span>, 
               <span class="dt">ymn =</span> -<span class="fl">0.45</span>, <span class="dt">ymx =</span> <span class="fl">0.45</span>, <span class="dt">vals =</span> <span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">9</span>))
@@ -866,9 +866,11 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(script.src))
-      script.src  = script.src.replace(/^https?:/, '');
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-01-24'
+date: '2018-01-25'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2018-01-24 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-01-25 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve818478ab991c10da
+preserve86f60e32c542c464
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3109,7 +3109,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveaa6c9f6ffa6626f4
+preserve4988e1769a442280
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3291,17 +3291,18 @@ For the reader's convenience, these datasets can be also found in the **spData**
 
 ### Spatial subsetting {#raster-subsetting}
 
-In the previous chapter (section \@ref(manipulating-raster-objects)) we have already learned how to subset raster datasets using cell IDs and matrix indexing.
-Naturally, we can subset rasters also with the help of coordinates and spatial objects.
-To use coordinates for subsetting, we have to 'translate' them into the corresponding cell ID(s) or by using the `extract()` command.
-This operation is also known as extracting values/attributes to points.
+The previous chapter (section \@ref(manipulating-raster-objects)) demonstrated how to subset raster datasets using cell IDs.
+Raster cell values can also be extracted by location (coordinates) and other spatial objects.
+To use coordinates for subsetting, one can 'translate' the coordinates into a cell ID with the **raster** function `cellFromXY()`.
+An alternative is to use `raster::extract()` (there is also a function called `extract()` in the **tidyverse**) to extract values.
+Both methods are demonstrated below to find the value of the cell that covers a point located 0.1 units from the origin.
 
 
 ```r
-# point within the top left pixel
-elev[cellFromXY(elev, xy = c(-1.5, 1.5))]
+id = cellFromXY(elev, xy = c(0.1, 0.1))
+elev[id]
 # the same as
-extract(elev, data.frame(x = -1.5, y = 1.5))
+raster::extract(elev, data.frame(x = 0.1, y = 0.1))
 ```
 
 It is convenient that both functions also accept objects of class `SpatialObjects` and `sf`.
@@ -6145,7 +6146,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservee8e889ddb2fbdcde
+preserve5aacb49c3b16db02
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6807,7 +6808,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 
 
 <div class="figure" style="text-align: center">
-preserve8aeceed9f60fc416
+preserve426fc2f87c2c79fb
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
