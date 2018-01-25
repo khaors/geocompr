@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserved91dea4bdf3b2a29
+preserve46e8d48a3267e864
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3109,7 +3109,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve35141e7d39e3c918
+preserve94f9211ae059a7b5
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5583,6 +5583,8 @@ Export this map to a file called `cycle_hire.html`.
 <!--chapter:end:06-read-write-plot.Rmd-->
 
 
+# (PART) Basic applications {-}
+
 # Transport applications {#transport}
 
 ## Prerequisites {-}
@@ -6175,7 +6177,7 @@ route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 
 
 <div class="figure" style="text-align: center">
-preserve28f403383eef2d53
+preservea07be678b6a3c734
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6242,8 +6244,6 @@ R's 'ecological niche' in transport modelling software could be around the integ
 
 <!--chapter:end:07-transport.Rmd-->
 
-
-# (PART) Basic applications {-}
 
 # Location analysis {#location}
 
@@ -6806,7 +6806,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve533db532c66e41a3
+preservea6f4fdaf3de4f69a
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
