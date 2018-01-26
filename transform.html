@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-01-25">
+<meta name="date" content="2018-01-26">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -296,15 +296,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="prerequisites-3" class="section level2 unnumbered">
 <h2>Prerequisites</h2>
 <ul>
-<li>This chapter requires the following packages (<strong>lwgeom</strong> is also used but does not need to be loaded):</li>
+<li>This chapter uses the same packages as Chapter <a href="spatial-operations.html#spatial-operations">4</a> but with the addition of <strong>spDataLarge</strong>, which was installed in Chapter <a href="spatial-class.html#spatial-class">2</a> (<strong>lwgeom</strong> is also used, but does not need to be loaded):</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sf)
 <span class="kw">library</span>(raster)
-<span class="kw">library</span>(tidyverse)</code></pre></div>
-<ul>
-<li>It also relies on <strong>spData</strong> and <strong>spDataLarge</strong>, which load datasets and provides external files used in the code examples of this chapter:</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(spData)
+<span class="kw">library</span>(tidyverse)
+<span class="kw">library</span>(spData)
 <span class="kw">library</span>(spDataLarge)</code></pre></div>
 </div>
 <div id="introduction-2" class="section level2">
@@ -736,7 +733,7 @@ y =<span class="st"> </span>b[<span class="dv">2</span>]
 x_and_y =<span class="st"> </span><span class="kw">st_intersection</span>(x, y)
 <span class="kw">plot</span>(b)
 <span class="kw">plot</span>(x_and_y, <span class="dt">col =</span> <span class="st">&quot;lightgrey&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>) <span class="co"># color intersecting area</span></code></pre></div>
-<p><img src="figures/unnamed-chunk-54-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-53-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>The subsequent code chunk demonstrates how this works for all combinations of the ‘Venn’ diagram representing <code>x</code> and <code>y</code>, inspired by <a href="http://r4ds.had.co.nz/transform.html#logical-operators">Figure 5.1</a> of the book R for Data Science <span class="citation">(Grolemund and Wickham <a href="#ref-grolemund_r_2016">2016</a>)</span>. <!-- Todo: reference r4ds --></p>
 <div class="figure" style="text-align: center"><span id="fig:venn-clip"></span>
 <img src="figures/venn-clip-1.png" alt="Spatial equivalents of logical operators." width="576" />
