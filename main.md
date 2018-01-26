@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve0e2238059ff33ab4
+preserve8fab62a6f0f217bd
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -1457,8 +1457,8 @@ new_raster = raster(raster_filepath)
 The **raster** package supports numerous drivers with the help of **rgdal**.
 To find out which drivers are available on your system, run `raster::writeFormats()` and `rgdal::gdalDrivers()`.
 
-Raster objects can also be created from scratch using the `raster()` function.
-This is illustrated in the subsequent code chunk, which demonstrates how.
+Rasters can also be created from scratch using the `raster()` function.
+This is illustrated in the subsequent code chunk, which results in a new `RasterLayer` object.
 The resulting raster consists of 36 cells (6 columns and 6 rows specified by `nrow` and `ncol`) centered around the Prim Meridian and the Equator (see `xmn`, `xmx`, `ymn` and `ymx` parameters).
 The resolution (`res`) of 0.5 degrees corresponds to the default CRS of raster objects: WGS84.
 Values (`vals`) are assigned to each cell: 1 to cell 1, 2 to cell 2, and so on.
@@ -1466,7 +1466,6 @@ Remember: `raster()` fills cells row-wise (unlike `matrix()`) starting at the up
 
 
 ```r
-# creation of the RasterLayer object with a given number of columns and rows, and extent
 new_raster2 = raster(nrow = 6, ncol = 6, res = 0.5, 
                      xmn = -1.5, xmx = 1.5, ymn = -1.5, ymx = 1.5,
                      vals = 1:36)
@@ -3104,7 +3103,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservecfec564286f4edfa
+preservebcbfd8649d3ac450
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6180,7 +6179,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservee38fd6e46d6b38e5
+preservefbf9dcc472587ba7
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6804,7 +6803,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve1bfdd0bba51542c6
+preservee7d0431d0f933b2f
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
