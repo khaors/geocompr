@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve9d9cecaded704997
+preserve0e2238059ff33ab4
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -1457,17 +1457,12 @@ new_raster = raster(raster_filepath)
 The **raster** package supports numerous drivers with the help of **rgdal**.
 To find out which drivers are available on your system, run `raster::writeFormats()` and `rgdal::gdalDrivers()`.
 
-Aside from reading in a raster, you can also create one from scratch.
-Running `raster()` creates an empty `RasterLayer`.
-Here, however, we will create manually a very simple raster.
-This should make it easy to understand how raster and related operations work.
-Our raster should consist of just three rows and columns centered around the null meridian and the equator (see `xmn`, `xmx`, `ymn` and `ymx` parameters).
-Additionally, we define a resolution of 0.5, which here corresponds to 0.5 degrees since the default proj4string of a raster object is WGS84.
-Finally, we set the values with the `vals` argument.
-Here, we just number the cells, that means we assign 1 to cell 1, 2 to cell 2, and finally 36 to cell 36.
-We know that there are 36 cells by multiplying six (rows) by six (columns).
-As we have seen above, setting raster values in R corresponds to a row-wise cell filling starting at the upper left corner.
-Consequently, the upper first row contains the values 1 to 6, the second row 7 to 12, and the last row 31 to 36.
+Raster objects can also be created from scratch using the `raster()` function.
+This is illustrated in the subsequent code chunk, which demonstrates how.
+The resulting raster consists of 36 cells (6 columns and 6 rows specified by `nrow` and `ncol`) centered around the Prim Meridian and the Equator (see `xmn`, `xmx`, `ymn` and `ymx` parameters).
+The resolution (`res`) of 0.5 degrees corresponds to the default CRS of raster objects: WGS84.
+Values (`vals`) are assigned to each cell: 1 to cell 1, 2 to cell 2, and so on.
+Remember: `raster()` fills cells row-wise (unlike `matrix()`) starting at the upper left corner, meaning the top row contains the values 1 to 6, the second 7 to 12 etc.
 
 
 ```r
@@ -3109,7 +3104,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve63d1a2011ac8c7b9
+preservecfec564286f4edfa
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6185,7 +6180,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve37a23100d00e31e4
+preservee38fd6e46d6b38e5
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6809,7 +6804,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservea03dc438119666b4
+preserve1bfdd0bba51542c6
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
