@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve8fab62a6f0f217bd
+preservef344672a00124f17
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3103,7 +3103,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservebcbfd8649d3ac450
+preserveb6c9a44628d2ede9
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4172,8 +4172,8 @@ the functions discussed in this section work on objects of class `sfc` in additi
 ### Simplification
 
 Simplification is a process for generalization of vector objects (lines and polygons) usually for use in smaller scale maps.
-An additional reason for simplification is reduction of the object size and therefore the size of a saved file.
-Therefore, data is often simplified before being used in interactive maps. 
+Another reason for simplifying objects is to reduce the amount of memory, disk space and network bandwidth they consume:
+it may be wise to simplify complex geometries before publishing them as interactive maps. 
 The **sf** package provides `st_simplify()`, which uses the GEOS implementation of the Douglas-Peucker algorithm to reduce the vertex count.
 `st_simplify()` uses the `dTolerance` to control the level of generalization in map units [see @douglas_algorithms_1973 for details].
 <!-- I have no idea what the next sentence means -->
@@ -4444,9 +4444,8 @@ Some points will be inside just one circle, some will be inside both and some wi
 
 There are two different ways to subset points that fit into combinations of the circles: via clipping and logical operators.
 But first we must generate some points.
-We will use the *simple random* sampling strategy to sample from a box representing the extent of `x` and `y`.
-To generate the points, we will use a function not yet covered in this book, `st_sample()`.
-?Then? we will generate the situation plotted in Figure \@ref(fig:venn-subset):
+We will use the *simple random* sampling strategy to sample from a box representing the extent of `x` and `y` using the **sf** function `st_sample()`.
+This generates objects plotted in Figure \@ref(fig:venn-subset):
 
 
 ```r
@@ -4479,23 +4478,14 @@ group_by(us_states, REGION) %>%
   summarize(sum(pop = total_pop_15, na.rm = TRUE))
 ```
 
-For attribute data aggregation the grouping variable is another variable, typically one with few unique values relative to the number of rows (see section \@ref(vector-attribute-aggregation)).
-What we did not cover in that section was that attribute data aggregation dissolves the geometries of touching polygons.
-<!--
-above setence could be phrased differently, maybe 'further to what was covered in section 3.2.2
--->
-The `REGION` variable in the `us_states` dataset is a good example:
-there are 49 states (excluding Hawaii and Alaska) which can be aggregated into four regions.
-This is demonstrated in the code chunk below, the results of which are illustrated in Figure \@ref(fig:us-regions):
+Further to what was covered in section \@ref(vector-attribute-aggregation), aggregation of polygons often silently dissolves the geometries of touching polygons in the same group.
+This is demonstrated in the code chunk below, in which the `REGION` variable in `us_states` is used to aggregate the states into four regions, illustrated in Figure \@ref(fig:us-regions):
 
 
 ```r
 regions = aggregate(x = us_states[, "total_pop_15"], by = list(us_states$REGION),
                     FUN = sum, na.rm = TRUE)
 ```
-<!--
-show also tidyverse way, so what you are doing is basically a spatial join and a subsequent aggregation without a grouping variable. Didactically, it might be better to present a grouping variable.
--->
 
 
 
@@ -4733,7 +4723,7 @@ It is also possible to use the `field` or `fun` arguments for lines and polygons
 
 While `rasterize` works well for most cases, it is not performance optimized. 
 Fortunately, there are several alternatives, including the `fasterize::fasterize()`^[The **fasterize** package is available at https://github.com/ecohealthalliance/fasterize.] and `gdalUtils::gdal_rasterize()`. 
-The former is 100 times faster than `rasterize()`, however it is currently limited to polygon rasterization.
+The former is much (100 times+) faster than `rasterize()` but is currently limited to polygon rasterization.
 The latter is part of GDAL and therefore requires a vector file, instead of an `sf` object, as an input and rasterization parameters, instead of a `Raster*` template object.^[See more at http://www.gdal.org/gdal_rasterize.html.]
 
 ## Geometric operations on raster data {#geo-ras}
@@ -4885,7 +4875,7 @@ elev_point = rasterToPoints(elev, spatial = TRUE) %>%
 
 Another common application is the representation of a digital elevation model as contour lines, hence, converting raster data into spatial lines. 
 Here, we will us a real-world DEM since our artificial raster `elev` produces parallel lines (give it a try yourself) because when creating it we made the upper left corner the lowest and the lower right corner the highest value while increasing cell values by one from left to right.
-`rasterToContour()` is a wrapper around `contourLines()`, which is why we (...)? 
+`rasterToContour()` is a wrapper around `contourLines()`.
 
 
 ```r
@@ -4996,8 +4986,8 @@ Hint: The `st_length` function computes the length of a `LINESTRING` or `MULTILI
 
 1. Subset points higher than 3100 meters in New Zealand (the `nz_height` object). 
 Using the new object:
-    - Count numbers of the highest points in grid cells of 3km resolution.
-    - Find maximum elevation value for grid cells of 3km resolution.
+    - Count numbers of the highest points in grid cells with a resolution of 3 km.
+    - Find maximum elevation value for grid cells with a resolution of 3 km.
 
 1. Aggregate the raster counting high points in New Zealand created in the previous exercise, reduce its geographic resolution by half (so cells are 6 by 6 km) and plot the result.
     - Resample the lower resolution raster back to the 3 km resolution of the orginal. How have the results changed?
@@ -6179,7 +6169,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservefbf9dcc472587ba7
+preservec9b3a1a62cff979e
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6803,7 +6793,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservee7d0431d0f933b2f
+preserveb52ce2511a64fb7f
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
