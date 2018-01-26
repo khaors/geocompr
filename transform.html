@@ -220,8 +220,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.3.8" data-path="transform.html"><a href="transform.html#rasterization"><i class="fa fa-check"></i><b>5.3.8</b> Rasterization</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="transform.html"><a href="transform.html#geo-ras"><i class="fa fa-check"></i><b>5.4</b> Geometric operations on raster data</a><ul>
-<li class="chapter" data-level="5.4.1" data-path="transform.html"><a href="transform.html#raster-alignment"><i class="fa fa-check"></i><b>5.4.1</b> Image co-registration (image alignment)</a></li>
-<li class="chapter" data-level="5.4.2" data-path="transform.html"><a href="transform.html#spatial-vectorization"><i class="fa fa-check"></i><b>5.4.2</b> Spatial vectorization</a></li>
+<li class="chapter" data-level="5.4.1" data-path="transform.html"><a href="transform.html#extending-raster-images"><i class="fa fa-check"></i><b>5.4.1</b> Extending raster images</a></li>
+<li class="chapter" data-level="5.4.2" data-path="transform.html"><a href="transform.html#aggregation-and-disaggregation"><i class="fa fa-check"></i><b>5.4.2</b> Aggregation and Disaggregation</a></li>
+<li class="chapter" data-level="5.4.3" data-path="transform.html"><a href="transform.html#changing-origin-extend-and-resolution-simultaneously"><i class="fa fa-check"></i><b>5.4.3</b> Changing origin, extend and resolution simultaneously</a></li>
+<li class="chapter" data-level="5.4.4" data-path="transform.html"><a href="transform.html#spatial-vectorization"><i class="fa fa-check"></i><b>5.4.4</b> Spatial vectorization</a></li>
 </ul></li>
 <li class="chapter" data-level="5.5" data-path="transform.html"><a href="transform.html#exercises-3"><i class="fa fa-check"></i><b>5.5</b> Exercises</a></li>
 </ul></li>
@@ -308,7 +310,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h2><span class="header-section-number">5.1</span> Introduction</h2>
 <p>The previous three chapters have demonstrated how geographic datasets are structured in R (Chapter <a href="spatial-class.html#spatial-class">2</a>) and how to manipulate them based on their non-geographic attributes (Chapter <a href="attr.html#attr">3</a>) and spatial properties (Chapter <a href="spatial-operations.html#spatial-operations">4</a>). This chapter extends these skills by demonstrating how to interact with a modify the geometry underlying spatial datasets.</p>
 <p>Section <a href="transform.html#geo-vec">5.3</a> covers transforming vector geometries with ‘unary’ and ‘binary’ operations. <!-- TODO: add something on n-ary ops (RL) --> Unary operations work on a single geometry in isolation. This includes simplification (of lines and polygons), the creation of buffers and centroids, and shifting/scaling/rotating single geometries using ‘affine transformations’ (sections <a href="transform.html#simplification">5.3.1</a> to <a href="transform.html#affine-transformations">5.3.4</a>). Binary transformations modify one geometry based on the shape of another. This includes clipping and geometry unions, covered in sections <a href="transform.html#clipping">5.3.5</a> and <a href="transform.html#geometry-unions">5.3.6</a> respectively. Type transformations (from a polygon to a line, for example) are demonstrated in section <a href="transform.html#type-trans">5.3.7</a> and ‘rasterization’ is covered in section <a href="transform.html#rasterization">5.3.8</a>.</p>
-<p>Section <a href="transform.html#geo-ras">5.4</a> covers geometric transformations on raster objects. This involves changing the size and number of the underlying pixels, and assigning them new values. It teaches how to change the resolution (also called raster aggregation and disaggregation), the extent and the origin of a raster. These operations are especially useful if one would like to align raster datasets from diverse sources (see section <a href="transform.html#raster-alignment">5.4.1</a>). Aligned raster objects share the same header information, allowing them to be processed using map algebra operations, described in section <a href="spatial-operations.html#map-algebra">4.3.2</a>.</p>
+<p>Section <a href="transform.html#geo-ras">5.4</a> covers geometric transformations on raster objects. This involves changing the size and number of the underlying pixels, and assigning them new values. It teaches how to change the resolution (also called raster aggregation and disaggregation), the extent and the origin of a raster. These operations are especially useful if one would like to align raster datasets from diverse sources (see section <a href="#raster-alignment"><strong>??</strong></a>). Aligned raster objects share the same header information, allowing them to be processed using map algebra operations, described in section <a href="spatial-operations.html#map-algebra">4.3.2</a>.</p>
 <p>A vital type of geometry transformation is <em>reprojecting</em> from one coordinate reference system (CRS) to another. Because of the importance of reprojection, introduced in Chapter <a href="spatial-class.html#spatial-class">2</a>, and the fact that it applies to raster and vector geometries alike, it is the topic of the first section in this chapter.</p>
 </div>
 <div id="reproj-geo-data" class="section level2">
@@ -921,8 +923,8 @@ Figure 5.18: Examples of line and polygon rasterizations.
 <li>Image (co-)registration is the process of aligning one image with another (in terms of CRS, origin and resolution). Registration becomes necessary for images from the same scene but shot from different sensors or from different angles or at different points in time.</li>
 </ul>
 <p>In this section we will mainly deal with the co-registration (alignment) of images including a matching resolution, extent and origin. A matching projection is of course also required but is already covered in section <a href="transform.html#reprojecting-raster-geometries">5.2.4</a>. Secondly, we will show how to convert raster images into the spatial vector model.</p>
-<div id="raster-alignment" class="section level3">
-<h3><span class="header-section-number">5.4.1</span> Image co-registration (image alignment)</h3>
+<div id="extending-raster-images" class="section level3">
+<h3><span class="header-section-number">5.4.1</span> Extending raster images</h3>
 <p>When merging or performing map algebra on rasters, their resolution, projection, origin and/or extent has to match. Otherwise, how should we add the values of one raster with a resolution of 0.2 decimal degrees to a second with a resolution of 1 decimal degree? The same problem arises when we would like to merge satellite imagery from different sensors with different projections and resolutions. We can deal with such mismatches by aligning the rasters.</p>
 <p>In the simplest case, two images only differ in a mismatch in extent. <!--The `projectRaster()` function reprojects one raster to a desired projection, say from UTM to WGS84.--> Following code adds one row and two columns to each side of the raster while setting all new values to an elevation of 1000 meters (<a href="transform.html#fig:extend-example">5.19</a>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(elev, <span class="dt">package =</span> <span class="st">&quot;spData&quot;</span>)
@@ -940,7 +942,11 @@ Figure 5.19: Original raster extended by 1 one row on each side (top, bottom) an
 <span class="co">#&gt; their intersection is returned</span></code></pre></div>
 <p>However, we can also align the extent of two rasters with <code>extend()</code>. Instead of telling the function how many rows or columns should be added (as done before), we allow it to figure it out by using another raster object. Here, we extend the <code>elev</code> object to the extent of <code>elev_2</code>. The newly added rows and column receive the default value of the <code>value</code> parameter, i.e. <code>NA</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_4 =<span class="st"> </span><span class="kw">extend</span>(elev, elev_2)</code></pre></div>
-<p>Matching different resolutions is computationally more complicated, but functions <code>aggregate()</code> and <code>disaggregate()</code> help with that. For instance, let us aggregate <code>elev</code> from a resolution of 0.5 to a resolution of 1, that means aggregating by a factor of 2 (Fig. <a href="transform.html#fig:aggregate-example">5.20</a>). Additionally, the output cell value should correspond to the mean of the input cells (note that one could use other functions as well, such as <code>median()</code>, <code>sum()</code> etc.):</p>
+</div>
+<div id="aggregation-and-disaggregation" class="section level3">
+<h3><span class="header-section-number">5.4.2</span> Aggregation and Disaggregation</h3>
+<!-- differentiate between spatial, spectral, temporal and radiometric resolution-->
+<p>Raster datasets can also differ with regard to their resolution. To match resolutions, one can either increase (<code>aggregate()</code>) or decrease (<code>disaggregate()</code>) the resolution of one raster. As an example, we here change the resolution of <code>elev</code> from 0.5 to 1 decimal degree, that means, we aggregate by a factor of 2 (Fig. <a href="transform.html#fig:aggregate-example">5.20</a>). Additionally, the output cell value should correspond to the mean of the input cells (note that one could use other functions as well, such as <code>median()</code>, <code>sum()</code> etc.):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_agg =<span class="st"> </span><span class="kw">aggregate</span>(elev, <span class="dt">fact =</span> <span class="dv">2</span>, <span class="dt">fun =</span> mean)
 <span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
 <span class="kw">plot</span>(elev)
@@ -969,11 +975,18 @@ Figure 5.20: Original raster (left). Aggregated raster (right).
 Figure 5.21: Plotting rasters with the same values but different origins.
 </p>
 </div>
+</div>
+<div id="changing-origin-extend-and-resolution-simultaneously" class="section level3">
+<h3><span class="header-section-number">5.4.3</span> Changing origin, extend and resolution simultaneously</h3>
+<!--In order to actually geometrically correct the original distorted image, a procedure called resampling is used to determine the digital values to place in the new pixel locations of the corrected output image. The resampling process calculates the new pixel values from the original digital pixel values in the uncorrected image. There are three common methods for resampling: nearest neighbour, bilinear interpolation, and cubic convolution. Nearest neighbour resampling uses the digital value from the pixel in the original image which is nearest to the new pixel location in the corrected image. This is the simplest method and does not alter the original values, but may result in some pixel values being duplicated while others are lost. This method also tends to result in a disjointed or blocky image appearance.
+http://www.nrcan.gc.ca/node/9403
+-->
+<!--Resampling = The process of interpolating new cell values when transforming rasters to a new coordinate space or cell size. (ESRI definition)-->
 <p>The <code>resample()</code> command lets you align several raster properties in one go, namely origin, extent and resolution. Let us resample an extended <code>elev_agg</code> to the properties of <code>elev</code> again.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># add 2 rows and columns, i.e. change the extent</span>
 elev_agg =<span class="st"> </span><span class="kw">extend</span>(elev_agg, <span class="dv">2</span>)
 elev_disagg =<span class="st"> </span><span class="kw">resample</span>(elev_agg, elev)</code></pre></div>
-<p>Though our disaggregated <code>elev_disagg</code> retrieved back its original resolution, cell size and extent, its values differ. However, this is to be expected, disaggregating <strong>cannot</strong> predict values at a finer resolution, it simply uses an interpolation algorithm. It is important to keep in mind that disaggregating results in a finer resolution, the corresponding values, however, are only as accurate as their lower resolution source.</p>
+<p>Though our disaggregated <code>elev_disagg</code> retrieved back its original resolution, cell size and extent, its values differ from the original cell values. However, this is to be expected, disaggregating <strong>cannot</strong> predict values at a finer resolution, it simply uses an interpolation algorithm. It is important to keep in mind that disaggregating results in a finer resolution, the corresponding values, however, are only as accurate as their lower resolution source.</p>
 <p>Finally, in order to align many (possibly hundreds or thousands of) images stored on disk, you could use the <code>gdalUtils::align_rasters()</code> function. However, you may also use <strong>raster</strong> with very large datasets. This is because <strong>raster</strong>:</p>
 <ol style="list-style-type: decimal">
 <li>Lets you work with raster datasets that are too large to fit into the main memory (RAM) by only processing chunks of it.</li>
@@ -981,7 +994,7 @@ elev_disagg =<span class="st"> </span><span class="kw">resample</span>(elev_agg,
 </ol>
 </div>
 <div id="spatial-vectorization" class="section level3">
-<h3><span class="header-section-number">5.4.2</span> Spatial vectorization</h3>
+<h3><span class="header-section-number">5.4.4</span> Spatial vectorization</h3>
 <p>Spatial vectorization is the counterpart of rasterization <a href="transform.html#rasterization">5.3.8</a>, and hence the process of converting continuous raster data into discrete vector data such as points, lines or polygons.</p>
 
 <div class="rmdnote">
@@ -1002,7 +1015,7 @@ Figure 5.22: Raster and point representation of <code>elev</code>.
 <span class="kw">data</span>(dem, <span class="dt">package =</span> <span class="st">&quot;RQGIS&quot;</span>)
 <span class="kw">plot</span>(dem, <span class="dt">axes =</span> <span class="ot">FALSE</span>)
 <span class="kw">plot</span>(<span class="kw">rasterToContour</span>(dem), <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<p>Use <code>contour()</code> or <code>rasterVis::contourplot()</code> if you want to add contour lines to a plot with isoline labels (Fig. <a href="transform.html#fig:contour">5.23</a>).</p>
+<p>Use <code>contour()</code>, <code>rasterVis::contourplot()</code> or <code>tmap::tm_iso()</code> if you want to add contour lines to a plot with isoline labels (Fig. <a href="transform.html#fig:contour">5.23</a>).</p>
 <div class="figure" style="text-align: center"><span id="fig:contour"></span>
 <img src="figures/contour-1.png" alt="DEM hillshade of the southern flank of Mt. Mongón overlaid with contour lines." width="576" />
 <p class="caption">
@@ -1083,15 +1096,15 @@ Figure 5.24: Illustration of vectorization of raster (left) into polygon (center
 <li>Count numbers of the highest points in grid cells with a resolution of 3 km.</li>
 <li>Find maximum elevation value for grid cells with a resolution of 3 km.</li>
 </ul></li>
-<li>Aggregate the raster counting high points in New Zealand created in the previous exercise, reduce its geographic resolution by half (so cells are 6 by 6 km) and plot the result.
+<li>Aggregate the raster counting high points in New Zealand (created in the previous exercise), reduce its geographic resolution by half (so cells are 6 by 6 km) and plot the result.
 <ul>
-<li>Resample the lower resolution raster back to the 3 km resolution of the orginal. How have the results changed?</li>
-<li>Name two advantages and two disadvantages of reducing raster resolution in this way.</li>
+<li>Resample the lower resolution raster back to a resolution of 3 km. How have the results changed?</li>
+<li>Name two advantages and disadvantages of reducing raster resolution.</li>
 </ul></li>
-<li>Polygonize the <code>grain</code> dataset and filter-out all the squares representing clay.
+<li>Polygonize the <code>grain</code> dataset and filter all squares representing clay.
 <ul>
-<li>Name 2 advantages and 2 disadvantages of vector data over raster data.</li>
-<li>At which points would it be useful to convert rasters to vectors in your research?</li>
+<li>Name two advantages and disadvantages of vector data over raster data.</li>
+<li>At which points would it be useful to convert rasters to vectors in your work?</li>
 </ul></li>
 </ol>
 <!-- advances exercise - rotate nz as a whole - union new zeleand and rotate it around its centroid by 180 degrees -->

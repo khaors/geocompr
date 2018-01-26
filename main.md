@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservef344672a00124f17
+preserve444cd22e71abe2c1
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3103,7 +3103,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveb6c9a44628d2ede9
+preservebdc6829dfad67e58
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4740,7 +4740,7 @@ In this section we will mainly deal with the co-registration (alignment) of imag
 A matching projection is of course also required but is already covered in section \@ref(reprojecting-raster-geometries).
 Secondly, we will show how to convert raster images into the spatial vector model.
 
-### Image co-registration (image alignment) {#raster-alignment}
+### Extending raster images
 
 When merging or performing map algebra on rasters, their resolution, projection, origin and/or extent has to match. Otherwise, how should we add the values of one raster with a resolution of 0.2 decimal degrees to a second with a resolution of 1 decimal degree? The same problem arises when we would like to merge satellite imagery from different sensors with different projections and resolutions. We can deal with such mismatches by aligning the rasters.
 
@@ -4781,8 +4781,12 @@ The newly added rows and column receive the default value of the `value` paramet
 elev_4 = extend(elev, elev_2)
 ```
 
-Matching different resolutions is computationally more complicated, but functions `aggregate()` and `disaggregate()` help with that.
-For instance, let us aggregate `elev` from a resolution of 0.5 to a resolution of 1, that means aggregating by a factor of 2 (Fig. \@ref(fig:aggregate-example)).
+### Aggregation and Disaggregation
+
+<!-- differentiate between spatial, spectral, temporal and radiometric resolution-->
+Raster datasets can also differ with regard to their resolution. 
+To match resolutions, one can either increase  (`aggregate()`) or decrease (`disaggregate()`) the resolution of one raster. 
+As an example, we here change the resolution of `elev` from 0.5 to 1 decimal degree, that means, we aggregate by a factor of 2 (Fig. \@ref(fig:aggregate-example)).
 Additionally, the output cell value should correspond to the mean of the input cells (note that one could use other functions as well, such as `median()`, `sum()` etc.):
 
 
@@ -4799,6 +4803,7 @@ plot(elev_agg)
 </div>
 
 Note that the origin of `elev_agg` has changed too.
+
 
 
 ```r
@@ -4828,6 +4833,13 @@ plot(elev_agg, add = TRUE)
 <p class="caption">(\#fig:origin-example)Plotting rasters with the same values but different origins.</p>
 </div>
 
+### Changing origin, extend and resolution simultaneously
+
+<!--In order to actually geometrically correct the original distorted image, a procedure called resampling is used to determine the digital values to place in the new pixel locations of the corrected output image. The resampling process calculates the new pixel values from the original digital pixel values in the uncorrected image. There are three common methods for resampling: nearest neighbour, bilinear interpolation, and cubic convolution. Nearest neighbour resampling uses the digital value from the pixel in the original image which is nearest to the new pixel location in the corrected image. This is the simplest method and does not alter the original values, but may result in some pixel values being duplicated while others are lost. This method also tends to result in a disjointed or blocky image appearance.
+http://www.nrcan.gc.ca/node/9403
+-->
+
+<!--Resampling = The process of interpolating new cell values when transforming rasters to a new coordinate space or cell size. (ESRI definition)--> 
 The `resample()` command lets you align several raster properties in one go, namely origin, extent and resolution.
 Let us resample an extended `elev_agg` to the properties of `elev` again.
 
@@ -4838,7 +4850,7 @@ elev_agg = extend(elev_agg, 2)
 elev_disagg = resample(elev_agg, elev)
 ```
 
-Though our disaggregated `elev_disagg` retrieved back its original resolution, cell size and extent, its values differ. 
+Though our disaggregated `elev_disagg` retrieved back its original resolution, cell size and extent, its values differ from the original cell values. 
 However, this is to be expected, disaggregating **cannot** predict values at a finer resolution, it simply uses an interpolation algorithm.
 It is important to keep in mind that disaggregating results in a finer resolution, the corresponding values, however, are only as accurate as their lower resolution source.
 
@@ -4885,7 +4897,7 @@ plot(dem, axes = FALSE)
 plot(rasterToContour(dem), add = TRUE)
 ```
 
-Use `contour()` or `rasterVis::contourplot()` if you want to add contour lines to a plot with isoline labels (Fig. \@ref(fig:contour)).
+Use `contour()`, `rasterVis::contourplot()` or `tmap::tm_iso()` if you want to add contour lines to a plot with isoline labels (Fig. \@ref(fig:contour)).
 
 <div class="figure" style="text-align: center">
 <img src="figures/contour-1.png" alt="DEM hillshade of the southern flank of Mt. Mongón overlaid with contour lines." width="576" />
@@ -4989,13 +5001,17 @@ Using the new object:
     - Count numbers of the highest points in grid cells with a resolution of 3 km.
     - Find maximum elevation value for grid cells with a resolution of 3 km.
 
-1. Aggregate the raster counting high points in New Zealand created in the previous exercise, reduce its geographic resolution by half (so cells are 6 by 6 km) and plot the result.
-    - Resample the lower resolution raster back to the 3 km resolution of the orginal. How have the results changed?
-    - Name two advantages and two disadvantages of reducing raster resolution in this way.
 
-1. Polygonize the `grain` dataset and filter-out all the squares representing clay.
-    - Name 2 advantages and 2 disadvantages of vector data over raster data.
-    - At which points would it be useful to convert rasters to vectors in your research?
+1. Aggregate the raster counting high points in New Zealand (created in the previous exercise), reduce its geographic resolution by half (so cells are 6 by 6 km) and plot the result.
+    - Resample the lower resolution raster back to a resolution of 3 km. How have the results changed?
+    - Name two advantages and disadvantages of reducing raster resolution.
+
+
+
+1. Polygonize the `grain` dataset and filter all squares representing clay.
+    - Name two advantages and disadvantages of vector data over raster data.
+    -  At which points would it be useful to convert rasters to vectors in your work?
+
 
 
 <!-- advances exercise - rotate nz as a whole - union new zeleand and rotate it around its centroid by 180 degrees -->
@@ -6169,7 +6185,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservec9b3a1a62cff979e
+preserve695b22d985da9eb1
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6793,7 +6809,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveb52ce2511a64fb7f
+preserved5c05ff82ce469b7
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
