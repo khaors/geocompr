@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-01-28'
+date: '2018-01-29'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2018-01-28 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-01-29 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve79f8ec8596619579
+preserve36d95c999ee9e3de
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3104,7 +3104,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve5c1ab57416c18e0d
+preservebe031f938cea5348
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3653,7 +3653,7 @@ Type transformations (from a polygon to a line, for example) are demonstrated in
 Section \@ref(geo-ras) covers geometric transformations on raster objects.
 This involves changing the size and number of the underlying pixels, and assigning them new values.
 It teaches how to change the resolution (also called raster aggregation and disaggregation), the extent and the origin of a raster.
-These operations are especially useful if one would like to align raster datasets from diverse sources (see section \@ref(raster-alignment)).
+These operations are especially useful if one would like to align raster datasets from diverse sources.
 Aligned raster objects share the same header information, allowing them to be processed using map algebra operations, described in section \@ref(map-algebra). 
 
 A vital type of geometry transformation is *reprojecting* from one coordinate reference system (CRS) to another.
@@ -4730,22 +4730,27 @@ The latter is part of GDAL and therefore requires a vector file, instead of an `
 ## Geometric operations on raster data {#geo-ras}
 
 Geometric raster operations include the shift, flipping, mirroring, scaling, rotation or warping of images.
-These operations are necessary when geolocating a raster image.
-Geolocating requires the rectification of the image, which includes one or several of the following steps depending on the task at hand [see also @liu_essential_2009]:
+These operations are e.g. necessary when geolocating a raster image.
+In turn, geolocating requires the rectification of the image, which includes one or several of the following steps depending on the task at hand [see also @liu_essential_2009]:
 
 - Georeferencing with ground control points.
 - Orthorectification also georeferences an image but additionally takes into account local topography.
-- Image (co-)registration is the process of aligning one image with another (in terms of CRS, origin and resolution). Registration becomes necessary for images from the same scene but shot from different sensors or from different angles or at different points in time.
+- Image (co-)registration is the process of aligning one image with another (in terms of CRS, origin and resolution). 
+Registration becomes necessary for images from the same scene but shot from different sensors or from different angles or at different points in time.
 
-In this section we will mainly deal with the co-registration (alignment) of images including a matching resolution, extent and origin.
+In this section we will first show how to change the extent, the resolution and the origin of an image.
+As mentioned before, most of the times, we need these operations in order to align several images.
 A matching projection is of course also required but is already covered in section \@ref(reprojecting-raster-geometries).
-Secondly, we will show how to convert raster images into the spatial vector model.
+In any case, there are other reasons why to perform a geometric operation on a single raster image.
+For instance, in chapter \@ref(location) we define metropolitan areas in Germany as 20 km^2^ pixels with more than 500,000 inhabitants. 
+The original inhabitant raster, however, has a resolution of 1 km^2^ which is why we will decrease (aggregate) the resolution by a factor of 20 (see section \@ref(define-metropolitan-areas).
+Finally, we will show how to convert raster images into the spatial vector model.
 
-### Extending raster images
+### Extent and origin
 
-When merging or performing map algebra on rasters, their resolution, projection, origin and/or extent has to match. Otherwise, how should we add the values of one raster with a resolution of 0.2 decimal degrees to a second with a resolution of 1 decimal degree? The same problem arises when we would like to merge satellite imagery from different sensors with different projections and resolutions. We can deal with such mismatches by aligning the rasters.
-
-
+When merging or performing map algebra on rasters, their resolution, projection, origin and/or extent has to match. Otherwise, how should we add the values of one raster with a resolution of 0.2 decimal degrees to a second with a resolution of 1 decimal degree?
+The same problem arises when we would like to merge satellite imagery from different sensors with different projections and resolutions. 
+We can deal with such mismatches by aligning the rasters.
 
 In the simplest case, two images only differ in a mismatch in extent.
 <!--The `projectRaster()` function reprojects one raster to a desired projection, say from UTM to WGS84.-->
@@ -4782,12 +4787,40 @@ The newly added rows and column receive the default value of the `value` paramet
 elev_4 = extend(elev, elev_2)
 ```
 
-### Aggregation and Disaggregation
+The origin is the point closest to (0, 0) if you moved towards it in steps of x and y resolution.
+
+
+```r
+origin(elev_4)
+#> [1] 0 0
+```
+
+If two rasters have different origins, their cells do not overlap completely which would make map algebra impossible.
+To change the origin , use `origin()`.^[If the origins of two raster datasets are just marginally apart, it sometimes is sufficient to simply increase the `tolerance` argument  of `raster::rasterOptions()`.]
+Looking at figure \@ref(fig:origin-example) reveals the effect of changing the origin.
+
+
+```r
+# change the origin
+origin(elev_4) = c(0.25, 0.25)
+plot(elev_4)
+# and add the original raster
+plot(elev, add = TRUE)
+```
+
+<div class="figure" style="text-align: center">
+<img src="figures/origin-example-1.png" alt="Plotting rasters with the same values but different origins." width="576" />
+<p class="caption">(\#fig:origin-example)Plotting rasters with the same values but different origins.</p>
+</div>
+
+Note that changing the resolution frequently (next section) also changes the origin.
+
+### Aggregation and disaggregation
 
 <!-- differentiate between spatial, spectral, temporal and radiometric resolution-->
 Raster datasets can also differ with regard to their resolution. 
-To match resolutions, one can either increase  (`aggregate()`) or decrease (`disaggregate()`) the resolution of one raster. 
-As an example, we here change the resolution of `elev` from 0.5 to 1 decimal degree, that means, we aggregate by a factor of 2 (Fig. \@ref(fig:aggregate-example)).
+To match resolutions, one can either decrease  (`aggregate()`) or increase (`disaggregate()`) the resolution of one raster.^[It is important to note that we here are solely referring to the spatial resolution but that in remote sensing the spectral (spectral bands), temporal (observations through time of the same area) and radiometric (color depth) resolution are equally important.]
+As an example, we here change the spatial resolution of `elev` from 0.5 to 2 decimal degree, that means, we aggregate by a factor of 2 (Fig. \@ref(fig:aggregate-example)).
 Additionally, the output cell value should correspond to the mean of the input cells (note that one could use other functions as well, such as `median()`, `sum()` etc.):
 
 
@@ -4803,57 +4836,42 @@ plot(elev_agg)
 <p class="caption">(\#fig:aggregate-example)Original raster (left). Aggregated raster (right).</p>
 </div>
 
-Note that the origin of `elev_agg` has changed too.
+By contrast, the`disaggregate()` function increases the resolution.
+However, we have to specify a method how to fill the new cells.
+The `disaggregate()` function provides two methods.
+The first (nearest neighbor, `method = ""`) simply gives all output cells the value of the nearest input cell, and hence duplicates values which leads to a blocky output image.
+For example, the four cells building up the upper left cell of the aggregated raster (Fig. \@ref(fig:aggregate-example)) will retrieve all the same value, namely 4.5.
 
-
-
-```r
-origin(elev)
-#> [1] 0 0
-origin(elev_agg)
-#> [1] 0.5 0.5
-```
-
-The origin is the point closest to (0, 0) if you moved towards it in steps of x and y resolution.
-If two rasters have different origins, their cells do not overlap completely which would make map algebra impossible.
-To change the origin , use `origin()`.^[If the origins of two raster datasets are just marginally apart, it sometimes is sufficient to simply increase the `tolerance` argument  of `raster::rasterOptions()`.]
-Looking at figure \@ref(fig:origin-example) reveals the effect of changing the origin.
+The `bilinear` method, in turn, is an interpolation technique that uses the four nearest pixel centers of the input image (salmon colored points in Fig. \@ref(fig:bilinear)) to compute an average weighted by distance (arrows in Fig. \@ref(fig:bilinear) as the value of the output cell (square in the upper left corner in Fig. \@ref(fig:bilinear)).
 
 
 ```r
-# plot the aggregated raster
-plot(elev_agg)
-# change the origin
-origin(elev_agg) = c(0, 0)
-# plot it again
-plot(elev_agg, add = TRUE)
+elev_disagg = disaggregate(elev_agg, fact = 2, method = "bilinear")
+all(values(elev) == values(elev_disagg))
+#> [1] TRUE
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/origin-example-1.png" alt="Plotting rasters with the same values but different origins." width="576" />
-<p class="caption">(\#fig:origin-example)Plotting rasters with the same values but different origins.</p>
+<img src="figures/bilinear-1.png" alt="Illustration of the bilinear interpolation technique." width="768" />
+<p class="caption">(\#fig:bilinear)Illustration of the bilinear interpolation technique.</p>
 </div>
 
-### Changing origin, extend and resolution simultaneously
+Comparing the values of `elev` and `elev_disagg` tells us that both are identical (you can also use `compareRaster()` or `all.equal()`).
+Please note that the disaggregation only predicted correctly the values at a higher resolution due to our artificial input data set (`elev`) and the fact that we have used the mean for the aggregation (`elev_agg`).
+However, this is usually not to be expected, since disaggregating is a simple interpolation technique.
+It is important to keep in mind that disaggregating results in a finer resolution, the corresponding values, however, are only as accurate as their lower resolution source.
 
-<!--In order to actually geometrically correct the original distorted image, a procedure called resampling is used to determine the digital values to place in the new pixel locations of the corrected output image. The resampling process calculates the new pixel values from the original digital pixel values in the uncorrected image. There are three common methods for resampling: nearest neighbour, bilinear interpolation, and cubic convolution. Nearest neighbour resampling uses the digital value from the pixel in the original image which is nearest to the new pixel location in the corrected image. This is the simplest method and does not alter the original values, but may result in some pixel values being duplicated while others are lost. This method also tends to result in a disjointed or blocky image appearance.
-http://www.nrcan.gc.ca/node/9403
--->
-
-<!--Resampling = The process of interpolating new cell values when transforming rasters to a new coordinate space or cell size. (ESRI definition)--> 
-The `resample()` command lets you align several raster properties in one go, namely origin, extent and resolution.
-Let us resample an extended `elev_agg` to the properties of `elev` again.
+The process of computing values for new pixel locations is also called resampling. 
+In fact, the **raster** package provides a `resample()` function.
+It lets you align several raster properties in one go, namely origin, extent and resolution.
+By default, it uses the `bilinear`-interpolation.
 
 
 ```r
 # add 2 rows and columns, i.e. change the extent
 elev_agg = extend(elev_agg, 2)
-elev_disagg = resample(elev_agg, elev)
+elev_disagg_2 = resample(elev_agg, elev)
 ```
-
-Though our disaggregated `elev_disagg` retrieved back its original resolution, cell size and extent, its values differ from the original cell values. 
-However, this is to be expected, disaggregating **cannot** predict values at a finer resolution, it simply uses an interpolation algorithm.
-It is important to keep in mind that disaggregating results in a finer resolution, the corresponding values, however, are only as accurate as their lower resolution source.
 
 Finally, in order to align many (possibly hundreds or thousands of) images stored on disk, you could use the `gdalUtils::align_rasters()` function.
 However, you may also use **raster** with very large datasets. 
@@ -6186,7 +6204,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservef95142ce9662a1db
+preservec035364e7a897127
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6493,7 +6511,7 @@ reclass
 ### Define metropolitan areas
 
 We define metropolitan areas as pixels of 20 km^2^ inhabited by more than 500,000 people.
-Pixels at this coarse resolution can rapidly be created using `aggregate()`, as introduced in section \@ref(raster-alignment).
+Pixels at this coarse resolution can rapidly be created using `aggregate()`, as introduced in section \@ref(aggregation-and-disaggregation).
 The command below uses the argument `fact = 20` to reduce the resolution of the result twenty-fold (recall the original raster resolution was 1 km^2^):
 
 
@@ -6810,7 +6828,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve4779275aaa9f5c27
+preserve840c8e5e3b0af8b0
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
