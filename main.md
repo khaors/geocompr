@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservee09ccdd90bacfa38
+preservecc947cfae2836f68
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3104,7 +3104,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveb9fe01e5a38c7055
+preserved776267061688c24
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4842,7 +4842,7 @@ The `disaggregate()` function provides two methods.
 The first (nearest neighbor, `method = ""`) simply gives all output cells the value of the nearest input cell, and hence duplicates values which leads to a blocky output image.
 For example, the four cells building up the upper left cell of the aggregated raster (Fig. \@ref(fig:aggregate-example)) will retrieve all the same value, namely 4.5.
 
-The `bilinear` method, in turn, is an interpolation technique that uses the four nearest pixel centers of the input image (salmon colored points in Fig. \@ref(fig:bilinear)) to compute an average weighted by distance (arrows in Fig. \@ref(fig:bilinear) as the value of the output cell (square in the upper left corner in Fig. \@ref(fig:bilinear)).
+The `bilinear` method, in turn, is an interpolation technique that uses the four nearest pixel centers of the input image (salmon colored points in Fig. \@ref(fig:bilinear)) to compute an average weighted by distance (arrows in Fig. \@ref(fig:bilinear) as the value of the output cell - square in the upper left corner in Fig. \@ref(fig:bilinear)).
 
 
 ```r
@@ -6204,7 +6204,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve76ad3ebcee11d525
+preserve5834a6c33e6876d9
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6828,7 +6828,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve1a37e03d9a53a581
+preserveffa34877bc1b6a89
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
