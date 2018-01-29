@@ -978,9 +978,9 @@ Figure 5.21: Original raster (left). Aggregated raster (right).
 <span class="kw">all</span>(<span class="kw">values</span>(elev) ==<span class="st"> </span><span class="kw">values</span>(elev_disagg))
 <span class="co">#&gt; [1] TRUE</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:bilinear"></span>
-<img src="figures/bilinear-1.png" alt="Illustration of the bilinear interpolation technique." width="768" />
+<img src="figures/bilinear-1.png" alt="The distance-weighted average of the four closest input cells determine the output when using the bilinear method for disaggregation." width="768" />
 <p class="caption">
-Figure 5.22: Illustration of the bilinear interpolation technique.
+Figure 5.22: The distance-weighted average of the four closest input cells determine the output when using the bilinear method for disaggregation.
 </p>
 </div>
 <p>Comparing the values of <code>elev</code> and <code>elev_disagg</code> tells us that both are identical (you can also use <code>compareRaster()</code> or <code>all.equal()</code>). Please note that the disaggregation only predicted correctly the values at a higher resolution due to our artificial input data set (<code>elev</code>) and the fact that we have used the mean for the aggregation (<code>elev_agg</code>). However, this is usually not to be expected, since disaggregating is a simple interpolation technique. It is important to keep in mind that disaggregating results in a finer resolution, the corresponding values, however, are only as accurate as their lower resolution source.</p>
