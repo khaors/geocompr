@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveac0fd5047bade909
+preserve503ddd2ccba5fde4
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2350,10 +2350,23 @@ nrow(world_coffee_match)
 #> [1] 46
 ```
 
+It is also possible to join in the other direction: starting with a non-spatial dataset and adding variables from a simple features object.
+This is demonstrated below, which starts with the `coffee_data_match` object and adds variables from the original `world` dataset.
+In contrast with the previous joins, the result is *not* another simple feature object, but a data frame in the form of a **tidyverse** tibble:
+the output of a join tends to match its first argument:
+
+
+```r
+coffee_world = left_join(coffee_data_match, world)
+#> Joining, by = "name_long"
+class(coffee_world)
+#> [1] "tbl_df"     "tbl"        "data.frame"
+```
+
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">In most cases the geometry column is only useful in an `sf` object.
 The geometry column can only be used for creating maps and spatial operations if R 'knows' it is a spatial object, defined by a spatial package such as **sf**.
-Fortunately non-spatial data frames with a geometry list column (like `left_join4`) can be coerced into an `sf` object as follows: `st_as_sf(left_join4)`. </div>\EndKnitrBlock{rmdnote}
+Fortunately non-spatial data frames with a geometry list column (like `coffee_world`) can be coerced into an `sf` object as follows: `st_as_sf(coffee_world)`. </div>\EndKnitrBlock{rmdnote}
 
 ### Creating attributes and removing spatial information {#vec-attr-creation}
 <!-- lubridate? -->
@@ -3106,7 +3119,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveaf4c289cc036b912
+preserve442175026b3709f6
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6206,7 +6219,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservee2afada25af69571
+preserve3057bbe65ce0ff34
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6830,7 +6843,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve969074324d5baea1
+preserve6c276df4e2054adc
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 

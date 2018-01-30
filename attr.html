@@ -582,9 +582,14 @@ world_coffee_match =<span class="st"> </span><span class="kw">inner_join</span>(
 <span class="co">#&gt; Joining, by = &quot;name_long&quot;</span>
 <span class="kw">nrow</span>(world_coffee_match)
 <span class="co">#&gt; [1] 46</span></code></pre></div>
+<p>It is also possible to join in the other direction: starting with a non-spatial dataset and adding variables from a simple features object. This is demonstrated below, which starts with the <code>coffee_data_match</code> object and adds variables from the original <code>world</code> dataset. In contrast with the previous joins, the result is <em>not</em> another simple feature object, but a data frame in the form of a <strong>tidyverse</strong> tibble: the output of a join tends to match its first argument:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">coffee_world =<span class="st"> </span><span class="kw">left_join</span>(coffee_data_match, world)
+<span class="co">#&gt; Joining, by = &quot;name_long&quot;</span>
+<span class="kw">class</span>(coffee_world)
+<span class="co">#&gt; [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</span></code></pre></div>
 
 <div class="rmdnote">
-In most cases the geometry column is only useful in an <code>sf</code> object. The geometry column can only be used for creating maps and spatial operations if R ‘knows’ it is a spatial object, defined by a spatial package such as <strong>sf</strong>. Fortunately non-spatial data frames with a geometry list column (like <code>left_join4</code>) can be coerced into an <code>sf</code> object as follows: <code>st_as_sf(left_join4)</code>.
+In most cases the geometry column is only useful in an <code>sf</code> object. The geometry column can only be used for creating maps and spatial operations if R ‘knows’ it is a spatial object, defined by a spatial package such as <strong>sf</strong>. Fortunately non-spatial data frames with a geometry list column (like <code>coffee_world</code>) can be coerced into an <code>sf</code> object as follows: <code>st_as_sf(coffee_world)</code>.
 </div>
 <p></p>
 </div>
