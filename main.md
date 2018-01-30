@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve9793e5bead099f1f
+preserveca633f8e1b804c50
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2312,6 +2312,41 @@ nrow(world_coffee_inner)
 #> [1] 44
 ```
 
+Note that the result of `inner_join()` has only 44 rows compared with 47 in `coffee_data`.
+What happened to the remaining rows?
+We can identify the rows that did not match using the `setdiff()` function as follows:
+
+
+```r
+setdiff(coffee_data$name_long, world$name_long)
+#> [1] "Congo, Dem. Rep. of" "Côte d'Ivoire"       "Others"
+```
+
+The result shows that 2 countries have not matched due to name discrepancies.
+These discrepancies can be fixed by updating identifying the value that they were expected to have in the `world` dataset and updating the names accordingly.
+In this case we will use string matching to find out what `Congo, Dem. Rep. of` and `Côte d'Ivoire` are called:
+
+
+```r
+str_subset(world$name_long, "Ivo|Cong")
+#> [1] "Ivory Coast"                      "Democratic Republic of the Congo"
+#> [3] "Republic of Congo"
+```
+
+From these results we can identify the matching names and update the names in `coffee_data` accordingly.
+As demonstrated below, `inner_join()`ing the updated data frame returns a result with all 46 coffee producing nations represented in the dataset:
+
+
+```r
+coffee_data_match = mutate_if(coffee_data, is.character, recode,
+            `Congo, Dem. Rep. of` = "Democratic Republic of the Congo",
+            `Côte d'Ivoire` = "Ivory Coast")
+world_coffee_match = inner_join(world, coffee_data_match)
+#> Joining, by = "name_long"
+nrow(world_coffee_match)
+#> [1] 46
+```
+
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">In most cases the geometry column is only useful in an `sf` object.
 The geometry column can only be used for creating maps and spatial operations if R 'knows' it is a spatial object, defined by a spatial package such as **sf**.
@@ -3068,7 +3103,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveaffb3b541009c3f3
+preserve1854b2aaf7e2d26a
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6168,7 +6203,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservee4b5ad361114145c
+preserveafce4abf393c9534
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6792,7 +6827,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveff09b7b25e0de9e0
+preserve11cf6a4c8d8402a2
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 

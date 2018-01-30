@@ -562,6 +562,21 @@ world_coffee2 =<span class="st"> </span><span class="kw">left_join</span>(world,
 <span class="co">#&gt; Joining, by = &quot;name_long&quot;</span>
 <span class="kw">nrow</span>(world_coffee_inner)
 <span class="co">#&gt; [1] 44</span></code></pre></div>
+<p>Note that the result of <code>inner_join()</code> has only 44 rows compared with 47 in <code>coffee_data</code>. What happened to the remaining rows? We can identify the rows that did not match using the <code>setdiff()</code> function as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setdiff</span>(coffee_data$name_long, world$name_long)
+<span class="co">#&gt; [1] &quot;Congo, Dem. Rep. of&quot; &quot;Côte d&#39;Ivoire&quot;       &quot;Others&quot;</span></code></pre></div>
+<p>The result shows that 2 countries have not matched due to name discrepancies. These discrepancies can be fixed by updating identifying the value that they were expected to have in the <code>world</code> dataset and updating the names accordingly. In this case we will use string matching to find out what <code>Congo, Dem. Rep. of</code> and <code>Côte d'Ivoire</code> are called:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_subset</span>(world$name_long, <span class="st">&quot;Ivo|Cong&quot;</span>)
+<span class="co">#&gt; [1] &quot;Ivory Coast&quot;                      &quot;Democratic Republic of the Congo&quot;</span>
+<span class="co">#&gt; [3] &quot;Republic of Congo&quot;</span></code></pre></div>
+<p>From these results we can identify the matching names and update the names in <code>coffee_data</code> accordingly. As demonstrated below, <code>inner_join()</code>ing the updated data frame returns a result with all 46 coffee producing nations represented in the dataset:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">coffee_data_match =<span class="st"> </span><span class="kw">mutate_if</span>(coffee_data, is.character, recode,
+            <span class="st">`</span><span class="dt">Congo, Dem. Rep. of</span><span class="st">`</span> =<span class="st"> &quot;Democratic Republic of the Congo&quot;</span>,
+            <span class="st">`</span><span class="dt">Côte d&#39;Ivoire</span><span class="st">`</span> =<span class="st"> &quot;Ivory Coast&quot;</span>)
+world_coffee_match =<span class="st"> </span><span class="kw">inner_join</span>(world, coffee_data_match)
+<span class="co">#&gt; Joining, by = &quot;name_long&quot;</span>
+<span class="kw">nrow</span>(world_coffee_match)
+<span class="co">#&gt; [1] 46</span></code></pre></div>
 
 <div class="rmdnote">
 In most cases the geometry column is only useful in an <code>sf</code> object. The geometry column can only be used for creating maps and spatial operations if R ‘knows’ it is a spatial object, defined by a spatial package such as <strong>sf</strong>. Fortunately non-spatial data frames with a geometry list column (like <code>left_join4</code>) can be coerced into an <code>sf</code> object as follows: <code>st_as_sf(left_join4)</code>.
