@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve2e6ae9b44e486613
+preserve6e3d7cf57712d63f
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3125,7 +3125,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve7a40d61ace076806
+preserveaf813f1cc4316c3a
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4998,14 +4998,6 @@ What has changed and why?
 Try to transform it back into WGS 84 and plot the new object.
 Why does the new object differ from the original one?
 
-1. Transform the continuous raster (`cat_raster`) into WGS 84 using the nearest neighbor interpolation method. 
-What has changed?
-How does it influence the results?
-
-1. Try to transform the categorical raster (`cat_raster`) into WGS 84 using the bilinear interpolation method.
-What has changed?
-How does it influence the results?
-
 1. Generate and plot simplified versions of the `nz` dataset.
 Experiment with different values of `keep` (ranging from 0.5 to 0.00005) for `ms_simplify()` and `dTolerance` (from 100 to 100,000) `st_simplify()` .
     - At what value does the form of the result start to break-down for each method, making New Zealand unrecognizable?
@@ -5021,17 +5013,18 @@ Write code to do so.
 Hint: you need to use a two-element vector for this transformation.
     - Bonus: create a upside down map of your country.
 
+1. Transform the continuous raster (`cat_raster`) into WGS 84 using the nearest neighbor interpolation method. 
+What has changed?
+How does it influence the results?
+
+1. Transform the categorical raster (`cat_raster`) into WGS 84 using the bilinear interpolation method.
+What has changed?
+How does it influence the results?
+
 1. Subset the point in `p` that is contained within `x` *and* `y` (see section \@ref(clipping) and Figure \@ref(fig:venn-clip)).
     - Using base subsetting operators.
     - Using an intermediary object created with `st_intersection()`.
 
-1. Write code that uses the functions `aggregate()` and `st_buffer()` to answers the following question: what proportion of the world's population lives in countries that intersect a circle with a 10 degree radius of the intersection between the equator and the [9^th^ meridian](https://en.wikipedia.org/wiki/9th_meridian_east)?
-
-1. Assuming that people are evenly distributed across countries, estimate the population living *within* the circle created to answer the previous question.
-
-1. Warning messages should have been produced during the working to find the answer to the previous questions. What do these warnings mean and how could they be stopped? 
-    - Bonus: rewrite code that generated the answer to the previous question using a projected CRS (suggestion: UTM).
-1. Advanced challenge: find the point with the highest number of people within a 10 degree radius.
 1. Calculate the length of the boundary lines of US states in meters.
 Which state has the longest border and which has the shortest?
 Hint: The `st_length` function computes the length of a `LINESTRING` or `MULTILINESTRING` geometry.
@@ -6225,7 +6218,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservedc397b760434c668
+preserve9f274233aaddbed8
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6849,7 +6842,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservec32e5c4a1294f7d0
+preserve3c39e63602b440eb
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 

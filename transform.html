@@ -1066,8 +1066,6 @@ Figure 5.25: Illustration of vectorization of raster (left) into polygon (center
 <li>Remove the CRS from <code>nz_wgs</code> and plot the result: what is wrong with this map of New Zealand and why?</li>
 </ul></li>
 <li><p>Transform the <code>world</code> dataset to the transverse Mercator projection (<code>&quot;+proj=tmerc&quot;</code>) and plot the result. What has changed and why? Try to transform it back into WGS 84 and plot the new object. Why does the new object differ from the original one?</p></li>
-<li><p>Transform the continuous raster (<code>cat_raster</code>) into WGS 84 using the nearest neighbor interpolation method. What has changed? How does it influence the results?</p></li>
-<li><p>Try to transform the categorical raster (<code>cat_raster</code>) into WGS 84 using the bilinear interpolation method. What has changed? How does it influence the results?</p></li>
 <li>Generate and plot simplified versions of the <code>nz</code> dataset. Experiment with different values of <code>keep</code> (ranging from 0.5 to 0.00005) for <code>ms_simplify()</code> and <code>dTolerance</code> (from 100 to 100,000) <code>st_simplify()</code> .
 <ul>
 <li>At what value does the form of the result start to break-down for each method, making New Zealand unrecognizable?</li>
@@ -1079,18 +1077,13 @@ Figure 5.25: Illustration of vectorization of raster (left) into polygon (center
 <ul>
 <li>Bonus: create a upside down map of your country.</li>
 </ul></li>
+<li><p>Transform the continuous raster (<code>cat_raster</code>) into WGS 84 using the nearest neighbor interpolation method. What has changed? How does it influence the results?</p></li>
+<li><p>Transform the categorical raster (<code>cat_raster</code>) into WGS 84 using the bilinear interpolation method. What has changed? How does it influence the results?</p></li>
 <li>Subset the point in <code>p</code> that is contained within <code>x</code> <em>and</em> <code>y</code> (see section <a href="transform.html#clipping">5.3.5</a> and Figure <a href="transform.html#fig:venn-clip">5.12</a>).
 <ul>
 <li>Using base subsetting operators.</li>
 <li>Using an intermediary object created with <code>st_intersection()</code>.</li>
 </ul></li>
-<li><p>Write code that uses the functions <code>aggregate()</code> and <code>st_buffer()</code> to answers the following question: what proportion of the world’s population lives in countries that intersect a circle with a 10 degree radius of the intersection between the equator and the <a href="https://en.wikipedia.org/wiki/9th_meridian_east">9<sup>th</sup> meridian</a>?</p></li>
-<li><p>Assuming that people are evenly distributed across countries, estimate the population living <em>within</em> the circle created to answer the previous question.</p></li>
-<li>Warning messages should have been produced during the working to find the answer to the previous questions. What do these warnings mean and how could they be stopped?
-<ul>
-<li>Bonus: rewrite code that generated the answer to the previous question using a projected CRS (suggestion: UTM).</li>
-</ul></li>
-<li>Advanced challenge: find the point with the highest number of people within a 10 degree radius.</li>
 <li><p>Calculate the length of the boundary lines of US states in meters. Which state has the longest border and which has the shortest? Hint: The <code>st_length</code> function computes the length of a <code>LINESTRING</code> or <code>MULTILINESTRING</code> geometry.</p></li>
 <li>Subset points higher than 3100 meters in New Zealand (the <code>nz_height</code> object). Using the new object:
 <ul>
