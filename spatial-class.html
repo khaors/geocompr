@@ -788,24 +788,7 @@ new_raster =<span class="st"> </span><span class="kw">raster</span>(raster_filep
 <span class="co">#&gt; data source : /home/travis/R/Library/spDataLarge/raster/srtm.tif </span>
 <span class="co">#&gt; names       : srtm </span>
 <span class="co">#&gt; values      : 1024, 2892  (min, max)</span></code></pre></div>
-<p>To access individual header information, you can use following commands:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># dimensions (number of rows, number of columns, number of cells)</span>
-<span class="kw">dim</span>(new_raster)
-<span class="co">#&gt; [1] 457 465   1</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># spatial resolution</span>
-<span class="kw">res</span>(new_raster)
-<span class="co">#&gt; [1] 0.000833 0.000833</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># spatial extent</span>
-<span class="kw">extent</span>(new_raster)
-<span class="co">#&gt; class       : Extent </span>
-<span class="co">#&gt; xmin        : -113 </span>
-<span class="co">#&gt; xmax        : -113 </span>
-<span class="co">#&gt; ymin        : 37.1 </span>
-<span class="co">#&gt; ymax        : 37.5</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># coordinate reference system</span>
-<span class="kw">crs</span>(new_raster)
-<span class="co">#&gt; CRS arguments:</span>
-<span class="co">#&gt;  +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0</span></code></pre></div>
+<p>To access individual header information, you can use following commands: <code>dim(new_raster)</code> (dimensions - number of rows, number of columns, number of cells), <code>res(new_raster)</code> (spatial resolution), <code>extent(new_raster)</code> (spatial extent), and <code>crs(new_raster)</code> (coordinate reference system).</p>
 <!--CRSargs(CRS("+init=epsg:4326"))-->
 <p>Note that in contrast to the <strong>sf</strong> package, <strong>raster</strong> only accepts the <code>proj4string</code> representation of the coordinate reference system.</p>
 <!--

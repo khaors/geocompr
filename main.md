@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservef880850d83365f87
+preservea7f730837c30ce01
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -1321,40 +1321,7 @@ new_raster
 #> values      : 1024, 2892  (min, max)
 ```
 
-To access individual header information, you can use following commands:
-
-
-```r
-# dimensions (number of rows, number of columns, number of cells)
-dim(new_raster)
-#> [1] 457 465   1
-```
-
-
-```r
-# spatial resolution
-res(new_raster)
-#> [1] 0.000833 0.000833
-```
-
-
-```r
-# spatial extent
-extent(new_raster)
-#> class       : Extent 
-#> xmin        : -113 
-#> xmax        : -113 
-#> ymin        : 37.1 
-#> ymax        : 37.5
-```
-
-
-```r
-# coordinate reference system
-crs(new_raster)
-#> CRS arguments:
-#>  +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0
-```
+To access individual header information, you can use following commands: `dim(new_raster)` (dimensions - number of rows, number of columns, number of cells), `res(new_raster)` (spatial resolution), `extent(new_raster)` (spatial extent), and `crs(new_raster)` (coordinate reference system).
 
 <!--CRSargs(CRS("+init=epsg:4326"))-->
 Note that in contrast to the **sf** package, **raster** only accepts the `proj4string` representation of the coordinate reference system.
@@ -3125,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservec7672721eda2216e
+preserve34637e59ea3053c7
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6218,7 +6185,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve25db76a62935f22f
+preserve20da905eb2859b70
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6842,7 +6809,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveaa92a95fc01a5d5e
+preserve0b2b536576259c56
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
