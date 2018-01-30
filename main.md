@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-01-29'
+date: '2018-01-30'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -41,7 +41,7 @@ Currently the build is:
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr) 
 
-The version of the book you are reading now was built on 2018-01-29 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-01-30 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservec0ea5600baeb612c
+preserve9793e5bead099f1f
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2240,118 +2240,82 @@ Europe       7.39e+08            39
 
 Combining data from different sources is a common task in data preparation. 
 Joins do this by combining tables based on a shared 'key' variable.
-**dplyr** has powerful functions for joining: `left_join()`, `right_join()`,  `inner_join()`, `full_join`, `semi_join()` and `anti_join()`.
-These function names follow conventions used in the database language [SQL](http://r4ds.had.co.nz/relational-data.html) [@grolemund_r_2016, Chapter 13].
-Using them with `sf` objects is the focus of this section.
+**dplyr** has multiple join functions including `left_join()` and `inner_join()` --- see `vignette("two-table")` for a full list.
+These function names follow conventions used in the database language [SQL](http://r4ds.had.co.nz/relational-data.html) [@grolemund_r_2016, Chapter 13]; using them to join non spatial datasets to `sf` objects is the focus of this section.
 **dplyr** join functions work the same on data frames and `sf` objects, the only important difference being the `geometry` list column.
 The result of data joins can be either an `sf` or `data.frame` object.
+The most common type of attribute join on spatial data takes an `sf` object as the first argument and adds columns to it from `data.frame` specified as the second argument.
 
-Most joins involving spatial data will have an `sf` object as the first argument and a `data.frame` object as the second argument, resulting in a new `sf` object (the reverse order is also possible and will return a `data.frame`).
-We will focus on the commonly used left and inner joins, which use the same syntax as the other join types [see @grolemund_r_2016 for more join types].
-
-The easiest way to understand the concept of joins is to show how they work with a smaller dataset. 
-We will use an `sf` object `north_america` with country codes (`iso_a2`), names and geometries, as well as a `data.frame` object `wb_north_america` containing information about urban population and unemployment for three countries.
-Note that `north_america` contains data about Canada, Greenland and the United States but the World Bank dataset (`wb_north_america`) contains information about Canada, Mexico and the United States:
-
-
-```r
-north_america = world %>%
-  filter(subregion == "Northern America") %>%
-  dplyr::select(iso_a2, name_long)
-north_america$name_long
-#> [1] "Canada"        "Greenland"     "United States"
-```
+To illustrate the utility of joins, imagine that you are researching global coffee production.
+You have managed to extract data hidden-away in a PDF document supplied by the International Coffee Organization (ICO).
+The results are stored in a data frame called `coffee_data` which has 3 columns:
+one (`name_long`) containing the names of coffee-producing nations and the other two reporting coffee production statistics for 2016 and 2017 (see `?coffee_data` for further information).
+We will use a 'left join' (meaning the left-hand dataset is kept intact) to merge this dataset with the pre-existing `world` dataset.
+The result of the code chunk below a new `sf` object.
 
 
 ```r
-wb_north_america = worldbank_df %>% 
-  filter(name %in% c("Canada", "Mexico", "United States")) %>%
-  dplyr::select(name, iso_a2, urban_pop, unemploy = unemployment)
+world_coffee = left_join(world, coffee_data)
+#> Joining, by = "name_long"
+class(world_coffee)
+#> [1] "sf"         "data.frame"
 ```
 
-We will use a left join to combine the two datasets.
-Left joins are the most commonly used operation for adding attributes to spatial data, as they return all observations from the left object (`north_america`) and the matched observations from the right object (`wb_north_america`) in new columns.
-Rows in the left object without matches in the right (`Greenland` in this case) result in `NA` values.
-
-To join two objects we need to specify a key.
-This is a variable (or a set of variables) that uniquely identifies each observation (row). 
-The `by` argument of **dplyr**'s join functions lets you identify the key variable. 
-In simple cases, a single, unique variable exist in both objects like the `iso_a2` column in our example (you may need to rename columns with identifying information for this to work):
+The resulting simple features object is the same as the orignal `world` object but has two new variables (with column indeces 11 and 12) reporting coffee production by year, allowing us to plot the results:
 
 
 ```r
-left_join1 = north_america %>% 
-  left_join(wb_north_america, by = "iso_a2")
+names(world_coffee)
+#>  [1] "iso_a2"                 "name_long"             
+#>  [3] "continent"              "region_un"             
+#>  [5] "subregion"              "type"                  
+#>  [7] "area_km2"               "pop"                   
+#>  [9] "lifeExp"                "gdpPercap"             
+#> [11] "coffee_production_2016" "coffee_production_2017"
+#> [13] "geom"
+plot(world_coffee[11:12])
 ```
 
-This has created a spatial dataset with the new variables added.
-The utility of this is shown in Figure \@ref(fig:unemploy), which shows the unemployment rate (a World Bank variable) across the countries of North America.
+<img src="figures/unnamed-chunk-35-1.png" width="576" style="display: block; margin: auto;" />
 
-<div class="figure" style="text-align: center">
-<img src="figures/unemploy-1.png" alt="The unemployment rate (taken from World Bank statistics) in Canada and the United States to illustrate the utility of joining attribute data on to spatial datasets." width="576" />
-<p class="caption">(\#fig:unemploy)The unemployment rate (taken from World Bank statistics) in Canada and the United States to illustrate the utility of joining attribute data on to spatial datasets.</p>
-</div>
 
-It is also possible to join objects by different variables.
-Both of the datasets have variables with names of countries, but they are named differently.
-The `north_america` has a `name_long` column and the `wb_north_america` has a `name` column.
-In these cases a named vector, such as `c("name_long" = "name")`, can specify the connection:
+For joining to work a 'key variable' must be supplied in both datasets.
+By default **dplyr** uses all variables with matching names.
+In this case both `world_coffee` and `world` objects contained a variable called `name_long`, explaining the message `Joining, by = "name_long"`.
+In the majority of cases where variable names are not the same you have two options:
+
+1. Rename the key variable in one of the objects so they match.
+2. Use the `by` argument to specify the joining variables.
+
+The latter approach is demonstrated below on a renamed version of `coffee_data`:
 
 
 ```r
-left_join2 = north_america %>% 
-  left_join(wb_north_america, by = c("name_long" = "name"))
-names(left_join2)
-#> [1] "iso_a2.x"  "name_long" "iso_a2.y"  "urban_pop" "unemploy"  "geom"
+coffee_renamed = rename(coffee_data, nm = name_long)
+world_coffee2 = left_join(world, coffee_renamed, by = c(name_long = "nm"))
 ```
 
-Note that the result contains two duplicated variables - `iso_a2.x` and `iso_a2.y` because both `x` and `y` objects have the column `iso_a2`.
-This can be solved by specifying all the keys:
+
+
+Note that the name in the original object is kept, meaning that `world_coffee` and the new object `world_coffee2` are identical.
+Another feature of the result is that it has the same number of rows as the original dataset.
+Although there are only 47 rows of data in `coffee_data` all 177 the country records are kept intact in `world_coffee` and `world_coffee2`:
+rows in the original dataset with no match are assigned `NA` values for the new coffee production variables.
+What if we only want to keep countries that have a match in the key variable?
+In that case an inner join can be used:
 
 
 ```r
-left_join3 = north_america %>% 
-  left_join(wb_north_america, by = c("iso_a2", "name_long" = "name"))
+world_coffee_inner = inner_join(world, coffee_data)
+#> Joining, by = "name_long"
+nrow(world_coffee_inner)
+#> [1] 44
 ```
 
-Joins also work when a data frame is the first argument.
-This keeps the geometry column but drops the `sf` class, returning a `data.frame` object.
-
-
-```r
-# keeps the geom column, but drops the sf class
-left_join4 = wb_north_america %>%
-  left_join(north_america, by = c("iso_a2"))
-class(left_join4)
-#> [1] "data.frame"
-```
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">In most cases the geometry column is only useful in an `sf` object.
 The geometry column can only be used for creating maps and spatial operations if R 'knows' it is a spatial object, defined by a spatial package such as **sf**.
 Fortunately non-spatial data frames with a geometry list column (like `left_join4`) can be coerced into an `sf` object as follows: `st_as_sf(left_join4)`. </div>\EndKnitrBlock{rmdnote}
-
-<!-- On the other hand, it is also possible to remove the geometry column of `left_join4` using base R functions or `dplyr`. -->
-<!-- Here, this is this simple because the geometry column is just another `data.frame` column and no longer the sticky geometry column of an `sf` object (see also Chapter \@ref(spatial-class)): -->
-
-<!-- ```{r} -->
-<!-- # base R -->
-<!-- left_join4_df = subset(left_join4, select = -geom) -->
-<!-- # or dplyr -->
-<!-- left_join4_df = left_join4 %>% dplyr::select(-geom) -->
-<!-- left_join4_df -->
-<!-- class(left_join4_df) -->
-<!-- ``` -->
-
-In contrast to `left_join()`, `inner_join()` keeps only observations from the left object (`north_america`) where there are matching observations in the right object (`wb_north_america`). 
-All columns from the left and right object are still kept:
-
-
-```r
-inner_join1 = north_america %>% 
-  inner_join(wb_north_america, by = c("iso_a2", "name_long" = "name"))
-inner_join1$name_long
-#> [1] "Canada"        "United States"
-```
 
 ### Creating attributes and removing spatial information {#vec-attr-creation}
 <!-- lubridate? -->
@@ -3104,7 +3068,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve61c7ec6956278447
+preserveaffb3b541009c3f3
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6204,7 +6168,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve559facf871ed9275
+preservee4b5ad361114145c
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6828,7 +6792,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve28254b43e8358ab1
+preserveff09b7b25e0de9e0
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 

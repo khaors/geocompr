@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-01-29">
+<meta name="date" content="2018-01-30">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -532,62 +532,41 @@ More details are provided in the help pages (which can be accessed via <code>?su
 <!-- https://github.com/dgrtwo/fuzzyjoin -->
 <!-- http://r4ds.had.co.nz/relational-data.html -->
 <!-- non-unique keys -->
-<p>Combining data from different sources is a common task in data preparation. Joins do this by combining tables based on a shared ‘key’ variable. <strong>dplyr</strong> has powerful functions for joining: <code>left_join()</code>, <code>right_join()</code>, <code>inner_join()</code>, <code>full_join</code>, <code>semi_join()</code> and <code>anti_join()</code>. These function names follow conventions used in the database language <a href="http://r4ds.had.co.nz/relational-data.html">SQL</a> <span class="citation">(Grolemund and Wickham <a href="#ref-grolemund_r_2016">2016</a>, Chapter 13)</span>. Using them with <code>sf</code> objects is the focus of this section. <strong>dplyr</strong> join functions work the same on data frames and <code>sf</code> objects, the only important difference being the <code>geometry</code> list column. The result of data joins can be either an <code>sf</code> or <code>data.frame</code> object.</p>
-<p>Most joins involving spatial data will have an <code>sf</code> object as the first argument and a <code>data.frame</code> object as the second argument, resulting in a new <code>sf</code> object (the reverse order is also possible and will return a <code>data.frame</code>). We will focus on the commonly used left and inner joins, which use the same syntax as the other join types <span class="citation">(see Grolemund and Wickham <a href="#ref-grolemund_r_2016">2016</a> for more join types)</span>.</p>
-<p>The easiest way to understand the concept of joins is to show how they work with a smaller dataset. We will use an <code>sf</code> object <code>north_america</code> with country codes (<code>iso_a2</code>), names and geometries, as well as a <code>data.frame</code> object <code>wb_north_america</code> containing information about urban population and unemployment for three countries. Note that <code>north_america</code> contains data about Canada, Greenland and the United States but the World Bank dataset (<code>wb_north_america</code>) contains information about Canada, Mexico and the United States:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">north_america =<span class="st"> </span>world %&gt;%
-<span class="st">  </span><span class="kw">filter</span>(subregion ==<span class="st"> &quot;Northern America&quot;</span>) %&gt;%
-<span class="st">  </span>dplyr::<span class="kw">select</span>(iso_a2, name_long)
-north_america$name_long
-<span class="co">#&gt; [1] &quot;Canada&quot;        &quot;Greenland&quot;     &quot;United States&quot;</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wb_north_america =<span class="st"> </span>worldbank_df %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(name %in%<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Canada&quot;</span>, <span class="st">&quot;Mexico&quot;</span>, <span class="st">&quot;United States&quot;</span>)) %&gt;%
-<span class="st">  </span>dplyr::<span class="kw">select</span>(name, iso_a2, urban_pop, <span class="dt">unemploy =</span> unemployment)</code></pre></div>
-<p>We will use a left join to combine the two datasets. Left joins are the most commonly used operation for adding attributes to spatial data, as they return all observations from the left object (<code>north_america</code>) and the matched observations from the right object (<code>wb_north_america</code>) in new columns. Rows in the left object without matches in the right (<code>Greenland</code> in this case) result in <code>NA</code> values.</p>
-<p>To join two objects we need to specify a key. This is a variable (or a set of variables) that uniquely identifies each observation (row). The <code>by</code> argument of <strong>dplyr</strong>’s join functions lets you identify the key variable. In simple cases, a single, unique variable exist in both objects like the <code>iso_a2</code> column in our example (you may need to rename columns with identifying information for this to work):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">left_join1 =<span class="st"> </span>north_america %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">left_join</span>(wb_north_america, <span class="dt">by =</span> <span class="st">&quot;iso_a2&quot;</span>)</code></pre></div>
-<p>This has created a spatial dataset with the new variables added. The utility of this is shown in Figure <a href="attr.html#fig:unemploy">3.1</a>, which shows the unemployment rate (a World Bank variable) across the countries of North America.</p>
-<div class="figure" style="text-align: center"><span id="fig:unemploy"></span>
-<img src="figures/unemploy-1.png" alt="The unemployment rate (taken from World Bank statistics) in Canada and the United States to illustrate the utility of joining attribute data on to spatial datasets." width="576" />
-<p class="caption">
-Figure 3.1: The unemployment rate (taken from World Bank statistics) in Canada and the United States to illustrate the utility of joining attribute data on to spatial datasets.
-</p>
-</div>
-<p>It is also possible to join objects by different variables. Both of the datasets have variables with names of countries, but they are named differently. The <code>north_america</code> has a <code>name_long</code> column and the <code>wb_north_america</code> has a <code>name</code> column. In these cases a named vector, such as <code>c(&quot;name_long&quot; = &quot;name&quot;)</code>, can specify the connection:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">left_join2 =<span class="st"> </span>north_america %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">left_join</span>(wb_north_america, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;name_long&quot;</span> =<span class="st"> &quot;name&quot;</span>))
-<span class="kw">names</span>(left_join2)
-<span class="co">#&gt; [1] &quot;iso_a2.x&quot;  &quot;name_long&quot; &quot;iso_a2.y&quot;  &quot;urban_pop&quot; &quot;unemploy&quot;  &quot;geom&quot;</span></code></pre></div>
-<p>Note that the result contains two duplicated variables - <code>iso_a2.x</code> and <code>iso_a2.y</code> because both <code>x</code> and <code>y</code> objects have the column <code>iso_a2</code>. This can be solved by specifying all the keys:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">left_join3 =<span class="st"> </span>north_america %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">left_join</span>(wb_north_america, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;iso_a2&quot;</span>, <span class="st">&quot;name_long&quot;</span> =<span class="st"> &quot;name&quot;</span>))</code></pre></div>
-<p>Joins also work when a data frame is the first argument. This keeps the geometry column but drops the <code>sf</code> class, returning a <code>data.frame</code> object.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># keeps the geom column, but drops the sf class</span>
-left_join4 =<span class="st"> </span>wb_north_america %&gt;%
-<span class="st">  </span><span class="kw">left_join</span>(north_america, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;iso_a2&quot;</span>))
-<span class="kw">class</span>(left_join4)
-<span class="co">#&gt; [1] &quot;data.frame&quot;</span></code></pre></div>
+<p>Combining data from different sources is a common task in data preparation. Joins do this by combining tables based on a shared ‘key’ variable. <strong>dplyr</strong> has multiple join functions including <code>left_join()</code> and <code>inner_join()</code> — see <code>vignette(&quot;two-table&quot;)</code> for a full list. These function names follow conventions used in the database language <a href="http://r4ds.had.co.nz/relational-data.html">SQL</a> <span class="citation">(Grolemund and Wickham <a href="#ref-grolemund_r_2016">2016</a>, Chapter 13)</span>; using them to join non spatial datasets to <code>sf</code> objects is the focus of this section. <strong>dplyr</strong> join functions work the same on data frames and <code>sf</code> objects, the only important difference being the <code>geometry</code> list column. The result of data joins can be either an <code>sf</code> or <code>data.frame</code> object. The most common type of attribute join on spatial data takes an <code>sf</code> object as the first argument and adds columns to it from <code>data.frame</code> specified as the second argument.</p>
+<p>To illustrate the utility of joins, imagine that you are researching global coffee production. You have managed to extract data hidden-away in a PDF document supplied by the International Coffee Organization (ICO). The results are stored in a data frame called <code>coffee_data</code> which has 3 columns: one (<code>name_long</code>) containing the names of coffee-producing nations and the other two reporting coffee production statistics for 2016 and 2017 (see <code>?coffee_data</code> for further information). We will use a ‘left join’ (meaning the left-hand dataset is kept intact) to merge this dataset with the pre-existing <code>world</code> dataset. The result of the code chunk below a new <code>sf</code> object.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_coffee =<span class="st"> </span><span class="kw">left_join</span>(world, coffee_data)
+<span class="co">#&gt; Joining, by = &quot;name_long&quot;</span>
+<span class="kw">class</span>(world_coffee)
+<span class="co">#&gt; [1] &quot;sf&quot;         &quot;data.frame&quot;</span></code></pre></div>
+<p>The resulting simple features object is the same as the orignal <code>world</code> object but has two new variables (with column indeces 11 and 12) reporting coffee production by year, allowing us to plot the results:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(world_coffee)
+<span class="co">#&gt;  [1] &quot;iso_a2&quot;                 &quot;name_long&quot;             </span>
+<span class="co">#&gt;  [3] &quot;continent&quot;              &quot;region_un&quot;             </span>
+<span class="co">#&gt;  [5] &quot;subregion&quot;              &quot;type&quot;                  </span>
+<span class="co">#&gt;  [7] &quot;area_km2&quot;               &quot;pop&quot;                   </span>
+<span class="co">#&gt;  [9] &quot;lifeExp&quot;                &quot;gdpPercap&quot;             </span>
+<span class="co">#&gt; [11] &quot;coffee_production_2016&quot; &quot;coffee_production_2017&quot;</span>
+<span class="co">#&gt; [13] &quot;geom&quot;</span>
+<span class="kw">plot</span>(world_coffee[<span class="dv">11</span>:<span class="dv">12</span>])</code></pre></div>
+<p><img src="figures/unnamed-chunk-35-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>For joining to work a ‘key variable’ must be supplied in both datasets. By default <strong>dplyr</strong> uses all variables with matching names. In this case both <code>world_coffee</code> and <code>world</code> objects contained a variable called <code>name_long</code>, explaining the message <code>Joining, by = &quot;name_long&quot;</code>. In the majority of cases where variable names are not the same you have two options:</p>
+<ol style="list-style-type: decimal">
+<li>Rename the key variable in one of the objects so they match.</li>
+<li>Use the <code>by</code> argument to specify the joining variables.</li>
+</ol>
+<p>The latter approach is demonstrated below on a renamed version of <code>coffee_data</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">coffee_renamed =<span class="st"> </span><span class="kw">rename</span>(coffee_data, <span class="dt">nm =</span> name_long)
+world_coffee2 =<span class="st"> </span><span class="kw">left_join</span>(world, coffee_renamed, <span class="dt">by =</span> <span class="kw">c</span>(<span class="dt">name_long =</span> <span class="st">&quot;nm&quot;</span>))</code></pre></div>
+<p>Note that the name in the original object is kept, meaning that <code>world_coffee</code> and the new object <code>world_coffee2</code> are identical. Another feature of the result is that it has the same number of rows as the original dataset. Although there are only 47 rows of data in <code>coffee_data</code> all 177 the country records are kept intact in <code>world_coffee</code> and <code>world_coffee2</code>: rows in the original dataset with no match are assigned <code>NA</code> values for the new coffee production variables. What if we only want to keep countries that have a match in the key variable? In that case an inner join can be used:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_coffee_inner =<span class="st"> </span><span class="kw">inner_join</span>(world, coffee_data)
+<span class="co">#&gt; Joining, by = &quot;name_long&quot;</span>
+<span class="kw">nrow</span>(world_coffee_inner)
+<span class="co">#&gt; [1] 44</span></code></pre></div>
 
 <div class="rmdnote">
 In most cases the geometry column is only useful in an <code>sf</code> object. The geometry column can only be used for creating maps and spatial operations if R ‘knows’ it is a spatial object, defined by a spatial package such as <strong>sf</strong>. Fortunately non-spatial data frames with a geometry list column (like <code>left_join4</code>) can be coerced into an <code>sf</code> object as follows: <code>st_as_sf(left_join4)</code>.
 </div>
 <p></p>
-<!-- On the other hand, it is also possible to remove the geometry column of `left_join4` using base R functions or `dplyr`. -->
-<!-- Here, this is this simple because the geometry column is just another `data.frame` column and no longer the sticky geometry column of an `sf` object (see also Chapter \@ref(spatial-class)): -->
-<!-- ```{r} -->
-<!-- # base R -->
-<!-- left_join4_df = subset(left_join4, select = -geom) -->
-<!-- # or dplyr -->
-<!-- left_join4_df = left_join4 %>% dplyr::select(-geom) -->
-<!-- left_join4_df -->
-<!-- class(left_join4_df) -->
-<!-- ``` -->
-<p>In contrast to <code>left_join()</code>, <code>inner_join()</code> keeps only observations from the left object (<code>north_america</code>) where there are matching observations in the right object (<code>wb_north_america</code>). All columns from the left and right object are still kept:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">inner_join1 =<span class="st"> </span>north_america %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">inner_join</span>(wb_north_america, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;iso_a2&quot;</span>, <span class="st">&quot;name_long&quot;</span> =<span class="st"> &quot;name&quot;</span>))
-inner_join1$name_long
-<span class="co">#&gt; [1] &quot;Canada&quot;        &quot;United States&quot;</span></code></pre></div>
 </div>
 <div id="vec-attr-creation" class="section level3">
 <h3><span class="header-section-number">3.2.4</span> Creating attributes and removing spatial information</h3>
@@ -623,11 +602,11 @@ world %&gt;%<span class="st"> </span>
 <div id="manipulating-raster-objects" class="section level2">
 <h2><span class="header-section-number">3.3</span> Manipulating raster objects</h2>
 <p>In contrast to the vector data model underlying simple features (which represents points, lines and polygons as discrete entities in space), raster data represent continuous surfaces. This section shows how raster objects work, by creating them <em>from scratch</em>, building on section <a href="spatial-class.html#an-introduction-to-raster">2.2.1</a>. Because of their unique structure, subsetting and other operations on raster datasets work in a different way, as demonstrated in section <a href="attr.html#raster-subsetting">3.3.1</a>.</p>
-<p>The following code recreates the raster dataset used in section <a href="spatial-class.html#raster-classes">2.2.3</a>, the result of which is illustrated in Figure <a href="attr.html#fig:cont-cate-rasters">3.2</a>. This demonstrates how the <code>raster()</code> function works to create an example raster named <code>elev</code> (representing elevations).</p>
+<p>The following code recreates the raster dataset used in section <a href="spatial-class.html#raster-classes">2.2.3</a>, the result of which is illustrated in Figure <a href="attr.html#fig:cont-cate-rasters">3.1</a>. This demonstrates how the <code>raster()</code> function works to create an example raster named <code>elev</code> (representing elevations).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev =<span class="st"> </span><span class="kw">raster</span>(<span class="dt">nrow =</span> <span class="dv">6</span>, <span class="dt">ncol =</span> <span class="dv">6</span>, <span class="dt">res =</span> <span class="fl">0.5</span>,
               <span class="dt">xmn =</span> -<span class="fl">1.5</span>, <span class="dt">xmx =</span> <span class="fl">1.5</span>, <span class="dt">ymn =</span> -<span class="fl">1.5</span>, <span class="dt">ymx =</span> <span class="fl">1.5</span>,
               <span class="dt">vals =</span> <span class="dv">1</span>:<span class="dv">36</span>)</code></pre></div>
-<p>The result is a raster object with 6 rows and 6 columns (specified by the <code>nrow</code> and <code>ncol</code> arguments), and a minimum and maximum spatial extent in x and y direction (<code>xmn</code>, <code>xmx</code>, <code>ymn</code>, <code>ymax</code>). The <code>vals</code> argument sets the values that each cell contains: numeric data ranging from 1 to 36 in this case. Raster objects can also contain categorical values of class <code>logical</code> or <code>factor</code> variables in R. The following code creates a raster representing grain sizes (Figure <a href="attr.html#fig:cont-cate-rasters">3.2</a>):</p>
+<p>The result is a raster object with 6 rows and 6 columns (specified by the <code>nrow</code> and <code>ncol</code> arguments), and a minimum and maximum spatial extent in x and y direction (<code>xmn</code>, <code>xmx</code>, <code>ymn</code>, <code>ymax</code>). The <code>vals</code> argument sets the values that each cell contains: numeric data ranging from 1 to 36 in this case. Raster objects can also contain categorical values of class <code>logical</code> or <code>factor</code> variables in R. The following code creates a raster representing grain sizes (Figure <a href="attr.html#fig:cont-cate-rasters">3.1</a>):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grain_order =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;clay&quot;</span>, <span class="st">&quot;silt&quot;</span>, <span class="st">&quot;sand&quot;</span>)
 grain_char =<span class="st"> </span><span class="kw">sample</span>(grain_order, <span class="dv">36</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 grain_fact =<span class="st"> </span><span class="kw">factor</span>(grain_char, <span class="dt">levels =</span> grain_order)
@@ -656,7 +635,7 @@ grain =<span class="st"> </span><span class="kw">raster</span>(<span class="dt">
 <div class="figure" style="text-align: center"><span id="fig:cont-cate-rasters"></span>
 <img src="figures/cont-cate-rasters-1.png" alt="Raster datasets with numeric (left) and categorical values (right)." width="672" />
 <p class="caption">
-Figure 3.2: Raster datasets with numeric (left) and categorical values (right).
+Figure 3.1: Raster datasets with numeric (left) and categorical values (right).
 </p>
 </div>
 <div id="raster-subsetting" class="section level3">
