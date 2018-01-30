@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveca633f8e1b804c50
+preserveac0fd5047bade909
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2261,7 +2261,8 @@ class(world_coffee)
 #> [1] "sf"         "data.frame"
 ```
 
-The resulting simple features object is the same as the orignal `world` object but has two new variables (with column indeces 11 and 12) reporting coffee production by year, allowing us to plot the results:
+The resulting simple features object is the same as the orignal `world` object but has two new variables (with column indeces 11 and 12) reporting coffee production by year.
+This can be plotted as a map, as illustrated in Figure \@ref(fig:coffeemap), generated with the `plot()` function below:
 
 
 ```r
@@ -2273,11 +2274,13 @@ names(world_coffee)
 #>  [9] "lifeExp"                "gdpPercap"             
 #> [11] "coffee_production_2016" "coffee_production_2017"
 #> [13] "geom"
-plot(world_coffee[11:12])
+plot(world_coffee["coffee_production_2017"])
 ```
 
-<img src="figures/unnamed-chunk-35-1.png" width="576" style="display: block; margin: auto;" />
-
+<div class="figure" style="text-align: center">
+<img src="figures/coffeemap-1.png" alt="World coffee production (thousand 60 kg bags) by country, 2017. Source: International Coffee Organization. See `?coffee_data` for details." width="576" />
+<p class="caption">(\#fig:coffeemap)World coffee production (thousand 60 kg bags) by country, 2017. Source: International Coffee Organization. See `?coffee_data` for details.</p>
+</div>
 
 For joining to work a 'key variable' must be supplied in both datasets.
 By default **dplyr** uses all variables with matching names.
@@ -3103,7 +3106,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve1854b2aaf7e2d26a
+preserveaf4c289cc036b912
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6203,7 +6206,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserveafce4abf393c9534
+preservee2afada25af69571
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6827,7 +6830,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve11cf6a4c8d8402a2
+preserve969074324d5baea1
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
