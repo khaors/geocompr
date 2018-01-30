@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve6e3d7cf57712d63f
+preservef880850d83365f87
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -2244,14 +2244,14 @@ Joins do this by combining tables based on a shared 'key' variable.
 These function names follow conventions used in the database language [SQL](http://r4ds.had.co.nz/relational-data.html) [@grolemund_r_2016, Chapter 13]; using them to join non spatial datasets to `sf` objects is the focus of this section.
 **dplyr** join functions work the same on data frames and `sf` objects, the only important difference being the `geometry` list column.
 The result of data joins can be either an `sf` or `data.frame` object.
-The most common type of attribute join on spatial data takes an `sf` object as the first argument and adds columns to it from `data.frame` specified as the second argument.
+The most common type of attribute join on spatial data takes an `sf` object as the first argument and adds columns to it from a `data.frame` specified as the second argument.
 
 To illustrate the utility of joins, imagine that you are researching global coffee production.
 You have managed to extract data hidden-away in a PDF document supplied by the International Coffee Organization (ICO).
 The results are stored in a data frame called `coffee_data` which has 3 columns:
 one (`name_long`) containing the names of coffee-producing nations and the other two reporting coffee production statistics for 2016 and 2017 (see `?coffee_data` for further information).
 We will use a 'left join' (meaning the left-hand dataset is kept intact) to merge this dataset with the pre-existing `world` dataset.
-The result of the code chunk below a new `sf` object.
+The result of the code chunk below is a new `sf` object.
 
 
 ```r
@@ -2326,7 +2326,7 @@ setdiff(coffee_data$name_long, world$name_long)
 ```
 
 The result shows that 2 countries have not matched due to name discrepancies.
-These discrepancies can be fixed by updating identifying the value that they were expected to have in the `world` dataset and updating the names accordingly.
+These discrepancies can be fixed by identifying the value that they were expected to have in the `world` dataset and updating the names accordingly.
 In this case we will use string matching to find out what `Congo, Dem. Rep. of` and `Côte d'Ivoire` are called:
 
 
@@ -3125,7 +3125,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveaf813f1cc4316c3a
+preservec7672721eda2216e
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6218,7 +6218,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve9f274233aaddbed8
+preserve25db76a62935f22f
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6842,7 +6842,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve3c39e63602b440eb
+preserveaa92a95fc01a5d5e
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
