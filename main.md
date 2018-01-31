@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservebf1919c4f5a78e60
+preserve255fc98ab8aeae92
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve66d5b10dbbfaa260
+preserve4a8254ee3c23e471
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5066,7 +5066,7 @@ A wealth of European data is available from the [INSPIRE geoportal](http://inspi
 
 Typically, geoportals provide an interface that lets you query interactively the existing data (spatial and temporal extent, and product).
 However, in this book we encourage you to create reproducible workflows.
-In many cases data downloads can be scripted via download calls to static URLs or APIs (see the [Sentinel API](https://scihub.copernicus.eu/twiki/do/view/SciHubWebPortal/APIHubDescription) for example), saving time, and enabling others to repeat and update the unglamorous data download process. 
+In many cases data downloads can be scripted via download calls to static URLs or APIs (see the [Sentinel API](https://scihub.copernicus.eu/twiki/do/view/SciHubWebPortal/APIHubDescription) for example), saving time and enabling others to repeat and update the unglamorous data download process. 
 
 Traditionally, files have been stored on servers.
 <!-- that's probably not the best example - replace it with something better -->
@@ -5128,7 +5128,7 @@ usa_sf = st_as_sf(usa)
 
 As a second example, we will download a raster dataset.
 The code below downloads a series of rasters that contains global monthly precipitation sums.
-The spatial resoultion is ten minutes.
+The spatial resolution is ten minutes.
 The result is a multilayer object of class `RasterStack`.
 
 
@@ -5158,7 +5158,7 @@ Although the quality is not as spatially consistent as many official datasets, O
 Further examples of **osmdata** in action are provided in Chapters \@ref(transport) and  \@ref(location).
 <!-- Todo: Replace the above with "Chapters \@ref(location) and \@ref(gis)." when gis is online (RL) -->
 
-Finally, R packages might contain or just consist of spatial data (e.g., package **spData**).
+Finally, R packages might contain or just consist of spatial data (e.g. package **spData**).
 You can access such data with the `data()` function.
 For example, you can get a list of dataset in a package, `data(package = "spData")`.
 To attach the dataset to the global environment specify the name of a dataset (`data("cycle_hire", package = "spData")`).
@@ -5185,22 +5185,22 @@ Find more information on getting data using R packages in [section 5.5](https://
 Spatial data is usually stored as files or in spatial databases. 
 File-based data formats can contain either vector or raster data, while spatial databases could store both.
 Historically, GIS file formats were developed by mapping agencies and software companies. <!--examples-->
-Exchanging spatial data between different software packages each coming with its own format was troublesome in the beginning.
+Exchanging spatial data between different software packages, each coming with its own format, was troublesome in the beginning.
 
-GDAL^[GDAL should be prounounced "goo-dal", with the double o making a reference to object-orientation.] put an end to these troubles by enabling reading and writing many raster and vector data formats.
-Subsequently, many open and proprietary GIS software (e.g., GRASS, QGIS, ArcGIS, ENVI) were quick to incorporate it.
+GDAL^[GDAL should be prounounced "goo-dal", with the double o making a reference to object-orientation.] put an end to these troubles by enabling reading and writing of many raster and vector data formats.
+Subsequently, many open and proprietary GIS softwares (e.g. GRASS, QGIS, ArcGIS, ENVI) were quick to incorporate it.
 <!-- GDAL (it's great - you can read, convert, and very often (though not always) write) -->
 <!-- GDAL info "it is possible to have smaller number of supported formats than there are on the GDAL webpage; you may need to recompile..." -->
 
 Another change for spatial data formats came with the foundation of the Open Geospatial Consortium (OGC).^[http://www.opengeospatial.org]
 This organization collaborates on the development and implementation of open standards for geospatial content including file formats such as the KML and GeoPackage formats as well as the simple feature standard. 
-Developing and maintaining spatial file formats in an open model provides several benefits over the proprietary formats <!-- such as??-->, and eases interoperability.
+Developing and maintaining spatial file formats in an open model provides several benefits over the proprietary formats <!-- such as??--> and eases interoperability.
 
 Nowadays, more than a hundred spatial data formats exist.
 <!-- In the same time, they could differ in many ways. -->
 <!-- Spatial data could be stored as a single file (e.g. GeoPackage), multiple files (e.g. ESRI Shapefile), or folders (ESRI ArcInfo Coverages). -->
 <!-- way of storage (single file, multiple files, folders) -->
-Table \@ref(tab:formats) presents some basic information about selected, often used spatial file formats.
+Table \@ref(tab:formats) presents some basic information about selected and often used spatial file formats.
 
 <!-- simple features are missing from this table-->
 
@@ -5208,7 +5208,7 @@ Table: (\#tab:formats)Selected spatial file formats.
 
 Name                Extension              Info                                                                                                                                                                                                                                                                                     Type                Model          
 ------------------  ---------------------  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------  ------------------  ---------------
-ESRI Shapefile      .shp (the main file)   One of the most popular vector file format. Consists of at least three files. The main files size cannot exceed 2 GB. It lacks support for mixed type. Columns names are limited to 10 characters, and number of columns are limited at 255. It has poor support for Unicode standard.   Vector              Partially open 
+ESRI Shapefile      .shp (the main file)   One of the most popular vector file formats. Consists of at least three files. The main files size cannot exceed 2 GB. It lacks support for mixed type. Column names are limited to 10 characters, and number of columns are limited at 255. It has poor support for Unicode standard.   Vector              Partially open 
 GeoJSON             .geojson               Extends the JSON exchange format by including a subset of the simple feature representation.                                                                                                                                                                                             Vector              Open           
 KML                 .kml                   XML-based format for spatial visualization, developed for use with Google Earth. Zipped KML file forms the KMZ format.                                                                                                                                                                   Vector              Open           
 GPX                 .gpx                   XML schema created for exchange of GPS data.                                                                                                                                                                                                                                             Vector              Open           
@@ -5216,7 +5216,7 @@ GeoTIFF             .tiff                  GeoTIFF is one of the most popular ra
 Arc ASCII           .asc                   Text format where the first six lines represent the raster header, followed by the raster cell values arranged in rows and columns.                                                                                                                                                      Raster              Open           
 R-raster            .gri, .grd             Native raster format of the R-package raster.                                                                                                                                                                                                                                            Raster              Open           
 SQLite/SpatiaLite   .sqlite                SQLite is a standalone, relational database management system. It is used as a default database driver in GRASS GIS 7. SpatiaLite is the spatial extension of SQLite providing support for simple features.                                                                              Vector and raster   Open           
-ESRI FileGDB        .gdb                   Collection of spatial and nonspatial objects created in the ArcGIS software. It allows to store multiple feature classes and enables use of topological definitions. Limited access to this format is provided by GDAL with the use of the OpenFileGDB and FileGDB drivers.              Vector and raster   Proprietary    
+ESRI FileGDB        .gdb                   Collection of spatial and nonspatial objects created in the ArcGIS software. It allows storage of multiple feature classes and enables use of topological definitions. Limited access to this format is provided by GDAL with the use of the OpenFileGDB and FileGDB drivers.            Vector and raster   Proprietary    
 GeoPackage          .gpkg                  Lightweight database container based on SQLite allowing an easy and platform-independent exchange of geodata                                                                                                                                                                             Vector and raster   Open           
 
 <!-- http://switchfromshapefile.org/ -->
@@ -5296,7 +5296,7 @@ cycle_hire_xy = st_read(cycle_hire_txt, options = c("X_POSSIBLE_NAMES=X",
 ```
 
 Instead of columns describing xy-coordinates, a single column can also contain the geometry information.
-Well-known text (WKT), well-known binary (WKB), and the GeoJSON formats are examples for this.
+Well-known text (WKT), well-known binary (WKB), and the GeoJSON formats are examples of this.
 For instance, the `world_wkt.csv` file has a column named `WKT` representing polygons of the world's countries.
 We will again use the `options` parameter to indicate this.
 Here, we will use `read_sf()` which does exactly the same as `st_read()` except it does not print the driver name to the console and stores strings as characters instead of factors.
@@ -5377,9 +5377,9 @@ Please refer to section \@ref(raster-classes) for information on the difference 
 ## Data output (O) {#data-output}
 
 <!--maybe we can come up with an intro which is a bit more compelling-->
-The ability of writing spatial data could be used for conversion between different formats and for saving newly created objects.
+Writing spatial data allows you to convert from one format to another and to save newly created objects.
 Depending on the data type (vector or raster), object class (e.g `multipoint` or `RasterLayer`), and type and amount of stored information (e.g. object size, range of values) - it is important to know how to store spatial files in the most efficient way.
-The next two section will show how to do that.
+The next two sections will demonstrate how to do this.
 
 <!-- should we add a note about recommended way to decide on a file name, for example "don't use spaces in the name", "create descriptive names" -->
 
@@ -5388,9 +5388,9 @@ The next two section will show how to do that.
 
 
 The counterpart of `st_read()` is `st_write()`.
-It allows to write **sf** objects to a wide range of geographic vector file formats, including the most common ones such as `.geojson`, `.shp` and `.gpkg`.
+It allows you to write **sf** objects to a wide range of geographic vector file formats, including the most common such as `.geojson`, `.shp` and `.gpkg`.
 Based on the file name, `st_write()` decides automatically which driver to use. 
-How fast the writing process is depends also on the driver.
+The speed of the writing process depends also on the driver.
 <!-- ref to the vignette -->
 
 
@@ -5419,7 +5419,7 @@ st_write(obj = world, dsn = "world.gpkg")
 
 The error message provides some information as to why the function failed.
 The `GDAL Error 1` statement makes clear that the failure occurred at the GDAL level.
-Additionally, the suggestion to use `OVERWRITE=YES` provides a clue how to fix the problem.
+Additionally, the suggestion to use `OVERWRITE=YES` provides a clue about how to fix the problem.
 However, this is not a `st_write()` argument, it is a GDAL option.
 Luckily, `st_write` provides a `layer_options` argument through which we can pass driver-dependent options:
 
@@ -5457,7 +5457,7 @@ st_write(world_wkt, "world_wkt.csv", layer_options = "GEOMETRY=AS_WKT")
 ### Raster data
 
 The `writeRaster()` function saves `Raster*` objects to files on disk. 
-The function expects input regarding output datatype, file format, but also accepts GDAL options specific to a selected file format (see `?writeRaster` for more details).
+The function expects input regarding output datatype and file format, but also accepts GDAL options specific to a selected file format (see `?writeRaster` for more details).
 
 <!-- datatypes -->
 The **raster** package offers nine datatypes when saving a raster: LOG1S, INT1S, INT1U, INT2S, INT2U, INT4S, INT4U, FLT4S, and FLT8S.^[Using INT4U is not recommended as R does not support 32-bit unsigned integers.<!--recheck this info-->]
@@ -5468,7 +5468,7 @@ Commonly, one would use LOG1S for bitmap (binary) rasters.
 Unsigned integers (INT1U, INT2U, INT4U) are suitable for categorical data, while float numbers (FLT4S and FLTS8S) usually represent continuous data.
 `writeRaster()` uses FLT4S as the default.
 While this works in most cases, the size of the output file will be unnecessarly large if you save binary or categorical data.
-Therefore, we would recommend to use the datatype that needs the least storing space but is still able to represent all values (check the range of values with the `summary()` function).
+Therefore, we would recommend to use the datatype that needs the least storage space but is still able to represent all values (check the range of values with the `summary()` function).
 
 
 Table: (\#tab:datatypes)Datatypes supported by the raster package.
@@ -5498,7 +5498,7 @@ writeRaster(x = single_layer,
 The `raster` file format (native to the `raster` package) is used when a file extension is invalid or missing. 
 Some raster file formats come with additional options.
 You can use them with the `options` parameter.[^2]
-For example, GeoTIFF allows to compress the output raster with the `COMPRESS` option^[Find out about GeoTIFF options under http://www.gdal.org/frmt_gtiff.html.]:
+For example, GeoTIFF allows you to compress the output raster with the `COMPRESS` option^[Find out about GeoTIFF options under http://www.gdal.org/frmt_gtiff.html.]:
 
 
 ```r
@@ -5529,7 +5529,7 @@ dev.off()
 Other available graphic devices include `pdf()`, `bmp()`, `jpeg()`, `png()`, and `tiff()`. 
 You can specify several properties of the output plot, including width, height and resolution.
 
-Additionally, several graphic packages provide its own function to save a graphical output.
+Additionally, several graphic packages provide thier own functions to save a graphical output.
 For example, the **tmap** package has the `save_tmap()` function.
 You can save a `tmap` object to different graphic formats by specifying the object name and a file path to a new graphic file.
 
@@ -5546,7 +5546,7 @@ save_tmap(tm  = tmap_obj, filename = "lifeExp_tmap.png")
 <!-- a = plot(world["lifeExp"]) -->
 <!-- ``` -->
 
-On the other hand, on can save interactive maps created in the `mapview` package as an HTML file or image using the `mapshot()` function:
+On the other hand, you can save interactive maps created in the `mapview` package as an HTML file or image using the `mapshot()` function:
 
 <!-- example doesn't work, problem with colors I guess -->
 
@@ -5569,7 +5569,7 @@ What is a geometry type of the loaded object?
 Write this new object to a file of the GeoPackage format.
 
 1. Download the global monthly minimum temperature with a spatial resolution of five minutes using the **raster** package.
-Extract the June values, and save them to a file named `tmin_june.tif` file (Hint: use `raster::subset()`).
+Extract the June values, and save them to a file named `tmin_june.tif` file (hint: use `raster::subset()`).
 
 1. Create a static map of Germany's borders, and save it to a PNG file.
 
@@ -6186,7 +6186,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve3ae6f101f8abd1b2
+preservef51ea765877047c3
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6805,7 +6805,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve0a052dcecab96775
+preserve11f236f4c5c98727
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
