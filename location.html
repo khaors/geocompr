@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-01-30">
+<meta name="date" content="2018-01-31">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -337,8 +337,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">download.file</span>(<span class="st">&quot;https://tinyurl.com/ybtpkwxz&quot;</span>, 
               <span class="dt">destfile =</span> <span class="st">&quot;census.zip&quot;</span>, <span class="dt">mode =</span> <span class="st">&quot;wb&quot;</span>)
 <span class="kw">unzip</span>(<span class="st">&quot;census.zip&quot;</span>) <span class="co"># unzip the files</span>
-census =<span class="st"> </span>readr::<span class="kw">read_csv2</span>(<span class="kw">list.files</span>(<span class="dt">pattern =</span> <span class="st">&quot;Gitter.csv&quot;</span>))</code></pre></div>
-<p>The <code>census</code> object is a data frame containing 13 variables for more than 300,000 grid cells across Germany. For our work we only need a subset of these: Easting and Northing, number of inhabitants (population), mean average age, proportion of women and average household size. These variables and selected and renamed in the code chunk below and summarized in Table <a href="location.html#tab:census-desc">8.1</a>. Further, <code>mutate_all()</code> is used to convert values -1 and -9 (meaning unknown) to <code>NA</code>.</p>
+census_de =<span class="st"> </span>readr::<span class="kw">read_csv2</span>(<span class="kw">list.files</span>(<span class="dt">pattern =</span> <span class="st">&quot;Gitter.csv&quot;</span>))</code></pre></div>
+<p>The <code>census_de</code> object is a data frame containing 13 variables for more than 300,000 grid cells across Germany. For our work we only need a subset of these: Easting and Northing, number of inhabitants (population), mean average age, proportion of women and average household size. These variables and selected and renamed in the code chunk below and summarized in Table <a href="location.html#tab:census-desc">8.1</a>. Further, <code>mutate_all()</code> is used to convert values -1 and -9 (meaning unknown) to <code>NA</code>.</p>
 <table>
 <caption>
 <span id="tab:census-desc">Table 8.1: </span>Excerpt from the data description ‘Datensatzbeschreibung_klassierte_Werte_1km-Gitter.xlsx’ located in the downloaded file census.zip describing the classes of the retained variables. The classes -1 and -9 refer to uninhabited areas or areas which have to be kept secret, for example due to anonymization reasons.
@@ -469,7 +469,7 @@ household size<br />
 </tbody>
 </table>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># pop = population, hh_size = household size</span>
-input =<span class="st"> </span>dplyr::<span class="kw">select</span>(census, <span class="dt">x =</span> x_mp_1km, <span class="dt">y =</span> y_mp_1km, <span class="dt">pop =</span> Einwohner,
+input =<span class="st"> </span>dplyr::<span class="kw">select</span>(census_de, <span class="dt">x =</span> x_mp_1km, <span class="dt">y =</span> y_mp_1km, <span class="dt">pop =</span> Einwohner,
                       <span class="dt">women =</span> Frauen_A, <span class="dt">mean_age =</span> Alter_D,
                       <span class="dt">hh_size =</span> HHGroesse_D)
 <span class="co"># set -1 and -9 to NA</span>
