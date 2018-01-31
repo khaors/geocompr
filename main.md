@@ -134,8 +134,6 @@ On the other hand, we embed the shown methods into the bigger field of GIScience
 <!--chapter:end:index.Rmd-->
 
 
-# (PART) Foundations {-}
-
 # Introduction {#intro}
 
 This book is about harnessing the power of modern computers to *do things* with geographic data.
@@ -256,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve10e667596d01a4b9
+preserve91eab24f743773c7
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -474,6 +472,8 @@ Naturally, this is the reason why we will describe **sf** in detail in Chapter \
 
 <!--chapter:end:01-introduction.Rmd-->
 
+
+# (PART) Foundations {-}
 
 # Geographic data in R {#spatial-class}
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservec92b51f83188402a
+preservee54e3c32339133dd
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6186,7 +6186,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservee7ff8bb19999bd39
+preservef606b551f79f7a72
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6805,7 +6805,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve0e0562ccb352dbae
+preserve43981aa87c384c2d
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
