@@ -256,7 +256,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserved2ee2669312415c7
+preservec7f0ad900eba2440
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve3eb46f81b951b61a
+preserve584c38f55b264955
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5596,6 +5596,7 @@ Export this map to a file called `cycle_hire.html`.
 library(sf)
 library(tidyverse)
 library(stplanr)
+library(spDataLarge)
 ```
 
 ## Introduction
@@ -5690,7 +5691,7 @@ The simplest way to define a study area is often the first matching boundary ret
 
 
 ```r
-region_bb = osmdata::getbb("Bristol", format_out = "sf_polygon")
+bristol_region = osmdata::getbb("Bristol", format_out = "sf_polygon")
 ```
 
 The result is an `sf` object representing the bounds of the largest matching city region, either a rectangular polygon of the bounding box or a detailed polygonal boundary.^[
@@ -6081,8 +6082,8 @@ To avoid having to request the data from OSM repeatedly, we will use a locally s
 
 
 ```r
-ways = readRDS("extdata/ways.rds")
-summary(ways)
+bristol_ways = readRDS("extdata/ways.rds")
+summary(bristol_ways)
 #>      highway        maxspeed         ref                geometry   
 #>  cycleway:1261   30 mph : 822   A38    : 199   LINESTRING   :4591  
 #>  rail    : 813   20 mph : 435   M5     : 138   epsg:4326    :   0  
@@ -6100,11 +6101,11 @@ As mentioned, route networks can usefully be represented as mathematical graphs,
 A number of R packages have been developed for dealing with such graphs, notably **igraph**.
 One can manually convert a route network into an `igraph` object, but that process risks loosing the geographic attributes.
 To overcome this issue `SpatialLinesNetwork()` was developed in the **stplanr** package to represent route networks simultaneously as graphs *and* a set of geographic lines.
-This function is demonstrated below using a subset of the `ways` object used in previous sections.
+This function is demonstrated below using a subset of the `bristol_ways` object used in previous sections.
 
 
 ```r
-ways_freeway = ways %>% filter(maxspeed == "70 mph") 
+ways_freeway = bristol_ways %>% filter(maxspeed == "70 mph") 
 ways_sln = SpatialLinesNetwork(ways_freeway)
 slotNames(ways_sln)
 #> [1] "sl"          "g"           "nb"          "weightfield"
@@ -6185,7 +6186,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservef2ba489fdb3ed0b8
+preserve00317ad7cc760565
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley. Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6243,7 +6244,7 @@ Similar tools could be used to encourage evidence-based transport policies relat
 <!-- Include a higher proportion of trips in the analysis -->
 1. Clearly the routes identified in Figure \@ref(fig:cycleways) only provide part of the picture. How would you extend the analysis to incorporate more trips that could potentially be cycled?
 1. Imagine that you want to extend the scenario by creating key *areas* (not routes) for investment in place-based cycling policies such as car-free zones, cycle parking points and reduced car parking strategy. How could raster data assist with this work? 
-    - Bonus: develop a raster layer that divides the Bristol region into 100 cells (10 by 10) and provide a metric related to transport policy, such as number of people trips that pass through each cell by walking or the average speed limit of roads (from the `ways` dataset).
+    - Bonus: develop a raster layer that divides the Bristol region into 100 cells (10 by 10) and provide a metric related to transport policy, such as number of people trips that pass through each cell by walking or the average speed limit of roads (from the `bristol_ways` dataset).
 
 <!--chapter:end:07-transport.Rmd-->
 
@@ -6804,7 +6805,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve3c74fea564cd6acb
+preserve8103038ad9e5208f
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
