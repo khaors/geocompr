@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve0881f41fd8252e22
+preserve94f016b1572f2d1a
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve5f9e00653fdc1def
+preserve04d88ce7d42b28f3
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5704,12 +5704,8 @@ Second, even if OSM returns the official boundary, this may be inappropriate for
 
 Travel to Work Areas (TTWAs) overcome the second issue by creating a zoning system analogous to hydrological watersheds.
 TTWAs were first defined as contiguous zones within which 75% of the population travels to work [@coombes_efficient_1986], and this is the definition used in this chapter.
-Because Bristol is a major employer attracting travel from surrounding towns, its TTWA --- loaded in the command below --- is substantially larger than the city bounds (see Figure \@ref(fig:bristol)).
-
-
-```r
-region_ttwa = readRDS("extdata/bristol-ttwa.rds")
-```
+Because Bristol is a major employer attracting travel from surrounding towns, its TTWA is substantially larger than the city bounds (see Figure \@ref(fig:bristol)).
+The polygon representing this transport-orientated boundary is stored in the object `bristol_ttwa`, provided by the **spDataLarge** package loaded at the beginning of this chapter.
 
 The origin and destination zones used in this chapter are the same: officially defined zones of intermediate geographic resolution (their [official](https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/bulletins/annualsmallareapopulationestimates/2014-10-23) name is Middle layer Super Output Areas or MSOAs).
 Each house around 8,000 people.
@@ -5723,19 +5719,12 @@ The geographic resolution of these zones is important: small zones with high geo
 </div>
 
 The 102 zones used are illustrated in Figure \@ref(fig:zones).
-These can be loaded from the `exdata` folder of the book:
-
-
-```r
-zones = readRDS("extdata/bristol-zones.rds")
-```
-
-This dataset provides a useful basis for dividing-up space into meaningful chunks, with each zone housing a similar number of people.
+These are stored in the `bristol_zones` object from the **spDataLarge** package, which divides-up space into sensible parcels, with each zone housing a similar number of people.
 However at present the dataset contains no attribute data, other than the zone name and zone code:
 
 
 ```r
-names(zones)
+names(bristol_zones)
 #> [1] "geo_code" "name"     "geometry"
 ```
 
@@ -5762,27 +5751,27 @@ Then the chained operation performed three main steps:
 - Aggregated the variables in the `od` dataset *if* they were numeric, to find the total number of people living in each zone by mode of transport.^[
 the `_if` affix requires a `TRUE`/`FALSE` question to be asked of the variables, in this case 'is it numeric?' and only variables returning true are summarized.
 ]
-- Renamed the grouping variable `o` so it matches the ID column `geo_code` in the `zones` object.
+- Renamed the grouping variable `o` so it matches the ID column `geo_code` in the `bristol_zones` object.
 
 The resulting object `zones_attr` is a data frame with rows representing zones and an ID variable.
 We can verify that the IDs match those in the `zones` dataset using `%in%` operator as follows:
 
 
 ```r
-summary(zones_attr$geo_code %in% zones$geo_code)
+summary(zones_attr$geo_code %in% bristol_zones$geo_code)
 #>    Mode    TRUE 
 #> logical     102
 ```
 
 The results show that all 102 zones are present in the new object and that `zone_attr` is in a form that can be joined onto the zones.^[
 It would also be important to check that IDs match in the opposite direction on real data.
-This could be done by reversing the order of the ID's in the commend --- `summary(zones$geo_code %in% zones_attr$geo_code)` --- or by using `setdiff()` as follows: `setdiff(zones$geo_code, zones_attr$geo_code)`.
+This could be done by reversing the order of the ID's in the commend --- `summary(bristol_zones$geo_code %in% zones_attr$geo_code)` --- or by using `setdiff()` as follows: `setdiff(bristol_zones$geo_code, zones_attr$geo_code)`.
 ]
 This is done using the joining function `left_join()` (note that `inner_join()` would produce here the same result):
 
 
 ```r
-zones = left_join(zones, zones_attr)
+zones = left_join(bristol_zones, zones_attr)
 #> Joining, by = "geo_code"
 sum(zones$all)
 #> [1] 238805
@@ -6133,8 +6122,8 @@ plot(ways_sln@sl$geometry, lwd = e / 500)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/unnamed-chunk-29-1.png" alt="Illustration of a small route network, with segment thickness proportional to its betweeness, generated using the **igraph** package and described in the text." width="576" />
-<p class="caption">(\#fig:unnamed-chunk-29)Illustration of a small route network, with segment thickness proportional to its betweeness, generated using the **igraph** package and described in the text.</p>
+<img src="figures/unnamed-chunk-27-1.png" alt="Illustration of a small route network, with segment thickness proportional to its betweeness, generated using the **igraph** package and described in the text." width="576" />
+<p class="caption">(\#fig:unnamed-chunk-27)Illustration of a small route network, with segment thickness proportional to its betweeness, generated using the **igraph** package and described in the text.</p>
 </div>
 
 
@@ -6188,7 +6177,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve8c088798f6f217dc
+preserveade5079a68fe0722
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6807,7 +6796,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve5ec561aa33b46fc2
+preserve3caac01f8a1b03fc
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
