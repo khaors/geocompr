@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve94f016b1572f2d1a
+preserve93f2b061b2b5f774
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve04d88ce7d42b28f3
+preserved49d8f2744df76cf
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5732,23 +5732,22 @@ Chapter \@ref(attr) demonstrated how to join attribute data onto geographic vari
 This is a common task which usually involves joining a table containing official zonal statistics to a geographic object via a shared key variable, as described in section \@ref(vector-attribute-joining).
 In this case we use data provided by [ons.gov.uk](https://www.ons.gov.uk/help/localstatistics), which maintains datasets at various geographic levels across the UK.
 
-Instead of accessing an area-level travel dataset directly, we will create zonal data by aggregating origin-destination (OD) by zone of origin and destination (the nature of this OD dataset is described in more detail in section \@ref(desire-lines)).
+Instead of accessing an area-level travel dataset directly, we will create zonal data by aggregating an object (`bristol_od` from **spDataLarge**) representing origin-destination (OD) data by zone of origin (exactly what this means and the nature of this OD dataset is described in more detail in section \@ref(desire-lines)).
 This is demonstrated below:
 
 
 ```r
-od = readRDS("extdata/bristol-od.rds")
-zones_attr = group_by(od, o) %>% 
+zones_attr = group_by(bristol_od, o) %>% 
   summarize_if(is.numeric, sum) %>% 
   rename(geo_code = o)
 ```
 
 What just happened?
-The code first read-in data to create `od`, a data frame object representing travel to work between zones from the UK's 2011 Census in which the first column is the ID of the zone of origin and the second column is the zone of destination (`od` is described more fully in the next section).
+The code first read-in data to create `bristol_od`, a data frame object representing travel to work between zones from the UK's 2011 Census in which the first column is the ID of the zone of origin and the second column is the zone of destination (`bristol_od` is described more fully in the next section).
 Then the chained operation performed three main steps:
 
 - Grouped the data by zone of origin (contained in the column `o`).
-- Aggregated the variables in the `od` dataset *if* they were numeric, to find the total number of people living in each zone by mode of transport.^[
+- Aggregated the variables in the `bristol_od` dataset *if* they were numeric, to find the total number of people living in each zone by mode of transport.^[
 the `_if` affix requires a `TRUE`/`FALSE` question to be asked of the variables, in this case 'is it numeric?' and only variables returning true are summarized.
 ]
 - Renamed the grouping variable `o` so it matches the ID column `geo_code` in the `bristol_zones` object.
@@ -5787,7 +5786,7 @@ More trips are made by people living near the center of Bristol and fewer on the
 Why is this? Remember that we are only dealing with trips within the study region:
 low trip numbers in the outskirts of the region can be explained by the fact that many people in these peripheral zones will travel to other regions outside of the study area.
 Trips outside the study region can be included in regional model by a special destination ID covering any trips that go to a zone not represented in the model [@hollander_transport_2016].
-The data in `od`, however, simply ignores such trips: it is an 'intra-zonal' model.
+The data in `bristol_od`, however, simply ignores such trips: it is an 'intra-zonal' model.
 
 In the same way that OD datasets can be aggregated to the zone of origin, they can also be aggregated to provide information about destination zones.
 People tend to gravitate towards central places.
@@ -5796,7 +5795,7 @@ The updated `zones` dataset, which contains a new column reporting the number of
 
 
 ```r
-zones = group_by(od, d) %>% 
+zones = group_by(bristol_od, d) %>% 
   summarize_if(is.numeric, sum) %>% 
   dplyr::select(geo_code = d, all_dest = all) %>% 
   inner_join(zones, ., by = "geo_code")
@@ -5812,18 +5811,18 @@ zones = group_by(od, d) %>%
 Unlike zones, which represent trip origins and destinations, desire lines connect the centroid of the origin and the destination zone, and thereby represent where people *desire* to go between zones.
 If it were not for obstacles such as buildings and windy roads, people would travel in a 'bee-line' from one place to the next, explaining why desire lines are straight (we will see how to convert desire lines into routes in the next section).
 
-We have already loaded data representing desire lines in the dataset `od`.
+We have already loaded data representing desire lines in the dataset `bristol_od`.
 This origin-destination (OD) data frame object represents the number of people traveling between the zone represented in `o` and `d`, as illustrated in Table \@ref(tab:od).
 To arrange the OD data by all trips and then filter-out only the top 5, type (please refer to Chapter \@ref(attr) for a detailed description of non-spatial attribute operations):
 
 
 ```r
-od_top5 = arrange(od, desc(all)) %>% 
+od_top5 = arrange(bristol_od, desc(all)) %>% 
   top_n(5, wt = all)
 ```
 
 
-Table: (\#tab:od)Sample of the origin-destination data stored in the data frame object `od`. These represent the top 5 most common desire lines between zones in the study area.
+Table: (\#tab:od)Sample of the origin-destination data stored in the data frame object `bristol_od`. These represent the top 5 most common desire lines between zones in the study area.
 
 o           d             all   bicycle   foot   car_driver   train
 ----------  ----------  -----  --------  -----  -----------  ------
@@ -5836,13 +5835,13 @@ E02003034   E02003043    1177       281    711          100       7
 The resulting table provides a snapshot of Bristolian travel patterns in terms of commuting (travel to work).
 It demonstrates that walking is the most popular mode of transport among the top 5 origin-destination pairs, that zone `E02003043` is a popular destination (Bristol city center, the destination of all the top 5 OD pairs), and that the *intrazonal* trips, from one part of zone `E02003043` to another (first row of table \@ref(tab:od)), constitute the most traveled OD pair in the dataset.
 But from a policy perspective \@ref(tab:od) is of limited use:
-aside from the fact that it contains only a tiny portion of the 2910 OD pairs, it tells us little about *where* policy measures are needed.
+aside from the fact that it contains only a tiny portion of the 2,910 OD pairs, it tells us little about *where* policy measures are needed.
 What is needed is a way to plot this origin-destination data on the map.
 
-The solution is to convert the non-geographic `od` dataset into geographical desire lines that can be plotted on a map.
+The solution is to convert the non-geographic `bristol_od` dataset into geographical desire lines that can be plotted on a map.
 The geographic representation of the *interzonal* OD pairs (in which the destination is different from the origin) presented in Table \@ref(tab:od) are displayed as straight black lines in \@ref(fig:desire).
 These are clearly more useful from a policy perspective.
-The conversion from `data.frame` to `sf` class is done by the **stplanr** function `od2line()`, which matches the IDs in the first two columns of the `od` object to the `zone_code` ID column in the geographic `zones` object.^[
+The conversion from `data.frame` to `sf` class is done by the **stplanr** function `od2line()`, which matches the IDs in the first two columns of the `bristol_od` object to the `zone_code` ID column in the geographic `zones` object.^[
 Note that the operation emits a warning: this is `od2line()` works by allocating the start and end points of each origin-destination pair to the *centroid* of its zone of origin and destination.
 This represents a straight line between the centroid of zone `E02003047` and the centroid of `E02003043` for the second origin-destination pair represented in Table \@ref(tab:od), for example.
 For real-world use one would use centroid values generated from projected data or, preferably, use *population-weighted* centroids [@lovelace_propensity_2017].
@@ -5850,15 +5849,15 @@ For real-world use one would use centroid values generated from projected data o
 
 
 ```r
-od_intra = filter(od, o == d)
-od_inter = filter(od, o != d)
+od_intra = filter(bristol_od, o == d)
+od_inter = filter(bristol_od, o != d)
 desire_lines = od2line(od_inter, zones)
 #> Warning in st_centroid.sfc(st_geometry(x), of_largest_polygon =
 #> of_largest_polygon): st_centroid does not give correct centroids for
 #> longitude/latitude data
 ```
 
-The first two lines of the preceding code chunk split the `od` dataset into two mutually exclusive objects, `od_intra` (which only contains OD pairs representing intrazone trips) and `od_inter` (which represents interzonal travel).
+The first two lines of the preceding code chunk split the `bristol_od` dataset into two mutually exclusive objects, `od_intra` (which only contains OD pairs representing intrazone trips) and `od_inter` (which represents interzonal travel).
 The third line generates a geographic object `desire_lines` (of class `sf`) that allows a subsequent geographic visualization of interzone trips.
 An illustration of the results is presented in Figure \@ref(fig:desire) (we will cover the visualization methods that produced this plot in Chapter 9)<!-- to do: add reference to chapter -->.
 The map shows that the city center dominates transport patterns in the region, suggesting policies should be prioritized there, although a number of peripheral sub-centers can also be seen.
@@ -6177,7 +6176,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserveade5079a68fe0722
+preserved406301d2eb14ed9
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6796,7 +6795,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve3caac01f8a1b03fc
+preservef5a882529281e7ca
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
