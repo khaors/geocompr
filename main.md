@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveba1becb58a4119da
+preserve83c726e7987169fc
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve9bb45e020c2d2996
+preservebd8c79b18c3cb16a
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5158,7 +5158,7 @@ Although the quality is not as spatially consistent as many official datasets, O
 Further examples of **osmdata** in action are provided in Chapters \@ref(transport) and  \@ref(location).
 <!-- Todo: Replace the above with "Chapters \@ref(location) and \@ref(gis)." when gis is online (RL) -->
 
-Finally, R packages might contain or just consist of spatial data (e.g. package **spData**).
+Finally, R packages might contain or just consist of spatial data, such as **spData** which provides example datasets used in this book.
 You can access such data with the `data()` function.
 For example, you can get a list of dataset in a package, `data(package = "spData")`.
 To attach the dataset to the global environment specify the name of a dataset (`data("cycle_hire", package = "spData")`).
@@ -5182,21 +5182,22 @@ Find more information on getting data using R packages in [section 5.5](https://
 
 ## File formats
 
-Spatial data is usually stored as files or in spatial databases. 
-File-based data formats can contain either vector or raster data, while spatial databases could store both.
-Historically, GIS file formats were developed by mapping agencies and software companies. <!--examples-->
-Exchanging spatial data between different software packages, each coming with its own format, was troublesome in the beginning.
+Spatial datasets are usually stored as files or in spatial databases.
+File formats can either store vector or raster data, while spatial databases such as [PostGIS](https://trac.osgeo.org/postgis/wiki/WKTRaster) can store both.
+Today file formats may seem bewildering but there has been much consolidation and standardisation since the beginnings of GIS software in the 1960s when the first widely distributed program ([SYMAP](https://news.harvard.edu/gazette/story/2011/10/the-invention-of-gis/)) for spatial analysis was created at Harvard University [@coppock_history_1991].
 
-GDAL^[GDAL should be prounounced "goo-dal", with the double o making a reference to object-orientation.] put an end to these troubles by enabling reading and writing of many raster and vector data formats.
-Subsequently, many open and proprietary GIS softwares (e.g. GRASS, QGIS, ArcGIS, ENVI) were quick to incorporate it.
+GDAL,^[[GDAL](http://www.gdal.org/) should be prounounced "goo-dal", with the double o making a reference to object-orientation.] the Geospatial Data Abstraction Library, has resolved many issues associated with incompatibility between file formats since its release in 2000.
+GDAL provides a unified and high-performance interface for reading and writing of many raster and vector data formats.
+Many open and proprietary GIS programs, including GRASS, ArcGIS and QGIS, use GDAL behind their GUIs for doing the legwork of ingesting and spitting-out geographic data in appropriate formats.
 <!-- GDAL (it's great - you can read, convert, and very often (though not always) write) -->
 <!-- GDAL info "it is possible to have smaller number of supported formats than there are on the GDAL webpage; you may need to recompile..." -->
 
-Another change for spatial data formats came with the foundation of the Open Geospatial Consortium (OGC).^[http://www.opengeospatial.org]
-This organization collaborates on the development and implementation of open standards for geospatial content including file formats such as the KML and GeoPackage formats as well as the simple feature standard. 
-Developing and maintaining spatial file formats in an open model provides several benefits over the proprietary formats <!-- such as??--> and eases interoperability.
+An important development ensuring greater standardisation and open-sourcing of file formats was the founding of the Open Geospatial Consortium (OGC) in 1994.^[See [opengeospatial.org](http://www.opengeospatial.org).]
+The OGC coordinates the development of open standards for geospatial content including file formats such as KML and GeoPackage.
+As described in Chapter \@ref(spatial-class) the OGC publishes the simple feature data model, which underlies the vector data classes provided by **sf** and used in this book. 
+Open file formats of the kind endorsed by the OGC have several advantages over proprietary formats: the standards are published, ensuring transparency and enabling innovation to improve the file formats.
 
-Nowadays, more than a hundred spatial data formats exist.
+There are more than 100 spatial data formats exist available to R users via GDAL.
 <!-- In the same time, they could differ in many ways. -->
 <!-- Spatial data could be stored as a single file (e.g. GeoPackage), multiple files (e.g. ESRI Shapefile), or folders (ESRI ArcInfo Coverages). -->
 <!-- way of storage (single file, multiple files, folders) -->
@@ -6186,7 +6187,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve928170147f7319c8
+preserve4291222653dd800c
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6805,7 +6806,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve36895dae434b3751
+preserve752a5cd61bed0d28
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
