@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve93f2b061b2b5f774
+preserve6983098f57631dfd
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserved49d8f2744df76cf
+preserve0f6962b327d8212e
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5967,12 +5967,7 @@ We will see how transport networks can be represented as mathematical graphs in 
 
 Public transport stops are particularly important nodes that can be represented as either type of node: a bus stop that is part of a road, or a large rail station that is represented by its pedestrian entry point hundreds of meters from railway tracks.
 We will use railway stations to illustrate public transport nodes, in relation to the research question of increasing cycling in Bristol.
-These stations are loaded as follows:
-
-
-```r
-rail_stations = readRDS("extdata/rail_stations.rds")
-```
+These stations are provided by **spDataLarge** in `bristol_stations`.
 
 A common barrier preventing people from switching away from cars for commuting to work is that the distance from home to work is too far to walk or cycle.
 Public transport can reduce this barrier by providing a fast and high-volume option for common routes into cities.
@@ -6000,7 +5995,7 @@ The first stage is to create matrices of coordinates that will subsequently be u
 ```r
 mat_orig = as.matrix(line2df(desire_rail)[c("fx", "fy")])
 mat_dest = as.matrix(line2df(desire_rail)[c("tx", "ty")])
-mat_rail = st_coordinates(rail_stations)
+mat_rail = st_coordinates(bristol_stations)
 ```
 
 The outputs are three matrices representing the starting points of the trips, their destinations and possible intermediary points at public transport nodes (named `orig`, `dest` and `rail` respectively).
@@ -6023,9 +6018,9 @@ It is worth taking a look at the results to ensure that the process has worked p
 
 ```r
 as.numeric(knn_orig)
-#> [1] 28  3  2
+#> [1] 27  3  2
 as.numeric(knn_dest)
-#> [1] 30 30 30
+#> [1] 29 29 29
 ```
 
 The output demonstrates that each object contains three whole numbers (the number of rows in `desire_rail`) representing the rail station closest to the origin and destination of each desire line.
@@ -6068,20 +6063,19 @@ In this case the destination leg is very short (walking distance) but the origin
 ## Route networks
 
 The data used in this section was downloaded using **osmdata**.
-To avoid having to request the data from OSM repeatedly, we will use a locally saved version of the data, which contains point and line data for the case study area:
+To avoid having to request the data from OSM repeatedly, we will use the `bristol_ways` object, which contains point and line data for the case study area (see `?bristol_ways`):
 
 
 ```r
-bristol_ways = readRDS("extdata/ways.rds")
 summary(bristol_ways)
 #>      highway        maxspeed         ref                geometry   
-#>  cycleway:1261   30 mph : 822   A38    : 199   LINESTRING   :4591  
-#>  rail    : 813   20 mph : 435   M5     : 138   epsg:4326    :   0  
-#>  road    :2517   70 mph : 323   A432   : 128   +proj=long...:   0  
-#>                  40 mph : 314   A4018  : 120                       
-#>                  50 mph : 131   A420   : 112                       
-#>                  (Other): 475   (Other):1681                       
-#>                  NA's   :2091   NA's   :2213
+#>  cycleway:1262   30 mph : 834   A38    : 202   LINESTRING   :4619  
+#>  rail    : 813   20 mph : 456   M5     : 138   epsg:4326    :   0  
+#>  road    :2544   40 mph : 332   A432   : 131   +proj=long...:   0  
+#>                  70 mph : 323   A4018  : 120                       
+#>                  50 mph : 137   A420   : 114                       
+#>                  (Other): 470   (Other):1697                       
+#>                  NA's   :2067   NA's   :2217
 ```
 
 The above code chunk loaded a simple feature object representing around 3,000 segments on the transport network.
@@ -6121,8 +6115,8 @@ plot(ways_sln@sl$geometry, lwd = e / 500)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/unnamed-chunk-27-1.png" alt="Illustration of a small route network, with segment thickness proportional to its betweeness, generated using the **igraph** package and described in the text." width="576" />
-<p class="caption">(\#fig:unnamed-chunk-27)Illustration of a small route network, with segment thickness proportional to its betweeness, generated using the **igraph** package and described in the text.</p>
+<img src="figures/unnamed-chunk-26-1.png" alt="Illustration of a small route network, with segment thickness proportional to its betweeness, generated using the **igraph** package and described in the text." width="576" />
+<p class="caption">(\#fig:unnamed-chunk-26)Illustration of a small route network, with segment thickness proportional to its betweeness, generated using the **igraph** package and described in the text.</p>
 </div>
 
 
@@ -6176,7 +6170,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserved406301d2eb14ed9
+preserve1c1097c753bc409b
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6795,7 +6789,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservef5a882529281e7ca
+preservedf338d1e31567e27
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
