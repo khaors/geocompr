@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-02-01">
+<meta name="date" content="2018-02-02">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -259,15 +259,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="8" data-path="location.html"><a href="location.html"><i class="fa fa-check"></i><b>8</b> Location analysis</a><ul>
 <li class="chapter" data-level="" data-path="location.html"><a href="location.html#prerequisites-6"><i class="fa fa-check"></i>Prerequisites</a></li>
 <li class="chapter" data-level="8.1" data-path="location.html"><a href="location.html#introduction-5"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
-<li class="chapter" data-level="8.2" data-path="location.html"><a href="location.html#case-study"><i class="fa fa-check"></i><b>8.2</b> Case study: bike shops in Germany</a><ul>
-<li class="chapter" data-level="8.2.1" data-path="location.html"><a href="location.html#tidy-the-input-data"><i class="fa fa-check"></i><b>8.2.1</b> Tidy the input data</a></li>
-<li class="chapter" data-level="8.2.2" data-path="location.html"><a href="location.html#create-census-rasters"><i class="fa fa-check"></i><b>8.2.2</b> Create census rasters</a></li>
-<li class="chapter" data-level="8.2.3" data-path="location.html"><a href="location.html#define-metropolitan-areas"><i class="fa fa-check"></i><b>8.2.3</b> Define metropolitan areas</a></li>
-<li class="chapter" data-level="8.2.4" data-path="location.html"><a href="location.html#points-of-interest"><i class="fa fa-check"></i><b>8.2.4</b> Points of interest</a></li>
-<li class="chapter" data-level="8.2.5" data-path="location.html"><a href="location.html#identifying-suitable-locations"><i class="fa fa-check"></i><b>8.2.5</b> Identifying suitable locations</a></li>
-</ul></li>
-<li class="chapter" data-level="8.3" data-path="location.html"><a href="location.html#discussion-and-next-steps"><i class="fa fa-check"></i><b>8.3</b> Discussion and next steps</a></li>
-<li class="chapter" data-level="8.4" data-path="location.html"><a href="location.html#exercises-5"><i class="fa fa-check"></i><b>8.4</b> Exercises</a></li>
+<li class="chapter" data-level="8.2" data-path="location.html"><a href="location.html#case-study"><i class="fa fa-check"></i><b>8.2</b> Case study: bike shops in Germany</a></li>
+<li class="chapter" data-level="8.3" data-path="location.html"><a href="location.html#tidy-the-input-data"><i class="fa fa-check"></i><b>8.3</b> Tidy the input data</a></li>
+<li class="chapter" data-level="8.4" data-path="location.html"><a href="location.html#create-census-rasters"><i class="fa fa-check"></i><b>8.4</b> Create census rasters</a></li>
+<li class="chapter" data-level="8.5" data-path="location.html"><a href="location.html#define-metropolitan-areas"><i class="fa fa-check"></i><b>8.5</b> Define metropolitan areas</a></li>
+<li class="chapter" data-level="8.6" data-path="location.html"><a href="location.html#points-of-interest"><i class="fa fa-check"></i><b>8.6</b> Points of interest</a></li>
+<li class="chapter" data-level="8.7" data-path="location.html"><a href="location.html#identifying-suitable-locations"><i class="fa fa-check"></i><b>8.7</b> Identifying suitable locations</a></li>
+<li class="chapter" data-level="8.8" data-path="location.html"><a href="location.html#discussion-and-next-steps"><i class="fa fa-check"></i><b>8.8</b> Discussion and next steps</a></li>
+<li class="chapter" data-level="8.9" data-path="location.html"><a href="location.html#exercises-5"><i class="fa fa-check"></i><b>8.9</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -324,15 +323,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h2><span class="header-section-number">8.2</span> Case study: bike shops in Germany</h2>
 <p>Imagine you are starting a chain of bike shops in Germany. The stores should be placed in urban areas with as many potential customers as possible. Additionally, a survey<a href="#fn55" class="footnoteRef" id="fnref55"><sup>55</sup></a> suggests that single young males (aged 20 to 40) are most likely to buy your products: this is the <em>target audience</em>. You are in the lucky position to have sufficient capital to open a number of shops. But where should they be placed? Consulting companies (employing location analysts) would happily charge high rates to answer such questions. Luckily, we can do so ourselves with the help of open data and open source software. The following sections will demonstrate how the techniques learned during the first chapters of the book can be applied to undertake the following steps:</p>
 <ul>
-<li>Tidy the input data from the German census (section <a href="location.html#tidy-the-input-data">8.2.1</a>).</li>
-<li>Convert the tabulated census data into raster objects (section <a href="location.html#create-census-rasters">8.2.2</a>).</li>
-<li>Identify metropolitan areas with high population densities (section <a href="location.html#define-metropolitan-areas">8.2.3</a>).</li>
-<li>Download detailed geographic data (from OpenStreetMap, with <strong>osmdata</strong>) for these areas (section <a href="location.html#points-of-interest">8.2.4</a>).</li>
-<li>Create rasters for scoring the relative desirability of different locations using map algebra (section <a href="location.html#identifying-suitable-locations">8.2.5</a>).</li>
+<li>Tidy the input data from the German census (section <a href="location.html#tidy-the-input-data">8.3</a>).</li>
+<li>Convert the tabulated census data into raster objects (section <a href="location.html#create-census-rasters">8.4</a>).</li>
+<li>Identify metropolitan areas with high population densities (section <a href="location.html#define-metropolitan-areas">8.5</a>).</li>
+<li>Download detailed geographic data (from OpenStreetMap, with <strong>osmdata</strong>) for these areas (section <a href="location.html#points-of-interest">8.6</a>).</li>
+<li>Create rasters for scoring the relative desirability of different locations using map algebra (section <a href="location.html#identifying-suitable-locations">8.7</a>).</li>
 </ul>
 <p>Although we have applied these steps to a specific case study, they could be generalized to many scenarios of store location or public service provision.</p>
-<div id="tidy-the-input-data" class="section level3">
-<h3><span class="header-section-number">8.2.1</span> Tidy the input data</h3>
+</div>
+<div id="tidy-the-input-data" class="section level2">
+<h2><span class="header-section-number">8.3</span> Tidy the input data</h2>
 <p>The German government provides gridded census data at either 1 km or 100 m resolution. The following code chunk downloads, unzips and reads-in the 1 km data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">download.file</span>(<span class="st">&quot;https://tinyurl.com/ybtpkwxz&quot;</span>, 
               <span class="dt">destfile =</span> <span class="st">&quot;census.zip&quot;</span>, <span class="dt">mode =</span> <span class="st">&quot;wb&quot;</span>)
@@ -475,8 +475,8 @@ input =<span class="st"> </span>dplyr::<span class="kw">select</span>(census_de,
 <span class="co"># set -1 and -9 to NA</span>
 input_tidy =<span class="st"> </span><span class="kw">mutate_all</span>(input, <span class="kw">funs</span>(<span class="kw">ifelse</span>(. %in%<span class="st"> </span><span class="kw">c</span>(-<span class="dv">1</span>, -<span class="dv">9</span>), <span class="ot">NA</span>, .)))</code></pre></div>
 </div>
-<div id="create-census-rasters" class="section level3">
-<h3><span class="header-section-number">8.2.2</span> Create census rasters</h3>
+<div id="create-census-rasters" class="section level2">
+<h2><span class="header-section-number">8.4</span> Create census rasters</h2>
 <p>After the preprocessing, the data can be converted into a raster stack or brick (see sections <a href="spatial-class.html#raster-classes">2.2.3</a> and <a href="attr.html#raster-subsetting">3.3.1</a>). <code>rasterFromXYZ()</code> makes this really easy. It requires an input data frame where the first two columns represent coordinates on a regular grid. All the remaining columns (here: <code>pop</code>, <code>women</code>, <code>mean_age</code>, <code>hh_size</code>) will serve as input for the raster brick layers (Figure <a href="location.html#fig:census-stack">8.1</a>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">input_ras =<span class="st"> </span><span class="kw">rasterFromXYZ</span>(input_tidy, <span class="dt">crs =</span> <span class="kw">st_crs</span>(<span class="dv">3035</span>)$proj4string)
 <span class="co"># print the output to the console</span>
@@ -532,8 +532,8 @@ reclass
 
 -->
 </div>
-<div id="define-metropolitan-areas" class="section level3">
-<h3><span class="header-section-number">8.2.3</span> Define metropolitan areas</h3>
+<div id="define-metropolitan-areas" class="section level2">
+<h2><span class="header-section-number">8.5</span> Define metropolitan areas</h2>
 <p>We define metropolitan areas as pixels of 20 km<sup>2</sup> inhabited by more than 500,000 people. Pixels at this coarse resolution can rapidly be created using <code>aggregate()</code>, as introduced in section <a href="transform.html#aggregation-and-disaggregation">5.4.2</a>. The command below uses the argument <code>fact = 20</code> to reduce the resolution of the result twenty-fold (recall the original raster resolution was 1 km<sup>2</sup>):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pop_agg =<span class="st"> </span><span class="kw">aggregate</span>(reclass$pop, <span class="dt">fact =</span> <span class="dv">20</span>, <span class="dt">fun =</span> sum)</code></pre></div>
 <p>The next stage is to keep only cells with more than half a million people, and convert the result cells into a vector object of class <code>sf</code>.</p>
@@ -652,8 +652,8 @@ metro_names =<span class="st"> </span><span class="kw">map_dfr</span>(<span clas
          <span class="dt">locality =</span> <span class="kw">gsub</span>(<span class="st">&quot;ü&quot;</span>, <span class="st">&quot;ue&quot;</span>, locality)) %&gt;%
 <span class="st">  </span><span class="kw">pull</span>(locality)</code></pre></div>
 </div>
-<div id="points-of-interest" class="section level3">
-<h3><span class="header-section-number">8.2.4</span> Points of interest</h3>
+<div id="points-of-interest" class="section level2">
+<h2><span class="header-section-number">8.6</span> Points of interest</h2>
 <p>The <strong>osmdata</strong> package provides a fantastic and easy-to-use interface to download OSM data (see also section <a href="read-write.html#retrieving-data">6.2</a>). Instead of downloading all shops for the whole of Germany, we restrict the download to the defined metropolitan areas. This relieves the OSM server resources, reduces download time and above all only gives back the shop locations we are interested in. The <code>map()</code> loop, the <code>lapply()</code> equivalent of <strong>purrr</strong>, runs through all eight metropolitan names which subsequently define the bounding box in the <code>opq()</code> function (see section <a href="read-write.html#retrieving-data">6.2</a>). Alternatively, we could have provided the bounding box in the form of coordinates ourselves. Next, we indicate that we only would like to download <code>shop</code> features (see this <a href="http://wiki.openstreetmap.org/wiki/Map_Features">page</a> for a full list of OpenStreetMap map features). <code>osmdata_sf()</code> returns a list with several spatial objects (points, lines, polygons, etc.). Here, we will only keep the point objects. As with Google’s reverse geocode API, the OSM-download will once in a while not work at the first attempt. The <code>while</code> loop increases the number of download trials to three. If then still no features can be downloaded, most likely there are none. Or it is an indication that another error has occurred before. For instance, the <code>opq()</code> function might have retrieved a wrong bounding box.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">shops =<span class="st"> </span><span class="kw">map</span>(metro_names, function(x) {
   <span class="kw">message</span>(<span class="st">&quot;Downloading shops of: &quot;</span>, x, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
@@ -692,7 +692,7 @@ If the <code>shop</code> column were used instead of the <code>osm_id</code> col
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">shops =<span class="st"> </span><span class="kw">st_transform</span>(shops, <span class="kw">proj4string</span>(reclass))
 <span class="co"># create poi raster</span>
 poi =<span class="st"> </span><span class="kw">rasterize</span>(<span class="dt">x =</span> shops, <span class="dt">y =</span> reclass, <span class="dt">field =</span> <span class="st">&quot;osm_id&quot;</span>, <span class="dt">fun =</span> <span class="st">&quot;count&quot;</span>)</code></pre></div>
-<p>As with the other raster layers (population, women, mean age, household size) the <code>poi</code> raster is reclassified into four classes (see section <a href="location.html#create-census-rasters">8.2.2</a>). Defining class intervals is an arbitrary undertaking to a certain degree. One can use equal breaks, quantile breaks, fixed values or others. Here, we choose the Fisher-Jenks natural breaks approach which minimizes within-class variance, the result of which provides an input for the reclassification matrix.</p>
+<p>As with the other raster layers (population, women, mean age, household size) the <code>poi</code> raster is reclassified into four classes (see section <a href="location.html#create-census-rasters">8.4</a>). Defining class intervals is an arbitrary undertaking to a certain degree. One can use equal breaks, quantile breaks, fixed values or others. Here, we choose the Fisher-Jenks natural breaks approach which minimizes within-class variance, the result of which provides an input for the reclassification matrix.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># construct reclassification matrix</span>
 int =<span class="st"> </span>classInt::<span class="kw">classIntervals</span>(<span class="kw">values</span>(poi), <span class="dt">n =</span> <span class="dv">4</span>, <span class="dt">style =</span> <span class="st">&quot;fisher&quot;</span>)
 int =<span class="st"> </span><span class="kw">round</span>(int$brks)
@@ -703,8 +703,8 @@ rcl_poi =<span class="st"> </span><span class="kw">cbind</span>(rcl_poi, <span c
 poi =<span class="st"> </span><span class="kw">reclassify</span>(poi, <span class="dt">rcl =</span> rcl_poi, <span class="dt">right =</span> <span class="ot">NA</span>) 
 <span class="kw">names</span>(poi) =<span class="st"> &quot;poi&quot;</span></code></pre></div>
 </div>
-<div id="identifying-suitable-locations" class="section level3">
-<h3><span class="header-section-number">8.2.5</span> Identifying suitable locations</h3>
+<div id="identifying-suitable-locations" class="section level2">
+<h2><span class="header-section-number">8.7</span> Identifying suitable locations</h2>
 <p>The only steps that remain before combining all the layers are to add POI and delete the population from the raster stack. The reasoning for the latter is twofold. First of all, we already have delineated metropolitan areas, that is areas where the population density is above average compared to the rest of Germany. Secondly, though it is advantageous to have many potential customers within a specific catchment area, the sheer number alone might not actually represent the desired target group. For instance, residential tower blocks are areas with a high population density but not necessarily with a high purchasing power for expensive cycle components. This is achieved with the complimentary functions <code>addLayer()</code> and <code>dropLayer()</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># add poi raster</span>
 reclass =<span class="st"> </span><span class="kw">addLayer</span>(reclass, poi)
@@ -722,9 +722,8 @@ Figure 8.3: Suitable areas (i.e., raster cells with a score &gt; 9) in accordanc
 </p>
 </div>
 </div>
-</div>
 <div id="discussion-and-next-steps" class="section level2">
-<h2><span class="header-section-number">8.3</span> Discussion and next steps</h2>
+<h2><span class="header-section-number">8.8</span> Discussion and next steps</h2>
 <p>The presented approach is a typical example of the normative usage of a GIS <span class="citation">(Longley <a href="#ref-longley_geographic_2015">2015</a>)</span>. We combined survey data with expert-based knowledge and assumptions (definition of metropolitan areas, defining class intervals, definition of a final score threshold). It should be clear that this approach is not suitable for scientific knowledge advancement but is a very applied way of information extraction. This is to say, we can only suspect based on common sense that we have identified areas suitable for bike shops. However, we have no proof that this is in fact the case.</p>
 <p>A few other things remained unconsidered but might improve the analysis:</p>
 <ul>
@@ -743,7 +742,7 @@ Figure 8.3: Suitable areas (i.e., raster cells with a score &gt; 9) in accordanc
 </ul>
 </div>
 <div id="exercises-5" class="section level2">
-<h2><span class="header-section-number">8.4</span> Exercises</h2>
+<h2><span class="header-section-number">8.9</span> Exercises</h2>
 <ol style="list-style-type: decimal">
 <li><p>In our use we have used <code>raster::rasterFromXYZ()</code> to convert a <code>input_tidy</code> into a raster brick. Try to achieve the same with the help of the <code>sp::gridded()</code> function. <!--
 input = st_as_sf(input, coords = c("x", "y"))

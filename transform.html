@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-02-01">
+<meta name="date" content="2018-02-02">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -259,15 +259,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="8" data-path="location.html"><a href="location.html"><i class="fa fa-check"></i><b>8</b> Location analysis</a><ul>
 <li class="chapter" data-level="" data-path="location.html"><a href="location.html#prerequisites-6"><i class="fa fa-check"></i>Prerequisites</a></li>
 <li class="chapter" data-level="8.1" data-path="location.html"><a href="location.html#introduction-5"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
-<li class="chapter" data-level="8.2" data-path="location.html"><a href="location.html#case-study"><i class="fa fa-check"></i><b>8.2</b> Case study: bike shops in Germany</a><ul>
-<li class="chapter" data-level="8.2.1" data-path="location.html"><a href="location.html#tidy-the-input-data"><i class="fa fa-check"></i><b>8.2.1</b> Tidy the input data</a></li>
-<li class="chapter" data-level="8.2.2" data-path="location.html"><a href="location.html#create-census-rasters"><i class="fa fa-check"></i><b>8.2.2</b> Create census rasters</a></li>
-<li class="chapter" data-level="8.2.3" data-path="location.html"><a href="location.html#define-metropolitan-areas"><i class="fa fa-check"></i><b>8.2.3</b> Define metropolitan areas</a></li>
-<li class="chapter" data-level="8.2.4" data-path="location.html"><a href="location.html#points-of-interest"><i class="fa fa-check"></i><b>8.2.4</b> Points of interest</a></li>
-<li class="chapter" data-level="8.2.5" data-path="location.html"><a href="location.html#identifying-suitable-locations"><i class="fa fa-check"></i><b>8.2.5</b> Identifying suitable locations</a></li>
-</ul></li>
-<li class="chapter" data-level="8.3" data-path="location.html"><a href="location.html#discussion-and-next-steps"><i class="fa fa-check"></i><b>8.3</b> Discussion and next steps</a></li>
-<li class="chapter" data-level="8.4" data-path="location.html"><a href="location.html#exercises-5"><i class="fa fa-check"></i><b>8.4</b> Exercises</a></li>
+<li class="chapter" data-level="8.2" data-path="location.html"><a href="location.html#case-study"><i class="fa fa-check"></i><b>8.2</b> Case study: bike shops in Germany</a></li>
+<li class="chapter" data-level="8.3" data-path="location.html"><a href="location.html#tidy-the-input-data"><i class="fa fa-check"></i><b>8.3</b> Tidy the input data</a></li>
+<li class="chapter" data-level="8.4" data-path="location.html"><a href="location.html#create-census-rasters"><i class="fa fa-check"></i><b>8.4</b> Create census rasters</a></li>
+<li class="chapter" data-level="8.5" data-path="location.html"><a href="location.html#define-metropolitan-areas"><i class="fa fa-check"></i><b>8.5</b> Define metropolitan areas</a></li>
+<li class="chapter" data-level="8.6" data-path="location.html"><a href="location.html#points-of-interest"><i class="fa fa-check"></i><b>8.6</b> Points of interest</a></li>
+<li class="chapter" data-level="8.7" data-path="location.html"><a href="location.html#identifying-suitable-locations"><i class="fa fa-check"></i><b>8.7</b> Identifying suitable locations</a></li>
+<li class="chapter" data-level="8.8" data-path="location.html"><a href="location.html#discussion-and-next-steps"><i class="fa fa-check"></i><b>8.8</b> Discussion and next steps</a></li>
+<li class="chapter" data-level="8.9" data-path="location.html"><a href="location.html#exercises-5"><i class="fa fa-check"></i><b>8.9</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -921,7 +920,7 @@ Figure 5.18: Examples of line and polygon rasterizations.
 <li>Orthorectification also georeferences an image but additionally takes into account local topography.</li>
 <li>Image (co-)registration is the process of aligning one image with another (in terms of CRS, origin and resolution). Registration becomes necessary for images from the same scene but shot from different sensors or from different angles or at different points in time.</li>
 </ul>
-<p>In this section we will first show how to change the extent, the resolution and the origin of an image. As mentioned before, most of the times, we need these operations in order to align several images. A matching projection is of course also required but is already covered in section <a href="transform.html#reprojecting-raster-geometries">5.2.4</a>. In any case, there are other reasons why to perform a geometric operation on a single raster image. For instance, in chapter <a href="location.html#location">8</a> we define metropolitan areas in Germany as 20 km<sup>2</sup> pixels with more than 500,000 inhabitants. The original inhabitant raster, however, has a resolution of 1 km<sup>2</sup> which is why we will decrease (aggregate) the resolution by a factor of 20 (see section <a href="location.html#define-metropolitan-areas">8.2.3</a>. Finally, we will show how to convert raster images into the spatial vector model.</p>
+<p>In this section we will first show how to change the extent, the resolution and the origin of an image. As mentioned before, most of the times, we need these operations in order to align several images. A matching projection is of course also required but is already covered in section <a href="transform.html#reprojecting-raster-geometries">5.2.4</a>. In any case, there are other reasons why to perform a geometric operation on a single raster image. For instance, in chapter <a href="location.html#location">8</a> we define metropolitan areas in Germany as 20 km<sup>2</sup> pixels with more than 500,000 inhabitants. The original inhabitant raster, however, has a resolution of 1 km<sup>2</sup> which is why we will decrease (aggregate) the resolution by a factor of 20 (see section <a href="location.html#define-metropolitan-areas">8.5</a>. Finally, we will show how to convert raster images into the spatial vector model.</p>
 <div id="extent-and-origin" class="section level3">
 <h3><span class="header-section-number">5.4.1</span> Extent and origin</h3>
 <p>When merging or performing map algebra on rasters, their resolution, projection, origin and/or extent has to match. Otherwise, how should we add the values of one raster with a resolution of 0.2 decimal degrees to a second with a resolution of 1 decimal degree? The same problem arises when we would like to merge satellite imagery from different sensors with different projections and resolutions. We can deal with such mismatches by aligning the rasters.</p>

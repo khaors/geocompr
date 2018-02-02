@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-02-01'
+date: '2018-02-02'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-02-01 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-02-02 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -252,7 +252,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservef9d5c34ed95befe9
+preserve82c327fa9a19247b
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3090,7 +3090,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve020c7a746812d41b
+preservef585b883bc522131
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6168,7 +6168,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservef01f13af298917e5
+preserve7a109252ccd10364
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6293,7 +6293,7 @@ The following sections will demonstrate how the techniques learned during the fi
 
 Although we have applied these steps to a specific case study, they could be generalized to many scenarios of store location or public service provision.
 
-### Tidy the input data
+## Tidy the input data
 
 The German government provides gridded census data at either 1 km or 100 m resolution.
 The following code chunk downloads, unzips and reads-in the 1 km data.
@@ -6385,7 +6385,7 @@ input = dplyr::select(census_de, x = x_mp_1km, y = y_mp_1km, pop = Einwohner,
 input_tidy = mutate_all(input, funs(ifelse(. %in% c(-1, -9), NA, .)))
 ```
 
-### Create census rasters
+## Create census rasters
  
 After the preprocessing, the data can be converted into a raster stack or brick (see sections \@ref(raster-classes) and \@ref(raster-subsetting)).
 `rasterFromXYZ()` makes this really easy.
@@ -6470,7 +6470,7 @@ reclass
 -->
 
 
-### Define metropolitan areas
+## Define metropolitan areas
 
 We define metropolitan areas as pixels of 20 km^2^ inhabited by more than 500,000 people.
 Pixels at this coarse resolution can rapidly be created using `aggregate()`, as introduced in section \@ref(aggregation-and-disaggregation).
@@ -6657,7 +6657,7 @@ metro_names =
   pull(locality)
 ```
 
-### Points of interest
+## Points of interest
 
 The **osmdata** package provides a fantastic and easy-to-use interface to download OSM data (see also section \@ref(retrieving-data)).
 Instead of downloading all shops for the whole of Germany, we restrict the download to the defined metropolitan areas. 
@@ -6758,7 +6758,7 @@ poi = reclassify(poi, rcl = rcl_poi, right = NA)
 names(poi) = "poi"
 ```
 
-### Identifying suitable locations
+## Identifying suitable locations
 
 The only steps that remain before combining all the layers are to add POI and delete the population from the raster stack.
 The reasoning for the latter is twofold.
@@ -6787,7 +6787,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve1292492006c7ba20
+preserve4542cd731b6e6879
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
