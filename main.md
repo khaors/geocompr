@@ -252,7 +252,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserved41e545cfff99e6d
+preserve48c7dd084344d812
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -352,15 +352,15 @@ See the [r-spatial](https://github.com/r-spatial/) organisation and conversation
 ] and a growing number of actively developed packages which are designed to work in harmony with **sf** (Table \@ref(tab:revdep)). 
 
 
-Table: (\#tab:revdep)The top 5 most downloaded packages that depend on sf, in terms of average number of downloads per day over the previous month. As of 2018-01-27 there are 53 packages which import sf.
+Table: (\#tab:revdep)The top 5 most downloaded packages that depend on sf, in terms of average number of downloads per day over the previous month. As of 2018-02-05 there are 54 packages which import sf.
 
 package    Downloads
 --------  ----------
-plotly          1424
-raster          1252
-spData           614
-spdep            604
-leaflet          503
+plotly          1731
+raster          1535
+spData           769
+spdep            743
+leaflet          604
 
 ## The history of R-spatial
 
@@ -3090,7 +3090,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservea47b359d21d1516b
+preserve1a3075f74d25d2fa
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5902,8 +5902,13 @@ This routing is done by the **stplanr** function `line2route()` which takes stra
 ```r
 desire_lines$distance = as.numeric(st_length(desire_lines))
 desire_carshort = dplyr::filter(desire_lines, car_driver > 300 & distance < 5000)
+```
+
+
+```r
 route_carshort = line2route(desire_carshort, route_fun = route_osrm)
 ```
+
 
 `st_length()` determines the length of a linestring, and falls into the distance relations category (see also section \@ref(distance-relations)).
 Subsequently, we apply a simple attribute filter operation (see section \@ref(vector-attribute-subsetting)) before letting the OSRM service do the routing on a remote server.
@@ -6113,8 +6118,8 @@ plot(ways_sln@sl$geometry, lwd = e / 500)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/unnamed-chunk-26-1.png" alt="Illustration of a small route network, with segment thickness proportional to its betweeness, generated using the **igraph** package and described in the text." width="576" />
-<p class="caption">(\#fig:unnamed-chunk-26)Illustration of a small route network, with segment thickness proportional to its betweeness, generated using the **igraph** package and described in the text.</p>
+<img src="figures/unnamed-chunk-27-1.png" alt="Illustration of a small route network, with segment thickness proportional to its betweeness, generated using the **igraph** package and described in the text." width="576" />
+<p class="caption">(\#fig:unnamed-chunk-27)Illustration of a small route network, with segment thickness proportional to its betweeness, generated using the **igraph** package and described in the text.</p>
 </div>
 
 
@@ -6158,6 +6163,11 @@ It adds the car-dependent routes in `route_carshort` with a newly-created object
 route_rail = st_set_geometry(desire_rail, "leg_orig") %>% 
   line2route(route_fun = route_osrm) %>% 
   st_set_crs(4326)
+```
+
+
+
+```r
 route_cycleway = rbind(route_rail, route_carshort)
 route_cycleway$all = c(desire_rail$all, desire_carshort$all)
 ```
@@ -6168,7 +6178,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve8127e133aadbe644
+preserveb2794aced94a375d
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6787,7 +6797,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve4792c4028acc9e1d
+preserve5d91716ed3c365fb
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6866,6 +6876,13 @@ Change the age raster accordingly, repeat the remaining analyses and compare the
 - This chapter requires the following packages:
 
 
+```r
+library(sf)
+library(raster)
+library(tidyverse)
+library(tmap)
+library(spData)
+```
 
 ## Introduction
 
@@ -7713,11 +7730,6 @@ That means the presence of a plant usually follows a unimodal relationship along
 Secondly, the joint absence of a species in two plots is often hardly an indication for similarity.
 Suppose a plant species is absent from the driest (e.g., an extreme desert) and the most moist locations (e.g., a tree savannah) of our sampling.
 Then we really should refrain from counting this as a simlilarity because it is very likely that the only thing these two completely different environmental settings have in common in terms of floristic composition is the shared absence of species (except for rare ubiquist species). 
-
-
-
-
-
 
 <!--chapter:end:13-eco.Rmd-->
 
