@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="index.html">
-<link rel="next" href="intro.html">
+<link rel="prev" href="algorithms-and-functions-for-geocomputation.html">
+<link rel="next" href="geocomputation-for-sea-level-research.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -332,59 +332,68 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="preface" class="section level1 unnumbered">
-<h1>Preface</h1>
-<p>This book is aimed at people who want to do spatial data analysis, visualization and modeling with a modern programming language (R). There is no single target audience but we expect the book to be especially useful for:</p>
-<ul>
-<li>People who have learned spatial analysis skills using a desktop Geographic Information System (GIS) such as <a href="http://qgis.org/en/site/">QGIS</a>, <a href="http://desktop.arcgis.com/en/arcmap/">ArcMap</a>, <a href="https://grass.osgeo.org/">GRASS</a> or <a href="http://www.saga-gis.org/en/index.html">SAGA</a>, who want access to a powerful (geo)statistical and visualization programming language and the benefits of a command-line approach <span class="citation">(Sherman <a href="#ref-sherman_desktop_2008">2008</a>)</span>:</li>
-</ul>
-<blockquote>
-<p>With the advent of ‘modern’ GIS software, most people want to point and click their way through life. That’s good, but there is a tremendous amount of flexibility and power waiting for you with the command line.</p>
-</blockquote>
-<ul>
-<li>Graduate students and researchers from fields specializing in geographic data including Geography, Remote Sensing, Planning, GIS and Geographic Data Science</li>
-<li>Academics and post-graduate students working on projects in fields including Geology, Regional Science, Biology and Ecology, Agricultural Sciences (precision farming), Archaeology, Epidemiology, Transport Modeling, and broadly defined Data Science which require the power and flexibility of R for their research <!-- please add further fields--></li>
-<li>Applied researchers and analysts in public, private or third-sector organisations who need the reproducibility, speed and flexibility of a command-line language such as R in applications dealing with spatial data as diverse as Urban and Transport Planning, Logistics, Geo-marketing (store location analysis) and Emergency Planning <!-- please add further examples--></li>
-</ul>
-<p>The book is designed to be accessible to a wide audience. The chapters progress gradually in difficulty and exercises are provided at the end of each chapter to ensure understanding. However, R novices may find the reproducible code chunks — an integral part of the book — difficult to understand and implement at first.</p>
-<p>Impatient readers are welcome to dive straight into the first practical examples in Chapter <a href="spatial-class.html#spatial-class">2</a>. However we suggest most R beginners get up-to-speed with R before diving-in to chapters onwards (unless you’re reading the book for an understanding of the concepts). R has a supportive community that has developed a wealth of resources that can help here, three of which we highly recommend: <a href="http://colinfay.me/intro-to-r/">An introduction to R</a> <span class="citation">(Venables, Smith, and Team <a href="#ref-venables_introduction_2017">2017</a>)</span>, <a href="http://r4ds.had.co.nz/">R for Data Science</a> <span class="citation">(Grolemund and Wickham <a href="#ref-grolemund_r_2016">2016</a>)</span> and <a href="https://csgillespie.github.io/efficientR/">Efficient R Programming</a> <span class="citation">(Gillespie and Lovelace <a href="#ref-gillespie_efficient_2016">2016</a>)</span>, especially <a href="https://csgillespie.github.io/efficientR/set-up.html#r-version">Chapter 2</a> (on installing and setting-up R/RStudio) and <a href="https://csgillespie.github.io/efficientR/learning.html">Chapter 10</a> (on learning to learn). There are also many interactive resources, including DataCamp’s <a href="https://www.datacamp.com/courses/free-introduction-to-r">Introduction to R</a> and tutorials created with <a href="https://rstudio.github.io/learnr/examples.html"><strong>learnr</strong></a>.</p>
-<p>With such material to hand we are confident that the command-line approach demonstrated in this book will be worthwhile within a few months for most people, including programming novices. Over time and with practice R will likely become the natural choice for many geographic applications. We expect you will eventually find its interface faster than the point-and-click interface emphasized in many desktop GISs. For some applications such as Spatial Statistics and modelling R may be the <em>only</em> realistic way to get the work done.</p>
-<p>As outlined in section <a href="intro.html#why-geocomputation-with-r">1.2</a> there are many reasons for using R for geocomputation: R is well-suited to the interactive use required in many geographic data analysis workflows compared with other languages. R excels in the rapidly growing fields of Data Science (which includes data carpentry, statistical learning techniques and data visualization) and Big Data (via efficient interfaces to databases and distributed computing systems).</p>
-<p>For some applications another language may be more appropriate, such as Python, Java or C++. There are excellent resources for learning geocomputation <em>without R</em>, as discussed in section <a href="intro.html#software-for-geocomputation">1.3</a>. However we advocate learning one language (R) in <em>depth</em> to gain an understanding of the concepts. Proficiency with one programming language is preferable to the <em>breadth</em> of knowledge (and potential for confusion) attainable by dabbling with many.</p>
-<p>We believe that <em>Geocomputation with R</em> will equip you with the knowledge and skills needed to solve the majority of challenges that geographic data pose. A logical question to ask if you’ve read this far may be: what <em>is</em> geocomputation anyway? The answer is provided in section <a href="intro.html#what-is-geocomputation">1.1</a> which, alongside the rest of Chapter <a href="intro.html#intro">1</a>, explains the motivations behind this book.</p>
-<!-- to think about, not sure if needed but then this would be a good place to point out why our book might have advantages over other books. Compare with:
-- Bivand, R., Pebesma, E., Gomez-Rubio, V. (2013): Applied spatial data analysis with R.
-- Blangiardo, M. & Cameletti, M. (2015): Spatial and spatio-temporal Bayesian models with R - INLA.
-- Brunsdon, C. & Comber, L. (2015): An introduction to R for spatial analysis and mapping.
-- Dorman, M. (2014): Learning R for geospatial analysis.
-- Hijmans, R. (2016): Spatial data analysis and modeling with R.  http://rspatial.org/intr/index.html (haven't read it but might be more suitable for beginners, however, it does not consider sf; additionally, it provides more code than text, and hence, probably less explanations than our book) 
-- Quiang, S. (2016): Environmental and Ecological Statistics with R (not really a competitor, I have ordered a copy, this book is really about modeling, and I would rather prefer the Zuur et al. books over it)
-- Wegmann, M., Leutner, B., Dech, S. (2016): Remote Sensing and GIS for ecologists: Using Open Source Software.
-- Zuur, A., Ieno, E., Saveliev, A. (2017): Beginner's guide to spatial, temporal and spatial-temporal ecological data analysis with R-INLA.
-
-Put the competing books into categories, e.g., introduction to spatial analysis (Brundsdon, Dorman, Hijmans), advanced spatial analysis (Bivand), topical spatial analysis (Quiang, Wegmann),  (mainly) spatial modeling (Bivand, Blangiardo, Hijmans, Quiang, Zuur).
-Point out where our book fits in and which gap it is filling -> somewhere between advanced (but not that hard) and spatial modeling with a broad range of topics (not just one like ecology).
-We try to address a broad audiecence with an interest in spatial data, and how things can be **get done**, not just theoretically but in an applied way.
-On the other hand, we embed the shown methods into the bigger field of GIScience, provide context and refer to further literature for the interested reader.
-
+<div id="geocomputation-for-ecology-a-case-study-of-fog-oases" class="section level1">
+<h1><span class="header-section-number">13</span> Geocomputation for Ecology: A case study of fog oases</h1>
+<div id="prerequisites-9" class="section level2 unnumbered">
+<h2>Prerequisites</h2>
+<p>This chapter assumes you have a strong grasp of spatial data analysis and processing, covered in chapters 2-5. In it you will make use of R’s interfaces to dedicated GIS software, and spatial cross validation, topics covered in chapters xx and xx respectively.</p>
+</div>
+<div id="introduction-7" class="section level2">
+<h2><span class="header-section-number">13.1</span> Introduction</h2>
+<p>keywords: species distribution modeling, floristic modeling, spatial cross-validation, spatial autocorrelation, ordination (NMDS, Isomap), predictive mapping</p>
+<p>structure:</p>
+<ol style="list-style-type: decimal">
+<li>intro ecological modeling and related applications beyond ecology</li>
+<li>introduce research question, shortly the dataset and the planned approach</li>
+<li>ordination</li>
+<li>retrieving predictors and quick data exploration</li>
+<li>modeling ordination scores most likely using machine-learning since we are mostly interested in spatial predictions, and because the mlr spatial cv approach is new, and finally because Alain Zuur’s books cover statistical inference broadly</li>
+<li>predictive mapping of floristic composition including spatial cross-validation</li>
+<li>discussion: what could be done better or alternatives and again emphasizing that the methods shown finally, point to books on ecological modeling especially emphasizing Alain Zuur’s books</li>
+</ol>
+</div>
+<div id="background" class="section level2">
+<h2><span class="header-section-number">13.2</span> Background</h2>
+<p>Fog oases are one of the most fascinating vegetation formations I have ever encountered. These formations, locally termed <em>lomas</em>, develop on mountains along the coastal deserts of Peru and Chile. The desert’s extreme conditions and remoteness provide the habitat for a unique ecosystem, including species endemic to the fog oases. Despite the arid conditions and low levels of precipitation of around 30-50 mm per year, plants can survive, by ‘combing out’ fog. This fog, which develops below the temperature inversion caused by the cold Humboldt current in austral winter, provides the name for this habitat. Every few years, the El Niño weather pattern brings torrential rainfall to this sun-baked environment <span class="citation">(Dillon, Nakazawa, and Leiva <a href="#ref-dillon_lomas_2003">2003</a>)</span>. This causes the desert to bloom, and provides tree seedlings a chance to develop roots long enough to survive the following arid conditions.</p>
+<p>Unfortunately fog oases are heavily endangered. This is mostly due to human activity (agriculture and climate change). To effectively protect the last remnants of this unique vegetation ecosystem, evidence is needed on the composition and spatial distribution of the native flora <span class="citation">(Jannes Muenchow, Bräuning, et al. <a href="#ref-muenchow_predictive_2013">2013</a>; Jannes Muenchow, Hauenstein, et al. <a href="#ref-muenchow_soil_2013">2013</a>)</span>. <em>Lomas</em> mountains also have economic value as a tourist destination, and can contribute to the wellbeing of local people via recreation. For example, most Peruvians live in the coastal desert, and <em>lomas</em> mountains are frequently the closest “green” destination.</p>
+<p>In this chapter we will demonstrate ecological applications of some of the techniques learned in the previous chapters. This case study will involve analyzing the composition and the spatial distribution of the vascular plants on the southern slope of Mt. Mongón, a <em>lomas</em> mountain near Casma on the central northern coast of Peru (Fig. <a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html#fig:study-area-mongon">13.1</a>).</p>
+<div class="figure" style="text-align: center"><span id="fig:study-area-mongon"></span>
+<img src="figures/study_area_mongon.png" alt="The Mt. Mongón study area (taken from @muenchow_rqgis:_nodate; Landsat image: path 9, row 67, acquisition date 09/22/2000; @usgs_u.s._2016)." width="1092" />
+<p class="caption">
+Figure 13.1: The Mt. Mongón study area (taken from <span class="citation">Muenchow, Schratz, and Brenning (n.d.)</span>; Landsat image: path 9, row 67, acquisition date 09/22/2000; <span class="citation">USGS (<a href="#ref-usgs_u.s._2016">2016</a>)</span>).
+</p>
+</div>
+<p>During a field study to Mt. Mongón we recorded all vascular plants living in 100 randomly sampled 4x4 m<sup>2</sup> plots in the austral winter of 2011 <span class="citation">(Jannes Muenchow, Bräuning, et al. <a href="#ref-muenchow_predictive_2013">2013</a>)</span>. The sampling coincided with a strong La Niña event that year (see ENSO monitoring of the <a href="http://origin.cpc.ncep.noaa.gov/products/analysis_monitoring/ensostuff/ONI_v5.php">NOASS Climate Prediction Center</a>). This led to even higher levels of aridity than usual in the coastal desert. By contrast, it increased fog activity on the southern slopes of Peruvian <em>lomas</em> mountains.</p>
+<!--
+The first hypothesis is that four plant belts will be found along the altitudinal gradient: a low-elevation *Tillandsia* belt, a herbaceous belt, a bromeliad belt, and an uppermost succulent belt [@muenchow_soil_2013].
 -->
-<!-- ## Acknowledgements {-} -->
-<!-- add list of people who helped with this book -->
+<p>Ordinations are dimension-reducing techniques which allow the extraction of the main gradients from a (noisy) dataset, in our case the floristic gradient developing along the southern mountain slope. In this chapter we will try to model the first ordination axis, i.e., the floristic gradient, as a function of environmental predictors such as altitude, slope, catchment area and NDVI. The corresponding model will allow us to make spatial predictions of the plant composition anywhere in the study area. When doing the spatial predictions, we will of course account for the likely presence of spatial autocorrelation with the help of spatial cross-validation (see chapter xx). <!-- make a cross-reference--></p>
+</div>
+<div id="reducing-dimensionality" class="section level2">
+<h2><span class="header-section-number">13.3</span> Reducing dimensionality</h2>
+<p>Ordinations are a popular tool in vegetation science to extract the main information, frequently corresponding to ecological gradients, from large species-plot matrices mostly filled with 0s. However, they are also used in remote sensing (spectral bands + hyperspectral), the soil sciences, geomarketing, etc.. If you are unfamiliar with ordination techniques or in need of a refresher, have a look at Michael W. Palmers <a href="http://ordination.okstate.edu/overview.htm">webpage</a> for a short introduction to popular ordination techniques in ecology and at <span class="citation">Borcard, Gillet, and Legendre (<a href="#ref-borcard_numerical_2011">2011</a>)</span> for a deeper look how to apply these techniques in R. <strong>vegan</strong>’s package documentation is also very helpful (<code>vignette(package = &quot;vegan&quot;)</code>).</p>
+<p>Principal component analysis (PCA) is probably the most famous ordination technique. It is a great tool to reduce dimensionality if one can expect linear relationships between variables, and if the joint absence of a variable (for example calcium) in two plots (observations) can be considered a similarity. This is barely the case with vegetation data.</p>
+<p>For one, relationships are usually non-linear along environmental gradients. That means the presence of a plant usually follows a unimodal relationship along a gradient (e.g., humidity, temperature or salinity) with a peak at the most favorable conditions and declining ends towards the unfavarable conditions.</p>
+<p>Secondly, the joint absence of a species in two plots is often hardly an indication for similarity. Suppose a plant species is absent from the driest (e.g., an extreme desert) and the most moist locations (e.g., a tree savannah) of our sampling. Then we really should refrain from counting this as a simlilarity because it is very likely that the only thing these two completely different environmental settings have in common in terms of floristic composition is the shared absence of species (except for rare ubiquist species).</p>
 
+</div>
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
-<div id="ref-sherman_desktop_2008">
-<p>Sherman, Gary. 2008. <em>Desktop GIS: Mapping the Planet with Open Source Tools</em>. Pragmatic Bookshelf.</p>
+<div id="ref-dillon_lomas_2003">
+<p>Dillon, M. O., M. Nakazawa, and S. G. Leiva. 2003. “The Lomas Formations of Coastal Peru: Composition and Biogeographic History.” In <em>El Niño in Peru: Biology and Culture over 10,000 Years</em>, edited by J. Haas and M. O. Dillon, 1–9. Chicago: Field Museum of Natural History.</p>
 </div>
-<div id="ref-venables_introduction_2017">
-<p>Venables, W.N., D.M. Smith, and R Core Team. 2017. <em>An Introduction to R. Notes on R: A Programming Environment for Data Analysis and Graphics</em>. <a href="http://colinfay.me/intro-to-r/" class="uri">http://colinfay.me/intro-to-r/</a>.</p>
+<div id="ref-muenchow_predictive_2013">
+<p>Muenchow, Jannes, Achim Bräuning, Eric Frank Rodríguez, and Henrik von Wehrden. 2013. “Predictive Mapping of Species Richness and Plant Species’ Distributions of a Peruvian Fog Oasis Along an Altitudinal Gradient.” <em>Biotropica</em> 45 (5): 557–66. doi:<a href="https://doi.org/10.1111/btp.12049">10.1111/btp.12049</a>.</p>
 </div>
-<div id="ref-grolemund_r_2016">
-<p>Grolemund, Garrett, and Hadley Wickham. 2016. <em>R for Data Science</em>. 1 edition. O’Reilly Media.</p>
+<div id="ref-muenchow_soil_2013">
+<p>Muenchow, Jannes, Simon Hauenstein, Achim Bräuning, Rupert Bäumler, Eric Frank Rodríguez, and Henrik von Wehrden. 2013. “Soil Texture and Altitude, Respectively, Largely Determine the Floristic Gradient of the Most Diverse Fog Oasis in the Peruvian Desert.” <em>Journal of Tropical Ecology</em> 29 (05): 427–38. doi:<a href="https://doi.org/10.1017/S0266467413000436">10.1017/S0266467413000436</a>.</p>
 </div>
-<div id="ref-gillespie_efficient_2016">
-<p>Gillespie, Colin, and Robin Lovelace. 2016. <em>Efficient R Programming: A Practical Guide to Smarter Programming</em>. O’Reilly Media. <a href="https://csgillespie.github.io/efficientR/" class="uri">https://csgillespie.github.io/efficientR/</a>.</p>
+<div id="ref-usgs_u.s._2016">
+<p>USGS. 2016. <em>U.S. Geological Survey (USGS) Earth Resources Observation and Science (EROS) Center</em>. <a href="http://earthexplorer.usgs.gov/" class="uri">http://earthexplorer.usgs.gov/</a>.</p>
+</div>
+<div id="ref-borcard_numerical_2011">
+<p>Borcard, Daniel, François Gillet, and Pierre Legendre. 2011. <em>Numerical Ecology with R</em>. Use R! New York: Springer.</p>
 </div>
 </div>
             </section>
@@ -392,8 +401,8 @@ On the other hand, we embed the shown methods into the bigger field of GIScience
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="intro.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="algorithms-and-functions-for-geocomputation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="geocomputation-for-sea-level-research.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -422,7 +431,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Robinlovelace/geocompr/edit/master/index.Rmd",
+"link": "https://github.com/Robinlovelace/geocompr/edit/master/13-eco.Rmd",
 "text": "Edit"
 },
 "download": null,

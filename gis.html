@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Geocomputation with R</title>
+  <meta name="description" content="Forthcoming book on geographic data with R.">
+  <meta name="generator" content="bookdown 0.6 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Geocomputation with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://geocompr.robinlovelace.net" />
+  
+  <meta property="og:description" content="Forthcoming book on geographic data with R." />
+  <meta name="github-repo" content="Robinlovelace/geocompr" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Geocomputation with R" />
+  
+  <meta name="twitter:description" content="Forthcoming book on geographic data with R." />
+  
+
+<meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
+
+
+<meta name="date" content="2018-02-06">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="adv-map.html">
+<link rel="next" href="raster-vector.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.0/htmlwidgets.js"></script>
+<link href="libs/leaflet-0.7.7/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-0.7.7/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<link href="libs/leaflet-label-0.2.2/leaflet.label.css" rel="stylesheet" />
+<script src="libs/leaflet-label-0.2.2/leaflet.label.js"></script>
+<script src="libs/Proj4Leaflet-0.7.2/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-0.7.2/proj4leaflet.js"></script>
+<script src="libs/leaflet-binding-1.1.0/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.0.27/leaflet-providers.js"></script>
+<script src="libs/leaflet-providers-plugin-1.1.0/leaflet-providers-plugin.js"></script>
+<link href="libs/leaflet-awesomemarkers-2.0.3/leaflet.awesome-markers.css" rel="stylesheet" />
+<script src="libs/leaflet-awesomemarkers-2.0.3/leaflet.awesome-markers.min.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-99618359-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Geocomputation with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#development"><i class="fa fa-check"></i>Development</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#how-to-contribute"><i class="fa fa-check"></i>How to contribute?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#reproducibility"><i class="fa fa-check"></i>Reproducibility</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#what-is-geocomputation"><i class="fa fa-check"></i><b>1.1</b> What is geocomputation?</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#why-geocomputation-with-r"><i class="fa fa-check"></i><b>1.2</b> Why Geocomputation with R?</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#software-for-geocomputation"><i class="fa fa-check"></i><b>1.3</b> Software for geocomputation</a></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#rs-spatial-ecosystem"><i class="fa fa-check"></i><b>1.4</b> R’s spatial ecosystem</a></li>
+<li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#the-history-of-r-spatial"><i class="fa fa-check"></i><b>1.5</b> The history of R-spatial</a></li>
+<li class="chapter" data-level="1.6" data-path="intro.html"><a href="intro.html#exercises"><i class="fa fa-check"></i><b>1.6</b> Exercises</a></li>
+</ul></li>
+<li class="part"><span><b>I Basic methods</b></span></li>
+<li class="chapter" data-level="2" data-path="spatial-class.html"><a href="spatial-class.html"><i class="fa fa-check"></i><b>2</b> Geographic data in R</a><ul>
+<li class="chapter" data-level="" data-path="spatial-class.html"><a href="spatial-class.html#prerequisites"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="2.1" data-path="spatial-class.html"><a href="spatial-class.html#vector-data"><i class="fa fa-check"></i><b>2.1</b> Vector data</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="spatial-class.html"><a href="spatial-class.html#intro-sf"><i class="fa fa-check"></i><b>2.1.1</b> An introduction to simple features</a></li>
+<li class="chapter" data-level="2.1.2" data-path="spatial-class.html"><a href="spatial-class.html#why-simple-features"><i class="fa fa-check"></i><b>2.1.2</b> Why simple features?</a></li>
+<li class="chapter" data-level="2.1.3" data-path="spatial-class.html"><a href="spatial-class.html#basic-map"><i class="fa fa-check"></i><b>2.1.3</b> Basic map making</a></li>
+<li class="chapter" data-level="2.1.4" data-path="spatial-class.html"><a href="spatial-class.html#base-args"><i class="fa fa-check"></i><b>2.1.4</b> Base plot arguments</a></li>
+<li class="chapter" data-level="2.1.5" data-path="spatial-class.html"><a href="spatial-class.html#sf-classes"><i class="fa fa-check"></i><b>2.1.5</b> Simple feature classes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="spatial-class.html"><a href="spatial-class.html#raster-data"><i class="fa fa-check"></i><b>2.2</b> Raster data</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="spatial-class.html"><a href="spatial-class.html#an-introduction-to-raster"><i class="fa fa-check"></i><b>2.2.1</b> An introduction to raster</a></li>
+<li class="chapter" data-level="2.2.2" data-path="spatial-class.html"><a href="spatial-class.html#basic-map-raster"><i class="fa fa-check"></i><b>2.2.2</b> Basic map making</a></li>
+<li class="chapter" data-level="2.2.3" data-path="spatial-class.html"><a href="spatial-class.html#raster-classes"><i class="fa fa-check"></i><b>2.2.3</b> Raster classes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="spatial-class.html"><a href="spatial-class.html#crs-intro"><i class="fa fa-check"></i><b>2.3</b> Coordinate Reference Systems</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="spatial-class.html"><a href="spatial-class.html#geographic-coordinate-systems"><i class="fa fa-check"></i><b>2.3.1</b> Geographic coordinate systems</a></li>
+<li class="chapter" data-level="2.3.2" data-path="spatial-class.html"><a href="spatial-class.html#projected-coordinate-systems"><i class="fa fa-check"></i><b>2.3.2</b> Projected coordinate systems</a></li>
+<li class="chapter" data-level="2.3.3" data-path="spatial-class.html"><a href="spatial-class.html#crs-in-r"><i class="fa fa-check"></i><b>2.3.3</b> CRSs in R</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="spatial-class.html"><a href="spatial-class.html#units"><i class="fa fa-check"></i><b>2.4</b> Units</a></li>
+<li class="chapter" data-level="2.5" data-path="spatial-class.html"><a href="spatial-class.html#ex2"><i class="fa fa-check"></i><b>2.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="attr.html"><a href="attr.html"><i class="fa fa-check"></i><b>3</b> Attribute operations</a><ul>
+<li class="chapter" data-level="" data-path="attr.html"><a href="attr.html#prerequisites-1"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="3.1" data-path="attr.html"><a href="attr.html#introduction"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="attr.html"><a href="attr.html#vector-attribute-manipulation"><i class="fa fa-check"></i><b>3.2</b> Vector attribute manipulation</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="attr.html"><a href="attr.html#vector-attribute-subsetting"><i class="fa fa-check"></i><b>3.2.1</b> Vector attribute subsetting</a></li>
+<li class="chapter" data-level="3.2.2" data-path="attr.html"><a href="attr.html#vector-attribute-aggregation"><i class="fa fa-check"></i><b>3.2.2</b> Vector attribute aggregation</a></li>
+<li class="chapter" data-level="3.2.3" data-path="attr.html"><a href="attr.html#vector-attribute-joining"><i class="fa fa-check"></i><b>3.2.3</b> Vector attribute joining</a></li>
+<li class="chapter" data-level="3.2.4" data-path="attr.html"><a href="attr.html#vec-attr-creation"><i class="fa fa-check"></i><b>3.2.4</b> Creating attributes and removing spatial information</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="attr.html"><a href="attr.html#manipulating-raster-objects"><i class="fa fa-check"></i><b>3.3</b> Manipulating raster objects</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="attr.html"><a href="attr.html#raster-subsetting"><i class="fa fa-check"></i><b>3.3.1</b> Raster subsetting</a></li>
+<li class="chapter" data-level="3.3.2" data-path="attr.html"><a href="attr.html#summarizing-raster-objects"><i class="fa fa-check"></i><b>3.3.2</b> Summarizing raster objects</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="attr.html"><a href="attr.html#exercises-1"><i class="fa fa-check"></i><b>3.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="spatial-operations.html"><a href="spatial-operations.html"><i class="fa fa-check"></i><b>4</b> Spatial operations</a><ul>
+<li class="chapter" data-level="" data-path="spatial-operations.html"><a href="spatial-operations.html#prerequisites-2"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="4.1" data-path="spatial-operations.html"><a href="spatial-operations.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="spatial-operations.html"><a href="spatial-operations.html#spatial-vec"><i class="fa fa-check"></i><b>4.2</b> Spatial operations on vector data</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="spatial-operations.html"><a href="spatial-operations.html#spatial-subsetting"><i class="fa fa-check"></i><b>4.2.1</b> Spatial subsetting</a></li>
+<li class="chapter" data-level="4.2.2" data-path="spatial-operations.html"><a href="spatial-operations.html#topological-relations"><i class="fa fa-check"></i><b>4.2.2</b> Topological relations</a></li>
+<li class="chapter" data-level="4.2.3" data-path="spatial-operations.html"><a href="spatial-operations.html#spatial-joining"><i class="fa fa-check"></i><b>4.2.3</b> Spatial joining</a></li>
+<li class="chapter" data-level="4.2.4" data-path="spatial-operations.html"><a href="spatial-operations.html#non-overlapping-joins"><i class="fa fa-check"></i><b>4.2.4</b> Non-overlapping joins</a></li>
+<li class="chapter" data-level="4.2.5" data-path="spatial-operations.html"><a href="spatial-operations.html#spatial-aggr"><i class="fa fa-check"></i><b>4.2.5</b> Spatial data aggregation</a></li>
+<li class="chapter" data-level="4.2.6" data-path="spatial-operations.html"><a href="spatial-operations.html#distance-relations"><i class="fa fa-check"></i><b>4.2.6</b> Distance relations</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="spatial-operations.html"><a href="spatial-operations.html#spatial-ras"><i class="fa fa-check"></i><b>4.3</b> Spatial operations on raster data</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="attr.html"><a href="attr.html#raster-subsetting"><i class="fa fa-check"></i><b>4.3.1</b> Spatial subsetting</a></li>
+<li class="chapter" data-level="4.3.2" data-path="spatial-operations.html"><a href="spatial-operations.html#map-algebra"><i class="fa fa-check"></i><b>4.3.2</b> Map algebra</a></li>
+<li class="chapter" data-level="4.3.3" data-path="spatial-operations.html"><a href="spatial-operations.html#local-operations"><i class="fa fa-check"></i><b>4.3.3</b> Local operations</a></li>
+<li class="chapter" data-level="4.3.4" data-path="spatial-operations.html"><a href="spatial-operations.html#focal-operations"><i class="fa fa-check"></i><b>4.3.4</b> Focal operations</a></li>
+<li class="chapter" data-level="4.3.5" data-path="spatial-operations.html"><a href="spatial-operations.html#zonal-operations"><i class="fa fa-check"></i><b>4.3.5</b> Zonal operations</a></li>
+<li class="chapter" data-level="4.3.6" data-path="spatial-operations.html"><a href="spatial-operations.html#global-operations-and-distances"><i class="fa fa-check"></i><b>4.3.6</b> Global operations and distances</a></li>
+<li class="chapter" data-level="4.3.7" data-path="spatial-operations.html"><a href="spatial-operations.html#merging-rasters"><i class="fa fa-check"></i><b>4.3.7</b> Merging rasters</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="spatial-operations.html"><a href="spatial-operations.html#exercises-2"><i class="fa fa-check"></i><b>4.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="transform.html"><a href="transform.html"><i class="fa fa-check"></i><b>5</b> Geometric operations</a><ul>
+<li class="chapter" data-level="" data-path="transform.html"><a href="transform.html#prerequisites-3"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="5.1" data-path="transform.html"><a href="transform.html#introduction-2"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
+<li class="chapter" data-level="5.2" data-path="transform.html"><a href="transform.html#reproj-geo-data"><i class="fa fa-check"></i><b>5.2</b> Reprojecting geographic data</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="transform.html"><a href="transform.html#which-crs-to-use"><i class="fa fa-check"></i><b>5.2.1</b> Which CRS to use?</a></li>
+<li class="chapter" data-level="5.2.2" data-path="transform.html"><a href="transform.html#reproj-vec-geom"><i class="fa fa-check"></i><b>5.2.2</b> Reprojecting vector geometries</a></li>
+<li class="chapter" data-level="5.2.3" data-path="transform.html"><a href="transform.html#modifying-map-projections"><i class="fa fa-check"></i><b>5.2.3</b> Modifying map projections</a></li>
+<li class="chapter" data-level="5.2.4" data-path="transform.html"><a href="transform.html#reprojecting-raster-geometries"><i class="fa fa-check"></i><b>5.2.4</b> Reprojecting raster geometries</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="transform.html"><a href="transform.html#geo-vec"><i class="fa fa-check"></i><b>5.3</b> Geometric operations on vector data</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="transform.html"><a href="transform.html#simplification"><i class="fa fa-check"></i><b>5.3.1</b> Simplification</a></li>
+<li class="chapter" data-level="5.3.2" data-path="transform.html"><a href="transform.html#centroids"><i class="fa fa-check"></i><b>5.3.2</b> Centroids</a></li>
+<li class="chapter" data-level="5.3.3" data-path="transform.html"><a href="transform.html#buffers"><i class="fa fa-check"></i><b>5.3.3</b> Buffers</a></li>
+<li class="chapter" data-level="5.3.4" data-path="transform.html"><a href="transform.html#affine-transformations"><i class="fa fa-check"></i><b>5.3.4</b> Affine transformations</a></li>
+<li class="chapter" data-level="5.3.5" data-path="transform.html"><a href="transform.html#clipping"><i class="fa fa-check"></i><b>5.3.5</b> Clipping</a></li>
+<li class="chapter" data-level="5.3.6" data-path="transform.html"><a href="transform.html#geometry-unions"><i class="fa fa-check"></i><b>5.3.6</b> Geometry unions</a></li>
+<li class="chapter" data-level="5.3.7" data-path="transform.html"><a href="transform.html#type-trans"><i class="fa fa-check"></i><b>5.3.7</b> Type transformations</a></li>
+<li class="chapter" data-level="5.3.8" data-path="transform.html"><a href="transform.html#rasterization"><i class="fa fa-check"></i><b>5.3.8</b> Rasterization</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="transform.html"><a href="transform.html#geo-ras"><i class="fa fa-check"></i><b>5.4</b> Geometric operations on raster data</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="transform.html"><a href="transform.html#extent-and-origin"><i class="fa fa-check"></i><b>5.4.1</b> Extent and origin</a></li>
+<li class="chapter" data-level="5.4.2" data-path="transform.html"><a href="transform.html#aggregation-and-disaggregation"><i class="fa fa-check"></i><b>5.4.2</b> Aggregation and disaggregation</a></li>
+<li class="chapter" data-level="5.4.3" data-path="transform.html"><a href="transform.html#spatial-vectorization"><i class="fa fa-check"></i><b>5.4.3</b> Spatial vectorization</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="transform.html"><a href="transform.html#exercises-3"><i class="fa fa-check"></i><b>5.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="read-write.html"><a href="read-write.html"><i class="fa fa-check"></i><b>6</b> Geographic data I/O</a><ul>
+<li class="chapter" data-level="" data-path="read-write.html"><a href="read-write.html#prerequisites-4"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="6.1" data-path="read-write.html"><a href="read-write.html#introduction-3"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
+<li class="chapter" data-level="6.2" data-path="read-write.html"><a href="read-write.html#retrieving-data"><i class="fa fa-check"></i><b>6.2</b> Retrieving open data</a></li>
+<li class="chapter" data-level="6.3" data-path="read-write.html"><a href="read-write.html#file-formats"><i class="fa fa-check"></i><b>6.3</b> File formats</a></li>
+<li class="chapter" data-level="6.4" data-path="read-write.html"><a href="read-write.html#data-input"><i class="fa fa-check"></i><b>6.4</b> Data Input (I)</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="read-write.html"><a href="read-write.html#vector-data-1"><i class="fa fa-check"></i><b>6.4.1</b> Vector data</a></li>
+<li class="chapter" data-level="6.4.2" data-path="read-write.html"><a href="read-write.html#raster-data-1"><i class="fa fa-check"></i><b>6.4.2</b> Raster data</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="read-write.html"><a href="read-write.html#data-output"><i class="fa fa-check"></i><b>6.5</b> Data output (O)</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="read-write.html"><a href="read-write.html#vector-data-2"><i class="fa fa-check"></i><b>6.5.1</b> Vector data</a></li>
+<li class="chapter" data-level="6.5.2" data-path="read-write.html"><a href="read-write.html#raster-data-2"><i class="fa fa-check"></i><b>6.5.2</b> Raster data</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="read-write.html"><a href="read-write.html#visual-outputs"><i class="fa fa-check"></i><b>6.6</b> Visual outputs</a></li>
+<li class="chapter" data-level="6.7" data-path="read-write.html"><a href="read-write.html#exercises-4"><i class="fa fa-check"></i><b>6.7</b> Exercises</a></li>
+</ul></li>
+<li class="part"><span><b>II Applied geocomputation</b></span></li>
+<li class="chapter" data-level="7" data-path="transport.html"><a href="transport.html"><i class="fa fa-check"></i><b>7</b> Transport applications</a><ul>
+<li class="chapter" data-level="" data-path="transport.html"><a href="transport.html#prerequisites-5"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="7.1" data-path="transport.html"><a href="transport.html#introduction-4"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
+<li class="chapter" data-level="7.2" data-path="transport.html"><a href="transport.html#bris-case"><i class="fa fa-check"></i><b>7.2</b> A case study of Bristol</a></li>
+<li class="chapter" data-level="7.3" data-path="transport.html"><a href="transport.html#transport-zones"><i class="fa fa-check"></i><b>7.3</b> Transport zones</a></li>
+<li class="chapter" data-level="7.4" data-path="transport.html"><a href="transport.html#desire-lines"><i class="fa fa-check"></i><b>7.4</b> Desire lines</a></li>
+<li class="chapter" data-level="7.5" data-path="transport.html"><a href="transport.html#routes"><i class="fa fa-check"></i><b>7.5</b> Routes</a></li>
+<li class="chapter" data-level="7.6" data-path="transport.html"><a href="transport.html#nodes"><i class="fa fa-check"></i><b>7.6</b> Nodes</a></li>
+<li class="chapter" data-level="7.7" data-path="transport.html"><a href="transport.html#route-networks"><i class="fa fa-check"></i><b>7.7</b> Route networks</a></li>
+<li class="chapter" data-level="7.8" data-path="transport.html"><a href="transport.html#prioritizing-new-infrastructure"><i class="fa fa-check"></i><b>7.8</b> Prioritizing new infrastructure</a></li>
+<li class="chapter" data-level="7.9" data-path="transport.html"><a href="transport.html#future-directions-of-travel"><i class="fa fa-check"></i><b>7.9</b> Future directions of travel</a></li>
+<li class="chapter" data-level="7.10" data-path="transport.html"><a href="transport.html#ex-transport"><i class="fa fa-check"></i><b>7.10</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="location.html"><a href="location.html"><i class="fa fa-check"></i><b>8</b> Location analysis</a><ul>
+<li class="chapter" data-level="" data-path="location.html"><a href="location.html#prerequisites-6"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="8.1" data-path="location.html"><a href="location.html#introduction-5"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="location.html"><a href="location.html#case-study"><i class="fa fa-check"></i><b>8.2</b> Case study: bike shops in Germany</a></li>
+<li class="chapter" data-level="8.3" data-path="location.html"><a href="location.html#tidy-the-input-data"><i class="fa fa-check"></i><b>8.3</b> Tidy the input data</a></li>
+<li class="chapter" data-level="8.4" data-path="location.html"><a href="location.html#create-census-rasters"><i class="fa fa-check"></i><b>8.4</b> Create census rasters</a></li>
+<li class="chapter" data-level="8.5" data-path="location.html"><a href="location.html#define-metropolitan-areas"><i class="fa fa-check"></i><b>8.5</b> Define metropolitan areas</a></li>
+<li class="chapter" data-level="8.6" data-path="location.html"><a href="location.html#points-of-interest"><i class="fa fa-check"></i><b>8.6</b> Points of interest</a></li>
+<li class="chapter" data-level="8.7" data-path="location.html"><a href="location.html#identifying-suitable-locations"><i class="fa fa-check"></i><b>8.7</b> Identifying suitable locations</a></li>
+<li class="chapter" data-level="8.8" data-path="location.html"><a href="location.html#discussion-and-next-steps"><i class="fa fa-check"></i><b>8.8</b> Discussion and next steps</a></li>
+<li class="chapter" data-level="8.9" data-path="location.html"><a href="location.html#exercises-5"><i class="fa fa-check"></i><b>8.9</b> Exercises</a></li>
+</ul></li>
+<li class="part"><span><b>III Advanced methods</b></span></li>
+<li class="chapter" data-level="9" data-path="adv-map.html"><a href="adv-map.html"><i class="fa fa-check"></i><b>9</b> Advanced map making</a><ul>
+<li class="chapter" data-level="" data-path="adv-map.html"><a href="adv-map.html#prerequisites-7"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="9.1" data-path="adv-map.html"><a href="adv-map.html#introduction-6"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
+<li class="chapter" data-level="9.2" data-path="adv-map.html"><a href="adv-map.html#static-maps"><i class="fa fa-check"></i><b>9.2</b> Static maps</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="adv-map.html"><a href="adv-map.html#basics"><i class="fa fa-check"></i><b>9.2.1</b> Basics</a></li>
+<li class="chapter" data-level="9.2.2" data-path="adv-map.html"><a href="adv-map.html#map-styling"><i class="fa fa-check"></i><b>9.2.2</b> Map styling</a></li>
+<li class="chapter" data-level="9.2.3" data-path="adv-map.html"><a href="adv-map.html#class-intervals"><i class="fa fa-check"></i><b>9.2.3</b> Class intervals</a></li>
+<li class="chapter" data-level="9.2.4" data-path="adv-map.html"><a href="adv-map.html#facetted-maps"><i class="fa fa-check"></i><b>9.2.4</b> Facetted maps</a></li>
+<li class="chapter" data-level="9.2.5" data-path="adv-map.html"><a href="adv-map.html#inset-maps"><i class="fa fa-check"></i><b>9.2.5</b> Inset maps</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="adv-map.html"><a href="adv-map.html#animations"><i class="fa fa-check"></i><b>9.3</b> Animations</a></li>
+<li class="chapter" data-level="9.4" data-path="adv-map.html"><a href="adv-map.html#interactive-maps"><i class="fa fa-check"></i><b>9.4</b> Interactive maps</a></li>
+<li class="chapter" data-level="9.5" data-path="adv-map.html"><a href="adv-map.html#pseudo-unusual-maps"><i class="fa fa-check"></i><b>9.5</b> Pseudo (unusual) maps</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="gis.html"><a href="gis.html"><i class="fa fa-check"></i><b>10</b> Bridges to GIS software</a><ul>
+<li class="chapter" data-level="10.1" data-path="gis.html"><a href="gis.html#rqgis"><i class="fa fa-check"></i><b>10.1</b> (R)QGIS</a></li>
+<li class="chapter" data-level="10.2" data-path="gis.html"><a href="gis.html#rsaga"><i class="fa fa-check"></i><b>10.2</b> (R)SAGA</a></li>
+<li class="chapter" data-level="10.3" data-path="gis.html"><a href="gis.html#grass-through-rgrass7"><i class="fa fa-check"></i><b>10.3</b> GRASS through <strong>rgrass7</strong></a></li>
+<li class="chapter" data-level="10.4" data-path="gis.html"><a href="gis.html#when-to-use-what"><i class="fa fa-check"></i><b>10.4</b> When to use what?</a></li>
+<li class="chapter" data-level="10.5" data-path="gis.html"><a href="gis.html#exercises-6"><i class="fa fa-check"></i><b>10.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="raster-vector.html"><a href="raster-vector.html"><i class="fa fa-check"></i><b>11</b> Raster-vector interactions</a><ul>
+<li class="chapter" data-level="" data-path="raster-vector.html"><a href="raster-vector.html#prerequisites-8"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="11.1" data-path="raster-vector.html"><a href="raster-vector.html#cropping"><i class="fa fa-check"></i><b>11.1</b> Cropping</a></li>
+<li class="chapter" data-level="11.2" data-path="raster-vector.html"><a href="raster-vector.html#extraction"><i class="fa fa-check"></i><b>11.2</b> Extraction</a></li>
+<li class="chapter" data-level="11.3" data-path="raster-vector.html"><a href="raster-vector.html#spatial-interpolation"><i class="fa fa-check"></i><b>11.3</b> Spatial interpolation ??</a></li>
+<li class="chapter" data-level="11.4" data-path="transform.html"><a href="transform.html#rasterization"><i class="fa fa-check"></i><b>11.4</b> Rasterization ??</a></li>
+<li class="chapter" data-level="11.5" data-path="raster-vector.html"><a href="raster-vector.html#vectorization"><i class="fa fa-check"></i><b>11.5</b> Vectorization ??</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="algorithms-and-functions-for-geocomputation.html"><a href="algorithms-and-functions-for-geocomputation.html"><i class="fa fa-check"></i><b>12</b> Algorithms and functions for geocomputation</a></li>
+<li class="part"><span><b>IV Geocomputation in the wild</b></span></li>
+<li class="chapter" data-level="13" data-path="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><i class="fa fa-check"></i><b>13</b> Geocomputation for Ecology: A case study of fog oases</a><ul>
+<li class="chapter" data-level="" data-path="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html#prerequisites-9"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="13.1" data-path="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html#introduction-7"><i class="fa fa-check"></i><b>13.1</b> Introduction</a></li>
+<li class="chapter" data-level="13.2" data-path="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html#background"><i class="fa fa-check"></i><b>13.2</b> Background</a></li>
+<li class="chapter" data-level="13.3" data-path="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html#reducing-dimensionality"><i class="fa fa-check"></i><b>13.3</b> Reducing dimensionality</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="geocomputation-for-sea-level-research.html"><a href="geocomputation-for-sea-level-research.html"><i class="fa fa-check"></i><b>14</b> Geocomputation for sea level research</a></li>
+<li class="chapter" data-level="15" data-path="geocomputation-for-renewable-energy-research.html"><a href="geocomputation-for-renewable-energy-research.html"><i class="fa fa-check"></i><b>15</b> Geocomputation for renewable energy research</a></li>
+<li class="chapter" data-level="16" data-path="synthesis-and-next-steps.html"><a href="synthesis-and-next-steps.html"><i class="fa fa-check"></i><b>16</b> Synthesis and next steps</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="http://robinlovelace.net/">Robin Lovelace</a></li>
+<li><a href="https://nowosad.github.io/">Jakub Nowosad</a></li>
+<li><a href="http://www.geographie.uni-jena.de/en/Muenchow.html">Jannes Muenchow</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Geocomputation with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="gis" class="section level1">
+<h1><span class="header-section-number">10</span> Bridges to GIS software</h1>
+<p>An important feature of R is that users must use the command-line interface (CLI) to interact with the computer: you type commands and hit <code>Enter</code> to execute them interactively. The most popular open-source GIS software packages, by contrast, feature a prominent graphical user interface (GUI): you <em>can</em> interact with QGIS, SAGA and gvSIG by typing into (dockable) command-lines, but most users interact with such programs by ‘pointing and clicking their way through life’ as Gary Sherman puts it below <span class="citation">(Sherman <a href="#ref-sherman_desktop_2008">2008</a>)</span>:<a href="#fn59" class="footnoteRef" id="fnref59"><sup>59</sup></a></p>
+<blockquote>
+<p>With the advent of ‘modern’ GIS software, most people want to point and click their way through life. That’s good, but there is a tremendous amount of flexibility and power waiting for you with the command line. Many times you can do something on the command line in a fraction of the time you can do it with a GUI.</p>
+</blockquote>
+<p>Gary Sherman is well-qualified to comment on this matter as the creator of QGIS, the world’s premier open source GUI-based GIS!</p>
+<p>The ‘CLI vs GUI’ debate is often adversarial and polarized but it does not have to be: both options are great if well chosen in accordance with your needs and tasks. The advantages of a good CLI such as that provided by R are numerous. Among others, a CLI:</p>
+<ul>
+<li>facilitates the automation of repetitive tasks. We strongly dislike the manual execution of iterations, and would recommend to always think about how to solve such tasks programmatically. This way, you most likely discover new programming features and concepts, i.e., you learn and enhance your skill set. By contrast, what are you learning from executing the same tasks a 1000 times? As a nice side-effect, automation is surely more effective and less error-prone.</li>
+<li>ensures transparency and reproducibility (which also is the backbone of good scientific practice). In short, it is easier to share your R script than explain a sequence of 10+ ‘points and clicks’.</li>
+<li>encourages extending existing software by making it easy to modify and extend functions. If you are missing an algorithm you need, the CLI gives you the freedom to write your own! <!-- add link to most sexiest job in the 21st century --></li>
+<li>is the way to (geo-)data science. Professional and advanced technical skills will certainly enhance your career prospects, and are in dire need across a wide range of disciplines.</li>
+<li>is fun, but admittedly that is a subjective argument. <!-- any other points that we have missed? --></li>
+<li>…</li>
+</ul>
+<p>On the other hand, GUI-based GIS systems (particularly QGIS) are also advantageous. For instance, think of:</p>
+<ul>
+<li>the GUI. The really user-friendly graphical interface spares the user from programming. Though you probably wouldn’t read the book if this were your main objective.</li>
+<li>digitizing and all related tools (trace, snap, topological rules, etc.). Note that there is also the new <strong>mapedit</strong> package but its intention is to allow the quick editing of a few spatial features, and not professional, large-scale cartographic digitizing.</li>
+<li>georeferencing</li>
+<li>stereoscopic mapping (e.g., LiDAR and structure from motion)</li>
+<li>the built-in geodatabase management system often integrated in Desktop GIS (ArcGIS, GRASS GIS) and all related advantages such as object relational modeling, topology, fast (spatial) querying, etc.</li>
+<li>map production, in case you only want to create a beautiful map once. If you have to produce it over and over again, then maybe the CLI approach is better.</li>
+<li>zooming and dragging on WMS (though this is also possible with <strong>mapview</strong> and <strong>leaflet</strong>) <!-- any other points that we have missed so far? --></li>
+<li>…</li>
+</ul>
+<p>This general overview already points out the differences between R’s CLI and desktop GIS. However, there is more: dedicated GIS software provides hundreds of geoalgorithms that are simply missing in R. The good news is that ‘GIS bridges’ enable the access to these with the comfort of the R command line.<a href="#fn60" class="footnoteRef" id="fnref60"><sup>60</sup></a></p>
+<p>The R language was originally designed as an interface to and extension of other languages, especially C and FORTRAN, to enable access to statistical algorithms in a user-friendly and intuitive read-evaluate-print loop (REPL) <span class="citation">(Chambers <a href="#ref-chambers_extending_2016">2016</a>)</span>. R was not originally intended to be a GIS. This makes the breadth of R’s geospatial capabilities astonishing to many who are unaware of its ability to replicate established GIS software for many operations on spatial data. There are some domains where R can now outperform desktop GIS including spatial statistical modeling, online interactive visualization and the generation of animated or faceted maps.</p>
+<p>Instead of implementing existing GIS algorithms in R, it makes sense to avoid ‘reinventing the wheel’ by taking advantage of R’s ability to interface with other languages (especially C++, which is used for much low-level and high-performance GIS work). Using compiled code for new geoprocessing functionality (particularly with the help of the excellent <strong>Rcpp</strong> package) could form the basis of new R packages, building on the success of <strong>sf</strong>. However, there is already a wide range of algorithms that can be accessed via R’s interfaces to dedicated GIS software. It makes sense to understand these before moving to develop your own optimized algorithms. For this reason this chapter focuses on ‘bridges’ to the mature GIS products <a href="http://qgis.org/">QGIS</a> (via the package <strong>RQGIS</strong>), <a href="http://www.saga-gis.org/">SAGA</a> (<strong>RSAGA</strong>) and <a href="https://grass.osgeo.org/">GRASS</a> (<strong>rgrass7</strong>) from within R. Obviously, we here focus on open-source software solutions, however, there is also a bridge to the commercial GIS leader <a href="https://www.arcgis.com">ArcGIS</a> through the <strong>RPyGeo</strong> package. And the so-called <a href="https://github.com/R-ArcGIS/r-bridge">R-ArcGIS bridge</a> allows to use R from within ArcGIS. As a final note, we would like to point out that aside from interfaces to desktop GIS there are also interfaces to geospatial libraries such as <a href="www.gdal.org">GDAL</a> (<strong>gdalUtils</strong>, <strong>rgdal</strong>, <strong>sf</strong>) and <a href="https://trac.osgeo.org/geos/">GEOS</a> (<strong>rgeos</strong>, <strong>sf</strong>). By the end of the chapter you should have a working knowledge of the functionality such packages open up, and a more nuanced understanding of the ‘CLI vs GUI’ debate. As mentioned in chapter <a href="intro.html#intro">1</a>, doing GIS at the command-line makes it more reproducible, in-line with the principles of Geographic Data Science.</p>
+<div id="rqgis" class="section level2">
+<h2><span class="header-section-number">10.1</span> (R)QGIS</h2>
+<p>QGIS is one of the most popular open-source GIS <span class="citation">(Table @ref(tab:gis_comp); Graser and Olaya <a href="#ref-graser_processing:_2015">2015</a>)</span>. Its main advantage lies in the fact that it provides a unified interface to several other open-source GIS.</p>
+<table>
+<caption>(#tab:gis_comp)Comparison between three open-source GIS. Hybrid refers to the support of vector and raster operations.</caption>
+<thead>
+<tr class="header">
+<th align="left">GIS</th>
+<th align="left">first release</th>
+<th align="left">no. functions</th>
+<th align="left">support</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">GRASS</td>
+<td align="left">1984</td>
+<td align="left">&gt;500</td>
+<td align="left">hybrid</td>
+</tr>
+<tr class="even">
+<td align="left">QGIS</td>
+<td align="left">2002</td>
+<td align="left">&gt;1000</td>
+<td align="left">hybrid</td>
+</tr>
+<tr class="odd">
+<td align="left">SAGA</td>
+<td align="left">2004</td>
+<td align="left">&gt;600</td>
+<td align="left">hybrid</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note:</strong> <sup>a</sup> Comparing downloads of different providers is rather difficult (see <a href="http://spatialgalaxy.net/2011/12/19/qgis-users-around-the-world/" class="uri">http://spatialgalaxy.net/2011/12/19/qgis-users-around-the-world/</a>), and here also useless since every Windows QGIS download automatically also downloads SAGA and GRASS.</p>
+<p>First and foremost, this means that you have access to GDAL/OGR, GRASS and SAGA through QGIS but also to other third-party providers such as <a href="http://hydrology.usu.edu/taudem/taudem5/index.html">TauDEM</a>, <a href="https://www.orfeo-toolbox.org/">Orfeo Toolbox</a> and <a href="https://rapidlasso.com/lastools/">Lastools</a> (tools for LiDAR data) <span class="citation">(Graser and Olaya <a href="#ref-graser_processing:_2015">2015</a>)</span>. To run all these geoalgorithms (frequently more than 1000 depending on your set up) outside of the QGIS GUI, QGIS provides a Python API. <strong>RQGIS</strong> establishes a tunnel to this Python API through the <strong>reticulate</strong> package. Basically, functions <code>set_env</code> and <code>open_app</code> are doing this. Note that it is optional to run <code>set_env</code> and <code>open_app</code> since all functions depending on their output will run them automatically if needed. Before running <strong>RQGIS</strong> you have to make sure to have installed QGIS and all its (third-party) dependencies such as SAGA and GRASS. To help you with the installation process, please follow the steps as detailed in <code>vignette(&quot;install_guide&quot;, package = &quot;RQGIS&quot;)</code> for several platforms (Windows, Linux, MacOS).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(RQGIS)
+<span class="kw">set_env</span>()
+<span class="kw">open_app</span>()</code></pre></div>
+<p>Leaving the <code>path</code>-argument of <code>set_env</code> unspecified will search the computer for a QGIS installation. Hence, it is faster to specify explicitly the path to your QGIS installation. Subsequently, <code>open_app</code> sets all paths necessary to run QGIS from within R, and finally creates a so-called QGIS custom application <a href="http://docs.qgis.org/testing/en/docs/pyqgis_developer_cookbook/intro.html#using-pyqgis-in-custom-applications" class="uri">http://docs.qgis.org/testing/en/docs/pyqgis_developer_cookbook/intro.html#using-pyqgis-in-custom-applications</a>. We are now ready for some QGIS geoprocessing from within R! First of all, we load some data from the <strong>spData</strong>-package, namely the boroughs of London (<code>lnd</code>) and cycle hire points in London (<code>cycle_hire</code>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(spData)</code></pre></div>
+<p>In chapter <span class="citation">(<span class="citeproc-not-found" data-reference-id="ref"><strong>???</strong></span>)</span>(spatial-class), we already learned how to do a spatial overlay using the <strong>sf</strong>-package. Of course, any GIS is also able to perform spatial overlays. Here, we would like to know how many cycle points we can find per borough. First of all, we need to come up with the name of the function in QGIS. <code>find_algorithms</code> lets you search all QGIS geoalgorithms with the help of regular expressions. Here, we assume that the short description of the function contains first the word “point” and secondly somewhere later also the word “poly”. If you have no clue at all what to look for you can leave the <code>search_term</code>-argument empty which will return a list of all available QGIS geoalgorithms. If you also want to have a short description for each geoalgorithm, set the <code>name_only</code>-parameter to FALSE.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">find_algorithms</span>(<span class="st">&quot;points.*poly&quot;</span>, <span class="dt">name_only =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p>Now that we know the name of the function (“qgis:countpointsinpolygon”), we wonder how we can use it. <code>get_usage</code> returns all function parameters and default values. <code>open_help</code> lets you access the corresponding online help.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">alg =<span class="st"> &quot;qgis:countpointsinpolygon&quot;</span>
+<span class="kw">get_usage</span>(alg)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">open_help</span>(alg)</code></pre></div>
+<p>Finally, we can let QGIS do the work. Note that the workhorse function <code>run_qgis</code> accepts R named arguments, i.e., you can specify the parameter names as returned by <code>get_usage</code> as you would do in any other regular R function. Note also that <code>run_qgis</code> accepts spatial objects residing in R’s global environment as input (here: <code>lnd</code> and <code>cycle_hire</code>). But of course, you could also specify paths to shapefiles stored on disk. Setting the <code>load_output</code> to <code>TRUE</code> automatically loads the QGIS output into R. Since we only indicated the name of the output (“cycle.shp”), <code>run_qgis</code> saves the output to a temporary folder as returned by <code>tempdir()</code>, and loads it into R as an <strong>sf</strong>-object.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bike_points =<span class="st"> </span><span class="kw">run_qgis</span>(alg, <span class="dt">POLYGONS =</span> lnd, <span class="dt">POINTS =</span> cycle_hire, <span class="dt">FIELD =</span> <span class="st">&quot;no_bikes&quot;</span>, 
+                       <span class="dt">OUTPUT =</span> <span class="st">&quot;cycle.shp&quot;</span>, <span class="dt">load_output =</span> <span class="ot">TRUE</span>)
+<span class="kw">summary</span>(bike_points$no_bikes)
+<span class="kw">sum</span>(bike_points$no_bikes &gt;<span class="st"> </span><span class="dv">0</span>)</code></pre></div>
+<p>In case you leave some parameters of a geoalgorithm unspecified, <code>run_qgis</code> will automatically use the default values as arguments if available. To find out about the default values, run <code>get_args_man</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_args_man</span>(alg)</code></pre></div>
+<p>In this case the output tells us, had we left the <code>FIELDS</code>-parameter unspecified, our output (attribute) field would have been named “NUMPOINTS” (instead of “no_bikes”).</p>
+<!--
+"grass7:v.vect.stats" would achieve the same but is unavailable in QGIS
+-->
+<p>Other notes: - Leaving the output parameter(s) unspecified, saves the resulting QGIS output to a temporary folder created by QGIS. <code>run_qgis</code> prints these paths to the console after successfully running the QGIS engine. - If the output consists of multiple files and you have set <code>load_output</code> to <code>TRUE</code>, <code>run_qgis</code> will return a list with each element corresponding to one output file.</p>
+<p>To learn more about <strong>RQGIS</strong> please refer to the (hopefully) forthcoming paper (cite).</p>
+</div>
+<div id="rsaga" class="section level2">
+<h2><span class="header-section-number">10.2</span> (R)SAGA</h2>
+<p>Similar to QGIS, the System for Automated Geoscientific Analyses (SAGA; Table @ref(tab:gis_comp)) provides the possibility to run SAGA modules from Python (SAGA Python API). In addition, there is also a command line interface (saga_cmd.exe) to execute SAGA modules (see also <a href="https://sourceforge.net/p/saga-gis/wiki/Executing%20Modules%20with%20SAGA%20CMD/">https://sourceforge.net/p/saga-gis/wiki/Executing%20Modules%20with%20SAGA%20CMD/</a>). <strong>RSAGA</strong> uses the latter to run SAGA from within R.</p>
+<p>Though SAGA is a hybrid GIS, its main focus has been on raster processing, and here particularly on digital elevation models (soil properties, terrain attributes, climate parameters). Hence, SAGA is especially good at the fast processing of large (high-resolution) rasters datasets <span class="citation">(Conrad et al. <a href="#ref-conrad_system_2015">2015</a>)</span>. Therefore, we will introduce <strong>RSAGA</strong> with a raster and use case from <span class="citation">Muenchow, Brenning, and Richter (<a href="#ref-muenchow_geomorphic_2012">2012</a>)</span>. Specifically, we would like to compute the SAGA wetness index from a digital elevation model. First of all, we need to make sure that <strong>RSAGA</strong> will find SAGA on the computer when called. For this, all <strong>RSAGA</strong> functions using SAGA in the background make use of <code>rsaga.env()</code>. Usually, <code>rsaga.env()</code> will detect SAGA automatically by searching several likely directories (see its help for more information). However, we have ‘hidden’ SAGA in the OSGEO4W-installation, a location <code>rsaga.env()</code> does not search automatically. <code>linkSAGA</code> searches your computer for a valid SAGA installation. If it finds one, it adds it to the PATH environment variable thereby making sure that <code>rsaga.env</code> runs successfully.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(RSAGA)
+<span class="kw">library</span>(link2GI)
+<span class="kw">linkSAGA</span>()
+<span class="kw">rsaga.env</span>()</code></pre></div>
+<p>Secondly, we need to write the digital elevation model to a SAGA-format. Note that calling <code>data(landslides)</code> attaches two object to the global environment - <code>dem</code>, a digital elevation model in the form of a <code>list</code>, and <code>landslides</code>, a <code>data.frame</code> containing observations representing the presence or absence of a landslide:</p>
+<!-- The following examples only work with SAGA < 2.3. We have informed the package maintainer to update SAGA -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(landslides)
+<span class="kw">write.sgrd</span>(<span class="dt">data =</span> dem, <span class="dt">file =</span> <span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">&quot;dem&quot;</span>), <span class="dt">header =</span> dem$header)</code></pre></div>
+<p>The organization of SAGA is modular. Libraries contain so-called modules, i.e., geoalgorithms. To find out which libraries are available, run:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tail</span>(<span class="kw">rsaga.get.libraries</span>(), <span class="dv">10</span>)</code></pre></div>
+<p>Instead of presenting all available libraries we have shown only the last ten. We choose the library ‘ta_hydrology’ (ta is the abbreviation for terrain analysis). Subsequently, we can access the available modules of a specific library (here: ‘ta_hydrology’) as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rsaga.get.modules</span>(<span class="dt">libs =</span> <span class="st">&quot;ta_hydrology&quot;</span>)</code></pre></div>
+<p>Similarly to <code>RQGIS::get_usage()</code>, <code>rsaga.get.usage()</code> prints the function parameters of a specific geoalgorithm, e.g., the <code>SAGA Wetness Index</code>, to the console.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rsaga.get.usage</span>(<span class="dt">lib =</span> <span class="st">&quot;ta_hydrology&quot;</span>, <span class="dt">module =</span> <span class="st">&quot;SAGA Wetness Index&quot;</span>)</code></pre></div>
+<p>Finally, you can run SAGA from within R using <strong>RSAGA</strong>’s geoprocessing workhorse function <code>rsaga.geoprocessor()</code>. The function expects a parameter-argument list in which you have specified all necessary parameters.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">params =<span class="st"> </span><span class="kw">list</span>(<span class="dt">DEM =</span> <span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">&quot;dem.sgrd&quot;</span>),
+              <span class="dt">TWI =</span> <span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">&quot;twi.sdat&quot;</span>))
+<span class="kw">rsaga.geoprocessor</span>(<span class="dt">lib =</span> <span class="st">&quot;ta_hydrology&quot;</span>, <span class="dt">module =</span> <span class="st">&quot;SAGA Wetness Index&quot;</span>, 
+                   <span class="dt">param =</span> params)</code></pre></div>
+<p>To facilitate the access to the SAGA interface, RSAGA frequently provides user-friendly wrapper-functions with meaningful default values (see RSAGA documentation for examples, e.g., <code>?rsaga.wetness.index</code>). So the function call for calculating the ‘SAGA Wetness Index’ becomes as simple as:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rsaga.wetness.index</span>(<span class="dt">in.dem =</span> <span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">&quot;dem&quot;</span>), 
+                    <span class="dt">out.wetness.index =</span> <span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">&quot;twi&quot;</span>))</code></pre></div>
+<p>Of course, we would like to inspect our result visually (Figure @ref(fig:saga_twi)). To load and plot the SAGA output file, we use the <strong>raster</strong> package.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(raster)
+twi =<span class="st"> </span>raster::<span class="kw">raster</span>(<span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">&quot;twi.sdat&quot;</span>))
+<span class="kw">plot</span>(twi, <span class="dt">col =</span> RColorBrewer::<span class="kw">brewer.pal</span>(<span class="dt">n =</span> <span class="dv">9</span>, <span class="dt">name =</span> <span class="st">&quot;Blues&quot;</span>))
+<span class="co"># or using mapview</span>
+<span class="co"># proj4string(twi) = paste0(&quot;+proj=utm +zone=17 +south +ellps=WGS84 +towgs84=&quot;, </span>
+<span class="co">#                           &quot;0,0,0,0,0,0,0 +units=m +no_defs&quot;)</span>
+<span class="co"># mapview(twi, col.regions = RColorBrewer::brewer.pal(n = 9, &quot;Blues&quot;), </span>
+<span class="co">#         at = seq(cellStats(twi, &quot;min&quot;) - 0.01, cellStats(twi, &quot;max&quot;) + 0.01, </span>
+<span class="co">#                  length.out = 9))</span></code></pre></div>
+<p>You can find a much more extended version of the here presented example in the RSAGA vignette <code>vignette(&quot;RSAGA-landslides&quot;)</code>. This example includes statistical geocomputing, i.e., it uses a GIS to derive terrain attributes as predictors for a non-linear Generalized Linear Model (GAM) to predict spatially landslide susceptibility <span class="citation">(Muenchow, Brenning, and Richter <a href="#ref-muenchow_geomorphic_2012">2012</a>)</span>. The term statistical geocomputation emphasizes the strength of combining R’s data science power with the geoprocessing power of a GIS which is at the very heart of building a bridge from R to GIS.</p>
+</div>
+<div id="grass-through-rgrass7" class="section level2">
+<h2><span class="header-section-number">10.3</span> GRASS through <strong>rgrass7</strong></h2>
+<p>The U.S. Army - Construction Engineering Research Laboratory (USA-CERL) created the core of the hybrid raster-vector Geographical Resources Analysis Support System (GRASS) <span class="citation">(Table @ref(tab:gis_comp); Neteler and Mitasova <a href="#ref-neteler_open_2008">2008</a>)</span> from 1982 to 1995. Academia continued this work since 1997. Similar to SAGA, GRASS focussed on raster processing in the beginning while only later, since GRASS 6.0, adding advanced vector functionality <span class="citation">(Bivand, Pebesma, and Gómez-Rubio <a href="#ref-bivand_applied_2013">2013</a>)</span>.</p>
+<p>We will introduce <strong>rgrass7</strong> with one of the most interesting problems in GIScience - the traveling salesman problem. Suppose a traveling salesman would like to visit 24 customers while covering the shortest distance possible. Additionally, the salesman would like to set out his journey at home, and come back to it after having finished all customer visits. There is a single best solution to this problem, however, to find it, is even for modern computers (mostly) impossible <span class="citation">(Longley <a href="#ref-longley_geographic_2015">2015</a>)</span>. In our case, the number of possible solution correspond to <code>(25 - 1)! / 2</code> possible solutions, i.e. the factorial of 24 divided by 2 (since we do not differentiate between forward or backward direction). Even if one iteration can be done in a nanosecond this still corresponds to 9.83710^{6} years. Luckily, there are clever, almost optimal solutions which run in a tiny fraction of this inconceibable amount of time. GRASS GIS provides one of these solutions (for more details see <a href="https://grass.osgeo.org/grass72/manuals/v.net.salesman.html">v.net.salesman</a>). In our use case, we would like to find the shortest path between the first 25 bicycle stations (instead of customers) on London’s streets.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(spData)
+<span class="kw">data</span>(cycle_hire)
+points =<span class="st"> </span>cycle_hire[<span class="dv">1</span>:<span class="dv">25</span>, ]</code></pre></div>
+<!--
+
+```r
+# plot(st_geometry(streets))
+# plot(st_geometry(cycle_hire), col = "red", pch = 16, add = TRUE)
+```
+-->
+<p>Aside from the cycle hire points data, we will need the OpenStreetMap data of London. We download it with the help of the <strong>osmdata</strong> package (see also section <a href="read-write.html#retrieving-data">6.2</a>). We constrain the download of the street network (in OSM language called highway) to the bounding box of the cycle hire data, and attach the corresponding data as an <code>sf</code>-object. <code>osmdata_sf</code> returns a list with several spatial objects (points, lines, polygons, etc.). Here, we will only keep the line objects. To learn more about how to use the <strong>osmdata</strong>-package, please refer to <a href="https://ropensci.github.io/osmdata/" class="uri">https://ropensci.github.io/osmdata/</a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sf)
+<span class="kw">library</span>(osmdata)
+
+b_box =<span class="st"> </span>sf::<span class="kw">st_bbox</span>(cycle_hire)
+streets =<span class="st"> </span><span class="kw">opq</span>(b_box) %&gt;%
+<span class="st">  </span><span class="kw">add_osm_feature</span>(<span class="dt">key =</span> <span class="st">&quot;highway&quot;</span>) %&gt;%
+<span class="st">  </span><span class="kw">osmdata_sf</span>() %&gt;%
+<span class="st">  `</span><span class="dt">[[</span><span class="st">`</span>(., <span class="st">&quot;osm_lines&quot;</span>)</code></pre></div>
+<p>Now that we have the data, we can go on and initiate a GRASS session, i.e., we have to create a GRASS geodatabase. The GRASS geodatabase system is based on SQLite. Consequently, different users can easily work on the same project, possibly with different read/write permissions. However, one has to set up this geodatabase (also from within R), and users used to a GIS GUI popping up by one click might find this process a bit intimidating in the beginning. First of all, the GRASS database requires its own directory, and contains a location (Figure @ref(fig:grass_loc)). The location in turn simply contains the geodata for one project. Within one location several mapsets can exist, and typically refer to different users. PERMANENT is a mandatory mapset, and created automatically. It stores the projection, the spatial extent and the default resolution for raster data. In order to share spatial data with all users of a project, the database owner can add spatial data to the PERMANENT mapset. Please refer to <span class="citation">Neteler and Mitasova (<a href="#ref-neteler_open_2008">2008</a>)</span> and the <a href="https://grass.osgeo.org/grass72/manuals/helptext.html">GRASS GIS quick start</a> for more information on the GRASS geodatabase system.</p>
+<div class="figure" style="text-align: center">
+<img src="https://grass.osgeo.org/grass72/manuals/help_loc_struct.png" alt="Structure of the GRASS geodatabase system including locations and mapsets Figure was taken from https://grass.osgeo.org/grass72/manuals/help_loc_struct.png."  />
+<p class="caption">
+(#fig:grass_loc)Structure of the GRASS geodatabase system including locations and mapsets Figure was taken from <a href="https://grass.osgeo.org/grass72/manuals/help_loc_struct.png" class="uri">https://grass.osgeo.org/grass72/manuals/help_loc_struct.png</a>.
+</p>
+</div>
+<p>Naturally, you have to set up a location and a mapset if you want to use GRASS from within R. First of all, we need to find out if and where GRASS7 is installed on the computer.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(link2GI)
+if (<span class="kw">Sys.info</span>()[<span class="st">&quot;sysname&quot;</span>] ==<span class="st"> &quot;Windows&quot;</span>) {
+  link =<span class="st"> </span>link2GI::<span class="kw">searchGRASSW</span>()  
+} else {
+  link =<span class="st"> </span>link2GI::<span class="kw">searchGRASSX</span>()
+}
+<span class="co">#&gt; Warning in link2GI::searchGRASSX(): Did not find any valid GRASS</span>
+<span class="co">#&gt; installation at mount point /usr</span></code></pre></div>
+<p><code>link</code> is a <code>data.frame</code> which contains in its rows the GRASS installations on your computer. Here, we will use a GRASS7 installation. If you have not installed GRASS7 on your computer, we recommend that you do so now. Assuming that we have found a working installation on your computer, we use the corresponding path in <code>initGRASS</code>. Additionally, we specify where to store the geodatabase (gisDbase), name the location <code>london</code>, and use the PERMANENT mapset.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rgrass7)
+<span class="co"># find a GRASS7 installation, and use the first one</span>
+ind =<span class="st"> </span><span class="kw">grep</span>(<span class="st">&quot;7&quot;</span>, link$version)[<span class="dv">1</span>]
+<span class="co"># next line of code only necessary if we want to use GRASS as installed by </span>
+<span class="co"># OSGeo4W. Among others, this adds some paths to PATH, which are also needed</span>
+<span class="co"># for running GRASS.</span>
+link2GI::<span class="kw">getparams_GRASS4W</span>(link[ind, ])
+grass_path =<span class="st"> </span><span class="kw">ifelse</span>(!<span class="kw">is.null</span>(link$installation_type) &amp;&amp;<span class="st"> </span>
+<span class="st">                      </span>link$installation_type[ind] ==<span class="st"> &quot;osgeo4W&quot;</span>,
+                     <span class="kw">file.path</span>(link$instDir[ind], <span class="st">&quot;apps/grass&quot;</span>, link$version[ind]),
+                     link$instDir)
+<span class="kw">initGRASS</span>(<span class="dt">gisBase =</span> grass_path,
+          <span class="co"># home parameter necessary under UNIX-based systems</span>
+          <span class="dt">home =</span> <span class="kw">tempdir</span>(),
+          <span class="dt">gisDbase =</span> <span class="kw">tempdir</span>(), <span class="dt">location =</span> <span class="st">&quot;london&quot;</span>, 
+          <span class="dt">mapset =</span> <span class="st">&quot;PERMANENT&quot;</span>)</code></pre></div>
+<p>Subsequently, we define the projection, the extent and the resolution.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">execGRASS</span>(<span class="st">&quot;g.proj&quot;</span>, <span class="dt">flags =</span> <span class="kw">c</span>(<span class="st">&quot;c&quot;</span>, <span class="st">&quot;quiet&quot;</span>), 
+          <span class="dt">proj4 =</span> sf::<span class="kw">st_crs</span>(streets)$proj4string)
+b_box =<span class="st"> </span>sf::<span class="kw">st_bbox</span>(streets) 
+<span class="kw">execGRASS</span>(<span class="st">&quot;g.region&quot;</span>, <span class="dt">flags =</span> <span class="kw">c</span>(<span class="st">&quot;quiet&quot;</span>), 
+          <span class="dt">n =</span> <span class="kw">as.character</span>(b_box[<span class="st">&quot;ymax&quot;</span>]), <span class="dt">s =</span> <span class="kw">as.character</span>(b_box[<span class="st">&quot;ymin&quot;</span>]), 
+          <span class="dt">e =</span> <span class="kw">as.character</span>(b_box[<span class="st">&quot;xmax&quot;</span>]), <span class="dt">w =</span> <span class="kw">as.character</span>(b_box[<span class="st">&quot;xmin&quot;</span>]), 
+          <span class="dt">res =</span> <span class="st">&quot;1&quot;</span>)</code></pre></div>
+<p>Once you are familiar how to set up the GRASS environment, it becomes tedious to do so over and over again. Luckily, <code>linkGRASS7</code> of the <strong>link2GI</strong> packages lets you do it with one line of code. The only thing you need to provide is a spatial object which determines the projection and the extent of the geodatabase. First, <code>linkGRASS7</code> finds all GRASS installations on your computer. Since we have set <code>ver_select</code> to <code>TRUE</code>, we can interactively choose one of the found GRASS-installations. If there is just one installation, the <code>linkGRASS7</code> automatically chooses this one. Secondly, <code>linkGRASS7</code> establishes a connection to GRASS7.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">linkGRASS7</span>(streets, <span class="dt">ver_select =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p>Before we can use GRASS geoalgorithms, we need to add data to GRASS’s spatial database. Luckily, the convenience function <code>writeVECT</code> does this for us. (Use <code>writeRast</code> in the case of raster data.) In our case we add the street and cycle hire point data while using only the first attribute column, and name them also <code>streets</code> and <code>points</code>.</p>
+<!-- in time we can also use sf- and raster-objects with rgrass7, Roger has already implemented this in the rgrass7 developer version -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">writeVECT</span>(<span class="kw">as</span>(streets[, <span class="dv">1</span>], <span class="st">&quot;Spatial&quot;</span>), <span class="dt">vname =</span> <span class="st">&quot;streets&quot;</span>)
+<span class="kw">writeVECT</span>(<span class="dt">SDF =</span> <span class="kw">as</span>(points[, <span class="dv">1</span>], <span class="st">&quot;Spatial&quot;</span>), <span class="dt">vname =</span> <span class="st">&quot;points&quot;</span>)</code></pre></div>
+<p>To perform our network analysis, we need a topological clean street network. GRASS’s <code>v.clean</code> takes care of the removal of duplicates, small angles and dangles, among others. Here, we break lines at each intersection to ensure that the subsequent routing algorithm can actually turn right or left at an intersection, and save the output in a GRASS object named <code>streets_clean</code>. Probably a few of our cycling station points do not exactly lie on a street segment. However, to find the shortest route between them, we need to connect them to the nearest streets segment. <code>v.net</code>’s connect-operator does exactly this. We save its output in <code>streets_points_con</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">execGRASS</span>(<span class="dt">cmd =</span> <span class="st">&quot;v.clean&quot;</span>, <span class="dt">input =</span> <span class="st">&quot;streets&quot;</span>, <span class="dt">output =</span> <span class="st">&quot;streets_clean&quot;</span>,
+          <span class="dt">tool =</span> <span class="st">&quot;break&quot;</span>, <span class="dt">flags =</span> <span class="st">&quot;overwrite&quot;</span>)
+<span class="kw">execGRASS</span>(<span class="dt">cmd =</span> <span class="st">&quot;v.net&quot;</span>, <span class="dt">input =</span> <span class="st">&quot;streets_clean&quot;</span>, <span class="dt">output =</span> <span class="st">&quot;streets_points_con&quot;</span>, 
+          <span class="dt">points =</span> <span class="st">&quot;points&quot;</span>, <span class="dt">operation =</span> <span class="st">&quot;connect&quot;</span>, <span class="dt">threshold =</span> <span class="fl">0.001</span>,
+          <span class="dt">flags =</span> <span class="kw">c</span>(<span class="st">&quot;overwrite&quot;</span>, <span class="st">&quot;c&quot;</span>))</code></pre></div>
+<p>The resulting clean dataset serves as input for the <code>v.net.salesman</code>-algorithm, which finally finds the shortest route between all cycle hire stations. <code>center_cats</code> requires a numeric range as input. This range represents the points for which a shortest route should be calculated. Since we would like to calculate the route for all cycle stations, we set it to <code>1-25</code>. To access the GRASS help page of the traveling salesman algorithm, run <code>execGRASS(&quot;g.manual&quot;, entry = &quot;v.net.salesman&quot;)</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">execGRASS</span>(<span class="dt">cmd =</span> <span class="st">&quot;v.net.salesman&quot;</span>, <span class="dt">input =</span> <span class="st">&quot;streets_points_con&quot;</span>,
+          <span class="dt">output =</span> <span class="st">&quot;shortest_route&quot;</span>, <span class="dt">center_cats =</span> <span class="kw">paste0</span>(<span class="st">&quot;1-&quot;</span>, <span class="kw">nrow</span>(points)),
+          <span class="dt">flags =</span> <span class="kw">c</span>(<span class="st">&quot;overwrite&quot;</span>))</code></pre></div>
+<p>To visualize our result, we import the output layer into R, and visualize it with the help of the <strong>mapview</strong> package (Figure @ref(fig:grass_mapview)).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(mapview)
+route =<span class="st"> </span><span class="kw">readVECT</span>(<span class="st">&quot;shortest_route&quot;</span>)
+<span class="kw">mapview</span>(route) +
+<span class="st">  </span><span class="kw">mapview</span>(points)</code></pre></div>
+<p>Further notes: - Please note that we have used GRASS’s geodatabase (based on SQLite) which allows faster processing. That means we have only exported spatial data in the beginning. Then we created new objects but only imported the final result back into R. To find out which datasets are currently available, run <code>execGRASS(&quot;g.list&quot;, type = &quot;vector,raster&quot;, flags = &quot;p&quot;)</code>. - Of course, we could have also accessed an already existing GRASS geodatabase from within R. Prior to importing data into R, you might want to perform some (spatial) subsetting. Use <code>v.select</code> and <code>v.extract</code> for vector data. <code>db.select</code> lets you select subsets of the attribute table of a vector layer without returning the correponding geometry. - You can start R also from within a running GRASS session <span class="citation">(for more information please refer to Bivand, Pebesma, and Gómez-Rubio <a href="#ref-bivand_applied_2013">2013</a> and this <a href="https://grasswiki.osgeo.org/wiki/R_statistics/rgrass7">wiki</a>)</span>. - Refer to the excellent <a href="https://grass.osgeo.org/grass72/manuals/">GRASS online help</a> or <code>execGRASS(&quot;g.manual&quot;, flags = &quot;i&quot;)</code> for more information on each available GRASS geoalgorithm. - If you would like to use GRASS 6 from within R, use the R package <strong>spgrass6</strong>.</p>
+</div>
+<div id="when-to-use-what" class="section level2">
+<h2><span class="header-section-number">10.4</span> When to use what?</h2>
+<p>To recommend a single R-GIS interface is hard since the usage depends on personal preferences, the tasks at hand and your familiarity with different GIS. The latter means if you have already preferred the GUI of a certain GIS, you are quite likely to use the corresponding interface. Certainly, <strong>RQGIS</strong> is an appropriate choice for most use cases. Its main advantages are:</p>
+<ul>
+<li>an unified access to several GIS, and therefore the provision of &gt;1000 geoalgorithms. Of course, this includes duplicated functionality, e.g., you can perform overlay-operations using QGIS-, SAGA- or GRASS-geoalgorithms.</li>
+<li>the automatic data format conversions. For instance, SAGA uses <code>.sdat</code> grid files and GRASS uses its own database format but QGIS will handle the corresponding conversions for you on the fly.</li>
+<li><strong>RQGIS</strong> can also handle spatial objects residing in R as input for geoalgorithms, and loads QGIS output automatically back into R if desired.</li>
+<li>its convenience functions to support the access of the online help, R named arguments and automatic default value retrieval. Please note that <strong>rgrass7</strong> inspired the latter two features.</li>
+<li>Currently (but this might change), <strong>RQGIS</strong> supports newer SAGA (2.3.1) versions than <strong>RSAGA</strong> (2.2.3)</li>
+</ul>
+<p>However, there are use cases when you certainly should use one of the other R-GIS bridges. QGIS only provides access to a subset of GRASS and SAGA functionality. Therefore, to use the complete set of SAGA and GRASS functions, stick with <strong>RSAGA</strong> and <strong>rgrass7</strong>. When doing so, make advantage of <strong>RSAGA</strong>’s numerous user-friendly functions. Note also, that <strong>RSAGA</strong> offers native R functions for geocomputation such as <code>multi.local.function</code>, <code>pick.from.grid</code> and many more. Finally, if you need topological correct data and/or geodatabase-management functionality, we recommend the usage of GRASS. In addition, if you would like to run simulations with the help of a geodatabase <span class="citation">(<span class="citeproc-not-found" data-reference-id="krug_2010_clearing"><strong>???</strong></span>)</span>, use <strong>rgrass7</strong> directly since <strong>RQGIS</strong> always starts a new GRASS session for each call.</p>
+</div>
+<div id="exercises-6" class="section level2">
+<h2><span class="header-section-number">10.5</span> Exercises</h2>
+<ol style="list-style-type: decimal">
+<li>Create two overlapping polygons (<code>poly_1</code> and <code>poly_2</code>) with the help of the <strong>sf</strong>-package (see chapter <a href="spatial-class.html#spatial-class">2</a>). Calculate the intersection using:</li>
+</ol>
+<ul>
+<li><strong>RQGIS</strong>, <strong>RSAGA</strong> and <strong>rgrass7</strong></li>
+<li><strong>sf</strong></li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>Run <code>data(dem, package = &quot;RQGIS&quot;)</code> and <code>data(random_points, package = &quot;RQGIS&quot;)</code>. Select randomly a point from <code>random_points</code> and find all <code>dem</code> pixels that can be seen from this point (hint: viewshed). Visualize your result. For example, plot a hillshade, and on top of it the digital elevation model, your viewshed output and the point. Additionally, give <code>mapview</code> a try.</li>
+</ol>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-sherman_desktop_2008">
+<p>Sherman, Gary. 2008. <em>Desktop GIS: Mapping the Planet with Open Source Tools</em>. Pragmatic Bookshelf.</p>
+</div>
+<div id="ref-chambers_extending_2016">
+<p>Chambers, John M. 2016. <em>Extending R</em>. CRC Press.</p>
+</div>
+<div id="ref-graser_processing:_2015">
+<p>Graser, Anita, and Victor Olaya. 2015. “Processing: A Python Framework for the Seamless Integration of Geoprocessing Tools in QGIS.” <em>ISPRS International Journal of Geo-Information</em> 4 (4): 2219–45. doi:<a href="https://doi.org/10.3390/ijgi4042219">10.3390/ijgi4042219</a>.</p>
+</div>
+<div id="ref-conrad_system_2015">
+<p>Conrad, O., B. Bechtel, M. Bock, H. Dietrich, E. Fischer, L. Gerlitz, J. Wehberg, V. Wichmann, and J. Böhner. 2015. “System for Automated Geoscientific Analyses (SAGA) V. 2.1.4.” <em>Geosci. Model Dev.</em> 8 (7): 1991–2007. doi:<a href="https://doi.org/10.5194/gmd-8-1991-2015">10.5194/gmd-8-1991-2015</a>.</p>
+</div>
+<div id="ref-muenchow_geomorphic_2012">
+<p>Muenchow, J., A. Brenning, and M. Richter. 2012. “Geomorphic Process Rates of Landslides Along a Humidity Gradient in the Tropical Andes.” <em>Geomorphology</em> 139-140 (February): 271–84. doi:<a href="https://doi.org/10.1016/j.geomorph.2011.10.029">10.1016/j.geomorph.2011.10.029</a>.</p>
+</div>
+<div id="ref-neteler_open_2008">
+<p>Neteler, Markus, and Helena Mitasova. 2008. <em>Open Source GIS: A GRASS GIS Approach</em>. 3. ed. New York, NY: Springer.</p>
+</div>
+<div id="ref-bivand_applied_2013">
+<p>Bivand, Roger, Edzer J Pebesma, and Virgilio Gómez-Rubio. 2013. <em>Applied Spatial Data Analysis with R</em>. Vol. 747248717. Springer.</p>
+</div>
+<div id="ref-longley_geographic_2015">
+<p>Longley, Paul. 2015. <em>Geographic Information Science &amp; Systems</em>. Fourth edition. Hoboken, NJ: Wiley.</p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="59">
+<li id="fn59"><p><!-- yes, we should shorten the footnote or put it somewhere into the text. I just rewrote it to make clearer what was meant. At least this was what I gathered. --> The mature GRASS GIS software package and PostGIS are quite popular in academia and industry, and could be seen as products which buck this trend as they are built around the command-line. In <a href="http://gama.fsv.cvut.cz/~landa/publications/2008/gis-ostrava-08/paper/landa-grass-gui-wxpython.pdf">2008</a> GRASS developers added a sophisticated GUI, shifting the emphasis slightly away from its CLI. However, GRASS lacks a sophisticated and feature-rich IDE such as RStudio that supports ‘CLI newbies’. On the other hand, PostGIS is the spatial extension of the popular PostgreSQL open source database, and therefore not really a dedicated GIS. This is also highlighted by the fact that PostGIS lacks any geovisualization capabilities and its description of ‘legacy GIS’ on its <a href="http://workshops.boundlessgeo.com/postgis-intro/introduction.html">website</a>. Similar to GRASS, PostgreSQGL provides a (partial) GUI called <a href="https://www.pgadmin.org/">pgAdmin</a> to facilitate the editing and administration of the database. To make it clear, though PostGIS provides spatial functions, its main purpose is the handling of spatial objects in a relational database management system. Therefore, frequently users store their spatial data in PostGIS, and interact with it through a dedicated GIS software such as QGIS. Of course, you can also use R to access data from PostGIS (<strong>sf</strong>, <strong>rgdal</strong>, <strong>rpostgis</strong>). In summary, a typical workflow would be: perform a large spatial query with PostGIS, then load the result into a further application (QGIS, R) for further geoprocessing.<br />
+<a href="gis.html#fnref59">↩</a></p></li>
+<li id="fn60"><p>The term ‘bridge’ was probably first used in the R-spatial world for the coupling of R with GRASS <span class="citation">(Neteler and Mitasova <a href="#ref-neteler_open_2008">2008</a>)</span>. Roger Bivand elaborates on this in his talk “Bridges between GIS and R”, delivered at the 2016 GEOSTAT summer school. The resulting slides can be found on Roger’s personal website at <a href="http://spatial.nhh.no/misc/?C=M;O=D">http://spatial.nhh.no/misc</a> in the file <code>geostat_talk16.zip</code>.<a href="gis.html#fnref60">↩</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="adv-map.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="raster-vector.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/Robinlovelace/geocompr/edit/master/11-gis.Rmd",
+"text": "Edit"
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

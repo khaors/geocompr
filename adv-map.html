@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="index.html">
-<link rel="next" href="intro.html">
+<link rel="prev" href="location.html">
+<link rel="next" href="gis.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -332,59 +332,168 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="preface" class="section level1 unnumbered">
-<h1>Preface</h1>
-<p>This book is aimed at people who want to do spatial data analysis, visualization and modeling with a modern programming language (R). There is no single target audience but we expect the book to be especially useful for:</p>
+<div id="adv-map" class="section level1">
+<h1><span class="header-section-number">9</span> Advanced map making</h1>
+<div id="prerequisites-7" class="section level2 unnumbered">
+<h2>Prerequisites</h2>
 <ul>
-<li>People who have learned spatial analysis skills using a desktop Geographic Information System (GIS) such as <a href="http://qgis.org/en/site/">QGIS</a>, <a href="http://desktop.arcgis.com/en/arcmap/">ArcMap</a>, <a href="https://grass.osgeo.org/">GRASS</a> or <a href="http://www.saga-gis.org/en/index.html">SAGA</a>, who want access to a powerful (geo)statistical and visualization programming language and the benefits of a command-line approach <span class="citation">(Sherman <a href="#ref-sherman_desktop_2008">2008</a>)</span>:</li>
+<li>This chapter requires the following packages:</li>
 </ul>
-<blockquote>
-<p>With the advent of ‘modern’ GIS software, most people want to point and click their way through life. That’s good, but there is a tremendous amount of flexibility and power waiting for you with the command line.</p>
-</blockquote>
-<ul>
-<li>Graduate students and researchers from fields specializing in geographic data including Geography, Remote Sensing, Planning, GIS and Geographic Data Science</li>
-<li>Academics and post-graduate students working on projects in fields including Geology, Regional Science, Biology and Ecology, Agricultural Sciences (precision farming), Archaeology, Epidemiology, Transport Modeling, and broadly defined Data Science which require the power and flexibility of R for their research <!-- please add further fields--></li>
-<li>Applied researchers and analysts in public, private or third-sector organisations who need the reproducibility, speed and flexibility of a command-line language such as R in applications dealing with spatial data as diverse as Urban and Transport Planning, Logistics, Geo-marketing (store location analysis) and Emergency Planning <!-- please add further examples--></li>
-</ul>
-<p>The book is designed to be accessible to a wide audience. The chapters progress gradually in difficulty and exercises are provided at the end of each chapter to ensure understanding. However, R novices may find the reproducible code chunks — an integral part of the book — difficult to understand and implement at first.</p>
-<p>Impatient readers are welcome to dive straight into the first practical examples in Chapter <a href="spatial-class.html#spatial-class">2</a>. However we suggest most R beginners get up-to-speed with R before diving-in to chapters onwards (unless you’re reading the book for an understanding of the concepts). R has a supportive community that has developed a wealth of resources that can help here, three of which we highly recommend: <a href="http://colinfay.me/intro-to-r/">An introduction to R</a> <span class="citation">(Venables, Smith, and Team <a href="#ref-venables_introduction_2017">2017</a>)</span>, <a href="http://r4ds.had.co.nz/">R for Data Science</a> <span class="citation">(Grolemund and Wickham <a href="#ref-grolemund_r_2016">2016</a>)</span> and <a href="https://csgillespie.github.io/efficientR/">Efficient R Programming</a> <span class="citation">(Gillespie and Lovelace <a href="#ref-gillespie_efficient_2016">2016</a>)</span>, especially <a href="https://csgillespie.github.io/efficientR/set-up.html#r-version">Chapter 2</a> (on installing and setting-up R/RStudio) and <a href="https://csgillespie.github.io/efficientR/learning.html">Chapter 10</a> (on learning to learn). There are also many interactive resources, including DataCamp’s <a href="https://www.datacamp.com/courses/free-introduction-to-r">Introduction to R</a> and tutorials created with <a href="https://rstudio.github.io/learnr/examples.html"><strong>learnr</strong></a>.</p>
-<p>With such material to hand we are confident that the command-line approach demonstrated in this book will be worthwhile within a few months for most people, including programming novices. Over time and with practice R will likely become the natural choice for many geographic applications. We expect you will eventually find its interface faster than the point-and-click interface emphasized in many desktop GISs. For some applications such as Spatial Statistics and modelling R may be the <em>only</em> realistic way to get the work done.</p>
-<p>As outlined in section <a href="intro.html#why-geocomputation-with-r">1.2</a> there are many reasons for using R for geocomputation: R is well-suited to the interactive use required in many geographic data analysis workflows compared with other languages. R excels in the rapidly growing fields of Data Science (which includes data carpentry, statistical learning techniques and data visualization) and Big Data (via efficient interfaces to databases and distributed computing systems).</p>
-<p>For some applications another language may be more appropriate, such as Python, Java or C++. There are excellent resources for learning geocomputation <em>without R</em>, as discussed in section <a href="intro.html#software-for-geocomputation">1.3</a>. However we advocate learning one language (R) in <em>depth</em> to gain an understanding of the concepts. Proficiency with one programming language is preferable to the <em>breadth</em> of knowledge (and potential for confusion) attainable by dabbling with many.</p>
-<p>We believe that <em>Geocomputation with R</em> will equip you with the knowledge and skills needed to solve the majority of challenges that geographic data pose. A logical question to ask if you’ve read this far may be: what <em>is</em> geocomputation anyway? The answer is provided in section <a href="intro.html#what-is-geocomputation">1.1</a> which, alongside the rest of Chapter <a href="intro.html#intro">1</a>, explains the motivations behind this book.</p>
-<!-- to think about, not sure if needed but then this would be a good place to point out why our book might have advantages over other books. Compare with:
-- Bivand, R., Pebesma, E., Gomez-Rubio, V. (2013): Applied spatial data analysis with R.
-- Blangiardo, M. & Cameletti, M. (2015): Spatial and spatio-temporal Bayesian models with R - INLA.
-- Brunsdon, C. & Comber, L. (2015): An introduction to R for spatial analysis and mapping.
-- Dorman, M. (2014): Learning R for geospatial analysis.
-- Hijmans, R. (2016): Spatial data analysis and modeling with R.  http://rspatial.org/intr/index.html (haven't read it but might be more suitable for beginners, however, it does not consider sf; additionally, it provides more code than text, and hence, probably less explanations than our book) 
-- Quiang, S. (2016): Environmental and Ecological Statistics with R (not really a competitor, I have ordered a copy, this book is really about modeling, and I would rather prefer the Zuur et al. books over it)
-- Wegmann, M., Leutner, B., Dech, S. (2016): Remote Sensing and GIS for ecologists: Using Open Source Software.
-- Zuur, A., Ieno, E., Saveliev, A. (2017): Beginner's guide to spatial, temporal and spatial-temporal ecological data analysis with R-INLA.
-
-Put the competing books into categories, e.g., introduction to spatial analysis (Brundsdon, Dorman, Hijmans), advanced spatial analysis (Bivand), topical spatial analysis (Quiang, Wegmann),  (mainly) spatial modeling (Bivand, Blangiardo, Hijmans, Quiang, Zuur).
-Point out where our book fits in and which gap it is filling -> somewhere between advanced (but not that hard) and spatial modeling with a broad range of topics (not just one like ecology).
-We try to address a broad audiecence with an interest in spatial data, and how things can be **get done**, not just theoretically but in an applied way.
-On the other hand, we embed the shown methods into the bigger field of GIScience, provide context and refer to further literature for the interested reader.
-
+</div>
+<div id="introduction-6" class="section level2">
+<h2><span class="header-section-number">9.1</span> Introduction</h2>
+<!-- intro -->
+<!-- ref to previous chapters -->
+<!-- info about relation between efficiency and editability -->
+</div>
+<div id="static-maps" class="section level2">
+<h2><span class="header-section-number">9.2</span> Static maps</h2>
+<div id="basics" class="section level3">
+<h3><span class="header-section-number">9.2.1</span> Basics</h3>
+<!-- I'm not sure if we can fill it all in the book, but it could be worth to try it all on the same problems -->
+<!-- base plots -->
+<!-- ggplots  (geom_sf, coord_sf)-->
+<!-- tmap -->
+</div>
+<div id="map-styling" class="section level3">
+<h3><span class="header-section-number">9.2.2</span> Map styling</h3>
+<!-- 
+- lines widths, polygon lines vs polygon areas, etc.
+- alpha colors
+- joining points/lines/polygons
+- joining vector/raster data
+- titles, labels
+- satellite tiles in the background
+- choropleth maps
+- north arrow
+- scale bar
 -->
-<!-- ## Acknowledgements {-} -->
-<!-- add list of people who helped with this book -->
+</div>
+<div id="class-intervals" class="section level3">
+<h3><span class="header-section-number">9.2.3</span> Class intervals</h3>
+<!--
+- color palettes (viridis, etc.)
+- class intervals ("cat", "fixed", "sd", "equal", "pretty", "quantile", "kmeans", "hclust", "bclust", "fisher", and "jenks")
+- bicolor maps?
+- categorical rasters?
+-->
+</div>
+<div id="facetted-maps" class="section level3">
+<h3><span class="header-section-number">9.2.4</span> Facetted maps</h3>
+<p>Facetted maps are a common and potentially effective way of visualizing spatial relationships that are more complex that a single relationship. The population of cities at one moment in time can be represented easily on a single map, for example by making the size of symbols variable for each city depending on population. However, to represent the populations of cities at multiple moments in time requires an <em>extra dimension</em>. This could be added by an additional <em>aesthetic</em> such as colour but this risks cluttering the map because it will involve multiple overlapping points (cities do not tend to move over time!).</p>
+<p>Facetted maps overcome this issue by creating ‘small multiples’ of spatial information. Typically, this will involve plotting the same geometry data multiple times, once for each variable present in the attribute data (this is the default plotting method for <code>sf</code> objects, as we saw in Chapter 2). However, facets can also represent shifting geometries, e.g. as the spatial distribution of a point pattern evolves over time. This use case of facetted plot is illustrated in Figure <a href="adv-map.html#fig:urban-facet">9.1</a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tm_shape</span>(world) +
+<span class="st">  </span><span class="kw">tm_polygons</span>() +<span class="st"> </span>
+<span class="st">  </span><span class="kw">tm_shape</span>(urban_agglomerations) +
+<span class="st">  </span><span class="kw">tm_dots</span>(<span class="dt">size =</span> <span class="st">&quot;population_millions&quot;</span>) +
+<span class="st">  </span><span class="kw">tm_facets</span>(<span class="dt">by =</span> <span class="st">&quot;year&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:urban-facet"></span>
+<img src="figures/urban-facet-1.png" alt="Facetted map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations" width="576" />
+<p class="caption">
+Figure 9.1: Facetted map showing the top 30 largest ‘urban agglomerations’ from 1950 to 2030 based on population projects by the United Nations
+</p>
+</div>
+</div>
+<div id="inset-maps" class="section level3">
+<h3><span class="header-section-number">9.2.5</span> Inset maps</h3>
+<p>The role of spatial visualizations is to provide an information in the most accessible form. This is often done with the use of inset maps. They could be used to focus on a smaller area in more detail<!--fig ref1--> or to bring some non-contiguous regions closer to ease a comparision<!--fig ref2-->.</p>
+<!-- intro  -->
+<!-- used when: a/ non-contigous regions, b/ focus on small region while showing the large one -->
+<!-- find the best distribution of insets -->
+<!-- example1: classic inset map -->
+<!-- example2: us states + hawaii + alaska -->
+<!-- find the best projection for each individual inset. -->
+<!-- reproj -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">us_states_map =<span class="st"> </span><span class="kw">tm_shape</span>(us_states, <span class="dt">projection =</span> <span class="dv">2163</span>) +
+<span class="st">  </span><span class="kw">tm_polygons</span>() +<span class="st"> </span>
+<span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">frame =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<!-- create separate maps -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hawaii_map =<span class="st"> </span><span class="kw">tm_shape</span>(hawaii) +
+<span class="st">  </span><span class="kw">tm_polygons</span>() +<span class="st"> </span>
+<span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">title =</span> <span class="st">&quot;Hawaii&quot;</span>, <span class="dt">frame =</span> <span class="ot">FALSE</span>, <span class="dt">bg.color =</span> <span class="ot">NA</span>, 
+            <span class="dt">title.position =</span> <span class="kw">c</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;bottom&quot;</span>))
+alaska_map =<span class="st"> </span><span class="kw">tm_shape</span>(alaska) +
+<span class="st">  </span><span class="kw">tm_polygons</span>() +<span class="st"> </span>
+<span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">title =</span> <span class="st">&quot;Alaska&quot;</span>, <span class="dt">frame =</span> <span class="ot">FALSE</span>, <span class="dt">bg.color =</span> <span class="ot">NA</span>)</code></pre></div>
+<!-- create an inset map -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(grid)
+us_states_map
+<span class="kw">print</span>(hawaii_map, <span class="dt">vp =</span> <span class="kw">viewport</span>(<span class="dt">x =</span> <span class="fl">0.4</span>, <span class="dt">y =</span> <span class="fl">0.1</span>, <span class="dt">width =</span> <span class="fl">0.2</span>, <span class="dt">height =</span> <span class="fl">0.1</span>))
+<span class="kw">print</span>(alaska_map, <span class="dt">vp =</span> <span class="kw">viewport</span>(<span class="dt">x =</span> <span class="fl">0.15</span>, <span class="dt">y =</span> <span class="fl">0.15</span>, <span class="dt">width =</span> <span class="fl">0.3</span>, <span class="dt">height =</span> <span class="fl">0.3</span>))</code></pre></div>
+<p><img src="figures/unnamed-chunk-5-1.png" width="576" style="display: block; margin: auto;" /></p>
+<!-- extended info about using tm_layout to show legend in main plot and remove it in the others -->
+<!-- example3: mix of maps and plots? -->
+<!-- of maybe only mention this -->
+<!-- https://gist.github.com/walkerke/93bfe80bb7735aa6265a61013eaed3fa -->
+</div>
+</div>
+<div id="animations" class="section level2">
+<h2><span class="header-section-number">9.3</span> Animations</h2>
+<p>Animated maps can be useful for communicating how spatial phenomena shift over time. An advantage of facetted plots are that they can be printed, but the approach has disadvantages: faceted maps can become very small with more than ~9 maps in one figure, and it can be hard to see the spatial relationships between each facet when each map is on a different part of the page! Furthermore, with the increasing proportion of communication that happens via digital screens, the disadvantage that animations cannot be printed is diminished. You can always link readers to a web-page containing an animated (or interactive) version of a printed map to help make it come alive.</p>
+<p>Figure <a href="adv-map.html#fig:urban-animated">9.2</a> is a simple example of the benefits of an animated map. Unlike the facetted plot presented in the previous section, it does not squeeze all 17 for them all to be displayed simultaneously (see the book’s website for the animated version).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr::<span class="kw">include_graphics</span>(<span class="st">&quot;figures/urban-animated.gif&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:urban-animated"></span>
+<img src="figures/urban-animated.gif" alt="Animated map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations."  />
+<p class="caption">
+Figure 9.2: Animated map showing the top 30 largest ‘urban agglomerations’ from 1950 to 2030 based on population projects by the United Nations.
+</p>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m =<span class="st"> </span><span class="kw">tm_shape</span>(world) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">tm_polygons</span>() +
+<span class="st">  </span><span class="kw">tm_shape</span>(urban_agglomerations) +
+<span class="st">  </span><span class="kw">tm_dots</span>(<span class="dt">size =</span> <span class="st">&quot;population_millions&quot;</span>) +
+<span class="st">  </span><span class="kw">tm_facets</span>(<span class="dt">by =</span> <span class="st">&quot;year&quot;</span>, <span class="dt">nrow =</span> <span class="dv">1</span>, <span class="dt">ncol =</span> <span class="dv">1</span>) </code></pre></div>
+<!-- Robin, check the differences between by="year" and along="year" -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">scipen =</span> <span class="dv">999</span>)
 
+wb_data_create =<span class="st"> </span>function(indicator, our_name, year, ...){
+  df =<span class="st"> </span><span class="kw">wb</span>(<span class="dt">indicator =</span> indicator, <span class="dt">startdate =</span> year, <span class="dt">enddate =</span> year, ...) %&gt;%
+<span class="st">    </span><span class="kw">as_data_frame</span>() %&gt;%
+<span class="st">    </span><span class="kw">select</span>(<span class="dt">iso_a2=</span>iso2c, value) %&gt;%
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">indicator =</span> our_name) %&gt;%
+<span class="st">    </span><span class="kw">spread</span>(indicator, value)
+  <span class="kw">return</span>(df)
+}
+
+data_lifeExp =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1963</span>, <span class="dv">2013</span>, <span class="dt">by=</span><span class="dv">5</span>) %&gt;%
+<span class="st">  </span><span class="kw">set_names</span>(.) %&gt;%
+<span class="st">  </span><span class="kw">map_df</span>(~<span class="kw">wb_data_create</span>(.x, <span class="dt">indicator =</span> <span class="st">&quot;SP.DYN.LE00.IN&quot;</span>,
+                   <span class="dt">our_name =</span> <span class="st">&quot;lifeExp&quot;</span>,
+                   <span class="dt">country =</span> <span class="st">&quot;countries_only&quot;</span>), <span class="dt">.id=</span><span class="st">&#39;year&#39;</span>) %&gt;%
+<span class="st">  </span><span class="kw">spread</span>(year, lifeExp)
+
+world_sf_temporal =<span class="st"> </span><span class="kw">ne_countries</span>(<span class="dt">returnclass =</span> <span class="st">&#39;sf&#39;</span>) %&gt;%
+<span class="st">  </span><span class="kw">left_join</span>(., data_lifeExp, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&#39;iso_a2&#39;</span>)) %&gt;%
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">area_km2 =</span> <span class="kw">set_units</span>(<span class="kw">st_area</span>(.), km^<span class="dv">2</span>)) %&gt;%
+<span class="st">  </span><span class="kw">select</span>(iso_a2, name_long, continent, region_un, subregion, type, area_km2, <span class="st">`</span><span class="dt">1963</span><span class="st">`</span>:<span class="st">`</span><span class="dt">2013</span><span class="st">`</span>) %&gt;%
+<span class="st">  </span><span class="kw">gather</span>(year, lifeExp, <span class="st">`</span><span class="dt">1963</span><span class="st">`</span>:<span class="st">`</span><span class="dt">2013</span><span class="st">`</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m1 =<span class="st"> </span><span class="kw">tm_shape</span>(world_sf_temporal) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">tm_polygons</span>(<span class="st">&quot;lifeExp&quot;</span>) +
+<span class="st">  </span><span class="kw">tm_facets</span>(<span class="dt">by =</span> <span class="st">&quot;year&quot;</span>, <span class="dt">nrow =</span> <span class="dv">1</span>, <span class="dt">ncol =</span> <span class="dv">1</span>, <span class="dt">drop.units =</span> <span class="ot">TRUE</span>)
+
+<span class="kw">animation_tmap</span>(m1, <span class="dt">filename =</span> <span class="st">&quot;figures/11-lifeExp_animation.gif&quot;</span>, <span class="dt">width =</span> <span class="dv">2000</span>, <span class="dt">height =</span> <span class="dv">600</span>, <span class="dt">delay =</span> <span class="dv">40</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_sf_temporal2 =<span class="st"> </span><span class="kw">filter</span>(world_sf_temporal, continent ==<span class="st"> &quot;South America&quot;</span>)
+m2 =<span class="st"> </span><span class="kw">tm_shape</span>(world_sf_temporal2) +
+<span class="st">  </span><span class="kw">tm_polygons</span>(<span class="st">&quot;lifeExp&quot;</span>, <span class="dt">n =</span> <span class="dv">12</span>) +
+<span class="st">  </span><span class="kw">tm_facets</span>(<span class="dt">by =</span> <span class="st">&quot;name_long&quot;</span>, <span class="dt">along =</span> <span class="st">&quot;year&quot;</span>, <span class="dt">drop.units =</span> <span class="ot">TRUE</span>, <span class="dt">free.coords =</span> <span class="ot">TRUE</span>)
+<span class="kw">animation_tmap</span>(m2, <span class="dt">filename =</span> <span class="st">&quot;figures/11-lifeExp_sa_animation.gif&quot;</span>, <span class="dt">width =</span> <span class="dv">1600</span>, <span class="dt">height =</span> <span class="dv">1000</span>, <span class="dt">delay =</span> <span class="dv">40</span>)</code></pre></div>
 </div>
-<h3>References</h3>
-<div id="refs" class="references">
-<div id="ref-sherman_desktop_2008">
-<p>Sherman, Gary. 2008. <em>Desktop GIS: Mapping the Planet with Open Source Tools</em>. Pragmatic Bookshelf.</p>
+<div id="interactive-maps" class="section level2">
+<h2><span class="header-section-number">9.4</span> Interactive maps</h2>
+<!-- leaflet -->
+<!-- leaflet plugins -->
+<!-- mapview -->
+<!-- mapview raster support! -->
 </div>
-<div id="ref-venables_introduction_2017">
-<p>Venables, W.N., D.M. Smith, and R Core Team. 2017. <em>An Introduction to R. Notes on R: A Programming Environment for Data Analysis and Graphics</em>. <a href="http://colinfay.me/intro-to-r/" class="uri">http://colinfay.me/intro-to-r/</a>.</p>
-</div>
-<div id="ref-grolemund_r_2016">
-<p>Grolemund, Garrett, and Hadley Wickham. 2016. <em>R for Data Science</em>. 1 edition. O’Reilly Media.</p>
-</div>
-<div id="ref-gillespie_efficient_2016">
-<p>Gillespie, Colin, and Robin Lovelace. 2016. <em>Efficient R Programming: A Practical Guide to Smarter Programming</em>. O’Reilly Media. <a href="https://csgillespie.github.io/efficientR/" class="uri">https://csgillespie.github.io/efficientR/</a>.</p>
+<div id="pseudo-unusual-maps" class="section level2">
+<h2><span class="header-section-number">9.5</span> Pseudo (unusual) maps</h2>
+<!-- geofacet -->
+<!-- e.g. population lines -->
+<!-- point maps -->
+<!-- hexbin -->
+<!-- cartogram - https://github.com/sjewo/cartogram -->
+<!-- shiny? -->
+
 </div>
 </div>
             </section>
@@ -392,8 +501,8 @@ On the other hand, we embed the shown methods into the bigger field of GIScience
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="intro.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="location.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="gis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -422,7 +531,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Robinlovelace/geocompr/edit/master/index.Rmd",
+"link": "https://github.com/Robinlovelace/geocompr/edit/master/09-mapping.Rmd",
 "text": "Edit"
 },
 "download": null,
