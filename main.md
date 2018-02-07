@@ -252,7 +252,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve2113ed46b47c08a6
+preserve03ae2060bce82bc9
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3090,7 +3090,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve25ff034c458abaaa
+preserve988cfe60d9e27cda
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6178,7 +6178,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve8aab1e07126a9bcc
+preserve7d4b63f6b6046307
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6797,7 +6797,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve8d1e170a829bcfe9
+preservee5b514bba95694fd
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6892,11 +6892,27 @@ library(tmap)
 # library(shiny)
 ```
 
-
 ## Introduction
 
-<!-- intro -->
-<!-- ref to previous chapters -->
+The most satisfying part of many projects involving geocomputation is producing and communicating the results in the form of maps.
+Map making --- the art of Cartography --- is an ancient skill that involves precision, consideration of the map-reader and often an element of creative flair.
+
+Maps have been used for several thousand years for a wide variety of purposes.
+From asserting control real estate in ancient Mesapotamia to illustrating a scientific worldview in Ptolomy's Greek masterpiece *Geography* nearly 2,000 years ago [@talbert_ancient_2014], they have historically been out of reach for everyday people.
+The advent of modern computing has changed this, however.
+Open data and software has played a major role in the democratization of map making.
+This chapter teaches a range of methods to amplify the clarity, reach and attractiveness of your maps.
+From a research perspective maps are often the best way to present the results of geocomputational research.
+From the perspective of public engagement and policy impact, a map may be the best way to get a message across.
+Map making is therefore a critical part of geocomputation and its emphasis on changing the world outlined in Chapter \@ref(intro).
+
+We have already seen how to create maps using methods building on the substantial graphical capabilities of base R in section \@ref(basic-map).
+It is possible to go far with these methods, as illustrated in Chapter 14 of [@murrell_graphics_2016], for example.
+The focus of this chapter, however, is creating maps using packages that are dedicated to this purpose.
+In many cases the simplicity and speed of maps created using `plot()` commands will be sufficient, especially when using R interactively to understand data quickly.
+In some case you may benefit from the flexibility of low-level control over graphical parameters offered by `plot()` and functions provided by the **grid** package.
+If your aim is to produce publication-quality or high-impact maps in minimal time and code, this chapter is for you.
+
 <!-- info about relation between efficiency and editability -->
 <!-- intro to the chapter structure -->
 
