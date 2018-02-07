@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="algorithms-and-functions-for-geocomputation.html">
-<link rel="next" href="geocomputation-for-ecology-a-case-study-of-fog-oases.html">
+<link rel="next" href="eco.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -299,13 +299,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="11.5" data-path="raster-vector.html"><a href="raster-vector.html#vectorization"><i class="fa fa-check"></i><b>11.5</b> Vectorization ??</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="algorithms-and-functions-for-geocomputation.html"><a href="algorithms-and-functions-for-geocomputation.html"><i class="fa fa-check"></i><b>12</b> Algorithms and functions for geocomputation</a></li>
-<li class="chapter" data-level="13" data-path="spatial-cv.html"><a href="spatial-cv.html"><i class="fa fa-check"></i><b>13</b> Spatial cross-validation</a></li>
+<li class="chapter" data-level="13" data-path="spatial-cv.html"><a href="spatial-cv.html"><i class="fa fa-check"></i><b>13</b> Spatial cross-validation</a><ul>
+<li class="chapter" data-level="" data-path="spatial-cv.html"><a href="spatial-cv.html#prerequisites-9"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="13.1" data-path="spatial-cv.html"><a href="spatial-cv.html#introduction-7"><i class="fa fa-check"></i><b>13.1</b> Introduction</a></li>
+<li class="chapter" data-level="13.2" data-path="location.html"><a href="location.html#case-study"><i class="fa fa-check"></i><b>13.2</b> Case study: landslide susceptibility</a></li>
+<li class="chapter" data-level="13.3" data-path="spatial-cv.html"><a href="spatial-cv.html#spatial-cross-validation"><i class="fa fa-check"></i><b>13.3</b> Spatial cross-validation</a></li>
+</ul></li>
 <li class="part"><span><b>IV Geocomputation in the wild</b></span></li>
-<li class="chapter" data-level="14" data-path="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><i class="fa fa-check"></i><b>14</b> Geocomputation for Ecology: A case study of fog oases</a><ul>
-<li class="chapter" data-level="" data-path="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html#prerequisites-9"><i class="fa fa-check"></i>Prerequisites</a></li>
-<li class="chapter" data-level="14.1" data-path="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html#introduction-7"><i class="fa fa-check"></i><b>14.1</b> Introduction</a></li>
-<li class="chapter" data-level="14.2" data-path="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html#background"><i class="fa fa-check"></i><b>14.2</b> Background</a></li>
-<li class="chapter" data-level="14.3" data-path="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html#reducing-dimensionality"><i class="fa fa-check"></i><b>14.3</b> Reducing dimensionality</a></li>
+<li class="chapter" data-level="14" data-path="eco.html"><a href="eco.html"><i class="fa fa-check"></i><b>14</b> Geocomputation for Ecology: A case study of fog oases</a><ul>
+<li class="chapter" data-level="" data-path="eco.html"><a href="eco.html#prerequisites-10"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="14.1" data-path="eco.html"><a href="eco.html#introduction-8"><i class="fa fa-check"></i><b>14.1</b> Introduction</a></li>
+<li class="chapter" data-level="14.2" data-path="eco.html"><a href="eco.html#background"><i class="fa fa-check"></i><b>14.2</b> Background</a></li>
+<li class="chapter" data-level="14.3" data-path="eco.html"><a href="eco.html#reducing-dimensionality"><i class="fa fa-check"></i><b>14.3</b> Reducing dimensionality</a></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="geocomputation-for-sea-level-research.html"><a href="geocomputation-for-sea-level-research.html"><i class="fa fa-check"></i><b>15</b> Geocomputation for sea level research</a></li>
 <li class="chapter" data-level="16" data-path="geocomputation-for-renewable-energy-research.html"><a href="geocomputation-for-renewable-energy-research.html"><i class="fa fa-check"></i><b>16</b> Geocomputation for renewable energy research</a></li>
@@ -335,21 +340,46 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="spatial-cv" class="section level1">
 <h1><span class="header-section-number">13</span> Spatial cross-validation</h1>
-<p>In the beginning, we pointed out that there are several programming languages at our disposal for geocomputing. This chapter shows why doing geocomputation with R is especially beneficial, i.e. it combines R’s unparalleled statistical power with geographic data. Specifically, we will model spatially the</p>
-<p>This chapter combines the strength of R, statistical power, with geographic data.</p>
+<div id="prerequisites-9" class="section level2 unnumbered">
+<h2>Prerequisites</h2>
+<p>This chapter assumes you have a strong grasp of spatial data analysis and processing, covered in chapters 2-5. Additionally, we assume that you are familiar with linear regression and its generalized extensions <span class="citation">(Zuur et al. <a href="#ref-zuur_mixed_2009">2009</a>)</span>.</p>
+<p>We will need following packages:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sf)
+<span class="kw">library</span>(raster)
+<span class="kw">library</span>(RQGIS)
+<span class="kw">library</span>(RSAGA)
+<span class="kw">library</span>(mlr)
+<span class="co">#&gt; Warning: replacing previous import &#39;BBmisc::isFALSE&#39; by</span>
+<span class="co">#&gt; &#39;backports::isFALSE&#39; when loading &#39;mlr&#39;</span></code></pre></div>
+<ul>
+<li>Required data will be downloaded in due course.</li>
+</ul>
+</div>
+<div id="introduction-7" class="section level2">
+<h2><span class="header-section-number">13.1</span> Introduction</h2>
+<p>In the beginning, we pointed out that there are several programming languages suitable for command-line based geocomputing (section <a href="intro.html#software-for-geocomputation">1.3</a>). The special advantage of doing geocomputation with R is combining geocomputing with R’s unparalleled statistical power. In this chapter we will introduce predictive mapping by means of statistical learning <span class="citation">(James et al. <a href="#ref-james_introduction_2013">2013</a>)</span> while using spatial cross-validation for a bias-reduced assessment of the model performance - something which is probably only easily doable with R at the moment.</p>
+<p>Statistical learning aims at understanding data by building models which disentangle underlying relationships (tidyverse figure: model data). It is used throughout a vast range of disciplines such as economics, physics, medicine, biology, ecology and geography, and can be roughly grouped into supervised and unsupervised techniques <span class="citation">(James et al. <a href="#ref-james_introduction_2013">2013</a>)</span>. In this chapter we will only focus on supervised techniques, i.e., we have a response variable, in our case this will be a binary one (landslide vs. non-landslide) but could be also a numeric (pH value), an integer (species richness) or a categorical variable (land use). With the advent of big data, statistical learning has even gained in popularity, especially so-called machine learning approaches. Machine learning tends to be especially useful if the aim is not statistical inference but prediction, e.g., future customer behavior. Though prediction will be the aim of the modeling in this chapter, we will not use machine learning but a simple generalized linear model (GLM). This is because a GLM is probably familiar to most readers, and therefore instead of explaining in detail the model building we can focus on the speciality of geographic data in a modeling context and spatial cross-validation.<a href="#fn61" class="footnoteRef" id="fnref61"><sup>61</sup></a> Nevertheless, a generalized additive model or a machine learning approach would be more suitable for our dataset (see exercises). In chapter <a href="eco.html#eco">14</a> we will build on this chapter and use spatial cross-validation with a machine learning approach.</p>
+</div>
+<div id="case-study" class="section level2">
+<h2><span class="header-section-number">13.2</span> Case study: landslide susceptibility</h2>
+<p>For more details please refer to <span class="citation">Muenchow, Brenning, and Richter (<a href="#ref-muenchow_geomorphic_2012">2012</a>)</span>.</p>
+</div>
+<div id="spatial-cross-validation" class="section level2">
+<h2><span class="header-section-number">13.3</span> Spatial cross-validation</h2>
+<p>i.e. the fact that points close to each other tend to share similarities compared to points further apart. Simply put, if it rains at one location it is pretty likely that it also rains if we moved 1 meter in any direction. But if we moved 10 or 100 km this might not longer be the case.</p>
 <ul>
 <li>short intro spatial autocorrelation, maybe by showing artificial spatial datasets with different sills, nuggets, ranges (don’t show the code but just the concept of spatial autocorrelation)</li>
 <li>spatial cross-validation when predictive performance is desirable</li>
 <li>use Ecuador landslide data to spatially predict landslide susceptibility (GAM, i.e. a semiparametric extension of a GLM + refer to eco chapter in which we will use ml and where the hyperparameter tuning also requires an additional inner-fold tuning)</li>
 </ul>
-<p><span class="citation">Muenchow, Brenning, and Richter (<a href="#ref-muenchow_geomorphic_2012">2012</a>)</span> <span class="citation">A. Brenning (<a href="#ref-brenning_spatial_2012">2012</a><a href="#ref-brenning_spatial_2012">b</a>)</span> <span class="citation">Schratz et al. (<a href="#ref-schratz_performance_2018">2018</a>)</span> <span class="citation">James et al. (<a href="#ref-james_introduction_2013">2013</a>)</span></p>
+<p><span class="citation">Muenchow, Brenning, and Richter (<a href="#ref-muenchow_geomorphic_2012">2012</a>)</span> <span class="citation">A. Brenning (<a href="#ref-brenning_spatial_2012">2012</a><a href="#ref-brenning_spatial_2012">b</a>)</span> <span class="citation">Schratz et al. (<a href="#ref-schratz_performance_2018">2018</a>)</span> <span class="citation">James et al. (<a href="#ref-james_introduction_2013">2013</a>)</span> <span class="citation">Blangiardo and Cameletti (<a href="#ref-blangiardo_spatial_2015">2015</a>)</span> <span class="citation">Zuur, Ieno, and Saveliev (<a href="#ref-zuur_beginners_2017">2017</a>)</span> <span class="citation">Zuur et al. (<a href="#ref-zuur_mixed_2009">2009</a>)</span></p>
 <ul>
 <li>What is spatial modeling and for what do we use it?</li>
 <li>What is cross-validation, why do we need it?</li>
 <li>What is spatial cv?</li>
 </ul>
 <p>Spatial modeling: species distribution models, landslide susceptibility, epidemiology, disease mapping, rock glaciers, etc.</p>
-<p>When we are interested in the accuracy of a model, i.e., when we want to assess a model’s predictive performance, we want to avoid overfitting.<a href="#fn61" class="footnoteRef" id="fnref61"><sup>61</sup></a> Spatial autocorrelation will lead to overfitting when the training dataset is not independent of the test dataset which is frequently the case in temporal and spatial settings.</p>
+<p>When we are interested in the accuracy of a model, i.e., when we want to assess a model’s predictive performance, we want to avoid overfitting.<a href="#fn62" class="footnoteRef" id="fnref62"><sup>62</sup></a> Spatial autocorrelation will lead to overfitting when the training dataset is not independent of the test dataset which is frequently the case in temporal and spatial settings.</p>
 <p>Cross-validation separates test and training datasets randomly. Let’s take our landslide dataset as an example. Randomly selecting 20% of all points leads to an unwanted effect, namely that test and training points might be close to each other (see Figure ??). The first law of geography states that points close to each other tend to be, on average, more similar compared to points further apart. This means these points are not indepedent. Hence, using this information in our modeling is like a sneak preview, i.e. using information that should be unavailable to the test dataset.</p>
 <!--
 Usually people seek to accomplish one of the following aims when using supervised statistical learning techniques: 
@@ -363,11 +393,18 @@ This is the reason why machine learning techniques (no explicit model assumption
 -->
 
 </div>
+</div>
 
 
 
 <h3>References</h3>
 <div id="refs" class="references">
+<div id="ref-zuur_mixed_2009">
+<p>Zuur, Alain, Elena N. Ieno, Neil Walker, Anatoly A. Saveliev, and Graham M. Smith. 2009. <em>Mixed Effects Models and Extensions in Ecology with R</em>. Statistics for Biology and Health. New York: Springer-Verlag. <a href="//www.springer.com/de/book/9780387874579" class="uri">//www.springer.com/de/book/9780387874579</a>.</p>
+</div>
+<div id="ref-james_introduction_2013">
+<p>James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani, eds. 2013. <em>An Introduction to Statistical Learning: With Applications in R</em>. Springer Texts in Statistics 103. New York: Springer.</p>
+</div>
 <div id="ref-muenchow_geomorphic_2012">
 <p>Muenchow, J., A. Brenning, and M. Richter. 2012. “Geomorphic Process Rates of Landslides Along a Humidity Gradient in the Tropical Andes.” <em>Geomorphology</em> 139-140 (February): 271–84. doi:<a href="https://doi.org/10.1016/j.geomorph.2011.10.029">10.1016/j.geomorph.2011.10.029</a>.</p>
 </div>
@@ -377,14 +414,18 @@ This is the reason why machine learning techniques (no explicit model assumption
 <div id="ref-schratz_performance_2018">
 <p>Schratz, Patrick, J. Muenchow, Eugenia Iturritxa, Jakob Richter, and A. Brenning. 2018. “Performance Evaluation and Hyperparameter Tuning of Statistical and Machine-Learning Models Using Spatial Data.”</p>
 </div>
-<div id="ref-james_introduction_2013">
-<p>James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani, eds. 2013. <em>An Introduction to Statistical Learning: With Applications in R</em>. Springer Texts in Statistics 103. New York: Springer.</p>
+<div id="ref-blangiardo_spatial_2015">
+<p>Blangiardo, Marta, and Michela Cameletti. 2015. <em>Spatial and Spatio-Temporal Bayesian Models with R-INLA</em>. Chichester, UK: John Wiley &amp; Sons, Ltd. <a href="http://doi.wiley.com/10.1002/9781118950203" class="uri">http://doi.wiley.com/10.1002/9781118950203</a>.</p>
+</div>
+<div id="ref-zuur_beginners_2017">
+<p>Zuur, Alain F., Elena N. Ieno, and Anatoly A. Saveliev. 2017. <em>Beginner’s Guide to Spatial, Temporal and Spatial-Temporal Ecological Data Analysis with R-INLA</em>. Vol. Volume 1: Using GLM and GLMM. Newburgh, United Kingdom: Highland Statistics Ltd.</p>
 </div>
 </div>
 <div class="footnotes">
 <hr />
 <ol start="61">
-<li id="fn61"><p>short definition of overfitting<a href="spatial-cv.html#fnref61">↩</a></p></li>
+<li id="fn61"><p>Readers who are in need of refreshing their regression skills might have a look at <span class="citation">Zuur et al. (<a href="#ref-zuur_mixed_2009">2009</a>)</span>.<a href="spatial-cv.html#fnref61">↩</a></p></li>
+<li id="fn62"><p>short definition of overfitting<a href="spatial-cv.html#fnref62">↩</a></p></li>
 </ol>
 </div>
             </section>
@@ -393,7 +434,7 @@ This is the reason why machine learning techniques (no explicit model assumption
         </div>
       </div>
 <a href="algorithms-and-functions-for-geocomputation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="eco.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

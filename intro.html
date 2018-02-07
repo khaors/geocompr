@@ -299,13 +299,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="11.5" data-path="raster-vector.html"><a href="raster-vector.html#vectorization"><i class="fa fa-check"></i><b>11.5</b> Vectorization ??</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="algorithms-and-functions-for-geocomputation.html"><a href="algorithms-and-functions-for-geocomputation.html"><i class="fa fa-check"></i><b>12</b> Algorithms and functions for geocomputation</a></li>
-<li class="chapter" data-level="13" data-path="spatial-cv.html"><a href="spatial-cv.html"><i class="fa fa-check"></i><b>13</b> Spatial cross-validation</a></li>
+<li class="chapter" data-level="13" data-path="spatial-cv.html"><a href="spatial-cv.html"><i class="fa fa-check"></i><b>13</b> Spatial cross-validation</a><ul>
+<li class="chapter" data-level="" data-path="spatial-cv.html"><a href="spatial-cv.html#prerequisites-9"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="13.1" data-path="spatial-cv.html"><a href="spatial-cv.html#introduction-7"><i class="fa fa-check"></i><b>13.1</b> Introduction</a></li>
+<li class="chapter" data-level="13.2" data-path="location.html"><a href="location.html#case-study"><i class="fa fa-check"></i><b>13.2</b> Case study: landslide susceptibility</a></li>
+<li class="chapter" data-level="13.3" data-path="spatial-cv.html"><a href="spatial-cv.html#spatial-cross-validation"><i class="fa fa-check"></i><b>13.3</b> Spatial cross-validation</a></li>
+</ul></li>
 <li class="part"><span><b>IV Geocomputation in the wild</b></span></li>
-<li class="chapter" data-level="14" data-path="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><i class="fa fa-check"></i><b>14</b> Geocomputation for Ecology: A case study of fog oases</a><ul>
-<li class="chapter" data-level="" data-path="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html#prerequisites-9"><i class="fa fa-check"></i>Prerequisites</a></li>
-<li class="chapter" data-level="14.1" data-path="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html#introduction-7"><i class="fa fa-check"></i><b>14.1</b> Introduction</a></li>
-<li class="chapter" data-level="14.2" data-path="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html#background"><i class="fa fa-check"></i><b>14.2</b> Background</a></li>
-<li class="chapter" data-level="14.3" data-path="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html#reducing-dimensionality"><i class="fa fa-check"></i><b>14.3</b> Reducing dimensionality</a></li>
+<li class="chapter" data-level="14" data-path="eco.html"><a href="eco.html"><i class="fa fa-check"></i><b>14</b> Geocomputation for Ecology: A case study of fog oases</a><ul>
+<li class="chapter" data-level="" data-path="eco.html"><a href="eco.html#prerequisites-10"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="14.1" data-path="eco.html"><a href="eco.html#introduction-8"><i class="fa fa-check"></i><b>14.1</b> Introduction</a></li>
+<li class="chapter" data-level="14.2" data-path="eco.html"><a href="eco.html#background"><i class="fa fa-check"></i><b>14.2</b> Background</a></li>
+<li class="chapter" data-level="14.3" data-path="eco.html"><a href="eco.html#reducing-dimensionality"><i class="fa fa-check"></i><b>14.3</b> Reducing dimensionality</a></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="geocomputation-for-sea-level-research.html"><a href="geocomputation-for-sea-level-research.html"><i class="fa fa-check"></i><b>15</b> Geocomputation for sea level research</a></li>
 <li class="chapter" data-level="16" data-path="geocomputation-for-renewable-energy-research.html"><a href="geocomputation-for-renewable-energy-research.html"><i class="fa fa-check"></i><b>16</b> Geocomputation for renewable energy research</a></li>
@@ -433,7 +438,7 @@ Figure 1.2: The popularity of spatial packages in R. The y-axis shows the averag
 </div>
 <p>It is noteworthy that shifts in the wider R community, as exemplified by the data processing package <strong>dplyr</strong> (released in <a href="https://cran.r-project.org/src/contrib/Archive/dplyr/">2014</a>) influenced shifts in R’s spatial ecosystem. Alongside other packages that have a shared style and emphasis on ‘tidy data’ (including e.g., <strong>ggplot2</strong>), <strong>dplyr</strong> was placed in the <strong>tidyverse</strong> ‘metapackage’ in late <a href="https://cran.r-project.org/src/contrib/Archive/tidyverse/">2016</a>. The <strong>tidyverse</strong> approach, with its focus on long-form data and fast intuitively named functions, has become immensely popular. This has led to a demand for ‘tidy spatial data’ which has been partly met by <strong>sf</strong> and other approaches such as <strong>tabularaster</strong>. An obvious feature of the <strong>tidyverse</strong> is the tendency for packages to work in harmony. Although an equivalent <strong>geoverse</strong> is presently missing, there is an on-going discussion of harmonizing R’s many spatial packages<a href="#fn10" class="footnoteRef" id="fnref10"><sup>10</sup></a> and a growing number of actively developed packages which are designed to work in harmony with <strong>sf</strong> (Table <a href="intro.html#tab:revdep">1.2</a>).</p>
 <table>
-<caption><span id="tab:revdep">Table 1.2: </span>The top 5 most downloaded packages that depend on sf, in terms of average number of downloads per day over the previous month. As of 2018-02-05 there are 54 packages which import sf.</caption>
+<caption><span id="tab:revdep">Table 1.2: </span>The top 5 most downloaded packages that depend on sf, in terms of average number of downloads per day over the previous month. As of 2018-02-06 there are 55 packages which import sf.</caption>
 <thead>
 <tr class="header">
 <th align="left">package</th>
@@ -443,23 +448,23 @@ Figure 1.2: The popularity of spatial packages in R. The y-axis shows the averag
 <tbody>
 <tr class="odd">
 <td align="left">plotly</td>
-<td align="right">1731</td>
+<td align="right">1773</td>
 </tr>
 <tr class="even">
 <td align="left">raster</td>
-<td align="right">1535</td>
+<td align="right">1586</td>
 </tr>
 <tr class="odd">
 <td align="left">spData</td>
-<td align="right">769</td>
+<td align="right">790</td>
 </tr>
 <tr class="even">
 <td align="left">spdep</td>
-<td align="right">743</td>
+<td align="right">764</td>
 </tr>
 <tr class="odd">
 <td align="left">leaflet</td>
-<td align="right">604</td>
+<td align="right">623</td>
 </tr>
 </tbody>
 </table>

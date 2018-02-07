@@ -29,10 +29,10 @@ This approach encourages contributions, ensures reproducibility and provides acc
 
 The book's development can be divided into four main phases:
 
-1. Foundations
-2. Basic applications
-3. Geocomputation methods
-4. Advanced applications
+1. Basic methods
+2. Applied geocomputation
+3. Advanced methods
+4. Geocomputation in the wild
 
 Currently we are working on Part 3.
 New chapters will be added to this website as the project progresses, hosted at [geocompr.robinlovelace.net](https://geocompr.robinlovelace.net) and kept up-to-date thanks to [Travis](https://travis-ci.org/Robinlovelace/geocompr), which rebuilds the book each time its source code changes, and provides a visual indicator that reports the build status:
@@ -252,7 +252,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve6796da27b442874b
+preservef15172d77d5ce287
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -352,15 +352,15 @@ See the [r-spatial](https://github.com/r-spatial/) organisation and conversation
 ] and a growing number of actively developed packages which are designed to work in harmony with **sf** (Table \@ref(tab:revdep)). 
 
 
-Table: (\#tab:revdep)The top 5 most downloaded packages that depend on sf, in terms of average number of downloads per day over the previous month. As of 2018-02-05 there are 54 packages which import sf.
+Table: (\#tab:revdep)The top 5 most downloaded packages that depend on sf, in terms of average number of downloads per day over the previous month. As of 2018-02-06 there are 55 packages which import sf.
 
 package    Downloads
 --------  ----------
-plotly          1731
-raster          1535
-spData           769
-spdep            743
-leaflet          604
+plotly          1773
+raster          1586
+spData           790
+spdep            764
+leaflet          623
 
 ## The history of R-spatial
 
@@ -3090,7 +3090,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve25d1d7a9b8e3fedf
+preserve28243e0d4171fbd6
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6178,7 +6178,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve7eba77300bbd231b
+preserve188a676223ecb500
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6267,7 +6267,7 @@ There are also many non-commercial applications that can use the technique for p
 
 People are fundamental to location analysis, in particular where they are likely to spend their time and other resources.
 Interestingly, ecological concepts and models are quite similar to those used for store location analysis.
-Animals and plants can best meet their needs in certain 'optimal' locations, based on variables that change over space [@muenchow_review_2017]<!--and chapter xx-->.
+Animals and plants can best meet their needs in certain 'optimal' locations, based on variables that change over space (@muenchow_review_2018; see also chapter \@ref(eco)) .
 This is one of the great strength of geocomputation and GIScience in general.
 Concepts and methods are transferable to other fields.
 <!-- add reference!! -->
@@ -6797,7 +6797,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve276390e59c7301f6
+preserve0d04120a3eb4c5bc
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7680,11 +7680,53 @@ Additionally, give `mapview` a try.
 
 # Spatial cross-validation {#spatial-cv}
 
-In the beginning, we pointed out that there are several programming languages at our disposal for geocomputing.
-This chapter shows why doing geocomputation with R is especially beneficial, i.e. it combines R's unparalleled statistical power with geographic data.
-Specifically, we will model spatially the 
+## Prerequisites {-}
 
-This chapter combines the strength of R, statistical power, with geographic data.
+This chapter assumes you have a strong grasp of spatial data analysis and processing, covered in chapters 2-5.
+Additionally, we assume that you are familiar with linear regression and its generalized extensions [@zuur_mixed_2009].
+
+We will need following packages:
+
+
+```r
+library(sf)
+library(raster)
+library(RQGIS)
+library(RSAGA)
+library(mlr)
+#> Warning: replacing previous import 'BBmisc::isFALSE' by
+#> 'backports::isFALSE' when loading 'mlr'
+```
+
+- Required data will be downloaded in due course.
+
+## Introduction
+In the beginning, we pointed out that there are several programming languages suitable for command-line based geocomputing (section \@ref(software-for-geocomputation)).
+The special advantage of doing geocomputation with R is combining geocomputing with R's unparalleled statistical power.
+In this chapter we will introduce predictive mapping by means of statistical learning [@james_introduction_2013] while using spatial cross-validation for a bias-reduced assessment of the model performance - something which is probably only easily doable with R at the moment.
+
+Statistical learning aims at understanding data by building models which disentangle underlying relationships (tidyverse figure: model data).
+It is used throughout a vast range of disciplines such as economics, physics, medicine, biology, ecology and geography, and can be roughly grouped into supervised and unsupervised techniques [@james_introduction_2013].
+In this chapter we will only focus on supervised techniques, i.e., we have a response variable, in our case this will be a binary one (landslide vs. non-landslide) but could be also a numeric (pH value), an integer (species richness) or a categorical variable (land use).
+With the advent of big data, statistical learning has even gained in popularity, especially so-called machine learning approaches.
+Machine learning tends to be especially useful if the aim is not statistical inference but prediction, e.g., future customer behavior.
+Though prediction will be the aim of the modeling in this chapter, we will not use machine learning but a simple generalized linear model (GLM).
+This is because a GLM is probably familiar to most readers, and therefore instead of explaining in detail the model building we can focus on the speciality of geographic data in a modeling context and spatial cross-validation.^[Readers who are in need of refreshing their regression skills might have a look at @zuur_mixed_2009.]
+Nevertheless, a generalized additive model or a machine learning approach would be more suitable for our dataset (see exercises).
+In chapter \@ref(eco) we will build on this chapter and use spatial cross-validation with a machine learning approach.
+
+## Case study: landslide susceptibility {#case-study}
+
+For more details please refer to @muenchow_geomorphic_2012.
+
+
+
+
+## Spatial cross-validation
+
+i.e. the fact that points close to each other tend to share similarities compared to points further apart.
+Simply put, if it rains at one location it is pretty likely that it also rains if we moved 1 meter in any direction.
+But if we moved 10 or 100 km this might not longer be the case. 
 
 
 - short intro spatial autocorrelation, maybe by showing artificial spatial datasets with different sills, nuggets, ranges (don't show the code but just the concept of spatial autocorrelation)
@@ -7695,6 +7737,9 @@ This chapter combines the strength of R, statistical power, with geographic data
 @brenning_spatial_2012
 @schratz_performance_2018
 @james_introduction_2013
+@blangiardo_spatial_2015
+@zuur_beginners_2017
+@zuur_mixed_2009
 
 - What is spatial modeling and for what do we use it?
 - What is cross-validation, why do we need it?
@@ -7728,7 +7773,7 @@ This is the reason why machine learning techniques (no explicit model assumption
 
 # (PART) Geocomputation in the wild {-}
 
-# Geocomputation for Ecology: A case study of fog oases
+# Geocomputation for Ecology: A case study of fog oases {#eco}
 
 ## Prerequisites {-}
 

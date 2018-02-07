@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="location.html">
-<link rel="next" href="gis.html">
+<link rel="prev" href="spatial-cv.html">
+<link rel="next" href="geocomputation-for-sea-level-research.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -338,188 +338,68 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="adv-map" class="section level1">
-<h1><span class="header-section-number">9</span> Making maps with R</h1>
-<div id="prerequisites-7" class="section level2 unnumbered">
+<div id="eco" class="section level1">
+<h1><span class="header-section-number">14</span> Geocomputation for Ecology: A case study of fog oases</h1>
+<div id="prerequisites-10" class="section level2 unnumbered">
 <h2>Prerequisites</h2>
-<ul>
-<li>This chapter requires the following packages that we have already been using:</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sf)
-<span class="kw">library</span>(spData)
-<span class="kw">library</span>(tidyverse)</code></pre></div>
-<ul>
-<li>In addition it will make use of the following visualisation packages:</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(leaflet)
-<span class="kw">library</span>(tmap)
-<span class="co"># library(mapview)</span>
-<span class="co"># library(shiny)</span></code></pre></div>
+<p>This chapter assumes you have a strong grasp of spatial data analysis and processing, covered in chapters 2-5. In it you will make use of R’s interfaces to dedicated GIS software, and spatial cross validation, topics covered in chapters xx and xx respectively.</p>
 </div>
-<div id="introduction-6" class="section level2">
-<h2><span class="header-section-number">9.1</span> Introduction</h2>
-<p>The most satisfying part of many projects involving geocomputation is producing and communicating the results in the form of maps. Map making — the art of Cartography — is an ancient skill that involves precision, consideration of the map-reader and often an element of creativity.</p>
-<p>Maps have been used for several thousand years for a wide variety of purposes. From asserting control real estate in ancient Mesapotamia to illustrating a scientific worldview in Ptolomy’s Greek masterpiece <em>Geography</em> nearly 2,000 years ago <span class="citation">(Talbert <a href="#ref-talbert_ancient_2014">2014</a>)</span>, they have historically been out of reach for everyday people. The advent of modern computing has changed this, however. Open data and software has played a major role in the democratization of map making. This chapter teaches a range of methods to amplify the clarity, reach and attractiveness of your maps. From a research perspective maps are often the best way to present the results of geocomputational research. From the perspective of public engagement and policy impact, a map may be the best way to get a message across. Map making is therefore a critical part of geocomputation and its emphasis on changing the world outlined in Chapter <a href="intro.html#intro">1</a>.</p>
-<p>We have already seen how to create maps using methods building on the substantial graphical capabilities of base R in section <a href="spatial-class.html#basic-map">2.1.3</a>. It is possible to go far with these methods, as illustrated in Chapter <a href="https://www.stat.auckland.ac.nz/~paul/RG2e/chapter14.html">14</a> of <em>R Graphics</em> <span class="citation">(<span class="citeproc-not-found" data-reference-id="murrell_r_2016"><strong>???</strong></span>)</span>. The focus of this chapter, however, is creating maps using packages that are dedicated to this purpose. In many cases the simplicity and speed of maps created using <code>plot()</code> commands will be sufficient, especially when using R interactively to understand data quickly. In some case you may benefit from the flexibility of low-level control over graphical parameters offered by <code>plot()</code> and functions provided by the <strong>grid</strong> package. If your aim is to produce publication-quality or high-impact maps in minimal time and code, this chapter is for you.</p>
-<!-- info about relation between efficiency and editability -->
-<!-- intro to the chapter structure -->
+<div id="introduction-8" class="section level2">
+<h2><span class="header-section-number">14.1</span> Introduction</h2>
+<p>keywords: species distribution modeling, floristic modeling, spatial cross-validation, spatial autocorrelation, ordination (NMDS, Isomap), predictive mapping</p>
+<p>structure:</p>
+<ol style="list-style-type: decimal">
+<li>intro ecological modeling and related applications beyond ecology</li>
+<li>introduce research question, shortly the dataset and the planned approach</li>
+<li>ordination</li>
+<li>retrieving predictors and quick data exploration</li>
+<li>modeling ordination scores most likely using machine-learning since we are mostly interested in spatial predictions, and because the mlr spatial cv approach is new, and finally because Alain Zuur’s books cover statistical inference broadly</li>
+<li>predictive mapping of floristic composition including spatial cross-validation</li>
+<li>discussion: what could be done better or alternatives and again emphasizing that the methods shown finally, point to books on ecological modeling especially emphasizing Alain Zuur’s books</li>
+</ol>
 </div>
-<div id="static-maps" class="section level2">
-<h2><span class="header-section-number">9.2</span> Static maps</h2>
-<div id="basics" class="section level3">
-<h3><span class="header-section-number">9.2.1</span> Basics</h3>
-<!-- I'm not sure if we can fill it all in the book, but it could be worth to try these three pacakges on the same problems/data -->
-<!-- base plots (one example) -->
-<!-- ggplots  (geom_sf, coord_sf; one example)-->
-<!-- tmap (more than one example) -->
+<div id="background" class="section level2">
+<h2><span class="header-section-number">14.2</span> Background</h2>
+<p>Fog oases are one of the most fascinating vegetation formations I have ever encountered. These formations, locally termed <em>lomas</em>, develop on mountains along the coastal deserts of Peru and Chile. The desert’s extreme conditions and remoteness provide the habitat for a unique ecosystem, including species endemic to the fog oases. Despite the arid conditions and low levels of precipitation of around 30-50 mm per year, plants can survive, by ‘combing out’ fog. This fog, which develops below the temperature inversion caused by the cold Humboldt current in austral winter, provides the name for this habitat. Every few years, the El Niño weather pattern brings torrential rainfall to this sun-baked environment <span class="citation">(Dillon, Nakazawa, and Leiva <a href="#ref-dillon_lomas_2003">2003</a>)</span>. This causes the desert to bloom, and provides tree seedlings a chance to develop roots long enough to survive the following arid conditions.</p>
+<p>Unfortunately fog oases are heavily endangered. This is mostly due to human activity (agriculture and climate change). To effectively protect the last remnants of this unique vegetation ecosystem, evidence is needed on the composition and spatial distribution of the native flora <span class="citation">(Jannes Muenchow, Bräuning, et al. <a href="#ref-muenchow_predictive_2013">2013</a>; Jannes Muenchow, Hauenstein, et al. <a href="#ref-muenchow_soil_2013">2013</a>)</span>. <em>Lomas</em> mountains also have economic value as a tourist destination, and can contribute to the wellbeing of local people via recreation. For example, most Peruvians live in the coastal desert, and <em>lomas</em> mountains are frequently the closest “green” destination.</p>
+<p>In this chapter we will demonstrate ecological applications of some of the techniques learned in the previous chapters. This case study will involve analyzing the composition and the spatial distribution of the vascular plants on the southern slope of Mt. Mongón, a <em>lomas</em> mountain near Casma on the central northern coast of Peru (Fig. <a href="eco.html#fig:study-area-mongon">14.1</a>).</p>
+<div class="figure" style="text-align: center"><span id="fig:study-area-mongon"></span>
+<img src="figures/study_area_mongon.png" alt="The Mt. Mongón study area (taken from @muenchow_rqgis:_nodate; Landsat image: path 9, row 67, acquisition date 09/22/2000; @usgs_u.s._2016)." width="1092" />
+<p class="caption">
+Figure 14.1: The Mt. Mongón study area (taken from <span class="citation">Muenchow, Schratz, and Brenning (n.d.)</span>; Landsat image: path 9, row 67, acquisition date 09/22/2000; <span class="citation">USGS (<a href="#ref-usgs_u.s._2016">2016</a>)</span>).
+</p>
 </div>
-<div id="map-styling" class="section level3">
-<h3><span class="header-section-number">9.2.2</span> Map styling</h3>
-<!-- 
-- lines widths, polygon lines vs polygon areas, etc.
-- alpha colors
-- joining points/lines/polygons
-- joining vector/raster data
-- titles, labels
-- satellite tiles in the background
-- choropleth maps
-- north arrow
-- scale bar
--->
-</div>
-<div id="class-intervals" class="section level3">
-<h3><span class="header-section-number">9.2.3</span> Class intervals</h3>
+<p>During a field study to Mt. Mongón we recorded all vascular plants living in 100 randomly sampled 4x4 m<sup>2</sup> plots in the austral winter of 2011 <span class="citation">(Jannes Muenchow, Bräuning, et al. <a href="#ref-muenchow_predictive_2013">2013</a>)</span>. The sampling coincided with a strong La Niña event that year (see ENSO monitoring of the <a href="http://origin.cpc.ncep.noaa.gov/products/analysis_monitoring/ensostuff/ONI_v5.php">NOASS Climate Prediction Center</a>). This led to even higher levels of aridity than usual in the coastal desert. By contrast, it increased fog activity on the southern slopes of Peruvian <em>lomas</em> mountains.</p>
 <!--
-- color palettes (viridis, etc.)
-- class intervals ("cat", "fixed", "sd", "equal", "pretty", "quantile", "kmeans", "hclust", "bclust", "fisher", and "jenks")
-- bicolor maps?
-- categorical rasters?
+The first hypothesis is that four plant belts will be found along the altitudinal gradient: a low-elevation *Tillandsia* belt, a herbaceous belt, a bromeliad belt, and an uppermost succulent belt [@muenchow_soil_2013].
 -->
+<p>Ordinations are dimension-reducing techniques which allow the extraction of the main gradients from a (noisy) dataset, in our case the floristic gradient developing along the southern mountain slope. In this chapter we will try to model the first ordination axis, i.e., the floristic gradient, as a function of environmental predictors such as altitude, slope, catchment area and NDVI. The corresponding model will allow us to make spatial predictions of the plant composition anywhere in the study area. When doing the spatial predictions, we will of course account for the likely presence of spatial autocorrelation with the help of spatial cross-validation (see chapter xx). <!-- make a cross-reference--></p>
 </div>
-<div id="facetted-maps" class="section level3">
-<h3><span class="header-section-number">9.2.4</span> Facetted maps</h3>
-<p>Facetted maps are a common and potentially effective way of visualizing spatial relationships that are more complex that a single relationship. The population of cities at one moment in time can be represented easily on a single map, for example by making the size of symbols variable for each city depending on population. However, to represent the populations of cities at multiple moments in time requires an <em>extra dimension</em>. This could be added by an additional <em>aesthetic</em> such as colour but this risks cluttering the map because it will involve multiple overlapping points (cities do not tend to move over time!).</p>
-<p>Facetted maps overcome this issue by creating ‘small multiples’ of spatial information. Typically, this will involve plotting the same geometry data multiple times, once for each variable present in the attribute data (this is the default plotting method for <code>sf</code> objects, as we saw in Chapter 2). However, facets can also represent shifting geometries, e.g. as the spatial distribution of a point pattern evolves over time. This use case of facetted plot is illustrated in Figure <a href="adv-map.html#fig:urban-facet">9.1</a>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tm_shape</span>(world) +
-<span class="st">  </span><span class="kw">tm_polygons</span>() +<span class="st"> </span>
-<span class="st">  </span><span class="kw">tm_shape</span>(urban_agglomerations) +
-<span class="st">  </span><span class="kw">tm_dots</span>(<span class="dt">size =</span> <span class="st">&quot;population_millions&quot;</span>) +
-<span class="st">  </span><span class="kw">tm_facets</span>(<span class="dt">by =</span> <span class="st">&quot;year&quot;</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:urban-facet"></span>
-<img src="figures/urban-facet-1.png" alt="Facetted map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations" width="576" />
-<p class="caption">
-Figure 9.1: Facetted map showing the top 30 largest ‘urban agglomerations’ from 1950 to 2030 based on population projects by the United Nations
-</p>
-</div>
-</div>
-<div id="inset-maps" class="section level3">
-<h3><span class="header-section-number">9.2.5</span> Inset maps</h3>
-<p>The role of spatial visualizations is to provide an information in the most accessible form. This is often done with the use of inset maps. They could be used to focus on a smaller area in more detail<!--fig ref1--> or to bring some non-contiguous regions closer to ease a comparision<!--fig ref2-->.</p>
-<!-- intro  -->
-<!-- used when: a/ non-contigous regions, b/ focus on small region while showing the large one -->
-<!-- find the best distribution of insets -->
-<!-- example1: classic inset map -->
-<!-- example2: us states + hawaii + alaska -->
-<!-- find the best projection for each individual inset. -->
-<!-- reproj -->
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">us_states_map =<span class="st"> </span><span class="kw">tm_shape</span>(us_states, <span class="dt">projection =</span> <span class="dv">2163</span>) +
-<span class="st">  </span><span class="kw">tm_polygons</span>() +<span class="st"> </span>
-<span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">frame =</span> <span class="ot">FALSE</span>)</code></pre></div>
-<!-- create separate maps -->
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hawaii_map =<span class="st"> </span><span class="kw">tm_shape</span>(hawaii) +
-<span class="st">  </span><span class="kw">tm_polygons</span>() +<span class="st"> </span>
-<span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">title =</span> <span class="st">&quot;Hawaii&quot;</span>, <span class="dt">frame =</span> <span class="ot">FALSE</span>, <span class="dt">bg.color =</span> <span class="ot">NA</span>, 
-            <span class="dt">title.position =</span> <span class="kw">c</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;bottom&quot;</span>))
-alaska_map =<span class="st"> </span><span class="kw">tm_shape</span>(alaska) +
-<span class="st">  </span><span class="kw">tm_polygons</span>() +<span class="st"> </span>
-<span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">title =</span> <span class="st">&quot;Alaska&quot;</span>, <span class="dt">frame =</span> <span class="ot">FALSE</span>, <span class="dt">bg.color =</span> <span class="ot">NA</span>)</code></pre></div>
-<!-- create an inset map -->
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(grid)
-us_states_map
-<span class="kw">print</span>(hawaii_map, <span class="dt">vp =</span> <span class="kw">viewport</span>(<span class="dt">x =</span> <span class="fl">0.4</span>, <span class="dt">y =</span> <span class="fl">0.1</span>, <span class="dt">width =</span> <span class="fl">0.2</span>, <span class="dt">height =</span> <span class="fl">0.1</span>))
-<span class="kw">print</span>(alaska_map, <span class="dt">vp =</span> <span class="kw">viewport</span>(<span class="dt">x =</span> <span class="fl">0.15</span>, <span class="dt">y =</span> <span class="fl">0.15</span>, <span class="dt">width =</span> <span class="fl">0.3</span>, <span class="dt">height =</span> <span class="fl">0.3</span>))</code></pre></div>
-<p><img src="figures/unnamed-chunk-6-1.png" width="576" style="display: block; margin: auto;" /></p>
-<!-- extended info about using tm_layout to show legend in main plot and remove it in the others -->
-<!-- example3: mix of maps and plots? -->
-<!-- of maybe only mention this -->
-<!-- https://gist.github.com/walkerke/93bfe80bb7735aa6265a61013eaed3fa -->
-</div>
-</div>
-<div id="animations" class="section level2">
-<h2><span class="header-section-number">9.3</span> Animations</h2>
-<p>Animated maps can be useful for communicating how spatial phenomena shift over time. An advantage of facetted plots are that they can be printed, but the approach has disadvantages: faceted maps can become very small with more than ~9 maps in one figure, and it can be hard to see the spatial relationships between each facet when each map is on a different part of the page! Furthermore, with the increasing proportion of communication that happens via digital screens, the disadvantage that animations cannot be printed is diminished. You can always link readers to a web-page containing an animated (or interactive) version of a printed map to help make it come alive.</p>
-<p>Figure <a href="adv-map.html#fig:urban-animated">9.2</a> is a simple example of the benefits of an animated map. Unlike the facetted plot presented in the previous section, it does not squeeze all 17 for them all to be displayed simultaneously (see the book’s website for the animated version).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr::<span class="kw">include_graphics</span>(<span class="st">&quot;figures/urban-animated.gif&quot;</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:urban-animated"></span>
-<img src="figures/urban-animated.gif" alt="Animated map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations."  />
-<p class="caption">
-Figure 9.2: Animated map showing the top 30 largest ‘urban agglomerations’ from 1950 to 2030 based on population projects by the United Nations.
-</p>
-</div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m =<span class="st"> </span><span class="kw">tm_shape</span>(world) +<span class="st"> </span>
-<span class="st">  </span><span class="kw">tm_polygons</span>() +
-<span class="st">  </span><span class="kw">tm_shape</span>(urban_agglomerations) +
-<span class="st">  </span><span class="kw">tm_dots</span>(<span class="dt">size =</span> <span class="st">&quot;population_millions&quot;</span>) +
-<span class="st">  </span><span class="kw">tm_facets</span>(<span class="dt">by =</span> <span class="st">&quot;year&quot;</span>, <span class="dt">nrow =</span> <span class="dv">1</span>, <span class="dt">ncol =</span> <span class="dv">1</span>) </code></pre></div>
-<!-- Robin, check the differences between by="year" and along="year" -->
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">scipen =</span> <span class="dv">999</span>)
-
-wb_data_create =<span class="st"> </span>function(indicator, our_name, year, ...){
-  df =<span class="st"> </span><span class="kw">wb</span>(<span class="dt">indicator =</span> indicator, <span class="dt">startdate =</span> year, <span class="dt">enddate =</span> year, ...) %&gt;%
-<span class="st">    </span><span class="kw">as_data_frame</span>() %&gt;%
-<span class="st">    </span><span class="kw">select</span>(<span class="dt">iso_a2=</span>iso2c, value) %&gt;%
-<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">indicator =</span> our_name) %&gt;%
-<span class="st">    </span><span class="kw">spread</span>(indicator, value)
-  <span class="kw">return</span>(df)
-}
-
-data_lifeExp =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1963</span>, <span class="dv">2013</span>, <span class="dt">by=</span><span class="dv">5</span>) %&gt;%
-<span class="st">  </span><span class="kw">set_names</span>(.) %&gt;%
-<span class="st">  </span><span class="kw">map_df</span>(~<span class="kw">wb_data_create</span>(.x, <span class="dt">indicator =</span> <span class="st">&quot;SP.DYN.LE00.IN&quot;</span>,
-                   <span class="dt">our_name =</span> <span class="st">&quot;lifeExp&quot;</span>,
-                   <span class="dt">country =</span> <span class="st">&quot;countries_only&quot;</span>), <span class="dt">.id=</span><span class="st">&#39;year&#39;</span>) %&gt;%
-<span class="st">  </span><span class="kw">spread</span>(year, lifeExp)
-
-world_sf_temporal =<span class="st"> </span><span class="kw">ne_countries</span>(<span class="dt">returnclass =</span> <span class="st">&#39;sf&#39;</span>) %&gt;%
-<span class="st">  </span><span class="kw">left_join</span>(., data_lifeExp, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&#39;iso_a2&#39;</span>)) %&gt;%
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">area_km2 =</span> <span class="kw">set_units</span>(<span class="kw">st_area</span>(.), km^<span class="dv">2</span>)) %&gt;%
-<span class="st">  </span><span class="kw">select</span>(iso_a2, name_long, continent, region_un, subregion, type, area_km2, <span class="st">`</span><span class="dt">1963</span><span class="st">`</span>:<span class="st">`</span><span class="dt">2013</span><span class="st">`</span>) %&gt;%
-<span class="st">  </span><span class="kw">gather</span>(year, lifeExp, <span class="st">`</span><span class="dt">1963</span><span class="st">`</span>:<span class="st">`</span><span class="dt">2013</span><span class="st">`</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m1 =<span class="st"> </span><span class="kw">tm_shape</span>(world_sf_temporal) +<span class="st"> </span>
-<span class="st">  </span><span class="kw">tm_polygons</span>(<span class="st">&quot;lifeExp&quot;</span>) +
-<span class="st">  </span><span class="kw">tm_facets</span>(<span class="dt">by =</span> <span class="st">&quot;year&quot;</span>, <span class="dt">nrow =</span> <span class="dv">1</span>, <span class="dt">ncol =</span> <span class="dv">1</span>, <span class="dt">drop.units =</span> <span class="ot">TRUE</span>)
-
-<span class="kw">animation_tmap</span>(m1, <span class="dt">filename =</span> <span class="st">&quot;figures/11-lifeExp_animation.gif&quot;</span>, <span class="dt">width =</span> <span class="dv">2000</span>, <span class="dt">height =</span> <span class="dv">600</span>, <span class="dt">delay =</span> <span class="dv">40</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_sf_temporal2 =<span class="st"> </span><span class="kw">filter</span>(world_sf_temporal, continent ==<span class="st"> &quot;South America&quot;</span>)
-m2 =<span class="st"> </span><span class="kw">tm_shape</span>(world_sf_temporal2) +
-<span class="st">  </span><span class="kw">tm_polygons</span>(<span class="st">&quot;lifeExp&quot;</span>, <span class="dt">n =</span> <span class="dv">12</span>) +
-<span class="st">  </span><span class="kw">tm_facets</span>(<span class="dt">by =</span> <span class="st">&quot;name_long&quot;</span>, <span class="dt">along =</span> <span class="st">&quot;year&quot;</span>, <span class="dt">drop.units =</span> <span class="ot">TRUE</span>, <span class="dt">free.coords =</span> <span class="ot">TRUE</span>)
-<span class="kw">animation_tmap</span>(m2, <span class="dt">filename =</span> <span class="st">&quot;figures/11-lifeExp_sa_animation.gif&quot;</span>, <span class="dt">width =</span> <span class="dv">1600</span>, <span class="dt">height =</span> <span class="dv">1000</span>, <span class="dt">delay =</span> <span class="dv">40</span>)</code></pre></div>
-</div>
-<div id="interactive-maps" class="section level2">
-<h2><span class="header-section-number">9.4</span> Interactive maps</h2>
-<!-- leaflet -->
-<!-- leaflet plugins -->
-<!-- mapview -->
-<!-- mapview raster support! -->
-<!-- are we going to focus on leaflet or mapview? -->
-</div>
-<div id="pseudo-unusual-maps" class="section level2">
-<h2><span class="header-section-number">9.5</span> Pseudo (unusual) maps</h2>
-<!--we need better name -->
-<!-- geofacet -->
-<!-- e.g. population lines -->
-<!-- point maps -->
-<!-- hexbin -->
-<!-- cartogram - https://github.com/sjewo/cartogram -->
-<!-- shiny? -->
+<div id="reducing-dimensionality" class="section level2">
+<h2><span class="header-section-number">14.3</span> Reducing dimensionality</h2>
+<p>Ordinations are a popular tool in vegetation science to extract the main information, frequently corresponding to ecological gradients, from large species-plot matrices mostly filled with 0s. However, they are also used in remote sensing (spectral bands + hyperspectral), the soil sciences, geomarketing, etc.. If you are unfamiliar with ordination techniques or in need of a refresher, have a look at Michael W. Palmers <a href="http://ordination.okstate.edu/overview.htm">webpage</a> for a short introduction to popular ordination techniques in ecology and at <span class="citation">Borcard, Gillet, and Legendre (<a href="#ref-borcard_numerical_2011">2011</a>)</span> for a deeper look how to apply these techniques in R. <strong>vegan</strong>’s package documentation is also very helpful (<code>vignette(package = &quot;vegan&quot;)</code>).</p>
+<p>Principal component analysis (PCA) is probably the most famous ordination technique. It is a great tool to reduce dimensionality if one can expect linear relationships between variables, and if the joint absence of a variable (for example calcium) in two plots (observations) can be considered a similarity. This is barely the case with vegetation data.</p>
+<p>For one, relationships are usually non-linear along environmental gradients. That means the presence of a plant usually follows a unimodal relationship along a gradient (e.g., humidity, temperature or salinity) with a peak at the most favorable conditions and declining ends towards the unfavarable conditions.</p>
+<p>Secondly, the joint absence of a species in two plots is often hardly an indication for similarity. Suppose a plant species is absent from the driest (e.g., an extreme desert) and the most moist locations (e.g., a tree savannah) of our sampling. Then we really should refrain from counting this as a simlilarity because it is very likely that the only thing these two completely different environmental settings have in common in terms of floristic composition is the shared absence of species (except for rare ubiquist species).</p>
 
 </div>
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
-<div id="ref-talbert_ancient_2014">
-<p>Talbert, Richard J. A. 2014. <em>Ancient Perspectives: Maps and Their Place in Mesopotamia, Egypt, Greece, and Rome</em>. University of Chicago Press.</p>
+<div id="ref-dillon_lomas_2003">
+<p>Dillon, M. O., M. Nakazawa, and S. G. Leiva. 2003. “The Lomas Formations of Coastal Peru: Composition and Biogeographic History.” In <em>El Niño in Peru: Biology and Culture over 10,000 Years</em>, edited by J. Haas and M. O. Dillon, 1–9. Chicago: Field Museum of Natural History.</p>
+</div>
+<div id="ref-muenchow_predictive_2013">
+<p>Muenchow, Jannes, Achim Bräuning, Eric Frank Rodríguez, and Henrik von Wehrden. 2013. “Predictive Mapping of Species Richness and Plant Species’ Distributions of a Peruvian Fog Oasis Along an Altitudinal Gradient.” <em>Biotropica</em> 45 (5): 557–66. doi:<a href="https://doi.org/10.1111/btp.12049">10.1111/btp.12049</a>.</p>
+</div>
+<div id="ref-muenchow_soil_2013">
+<p>Muenchow, Jannes, Simon Hauenstein, Achim Bräuning, Rupert Bäumler, Eric Frank Rodríguez, and Henrik von Wehrden. 2013. “Soil Texture and Altitude, Respectively, Largely Determine the Floristic Gradient of the Most Diverse Fog Oasis in the Peruvian Desert.” <em>Journal of Tropical Ecology</em> 29 (05): 427–38. doi:<a href="https://doi.org/10.1017/S0266467413000436">10.1017/S0266467413000436</a>.</p>
+</div>
+<div id="ref-usgs_u.s._2016">
+<p>USGS. 2016. <em>U.S. Geological Survey (USGS) Earth Resources Observation and Science (EROS) Center</em>. <a href="http://earthexplorer.usgs.gov/" class="uri">http://earthexplorer.usgs.gov/</a>.</p>
+</div>
+<div id="ref-borcard_numerical_2011">
+<p>Borcard, Daniel, François Gillet, and Pierre Legendre. 2011. <em>Numerical Ecology with R</em>. Use R! New York: Springer.</p>
 </div>
 </div>
             </section>
@@ -527,8 +407,8 @@ m2 =<span class="st"> </span><span class="kw">tm_shape</span>(world_sf_temporal2
           </div>
         </div>
       </div>
-<a href="location.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="gis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="spatial-cv.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="geocomputation-for-sea-level-research.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -557,7 +437,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Robinlovelace/geocompr/edit/master/09-mapping.Rmd",
+"link": "https://github.com/Robinlovelace/geocompr/edit/master/14-eco.Rmd",
 "text": "Edit"
 },
 "download": null,
