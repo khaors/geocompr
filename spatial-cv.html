@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="geocomputation-for-renewable-energy-research.html">
-<link rel="next" href="references.html">
+<link rel="prev" href="algorithms-and-functions-for-geocomputation.html">
+<link rel="next" href="geocomputation-for-ecology-a-case-study-of-fog-oases.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -333,17 +333,67 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="synthesis-and-next-steps" class="section level1">
-<h1><span class="header-section-number">17</span> Synthesis and next steps</h1>
+<div id="spatial-cv" class="section level1">
+<h1><span class="header-section-number">13</span> Spatial cross-validation</h1>
+<p>In the beginning, we pointed out that there are several programming languages at our disposal for geocomputing. This chapter shows why doing geocomputation with R is especially beneficial, i.e. it combines R’s unparalleled statistical power with geographic data. Specifically, we will model spatially the</p>
+<p>This chapter combines the strength of R, statistical power, with geographic data.</p>
+<ul>
+<li>short intro spatial autocorrelation, maybe by showing artificial spatial datasets with different sills, nuggets, ranges (don’t show the code but just the concept of spatial autocorrelation)</li>
+<li>spatial cross-validation when predictive performance is desirable</li>
+<li>use Ecuador landslide data to spatially predict landslide susceptibility (GAM, i.e. a semiparametric extension of a GLM + refer to eco chapter in which we will use ml and where the hyperparameter tuning also requires an additional inner-fold tuning)</li>
+</ul>
+<p><span class="citation">Muenchow, Brenning, and Richter (<a href="#ref-muenchow_geomorphic_2012">2012</a>)</span> <span class="citation">A. Brenning (<a href="#ref-brenning_spatial_2012">2012</a><a href="#ref-brenning_spatial_2012">b</a>)</span> <span class="citation">Schratz et al. (<a href="#ref-schratz_performance_2018">2018</a>)</span> <span class="citation">James et al. (<a href="#ref-james_introduction_2013">2013</a>)</span></p>
+<ul>
+<li>What is spatial modeling and for what do we use it?</li>
+<li>What is cross-validation, why do we need it?</li>
+<li>What is spatial cv?</li>
+</ul>
+<p>Spatial modeling: species distribution models, landslide susceptibility, epidemiology, disease mapping, rock glaciers, etc.</p>
+<p>When we are interested in the accuracy of a model, i.e., when we want to assess a model’s predictive performance, we want to avoid overfitting.<a href="#fn61" class="footnoteRef" id="fnref61"><sup>61</sup></a> Spatial autocorrelation will lead to overfitting when the training dataset is not independent of the test dataset which is frequently the case in temporal and spatial settings.</p>
+<p>Cross-validation separates test and training datasets randomly. Let’s take our landslide dataset as an example. Randomly selecting 20% of all points leads to an unwanted effect, namely that test and training points might be close to each other (see Figure ??). The first law of geography states that points close to each other tend to be, on average, more similar compared to points further apart. This means these points are not indepedent. Hence, using this information in our modeling is like a sneak preview, i.e. using information that should be unavailable to the test dataset.</p>
+<!--
+Usually people seek to accomplish one of the following aims when using supervised statistical learning techniques: 
 
+1. Spatial prediction of the response variable
+2. Inference about the relationship between response and predictors
+
+In the latter case, we need to make sure to comply with all model assumptions (normality, heterogeneity, independence).
+Spatial predictions are easier since we can argue that, the predictive performance of a model incorporating a (spatial) correlation structure is on average the same as for a model without a spatial correlation structure.
+This is the reason why machine learning techniques (no explicit model assumptions) are so popular when the goal is a good prediction.
+-->
+
+</div>
+
+
+
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-muenchow_geomorphic_2012">
+<p>Muenchow, J., A. Brenning, and M. Richter. 2012. “Geomorphic Process Rates of Landslides Along a Humidity Gradient in the Tropical Andes.” <em>Geomorphology</em> 139-140 (February): 271–84. doi:<a href="https://doi.org/10.1016/j.geomorph.2011.10.029">10.1016/j.geomorph.2011.10.029</a>.</p>
+</div>
+<div id="ref-brenning_spatial_2012">
+<p>Brenning, Alexander. 2012b. “Spatial Cross-Validation and Bootstrap for the Assessment of Prediction Rules in Remote Sensing: The R Package Sperrorest.” In, 5372–5. IEEE. doi:<a href="https://doi.org/10.1109/IGARSS.2012.6352393">10.1109/IGARSS.2012.6352393</a>.</p>
+</div>
+<div id="ref-schratz_performance_2018">
+<p>Schratz, Patrick, J. Muenchow, Eugenia Iturritxa, Jakob Richter, and A. Brenning. 2018. “Performance Evaluation and Hyperparameter Tuning of Statistical and Machine-Learning Models Using Spatial Data.”</p>
+</div>
+<div id="ref-james_introduction_2013">
+<p>James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani, eds. 2013. <em>An Introduction to Statistical Learning: With Applications in R</em>. Springer Texts in Statistics 103. New York: Springer.</p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="61">
+<li id="fn61"><p>short definition of overfitting<a href="spatial-cv.html#fnref61">↩</a></p></li>
+</ol>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="geocomputation-for-renewable-energy-research.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="algorithms-and-functions-for-geocomputation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -372,7 +422,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Robinlovelace/geocompr/edit/master/17-synthesis.Rmd",
+"link": "https://github.com/Robinlovelace/geocompr/edit/master/13-spatial-cv.Rmd",
 "text": "Edit"
 },
 "download": null,

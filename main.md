@@ -252,7 +252,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve380bbf48b5c6e8f7
+preserve6796da27b442874b
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3090,7 +3090,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve02345024f2d9cbc6
+preserve25d1d7a9b8e3fedf
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6178,7 +6178,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve1de2942d8044a397
+preserve7eba77300bbd231b
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6797,7 +6797,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve3a5e867697c3a1b3
+preserve276390e59c7301f6
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7678,6 +7678,54 @@ Additionally, give `mapview` a try.
 <!--chapter:end:12-algorithms.Rmd-->
 
 
+# Spatial cross-validation {#spatial-cv}
+
+In the beginning, we pointed out that there are several programming languages at our disposal for geocomputing.
+This chapter shows why doing geocomputation with R is especially beneficial, i.e. it combines R's unparalleled statistical power with geographic data.
+Specifically, we will model spatially the 
+
+This chapter combines the strength of R, statistical power, with geographic data.
+
+
+- short intro spatial autocorrelation, maybe by showing artificial spatial datasets with different sills, nuggets, ranges (don't show the code but just the concept of spatial autocorrelation)
+- spatial cross-validation when predictive performance is desirable 
+- use Ecuador landslide data to spatially predict landslide susceptibility (GAM, i.e. a semiparametric extension of a GLM + refer to eco chapter in which we will use ml and where the hyperparameter tuning also requires an additional inner-fold tuning)
+
+@muenchow_geomorphic_2012
+@brenning_spatial_2012
+@schratz_performance_2018
+@james_introduction_2013
+
+- What is spatial modeling and for what do we use it?
+- What is cross-validation, why do we need it?
+- What is spatial cv?
+
+Spatial modeling: species distribution models, landslide susceptibility, epidemiology, disease mapping, rock glaciers, etc.
+
+When we are interested in the accuracy of a model, i.e., when we want to assess a model's predictive performance, we want to avoid overfitting.^[short definition of overfitting]
+Spatial autocorrelation will lead to overfitting when the training dataset is not independent of the test dataset which is frequently the case in temporal and spatial settings.
+
+Cross-validation separates test and training datasets randomly.
+Let's take our landslide dataset as an example.
+Randomly selecting 20% of all points leads to an unwanted effect, namely that test and training points might be close to each other (see Figure ??).
+The first law of geography states that points close to each other tend to be, on average, more similar compared to points further apart.
+This means these points are not indepedent.
+Hence, using this information in our modeling is like a sneak preview, i.e. using information that should be unavailable to the test dataset.
+
+<!--
+Usually people seek to accomplish one of the following aims when using supervised statistical learning techniques: 
+
+1. Spatial prediction of the response variable
+2. Inference about the relationship between response and predictors
+
+In the latter case, we need to make sure to comply with all model assumptions (normality, heterogeneity, independence).
+Spatial predictions are easier since we can argue that, the predictive performance of a model incorporating a (spatial) correlation structure is on average the same as for a model without a spatial correlation structure.
+This is the reason why machine learning techniques (no explicit model assumptions) are so popular when the goal is a good prediction.
+-->
+
+<!--chapter:end:13-spatial-cv.Rmd-->
+
+
 # (PART) Geocomputation in the wild {-}
 
 # Geocomputation for Ecology: A case study of fog oases
@@ -7759,7 +7807,7 @@ Secondly, the joint absence of a species in two plots is often hardly an indicat
 Suppose a plant species is absent from the driest (e.g., an extreme desert) and the most moist locations (e.g., a tree savannah) of our sampling.
 Then we really should refrain from counting this as a simlilarity because it is very likely that the only thing these two completely different environmental settings have in common in terms of floristic composition is the shared absence of species (except for rare ubiquist species). 
 
-<!--chapter:end:13-eco.Rmd-->
+<!--chapter:end:14-eco.Rmd-->
 
 
 # Geocomputation for sea level research
@@ -7770,17 +7818,17 @@ Some countries such as Norway are actually increasing in height and have limited
 These imacts are exacerbated by climate change, adding an element of uncertainty and dynamics to the problem.
 All these features of SLR make it well-suited to analysis using geocomputation.
 
-<!--chapter:end:14-slr.Rmd-->
+<!--chapter:end:15-slr.Rmd-->
 
 
 # Geocomputation for renewable energy research
 
-<!--chapter:end:15-renewable.Rmd-->
+<!--chapter:end:16-renewable.Rmd-->
 
 
 # Synthesis and next steps
 
-<!--chapter:end:16-synthesis.Rmd-->
+<!--chapter:end:17-synthesis.Rmd-->
 
 
 # References {-}

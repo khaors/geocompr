@@ -32,7 +32,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="algorithms-and-functions-for-geocomputation.html">
+<link rel="prev" href="spatial-cv.html">
 <link rel="next" href="geocomputation-for-sea-level-research.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -299,16 +299,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="11.5" data-path="raster-vector.html"><a href="raster-vector.html#vectorization"><i class="fa fa-check"></i><b>11.5</b> Vectorization ??</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="algorithms-and-functions-for-geocomputation.html"><a href="algorithms-and-functions-for-geocomputation.html"><i class="fa fa-check"></i><b>12</b> Algorithms and functions for geocomputation</a></li>
+<li class="chapter" data-level="13" data-path="spatial-cv.html"><a href="spatial-cv.html"><i class="fa fa-check"></i><b>13</b> Spatial cross-validation</a></li>
 <li class="part"><span><b>IV Geocomputation in the wild</b></span></li>
-<li class="chapter" data-level="13" data-path="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><i class="fa fa-check"></i><b>13</b> Geocomputation for Ecology: A case study of fog oases</a><ul>
+<li class="chapter" data-level="14" data-path="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><i class="fa fa-check"></i><b>14</b> Geocomputation for Ecology: A case study of fog oases</a><ul>
 <li class="chapter" data-level="" data-path="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html#prerequisites-9"><i class="fa fa-check"></i>Prerequisites</a></li>
-<li class="chapter" data-level="13.1" data-path="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html#introduction-7"><i class="fa fa-check"></i><b>13.1</b> Introduction</a></li>
-<li class="chapter" data-level="13.2" data-path="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html#background"><i class="fa fa-check"></i><b>13.2</b> Background</a></li>
-<li class="chapter" data-level="13.3" data-path="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html#reducing-dimensionality"><i class="fa fa-check"></i><b>13.3</b> Reducing dimensionality</a></li>
+<li class="chapter" data-level="14.1" data-path="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html#introduction-7"><i class="fa fa-check"></i><b>14.1</b> Introduction</a></li>
+<li class="chapter" data-level="14.2" data-path="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html#background"><i class="fa fa-check"></i><b>14.2</b> Background</a></li>
+<li class="chapter" data-level="14.3" data-path="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html#reducing-dimensionality"><i class="fa fa-check"></i><b>14.3</b> Reducing dimensionality</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="geocomputation-for-sea-level-research.html"><a href="geocomputation-for-sea-level-research.html"><i class="fa fa-check"></i><b>14</b> Geocomputation for sea level research</a></li>
-<li class="chapter" data-level="15" data-path="geocomputation-for-renewable-energy-research.html"><a href="geocomputation-for-renewable-energy-research.html"><i class="fa fa-check"></i><b>15</b> Geocomputation for renewable energy research</a></li>
-<li class="chapter" data-level="16" data-path="synthesis-and-next-steps.html"><a href="synthesis-and-next-steps.html"><i class="fa fa-check"></i><b>16</b> Synthesis and next steps</a></li>
+<li class="chapter" data-level="15" data-path="geocomputation-for-sea-level-research.html"><a href="geocomputation-for-sea-level-research.html"><i class="fa fa-check"></i><b>15</b> Geocomputation for sea level research</a></li>
+<li class="chapter" data-level="16" data-path="geocomputation-for-renewable-energy-research.html"><a href="geocomputation-for-renewable-energy-research.html"><i class="fa fa-check"></i><b>16</b> Geocomputation for renewable energy research</a></li>
+<li class="chapter" data-level="17" data-path="synthesis-and-next-steps.html"><a href="synthesis-and-next-steps.html"><i class="fa fa-check"></i><b>17</b> Synthesis and next steps</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="http://robinlovelace.net/">Robin Lovelace</a></li>
@@ -333,13 +334,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="geocomputation-for-ecology-a-case-study-of-fog-oases" class="section level1">
-<h1><span class="header-section-number">13</span> Geocomputation for Ecology: A case study of fog oases</h1>
+<h1><span class="header-section-number">14</span> Geocomputation for Ecology: A case study of fog oases</h1>
 <div id="prerequisites-9" class="section level2 unnumbered">
 <h2>Prerequisites</h2>
 <p>This chapter assumes you have a strong grasp of spatial data analysis and processing, covered in chapters 2-5. In it you will make use of R’s interfaces to dedicated GIS software, and spatial cross validation, topics covered in chapters xx and xx respectively.</p>
 </div>
 <div id="introduction-7" class="section level2">
-<h2><span class="header-section-number">13.1</span> Introduction</h2>
+<h2><span class="header-section-number">14.1</span> Introduction</h2>
 <p>keywords: species distribution modeling, floristic modeling, spatial cross-validation, spatial autocorrelation, ordination (NMDS, Isomap), predictive mapping</p>
 <p>structure:</p>
 <ol style="list-style-type: decimal">
@@ -353,14 +354,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ol>
 </div>
 <div id="background" class="section level2">
-<h2><span class="header-section-number">13.2</span> Background</h2>
+<h2><span class="header-section-number">14.2</span> Background</h2>
 <p>Fog oases are one of the most fascinating vegetation formations I have ever encountered. These formations, locally termed <em>lomas</em>, develop on mountains along the coastal deserts of Peru and Chile. The desert’s extreme conditions and remoteness provide the habitat for a unique ecosystem, including species endemic to the fog oases. Despite the arid conditions and low levels of precipitation of around 30-50 mm per year, plants can survive, by ‘combing out’ fog. This fog, which develops below the temperature inversion caused by the cold Humboldt current in austral winter, provides the name for this habitat. Every few years, the El Niño weather pattern brings torrential rainfall to this sun-baked environment <span class="citation">(Dillon, Nakazawa, and Leiva <a href="#ref-dillon_lomas_2003">2003</a>)</span>. This causes the desert to bloom, and provides tree seedlings a chance to develop roots long enough to survive the following arid conditions.</p>
 <p>Unfortunately fog oases are heavily endangered. This is mostly due to human activity (agriculture and climate change). To effectively protect the last remnants of this unique vegetation ecosystem, evidence is needed on the composition and spatial distribution of the native flora <span class="citation">(Jannes Muenchow, Bräuning, et al. <a href="#ref-muenchow_predictive_2013">2013</a>; Jannes Muenchow, Hauenstein, et al. <a href="#ref-muenchow_soil_2013">2013</a>)</span>. <em>Lomas</em> mountains also have economic value as a tourist destination, and can contribute to the wellbeing of local people via recreation. For example, most Peruvians live in the coastal desert, and <em>lomas</em> mountains are frequently the closest “green” destination.</p>
-<p>In this chapter we will demonstrate ecological applications of some of the techniques learned in the previous chapters. This case study will involve analyzing the composition and the spatial distribution of the vascular plants on the southern slope of Mt. Mongón, a <em>lomas</em> mountain near Casma on the central northern coast of Peru (Fig. <a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html#fig:study-area-mongon">13.1</a>).</p>
+<p>In this chapter we will demonstrate ecological applications of some of the techniques learned in the previous chapters. This case study will involve analyzing the composition and the spatial distribution of the vascular plants on the southern slope of Mt. Mongón, a <em>lomas</em> mountain near Casma on the central northern coast of Peru (Fig. <a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html#fig:study-area-mongon">14.1</a>).</p>
 <div class="figure" style="text-align: center"><span id="fig:study-area-mongon"></span>
 <img src="figures/study_area_mongon.png" alt="The Mt. Mongón study area (taken from @muenchow_rqgis:_nodate; Landsat image: path 9, row 67, acquisition date 09/22/2000; @usgs_u.s._2016)." width="1092" />
 <p class="caption">
-Figure 13.1: The Mt. Mongón study area (taken from <span class="citation">Muenchow, Schratz, and Brenning (n.d.)</span>; Landsat image: path 9, row 67, acquisition date 09/22/2000; <span class="citation">USGS (<a href="#ref-usgs_u.s._2016">2016</a>)</span>).
+Figure 14.1: The Mt. Mongón study area (taken from <span class="citation">Muenchow, Schratz, and Brenning (n.d.)</span>; Landsat image: path 9, row 67, acquisition date 09/22/2000; <span class="citation">USGS (<a href="#ref-usgs_u.s._2016">2016</a>)</span>).
 </p>
 </div>
 <p>During a field study to Mt. Mongón we recorded all vascular plants living in 100 randomly sampled 4x4 m<sup>2</sup> plots in the austral winter of 2011 <span class="citation">(Jannes Muenchow, Bräuning, et al. <a href="#ref-muenchow_predictive_2013">2013</a>)</span>. The sampling coincided with a strong La Niña event that year (see ENSO monitoring of the <a href="http://origin.cpc.ncep.noaa.gov/products/analysis_monitoring/ensostuff/ONI_v5.php">NOASS Climate Prediction Center</a>). This led to even higher levels of aridity than usual in the coastal desert. By contrast, it increased fog activity on the southern slopes of Peruvian <em>lomas</em> mountains.</p>
@@ -370,7 +371,7 @@ The first hypothesis is that four plant belts will be found along the altitudina
 <p>Ordinations are dimension-reducing techniques which allow the extraction of the main gradients from a (noisy) dataset, in our case the floristic gradient developing along the southern mountain slope. In this chapter we will try to model the first ordination axis, i.e., the floristic gradient, as a function of environmental predictors such as altitude, slope, catchment area and NDVI. The corresponding model will allow us to make spatial predictions of the plant composition anywhere in the study area. When doing the spatial predictions, we will of course account for the likely presence of spatial autocorrelation with the help of spatial cross-validation (see chapter xx). <!-- make a cross-reference--></p>
 </div>
 <div id="reducing-dimensionality" class="section level2">
-<h2><span class="header-section-number">13.3</span> Reducing dimensionality</h2>
+<h2><span class="header-section-number">14.3</span> Reducing dimensionality</h2>
 <p>Ordinations are a popular tool in vegetation science to extract the main information, frequently corresponding to ecological gradients, from large species-plot matrices mostly filled with 0s. However, they are also used in remote sensing (spectral bands + hyperspectral), the soil sciences, geomarketing, etc.. If you are unfamiliar with ordination techniques or in need of a refresher, have a look at Michael W. Palmers <a href="http://ordination.okstate.edu/overview.htm">webpage</a> for a short introduction to popular ordination techniques in ecology and at <span class="citation">Borcard, Gillet, and Legendre (<a href="#ref-borcard_numerical_2011">2011</a>)</span> for a deeper look how to apply these techniques in R. <strong>vegan</strong>’s package documentation is also very helpful (<code>vignette(package = &quot;vegan&quot;)</code>).</p>
 <p>Principal component analysis (PCA) is probably the most famous ordination technique. It is a great tool to reduce dimensionality if one can expect linear relationships between variables, and if the joint absence of a variable (for example calcium) in two plots (observations) can be considered a similarity. This is barely the case with vegetation data.</p>
 <p>For one, relationships are usually non-linear along environmental gradients. That means the presence of a plant usually follows a unimodal relationship along a gradient (e.g., humidity, temperature or salinity) with a peak at the most favorable conditions and declining ends towards the unfavarable conditions.</p>
@@ -401,7 +402,7 @@ The first hypothesis is that four plant belts will be found along the altitudina
           </div>
         </div>
       </div>
-<a href="algorithms-and-functions-for-geocomputation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="spatial-cv.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="geocomputation-for-sea-level-research.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
@@ -431,7 +432,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Robinlovelace/geocompr/edit/master/13-eco.Rmd",
+"link": "https://github.com/Robinlovelace/geocompr/edit/master/14-eco.Rmd",
 "text": "Edit"
 },
 "download": null,

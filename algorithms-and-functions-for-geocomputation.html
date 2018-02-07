@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="raster-vector.html">
-<link rel="next" href="geocomputation-for-ecology-a-case-study-of-fog-oases.html">
+<link rel="next" href="spatial-cv.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -299,16 +299,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="11.5" data-path="raster-vector.html"><a href="raster-vector.html#vectorization"><i class="fa fa-check"></i><b>11.5</b> Vectorization ??</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="algorithms-and-functions-for-geocomputation.html"><a href="algorithms-and-functions-for-geocomputation.html"><i class="fa fa-check"></i><b>12</b> Algorithms and functions for geocomputation</a></li>
+<li class="chapter" data-level="13" data-path="spatial-cv.html"><a href="spatial-cv.html"><i class="fa fa-check"></i><b>13</b> Spatial cross-validation</a></li>
 <li class="part"><span><b>IV Geocomputation in the wild</b></span></li>
-<li class="chapter" data-level="13" data-path="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><i class="fa fa-check"></i><b>13</b> Geocomputation for Ecology: A case study of fog oases</a><ul>
+<li class="chapter" data-level="14" data-path="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><i class="fa fa-check"></i><b>14</b> Geocomputation for Ecology: A case study of fog oases</a><ul>
 <li class="chapter" data-level="" data-path="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html#prerequisites-9"><i class="fa fa-check"></i>Prerequisites</a></li>
-<li class="chapter" data-level="13.1" data-path="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html#introduction-7"><i class="fa fa-check"></i><b>13.1</b> Introduction</a></li>
-<li class="chapter" data-level="13.2" data-path="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html#background"><i class="fa fa-check"></i><b>13.2</b> Background</a></li>
-<li class="chapter" data-level="13.3" data-path="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html#reducing-dimensionality"><i class="fa fa-check"></i><b>13.3</b> Reducing dimensionality</a></li>
+<li class="chapter" data-level="14.1" data-path="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html#introduction-7"><i class="fa fa-check"></i><b>14.1</b> Introduction</a></li>
+<li class="chapter" data-level="14.2" data-path="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html#background"><i class="fa fa-check"></i><b>14.2</b> Background</a></li>
+<li class="chapter" data-level="14.3" data-path="geocomputation-for-ecology-a-case-study-of-fog-oases.html"><a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html#reducing-dimensionality"><i class="fa fa-check"></i><b>14.3</b> Reducing dimensionality</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="geocomputation-for-sea-level-research.html"><a href="geocomputation-for-sea-level-research.html"><i class="fa fa-check"></i><b>14</b> Geocomputation for sea level research</a></li>
-<li class="chapter" data-level="15" data-path="geocomputation-for-renewable-energy-research.html"><a href="geocomputation-for-renewable-energy-research.html"><i class="fa fa-check"></i><b>15</b> Geocomputation for renewable energy research</a></li>
-<li class="chapter" data-level="16" data-path="synthesis-and-next-steps.html"><a href="synthesis-and-next-steps.html"><i class="fa fa-check"></i><b>16</b> Synthesis and next steps</a></li>
+<li class="chapter" data-level="15" data-path="geocomputation-for-sea-level-research.html"><a href="geocomputation-for-sea-level-research.html"><i class="fa fa-check"></i><b>15</b> Geocomputation for sea level research</a></li>
+<li class="chapter" data-level="16" data-path="geocomputation-for-renewable-energy-research.html"><a href="geocomputation-for-renewable-energy-research.html"><i class="fa fa-check"></i><b>16</b> Geocomputation for renewable energy research</a></li>
+<li class="chapter" data-level="17" data-path="synthesis-and-next-steps.html"><a href="synthesis-and-next-steps.html"><i class="fa fa-check"></i><b>17</b> Synthesis and next steps</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="http://robinlovelace.net/">Robin Lovelace</a></li>
@@ -336,16 +337,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1><span class="header-section-number">12</span> Algorithms and functions for geocomputation</h1>
 
 </div>
-
-
-
             </section>
 
           </div>
         </div>
       </div>
 <a href="raster-vector.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="geocomputation-for-ecology-a-case-study-of-fog-oases.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="spatial-cv.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
