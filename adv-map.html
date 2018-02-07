@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-02-06">
+<meta name="date" content="2018-02-07">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -337,13 +337,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="prerequisites-7" class="section level2 unnumbered">
 <h2>Prerequisites</h2>
 <ul>
-<li>This chapter requires the following packages:</li>
+<li>This chapter requires the following packages that we have already been using:</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sf)
-<span class="kw">library</span>(raster)
-<span class="kw">library</span>(tidyverse)
+<span class="kw">library</span>(spData)
+<span class="kw">library</span>(tidyverse)</code></pre></div>
+<ul>
+<li>In addition it will make use of the following visualisation packages:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(leaflet)
 <span class="kw">library</span>(tmap)
-<span class="kw">library</span>(spData)</code></pre></div>
+<span class="co"># library(mapview)</span>
+<span class="co"># library(shiny)</span></code></pre></div>
 </div>
 <div id="introduction-6" class="section level2">
 <h2><span class="header-section-number">9.1</span> Introduction</h2>
@@ -426,7 +431,7 @@ alaska_map =<span class="st"> </span><span class="kw">tm_shape</span>(alaska) +
 us_states_map
 <span class="kw">print</span>(hawaii_map, <span class="dt">vp =</span> <span class="kw">viewport</span>(<span class="dt">x =</span> <span class="fl">0.4</span>, <span class="dt">y =</span> <span class="fl">0.1</span>, <span class="dt">width =</span> <span class="fl">0.2</span>, <span class="dt">height =</span> <span class="fl">0.1</span>))
 <span class="kw">print</span>(alaska_map, <span class="dt">vp =</span> <span class="kw">viewport</span>(<span class="dt">x =</span> <span class="fl">0.15</span>, <span class="dt">y =</span> <span class="fl">0.15</span>, <span class="dt">width =</span> <span class="fl">0.3</span>, <span class="dt">height =</span> <span class="fl">0.3</span>))</code></pre></div>
-<p><img src="figures/unnamed-chunk-5-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-6-1.png" width="576" style="display: block; margin: auto;" /></p>
 <!-- extended info about using tm_layout to show legend in main plot and remove it in the others -->
 <!-- example3: mix of maps and plots? -->
 <!-- of maybe only mention this -->
