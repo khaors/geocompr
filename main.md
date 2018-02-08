@@ -252,7 +252,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve79fe7062a2a9832c
+preserveb52658f663fdc1e8
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3090,7 +3090,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservedf4c83ce468cb5b9
+preserve53763599bc8db7fc
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6178,7 +6178,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservea25d0ea2a14b5dd1
+preserve42b9982c89d6d603
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6797,7 +6797,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve270bc48c6a27dd09
+preserve9f6efdcee3febf86
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6882,7 +6882,7 @@ library(spData)
 library(tidyverse)
 ```
 
-- In addition it will make use of the following visualisation packages:
+- In addition it will make use of the following visualization packages:
 
 
 ```r
@@ -6920,7 +6920,7 @@ If your aim is to produce publication-quality or high-impact maps in minimal tim
 
 ### Basics
 
-<!-- I'm not sure if we can fill it all in the book, but it could be worth to try these three pacakges on the same problems/data -->
+<!-- I'm not sure if we can fill it all in the book, but it could be worth to try these three packages on the same problems/data -->
 <!-- base plots (one example) -->
 <!-- ggplots  (geom_sf, coord_sf; one example)-->
 <!-- tmap (more than one example) -->
@@ -6948,17 +6948,17 @@ If your aim is to produce publication-quality or high-impact maps in minimal tim
 - categorical rasters?
 -->
 
-### Facetted maps
+### Faceted maps
 
-Facetted maps are a common and potentially effective way of visualizing spatial relationships that are more complex that a single relationship.
+Faceted maps are a common and potentially effective way of visualizing spatial relationships that are more complex that a single relationship.
 The population of cities at one moment in time can be represented easily on a single map, for example by making the size of symbols variable for each city depending on population.
 However, to represent the populations of cities at multiple moments in time requires an *extra dimension*.
-This could be added by an additional *aesthetic* such as colour but this risks cluttering the map because it will involve multiple overlapping points (cities do not tend to move over time!).
+This could be added by an additional *aesthetic* such as color but this risks cluttering the map because it will involve multiple overlapping points (cities do not tend to move over time!).
 
-Facetted maps overcome this issue by creating 'small multiples' of spatial information.
+Faceted maps overcome this issue by creating 'small multiples' of spatial information.
 Typically, this will involve plotting the same geometry data multiple times, once for each variable present in the attribute data (this is the default plotting method for `sf` objects, as we saw in Chapter 2).
 However, facets can also represent shifting geometries, e.g. as the spatial distribution of a point pattern evolves over time.
-This use case of facetted plot is illustrated in Figure \@ref(fig:urban-facet).
+This use case of faceted plot is illustrated in Figure \@ref(fig:urban-facet).
 
 
 ```r
@@ -6970,18 +6970,18 @@ tm_shape(world) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/urban-facet-1.png" alt="Facetted map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations" width="576" />
-<p class="caption">(\#fig:urban-facet)Facetted map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations</p>
+<img src="figures/urban-facet-1.png" alt="Faceted map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations" width="576" />
+<p class="caption">(\#fig:urban-facet)Faceted map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations</p>
 </div>
 
 ### Inset maps
 
 The role of spatial visualizations is to provide an information in the most accessible form. 
 This is often done with the use of inset maps.
-They could be used to focus on a smaller area in more detail<!--fig ref1--> or to bring some non-contiguous regions closer to ease a comparision<!--fig ref2-->.
+They could be used to focus on a smaller area in more detail<!--fig ref1--> or to bring some non-contiguous regions closer to ease a comparison<!--fig ref2-->.
 
 <!-- intro  -->
-<!-- used when: a/ non-contigous regions, b/ focus on small region while showing the large one -->
+<!-- used when: a/ non-contiguous regions, b/ focus on small region while showing the large one -->
 <!-- find the best distribution of insets -->
 
 <!-- example1: classic inset map -->
@@ -7031,13 +7031,13 @@ print(alaska_map, vp = viewport(x = 0.15, y = 0.15, width = 0.3, height = 0.3))
 ## Animations
 
 Animated maps can be useful for communicating how spatial phenomena shift over time.
-An advantage of facetted plots are that they can be printed, but the approach has disadvantages:
+An advantage of faceted plots are that they can be printed, but the approach has disadvantages:
 faceted maps can become very small with more than ~9 maps in one figure, and it can be hard to see the spatial relationships between each facet when each map is on a different part of the page!
 Furthermore, with the increasing proportion of communication that happens via digital screens, the disadvantage that animations cannot be printed is diminished.
 You can always link readers to a web-page containing an animated (or interactive) version of a printed map to help make it come alive.
 
 Figure \@ref(fig:urban-animated) is a simple example of the benefits of an animated map.
-Unlike the facetted plot presented in the previous section, it does not squeeze all 17 for them all to be displayed simultaneously (see the book's website for the animated version).
+Unlike the faceted plot presented in the previous section, it does not squeeze all 17 for them all to be displayed simultaneously (see the book's website for the animated version).
 
 
 ```r
