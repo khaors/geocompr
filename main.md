@@ -252,7 +252,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve9e69fc3b1cb1dbc0
+preserve32e481803aff904c
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3090,7 +3090,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve627473d1c944b090
+preserve4ddafb0aa5ee5bde
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6178,7 +6178,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservea8123a2e0e5d917b
+preservec317ff565ca5c6da
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6797,7 +6797,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveda39e9357933dccf
+preserve988e3e8a27dded96
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6898,7 +6898,7 @@ The most satisfying part of many projects involving geocomputation is producing 
 Map making --- the art of Cartography --- is an ancient skill that involves precision, consideration of the map-reader and often an element of creativity.
 
 Maps have been used for several thousand years for a wide variety of purposes.
-From asserting control real estate in ancient Mesapotamia to illustrating a scientific worldview in Ptolomy's Greek masterpiece *Geography* nearly 2,000 years ago [@talbert_ancient_2014], they have historically been out of reach for everyday people.
+From asserting control real estate in ancient Mesopotamia to illustrating a scientific worldview in Ptolomy's Greek masterpiece *Geography* nearly 2,000 years ago [@talbert_ancient_2014], they have historically been out of reach for everyday people.
 The advent of modern computing has changed this, however.
 Open data and software has played a major role in the democratization of map making.
 This chapter teaches a range of methods to amplify the clarity, reach and attractiveness of your maps.
