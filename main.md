@@ -252,7 +252,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveb52658f663fdc1e8
+preserve9e69fc3b1cb1dbc0
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3090,7 +3090,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve53763599bc8db7fc
+preserve627473d1c944b090
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6178,7 +6178,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve42b9982c89d6d603
+preservea8123a2e0e5d917b
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6797,7 +6797,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve9f6efdcee3febf86
+preserveda39e9357933dccf
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6986,6 +6986,40 @@ They could be used to focus on a smaller area in more detail<!--fig ref1--> or t
 
 <!-- example1: classic inset map -->
 
+
+```r
+# mapview::mapview(nz_height, native.crs = TRUE)
+nz_region = st_bbox(c(xmin = 1364000, xmax = 1387000, ymin = 5165000, ymax = 5185000),
+                    crs = st_crs(nz_height)) %>% 
+  st_as_sfc()
+```
+
+
+```r
+nz_height2 = st_intersection(nz_height, nz_region)
+#> Warning: attribute variables are assumed to be spatially constant
+#> throughout all geometries
+nz_height_map = tm_shape(nz_height2) +
+  tm_dots(size = 0.5)
+```
+
+
+```r
+nz_map = tm_shape(nz) +
+  tm_polygons() + 
+  tm_shape(nz_region) +
+  tm_polygons()
+```
+
+
+```r
+library(grid)
+nz_height_map
+print(nz_map, vp = viewport(x = 0.2, y = 0.75, width = 0.4, height = 0.4))
+```
+
+<img src="figures/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;" />
+
 <!-- example2: us states + hawaii + alaska -->
 
 
@@ -7020,7 +7054,7 @@ print(hawaii_map, vp = viewport(x = 0.4, y = 0.1, width = 0.2, height = 0.1))
 print(alaska_map, vp = viewport(x = 0.15, y = 0.15, width = 0.3, height = 0.3))
 ```
 
-<img src="figures/unnamed-chunk-6-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;" />
 
 <!-- extended info about using tm_layout to show legend in main plot and remove it in the others -->
 
