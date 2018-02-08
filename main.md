@@ -252,7 +252,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservee1915174d0c754ae
+preserve4edbe617a725409f
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3090,7 +3090,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve4460823151d43d40
+preserve948c360a812ce7b1
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6178,7 +6178,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve4cf9d8d7650b847c
+preserveea06d7f46de180db
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6797,7 +6797,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve2867d677518fe881
+preservee35eea08bc12cf92
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7703,13 +7703,23 @@ In the beginning, we pointed out that there are several programming languages su
 The special advantage of doing geocomputation with R is combining geocomputing with R's unparalleled statistical power.
 In this chapter we will introduce predictive mapping by means of statistical learning [@james_introduction_2013] while using spatial cross-validation for a bias-reduced assessment of the model performance - something which is probably only easily doable with R at the moment.
 
-Statistical learning aims at understanding data by building models which disentangle underlying relationships (tidyverse figure: model data).
-It is used throughout a vast range of disciplines such as economics, physics, medicine, biology, ecology and geography, and can be roughly grouped into supervised and unsupervised techniques [@james_introduction_2013].
-In this chapter we will only focus on supervised techniques, i.e., we have a response variable, in our case this will be a binary one (landslide vs. non-landslide) but could be also a numeric (pH value), an integer (species richness) or a categorical variable (land use).
-With the advent of big data, statistical learning has even gained in popularity, especially so-called machine learning approaches.
-Machine learning tends to be especially useful if the aim is not statistical inference but prediction, e.g., future customer behavior.
+Statistical learning aims at understanding data by building models which disentangle underlying relationships.
+Statistical learning can be roughly grouped into supervised and unsupervised techniques, both of which are used throughout a vast range of disciplines such as economics, physics, medicine, biology, ecology and geography. [@james_introduction_2013].
+In this chapter we will focus on supervised techniques, i.e., we have a response variable, in our case this will be a binary one (landslide vs. non-landslide) but could be also a numeric (pH value), an integer (species richness) or a categorical variable (land use).
+Supervised techniques such as regression and machine learning model the relationship between the response variable and various predictors.
+Using regression or machine learning models depends on the aim: statistical inference or prediction.
+Regression techniques are especially useful if the aim is statistical inference, i.e. if we are interested if a predictor significantly contributes to a model and how much.
+To trust the model outcomes we need to perform a throrough model validation testing if one or several of the underlying model assumptions (heterogeneity, indepedence, etc.) have been violated [@zuur_mixed_2009].
+By contrast, machine learning approaches are especially appealing due to the lack of assumptions, and especially suitable when the modeling aim is prediction.
+Various studies have shown that machine learning outperform regression techniques with regard to predictive performance [@schratz_performance_2018]. <!-- add one more source -->
+Naturally, with the advent of big data, machine learning has even gained in popularity since frequently the underlying relationship between variables is less important than the prediction such as future customer behavior.
+However, statistical inference is impossible [@james_introduction_2013]. 
+
 Though prediction will be the aim of the modeling in this chapter, we will not use machine learning but a simple generalized linear model (GLM).
-This is because a GLM is probably familiar to most readers, and therefore instead of explaining in detail the model building we can focus on the speciality of geographic data in a modeling context and spatial cross-validation.^[Readers who are in need of refreshing their regression skills might have a look at @zuur_mixed_2009.]
+This is because we can use also regression techniques such as a GLM without having to worry too much about possible model misspecfications when the aim is prediction.
+Additionally, GLMs are probably familiar to most readers, and therefore instead of explaining in detail the model building we can focus on the speciality of geographic data in a modeling context and spatial cross-validation.^[Readers who are in need of refreshing their regression skills might have a look at @zuur_mixed_2009.]
+<!-- write 4-5 lines with regard to cross-validation -->
+
 Nevertheless, a generalized additive model or a machine learning approach would be more suitable for our dataset (see exercises).
 In chapter \@ref(eco) we will build on this chapter and use spatial cross-validation with a machine learning approach.
 
