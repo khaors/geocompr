@@ -252,7 +252,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve45e54136a51a67c3
+preserve5a3be49362b9412b
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3090,7 +3090,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve635d50a65e8bef00
+preservec848cd8e6610c7a5
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6178,7 +6178,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve06da837c82442c8e
+preservedc27f5bb447094a2
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6797,7 +6797,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve6fd937b174627ab8
+preserve158a21c18fae2b39
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7158,6 +7158,8 @@ animation_tmap(m2, filename = "figures/11-lifeExp_sa_animation.gif", width = 160
 <!-- hexbin -->
 <!-- cartogram - https://github.com/sjewo/cartogram -->
 <!-- shiny? -->
+
+## Exercises
 
 <!--chapter:end:09-mapping.Rmd-->
 
@@ -7704,6 +7706,8 @@ Additionally, give `mapview` a try.
 <!-- distances? -->
 <!-- zonal stats -->
 
+## Exercises
+
 <!--chapter:end:10-ras-vec.Rmd-->
 
 
@@ -7718,6 +7722,8 @@ Additionally, give `mapview` a try.
 ## Implementation
 
 ## Case study
+
+## Exercises
 
 <!--chapter:end:12-algorithms.Rmd-->
 
@@ -7830,6 +7836,8 @@ Spatial predictions are easier since we can argue that, the predictive performan
 This is the reason why machine learning techniques (no explicit model assumptions) are so popular when the goal is a good prediction.
 -->
 
+## Exercises
+
 <!--chapter:end:13-spatial-cv.Rmd-->
 
 
@@ -7914,6 +7922,8 @@ Secondly, the joint absence of a species in two plots is often hardly an indicat
 Suppose a plant species is absent from the driest (e.g., an extreme desert) and the most moist locations (e.g., a tree savannah) of our sampling.
 Then we really should refrain from counting this as a simlilarity because it is very likely that the only thing these two completely different environmental settings have in common in terms of floristic composition is the shared absence of species (except for rare ubiquist species). 
 
+## Exercises
+
 <!--chapter:end:14-eco.Rmd-->
 
 
@@ -7925,10 +7935,14 @@ Some countries such as Norway are actually increasing in height and have limited
 These imacts are exacerbated by climate change, adding an element of uncertainty and dynamics to the problem.
 All these features of SLR make it well-suited to analysis using geocomputation.
 
+## Exercises
+
 <!--chapter:end:15-slr.Rmd-->
 
 
 # Geocomputation for renewable energy research
+
+## Exercises
 
 <!--chapter:end:16-renewable.Rmd-->
 
