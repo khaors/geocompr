@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-02-08'
+date: '2018-02-09'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-02-08 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-02-09 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -252,7 +252,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve32e481803aff904c
+preserve2b8c5997eb08d465
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3090,7 +3090,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve4ddafb0aa5ee5bde
+preserveeed91d2a09238440
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6178,7 +6178,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservec317ff565ca5c6da
+preservee7ad6705dc79c42d
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6797,7 +6797,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve988e3e8a27dded96
+preserve57ed077a06d3bf54
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7748,24 +7748,30 @@ The special advantage of doing geocomputation with R is combining geocomputing w
 In this chapter we will introduce predictive mapping by means of statistical learning [@james_introduction_2013] while using spatial cross-validation for a bias-reduced assessment of the model performance - something which is probably only easily doable with R at the moment.
 
 Statistical learning aims at understanding data by building models which disentangle underlying relationships.
-Statistical learning can be roughly grouped into supervised and unsupervised techniques, both of which are used throughout a vast range of disciplines such as economics, physics, medicine, biology, ecology and geography. [@james_introduction_2013].
+Statistical learning can be roughly grouped into supervised and unsupervised techniques, both of which are used throughout a vast range of disciplines such as economics, physics, medicine, biology, ecology and geography [@james_introduction_2013].
 In this chapter we will focus on supervised techniques, i.e., we have a response variable, in our case this will be a binary one (landslide vs. non-landslide) but could be also a numeric (pH value), an integer (species richness) or a categorical variable (land use).
 Supervised techniques such as regression and machine learning model the relationship between the response variable and various predictors.
 Using regression or machine learning models depends on the aim: statistical inference or prediction.
 Regression techniques are especially useful if the aim is statistical inference, i.e. if we are interested if a predictor significantly contributes to a model and how much.
 To trust the model outcomes we need to perform a throrough model validation testing if one or several of the underlying model assumptions (heterogeneity, indepedence, etc.) have been violated [@zuur_mixed_2009].
-By contrast, machine learning approaches are especially appealing due to the lack of assumptions, and especially suitable when the modeling aim is prediction.
-It is important to note that statistical inference is impossible [@james_introduction_2013]. 
-Various studies have shown that machine learning outperform regression techniques with regard to predictive performance [@schratz_performance_2018]. <!-- add one more source -->
+By contrast, machine learning approaches are especially appealing due to their lack of assumptions.
+Though statistical inference is impossible [@james_introduction_2013], various studies have shown that machine learning outperform regression techniques with regard to predictive performance [@schratz_performance_2018]. <!-- add one more source -->
 Naturally, with the advent of big data, machine learning has even gained in popularity since frequently the underlying relationship between variables is less important than the prediction such as future customer behavior.
 
-Though prediction will be the aim of the modeling in this chapter, we will not use machine learning but a simple generalized linear model (GLM).
+Though prediction will be the aim of the modeling in this chapter, we will not use machine learning but a simple generalized linear model (GLM).^[Nevertheless, a generalized additive model or a machine learning approach would be more suitable for our dataset (see exercises).
+We will show in chapter \@ref(eco) how to use spatial cross-validation with a machine learning approach.]
 This is because we can use also regression techniques such as a GLM without having to worry too much about possible model misspecfications when the aim is prediction.
 Additionally, GLMs are probably familiar to most readers, and therefore instead of explaining in detail the model building we can focus on the speciality of geographic data in a modeling context and spatial cross-validation.^[Readers who are in need of refreshing their regression skills might have a look at @zuur_mixed_2009.]
-<!-- write 4-5 lines with regard to cross-validation -->
-
-Nevertheless, a generalized additive model or a machine learning approach would be more suitable for our dataset (see exercises).
-We will show in chapter \@ref(eco) how to use spatial cross-validation with a machine learning approach.
+Cross-validation determines a model's ability to predict new data or differently put its ability to generalize.
+To achieve this, cross-validation splits a dataset into a test and a training dataset.
+It uses the training data to fit the model, and applies the learned relationship to the test data thereby checking if the model is able to predict the correct result.
+Basically, cross-validation helps to detect over-fitting since a model that fits too closely the training data and its specific pecularities (noise, random fluctuations) will have a bad prediction performance on the test data.
+However, the basic requirement for this is, that the test data is indepedent of the trainig data.
+Cross-validation achieves this by splitting the data randomly into test and training sets. 
+However, randomly splitting spatial data results in the fact that training points are frequently located next to test points.
+Since points close to each other are more similar compared to points further away, test and training datasets might not be independent.
+The consequence is that cross-validation would fail to detect the overfitting.
+Here, spatial cross-validation will come to the rescue which will be the main topic of this chapter.
 
 ## Case study: landslide susceptibility {#case-study}
 
