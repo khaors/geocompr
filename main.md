@@ -252,7 +252,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve2b8c5997eb08d465
+preserve45e54136a51a67c3
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3090,7 +3090,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveeed91d2a09238440
+preserve635d50a65e8bef00
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6178,7 +6178,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservee7ad6705dc79c42d
+preserve06da837c82442c8e
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6797,7 +6797,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve57ed077a06d3bf54
+preserve6fd937b174627ab8
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7762,6 +7762,7 @@ Though prediction will be the aim of the modeling in this chapter, we will not u
 We will show in chapter \@ref(eco) how to use spatial cross-validation with a machine learning approach.]
 This is because we can use also regression techniques such as a GLM without having to worry too much about possible model misspecfications when the aim is prediction.
 Additionally, GLMs are probably familiar to most readers, and therefore instead of explaining in detail the model building we can focus on the speciality of geographic data in a modeling context and spatial cross-validation.^[Readers who are in need of refreshing their regression skills might have a look at @zuur_mixed_2009.]
+
 Cross-validation determines a model's ability to predict new data or differently put its ability to generalize.
 To achieve this, cross-validation splits a dataset into a test and a training dataset.
 It uses the training data to fit the model, and applies the learned relationship to the test data thereby checking if the model is able to predict the correct result.
@@ -7770,7 +7771,7 @@ However, the basic requirement for this is, that the test data is indepedent of 
 Cross-validation achieves this by splitting the data randomly into test and training sets. 
 However, randomly splitting spatial data results in the fact that training points are frequently located next to test points.
 Since points close to each other are more similar compared to points further away, test and training datasets might not be independent.
-The consequence is that cross-validation would fail to detect the overfitting.
+The consequence is that cross-validation would fail to detect overfitting in the presence of spatial autocorrelation.
 Here, spatial cross-validation will come to the rescue which will be the main topic of this chapter.
 
 ## Case study: landslide susceptibility {#case-study}
