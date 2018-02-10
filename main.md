@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-02-09'
+date: '2018-02-10'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-02-09 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-02-10 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -252,7 +252,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve5a3be49362b9412b
+preservead81c27ce8b54321
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3090,7 +3090,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservec848cd8e6610c7a5
+preserve6b556f6e09db6724
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6178,7 +6178,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservedc27f5bb447094a2
+preserved3eb9246e7c50f5e
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6797,7 +6797,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve158a21c18fae2b39
+preserve6b746545e860bbed
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7759,21 +7759,21 @@ In this chapter we will focus on supervised techniques, i.e., we have a response
 Supervised techniques such as regression and machine learning model the relationship between the response variable and various predictors.
 Using regression or machine learning models depends on the aim: statistical inference or prediction.
 Regression techniques are especially useful if the aim is statistical inference, i.e. if we are interested if a predictor significantly contributes to a model and how much.
-To trust the model outcomes we need to perform a throrough model validation testing if one or several of the underlying model assumptions (heterogeneity, indepedence, etc.) have been violated [@zuur_mixed_2009].
+To trust the model outcomes we need to perform a thorough model validation testing if one or several of the underlying model assumptions (heterogeneity, independence, etc.) have been violated [@zuur_mixed_2009].
 By contrast, machine learning approaches are especially appealing due to their lack of assumptions.
 Though statistical inference is impossible [@james_introduction_2013], various studies have shown that machine learning outperform regression techniques with regard to predictive performance [@schratz_performance_2018]. <!-- add one more source -->
 Naturally, with the advent of big data, machine learning has even gained in popularity since frequently the underlying relationship between variables is less important than the prediction such as future customer behavior.
 
 Though prediction will be the aim of the modeling in this chapter, we will not use machine learning but a simple generalized linear model (GLM).^[Nevertheless, a generalized additive model or a machine learning approach would be more suitable for our dataset (see exercises).
 We will show in chapter \@ref(eco) how to use spatial cross-validation with a machine learning approach.]
-This is because we can use also regression techniques such as a GLM without having to worry too much about possible model misspecfications when the aim is prediction.
+This is because we can use also regression techniques such as a GLM without having to worry too much about possible model misspecifications when the aim is prediction.
 Additionally, GLMs are probably familiar to most readers, and therefore instead of explaining in detail the model building we can focus on the speciality of geographic data in a modeling context and spatial cross-validation.^[Readers who are in need of refreshing their regression skills might have a look at @zuur_mixed_2009.]
 
 Cross-validation determines a model's ability to predict new data or differently put its ability to generalize.
 To achieve this, cross-validation splits a dataset into a test and a training dataset.
 It uses the training data to fit the model, and applies the learned relationship to the test data thereby checking if the model is able to predict the correct result.
-Basically, cross-validation helps to detect over-fitting since a model that fits too closely the training data and its specific pecularities (noise, random fluctuations) will have a bad prediction performance on the test data.
-However, the basic requirement for this is, that the test data is indepedent of the trainig data.
+Basically, cross-validation helps to detect over-fitting since a model that fits too closely the training data and its specific peculiarities (noise, random fluctuations) will have a bad prediction performance on the test data.
+However, the basic requirement for this is, that the test data is independent of the training data.
 Cross-validation achieves this by splitting the data randomly into test and training sets. 
 However, randomly splitting spatial data results in the fact that training points are frequently located next to test points.
 Since points close to each other are more similar compared to points further away, test and training datasets might not be independent.
@@ -7822,7 +7822,7 @@ Cross-validation separates test and training datasets randomly.
 Let's take our landslide dataset as an example.
 Randomly selecting 20% of all points leads to an unwanted effect, namely that test and training points might be close to each other (see Figure ??).
 The first law of geography states that points close to each other tend to be, on average, more similar compared to points further apart.
-This means these points are not indepedent.
+This means these points are not independent.
 Hence, using this information in our modeling is like a sneak preview, i.e. using information that should be unavailable to the test dataset.
 
 <!--
