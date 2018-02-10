@@ -252,7 +252,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservead81c27ce8b54321
+preserved8567f34e323f624
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3090,7 +3090,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve6b556f6e09db6724
+preserve1f8d12a06f43176d
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6178,7 +6178,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserved3eb9246e7c50f5e
+preserveae4b44f751854241
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6797,7 +6797,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve6b746545e860bbed
+preservef02d3af6272631b4
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6969,11 +6969,6 @@ tm_shape(world) +
   tm_facets(by = "year")
 ```
 
-<div class="figure" style="text-align: center">
-<img src="figures/urban-facet-1.png" alt="Faceted map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations" width="576" />
-<p class="caption">(\#fig:urban-facet)Faceted map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations</p>
-</div>
-
 ### Inset maps
 
 The role of spatial visualizations is to provide an information in the most accessible form. 
@@ -6989,33 +6984,32 @@ They could be used to focus on a smaller area in more detail<!--fig ref1--> or t
 
 ```r
 # mapview::mapview(nz_height, native.crs = TRUE)
-nz_region = st_bbox(c(xmin = 1364000, xmax = 1387000, ymin = 5165000, ymax = 5185000),
+nz_region = st_bbox(c(xmin = 1340000, xmax = 1450000, ymin = 5130000, ymax = 5210000),
                     crs = st_crs(nz_height)) %>% 
-  st_as_sfc()
+  st_as_sfc() 
 ```
 
 
 ```r
-nz_height2 = st_intersection(nz_height, nz_region)
-#> Warning: attribute variables are assumed to be spatially constant
-#> throughout all geometries
-nz_height_map = tm_shape(nz_height2) +
-  tm_dots(size = 0.5)
+nz_height_map = tm_shape(nz, bbox = tmaptools::bb(nz_region)) +
+  tm_polygons() +
+  tm_shape(nz_height) +
+  tm_dots()
 ```
 
 
 ```r
 nz_map = tm_shape(nz) +
-  tm_polygons() + 
+  tm_borders() + 
   tm_shape(nz_region) +
-  tm_polygons()
+  tm_polygons(lwd = 2)
 ```
 
 
 ```r
 library(grid)
 nz_height_map
-print(nz_map, vp = viewport(x = 0.2, y = 0.75, width = 0.4, height = 0.4))
+print(nz_map, vp = viewport(x = 0.8, y = 0.25, width = 0.4, height = 0.4))
 ```
 
 <img src="figures/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;" />
@@ -7795,7 +7789,6 @@ For more details please refer to @muenchow_geomorphic_2012.
 i.e. the fact that points close to each other tend to share similarities compared to points further apart.
 Simply put, if it rains at one location it is pretty likely that it also rains if we moved 1 meter in any direction.
 But if we moved 10 or 100 km this might not longer be the case. 
-
 
 - short intro spatial autocorrelation, maybe by showing artificial spatial datasets with different sills, nuggets, ranges (don't show the code but just the concept of spatial autocorrelation)
 - spatial cross-validation when predictive performance is desirable 
