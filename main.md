@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-02-10'
+date: '2018-02-11'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-02-10 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-02-11 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -252,7 +252,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve4235b72f6a6801c9
+preservee33d668033ff44fe
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -352,15 +352,15 @@ See the [r-spatial](https://github.com/r-spatial/) organisation and conversation
 ] and a growing number of actively developed packages which are designed to work in harmony with **sf** (Table \@ref(tab:revdep)). 
 
 
-Table: (\#tab:revdep)The top 5 most downloaded packages that depend on sf, in terms of average number of downloads per day over the previous month. As of 2018-02-06 there are 1 packages which import sf.
+Table: (\#tab:revdep)The top 5 most downloaded packages that depend on sf, in terms of average number of downloads per day over the previous month. As of 2018-02-08 there are 55 packages which import sf.
 
- Downloads  date       
-----------  -----------
-       129  2018-02-06 
-        NA  NA         
-        NA  NA         
-        NA  NA         
-        NA  NA         
+package    Downloads
+--------  ----------
+plotly          1798
+raster          1596
+spData           800
+spdep            782
+leaflet          627
 
 ## The history of R-spatial
 
@@ -3090,7 +3090,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserved8ffb15b8db43fb9
+preservedb7c7cfc7cc7d2be
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6178,7 +6178,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve342a189af9679aa8
+preserve9bc928e9128e95d7
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6797,7 +6797,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve54ee0eeb54f53ee1
+preservec3fd0f344a16fcae
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6968,6 +6968,11 @@ tm_shape(world) +
   tm_dots(size = "population_millions") +
   tm_facets(by = "year")
 ```
+
+<div class="figure" style="text-align: center">
+<img src="figures/urban-facet-1.png" alt="Faceted map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations" width="576" />
+<p class="caption">(\#fig:urban-facet)Faceted map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations</p>
+</div>
 
 ### Inset maps
 
