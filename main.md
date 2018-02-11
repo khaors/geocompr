@@ -252,7 +252,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservee33d668033ff44fe
+preserve41c132641ba5bff4
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3090,7 +3090,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservedb7c7cfc7cc7d2be
+preserve737da11ac4a138d9
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6178,7 +6178,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve9bc928e9128e95d7
+preserve14cff2ca27fc7f13
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6797,7 +6797,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservec3fd0f344a16fcae
+preserve822ad93e6d2ad2e7
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6978,11 +6978,9 @@ tm_shape(world) +
 
 The role of spatial visualizations is to provide an information in the most accessible form. 
 This is often done with the use of inset maps.
-They could be used to focus on a smaller area in more detail<!--fig ref1--> or to bring some non-contiguous regions closer to ease a comparison<!--fig ref2-->.
-
-<!-- intro  -->
-<!-- used when: a/ non-contiguous regions, b/ focus on small region while showing the large one -->
+They could be used to focus on a smaller area in more detail (Figure \@ref(fig:insetmap1)) or to bring some non-contiguous regions closer to ease their comparison (Figure \@ref(fig:insetmap2)).
 <!-- find the best distribution of insets -->
+In this section we focus on a creation of inset maps, so to learn about map styling go to section \@ref(map-styling).
 
 <!-- example1: classic inset map -->
 
@@ -7017,14 +7015,12 @@ nz_height_map
 print(nz_map, vp = viewport(x = 0.8, y = 0.25, width = 0.4, height = 0.4))
 ```
 
-<img src="figures/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/insetmap1-1.png" width="576" style="display: block; margin: auto;" />
 
 <!-- example2: us states + hawaii + alaska -->
-
-
 <!-- find the best projection for each individual inset. -->
-
 <!-- reproj -->
+
 
 ```r
 us_states_map = tm_shape(us_states, projection = 2163) +
@@ -7053,7 +7049,7 @@ print(hawaii_map, vp = viewport(x = 0.4, y = 0.1, width = 0.2, height = 0.1))
 print(alaska_map, vp = viewport(x = 0.15, y = 0.15, width = 0.3, height = 0.3))
 ```
 
-<img src="figures/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;" />
 
 <!-- extended info about using tm_layout to show legend in main plot and remove it in the others -->
 

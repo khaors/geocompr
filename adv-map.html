@@ -429,10 +429,7 @@ Figure 9.1: Faceted map showing the top 30 largest ‘urban agglomerations’ fr
 </div>
 <div id="inset-maps" class="section level3">
 <h3><span class="header-section-number">9.2.5</span> Inset maps</h3>
-<p>The role of spatial visualizations is to provide an information in the most accessible form. This is often done with the use of inset maps. They could be used to focus on a smaller area in more detail<!--fig ref1--> or to bring some non-contiguous regions closer to ease a comparison<!--fig ref2-->.</p>
-<!-- intro  -->
-<!-- used when: a/ non-contiguous regions, b/ focus on small region while showing the large one -->
-<!-- find the best distribution of insets -->
+<p>The role of spatial visualizations is to provide an information in the most accessible form. This is often done with the use of inset maps. They could be used to focus on a smaller area in more detail (Figure <a href="#fig:insetmap1"><strong>??</strong></a>) or to bring some non-contiguous regions closer to ease their comparison (Figure <a href="#fig:insetmap2"><strong>??</strong></a>). <!-- find the best distribution of insets --> In this section we focus on a creation of inset maps, so to learn about map styling go to section <a href="adv-map.html#map-styling">9.2.2</a>.</p>
 <!-- example1: classic inset map -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># mapview::mapview(nz_height, native.crs = TRUE)</span>
 nz_region =<span class="st"> </span><span class="kw">st_bbox</span>(<span class="kw">c</span>(<span class="dt">xmin =</span> <span class="dv">1340000</span>, <span class="dt">xmax =</span> <span class="dv">1450000</span>, <span class="dt">ymin =</span> <span class="dv">5130000</span>, <span class="dt">ymax =</span> <span class="dv">5210000</span>),
@@ -449,7 +446,7 @@ nz_region =<span class="st"> </span><span class="kw">st_bbox</span>(<span class=
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(grid)
 nz_height_map
 <span class="kw">print</span>(nz_map, <span class="dt">vp =</span> <span class="kw">viewport</span>(<span class="dt">x =</span> <span class="fl">0.8</span>, <span class="dt">y =</span> <span class="fl">0.25</span>, <span class="dt">width =</span> <span class="fl">0.4</span>, <span class="dt">height =</span> <span class="fl">0.4</span>))</code></pre></div>
-<p><img src="figures/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/insetmap1-1.png" width="576" style="display: block; margin: auto;" /></p>
 <!-- example2: us states + hawaii + alaska -->
 <!-- find the best projection for each individual inset. -->
 <!-- reproj -->
@@ -469,7 +466,7 @@ alaska_map =<span class="st"> </span><span class="kw">tm_shape</span>(alaska) +
 us_states_map
 <span class="kw">print</span>(hawaii_map, <span class="dt">vp =</span> <span class="kw">viewport</span>(<span class="dt">x =</span> <span class="fl">0.4</span>, <span class="dt">y =</span> <span class="fl">0.1</span>, <span class="dt">width =</span> <span class="fl">0.2</span>, <span class="dt">height =</span> <span class="fl">0.1</span>))
 <span class="kw">print</span>(alaska_map, <span class="dt">vp =</span> <span class="kw">viewport</span>(<span class="dt">x =</span> <span class="fl">0.15</span>, <span class="dt">y =</span> <span class="fl">0.15</span>, <span class="dt">width =</span> <span class="fl">0.3</span>, <span class="dt">height =</span> <span class="fl">0.3</span>))</code></pre></div>
-<p><img src="figures/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figures/unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;" /></p>
 <!-- extended info about using tm_layout to show legend in main plot and remove it in the others -->
 <!-- example3: mix of maps and plots? -->
 <!-- of maybe only mention this -->
