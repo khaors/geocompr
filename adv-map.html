@@ -421,15 +421,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="st">  </span><span class="kw">tm_dots</span>(<span class="dt">size =</span> <span class="st">&quot;population_millions&quot;</span>) +
 <span class="st">  </span><span class="kw">tm_facets</span>(<span class="dt">by =</span> <span class="st">&quot;year&quot;</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:urban-facet"></span>
-<img src="figures/urban-facet-1.png" alt="Faceted map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations" width="576" />
+<img src="figures/urban-facet-1.png" alt="Faceted map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations." width="576" />
 <p class="caption">
-Figure 9.1: Faceted map showing the top 30 largest ‘urban agglomerations’ from 1950 to 2030 based on population projects by the United Nations
+Figure 9.1: Faceted map showing the top 30 largest ‘urban agglomerations’ from 1950 to 2030 based on population projects by the United Nations.
 </p>
 </div>
 </div>
 <div id="inset-maps" class="section level3">
 <h3><span class="header-section-number">9.2.5</span> Inset maps</h3>
-<p>The role of spatial visualizations is to provide an information in the most accessible form. This is often done with the use of inset maps. They could be used to focus on a smaller area in more detail (Figure <a href="#fig:insetmap1"><strong>??</strong></a>) or to bring some non-contiguous regions closer to ease their comparison (Figure <a href="#fig:insetmap2"><strong>??</strong></a>). <!-- find the best distribution of insets --> In this section we focus on a creation of inset maps, so to learn about map styling go to section <a href="adv-map.html#map-styling">9.2.2</a>.</p>
+<p>The role of spatial visualizations is to provide an information in the most accessible form. This is often done with the use of inset maps. They could be used to focus on a smaller area in more detail (Figure <a href="adv-map.html#fig:insetmap1">9.2</a>) or to bring some non-contiguous regions closer to ease their comparison (Figure <a href="adv-map.html#fig:insetmap2">9.3</a>). <!-- find the best distribution of insets --> In this section we focus on a creation of inset maps, so to learn about map styling go to section <a href="adv-map.html#map-styling">9.2.2</a>.</p>
 <!-- example1: classic inset map -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># mapview::mapview(nz_height, native.crs = TRUE)</span>
 nz_region =<span class="st"> </span><span class="kw">st_bbox</span>(<span class="kw">c</span>(<span class="dt">xmin =</span> <span class="dv">1340000</span>, <span class="dt">xmax =</span> <span class="dv">1450000</span>, <span class="dt">ymin =</span> <span class="dv">5130000</span>, <span class="dt">ymax =</span> <span class="dv">5210000</span>),
@@ -446,7 +446,12 @@ nz_region =<span class="st"> </span><span class="kw">st_bbox</span>(<span class=
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(grid)
 nz_height_map
 <span class="kw">print</span>(nz_map, <span class="dt">vp =</span> <span class="kw">viewport</span>(<span class="dt">x =</span> <span class="fl">0.8</span>, <span class="dt">y =</span> <span class="fl">0.25</span>, <span class="dt">width =</span> <span class="fl">0.4</span>, <span class="dt">height =</span> <span class="fl">0.4</span>))</code></pre></div>
-<p><img src="figures/insetmap1-1.png" width="576" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span id="fig:insetmap1"></span>
+<img src="figures/insetmap1-1.png" alt="Inset map showing the central part of the Southern Alps in New Zealand." width="576" />
+<p class="caption">
+Figure 9.2: Inset map showing the central part of the Southern Alps in New Zealand.
+</p>
+</div>
 <!-- example2: us states + hawaii + alaska -->
 <!-- find the best projection for each individual inset. -->
 <!-- reproj -->
@@ -466,7 +471,12 @@ alaska_map =<span class="st"> </span><span class="kw">tm_shape</span>(alaska) +
 us_states_map
 <span class="kw">print</span>(hawaii_map, <span class="dt">vp =</span> <span class="kw">viewport</span>(<span class="dt">x =</span> <span class="fl">0.4</span>, <span class="dt">y =</span> <span class="fl">0.1</span>, <span class="dt">width =</span> <span class="fl">0.2</span>, <span class="dt">height =</span> <span class="fl">0.1</span>))
 <span class="kw">print</span>(alaska_map, <span class="dt">vp =</span> <span class="kw">viewport</span>(<span class="dt">x =</span> <span class="fl">0.15</span>, <span class="dt">y =</span> <span class="fl">0.15</span>, <span class="dt">width =</span> <span class="fl">0.3</span>, <span class="dt">height =</span> <span class="fl">0.3</span>))</code></pre></div>
-<p><img src="figures/unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span id="fig:insetmap2"></span>
+<img src="figures/insetmap2-1.png" alt="Map of the United States." width="576" />
+<p class="caption">
+Figure 9.3: Map of the United States.
+</p>
+</div>
 <!-- extended info about using tm_layout to show legend in main plot and remove it in the others -->
 <!-- example3: mix of maps and plots? -->
 <!-- of maybe only mention this -->
@@ -476,12 +486,12 @@ us_states_map
 <div id="animations" class="section level2">
 <h2><span class="header-section-number">9.3</span> Animations</h2>
 <p>Animated maps can be useful for communicating how spatial phenomena shift over time. An advantage of faceted plots are that they can be printed, but the approach has disadvantages: faceted maps can become very small with more than ~9 maps in one figure, and it can be hard to see the spatial relationships between each facet when each map is on a different part of the page! Furthermore, with the increasing proportion of communication that happens via digital screens, the disadvantage that animations cannot be printed is diminished. You can always link readers to a web-page containing an animated (or interactive) version of a printed map to help make it come alive.</p>
-<p>Figure <a href="adv-map.html#fig:urban-animated">9.2</a> is a simple example of the benefits of an animated map. Unlike the faceted plot presented in the previous section, it does not squeeze all 17 for them all to be displayed simultaneously (see the book’s website for the animated version).</p>
+<p>Figure <a href="adv-map.html#fig:urban-animated">9.4</a> is a simple example of the benefits of an animated map. Unlike the faceted plot presented in the previous section, it does not squeeze all 17 for them all to be displayed simultaneously (see the book’s website for the animated version).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr::<span class="kw">include_graphics</span>(<span class="st">&quot;figures/urban-animated.gif&quot;</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:urban-animated"></span>
 <img src="figures/urban-animated.gif" alt="Animated map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations."  />
 <p class="caption">
-Figure 9.2: Animated map showing the top 30 largest ‘urban agglomerations’ from 1950 to 2030 based on population projects by the United Nations.
+Figure 9.4: Animated map showing the top 30 largest ‘urban agglomerations’ from 1950 to 2030 based on population projects by the United Nations.
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m =<span class="st"> </span><span class="kw">tm_shape</span>(world) +<span class="st"> </span>

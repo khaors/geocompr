@@ -252,7 +252,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve41c132641ba5bff4
+preserve835ab676aabe4f67
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3090,7 +3090,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve737da11ac4a138d9
+preserve047d2313d0f8e0b1
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6178,7 +6178,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve14cff2ca27fc7f13
+preserve3620cebb54d658c6
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6797,7 +6797,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve822ad93e6d2ad2e7
+preserve38d08b97f31f7b4e
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6970,8 +6970,8 @@ tm_shape(world) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/urban-facet-1.png" alt="Faceted map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations" width="576" />
-<p class="caption">(\#fig:urban-facet)Faceted map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations</p>
+<img src="figures/urban-facet-1.png" alt="Faceted map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations." width="576" />
+<p class="caption">(\#fig:urban-facet)Faceted map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations.</p>
 </div>
 
 ### Inset maps
@@ -7015,7 +7015,10 @@ nz_height_map
 print(nz_map, vp = viewport(x = 0.8, y = 0.25, width = 0.4, height = 0.4))
 ```
 
-<img src="figures/insetmap1-1.png" width="576" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures/insetmap1-1.png" alt="Inset map showing the central part of the Southern Alps in New Zealand." width="576" />
+<p class="caption">(\#fig:insetmap1)Inset map showing the central part of the Southern Alps in New Zealand.</p>
+</div>
 
 <!-- example2: us states + hawaii + alaska -->
 <!-- find the best projection for each individual inset. -->
@@ -7049,7 +7052,10 @@ print(hawaii_map, vp = viewport(x = 0.4, y = 0.1, width = 0.2, height = 0.1))
 print(alaska_map, vp = viewport(x = 0.15, y = 0.15, width = 0.3, height = 0.3))
 ```
 
-<img src="figures/unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures/insetmap2-1.png" alt="Map of the United States." width="576" />
+<p class="caption">(\#fig:insetmap2)Map of the United States.</p>
+</div>
 
 <!-- extended info about using tm_layout to show legend in main plot and remove it in the others -->
 
