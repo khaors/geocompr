@@ -252,7 +252,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve9f36496fef83fe5b
+preserveb2af7ed646b122b9
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3090,7 +3090,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservefab81804c64d0534
+preserve823aef71881d8edc
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6178,7 +6178,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve3dbbc43af051733d
+preserve499cef7c092e49e8
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6797,7 +6797,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserved0a1527366bc0fb5
+preservea9fecd7a76c85bd0
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7736,10 +7736,10 @@ Additionally, give `mapview` a try.
 
 ## Prerequisites {-}
 
-This chapter assumes you have a strong grasp of spatial data analysis and processing, covered in chapters 2-5.
-Additionally, we assume that you are familiar with linear regression and its generalized extensions [@zuur_mixed_2009].
+This chapter requires a strong grasp of spatial data analysis and processing, covered in chapters \@ref(spatial-class) to \@ref(transform).
+You should also be familiar with linear regression and its generalized extensions [e.g. @zuur_mixed_2009].
 
-We will need following packages:
+The chapter uses the following packages:
 
 
 ```r
@@ -7753,9 +7753,12 @@ library(mlr)
 - Required data will be downloaded in due course.
 
 ## Introduction
-In the beginning, we pointed out that there are several programming languages suitable for command-line based geocomputing (section \@ref(software-for-geocomputation)).
-The special advantage of doing geocomputation with R is combining geocomputing with R's unparalleled statistical power.
-In this chapter we will introduce predictive mapping by means of statistical learning [@james_introduction_2013] while using spatial cross-validation for a bias-reduced assessment of the model performance - something which is probably only easily doable with R at the moment.
+
+Section \@ref(software-for-geocomputation) mentioned several programming languages suitable for command-line based geocomputation.
+The advantages of geocomputation with R were discussed, including its unparalleled statistical power.
+This chapter makes use of some of this statistical power, by demonstrating methods for predictive mapping by means of statistical learning [@james_introduction_2013].
+The focus is the use of spatial cross-validation (or 'spatial CV' for short, a term we will define shortly) to assess model performance and reduce spatial bias.
+Spatial CV is an excellent example of using statistical methods to model spatial data and, at the time of writing, the technique is better supported in R than any other language.
 
 Statistical learning aims at understanding data by building models which disentangle underlying relationships.
 Statistical learning can be roughly grouped into supervised and unsupervised techniques, both of which are used throughout a vast range of disciplines such as economics, physics, medicine, biology, ecology and geography [@james_introduction_2013].
