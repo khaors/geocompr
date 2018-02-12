@@ -252,7 +252,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveb2af7ed646b122b9
+preserve6c651844039cc09c
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3090,7 +3090,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve823aef71881d8edc
+preserveda18409f0f311a64
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6178,7 +6178,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve499cef7c092e49e8
+preserve999a5d8a5578ff11
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6797,7 +6797,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservea9fecd7a76c85bd0
+preserveaaacb89188a88fb0
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6983,14 +6983,35 @@ They could be used to focus on a smaller area in more detail (Figure \@ref(fig:i
 In this section we focus on a creation of inset maps, so to learn about map styling go to section \@ref(map-styling).
 
 <!-- example1: classic inset map -->
+Inset map usually covers an area with densely located phenomena that cannot be clearly visible at the original map scale.
+In the example below, we would create an inset map of the central part of the New Zealand's Southern Alps.
+The first step is to define the area of interest, which can be done by creating a new spatial object, `nz_region`.
+<!--# mapview::mapview(nz_height, native.crs = TRUE) or mapedit??-->
 
 
 ```r
-# mapview::mapview(nz_height, native.crs = TRUE)
 nz_region = st_bbox(c(xmin = 1340000, xmax = 1450000, ymin = 5130000, ymax = 5210000),
                     crs = st_crs(nz_height)) %>% 
   st_as_sfc() 
 ```
+
+In the second step, we create a base map showing a lager area. 
+It gives a context and helps to locate the area of interest. 
+Importantly, this map needs to clearly indicate the location of the inset map, for example by stating its borders.
+
+
+```r
+nz_map = tm_shape(nz) +
+  tm_polygons() +
+  tm_shape(nz_height) +
+  tm_symbols(shape = 2, col = "red") + 
+  tm_shape(nz_region) +
+  tm_borders(lwd = 3) + 
+  tm_layout(frame = FALSE)
+```
+
+The third step consists of the inset map creation. 
+<!--expand-->
 
 
 ```r
@@ -7000,16 +7021,8 @@ nz_height_map = tm_shape(nz, bbox = tmaptools::bb(nz_region)) +
   tm_symbols(shape = 2, col = "red")
 ```
 
-
-```r
-nz_map = tm_shape(nz) +
-  tm_polygons() +
-  tm_shape(nz_height) +
-  tm_symbols(shape = 2, col = "red") + 
-  tm_shape(nz_region) +
-  tm_borders(lwd = 2) + 
-  tm_layout(frame = FALSE)
-```
+Finally, we combine the two maps together. 
+<!--expand-->
 
 
 ```r
