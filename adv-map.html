@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-02-11">
+<meta name="date" content="2018-02-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -438,14 +438,17 @@ nz_region =<span class="st"> </span><span class="kw">st_bbox</span>(<span class=
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_height_map =<span class="st"> </span><span class="kw">tm_shape</span>(nz, <span class="dt">bbox =</span> tmaptools::<span class="kw">bb</span>(nz_region)) +
 <span class="st">  </span><span class="kw">tm_polygons</span>() +
 <span class="st">  </span><span class="kw">tm_shape</span>(nz_height) +
-<span class="st">  </span><span class="kw">tm_dots</span>()</code></pre></div>
+<span class="st">  </span><span class="kw">tm_symbols</span>(<span class="dt">shape =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_map =<span class="st"> </span><span class="kw">tm_shape</span>(nz) +
-<span class="st">  </span><span class="kw">tm_borders</span>() +<span class="st"> </span>
+<span class="st">  </span><span class="kw">tm_polygons</span>() +
+<span class="st">  </span><span class="kw">tm_shape</span>(nz_height) +
+<span class="st">  </span><span class="kw">tm_symbols</span>(<span class="dt">shape =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>) +<span class="st"> </span>
 <span class="st">  </span><span class="kw">tm_shape</span>(nz_region) +
-<span class="st">  </span><span class="kw">tm_polygons</span>(<span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">tm_borders</span>(<span class="dt">lwd =</span> <span class="dv">2</span>) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">frame =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(grid)
-nz_height_map
-<span class="kw">print</span>(nz_map, <span class="dt">vp =</span> <span class="kw">viewport</span>(<span class="dt">x =</span> <span class="fl">0.8</span>, <span class="dt">y =</span> <span class="fl">0.25</span>, <span class="dt">width =</span> <span class="fl">0.4</span>, <span class="dt">height =</span> <span class="fl">0.4</span>))</code></pre></div>
+nz_map
+<span class="kw">print</span>(nz_height_map, <span class="dt">vp =</span> <span class="kw">viewport</span>(<span class="dt">x =</span> <span class="fl">0.3</span>, <span class="dt">y =</span> <span class="fl">0.7</span>, <span class="dt">width =</span> <span class="fl">0.4</span>, <span class="dt">height =</span> <span class="fl">0.4</span>))</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:insetmap1"></span>
 <img src="figures/insetmap1-1.png" alt="Inset map showing the central part of the Southern Alps in New Zealand." width="576" />
 <p class="caption">

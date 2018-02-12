@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-02-11'
+date: '2018-02-12'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-02-11 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-02-12 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -252,7 +252,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve835ab676aabe4f67
+preserve9f36496fef83fe5b
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3090,7 +3090,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve047d2313d0f8e0b1
+preservefab81804c64d0534
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6178,7 +6178,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve3620cebb54d658c6
+preserve3dbbc43af051733d
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6797,7 +6797,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve38d08b97f31f7b4e
+preserved0a1527366bc0fb5
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6997,22 +6997,25 @@ nz_region = st_bbox(c(xmin = 1340000, xmax = 1450000, ymin = 5130000, ymax = 521
 nz_height_map = tm_shape(nz, bbox = tmaptools::bb(nz_region)) +
   tm_polygons() +
   tm_shape(nz_height) +
-  tm_dots()
+  tm_symbols(shape = 2, col = "red")
 ```
 
 
 ```r
 nz_map = tm_shape(nz) +
-  tm_borders() + 
+  tm_polygons() +
+  tm_shape(nz_height) +
+  tm_symbols(shape = 2, col = "red") + 
   tm_shape(nz_region) +
-  tm_polygons(lwd = 2)
+  tm_borders(lwd = 2) + 
+  tm_layout(frame = FALSE)
 ```
 
 
 ```r
 library(grid)
-nz_height_map
-print(nz_map, vp = viewport(x = 0.8, y = 0.25, width = 0.4, height = 0.4))
+nz_map
+print(nz_height_map, vp = viewport(x = 0.3, y = 0.7, width = 0.4, height = 0.4))
 ```
 
 <div class="figure" style="text-align: center">
