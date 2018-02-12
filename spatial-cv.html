@@ -357,7 +357,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1><span class="header-section-number">13</span> Spatial cross-validation</h1>
 <div id="prerequisites-10" class="section level2 unnumbered">
 <h2>Prerequisites</h2>
-<p>This chapter requires a strong grasp of spatial data analysis and processing, covered in chapters <a href="spatial-class.html#spatial-class">2</a> to <a href="transform.html#transform">5</a>. You should also be familiar with linear regression and its generalized extensions <span class="citation">(e.g. Zuur et al. <a href="#ref-zuur_mixed_2009">2009</a>)</span>.</p>
+<p>This chapter requires a strong grasp of spatial data analysis and processing, covered in chapters <a href="spatial-class.html#spatial-class">2</a> to <a href="transform.html#transform">5</a>. You should also be familiar with linear regression and its generalized extensions <span class="citation">(e.g. Zuur et al. <a href="#ref-zuur_mixed_2009">2009</a>; James et al. <a href="#ref-james_introduction_2013">2013</a>)</span>.</p>
 <p>The chapter uses the following packages:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sf)
 <span class="kw">library</span>(raster)
@@ -377,9 +377,35 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="case-study" class="section level2">
 <h2><span class="header-section-number">13.2</span> Case study: landslide susceptibility</h2>
-<p>For more details please refer to <span class="citation">Muenchow, Brenning, and Richter (<a href="#ref-muenchow_geomorphic_2012">2012</a>)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-3"></span>
-<img src="figures/unnamed-chunk-3-1.png" alt="Landslide initiation points (red) and points unaffected by landsliding (blue) in Southern Ecuador. Randomly selected test points are marked by a golden border. Projection: UTM zone 17S (EPSG: 32717)." width="576" />
+<p>To introduce spatial CV by example, we will use a landslide dataset from Southern Ecuador. For a detailed description of the dataset and the study area please refer to <span class="citation">Muenchow, Brenning, and Richter (<a href="#ref-muenchow_geomorphic_2012">2012</a>)</span>. One can find a subset of the corresponding data in the <strong>RSAGA</strong> package. The following command loads two datasets, a <code>data.frame</code> named <code>landslides</code> and a <code>list</code> named <code>dem</code>.</p>
+<p><code>landslides</code> contains a boolean column <code>lslpts</code> where <code>TRUE</code> corresponds to an observed landslide initiation point and <code>FALSE</code> to points where no landsliding occurred. Columns <code>x</code> and <code>y</code> contain the corresponding coordinates. The landslide initation point is located in the scarp of a landslide polygon. The coordinates for the non-landslide points were sampled randomly with the restriction to fall outside of the buffered landslide polygons. <code>summary(landslides$lslpts)</code> tells us that 175 landslide points where observed while we have 1360 non-landslide points. To make the ratio between landslide and non-landslide points more balanced, we randomly sample 250 from the 1360 non-landslide points.</p>
+<p><code>dem</code> is in fact a digital elevation model and consists of two list elements with the first being a raster header and the second being a matrix with the altitudinal values. To transform the list into a <code>raster</code>, we can write:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dem =<span class="st"> </span>
+<span class="st">  </span><span class="kw">raster</span>(dem$data, 
+         <span class="dt">crs =</span> <span class="st">&quot;+proj=utm +zone=17 +south +datum=WGS84 +units=m +no_defs&quot;</span>,
+         <span class="dt">xmn =</span> dem$header$xllcorner, 
+         <span class="dt">xmx =</span> dem$header$xllcorner +<span class="st"> </span>dem$header$ncols *<span class="st"> </span>dem$header$cellsize,
+         <span class="dt">ymn =</span> dem$header$yllcorner,
+         <span class="dt">ymx =</span> dem$header$yllcorner +<span class="st"> </span>dem$header$nrows *<span class="st"> </span>dem$header$cellsize)</code></pre></div>
+<p>To model the probability for landslide occurrence, we need some predictors. Here, we use selected terrain attributes frequently associated with landsliding (add references), namely (units and column names in <code>lsl</code> are given in parentheses):</p>
+<ul>
+<li>slope (°, <code>slope</code>)</li>
+<li>plan curvature (rad m−1, <code>cplan</code>) expressing the convergence or divergence of a slope and thus water flow.</li>
+<li>profile curvature (rad m-1, <code>cprof</code>) as a measure of flow acceleration, also known as downslope change in slope angle</li>
+<li>the decadic logarithm of the catchment area (log m2, <code>log_carea</code>) representing the amount of water flowing towards a location.</li>
+<li>elevation (m a.s.l., <code>dem</code>) as the representation of different altitudinal zones of vegetation and precipitation in the study area.</li>
+</ul>
+<p>We can derive all these predictors from the provided digital elevation model (<code>dem</code>) using R-GIS bridges (<span class="citation">(<span class="citeproc-not-found" data-reference-id="ref"><strong>???</strong></span>)</span>(gis)). We leave it as an exercise to the reader to compute the terrain attribute rasters and extract the corresponding values to our landslide/non-landslide dataframe. The first six rows of the resulting dataframe (still named <code>lsl</code>) could look like this:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(lsl)
+<span class="co">#&gt;           x       y lslpts slope   cplan     cprof log_carea</span>
+<span class="co">#&gt; 1172 715568 9558797  FALSE  49.1  0.0131 -0.000114      2.70</span>
+<span class="co">#&gt; 576  713428 9558967  FALSE  34.1  0.0569  0.012271      2.88</span>
+<span class="co">#&gt; 420  712988 9559367  FALSE  29.0 -0.1090 -0.032045      4.85</span>
+<span class="co">#&gt; 593  715398 9557537  FALSE  24.9  0.0673 -0.017312      2.47</span>
+<span class="co">#&gt; 1089 713408 9560307  FALSE  37.5 -0.0133  0.009671      3.64</span>
+<span class="co">#&gt; 1570 714608 9557027  FALSE  37.7  0.0318 -0.022951      3.16</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-8"></span>
+<img src="figures/unnamed-chunk-8-1.png" alt="Landslide initiation points (red) and points unaffected by landsliding (blue) in Southern Ecuador. Randomly selected test points are marked by a golden border. Projection: UTM zone 17S (EPSG: 32717)." width="576" />
 <p class="caption">
 Figure 13.1: Landslide initiation points (red) and points unaffected by landsliding (blue) in Southern Ecuador. Randomly selected test points are marked by a golden border. Projection: UTM zone 17S (EPSG: 32717).
 </p>
@@ -402,19 +428,13 @@ Figure 13.1: Landslide initiation points (red) and points unaffected by landslid
 <p>Spatial modeling: species distribution models, landslide susceptibility, epidemiology, disease mapping, rock glaciers, etc.</p>
 <p>When we are interested in the accuracy of a model, i.e., when we want to assess a model’s predictive performance, we want to avoid overfitting.<a href="#fn63" class="footnoteRef" id="fnref63"><sup>63</sup></a> Spatial autocorrelation will lead to overfitting when the training dataset is not independent of the test dataset which is frequently the case in temporal and spatial settings.</p>
 <p>Cross-validation separates test and training datasets randomly. Let’s take our landslide dataset as an example. Randomly selecting 20% of all points leads to an unwanted effect, namely that test and training points might be close to each other (see Figure ??). The first law of geography states that points close to each other tend to be, on average, more similar compared to points further apart. This means these points are not independent. Hence, using this information in our modeling is like a sneak preview, i.e. using information that should be unavailable to the test dataset.</p>
-<!--
-Usually people seek to accomplish one of the following aims when using supervised statistical learning techniques: 
-
-1. Spatial prediction of the response variable
-2. Inference about the relationship between response and predictors
-
-In the latter case, we need to make sure to comply with all model assumptions (normality, heterogeneity, independence).
-Spatial predictions are easier since we can argue that, the predictive performance of a model incorporating a (spatial) correlation structure is on average the same as for a model without a spatial correlation structure.
-This is the reason why machine learning techniques (no explicit model assumptions) are so popular when the goal is a good prediction.
--->
 </div>
 <div id="exercises-10" class="section level2">
 <h2><span class="header-section-number">13.4</span> Exercises</h2>
+<ol style="list-style-type: decimal">
+<li>Compute the terrain attributes slope, plan curvature, profile curvature and catchment area from <code>dem</code> (provided by <code>data(&quot;landslides&quot;, package = &quot;RSAGA&quot;)</code>) with the help of R-GIS bridges, and extract the values from the corresponding output rasters to landslides/non-landslides dataframe.</li>
+<li>Use as a further predictor the squared slope. Repeat the modeling. How has the spatially cross-validaded mean AUROC value changed compared to the model without the squared altitude predictor?</li>
+</ol>
 
 </div>
 </div>

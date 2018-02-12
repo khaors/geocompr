@@ -252,7 +252,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve6c651844039cc09c
+preserve83e3c5e9ce714da6
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3090,7 +3090,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveda18409f0f311a64
+preserve3393329644785bb5
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6178,7 +6178,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve999a5d8a5578ff11
+preserved178e0becbe54fa1
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6797,7 +6797,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveaaacb89188a88fb0
+preservea124afbccd39cf36
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7750,7 +7750,7 @@ Additionally, give `mapview` a try.
 ## Prerequisites {-}
 
 This chapter requires a strong grasp of spatial data analysis and processing, covered in chapters \@ref(spatial-class) to \@ref(transform).
-You should also be familiar with linear regression and its generalized extensions [e.g. @zuur_mixed_2009].
+You should also be familiar with linear regression and its generalized extensions [e.g. @zuur_mixed_2009;@james_introduction_2013].
 
 The chapter uses the following packages:
 
@@ -7802,11 +7802,68 @@ Here, spatial cross-validation will come to the rescue which will be the main to
 
 ## Case study: landslide susceptibility {#case-study}
 
-For more details please refer to @muenchow_geomorphic_2012.
+To introduce spatial CV by example, we will use a landslide dataset from Southern Ecuador.
+For a detailed description of the dataset and the study area please refer to @muenchow_geomorphic_2012.
+One can find a subset of the corresponding data in the **RSAGA** package.
+The following command loads two datasets, a `data.frame` named `landslides` and a `list` named `dem`.
+
+
+
+`landslides` contains a boolean column `lslpts` where `TRUE` corresponds to an observed landslide initiation point and `FALSE` to points where no landsliding occurred. 
+Columns `x` and `y` contain the corresponding coordinates.
+The landslide initation point is located in the scarp of a landslide polygon.
+The coordinates for the non-landslide points were sampled randomly with the restriction to fall outside of the buffered landslide polygons.
+`summary(landslides$lslpts)` tells us that 175 landslide points where observed while we have 1360 non-landslide points.
+To make the ratio between landslide and non-landslide points more balanced, we randomly sample 250 from the 1360 non-landslide points.
+
+
+
+`dem` is in fact a digital elevation model and consists of two list elements with the first being a raster header and the second being a matrix with the altitudinal values.
+To transform the list into a `raster`, we can write:
+
+
+```r
+dem = 
+  raster(dem$data, 
+         crs = "+proj=utm +zone=17 +south +datum=WGS84 +units=m +no_defs",
+         xmn = dem$header$xllcorner, 
+         xmx = dem$header$xllcorner + dem$header$ncols * dem$header$cellsize,
+         ymn = dem$header$yllcorner,
+         ymx = dem$header$yllcorner + dem$header$nrows * dem$header$cellsize)
+
+```
+
+To model the probability for landslide occurrence, we need some predictors.
+Here, we use selected terrain attributes frequently associated with landsliding (add references), namely (units and column names in `lsl` are given in parentheses):
+
+- slope (°, `slope`)
+- plan curvature (rad m−1, `cplan`) expressing the convergence or divergence of a slope and thus water flow.
+- profile curvature (rad m-1, `cprof`) as a measure of flow acceleration, also known as downslope change in slope angle 
+- the decadic logarithm of the catchment area (log m2, `log_carea`) representing the amount of water flowing towards a location.
+- elevation (m a.s.l., `dem`) as the representation of different altitudinal zones of
+vegetation and precipitation in the study area.
+
+We can derive all these predictors from the provided digital elevation model (`dem`) using R-GIS bridges (@ref(gis)).
+We leave it as an exercise to the reader to compute the terrain attribute rasters and extract the corresponding values to our landslide/non-landslide dataframe.
+The first six rows of the resulting dataframe (still named `lsl`) could look like this:
+
+
+
+
+```r
+head(lsl)
+#>           x       y lslpts slope   cplan     cprof log_carea
+#> 1172 715568 9558797  FALSE  49.1  0.0131 -0.000114      2.70
+#> 576  713428 9558967  FALSE  34.1  0.0569  0.012271      2.88
+#> 420  712988 9559367  FALSE  29.0 -0.1090 -0.032045      4.85
+#> 593  715398 9557537  FALSE  24.9  0.0673 -0.017312      2.47
+#> 1089 713408 9560307  FALSE  37.5 -0.0133  0.009671      3.64
+#> 1570 714608 9557027  FALSE  37.7  0.0318 -0.022951      3.16
+```
 
 <div class="figure" style="text-align: center">
-<img src="figures/unnamed-chunk-3-1.png" alt="Landslide initiation points (red) and points unaffected by landsliding (blue) in Southern Ecuador. Randomly selected test points are marked by a golden border. Projection: UTM zone 17S (EPSG: 32717)." width="576" />
-<p class="caption">(\#fig:unnamed-chunk-3)Landslide initiation points (red) and points unaffected by landsliding (blue) in Southern Ecuador. Randomly selected test points are marked by a golden border. Projection: UTM zone 17S (EPSG: 32717).</p>
+<img src="figures/unnamed-chunk-8-1.png" alt="Landslide initiation points (red) and points unaffected by landsliding (blue) in Southern Ecuador. Randomly selected test points are marked by a golden border. Projection: UTM zone 17S (EPSG: 32717)." width="576" />
+<p class="caption">(\#fig:unnamed-chunk-8)Landslide initiation points (red) and points unaffected by landsliding (blue) in Southern Ecuador. Randomly selected test points are marked by a golden border. Projection: UTM zone 17S (EPSG: 32717).</p>
 </div>
 
 
@@ -7844,18 +7901,12 @@ The first law of geography states that points close to each other tend to be, on
 This means these points are not independent.
 Hence, using this information in our modeling is like a sneak preview, i.e. using information that should be unavailable to the test dataset.
 
-<!--
-Usually people seek to accomplish one of the following aims when using supervised statistical learning techniques: 
-
-1. Spatial prediction of the response variable
-2. Inference about the relationship between response and predictors
-
-In the latter case, we need to make sure to comply with all model assumptions (normality, heterogeneity, independence).
-Spatial predictions are easier since we can argue that, the predictive performance of a model incorporating a (spatial) correlation structure is on average the same as for a model without a spatial correlation structure.
-This is the reason why machine learning techniques (no explicit model assumptions) are so popular when the goal is a good prediction.
--->
-
 ## Exercises
+
+1. Compute the terrain attributes slope, plan curvature, profile curvature and catchment area from `dem` (provided by `data("landslides", package = "RSAGA")`) with the help of R-GIS bridges, and extract the values from the corresponding output rasters to landslides/non-landslides dataframe.
+1. Use as a further predictor the squared slope.
+Repeat the modeling. 
+How has the spatially cross-validaded mean AUROC value changed compared to the model without the squared altitude predictor?
 
 <!--chapter:end:13-spatial-cv.Rmd-->
 
