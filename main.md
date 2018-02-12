@@ -252,7 +252,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve83e3c5e9ce714da6
+preserveb7bdbe5448a28968
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3090,7 +3090,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve3393329644785bb5
+preservee591ff84a0fb5c31
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6178,7 +6178,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserved178e0becbe54fa1
+preserve24335677eb848cd1
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6797,7 +6797,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservea124afbccd39cf36
+preserveb1256f9a335e9f1f
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7775,9 +7775,9 @@ Spatial CV is an excellent example of using statistical methods to model spatial
 
 Statistical learning aims at understanding data by building models which disentangle underlying relationships.
 Statistical learning can be roughly grouped into supervised and unsupervised techniques, both of which are used throughout a vast range of disciplines such as economics, physics, medicine, biology, ecology and geography [@james_introduction_2013].
-In this chapter we will focus on supervised techniques, i.e., we have a response variable, in our case this will be a binary one (landslide vs. non-landslide) but could be also a numeric (pH value), an integer (species richness) or a categorical variable (land use).
+In this chapter we will focus on supervised techniques, i.e., we have a response variable, in our case this will be a binary one (landslide vs. non-landslide occurence) but could be also a numeric (pH value), an integer (species richness) or a categorical variable (land use).
 Supervised techniques such as regression and machine learning model the relationship between the response variable and various predictors.
-Using regression or machine learning models depends on the aim: statistical inference or prediction.
+Using either regression or machine learning techniques depends on the aim: statistical inference or prediction.
 Regression techniques are especially useful if the aim is statistical inference, i.e. if we are interested if a predictor significantly contributes to a model and how much.
 To trust the model outcomes we need to perform a thorough model validation testing if one or several of the underlying model assumptions (heterogeneity, independence, etc.) have been violated [@zuur_mixed_2009].
 By contrast, machine learning approaches are especially appealing due to their lack of assumptions.
@@ -7787,18 +7787,18 @@ Naturally, with the advent of big data, machine learning has even gained in popu
 Though prediction will be the aim of the modeling in this chapter, we will not use machine learning but a simple generalized linear model (GLM).^[Nevertheless, a generalized additive model or a machine learning approach would be more suitable for our dataset (see exercises).
 We will show in chapter \@ref(eco) how to use spatial cross-validation with a machine learning approach.]
 This is because we can use also regression techniques such as a GLM without having to worry too much about possible model misspecifications when the aim is prediction.
-Additionally, GLMs are probably familiar to most readers, and therefore instead of explaining in detail the model building we can focus on the speciality of geographic data in a modeling context and spatial cross-validation.^[Readers who are in need of refreshing their regression skills might have a look at @zuur_mixed_2009.]
+Additionally, GLMs are probably familiar to most readers, and therefore instead of explaining in detail the model building we can focus on the speciality of geographic data in a modeling context and spatial CV.^[Readers who are in need of refreshing their regression skills might have a look at @zuur_mixed_2009 and @james_introduction_2013, respectively.]
 
-Cross-validation determines a model's ability to predict new data or differently put its ability to generalize.
-To achieve this, cross-validation splits a dataset into a test and a training dataset.
+CV determines a model's ability to predict new data or differently put its ability to generalize.
+To achieve this, CV splits a dataset into a test and a training dataset.
 It uses the training data to fit the model, and applies the learned relationship to the test data thereby checking if the model is able to predict the correct result.
 Basically, cross-validation helps to detect over-fitting since a model that fits too closely the training data and its specific peculiarities (noise, random fluctuations) will have a bad prediction performance on the test data.
 However, the basic requirement for this is, that the test data is independent of the training data.
-Cross-validation achieves this by splitting the data randomly into test and training sets. 
+CV achieves this by splitting the data randomly into test and training sets. 
 However, randomly splitting spatial data results in the fact that training points are frequently located next to test points.
 Since points close to each other are more similar compared to points further away, test and training datasets might not be independent.
 The consequence is that cross-validation would fail to detect overfitting in the presence of spatial autocorrelation.
-Here, spatial cross-validation will come to the rescue which will be the main topic of this chapter.
+Here, spatial CV will come to the rescue which will be the main topic of this chapter.
 
 ## Case study: landslide susceptibility {#case-study}
 
@@ -7808,15 +7808,23 @@ One can find a subset of the corresponding data in the **RSAGA** package.
 The following command loads two datasets, a `data.frame` named `landslides` and a `list` named `dem`.
 
 
+```r
+data("landslides", package = "RSAGA")
+```
 
 `landslides` contains a boolean column `lslpts` where `TRUE` corresponds to an observed landslide initiation point and `FALSE` to points where no landsliding occurred. 
 Columns `x` and `y` contain the corresponding coordinates.
 The landslide initation point is located in the scarp of a landslide polygon.
-The coordinates for the non-landslide points were sampled randomly with the restriction to fall outside of the buffered landslide polygons.
+The coordinates for the non-landslide points were sampled randomly with the restriction to fall outside of the slightly buffered landslide polygons.
 `summary(landslides$lslpts)` tells us that 175 landslide points where observed while we have 1360 non-landslide points.
-To make the ratio between landslide and non-landslide points more balanced, we randomly sample 250 from the 1360 non-landslide points.
+To make the ratio between landslide and non-landslide points more balanced, we randomly sample 175 from the 1360 non-landslide points.
 
 
+```r
+non = landslides[landslides$lslpts == FALSE, ]
+ind = sample(1:nrow(non), nrow(landslides[landslides$lslpts == TRUE, ]))
+lsl = rbind(non[ind, ], landslides[landslides$lslpts == TRUE, ])
+```
 
 `dem` is in fact a digital elevation model and consists of two list elements with the first being a raster header and the second being a matrix with the altitudinal values.
 To transform the list into a `raster`, we can write:
@@ -7834,36 +7842,36 @@ dem =
 ```
 
 To model the probability for landslide occurrence, we need some predictors.
-Here, we use selected terrain attributes frequently associated with landsliding (add references), namely (units and column names in `lsl` are given in parentheses):
+Here, we use selected terrain attributes frequently associated with landsliding (add references), all of which can be computed from the provided digital elevation model (`dem`) using R-GIS bridges (see Chapter \@ref(gis)).
+We leave it as an exercise to the reader to compute the terrain attribute rasters and extract the corresponding values to our landslide/non-landslide dataframe (see also exercises).
+The first three rows of the resulting dataframe (still named `lsl`) could look like this:
 
-- slope (°, `slope`)
-- plan curvature (rad m−1, `cplan`) expressing the convergence or divergence of a slope and thus water flow.
-- profile curvature (rad m-1, `cprof`) as a measure of flow acceleration, also known as downslope change in slope angle 
-- the decadic logarithm of the catchment area (log m2, `log_carea`) representing the amount of water flowing towards a location.
-- elevation (m a.s.l., `dem`) as the representation of different altitudinal zones of
-vegetation and precipitation in the study area.
+<!-- has anybody an idea why I have to run the following code chunk two times to make it work when rendering the book with `bookdown::render_book()`?-->
 
-We can derive all these predictors from the provided digital elevation model (`dem`) using R-GIS bridges (@ref(gis)).
-We leave it as an exercise to the reader to compute the terrain attribute rasters and extract the corresponding values to our landslide/non-landslide dataframe.
-The first six rows of the resulting dataframe (still named `lsl`) could look like this:
 
 
 
 
 ```r
-head(lsl)
-#>           x       y lslpts slope   cplan     cprof log_carea
-#> 1172 715568 9558797  FALSE  49.1  0.0131 -0.000114      2.70
-#> 576  713428 9558967  FALSE  34.1  0.0569  0.012271      2.88
-#> 420  712988 9559367  FALSE  29.0 -0.1090 -0.032045      4.85
-#> 593  715398 9557537  FALSE  24.9  0.0673 -0.017312      2.47
-#> 1089 713408 9560307  FALSE  37.5 -0.0133  0.009671      3.64
-#> 1570 714608 9557027  FALSE  37.7  0.0318 -0.022951      3.16
+head(lsl, 3)
+#>           x       y lslpts slope   cplan   cprof elev log_carea
+#> 622  713668 9558047  FALSE  33.6  0.0208 0.01323 2493      2.63
+#> 1485 713958 9559837  FALSE  16.7  0.0432 0.00923 2226      2.26
+#> 1327 713478 9558717  FALSE  40.3 -0.0133 0.00593 2251      3.56
 ```
 
+The added columns are:
+
+- `slope`: slope angle (°)
+- `cplan`: plan curvature (rad m^−1^) expressing the convergence or divergence of a slope and thus water flow.
+- `cprof`: profile curvature (rad m^-1^) as a measure of flow acceleration, also known as downslope change in slope angle 
+- `elev`: elevation (m a.s.l.) as the representation of different altitudinal zones of vegetation and precipitation in the study area.
+- `log_carea`: the decadic logarithm of the catchment area (log m^2^) representing the amount of water flowing towards a location.
+
+
 <div class="figure" style="text-align: center">
-<img src="figures/unnamed-chunk-8-1.png" alt="Landslide initiation points (red) and points unaffected by landsliding (blue) in Southern Ecuador. Randomly selected test points are marked by a golden border. Projection: UTM zone 17S (EPSG: 32717)." width="576" />
-<p class="caption">(\#fig:unnamed-chunk-8)Landslide initiation points (red) and points unaffected by landsliding (blue) in Southern Ecuador. Randomly selected test points are marked by a golden border. Projection: UTM zone 17S (EPSG: 32717).</p>
+<img src="figures/unnamed-chunk-9-1.png" alt="Landslide initiation points (red) and points unaffected by landsliding (blue) in Southern Ecuador. Randomly selected test points are marked by a golden border. Projection: UTM zone 17S (EPSG: 32717)." width="576" />
+<p class="caption">(\#fig:unnamed-chunk-9)Landslide initiation points (red) and points unaffected by landsliding (blue) in Southern Ecuador. Randomly selected test points are marked by a golden border. Projection: UTM zone 17S (EPSG: 32717).</p>
 </div>
 
 
@@ -7904,9 +7912,12 @@ Hence, using this information in our modeling is like a sneak preview, i.e. usin
 ## Exercises
 
 1. Compute the terrain attributes slope, plan curvature, profile curvature and catchment area from `dem` (provided by `data("landslides", package = "RSAGA")`) with the help of R-GIS bridges, and extract the values from the corresponding output rasters to landslides/non-landslides dataframe.
-1. Use as a further predictor the squared slope.
+1. Reproduce the spatial prediction with the derived terrain attribute rasters (see Figure ??).
+1. Compute a non-spatial cross-validation and make boxplots to compare the AUROC from a spatial and a non-spatial cv (see also Figure ??).
+1. Use the squared slope as a further predictor.
 Repeat the modeling. 
 How has the spatially cross-validaded mean AUROC value changed compared to the model without the squared altitude predictor?
+
 
 <!--chapter:end:13-spatial-cv.Rmd-->
 
@@ -7956,8 +7967,8 @@ In this chapter we will demonstrate ecological applications of some of the techn
 This case study will involve analyzing the composition and the spatial distribution of the vascular plants on the southern slope of Mt. Mongón, a *lomas* mountain near Casma on the central northern coast of Peru (Fig. \@ref(fig:study-area-mongon)).
 
 <div class="figure" style="text-align: center">
-<img src="figures/study_area_mongon.png" alt="The Mt. Mongón study area (taken from @muenchow_rqgis:_nodate; Landsat image: path 9, row 67, acquisition date 09/22/2000; @usgs_u.s._2016)." width="1092" />
-<p class="caption">(\#fig:study-area-mongon)The Mt. Mongón study area (taken from @muenchow_rqgis:_nodate; Landsat image: path 9, row 67, acquisition date 09/22/2000; @usgs_u.s._2016).</p>
+<img src="figures/study_area_mongon.png" alt="The Mt. Mongón study area (taken from @muenchow_rqgis:_2017; Landsat image: path 9, row 67, acquisition date 09/22/2000; @usgs_u.s._2016)." width="1092" />
+<p class="caption">(\#fig:study-area-mongon)The Mt. Mongón study area (taken from @muenchow_rqgis:_2017; Landsat image: path 9, row 67, acquisition date 09/22/2000; @usgs_u.s._2016).</p>
 </div>
 
 During a field study to Mt. Mongón we recorded all vascular plants living in 100 randomly sampled 4x4 m^2^ plots in the austral winter of 2011 [@muenchow_predictive_2013].
