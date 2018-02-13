@@ -190,7 +190,9 @@ Home disciplines   Geography                  Geography, Computing, Statistics
 Software focus     Graphical User Interface   Code                             
 Reproducibility    Minimal                    Maximal                          
 
-While embracing recent developments in the field, we also wanted to pay respects to the wider field of Geography, with its 2000 year history [@roller_eratosthenes_2010], and the narrower field of *Geographic Information System* (GIS) [@neteler_open_2008].
+Geocomputation is young, but it builds on older fields.
+It can be seen as a part of Geography, which has a 2000+ year history [@talbert_ancient_2014];
+and an extension of *Geographic Information Systems* (GIS) [@neteler_open_2008], which emerged in the 1960s [@coppock_history_1991].
 Geography has played an important role in explaining and influencing humanity's relationship with the natural
 world^[A good example of this is Alexander von Humboldt's travels to South America, which laid the foundations for physical and plant geography [@wulf_invention_2015].
 ]
@@ -252,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservea623ec65ca784c6a
+preserve0d5225447006e4a2
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3090,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve0305792e8686e909
+preservee20bdad2024edcb1
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6178,7 +6180,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservee36e4f42802067d0
+preserveaef5125cab0316b2
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6797,7 +6799,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve12c673fcc420fb4a
+preserveec862b9d354a6f66
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6907,7 +6909,7 @@ From the perspective of public engagement and policy impact, a map may be the be
 Map making is therefore a critical part of geocomputation and its emphasis on changing the world outlined in Chapter \@ref(intro).
 
 We have already seen how to create maps using methods building on the substantial graphical capabilities of base R in section \@ref(basic-map).
-It is possible to go far with these methods, as illustrated in Chapter [14](https://www.stat.auckland.ac.nz/~paul/RG2e/chapter14.html) of *R Graphics* [@murrell_r_2016].
+It is possible to go far with these methods, as illustrated in Chapter [14](https://www.stat.auckland.ac.nz/~paul/RG2e/chapter14.html) of the book *R Graphics* [@murrell_r_2016].
 The focus of this chapter, however, is creating maps using packages that are dedicated to this purpose.
 In many cases the simplicity and speed of maps created using `plot()` commands will be sufficient, especially when using R interactively to understand data quickly.
 In some case you may benefit from the flexibility of low-level control over graphical parameters offered by `plot()` and functions provided by the **grid** package.
@@ -7679,7 +7681,7 @@ Therefore, to use the complete set of SAGA and GRASS functions, stick with **RSA
 When doing so, make advantage of **RSAGA**'s numerous user-friendly functions.
 Note also, that **RSAGA** offers native R functions for geocomputation such as `multi.local.function`, `pick.from.grid` and many more.
 Finally, if you need topological correct data and/or geodatabase-management functionality, we recommend the usage of GRASS. 
-In addition, if you would like to run simulations with the help of a geodatabase [@krug_2010_clearing], use **rgrass7** directly since **RQGIS** always starts a new GRASS session for each call.
+In addition, if you would like to run simulations with the help of a geodatabase [@krug_clearing_2010], use **rgrass7** directly since **RQGIS** always starts a new GRASS session for each call.
 
 ## Exercises
 
@@ -7781,7 +7783,7 @@ Using either regression or machine learning techniques depends on the aim: stati
 Regression techniques are especially useful if the aim is statistical inference, i.e. if we are interested if a predictor significantly contributes to a model and how much.
 To trust the model outcomes we need to perform a thorough model validation testing if one or several of the underlying model assumptions (heterogeneity, independence, etc.) have been violated [@zuur_mixed_2009].
 By contrast, machine learning approaches are especially appealing due to their lack of assumptions.
-Though statistical inference is impossible [@james_introduction_2013], various studies have shown that machine learning outperform regression techniques with regard to predictive performance [@schratz_performance_2018]. <!-- add one more source -->
+Though statistical inference is impossible [@james_introduction_2013], various studies have shown that machine learning outperform regression techniques with regard to predictive performance [@schratz_performance_nodate]. <!-- add one more source -->
 Naturally, with the advent of big data, machine learning has even gained in popularity since frequently the underlying relationship between variables is less important than the prediction such as future customer behavior.
 
 Though prediction will be the aim of the modeling in this chapter, we will not use machine learning but a simple generalized linear model (GLM).^[Nevertheless, a generalized additive model or a machine learning approach would be more suitable for our dataset (see exercises).
@@ -7887,7 +7889,6 @@ But if we moved 10 or 100 km this might not longer be the case.
 
 @muenchow_geomorphic_2012
 @brenning_spatial_2012
-@schratz_performance_2018
 @james_introduction_2013
 @blangiardo_spatial_2015
 @zuur_beginners_2017

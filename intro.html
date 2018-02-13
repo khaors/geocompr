@@ -402,7 +402,7 @@ This may sound simple and easy to achieve (which it is if you carefully maintain
 </tr>
 </tbody>
 </table>
-<p>While embracing recent developments in the field, we also wanted to pay respects to the wider field of Geography, with its 2000 year history <span class="citation">(Roller <a href="#ref-roller_eratosthenes_2010">2010</a>)</span>, and the narrower field of <em>Geographic Information System</em> (GIS) <span class="citation">(Neteler and Mitasova <a href="#ref-neteler_open_2008">2008</a>)</span>. Geography has played an important role in explaining and influencing humanity’s relationship with the natural world<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> and this book aims to contribute to this so-called ‘Geographic Tradition’ <span class="citation">(Livingstone <a href="#ref-livingstone_geographical_1992">1992</a>)</span>. GIS has become almost synonymous with handling spatial data on a computer, and provides a basis for excellent open source tools which can be accessed from R, as we will see in Chapter 13. <!-- todo - add dynamic reference to c13--></p>
+<p>Geocomputation is young, but it builds on older fields. It can be seen as a part of Geography, which has a 2000+ year history <span class="citation">(Talbert <a href="#ref-talbert_ancient_2014">2014</a>)</span>; and an extension of <em>Geographic Information Systems</em> (GIS) <span class="citation">(Neteler and Mitasova <a href="#ref-neteler_open_2008">2008</a>)</span>, which emerged in the 1960s <span class="citation">(Coppock and Rhind <a href="#ref-coppock_history_1991">1991</a>)</span>. Geography has played an important role in explaining and influencing humanity’s relationship with the natural world<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> and this book aims to contribute to this so-called ‘Geographic Tradition’ <span class="citation">(Livingstone <a href="#ref-livingstone_geographical_1992">1992</a>)</span>. GIS has become almost synonymous with handling spatial data on a computer, and provides a basis for excellent open source tools which can be accessed from R, as we will see in Chapter 13. <!-- todo - add dynamic reference to c13--></p>
 <p>The book’s links to older disciplines were reflected in suggested titles for the book: <em>Geography with R</em> and <em>R for GIS</em>. Each has advantages. The former conveys the message that it comprises much more than just spatial data: non-spatial attribute data are inevitably interwoven with geometry data, and Geography is about more than where something is on the map. The latter communicates that this is a book about using R as a GIS, to perform spatial operations on <em>geographic data</em> <span class="citation">(Bivand, Pebesma, and Gómez-Rubio <a href="#ref-bivand_applied_2013">2013</a>)</span>. However, the term GIS conveys some connotations (see Table <a href="intro.html#tab:gdsl">1.1</a>) which simply fail to communicate one of R’s greatest strengths: its console-based ability to seamlessly switch between geographic and non-geographic data processing, modeling and visualization tasks. By contrast, the term geocomputation implies reproducible and creative programming. Of course, (geocomputational) algorithms are powerful tools that can become highly complex. However, all algorithms are composed of smaller parts. By teaching you its foundations and underlying structure, we aim to empower you to create your own innovative solutions to geographic data problems.</p>
 </div>
 <div id="why-geocomputation-with-r" class="section level2">
@@ -531,17 +531,20 @@ of Statistical Software http://von-tijn.nl/tijn/research/presentations/tmap_user
 <div id="ref-openshaw_geocomputation_2000">
 <p>Openshaw, Stan, and Robert J. Abrahart, eds. 2000. <em>Geocomputation</em>. 1 edition. London ; New York: CRC Press.</p>
 </div>
-<div id="ref-roller_eratosthenes_2010">
-<p>Roller, D. 2010. <em>Eratosthenes’ “Geography”</em>. Princeton University Press. <a href="http://books.google.co.uk/books?id=8peKyWK_SWsC" class="uri">http://books.google.co.uk/books?id=8peKyWK_SWsC</a>.</p>
+<div id="ref-talbert_ancient_2014">
+<p>Talbert, Richard J. A. 2014. <em>Ancient Perspectives: Maps and Their Place in Mesopotamia, Egypt, Greece, and Rome</em>. University of Chicago Press.</p>
 </div>
 <div id="ref-neteler_open_2008">
 <p>Neteler, Markus, and Helena Mitasova. 2008. <em>Open Source GIS: A GRASS GIS Approach</em>. 3. ed. New York, NY: Springer.</p>
+</div>
+<div id="ref-coppock_history_1991">
+<p>Coppock, J Terry, and David W Rhind. 1991. “The History of GIS.” <em>Geographical Information Systems: Principles and Applications, Vol. 1.</em> 1 (1): 21–43. <a href="https://www.geos.ed.ac.uk/~gisteac/ilw/generic_resources/books_and_papers/Thx1ARTICLE.pdf" class="uri">https://www.geos.ed.ac.uk/~gisteac/ilw/generic_resources/books_and_papers/Thx1ARTICLE.pdf</a>.</p>
 </div>
 <div id="ref-livingstone_geographical_1992">
 <p>Livingstone, David N. 1992. <em>The Geographical Tradition: Episodes in the History of a Contested Enterprise</em>. Oxford, UK ; Cambridge, USA: John Wiley &amp; Sons Ltd.</p>
 </div>
 <div id="ref-bivand_applied_2013">
-<p>Bivand, Roger, Edzer J Pebesma, and Virgilio Gómez-Rubio. 2013. <em>Applied Spatial Data Analysis with R</em>. Vol. 747248717. Springer.</p>
+<p>Bivand, Roger S., Edzer Pebesma, and Virgilio Gómez-Rubio. 2013. <em>Applied Spatial Data Analysis with R</em>. 2nd ed. 2013 edition. New York: Springer.</p>
 </div>
 <div id="ref-wickham_advanced_2014">
 <p>Wickham, Hadley. 2014. <em>Advanced R</em>. CRC Press. <a href="http://www.crcpress.com/product/isbn/9781466586963 http://adv-r.had.co.nz http://www.crcpress.com/product/isbn/9781466586963 http://adv-r.had.co.nz" class="uri">http://www.crcpress.com/product/isbn/9781466586963 http://adv-r.had.co.nz http://www.crcpress.com/product/isbn/9781466586963 http://adv-r.had.co.nz</a>.</p>
@@ -595,7 +598,7 @@ of Statistical Software http://von-tijn.nl/tijn/research/presentations/tmap_user
 <p>Jr, Paulo J. Ribeiro, and Peter J. Diggle. 2016. <em>geoR: Analysis of Geostatistical Data</em>. <a href="https://CRAN.R-project.org/package=geoR" class="uri">https://CRAN.R-project.org/package=geoR</a>.</p>
 </div>
 <div id="ref-baddeley_spatial_2015">
-<p>Baddeley, Adrian, Ege Rubak, and Rolf Turner. 2015. <em>Spatial Point Patterns: Methodology and Applications with R</em>. London: Chapman; Hall/CRC Press. <a href="http://www.crcpress.com/Spatial-Point-Patterns-Methodology-and-Applications-with-R/Baddeley-Rubak-Turner/9781482210200/" class="uri">http://www.crcpress.com/Spatial-Point-Patterns-Methodology-and-Applications-with-R/Baddeley-Rubak-Turner/9781482210200/</a>.</p>
+<p>Baddeley, Adrian, Ege Rubak, and Rolf Turner. 2015. <em>Spatial Point Patterns: Methodology and Applications with R</em>. CRC Press.</p>
 </div>
 <div id="ref-bivand_more_2001">
 <p>Bivand, Roger. 2001. “More on Spatial Data Analysis.” <em>R News</em> 1 (3): 13–17.</p>
