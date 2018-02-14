@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve118176fcaea8ca12
+preserve4672cef78ffac3d6
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveed9c5b1df1d0a119
+preserve9171fc49ee62ff0f
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6180,7 +6180,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve368c9689010dc84d
+preserve1d3abcbeeb585faf
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6799,7 +6799,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve84735bb1ed9b517e
+preserve93b5aa2b59df4f67
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7047,6 +7047,10 @@ Probably, the most often use example is a map of United States, which consists o
 It is very important to find the best projection for each individual inset in this type of cases (see section \@ref(#reproj-geo-data) to learn more).
 We can use US National Atlas Equal Area for the map of the contiguous United States by putting its EPSG code in the `projection` argument of `tm_shape()`.
 
+<!-- # us_states$pop_dens = us_states$total_pop_15 / us_states$AREA -->
+<!-- # hawaii$pop_dens = hawaii$total_pop_15 / hawaii$AREA -->
+<!-- # alaska$pop_dens = alaska$total_pop_15 / hawaii$AREA -->
+
 
 ```r
 us_states_map = tm_shape(us_states, projection = 2163) +
@@ -7081,7 +7085,9 @@ print(alaska_map, vp = viewport(x = 0.15, y = 0.15, width = 0.3, height = 0.3))
 <p class="caption">(\#fig:insetmap2)Map of the United States.</p>
 </div>
 
+The main goal of this section is to present how to generate and arrange inset maps.
 <!-- extended info about using tm_layout to show legend in main plot and remove it in the others -->
+<!-- barebone examples + encourgement to do better -->
 
 <!-- example3: mix of maps and plots? -->
 <!-- of maybe only mention this -->

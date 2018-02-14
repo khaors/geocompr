@@ -446,6 +446,9 @@ Figure 9.2: Inset map showing the central part of the Southern Alps in New Zeala
 <p>Inset map can be save to file either by using a graphic device (see section <a href="read-write.html#visual-outputs">6.6</a>) or the <code>save_tmap()</code> function and its arguments - <code>insets_tm</code> and <code>insets_vp</code>.</p>
 <!-- example2: us states + hawaii + alaska -->
 <p>Inset maps are also used to create one map of non-contiguous areas. Probably, the most often use example is a map of United States, which consists of the contiguous United States, Hawaii and Alaska. It is very important to find the best projection for each individual inset in this type of cases (see section @ref(#reproj-geo-data) to learn more). We can use US National Atlas Equal Area for the map of the contiguous United States by putting its EPSG code in the <code>projection</code> argument of <code>tm_shape()</code>.</p>
+<!-- # us_states$pop_dens = us_states$total_pop_15 / us_states$AREA -->
+<!-- # hawaii$pop_dens = hawaii$total_pop_15 / hawaii$AREA -->
+<!-- # alaska$pop_dens = alaska$total_pop_15 / hawaii$AREA -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">us_states_map =<span class="st"> </span><span class="kw">tm_shape</span>(us_states, <span class="dt">projection =</span> <span class="dv">2163</span>) +
 <span class="st">  </span><span class="kw">tm_polygons</span>() +<span class="st"> </span>
 <span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">frame =</span> <span class="ot">FALSE</span>)</code></pre></div>
@@ -467,7 +470,7 @@ alaska_map =<span class="st"> </span><span class="kw">tm_shape</span>(alaska) +
 Figure 9.3: Map of the United States.
 </p>
 </div>
-<!-- extended info about using tm_layout to show legend in main plot and remove it in the others -->
+<p>The main goal of this section is to present how to generate and arrange inset maps. <!-- extended info about using tm_layout to show legend in main plot and remove it in the others --> <!-- barebone examples + encourgement to do better --></p>
 <!-- example3: mix of maps and plots? -->
 <!-- of maybe only mention this -->
 <!-- https://gist.github.com/walkerke/93bfe80bb7735aa6265a61013eaed3fa -->
