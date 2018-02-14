@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-02-13'
+date: '2018-02-14'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-02-13 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-02-14 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve3af69d672aa7d0db
+preservee42ac36dea84449b
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -354,15 +354,15 @@ See the [r-spatial](https://github.com/r-spatial/) organisation and conversation
 ] and a growing number of actively developed packages which are designed to work in harmony with **sf** (Table \@ref(tab:revdep)). 
 
 
-Table: (\#tab:revdep)The top 5 most downloaded packages that depend on sf, in terms of average number of downloads per day over the previous month. As of 2018-02-08 there are 55 packages which import sf.
+Table: (\#tab:revdep)The top 5 most downloaded packages that depend on sf, in terms of average number of downloads per day over the previous month. As of 2018-02-12 there are 55 packages which import sf.
 
 package    Downloads
 --------  ----------
-plotly          1798
-raster          1596
-spData           800
-spdep            782
-leaflet          627
+plotly          1694
+raster          1500
+spData           772
+spdep            738
+leaflet          589
 
 ## The history of R-spatial
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserved6b4663c5f16d616
+preserve715055dbb7296fe8
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6180,7 +6180,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserveb92ba352436c4c3f
+preserve7cebb3b84c3903ea
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6799,7 +6799,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve89f61fd7aab09a73
+preservebe56bddf1eac6153
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7000,6 +7000,7 @@ nz_region = st_bbox(c(xmin = 1340000, xmax = 1450000, ymin = 5130000, ymax = 521
 In the second step, we create a base map showing a lager area. 
 It gives a context and helps to locate the area of interest. 
 Importantly, this map needs to clearly indicate the location of the inset map, for example by stating its borders.
+<!-- should we mention tm_layout here or earlier? -->
 
 
 ```r
@@ -7013,7 +7014,7 @@ nz_map = tm_shape(nz) +
 ```
 
 The third step consists of the inset map creation. 
-<!--expand-->
+This is a place where the most imporant message is stated. 
 
 
 ```r
@@ -7023,8 +7024,8 @@ nz_height_map = tm_shape(nz, bbox = tmaptools::bb(nz_region)) +
   tm_symbols(shape = 2, col = "red")
 ```
 
-Finally, we combine the two maps together. 
-<!--expand-->
+Finally, we combine the two maps.
+A viewport from the **grid** package can be used by stating a center location (`x` and `y`) and a size (`width` and `height`) of the inset map.
 
 
 ```r
@@ -7038,9 +7039,13 @@ print(nz_height_map, vp = viewport(x = 0.3, y = 0.7, width = 0.4, height = 0.4))
 <p class="caption">(\#fig:insetmap1)Inset map showing the central part of the Southern Alps in New Zealand.</p>
 </div>
 
+Inset map can be save to file either by using a graphic device (see section \@ref(visual-outputs)) or the `save_tmap()` function and its arguments - `insets_tm` and `insets_vp`.
+
 <!-- example2: us states + hawaii + alaska -->
-<!-- find the best projection for each individual inset. -->
-<!-- reproj -->
+Inset maps are also used to create one map of non-contiguous areas.
+Probably, the most often use example is a map of United States, which consists of the contiguous United States, Hawaii and Alaska.
+It is very important to find the best projection for each individual inset in this type of cases (see section \@ref({#reproj-geo-data}) to learn more).
+We can use US National Atlas Equal Area for the map of the contiguous United States by putting its EPSG code in the `projection` argument of `tm_shape()`.
 
 
 ```r
@@ -7049,7 +7054,8 @@ us_states_map = tm_shape(us_states, projection = 2163) +
   tm_layout(frame = FALSE)
 ```
 
-<!-- create separate maps -->
+The rest of our objects, `hawaii` and `alaska`, already have proper projections, therefore we just need to create two separate maps:
+
 
 ```r
 hawaii_map = tm_shape(hawaii) +
@@ -7061,10 +7067,10 @@ alaska_map = tm_shape(alaska) +
   tm_layout(title = "Alaska", frame = FALSE, bg.color = NA)
 ```
 
-<!-- create an inset map -->
+The final map is created by combining and arranging these three maps:
+
 
 ```r
-library(grid)
 us_states_map
 print(hawaii_map, vp = viewport(x = 0.4, y = 0.1, width = 0.2, height = 0.1))
 print(alaska_map, vp = viewport(x = 0.15, y = 0.15, width = 0.3, height = 0.3))
@@ -7179,6 +7185,7 @@ animation_tmap(m2, filename = "figures/11-lifeExp_sa_animation.gif", width = 160
 <!-- shiny? -->
 
 ## Exercises
+
 
 <!--chapter:end:09-mapping.Rmd-->
 
