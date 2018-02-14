@@ -282,7 +282,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="9.3" data-path="adv-map.html"><a href="adv-map.html#animations"><i class="fa fa-check"></i><b>9.3</b> Animations</a></li>
 <li class="chapter" data-level="9.4" data-path="adv-map.html"><a href="adv-map.html#interactive-maps"><i class="fa fa-check"></i><b>9.4</b> Interactive maps</a></li>
 <li class="chapter" data-level="9.5" data-path="adv-map.html"><a href="adv-map.html#pseudo-unusual-maps"><i class="fa fa-check"></i><b>9.5</b> Pseudo (unusual) maps</a></li>
-<li class="chapter" data-level="9.6" data-path="adv-map.html"><a href="adv-map.html#exercises-6"><i class="fa fa-check"></i><b>9.6</b> Exercises</a></li>
+<li class="chapter" data-level="9.6" data-path="adv-map.html"><a href="adv-map.html#web-mapping-applications-with-shiny"><i class="fa fa-check"></i><b>9.6</b> Web mapping applications with shiny</a></li>
+<li class="chapter" data-level="9.7" data-path="adv-map.html"><a href="adv-map.html#exercises-6"><i class="fa fa-check"></i><b>9.7</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="gis.html"><a href="gis.html"><i class="fa fa-check"></i><b>10</b> Bridges to GIS software</a><ul>
 <li class="chapter" data-level="10.1" data-path="gis.html"><a href="gis.html#rqgis"><i class="fa fa-check"></i><b>10.1</b> (R)QGIS</a></li>
@@ -545,8 +546,42 @@ m2 =<span class="st"> </span><span class="kw">tm_shape</span>(world_sf_temporal2
 <!-- cartogram - https://github.com/sjewo/cartogram -->
 <!-- shiny? -->
 </div>
+<div id="web-mapping-applications-with-shiny" class="section level2">
+<h2><span class="header-section-number">9.6</span> Web mapping applications with shiny</h2>
+<p>The interactive ‘web maps’ demonstrated in the previous sections can go far. Careful selection of layers to display, base-maps and pop-ups can be used to communicate the main results of many projects involving Geocomputation. But the web mapping approach to interactivity has limitations:</p>
+<ul>
+<li>Although the map is interactive in terms of panning, zooming and clicking, the code is static, meaning the user interface is fixed.</li>
+<li>All map content is generally static in a web map, meaning that web maps cannot scale to handle large datasets easily.</li>
+<li>Additional layers of interactivity, such a graphs showing relationships between variables and ‘dashboards’ are difficult to create using the web-mapping approach.</li>
+</ul>
+<p>Overcoming these limitations involves going beyond static web mapping and towards geospatial frameworks and map servers. Products in this field include <a href="https://docs.djangoproject.com/en/2.0/ref/contrib/gis/">GeoDango</a> (geospatial extension of the Django content management system), <a href="https://www.osgeo.org/projects/mapguide-open-source/">MapGuide</a> (a framework for developing web applications) and <a href="https://github.com/geoserver/geoserver">GeoServer</a> (a mature and powerful Java application for serving raster and vector datasets). Each of these has merits, especially in terms of scalability, enabling your maps serve to thousands of people daily (provided you have the hardware and software support, and sufficient interest in your maps from the public). The bad news is that such server-side solutions require much skilled developer time to set-up and maintain, often involving teams of people with roles such as a dedicated geospatial database administrator (<a href="http://wiki.gis.com/wiki/index.php/Database_administrator">DBA</a>).</p>
+<p>The good news for R users is that web mapping applications can now be rapidly created using <strong>shiny</strong>, an R package developed for creating interactive web applications. As documented on the <a href="https://rstudio.github.io/leaflet/shiny.html">Shiny integration</a> section of <strong>leaflet</strong>’s online documentation, <strong>shiny</strong> has dedicated functions such as <code>renderLeaflet()</code> for serving maps. Rather than duplicate the content of RStudio’s excellent documentation, this section will teach the basics of <strong>shiny</strong> and demonstrate how to create a full-screen mapping application in less than 100 lines of code.</p>
+<p>The way <strong>shiny</strong> works is well documented at <a href="https://shiny.rstudio.com/">shiny.rstudio.com</a>. The two key elements of a <strong>shiny</strong> app reflect the duality common to most web application development: ‘front end’ (the bit the user sees) and ‘back end’ code. In <strong>shiny</strong> apps these are often split into <code>ui.R</code> (short for user interface) and <code>server.R</code> files, naming conventions used by <a href="https://github.com/rstudio/shiny-server"><code>shiny-server</code></a>. The two can also be combined into single file, as illustrated by the small web mapping application stored in <a href="https://github.com/Robinlovelace/geocompr/blob/master/coffee_app/app.R"><code>coffee_app/app.R</code></a> in the book’s GitHub repo.</p>
+<p>Before exploring the code in that file, it is worth creating a minimal example. The code below creates and executes a minimal <strong>shiny</strong> app:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># ui = fluidPage(div(</span>
+<span class="co">#   sliderInput(&quot;bins&quot;, &quot;Bins&quot;, 0, 4000, value = 30),</span>
+<span class="co">#       plotOutput(outputId = &quot;distPlot&quot;)</span>
+<span class="co">#     )</span>
+<span class="co">#   )</span>
+<span class="co"># # Define server logic required to draw a histogram ----</span>
+<span class="co"># server = function(input, output) {</span>
+<span class="co">#   output$distPlot = renderPlot({</span>
+<span class="co"># </span>
+<span class="co">#     x    = coffee_data$coffee_production_2016 %&gt;% na.omit()</span>
+<span class="co">#     bins = seq(min(x), max(x), length.out = input$bins + 1)</span>
+<span class="co"># </span>
+<span class="co">#     hist(x, breaks = bins, col = &quot;#75AADB&quot;, border = &quot;white&quot;,</span>
+<span class="co">#          xlab = &quot;Waiting time to next eruption (in mins)&quot;,</span>
+<span class="co">#          main = &quot;Histogram of waiting times&quot;)</span>
+<span class="co"># </span>
+<span class="co">#     })</span>
+<span class="co"># </span>
+<span class="co"># }</span>
+<span class="co"># shinyApp(ui, server)</span></code></pre></div>
+<p>, illustrated below:to understand the basics of a sh</p>
+</div>
 <div id="exercises-6" class="section level2">
-<h2><span class="header-section-number">9.6</span> Exercises</h2>
+<h2><span class="header-section-number">9.7</span> Exercises</h2>
 
 </div>
 </div>
