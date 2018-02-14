@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservee42ac36dea84449b
+preservefe7f3ac76cbc6658
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve715055dbb7296fe8
+preservec8eeee8a96c7272a
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6180,7 +6180,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve7cebb3b84c3903ea
+preserve6ef590cb39867225
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6799,7 +6799,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservebe56bddf1eac6153
+preserve8509213aae927029
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7044,7 +7044,7 @@ Inset map can be save to file either by using a graphic device (see section \@re
 <!-- example2: us states + hawaii + alaska -->
 Inset maps are also used to create one map of non-contiguous areas.
 Probably, the most often use example is a map of United States, which consists of the contiguous United States, Hawaii and Alaska.
-It is very important to find the best projection for each individual inset in this type of cases (see section \@ref({#reproj-geo-data}) to learn more).
+It is very important to find the best projection for each individual inset in this type of cases (see section \@ref(#reproj-geo-data) to learn more).
 We can use US National Atlas Equal Area for the map of the contiguous United States by putting its EPSG code in the `projection` argument of `tm_shape()`.
 
 
