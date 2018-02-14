@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve4161e876ad027403
+preserve6b3f081b1306830e
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservec90252af4066d51e
+preservec5f271054d603b92
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6180,7 +6180,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve7dabd1624a303038
+preservee248995b5e51a962
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6799,7 +6799,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve471146a0748f6e4c
+preserveb8713442cc90703d
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6891,7 +6891,7 @@ library(tidyverse)
 library(leaflet)
 library(tmap)
 # library(mapview)
-# library(shiny)
+library(shiny)
 ```
 
 ## Introduction
@@ -7031,7 +7031,7 @@ A viewport from the **grid** package can be used by stating a center location (`
 ```r
 library(grid)
 nz_map
-print(nz_height_map, vp = viewport(x = 0.3, y = 0.7, width = 0.4, height = 0.4))
+print(nz_height_map, vp = grid::viewport(0.3, 0.7, width = 0.4, height = 0.4))
 ```
 
 <div class="figure" style="text-align: center">
@@ -7219,31 +7219,23 @@ The code below creates and executes a minimal **shiny** app:
 
 
 ```r
-# ui = fluidPage(div(
-#   sliderInput("bins", "Bins", 0, 4000, value = 30),
-#       plotOutput(outputId = "distPlot")
-#     )
-#   )
-# # Define server logic required to draw a histogram ----
-# server = function(input, output) {
-#   output$distPlot = renderPlot({
-# 
-#     x    = coffee_data$coffee_production_2016 %>% na.omit()
-#     bins = seq(min(x), max(x), length.out = input$bins + 1)
-# 
-#     hist(x, breaks = bins, col = "#75AADB", border = "white",
-#          xlab = "Waiting time to next eruption (in mins)",
-#          main = "Histogram of waiting times")
-# 
-#     })
-# 
-# }
-# shinyApp(ui, server)
+ui = fluidPage(div(
+  sliderInput("life", "Life expectancy", 0, 80, value = 80),
+      leafletOutput(outputId = "map")
+    )
+  )
+server = function(input, output) {
+  output$map = renderLeaflet({
+    leaflet() %>% addProviderTiles("OpenStreetMap.BlackAndWhite") %>%
+      addPolygons(data = world[world$lifeExp > input$life, ])})
+}
+shinyApp(ui, server)
 ```
 
-
-, illustrated below:to understand the basics of a sh 
-
+<div class="figure" style="text-align: center">
+<iframe src="https://bookdown.org/robinlovelace/coffeeapp/?showcase=0" width="576" height="400px"></iframe>
+<p class="caption">(\#fig:shiny)Minimal example of a web mapping application created with **shiny**.</p>
+</div>
 
 ## Exercises
 
