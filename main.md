@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservee85eeeb35482157f
+preserve1f335afa76e10b5e
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve6be5f6f779383084
+preserve41ee08e38a971c5e
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6180,7 +6180,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve288aeaae08cf6ef8
+preserveeb57cb05db0c2910
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6799,7 +6799,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve2773e791b985b3fb
+preserveb23a48ad531ab974
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7569,7 +7569,7 @@ Now that we have the data, we can go on and initiate a GRASS session, i.e., we h
 The GRASS geodatabase system is based on SQLite.
 Consequently, different users can easily work on the same project, possibly with different read/write permissions.
 However, one has to set up this geodatabase (also from within R), and users used to a GIS GUI popping up by one click might find this process a bit intimidating in the beginning.
-First of all, the GRASS database requires its own directory, and contains a location (Figure \@ref(fig:grass_loc)).
+First of all, the GRASS database requires its own directory, and contains a location (Figure \@ref(fig:grass-loc)).
 The location in turn simply contains the geodata for one project. 
 Within one location several mapsets can exist, and typically refer to different users. 
 PERMANENT is a mandatory mapset, and created automatically.
@@ -7579,7 +7579,7 @@ Please refer to @neteler_open_2008 and the [GRASS GIS quick start](https://grass
 
 <div class="figure" style="text-align: center">
 <img src="https://grass.osgeo.org/grass72/manuals/help_loc_struct.png" alt="Structure of the GRASS geodatabase system including locations and mapsets Figure was taken from https://grass.osgeo.org/grass72/manuals/help_loc_struct.png."  />
-<p class="caption">(\#fig:grass_loc)Structure of the GRASS geodatabase system including locations and mapsets Figure was taken from https://grass.osgeo.org/grass72/manuals/help_loc_struct.png.</p>
+<p class="caption">(\#fig:grass-loc)Structure of the GRASS geodatabase system including locations and mapsets Figure was taken from https://grass.osgeo.org/grass72/manuals/help_loc_struct.png.</p>
 </div>
 
 Naturally, you have to set up a location and a mapset if you want to use GRASS from within R.
@@ -7720,13 +7720,13 @@ The latter means if you have already preferred the GUI of a certain GIS, you are
 Certainly, **RQGIS** is an appropriate choice for most use cases.
 Its main advantages are:
 
-- an unified access to several GIS, and therefore the provision of >1000 geoalgorithms.
+- An unified access to several GIS, and therefore the provision of >1000 geoalgorithms.
 Of course, this includes duplicated functionality, e.g., you can perform overlay-operations using QGIS-, SAGA- or GRASS-geoalgorithms.
-- the automatic data format conversions. For instance, SAGA uses `.sdat` grid files and GRASS uses its own database format but QGIS will handle the corresponding conversions for you on the fly.
+- The automatic data format conversions. For instance, SAGA uses `.sdat` grid files and GRASS uses its own database format but QGIS will handle the corresponding conversions for you on the fly.
 - **RQGIS** can also handle spatial objects residing in R as input for geoalgorithms, and loads QGIS output automatically back into R if desired.
-- its convenience functions to support the access of the online help, R named arguments and automatic default value retrieval.
+- Its convenience functions to support the access of the online help, R named arguments and automatic default value retrieval.
 Please note that **rgrass7** inspired the latter two features.
-- Currently (but this might change), **RQGIS** supports newer SAGA (2.3.1) versions than **RSAGA** (2.2.3)
+- Currently (but this might change), **RQGIS** supports newer SAGA (2.3.1) versions than **RSAGA** (2.2.3).
 
 However, there are use cases when you certainly should use one of the other R-GIS bridges.
 QGIS only provides access to a subset of GRASS and SAGA functionality.
@@ -7757,15 +7757,52 @@ Additionally, give `mapview` a try.
 
 ## Prerequisites {-}
 
+- This chapter requires the following packages:
 
 
-## Cropping
 
-<!-- - crop, mask -->
+## Introduction
+
+<!-- intro -->
+
+## Raster masking
+
+<!-- replace with spDataLarge::elevation in the future -->
+
+
+```r
+srtm = raster((system.file("raster/srtm.tif", package = "spDataLarge")))
+```
+
+
+```r
+zion = st_read((system.file("vector/zion.gpkg", package = "spDataLarge"))) %>% 
+  st_transform(4326)
+#> Reading layer `zion' from data source `/home/travis/R/Library/spDataLarge/vector/zion.gpkg' using driver `GPKG'
+#> Simple feature collection with 1 feature and 11 fields
+#> geometry type:  POLYGON
+#> dimension:      XY
+#> bbox:           xmin: 302903.1 ymin: 4112244 xmax: 334735.5 ymax: 4153087
+#> epsg (SRID):    NA
+#> proj4string:    +proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs
+```
+
+
+```r
+srtm_cropped = crop(srtm, as(zion, "Spatial"))
+```
+
+
+```r
+srtm_masked = mask(srtm_cropped, zion)
+```
+
+<img src="figures/cropmask-1.png" width="576" style="display: block; margin: auto;" /><img src="figures/cropmask-2.png" width="576" style="display: block; margin: auto;" />
 
 ## Extraction
 
-<!-- - extract -->
+<!-- extract -->
+<!-- zonal stats -->
 
 ## Spatial interpolation ??
 <!-- http://mdsumner.github.io/guerrilla/articles/irreg2.html -->
@@ -7773,10 +7810,7 @@ Additionally, give `mapview` a try.
 ## Rasterization ??
 
 ## Vectorization ??
-
-
 <!-- distances? -->
-<!-- zonal stats -->
 
 ## Exercises
 

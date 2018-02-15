@@ -294,12 +294,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="11" data-path="raster-vector.html"><a href="raster-vector.html"><i class="fa fa-check"></i><b>11</b> Raster-vector interactions</a><ul>
 <li class="chapter" data-level="" data-path="raster-vector.html"><a href="raster-vector.html#prerequisites-8"><i class="fa fa-check"></i>Prerequisites</a></li>
-<li class="chapter" data-level="11.1" data-path="raster-vector.html"><a href="raster-vector.html#cropping"><i class="fa fa-check"></i><b>11.1</b> Cropping</a></li>
-<li class="chapter" data-level="11.2" data-path="raster-vector.html"><a href="raster-vector.html#extraction"><i class="fa fa-check"></i><b>11.2</b> Extraction</a></li>
-<li class="chapter" data-level="11.3" data-path="raster-vector.html"><a href="raster-vector.html#spatial-interpolation"><i class="fa fa-check"></i><b>11.3</b> Spatial interpolation ??</a></li>
-<li class="chapter" data-level="11.4" data-path="transform.html"><a href="transform.html#rasterization"><i class="fa fa-check"></i><b>11.4</b> Rasterization ??</a></li>
-<li class="chapter" data-level="11.5" data-path="raster-vector.html"><a href="raster-vector.html#vectorization"><i class="fa fa-check"></i><b>11.5</b> Vectorization ??</a></li>
-<li class="chapter" data-level="11.6" data-path="raster-vector.html"><a href="raster-vector.html#exercises-8"><i class="fa fa-check"></i><b>11.6</b> Exercises</a></li>
+<li class="chapter" data-level="11.1" data-path="raster-vector.html"><a href="raster-vector.html#introduction-7"><i class="fa fa-check"></i><b>11.1</b> Introduction</a></li>
+<li class="chapter" data-level="11.2" data-path="raster-vector.html"><a href="raster-vector.html#raster-masking"><i class="fa fa-check"></i><b>11.2</b> Raster masking</a></li>
+<li class="chapter" data-level="11.3" data-path="raster-vector.html"><a href="raster-vector.html#extraction"><i class="fa fa-check"></i><b>11.3</b> Extraction</a></li>
+<li class="chapter" data-level="11.4" data-path="raster-vector.html"><a href="raster-vector.html#spatial-interpolation"><i class="fa fa-check"></i><b>11.4</b> Spatial interpolation ??</a></li>
+<li class="chapter" data-level="11.5" data-path="transform.html"><a href="transform.html#rasterization"><i class="fa fa-check"></i><b>11.5</b> Rasterization ??</a></li>
+<li class="chapter" data-level="11.6" data-path="raster-vector.html"><a href="raster-vector.html#vectorization"><i class="fa fa-check"></i><b>11.6</b> Vectorization ??</a></li>
+<li class="chapter" data-level="11.7" data-path="raster-vector.html"><a href="raster-vector.html#exercises-8"><i class="fa fa-check"></i><b>11.7</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="algorithms-and-functions-for-geocomputation.html"><a href="algorithms-and-functions-for-geocomputation.html"><i class="fa fa-check"></i><b>12</b> Algorithms and functions for geocomputation</a><ul>
 <li class="chapter" data-level="" data-path="algorithms-and-functions-for-geocomputation.html"><a href="algorithms-and-functions-for-geocomputation.html#prerequisites-9"><i class="fa fa-check"></i>Prerequisites</a></li>
@@ -311,7 +312,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="13" data-path="spatial-cv.html"><a href="spatial-cv.html"><i class="fa fa-check"></i><b>13</b> Spatial cross-validation</a><ul>
 <li class="chapter" data-level="" data-path="spatial-cv.html"><a href="spatial-cv.html#prerequisites-10"><i class="fa fa-check"></i>Prerequisites</a></li>
-<li class="chapter" data-level="13.1" data-path="spatial-cv.html"><a href="spatial-cv.html#introduction-7"><i class="fa fa-check"></i><b>13.1</b> Introduction</a></li>
+<li class="chapter" data-level="13.1" data-path="spatial-cv.html"><a href="spatial-cv.html#introduction-8"><i class="fa fa-check"></i><b>13.1</b> Introduction</a></li>
 <li class="chapter" data-level="13.2" data-path="location.html"><a href="location.html#case-study"><i class="fa fa-check"></i><b>13.2</b> Case study: landslide susceptibility</a></li>
 <li class="chapter" data-level="13.3" data-path="spatial-cv.html"><a href="spatial-cv.html#spatial-cross-validation"><i class="fa fa-check"></i><b>13.3</b> Spatial cross-validation</a></li>
 <li class="chapter" data-level="13.4" data-path="spatial-cv.html"><a href="spatial-cv.html#exercises-10"><i class="fa fa-check"></i><b>13.4</b> Exercises</a></li>
@@ -343,29 +344,49 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1><span class="header-section-number">11</span> Raster-vector interactions</h1>
 <div id="prerequisites-8" class="section level2 unnumbered">
 <h2>Prerequisites</h2>
+<ul>
+<li>This chapter requires the following packages:</li>
+</ul>
 </div>
-<div id="cropping" class="section level2">
-<h2><span class="header-section-number">11.1</span> Cropping</h2>
-<!-- - crop, mask -->
+<div id="introduction-7" class="section level2">
+<h2><span class="header-section-number">11.1</span> Introduction</h2>
+<!-- intro -->
+</div>
+<div id="raster-masking" class="section level2">
+<h2><span class="header-section-number">11.2</span> Raster masking</h2>
+<!-- replace with spDataLarge::elevation in the future -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">srtm =<span class="st"> </span><span class="kw">raster</span>((<span class="kw">system.file</span>(<span class="st">&quot;raster/srtm.tif&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;spDataLarge&quot;</span>)))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion =<span class="st"> </span><span class="kw">st_read</span>((<span class="kw">system.file</span>(<span class="st">&quot;vector/zion.gpkg&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;spDataLarge&quot;</span>))) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">st_transform</span>(<span class="dv">4326</span>)
+<span class="co">#&gt; Reading layer `zion&#39; from data source `/home/travis/R/Library/spDataLarge/vector/zion.gpkg&#39; using driver `GPKG&#39;</span>
+<span class="co">#&gt; Simple feature collection with 1 feature and 11 fields</span>
+<span class="co">#&gt; geometry type:  POLYGON</span>
+<span class="co">#&gt; dimension:      XY</span>
+<span class="co">#&gt; bbox:           xmin: 302903.1 ymin: 4112244 xmax: 334735.5 ymax: 4153087</span>
+<span class="co">#&gt; epsg (SRID):    NA</span>
+<span class="co">#&gt; proj4string:    +proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">srtm_cropped =<span class="st"> </span><span class="kw">crop</span>(srtm, <span class="kw">as</span>(zion, <span class="st">&quot;Spatial&quot;</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">srtm_masked =<span class="st"> </span><span class="kw">mask</span>(srtm_cropped, zion)</code></pre></div>
+<p><img src="figures/cropmask-1.png" width="576" style="display: block; margin: auto;" /><img src="figures/cropmask-2.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="extraction" class="section level2">
-<h2><span class="header-section-number">11.2</span> Extraction</h2>
-<!-- - extract -->
+<h2><span class="header-section-number">11.3</span> Extraction</h2>
+<!-- extract -->
+<!-- zonal stats -->
 </div>
 <div id="spatial-interpolation" class="section level2">
-<h2><span class="header-section-number">11.3</span> Spatial interpolation ??</h2>
+<h2><span class="header-section-number">11.4</span> Spatial interpolation ??</h2>
 <!-- http://mdsumner.github.io/guerrilla/articles/irreg2.html -->
 </div>
 <div id="rasterization" class="section level2">
-<h2><span class="header-section-number">11.4</span> Rasterization ??</h2>
+<h2><span class="header-section-number">11.5</span> Rasterization ??</h2>
 </div>
 <div id="vectorization" class="section level2">
-<h2><span class="header-section-number">11.5</span> Vectorization ??</h2>
+<h2><span class="header-section-number">11.6</span> Vectorization ??</h2>
 <!-- distances? -->
-<!-- zonal stats -->
 </div>
 <div id="exercises-8" class="section level2">
-<h2><span class="header-section-number">11.6</span> Exercises</h2>
+<h2><span class="header-section-number">11.7</span> Exercises</h2>
 
 </div>
 </div>
