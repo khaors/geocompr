@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserved730b8af79302299
+preserve6207d71c837a8687
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservec02abf90b55c1f8f
+preserve3a14db831b4e8207
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6180,7 +6180,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve865e15e71ada4a46
+preserve6bc6029504def185
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6799,7 +6799,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve903456f90cd9a73f
+preserve4ac4fec63163ce64
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7258,7 +7258,14 @@ With this in mind your prototype web applications should be limited not by techn
 
 ## Exercises
 
-1. 
+1. Sketch out on paper ideas for a web mapping app that could be used to make decisions more evidence based:
+  - In the city you live in
+  - In the country you live in
+  - Worldwide
+1. What design decisions change as the scale of map deployment increases and how would this change your approach to the development process? 
+1. Update the code in `coffeeApp/app.R` so that instead of centering on Brazil the user can select which country to focus on:
+    - Using `textInput()`
+    - Using `selectInput()`
 
 <!--chapter:end:09-mapping.Rmd-->
 
