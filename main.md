@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservef62154ede043e7a3
+preservea84bca7812e319b5
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve7b2c2ecabb85003a
+preserve840b48870de6d374
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6180,7 +6180,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve0f8e159fe0c3ce7e
+preserve672a3c825afb2dee
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6799,7 +6799,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve7743d5d2a02a0541
+preserve4a4a673e158e9cba
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7207,15 +7207,14 @@ The two key elements of a **shiny** app reflect the duality common to most web a
 In **shiny** apps these are often split into `ui.R` (short for user interface) and `server.R` files, naming conventions used by [`shiny-server`](https://github.com/rstudio/shiny-server).
 The two can also be combined into single file, as illustrated by the small web mapping application stored in [`coffee_app/app.R`](https://github.com/Robinlovelace/geocompr/blob/master/coffee_app/app.R) in the book's GitHub repo.
 
-Before exploring the code in that file, it is worth creating a minimal example.
-The code below creates and executes a minimal **shiny** app:
+Before exploring the code in that file, it is worth creating an example.
+The code below creates and launches --- with the command `shinyApp()` --- the minimal web mapping app illustrated in Figure \@ref(fig:shiny):
 
 
 ```r
-ui = fluidPage(div(
+ui = fluidPage(
   sliderInput("life", "Life expectancy", 0, 80, value = 80),
       leafletOutput(outputId = "map")
-    )
   )
 server = function(input, output) {
   output$map = renderLeaflet({
