@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve1f335afa76e10b5e
+preservef62154ede043e7a3
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve41ee08e38a971c5e
+preserve7b2c2ecabb85003a
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6180,7 +6180,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserveeb57cb05db0c2910
+preserve0f8e159fe0c3ce7e
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6799,7 +6799,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveb23a48ad531ab974
+preserve7743d5d2a02a0541
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7194,13 +7194,13 @@ But the web mapping approach to interactivity has limitations:
 - Additional layers of interactivity, such a graphs showing relationships between variables and 'dashboards' are difficult to create using the web-mapping approach.
 
 Overcoming these limitations involves going beyond static web mapping and towards geospatial frameworks and map servers.
-Products in this field include [GeoDango](https://docs.djangoproject.com/en/2.0/ref/contrib/gis/) (geospatial extension of the Django content management system), [MapGuide](https://www.osgeo.org/projects/mapguide-open-source/) (a framework for developing web applications) and [GeoServer](https://github.com/geoserver/geoserver) (a mature and powerful Java application for serving raster and vector datasets).
-Each of these has merits, especially in terms of scalability, enabling your maps serve to thousands of people daily (provided you have the hardware and software support, and sufficient interest in your maps from the public).
+Products in this field include [GeoDjango](https://docs.djangoproject.com/en/2.0/ref/contrib/gis/) (which extends the Django web framework and is written in [Python](https://github.com/django/django)), [MapGuide](https://www.osgeo.org/projects/mapguide-open-source/) (a framework for developing web applications, largely written in [C++](https://trac.osgeo.org/mapguide/wiki/MapGuideArchitecture)) and [GeoServer](http://geoserver.org/) (a mature and powerful map server written in [Java](https://github.com/geoserver/geoserver)).
+Each of these (particularly GeoServer) is scalable, enabling maps  to be served to thousands of people daily --- assuming there is sufficient public interest in your maps!
 The bad news is that such server-side solutions require much skilled developer time to set-up and maintain, often involving teams of people with roles such as a dedicated geospatial database administrator ([DBA](http://wiki.gis.com/wiki/index.php/Database_administrator)).
 
-The good news for R users is that web mapping applications can now be rapidly created using **shiny**, an R package developed for creating interactive web applications.
-As documented on the [Shiny integration](https://rstudio.github.io/leaflet/shiny.html) section of **leaflet**'s online documentation, **shiny** has dedicated functions such as `renderLeaflet()` for serving maps.
-Rather than duplicate the content of RStudio's excellent documentation, this section will teach the basics of **shiny** and demonstrate how to create a full-screen mapping application in less than 100 lines of code.
+The good news is that web mapping applications can now be rapidly created using **shiny**, a package for converting R code into interactive web applications.
+This is thanks to its support for interactive maps via `renderLeaflet()`, documented on the [Shiny integration](https://rstudio.github.io/leaflet/shiny.html) section of RStudio's **leaflet** website.
+Rather than duplicate this excellent documentation, this section teaches the basics of **shiny** from a web mapping perspective, culminating in a full-screen mapping application in less than 100 lines of code.
 
 The way **shiny** works is well documented at [shiny.rstudio.com](https://shiny.rstudio.com/).
 The two key elements of a **shiny** app reflect the duality common to most web application development: 'front end' (the bit the user sees) and 'back end' code.
