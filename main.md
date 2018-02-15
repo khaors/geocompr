@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve891324f1cdd307c4
+preserve32858fa2a7fb8b62
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve1e3ef21dbd8445a1
+preservec7fd725b37f5b6b9
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6180,7 +6180,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservebab5bb14c39a7263
+preserve45bea80246883b13
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6799,7 +6799,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservee204394075aed415
+preserve06507c08e16019db
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7267,31 +7267,32 @@ Gary Sherman is well-qualified to comment on this matter as the creator of QGIS,
 The 'CLI vs GUI' debate is often adversarial and polarized but it does not have to be: both options are great if well chosen in accordance with your needs and tasks.
 The advantages of a good CLI such as that provided by R are numerous. Among others, a CLI:
 
-- facilitates the automation of repetitive tasks. We strongly dislike the manual execution of iterations, and would recommend to always think about how to solve such tasks programmatically.
+- Facilitates the automation of repetitive tasks. We strongly dislike the manual execution of iterations, and would recommend to always think about how to solve such tasks programmatically.
 This way, you most likely discover new programming features and concepts, i.e., you learn and enhance your skill set. 
 By contrast, what are you learning from executing the same tasks a 1000 times?
 As a nice side-effect, automation is surely more effective and less error-prone.
-- ensures transparency and reproducibility (which also is the backbone of good scientific practice).
+- Ensures transparency and reproducibility (which also is the backbone of good scientific practice).
 In short, it is easier to share your R script than explain a sequence of 10+ 'points and clicks'.
-- encourages extending existing software by making it easy to modify and extend functions.
+- Encourages extending existing software by making it easy to modify and extend functions.
 If you are missing an algorithm you need, the CLI gives you the freedom to write your own!
 <!-- add link to most sexiest job in the 21st century -->
-- is the way to (geo-)data science.
+- Is the way to (geo-)data science.
 Professional and advanced technical skills will certainly enhance your career prospects, and are in dire need across a wide range of disciplines.
-- is fun, but admittedly that is a subjective argument.
+- Is fun, but admittedly that is a subjective argument.
 <!-- any other points that we have missed? -->
 - ... 
 
-On the other hand, GUI-based GIS systems (particularly QGIS) are also advantageous. For instance, think of:
+On the other hand, GUI-based GIS systems (particularly QGIS) are also advantageous.
+For instance, think of:
 
-- the GUI. The really user-friendly graphical interface spares the user from programming.
+- The GUI. The really user-friendly graphical interface spares the user from programming.
 Though you probably wouldn't read the book if this were your main objective.
-- digitizing and all related tools (trace, snap, topological rules, etc.). Note that there is also the new **mapedit** package but its intention is to allow the quick editing of a few spatial features, and not professional, large-scale cartographic digitizing.
-- georeferencing
-- stereoscopic mapping (e.g., LiDAR and structure from motion)
-- the built-in geodatabase management system often integrated in Desktop GIS (ArcGIS, GRASS GIS) and all related advantages such as object relational modeling, topology, fast (spatial) querying, etc.
-- map production, in case you only want to create a beautiful map once. If you have to produce it over and over again, then maybe the CLI approach is better.
-- zooming and dragging on WMS (though this is also possible with **mapview** and **leaflet**)
+- Digitizing and all related tools (trace, snap, topological rules, etc.). Note that there is also the new **mapedit** package but its intention is to allow the quick editing of a few spatial features, and not professional, large-scale cartographic digitizing.
+- Georeferencing
+- Stereoscopic mapping (e.g., LiDAR and structure from motion)
+- The built-in geodatabase management system often integrated in Desktop GIS (ArcGIS, GRASS GIS) and all related advantages such as object relational modeling, topology, fast (spatial) querying, etc.
+- Map production, in case you only want to create a beautiful map once. If you have to produce it over and over again, then maybe the CLI approach is better.
+- Zooming and dragging on WMS (though this is also possible with **mapview** and **leaflet**)
 <!-- any other points that we have missed so far? -->
 - ...
 
@@ -7320,10 +7321,10 @@ By the end of the chapter you should have a working knowledge of the functionali
 As mentioned in chapter \@ref(intro), doing GIS at the command-line makes it more reproducible, in-line with the principles of Geographic Data Science.
 
 ## (R)QGIS
-QGIS is one of the most popular open-source GIS [Table \@ref(tab:gis_comp); @graser_processing:_2015]. Its main advantage lies in the fact that it provides a unified interface to several other open-source GIS.
+QGIS is one of the most popular open-source GIS [Table \@ref(tab:gis-comp); @graser_processing:_2015]. Its main advantage lies in the fact that it provides a unified interface to several other open-source GIS.
 
 
-Table: (\#tab:gis_comp)Comparison between three open-source GIS. Hybrid refers to the support of vector and raster operations.
+Table: (\#tab:gis-comp)Comparison between three open-source GIS. Hybrid refers to the support of vector and raster operations.
 
 GIS     first release   no. functions   support 
 ------  --------------  --------------  --------
@@ -7359,7 +7360,7 @@ We are now ready for some QGIS geoprocessing from within R! First of all, we loa
 library(spData)
 ```
 
-In chapter @ref(spatial-class), we already learned how to do a spatial overlay using the **sf**-package.
+In chapter \@ref(spatial-class), we already learned how to do a spatial overlay using the **sf**-package.
 Of course, any GIS is also able to perform spatial overlays. Here, we would like to know how many cycle points we can find per borough.
 First of all, we need to come up with the name of the function in QGIS. `find_algorithms` lets you search all QGIS geoalgorithms with the help of regular expressions.
 Here, we assume that the short description of the function contains first the word "point" and secondly somewhere later also the word "poly".
@@ -7371,7 +7372,7 @@ If you also want to have a short description for each geoalgorithm, set the `nam
 find_algorithms("points.*poly", name_only = TRUE)
 ```
 
-Now that we know the name of the function ("qgis:countpointsinpolygon"), we wonder how we can use it.
+Now that we know the name of the function (`qgis:countpointsinpolygon`), we wonder how we can use it.
 `get_usage` returns all function parameters and default values. 
 `open_help` lets you access the corresponding online help.
 
@@ -7416,6 +7417,7 @@ In this case the output tells us, had we left the `FIELDS`-parameter unspecified
 -->
 
 Other notes:
+
 - Leaving the output parameter(s) unspecified, saves the resulting QGIS output to a temporary folder created by QGIS.
 `run_qgis` prints these paths to the console after successfully running the QGIS engine.
 - If the output consists of multiple files and you have set `load_output` to `TRUE`, `run_qgis` will return a list with each element corresponding to one output file.
@@ -7423,7 +7425,7 @@ Other notes:
 To learn more about **RQGIS** please refer to the (hopefully) forthcoming paper (cite). 
 
 ## (R)SAGA
-Similar to QGIS, the System for Automated Geoscientific Analyses (SAGA; Table \@ref(tab:gis_comp)) provides the possibility to run SAGA modules from Python (SAGA Python API).
+Similar to QGIS, the System for Automated Geoscientific Analyses (SAGA; Table \@ref(tab:gis-comp)) provides the possibility to run SAGA modules from Python (SAGA Python API).
 In addition, there is also a command line interface (saga_cmd.exe) to execute SAGA modules (see also [https://sourceforge.net/p/saga-gis/wiki/Executing%20Modules%20with%20SAGA%20CMD/](https://sourceforge.net/p/saga-gis/wiki/Executing%20Modules%20with%20SAGA%20CMD/)).
 **RSAGA** uses the latter to run SAGA from within R.
 
@@ -7433,7 +7435,9 @@ Therefore, we will introduce **RSAGA** with a raster and use case from @muenchow
 Specifically, we would like to compute the SAGA wetness index from a digital elevation model.
 First of all, we need to make sure that **RSAGA** will find SAGA on the computer when called.
 For this, all **RSAGA** functions using SAGA in the background make use of `rsaga.env()`. 
-Usually, `rsaga.env()` will detect SAGA automatically by searching several likely directories (see its help for more information). However, we have 'hidden' SAGA in the OSGEO4W-installation, a location `rsaga.env()` does not search automatically. `linkSAGA` searches your computer for a valid SAGA installation. If it finds one, it adds it to the PATH environment variable thereby making sure that `rsaga.env` runs successfully.
+Usually, `rsaga.env()` will detect SAGA automatically by searching several likely directories (see its help for more information). However, we have 'hidden' SAGA in the OSGEO4W-installation, a location `rsaga.env()` does not search automatically. 
+`linkSAGA` searches your computer for a valid SAGA installation. 
+If it finds one, it adds it to the PATH environment variable thereby making sure that `rsaga.env` runs successfully.
 
 
 ```r
@@ -7464,8 +7468,8 @@ tail(rsaga.get.libraries(), 10)
 ```
 
 Instead of presenting all available libraries we have shown only the last ten. 
-We choose the library 'ta_hydrology' (ta is the abbreviation for terrain analysis).
-Subsequently, we can access the available modules of a specific library (here: 'ta_hydrology') as follows:
+We choose the library `ta_hydrology` (`ta` is the abbreviation for terrain analysis).
+Subsequently, we can access the available modules of a specific library (here: `ta_hydrology`) as follows:
 
 
 ```r
@@ -7499,7 +7503,7 @@ rsaga.wetness.index(in.dem = file.path(tempdir(), "dem"),
                     out.wetness.index = file.path(tempdir(), "twi"))
 ```
 
-Of course, we would like to inspect our result visually (Figure \@ref(fig:saga_twi)). To load and plot the SAGA output file, we use the **raster** package. 
+Of course, we would like to inspect our result visually (Figure \@ref(fig:saga-twi)). To load and plot the SAGA output file, we use the **raster** package. 
 
 
 ```r
@@ -7519,7 +7523,8 @@ This example includes statistical geocomputing, i.e., it uses a GIS to derive te
 The term statistical geocomputation emphasizes the strength of combining R's data science power with the geoprocessing power of a GIS which is at the very heart of building a bridge from R to GIS.
 
 ## GRASS through **rgrass7**
-The U.S. Army - Construction Engineering Research Laboratory (USA-CERL) created the core of the hybrid raster-vector Geographical Resources Analysis Support System (GRASS) [Table \@ref(tab:gis_comp); @neteler_open_2008] from 1982 to 1995. 
+
+The U.S. Army - Construction Engineering Research Laboratory (USA-CERL) created the core of the hybrid raster-vector Geographical Resources Analysis Support System (GRASS) [Table \@ref(tab:gis-comp); @neteler_open_2008] from 1982 to 1995. 
 Academia continued this work since 1997.
 Similar to SAGA, GRASS focussed on raster processing in the beginning while only later, since GRASS 6.0, adding advanced vector functionality [@bivand_applied_2013].
 
@@ -7584,7 +7589,7 @@ Please refer to @neteler_open_2008 and the [GRASS GIS quick start](https://grass
 <p class="caption">(\#fig:grass-loc)Structure of the GRASS geodatabase system including locations and mapsets Figure was taken from https://grass.osgeo.org/grass72/manuals/help_loc_struct.png.</p>
 </div>
 
-Naturally, you have to set up a location and a mapset if you want to use GRASS from within R.
+You have to set up a location and a mapset if you want to use GRASS from within R.
 First of all, we need to find out if and where GRASS7 is installed on the computer.
 
 
@@ -7602,7 +7607,8 @@ if (Sys.info()["sysname"] == "Windows") {
 `link` is a `data.frame` which contains in its rows the GRASS installations on your computer. 
 Here, we will use a GRASS7 installation.
 If you have not installed GRASS7 on your computer, we recommend that you do so now.
-Assuming that we have found a working installation on your computer, we use the corresponding path in `initGRASS`. Additionally, we specify where to store the geodatabase (gisDbase), name the location `london`, and use the PERMANENT mapset.
+Assuming that we have found a working installation on your computer, we use the corresponding path in `initGRASS`. 
+Additionally, we specify where to store the geodatabase (gisDbase), name the location `london`, and use the PERMANENT mapset.
 
 
 ```r
@@ -7692,7 +7698,7 @@ execGRASS(cmd = "v.net.salesman", input = "streets_points_con",
           flags = c("overwrite"))
 ```
 
-To visualize our result, we import the output layer into R, and visualize it with the help of the **mapview** package (Figure \@ref(fig:grass_mapview)).
+To visualize our result, we import the output layer into R, and visualize it with the help of the **mapview** package (Figure \@ref(fig:grass-mapview)).
 
 
 ```r
@@ -7703,6 +7709,7 @@ mapview(route) +
 ```
 
 Further notes:
+
 - Please note that we have used GRASS's geodatabase (based on SQLite) which allows faster processing. 
 That means we have only exported spatial data in the beginning.
 Then we created new objects but only imported the final result back into R.
@@ -7743,8 +7750,8 @@ In addition, if you would like to run simulations with the help of a geodatabase
 1. Create two overlapping polygons (`poly_1` and `poly_2`) with the help of the **sf**-package (see chapter \@ref(spatial-class)). 
 Calculate the intersection using:
 
-- **RQGIS**, **RSAGA** and **rgrass7**
-- **sf**
+    - **RQGIS**, **RSAGA** and **rgrass7**
+    - **sf**
 
 2. Run `data(dem, package = "RQGIS")` and `data(random_points, package = "RQGIS")`.
 Select randomly a point from `random_points` and find all `dem` pixels that can be seen from this point (hint: viewshed).
