@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservee51b8c0a6456ceb1
+preservec8c89f57e0c28450
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservea6bfe50c540c0ff2
+preserve7454f40090e5155f
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6180,7 +6180,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve80a6bef377c7b96f
+preserve65b6e29d8b7ee588
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6799,7 +6799,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve79a835e08add56f0
+preserveb92be316f8619c57
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7921,7 +7921,7 @@ Additionally, GLMs are probably familiar to most readers, and therefore instead 
 
 CV determines a model's ability to predict new data or differently put its ability to generalize.
 To achieve this, CV splits a dataset into a test and a training dataset.
-It uses the training data to fit the model, and applies the learned relationship to the test data thereby checking if the model is able to predict the correct result.
+It uses the training data to fit the model, and checks if the trained model is able to predict the correct results for the test data.
 Basically, cross-validation helps to detect over-fitting since a model that fits too closely the training data and its specific peculiarities (noise, random fluctuations) will have a bad prediction performance on the test data.
 However, the basic requirement for this is, that the test data is independent of the training data.
 CV achieves this by splitting the data randomly into test and training sets. 
@@ -7956,8 +7956,8 @@ ind = sample(1:nrow(non), nrow(landslides[landslides$lslpts == TRUE, ]))
 lsl = rbind(non[ind, ], landslides[landslides$lslpts == TRUE, ])
 ```
 
-`dem` is in fact a digital elevation model and consists of two list elements with the first being a raster header and the second being a matrix with the altitudinal values.
-To transform the list into a `raster`, we can write:
+`dem` is in fact a digital elevation model and consists of two list elements with the first being a raster header and the second being a matrix containing the altitudinal values.
+To transform this list into a `raster`, we can write:
 
 
 ```r
@@ -7968,11 +7968,10 @@ dem =
          xmx = dem$header$xllcorner + dem$header$ncols * dem$header$cellsize,
          ymn = dem$header$yllcorner,
          ymx = dem$header$yllcorner + dem$header$nrows * dem$header$cellsize)
-
 ```
 
 To model the probability for landslide occurrence, we need some predictors.
-Here, we use selected terrain attributes frequently associated with landsliding (add references), all of which can be computed from the provided digital elevation model (`dem`) using R-GIS bridges (see Chapter \@ref(gis)).
+Here, we use selected terrain attributes frequently associated with landsliding [@muenchow_geomorphic_2012], all of which can be computed from the provided digital elevation model (`dem`) using R-GIS bridges (see Chapter \@ref(gis)).
 We leave it as an exercise to the reader to compute the terrain attribute rasters and extract the corresponding values to our landslide/non-landslide dataframe (see also exercises).
 The first three rows of the resulting dataframe (still named `lsl`) could look like this:
 
@@ -8005,15 +8004,53 @@ The added columns are:
 </div>
 
 
-## Spatial cross-validation
+## Modeling and spatial CV
+
+## Introduction to spatial CV
+
+## Modeling and spatial CV with `mlr`
+In R there are literally hundreds of packages available for statistical learning (e.g., have a look at the [CRAN task machine learning](https://CRAN.R-project.org/view=MachineLearning)).
+Many of them come with their own interface which is why programmers frequently have to spend a lot of time to figure out the specifics of each of these packages or how to compare modeling results from different packages.
+The **mlr** package acts as a meta-package/umbrella-package providing a unified interface to all popular statistical learning techniques available in R including classification, regression, survival analysis and clustering.^[As pointed out in the beginning we will solely focus on supervised learning techniques in this chapter.]
+The standardized **mrl** interface is based on so-called basic building blocks (see \@ref(fig:building-blocks)).
+
+<!-- @Jakub: yes, I will ask if we me may use the figure -->
+<div class="figure" style="text-align: center">
+<img src="http://openml.github.io/articles/slides/useR2017_tutorial/slides_tutorial_files/ml_abstraction-crop.png" alt="Basic building blocks of the **mlr** package. Figure was taken from http://openml.github.io/articles/slides/useR2017_tutorial/slides_tutorial_files/ml_abstraction-crop.png."  />
+<p class="caption">(\#fig:building-blocks)Basic building blocks of the **mlr** package. Figure was taken from http://openml.github.io/articles/slides/useR2017_tutorial/slides_tutorial_files/ml_abstraction-crop.png.</p>
+</div>
+
+First, we need to create a task containing the data, specifically the response and predictor variables, for the model and the model type (such as regression or classification).
+Secondly, a learner defines the specific model that models the task data or differently put learns a structure inherent in the provided data.
+Thirdly, we assess the predictive performance of the model, i.e. the model's ability to generalize the learned relationship to new data (repetitive resampling).
+
+To put it into practice, we create a task using our landslide data.
+Since we have a binary response, we will make use of the classification task, namely `makeClassifTask()`.^[In the case of a regression problem, we would use `makeRegrTask()`.
+Type `?makeClassifTask` to find out about all available modeling tasks.
+]
+First, we specifiy the data which will be used.
+The `target` parameter expects the response variable and the `positive` parameter determines which of the two factor levels of the response variable indicates the landslide initiation point.
+All other variables of the provided dataset will serve as predictors (check out with `getTaskFormula(task)`).
+As we will perform a spatial CV later on, we need to specify the coordinates which serve as input for the spatial partioning.
+These have to be provided in an additional dataframe in `coordinates`. 
+
+
+```r
+# separate data to be modeled and coordinates
+coords = lsl[, c("x", "y")]
+data = dplyr::select(lsl, -x, -y)
+# create task
+task = makeClassifTask(data = data, target = "lslpts",
+                       positive = "TRUE", coordinates = coords)
+```
+
 
 i.e. the fact that points close to each other tend to share similarities compared to points further apart.
 Simply put, if it rains at one location it is pretty likely that it also rains if we moved 1 meter in any direction.
 But if we moved 10 or 100 km this might not longer be the case. 
 
 - short intro spatial autocorrelation, maybe by showing artificial spatial datasets with different sills, nuggets, ranges (don't show the code but just the concept of spatial autocorrelation)
-- spatial cross-validation when predictive performance is desirable 
-- use Ecuador landslide data to spatially predict landslide susceptibility (GAM, i.e. a semiparametric extension of a GLM + refer to eco chapter in which we will use ml and where the hyperparameter tuning also requires an additional inner-fold tuning)
+
 
 @muenchow_geomorphic_2012
 @brenning_spatial_2012
