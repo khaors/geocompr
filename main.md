@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservec8c89f57e0c28450
+preservee794e480e3984f02
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3092,7 +3092,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve7454f40090e5155f
+preservecf888c52e6dfe5ff
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6180,7 +6180,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve65b6e29d8b7ee588
+preserve5b8fa1894afd9d84
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6799,7 +6799,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveb92be316f8619c57
+preserve27147ec31f05e1fa
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -8012,7 +8012,7 @@ The added columns are:
 In R there are literally hundreds of packages available for statistical learning (e.g., have a look at the [CRAN task machine learning](https://CRAN.R-project.org/view=MachineLearning)).
 Many of them come with their own interface which is why programmers frequently have to spend a lot of time to figure out the specifics of each of these packages or how to compare modeling results from different packages.
 The **mlr** package acts as a meta-package/umbrella-package providing a unified interface to all popular statistical learning techniques available in R including classification, regression, survival analysis and clustering.^[As pointed out in the beginning we will solely focus on supervised learning techniques in this chapter.]
-The standardized **mrl** interface is based on so-called basic building blocks (see \@ref(fig:building-blocks)).
+The standardized **mlr** interface is based on so-called basic building blocks (see \@ref(fig:building-blocks)).
 
 <!-- @Jakub: yes, I will ask if we me may use the figure -->
 <div class="figure" style="text-align: center">
