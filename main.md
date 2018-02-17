@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve6f68dc1c6165312c
+preserve03313452bfeb38e2
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -508,7 +508,8 @@ library(sf)          # classes and functions for vector data
 library(raster)      # classes and functions for raster data
 ```
 
-The chapter also relies on two data packages: **spData** and **spDataLarge**, the latter of which must be installed after **spData** is loaded:^[**spDataLarge** can also be installed with the following command: `install.packages("spDataLarge", repos = "https://nowosad.github.io/drat/", type = "source")`.]
+The chapter also relies on two data packages: **spData** and **spDataLarge**.
+Importantly, the **spDataLarge** package needs be installed with the following command: `install.packages("spDataLarge", repos = "https://nowosad.github.io/drat/", type = "source")`.
 
 
 
@@ -518,12 +519,7 @@ library(spData)        # load geographic data
 
 
 ```r
-install.packages("spDataLarge") # after loading spData
-```
-
-
-```r
-library(spDataLarge)   # load geographic data
+library(spDataLarge)   # load larger geographic data
 ```
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">On Mac and Linux a few requirements must be met to install **sf**.
@@ -3092,7 +3088,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve63542ef377f9c1a3
+preserve8c9af20831e372b6
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6180,7 +6176,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve7190b7e3d3f1ba32
+preserve74022e6a057044aa
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6799,7 +6795,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve61fe8f468a9485c6
+preservec9ae4c030fdce0c7
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
