@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservef462350f3225f532
+preservea1ee997883baa198
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3084,7 +3084,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservedb90eb46dda0c7d3
+preserved275cac9dce94c21
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6172,7 +6172,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservee1deca201e55c1f6
+preservefdef7e922008afb8
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6791,7 +6791,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve95c914a4d3cdbec7
+preserve902015249cbe8c36
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7177,7 +7177,7 @@ animation_tmap(m2, filename = "figures/11-lifeExp_sa_animation.gif", width = 160
 
 ## Web mapping applications with shiny
 
-The interactive 'web maps' demonstrated in section \@ref(interactive-maps) can go far.
+The interactive web maps demonstrated in section \@ref(interactive-maps) can go far.
 Careful selection of layers to display, base-maps and pop-ups can be used to communicate the main results of many projects involving Geocomputation.
 But the web mapping approach to interactivity has limitations:
 
@@ -7191,23 +7191,26 @@ Each of these (particularly GeoServer) is scalable, enabling maps  to be served 
 The bad news is that such server-side solutions require much skilled developer time to set-up and maintain, often involving teams of people with roles such as a dedicated geospatial database administrator ([DBA](http://wiki.gis.com/wiki/index.php/Database_administrator)).
 
 The good news is that web mapping applications can now be rapidly created using **shiny**, a package for converting R code into interactive web applications.
-This is thanks to its support for interactive maps via `renderLeaflet()`, documented on the [Shiny integration](https://rstudio.github.io/leaflet/shiny.html) section of RStudio's **leaflet** website.
-Rather than duplicate this excellent documentation, this section teaches the basics of **shiny** from a web mapping perspective, culminating in a full-screen mapping application in less than 100 lines of code.
+This is thanks to its support for interactive maps via functions such as `renderLeaflet()`, documented on the [Shiny integration](https://rstudio.github.io/leaflet/shiny.html) section of RStudio's **leaflet** website.
+This section some context, teaches the basics of **shiny** from a web mapping perspective and culminates in a full-screen mapping application in less than 100 lines of code.
 
 The way **shiny** works is well documented at [shiny.rstudio.com](https://shiny.rstudio.com/).
 The two key elements of a **shiny** app reflect the duality common to most web application development: 'front end' (the bit the user sees) and 'back end' code.
-In **shiny** apps these are often split into `ui.R` (short for user interface) and `server.R` files, naming conventions used by [`shiny-server`](https://github.com/rstudio/shiny-server).
-The two can also be combined into single file, as illustrated by the small web mapping application stored in [`coffeeApp/app.R`](https://github.com/Robinlovelace/geocompr/blob/master/coffeeApp/app.R) in the book's GitHub repo.
+In **shiny** apps these elements are typically created in objects named `ui` and `server` within an R script named `app.R`, that lives in an 'app folder'.
+This allows web mapping applications to be represented in a single file, such as the [`coffeeApp/app.R`](https://github.com/Robinlovelace/geocompr/blob/master/coffeeApp/app.R) file in the book's GitHub repo.
 
-Before exploring the code underlying 'coffeeApp' it is worth starting with a simpler example that we will name 'lifeApp'.^[
+\BeginKnitrBlock{rmdnote}<div class="rmdnote">In **shiny** apps these are often split into `ui.R` (short for user interface) and `server.R` files, naming conventions used by [`shiny-server`](https://github.com/rstudio/shiny-server).</div>\EndKnitrBlock{rmdnote}
+
+Before considering large apps it is worth seeing a minimal example, named 'lifeApp',^[
 The word 'app' in this context refers to 'web application' and should not be confused with smartphone apps, the more common meaning of the word.
 ]
-The code below creates and launches --- with the command `shinyApp()` --- a minimal web mapping app to allow users to explore the global distribution of country-level life expectancy data (see Figure \@ref(fig:lifeApp)):
+in action.
+The code below defines and launches --- with the command `shinyApp()` --- a lifeApp, which provides an interactive slider allowing users to make countries appear with progressively lower levels of life expectancy (see Figure \@ref(fig:lifeApp)):
 
 
 ```r
 ui = fluidPage(
-  sliderInput("life", "Life expectancy", 0, 80, value = 80),
+  sliderInput(inputId = "life", "Life expectancy", 0, 80, value = 80),
       leafletOutput(outputId = "map")
   )
 server = function(input, output) {
@@ -7223,23 +7226,40 @@ shinyApp(ui, server)
 <p class="caption">(\#fig:lifeApp)Minimal example of a web mapping application created with **shiny**.</p>
 </div>
 
-The preceding code chunk creates the **user interface** via `fluidPage()` which contains input 'widgets' --- a `sliderInput()` in this case (many other `*Input()` functions are available) --- and outputs, a `leafletOutput()` in this case.
-These are arranged by rows by default, explaining why the slider interface is placed directly above the map in Figure \@ref(fig:lifeApp).
-The **server side** is a function which populates the `output` with objects generated by `render*()` commands --- `renderLeaflet()` which generates `output$map` in this case --- with reference to inputs such as `input$life` defined by the `ui`.
+The **user interface** (`ui`) of lifeApp is created by `fluidPage()`.
+This contains input 'widgets' --- a `sliderInput()` in this case (many other `*Input()` functions are available) --- and outputs, a `leafletOutput()` in this case.
+Elements added to a `fluidPage()` are arranged row-wise by default, explaining why the slider interface is placed directly above the map in Figure \@ref(fig:lifeApp) (`?column` explains how to add content column-wise).
+The **server side** (`server`) is a function with `input` and `output` arguments.
+`output` is a list of objects containing elements generated by `render*()` function --- `renderLeaflet()` which generates `output$map` in this case.
+Inputs elements such as `input$life` referred to in the server must relate to elements that exist in the `ui` --- defined by `inputId = "life"` in the code above.
+The function `shinyApp()` combines both the `ui` and `server` elements and serves the results interactively via a new R process.
+When you move the slider in in Figure \@ref(fig:lifeApp), you are actually causing R code to re-run, although this is hidden from view in the user interface.
 
 Building on this basic example and knowing where to find help (see `?shiny`), the best way forward may be to stop reading and start programming!
-The recommended next step is to open [`coffeeApp/app.R`](https://github.com/Robinlovelace/geocompr/blob/master/coffeeApp/app.R) in your R IDE of choice, modify it and re-run it repeatedly to understand the various components that make-up a shiny app and how they behave.
-In the script you will find a number of functions that go beyond the simple 'lifeApp' example including **shiny** functions `reactive()`, `observer()` and `leafletProxy()`, which are critical to the creation of advanced web mapping applications.
+The recommended next step is to open the previously mentioned [`coffeeApp/app.R`](https://github.com/Robinlovelace/geocompr/blob/master/coffeeApp/app.R) script in an IDE of choice, modify it and re-run it repeatedly.
+The example contains some of the components of a web mapping application implemented in **shiny** and should 'shine' a light on how they behave (pun intended).
+The `coffeeApp/app.R` script contains **shiny** functions that go beyond those demonstrated in the simple 'lifeApp' example.
+These include `reactive()` and `observe()` (for creating outputs that respond to the user interface --- see `?reactive`) and `leafletProxy()` (for modifying a `leaflet` object that has already been created).
+Such elements are critical to the creation of web mapping applications implemented in **shiny**.
 
 <div class="rmdnote">
 <p>There are a number of ways to run a <strong>shiny</strong> app. For RStudio users the simplest way is probably to click on the 'Run App' button located in the top right of the source pane when an <code>app.R</code>, <code>ui.R</code> or <code>server.R</code> script is open. <strong>shiny</strong> apps can also be initiated by using <code>runApp()</code> with the first argument being the folder containing the app code and data: <code>runApp(&quot;coffeeApp&quot;)</code> in this case (which assumes a folder named <code>coffeeApp</code> containing the <code>app.R</code> script is in your working directory). You can also launch apps from a unix command line with the command <code>Rscript -e 'shiny::runApp(&quot;coffeeApp&quot;)'</code>.</p>
 </div>
 
 Experimenting with apps such as `coffeeApp` will build not only your knowledge of web mapping applications in R but your practical skills.
+Changing the contents of `setView()`, for example, will change the starting bounding box that the user sees when the app is initiated.
 Such experimentation should not be done at random, but with reference to relevant documentation, starting with `?shiny`, and motivated by a desire to solve problems such as those posed in the exercises.
+
 **shiny** used in this way can make prototyping mapping applications faster and more accessible than ever before (deploying **shiny** apps is a separate topic beyond the scope of this chapter).
 Even if your applications are eventually deployed using different technologies, **shiny** undoubtedly allows web mapping applications to be developed in relatively few lines of code (60 in the case of coffeeApp).
-With this in mind your prototype web applications should be limited not by technical considerations but your motivations for making maps interactive and your imagination.
+That does not stop shiny apps getting rather large.
+The Propensity to Cycle Tool (PCT) hosted at [pct.bike](http://www.pct.bike/), for example, is a national mapping tool funded by the UK's Department for Transport.
+The PCT is used by dozens of people each day and has multiple interactive elements based on more than 1000 lines of code [@lovelace_propensity_2017].
+
+While such apps undoubtedly take time and effort to develop, **shiny** provides a framework for reproducible prototyping that should aid the development process.
+One potential problem with the ease of developing prototypes with **shiny** is the temptation to start programming too early, before the purpose of the mapping application has been envisioined in detail.
+For that reason, despite advocating **shiny**, we recommend starting with the longer established technology of a pen and paper as the first stage for interactive mapping projects.
+This way your prototype web applications should be limited not by technical considerations but by your motivations and imagination.
 
 <!-- Cite Propensity to Cycle Tool. -->
 
