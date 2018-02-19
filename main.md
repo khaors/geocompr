@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve3010790af78829cc
+preserve8297e25ebd0b8d6e
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3084,7 +3084,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve40af59a556db86ad
+preserve1968cf3d3bd24597
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5975,7 +5975,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve07cfd75498d88394
+preserve3eaafa24734f9689
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6594,7 +6594,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservea13160cce4a0ba0a
+preserveeeba1dcce6b3a5cd
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -8033,14 +8033,15 @@ The added columns are:
 </div>
 
 
-## Modeling and spatial CV
-
 ## Introduction to spatial CV
 
-## Modeling and spatial CV with `mlr`
+figure showing difference between spatial and non-spatial random sampling
+cross-reference **sperrorest** which has been integrated into **mlr**
+
+## Modeling and spatial CV with **mlr**
 In R there are literally hundreds of packages available for statistical learning (e.g., have a look at the [CRAN task machine learning](https://CRAN.R-project.org/view=MachineLearning)).
 Many of them come with their own interface which is why programmers frequently have to spend a lot of time to figure out the specifics of each of these packages or how to compare modeling results from different packages.
-The **mlr** package acts as a meta-package/umbrella-package providing a unified interface to all popular statistical learning techniques available in R including classification, regression, survival analysis and clustering.^[As pointed out in the beginning we will solely focus on supervised learning techniques in this chapter.]
+The **mlr** package acts as a meta- or umbrella-package providing a unified interface to all popular statistical learning techniques available in R including classification, regression, survival analysis and clustering.^[As pointed out in the beginning we will solely focus on supervised learning techniques in this chapter.]
 The standardized **mlr** interface is based on so-called basic building blocks (see \@ref(fig:building-blocks)).
 
 <!-- @Jakub: yes, I will ask if we me may use the figure -->
@@ -8060,7 +8061,7 @@ Type `?makeClassifTask` to find out about all available modeling tasks.
 First, we specifiy the data which will be used.
 The `target` parameter expects the response variable and the `positive` parameter determines which of the two factor levels of the response variable indicates the landslide initiation point.
 All other variables of the provided dataset will serve as predictors (check out with `getTaskFormula(task)`).
-As we will perform a spatial CV later on, we need to specify the coordinates which serve as input for the spatial partioning.
+As we will perform a spatial CV later on, we need to specify the coordinates which will form the basis of the spatial partioning.
 These have to be provided in an additional dataframe in `coordinates`. 
 
 
@@ -8072,6 +8073,96 @@ data = dplyr::select(lsl, -x, -y)
 task = makeClassifTask(data = data, target = "lslpts",
                        positive = "TRUE", coordinates = coords)
 ```
+
+`makeLearner()` determines the statistical learning method to use.
+All classification learners start with `classif.` and all regression learners with `regr.` (see `?makeLearners` for more details). 
+`listLearners()` helps to find out about all available learners and from which package **mlr** imports them. 
+For a specific task, we can run:
+
+
+```r
+lrns = listLearners(task)
+head(lrns[, 1:4])
+#>                 class                         name  short.name package
+#> 1    classif.binomial          Binomial Regression    binomial   stats
+#> 2 classif.featureless       Featureless classifier featureless     mlr
+#> 3         classif.fnn     Fast k-Nearest Neighbour         fnn     FNN
+#> 4         classif.knn           k-Nearest Neighbor         knn   class
+#> 5         classif.lda Linear Discriminant Analysis         lda    MASS
+#> 6      classif.logreg          Logistic Regression      logreg   stats
+```
+
+This yields all learners able to model two-class problems (landslide yes or no).
+We opt for the binomial classification method from the **stats** package implemented in **mlr** as `classif.binomial`.
+Additionally, we have to specify the link-function.
+We choose the `logit` link which is also the default when using the `binomial` family in `glm`.
+`predict.type` determines the type of the prediction with
+<!--Setting it to `response` produces class labels as output, which would be in our case `TRUE` or `FALSE`.-->
+ `prob` resulting in a predicted probability for landslide occurrence between 0 and 1.^[Note that this corresponds to `type = response` in `predict.glm`.]
+
+
+```r
+lrn = makeLearner(cl = "classif.binomial",
+                  link = "logit",
+                  predict.type = "prob",
+                  fix.factors.prediction = TRUE)
+# run the following lines to find out from which package the learner is taken
+# and how to access the corresponding help file(s)
+# getLearnerPackages(learner)
+# helpLearner(learner)
+```
+
+Having specified a learner and a task, we can train our model. 
+
+
+
+```r
+mod = train(learner = lrn, task = task)
+mlr_fit = getLearnerModel(mod)
+```
+
+
+
+`getLearnerModel()` extracts the used model which shows that **mlr** passed all specified parameters to the `glm` function in the background as also proved by following code:
+
+
+```r
+fit = glm(lslpts ~ ., family = binomial(link = "logit"), data = data)
+identical(fit$coefficients, mlr_fit$coefficients)
+#> [1] TRUE
+```
+
+In the beginning, it might seem a bit tedious to learn the **mlr** interface for modeling.
+But remember that one only has to learn one single interface to run 171 learners.
+Additionally, resampling in **mlr** is really easy and only requires two more steps.
+The first thing to to is specifying a resampling method.
+Spatial repeated cross-validation
+
+
+```r
+resampling = makeResampleDesc(method = "SpRepCV", folds = 5, reps = 10)
+```
+
+Executing the resampling method and set the preferred performance measure.
+
+
+```r
+set.seed(02192018)
+sp_cv = mlr::resample(learner = lrn, task = task, resampling = resampling, 
+                      measures = auc)
+sp_cv$measures.test$auc
+#>  [1] 0.825 0.838 0.804 0.865 0.731 0.811 0.849 0.774 0.894 0.842 0.815
+#> [12] 0.832 0.654 0.862 0.825 0.815 0.825 0.862 0.832 0.654 0.797 0.872
+#> [23] 0.880 0.839 0.772 0.774 0.842 0.811 0.894 0.849 0.849 0.782 0.801
+#> [34] 0.869 0.800 0.842 0.811 0.849 0.774 0.894 0.869 0.849 0.772 0.800
+#> [45] 0.819 0.849 0.774 0.894 0.811 0.842
+# the same as:
+mean(sp_cv$measures.test$auc)
+#> [1] 0.822
+```
+
+To put it into perspective, we compare this result with that of a non-spatial cross-validation.
+
 
 
 i.e. the fact that points close to each other tend to share similarities compared to points further apart.

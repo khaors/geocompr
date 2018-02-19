@@ -312,10 +312,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="spatial-cv.html"><a href="spatial-cv.html#prerequisites-10"><i class="fa fa-check"></i>Prerequisites</a></li>
 <li class="chapter" data-level="13.1" data-path="spatial-cv.html"><a href="spatial-cv.html#introduction-8"><i class="fa fa-check"></i><b>13.1</b> Introduction</a></li>
 <li class="chapter" data-level="13.2" data-path="location.html"><a href="location.html#case-study"><i class="fa fa-check"></i><b>13.2</b> Case study: landslide susceptibility</a></li>
-<li class="chapter" data-level="13.3" data-path="spatial-cv.html"><a href="spatial-cv.html#modeling-and-spatial-cv"><i class="fa fa-check"></i><b>13.3</b> Modeling and spatial CV</a></li>
-<li class="chapter" data-level="13.4" data-path="spatial-cv.html"><a href="spatial-cv.html#introduction-to-spatial-cv"><i class="fa fa-check"></i><b>13.4</b> Introduction to spatial CV</a></li>
-<li class="chapter" data-level="13.5" data-path="spatial-cv.html"><a href="spatial-cv.html#modeling-and-spatial-cv-with-mlr"><i class="fa fa-check"></i><b>13.5</b> Modeling and spatial CV with <code>mlr</code></a></li>
-<li class="chapter" data-level="13.6" data-path="spatial-cv.html"><a href="spatial-cv.html#exercises-10"><i class="fa fa-check"></i><b>13.6</b> Exercises</a></li>
+<li class="chapter" data-level="13.3" data-path="spatial-cv.html"><a href="spatial-cv.html#introduction-to-spatial-cv"><i class="fa fa-check"></i><b>13.3</b> Introduction to spatial CV</a></li>
+<li class="chapter" data-level="13.4" data-path="spatial-cv.html"><a href="spatial-cv.html#modeling-and-spatial-cv-with-mlr"><i class="fa fa-check"></i><b>13.4</b> Modeling and spatial CV with <strong>mlr</strong></a></li>
+<li class="chapter" data-level="13.5" data-path="spatial-cv.html"><a href="spatial-cv.html#exercises-10"><i class="fa fa-check"></i><b>13.5</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -400,15 +399,13 @@ Figure 13.1: Landslide initiation points (red) and points unaffected by landslid
 </p>
 </div>
 </div>
-<div id="modeling-and-spatial-cv" class="section level2">
-<h2><span class="header-section-number">13.3</span> Modeling and spatial CV</h2>
-</div>
 <div id="introduction-to-spatial-cv" class="section level2">
-<h2><span class="header-section-number">13.4</span> Introduction to spatial CV</h2>
+<h2><span class="header-section-number">13.3</span> Introduction to spatial CV</h2>
+<p>figure showing difference between spatial and non-spatial random sampling cross-reference <strong>sperrorest</strong> which has been integrated into <strong>mlr</strong></p>
 </div>
 <div id="modeling-and-spatial-cv-with-mlr" class="section level2">
-<h2><span class="header-section-number">13.5</span> Modeling and spatial CV with <code>mlr</code></h2>
-<p>In R there are literally hundreds of packages available for statistical learning (e.g., have a look at the <a href="https://CRAN.R-project.org/view=MachineLearning">CRAN task machine learning</a>). Many of them come with their own interface which is why programmers frequently have to spend a lot of time to figure out the specifics of each of these packages or how to compare modeling results from different packages. The <strong>mlr</strong> package acts as a meta-package/umbrella-package providing a unified interface to all popular statistical learning techniques available in R including classification, regression, survival analysis and clustering.<a href="#fn63" class="footnoteRef" id="fnref63"><sup>63</sup></a> The standardized <strong>mlr</strong> interface is based on so-called basic building blocks (see <a href="spatial-cv.html#fig:building-blocks">13.2</a>).</p>
+<h2><span class="header-section-number">13.4</span> Modeling and spatial CV with <strong>mlr</strong></h2>
+<p>In R there are literally hundreds of packages available for statistical learning (e.g., have a look at the <a href="https://CRAN.R-project.org/view=MachineLearning">CRAN task machine learning</a>). Many of them come with their own interface which is why programmers frequently have to spend a lot of time to figure out the specifics of each of these packages or how to compare modeling results from different packages. The <strong>mlr</strong> package acts as a meta- or umbrella-package providing a unified interface to all popular statistical learning techniques available in R including classification, regression, survival analysis and clustering.<a href="#fn63" class="footnoteRef" id="fnref63"><sup>63</sup></a> The standardized <strong>mlr</strong> interface is based on so-called basic building blocks (see <a href="spatial-cv.html#fig:building-blocks">13.2</a>).</p>
 <!-- @Jakub: yes, I will ask if we me may use the figure -->
 <div class="figure" style="text-align: center"><span id="fig:building-blocks"></span>
 <img src="http://openml.github.io/articles/slides/useR2017_tutorial/slides_tutorial_files/ml_abstraction-crop.png" alt="Basic building blocks of the **mlr** package. Figure was taken from http://openml.github.io/articles/slides/useR2017_tutorial/slides_tutorial_files/ml_abstraction-crop.png."  />
@@ -417,13 +414,55 @@ Figure 13.2: Basic building blocks of the <strong>mlr</strong> package. Figure w
 </p>
 </div>
 <p>First, we need to create a task containing the data, specifically the response and predictor variables, for the model and the model type (such as regression or classification). Secondly, a learner defines the specific model that models the task data or differently put learns a structure inherent in the provided data. Thirdly, we assess the predictive performance of the model, i.e. the model’s ability to generalize the learned relationship to new data (repetitive resampling).</p>
-<p>To put it into practice, we create a task using our landslide data. Since we have a binary response, we will make use of the classification task, namely <code>makeClassifTask()</code>.<a href="#fn64" class="footnoteRef" id="fnref64"><sup>64</sup></a> First, we specifiy the data which will be used. The <code>target</code> parameter expects the response variable and the <code>positive</code> parameter determines which of the two factor levels of the response variable indicates the landslide initiation point. All other variables of the provided dataset will serve as predictors (check out with <code>getTaskFormula(task)</code>). As we will perform a spatial CV later on, we need to specify the coordinates which serve as input for the spatial partioning. These have to be provided in an additional dataframe in <code>coordinates</code>.</p>
+<p>To put it into practice, we create a task using our landslide data. Since we have a binary response, we will make use of the classification task, namely <code>makeClassifTask()</code>.<a href="#fn64" class="footnoteRef" id="fnref64"><sup>64</sup></a> First, we specifiy the data which will be used. The <code>target</code> parameter expects the response variable and the <code>positive</code> parameter determines which of the two factor levels of the response variable indicates the landslide initiation point. All other variables of the provided dataset will serve as predictors (check out with <code>getTaskFormula(task)</code>). As we will perform a spatial CV later on, we need to specify the coordinates which will form the basis of the spatial partioning. These have to be provided in an additional dataframe in <code>coordinates</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># separate data to be modeled and coordinates</span>
 coords =<span class="st"> </span>lsl[, <span class="kw">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>)]
 data =<span class="st"> </span>dplyr::<span class="kw">select</span>(lsl, -x, -y)
 <span class="co"># create task</span>
 task =<span class="st"> </span><span class="kw">makeClassifTask</span>(<span class="dt">data =</span> data, <span class="dt">target =</span> <span class="st">&quot;lslpts&quot;</span>,
                        <span class="dt">positive =</span> <span class="st">&quot;TRUE&quot;</span>, <span class="dt">coordinates =</span> coords)</code></pre></div>
+<p><code>makeLearner()</code> determines the statistical learning method to use. All classification learners start with <code>classif.</code> and all regression learners with <code>regr.</code> (see <code>?makeLearners</code> for more details). <code>listLearners()</code> helps to find out about all available learners and from which package <strong>mlr</strong> imports them. For a specific task, we can run:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lrns =<span class="st"> </span><span class="kw">listLearners</span>(task)
+<span class="kw">head</span>(lrns[, <span class="dv">1</span>:<span class="dv">4</span>])
+<span class="co">#&gt;                 class                         name  short.name package</span>
+<span class="co">#&gt; 1    classif.binomial          Binomial Regression    binomial   stats</span>
+<span class="co">#&gt; 2 classif.featureless       Featureless classifier featureless     mlr</span>
+<span class="co">#&gt; 3         classif.fnn     Fast k-Nearest Neighbour         fnn     FNN</span>
+<span class="co">#&gt; 4         classif.knn           k-Nearest Neighbor         knn   class</span>
+<span class="co">#&gt; 5         classif.lda Linear Discriminant Analysis         lda    MASS</span>
+<span class="co">#&gt; 6      classif.logreg          Logistic Regression      logreg   stats</span></code></pre></div>
+<p>This yields all learners able to model two-class problems (landslide yes or no). We opt for the binomial classification method from the <strong>stats</strong> package implemented in <strong>mlr</strong> as <code>classif.binomial</code>. Additionally, we have to specify the link-function. We choose the <code>logit</code> link which is also the default when using the <code>binomial</code> family in <code>glm</code>. <code>predict.type</code> determines the type of the prediction with <!--Setting it to `response` produces class labels as output, which would be in our case `TRUE` or `FALSE`.--> <code>prob</code> resulting in a predicted probability for landslide occurrence between 0 and 1.<a href="#fn65" class="footnoteRef" id="fnref65"><sup>65</sup></a></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lrn =<span class="st"> </span><span class="kw">makeLearner</span>(<span class="dt">cl =</span> <span class="st">&quot;classif.binomial&quot;</span>,
+                  <span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>,
+                  <span class="dt">predict.type =</span> <span class="st">&quot;prob&quot;</span>,
+                  <span class="dt">fix.factors.prediction =</span> <span class="ot">TRUE</span>)
+<span class="co"># run the following lines to find out from which package the learner is taken</span>
+<span class="co"># and how to access the corresponding help file(s)</span>
+<span class="co"># getLearnerPackages(learner)</span>
+<span class="co"># helpLearner(learner)</span></code></pre></div>
+<p>Having specified a learner and a task, we can train our model.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod =<span class="st"> </span><span class="kw">train</span>(<span class="dt">learner =</span> lrn, <span class="dt">task =</span> task)
+mlr_fit =<span class="st"> </span><span class="kw">getLearnerModel</span>(mod)</code></pre></div>
+<p><code>getLearnerModel()</code> extracts the used model which shows that <strong>mlr</strong> passed all specified parameters to the <code>glm</code> function in the background as also proved by following code:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit =<span class="st"> </span><span class="kw">glm</span>(lslpts ~<span class="st"> </span>., <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>), <span class="dt">data =</span> data)
+<span class="kw">identical</span>(fit$coefficients, mlr_fit$coefficients)
+<span class="co">#&gt; [1] TRUE</span></code></pre></div>
+<p>In the beginning, it might seem a bit tedious to learn the <strong>mlr</strong> interface for modeling. But remember that one only has to learn one single interface to run 171 learners. Additionally, resampling in <strong>mlr</strong> is really easy and only requires two more steps. The first thing to to is specifying a resampling method. Spatial repeated cross-validation</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">resampling =<span class="st"> </span><span class="kw">makeResampleDesc</span>(<span class="dt">method =</span> <span class="st">&quot;SpRepCV&quot;</span>, <span class="dt">folds =</span> <span class="dv">5</span>, <span class="dt">reps =</span> <span class="dv">10</span>)</code></pre></div>
+<p>Executing the resampling method and set the preferred performance measure.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">02192018</span>)
+sp_cv =<span class="st"> </span>mlr::<span class="kw">resample</span>(<span class="dt">learner =</span> lrn, <span class="dt">task =</span> task, <span class="dt">resampling =</span> resampling, 
+                      <span class="dt">measures =</span> auc)
+sp_cv$measures.test$auc
+<span class="co">#&gt;  [1] 0.825 0.838 0.804 0.865 0.731 0.811 0.849 0.774 0.894 0.842 0.815</span>
+<span class="co">#&gt; [12] 0.832 0.654 0.862 0.825 0.815 0.825 0.862 0.832 0.654 0.797 0.872</span>
+<span class="co">#&gt; [23] 0.880 0.839 0.772 0.774 0.842 0.811 0.894 0.849 0.849 0.782 0.801</span>
+<span class="co">#&gt; [34] 0.869 0.800 0.842 0.811 0.849 0.774 0.894 0.869 0.849 0.772 0.800</span>
+<span class="co">#&gt; [45] 0.819 0.849 0.774 0.894 0.811 0.842</span>
+<span class="co"># the same as:</span>
+<span class="kw">mean</span>(sp_cv$measures.test$auc)
+<span class="co">#&gt; [1] 0.822</span></code></pre></div>
+<p>To put it into perspective, we compare this result with that of a non-spatial cross-validation.</p>
 <p>i.e. the fact that points close to each other tend to share similarities compared to points further apart. Simply put, if it rains at one location it is pretty likely that it also rains if we moved 1 meter in any direction. But if we moved 10 or 100 km this might not longer be the case.</p>
 <ul>
 <li>short intro spatial autocorrelation, maybe by showing artificial spatial datasets with different sills, nuggets, ranges (don’t show the code but just the concept of spatial autocorrelation)</li>
@@ -435,11 +474,11 @@ task =<span class="st"> </span><span class="kw">makeClassifTask</span>(<span cla
 <li>What is spatial cv?</li>
 </ul>
 <p>Spatial modeling: species distribution models, landslide susceptibility, epidemiology, disease mapping, rock glaciers, etc.</p>
-<p>When we are interested in the accuracy of a model, i.e., when we want to assess a model’s predictive performance, we want to avoid overfitting.<a href="#fn65" class="footnoteRef" id="fnref65"><sup>65</sup></a> Spatial autocorrelation will lead to overfitting when the training dataset is not independent of the test dataset which is frequently the case in temporal and spatial settings.</p>
+<p>When we are interested in the accuracy of a model, i.e., when we want to assess a model’s predictive performance, we want to avoid overfitting.<a href="#fn66" class="footnoteRef" id="fnref66"><sup>66</sup></a> Spatial autocorrelation will lead to overfitting when the training dataset is not independent of the test dataset which is frequently the case in temporal and spatial settings.</p>
 <p>Cross-validation separates test and training datasets randomly. Let’s take our landslide dataset as an example. Randomly selecting 20% of all points leads to an unwanted effect, namely that test and training points might be close to each other (see Figure ??). The first law of geography states that points close to each other tend to be, on average, more similar compared to points further apart. This means these points are not independent. Hence, using this information in our modeling is like a sneak preview, i.e. using information that should be unavailable to the test dataset.</p>
 </div>
 <div id="exercises-10" class="section level2">
-<h2><span class="header-section-number">13.6</span> Exercises</h2>
+<h2><span class="header-section-number">13.5</span> Exercises</h2>
 <ol style="list-style-type: decimal">
 <li>Compute the terrain attributes slope, plan curvature, profile curvature and catchment area from <code>dem</code> (provided by <code>data(&quot;landslides&quot;, package = &quot;RSAGA&quot;)</code>) with the help of R-GIS bridges, and extract the values from the corresponding output rasters to landslides/non-landslides dataframe.</li>
 <li>Reproduce the spatial prediction with the derived terrain attribute rasters (see Figure ??).</li>
@@ -477,7 +516,8 @@ task =<span class="st"> </span><span class="kw">makeClassifTask</span>(<span cla
 <li id="fn62"><p>Readers who are in need of refreshing their regression skills might have a look at <span class="citation">Zuur et al. (<a href="#ref-zuur_mixed_2009">2009</a>)</span> and <span class="citation">James et al. (<a href="#ref-james_introduction_2013">2013</a>)</span>, respectively.<a href="spatial-cv.html#fnref62">↩</a></p></li>
 <li id="fn63"><p>As pointed out in the beginning we will solely focus on supervised learning techniques in this chapter.<a href="spatial-cv.html#fnref63">↩</a></p></li>
 <li id="fn64"><p>In the case of a regression problem, we would use <code>makeRegrTask()</code>. Type <code>?makeClassifTask</code> to find out about all available modeling tasks.<a href="spatial-cv.html#fnref64">↩</a></p></li>
-<li id="fn65"><p>short definition of overfitting<a href="spatial-cv.html#fnref65">↩</a></p></li>
+<li id="fn65"><p>Note that this corresponds to <code>type = response</code> in <code>predict.glm</code>.<a href="spatial-cv.html#fnref65">↩</a></p></li>
+<li id="fn66"><p>short definition of overfitting<a href="spatial-cv.html#fnref66">↩</a></p></li>
 </ol>
 </div>
             </section>
