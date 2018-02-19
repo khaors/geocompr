@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-02-18">
+<meta name="date" content="2018-02-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -558,7 +558,7 @@ m2 =<span class="st"> </span><span class="kw">tm_shape</span>(world_sf_temporal2
 <p>The way <strong>shiny</strong> works is well documented at <a href="https://shiny.rstudio.com/">shiny.rstudio.com</a>. The two key elements of a <strong>shiny</strong> app reflect the duality common to most web application development: ‘front end’ (the bit the user sees) and ‘back end’ code. In <strong>shiny</strong> apps these elements are typically created in objects named <code>ui</code> and <code>server</code> within an R script named <code>app.R</code>, that lives in an ‘app folder’. This allows web mapping applications to be represented in a single file, such as the <a href="https://github.com/Robinlovelace/geocompr/blob/master/coffeeApp/app.R"><code>coffeeApp/app.R</code></a> file in the book’s GitHub repo.</p>
 
 <div class="rmdnote">
-In <strong>shiny</strong> apps these are often split into <code>ui.R</code> (short for user interface) and <code>server.R</code> files, naming conventions used by <a href="https://github.com/rstudio/shiny-server"><code>shiny-server</code></a>.
+In <strong>shiny</strong> apps these are often split into <code>ui.R</code> (short for user interface) and <code>server.R</code> files, naming conventions used by <a href="https://github.com/rstudio/shiny-server"><code>shiny-server</code></a>, a server-side Linux application for serving shiny apps on public-facing websites <code>shiny-server</code> also serves apps defined by a single <code>app.R</code> file in an ‘app folder’.
 </div>
 <p></p>
 <p>Before considering large apps it is worth seeing a minimal example, named ‘lifeApp’, <!-- ^[ --> <!-- The word 'app' in this context refers to 'web application' and should not be confused with smartphone apps, the more common meaning of the word. --> <!-- ] --> in action. The code below defines and launches — with the command <code>shinyApp()</code> — a lifeApp, which provides an interactive slider allowing users to make countries appear with progressively lower levels of life expectancy (see Figure <a href="adv-map.html#fig:lifeApp">9.5</a>):</p>
