@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve0d53fa6505996477
+preservec6d727d3dc2e45fb
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3084,7 +3084,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve64815b473a7159e0
+preserve05c283c6dcc2fe0c
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6172,7 +6172,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserveb729899fd3fd1246
+preservee7ccafd7b34418bc
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6791,7 +6791,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve7eae52ec55b44ca3
+preserve46bd3e0867333b72
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7205,11 +7205,9 @@ This allows web mapping applications to be represented in a single file, such as
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">In **shiny** apps these are often split into `ui.R` (short for user interface) and `server.R` files, naming conventions used by [`shiny-server`](https://github.com/rstudio/shiny-server), a server-side Linux application for serving shiny apps on public-facing websites
 `shiny-server` also serves apps defined by a single `app.R` file in an 'app folder'.</div>\EndKnitrBlock{rmdnote}
 
-Before considering large apps it is worth seeing a minimal example, named 'lifeApp',
-<!-- ^[ -->
-<!-- The word 'app' in this context refers to 'web application' and should not be confused with smartphone apps, the more common meaning of the word. -->
-<!-- ] -->
-in action.
+Before considering large apps it is worth seeing a minimal example, named 'lifeApp', in action.^[
+The word 'app' in this context refers to 'web application' and should not be confused with smartphone apps, the more common meaning of the word.
+]
 The code below defines and launches --- with the command `shinyApp()` --- a lifeApp, which provides an interactive slider allowing users to make countries appear with progressively lower levels of life expectancy (see Figure \@ref(fig:lifeApp)):
 
 

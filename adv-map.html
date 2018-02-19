@@ -561,7 +561,7 @@ m2 =<span class="st"> </span><span class="kw">tm_shape</span>(world_sf_temporal2
 In <strong>shiny</strong> apps these are often split into <code>ui.R</code> (short for user interface) and <code>server.R</code> files, naming conventions used by <a href="https://github.com/rstudio/shiny-server"><code>shiny-server</code></a>, a server-side Linux application for serving shiny apps on public-facing websites <code>shiny-server</code> also serves apps defined by a single <code>app.R</code> file in an ‘app folder’.
 </div>
 <p></p>
-<p>Before considering large apps it is worth seeing a minimal example, named ‘lifeApp’, <!-- ^[ --> <!-- The word 'app' in this context refers to 'web application' and should not be confused with smartphone apps, the more common meaning of the word. --> <!-- ] --> in action. The code below defines and launches — with the command <code>shinyApp()</code> — a lifeApp, which provides an interactive slider allowing users to make countries appear with progressively lower levels of life expectancy (see Figure <a href="adv-map.html#fig:lifeApp">9.5</a>):</p>
+<p>Before considering large apps it is worth seeing a minimal example, named ‘lifeApp’, in action.<a href="#fn58" class="footnoteRef" id="fnref58"><sup>58</sup></a> The code below defines and launches — with the command <code>shinyApp()</code> — a lifeApp, which provides an interactive slider allowing users to make countries appear with progressively lower levels of life expectancy (see Figure <a href="adv-map.html#fig:lifeApp">9.5</a>):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ui =<span class="st"> </span><span class="kw">fluidPage</span>(
   <span class="kw">sliderInput</span>(<span class="dt">inputId =</span> <span class="st">&quot;life&quot;</span>, <span class="st">&quot;Life expectancy&quot;</span>, <span class="dv">0</span>, <span class="dv">80</span>, <span class="dt">value =</span> <span class="dv">80</span>),
       <span class="kw">leafletOutput</span>(<span class="dt">outputId =</span> <span class="st">&quot;map&quot;</span>)
@@ -630,6 +630,12 @@ Figure 9.6: coffeeApp, a simple web mapping application for exploring global cof
 <div id="ref-lovelace_propensity_2017">
 <p>Lovelace, Robin, Anna Goodman, Rachel Aldred, Nikolai Berkoff, Ali Abbas, and James Woodcock. 2017. “The Propensity to Cycle Tool: An Open Source Online System for Sustainable Transport Planning.” <em>Journal of Transport and Land Use</em> 10 (1). doi:<a href="https://doi.org/10.5198/jtlu.2016.862">10.5198/jtlu.2016.862</a>.</p>
 </div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="58">
+<li id="fn58"><p>The word ‘app’ in this context refers to ‘web application’ and should not be confused with smartphone apps, the more common meaning of the word.<a href="adv-map.html#fnref58">↩</a></p></li>
+</ol>
 </div>
             </section>
 
