@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve381dd176eb674006
+preserve3010790af78829cc
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3084,7 +3084,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservee8cc28a48fa63126
+preserve40af59a556db86ad
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5975,7 +5975,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve57aa057b00f6d85c
+preserve07cfd75498d88394
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6594,7 +6594,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve02d046332cf2cd0d
+preservea13160cce4a0ba0a
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7609,7 +7609,7 @@ Visualize your result.
 For example, plot a hillshade, and on top of it the digital elevation model, your viewshed output and the point.
 Additionally, give `mapview` a try.
 
-<!--chapter:end:11-gis.Rmd-->
+<!--chapter:end:10-gis.Rmd-->
 
 
 # Raster-vector interactions {#raster-vector}
@@ -7619,6 +7619,25 @@ Additionally, give `mapview` a try.
 - This chapter requires the following packages:
 
 
+```r
+library(sf)
+#> Linking to GEOS 3.5.0, GDAL 2.2.2, proj.4 4.8.0
+library(raster)
+#> Loading required package: sp
+library(tidyverse)
+#> ── Attaching packages ────────────────────────────────── tidyverse 1.2.1 ──
+#> ✔ ggplot2 2.2.1     ✔ purrr   0.2.4
+#> ✔ tibble  1.3.4     ✔ dplyr   0.7.4
+#> ✔ tidyr   0.7.2     ✔ stringr 1.2.0
+#> ✔ readr   1.1.1     ✔ forcats 0.2.0
+#> ── Conflicts ───────────────────────────────────── tidyverse_conflicts() ──
+#> ✖ tidyr::extract() masks raster::extract()
+#> ✖ dplyr::filter()  masks stats::filter()
+#> ✖ dplyr::lag()     masks stats::lag()
+#> ✖ dplyr::select()  masks raster::select()
+library(spData)
+library(spDataLarge)
+```
 
 ## Introduction
 
@@ -7865,7 +7884,7 @@ Using the new object:
 
 
 
-<!--chapter:end:10-ras-vec.Rmd-->
+<!--chapter:end:11-ras-vec.Rmd-->
 
 
 # Algorithms and functions for geocomputation
