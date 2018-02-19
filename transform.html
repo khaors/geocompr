@@ -217,12 +217,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.3.5" data-path="transform.html"><a href="transform.html#clipping"><i class="fa fa-check"></i><b>5.3.5</b> Clipping</a></li>
 <li class="chapter" data-level="5.3.6" data-path="transform.html"><a href="transform.html#geometry-unions"><i class="fa fa-check"></i><b>5.3.6</b> Geometry unions</a></li>
 <li class="chapter" data-level="5.3.7" data-path="transform.html"><a href="transform.html#type-trans"><i class="fa fa-check"></i><b>5.3.7</b> Type transformations</a></li>
-<li class="chapter" data-level="5.3.8" data-path="transform.html"><a href="transform.html#rasterization"><i class="fa fa-check"></i><b>5.3.8</b> Rasterization</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="transform.html"><a href="transform.html#geo-ras"><i class="fa fa-check"></i><b>5.4</b> Geometric operations on raster data</a><ul>
 <li class="chapter" data-level="5.4.1" data-path="transform.html"><a href="transform.html#extent-and-origin"><i class="fa fa-check"></i><b>5.4.1</b> Extent and origin</a></li>
 <li class="chapter" data-level="5.4.2" data-path="transform.html"><a href="transform.html#aggregation-and-disaggregation"><i class="fa fa-check"></i><b>5.4.2</b> Aggregation and disaggregation</a></li>
-<li class="chapter" data-level="5.4.3" data-path="transform.html"><a href="transform.html#spatial-vectorization"><i class="fa fa-check"></i><b>5.4.3</b> Spatial vectorization</a></li>
 </ul></li>
 <li class="chapter" data-level="5.5" data-path="transform.html"><a href="transform.html#exercises-3"><i class="fa fa-check"></i><b>5.5</b> Exercises</a></li>
 </ul></li>
@@ -298,8 +296,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="11.2" data-path="raster-vector.html"><a href="raster-vector.html#raster-masking"><i class="fa fa-check"></i><b>11.2</b> Raster masking</a></li>
 <li class="chapter" data-level="11.3" data-path="raster-vector.html"><a href="raster-vector.html#extraction"><i class="fa fa-check"></i><b>11.3</b> Extraction</a></li>
 <li class="chapter" data-level="11.4" data-path="raster-vector.html"><a href="raster-vector.html#spatial-interpolation"><i class="fa fa-check"></i><b>11.4</b> Spatial interpolation ??</a></li>
-<li class="chapter" data-level="11.5" data-path="transform.html"><a href="transform.html#rasterization"><i class="fa fa-check"></i><b>11.5</b> Rasterization ??</a></li>
-<li class="chapter" data-level="11.6" data-path="raster-vector.html"><a href="raster-vector.html#vectorization"><i class="fa fa-check"></i><b>11.6</b> Vectorization ??</a></li>
+<li class="chapter" data-level="11.5" data-path="raster-vector.html"><a href="raster-vector.html#rasterization"><i class="fa fa-check"></i><b>11.5</b> Rasterization</a></li>
+<li class="chapter" data-level="11.6" data-path="raster-vector.html"><a href="raster-vector.html#spatial-vectorization"><i class="fa fa-check"></i><b>11.6</b> Spatial vectorization</a></li>
 <li class="chapter" data-level="11.7" data-path="raster-vector.html"><a href="raster-vector.html#exercises-8"><i class="fa fa-check"></i><b>11.7</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="algorithms-and-functions-for-geocomputation.html"><a href="algorithms-and-functions-for-geocomputation.html"><i class="fa fa-check"></i><b>12</b> Algorithms and functions for geocomputation</a><ul>
@@ -358,7 +356,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="introduction-2" class="section level2">
 <h2><span class="header-section-number">5.1</span> Introduction</h2>
 <p>The previous three chapters have demonstrated how geographic datasets are structured in R (Chapter <a href="spatial-class.html#spatial-class">2</a>) and how to manipulate them based on their non-geographic attributes (Chapter <a href="attr.html#attr">3</a>) and spatial properties (Chapter <a href="spatial-operations.html#spatial-operations">4</a>). This chapter extends these skills by demonstrating how to interact with a modify the geometry underlying spatial datasets.</p>
-<p>Section <a href="transform.html#geo-vec">5.3</a> covers transforming vector geometries with ‘unary’ and ‘binary’ operations. <!-- TODO: add something on n-ary ops (RL) --> Unary operations work on a single geometry in isolation. This includes simplification (of lines and polygons), the creation of buffers and centroids, and shifting/scaling/rotating single geometries using ‘affine transformations’ (sections <a href="transform.html#simplification">5.3.1</a> to <a href="transform.html#affine-transformations">5.3.4</a>). Binary transformations modify one geometry based on the shape of another. This includes clipping and geometry unions, covered in sections <a href="transform.html#clipping">5.3.5</a> and <a href="transform.html#geometry-unions">5.3.6</a> respectively. Type transformations (from a polygon to a line, for example) are demonstrated in section <a href="transform.html#type-trans">5.3.7</a> and ‘rasterization’ is covered in section <a href="transform.html#rasterization">5.3.8</a>.</p>
+<p>Section <a href="transform.html#geo-vec">5.3</a> covers transforming vector geometries with ‘unary’ and ‘binary’ operations. <!-- TODO: add something on n-ary ops (RL) --> Unary operations work on a single geometry in isolation. This includes simplification (of lines and polygons), the creation of buffers and centroids, and shifting/scaling/rotating single geometries using ‘affine transformations’ (sections <a href="transform.html#simplification">5.3.1</a> to <a href="transform.html#affine-transformations">5.3.4</a>). Binary transformations modify one geometry based on the shape of another. This includes clipping and geometry unions, covered in sections <a href="transform.html#clipping">5.3.5</a> and <a href="transform.html#geometry-unions">5.3.6</a> respectively. Type transformations (from a polygon to a line, for example) are demonstrated in section <a href="transform.html#type-trans">5.3.7</a>.</p>
 <p>Section <a href="transform.html#geo-ras">5.4</a> covers geometric transformations on raster objects. This involves changing the size and number of the underlying pixels, and assigning them new values. It teaches how to change the resolution (also called raster aggregation and disaggregation), the extent and the origin of a raster. These operations are especially useful if one would like to align raster datasets from diverse sources. Aligned raster objects share the same header information, allowing them to be processed using map algebra operations, described in section <a href="spatial-operations.html#map-algebra">4.3.2</a>.</p>
 <p>A vital type of geometry transformation is <em>reprojecting</em> from one coordinate reference system (CRS) to another. Because of the importance of reprojection, introduced in Chapter <a href="spatial-class.html#spatial-class">2</a>, and the fact that it applies to raster and vector geometries alike, it is the topic of the first section in this chapter.</p>
 </div>
@@ -912,56 +910,6 @@ linestring_sf2
 <!-- sp -> sf -->
 <!-- stars; https://github.com/r-spatial/stars/blob/master/vignettes/blog1.Rmd -->
 </div>
-<div id="rasterization" class="section level3">
-<h3><span class="header-section-number">5.3.8</span> Rasterization</h3>
-<p>Rasterization is a conversion from vector objects into rasters. Usually, the output raster is used for quantitative analysis (e.g. analysis of terrain) or modeling.</p>
-<p>The <code>rasterize()</code> function takes a vector object and converts it into a raster with extent, resolution and CRS determined by another raster object. Parameters of a template raster have big impact on rasterization output – coarse resolution could not capture all of important spatial objects, while high resolution could increase computation times. However, there is no simple rules for parameters selection as it depends on the input data and rasterization purpose. For the first group of examples, we will use a template raster having the same extent and CRS as <code>cycle_hire_osm_projected</code> and spatial resolution of 1000 meters:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">raster_template =<span class="st"> </span><span class="kw">raster</span>(<span class="kw">extent</span>(cycle_hire_osm_projected), <span class="dt">resolution =</span> <span class="dv">1000</span>,
-                         <span class="dt">crs =</span> <span class="kw">st_crs</span>(cycle_hire_osm_projected)$proj4string)</code></pre></div>
-<p>Rasterization is a very flexible operation and gives different results based not only on a template raster, but also on the type of input vector (e.g. points, polygons) and given arguments.</p>
-<p>Let’s try three different approaches to rasterize points - cycle hire locations across London (Figure <a href="transform.html#fig:vector-rasterization1">5.17</a>:A). The simplest case is when we want to create a raster containing areas with cycle hire points (also known as a presence/absence raster). In this situation, <code>rasterize()</code> expects only three arguments - an input vector data, a raster template, and a value to be transferred to all non-empty cells (Figure <a href="transform.html#fig:vector-rasterization1">5.17</a>:B).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ch_raster1 =<span class="st"> </span><span class="kw">rasterize</span>(cycle_hire_osm_projected, raster_template, <span class="dt">field =</span> <span class="dv">1</span>)</code></pre></div>
-<p><code>rasterize()</code> also could take a <code>fun</code> argument which specifies how attributes are transferred to the raster object. For example, the <code>fun = &quot;count&quot;</code> argument counts the number of points in each grid cell (Figure <a href="transform.html#fig:vector-rasterization1">5.17</a>:C).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ch_raster2 =<span class="st"> </span><span class="kw">rasterize</span>(cycle_hire_osm_projected, raster_template, 
-                       <span class="dt">field =</span> <span class="dv">1</span>, <span class="dt">fun =</span> <span class="st">&quot;count&quot;</span>)</code></pre></div>
-<p>The new output, <code>ch_raster2</code>, shows the number of cycle hire points in each grid cell. However, the cycle hire locations have different numbers of bicycles, which is described by the <code>capacity</code> variable. We need to select a field (<code>&quot;capacity&quot;</code>) and a function (<code>sum</code>) to determine a cycle hire capacity in each grid cell (Figure <a href="transform.html#fig:vector-rasterization1">5.17</a>:D). In the same way, another statistics could be calculated such as an average capacity for each grid cell, etc.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ch_raster3 =<span class="st"> </span><span class="kw">rasterize</span>(cycle_hire_osm_projected, raster_template, 
-                       <span class="dt">field =</span> <span class="st">&quot;capacity&quot;</span>, <span class="dt">fun =</span> sum)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:vector-rasterization1"></span>
-<img src="figures/vector-rasterization1-1.png" alt="Examples of point's rasterization." width="576" />
-<p class="caption">
-Figure 5.17: Examples of point’s rasterization.
-</p>
-</div>
-<p>Additionally, we will illustrate polygons and lines rasterizations using California’s polygons (<code>california</code>) and borders (<code>california_borders</code>). A template raster here will have the resolution of a 0.5 degree:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">california =<span class="st"> </span><span class="kw">filter</span>(us_states, NAME ==<span class="st"> &quot;California&quot;</span>)
-california_borders =<span class="st"> </span><span class="kw">st_cast</span>(california, <span class="st">&quot;MULTILINESTRING&quot;</span>)
-raster_template2 =<span class="st"> </span><span class="kw">raster</span>(<span class="kw">extent</span>(california), <span class="dt">resolution =</span> <span class="fl">0.5</span>,
-                         <span class="dt">crs =</span> <span class="kw">st_crs</span>(california)$proj4string)</code></pre></div>
-<p>All cells that are touched by a line get a value in a line rasterization (Figure <a href="transform.html#fig:vector-rasterization2">5.18</a>:A).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">california_raster1 =<span class="st"> </span><span class="kw">rasterize</span>(california_borders, raster_template2)</code></pre></div>
-<p>On the other hand, polygon rasterization is based on the positions of cells’ centers (points on Figure <a href="transform.html#fig:vector-rasterization2">5.18</a>:B). Values are only given when the center of the cell lies inside of the input polygon (Figure <a href="transform.html#fig:vector-rasterization2">5.18</a>:B).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">california_raster2 =<span class="st"> </span><span class="kw">rasterize</span>(california, raster_template2)</code></pre></div>
-<!-- getCover? -->
-<!-- the fraction of each grid cell that is covered by the polygons-->
-<!-- ```{r, echo=FALSE, eval=FALSE} -->
-<!-- california_raster3 = rasterize(california, raster_template2, getCover = TRUE) -->
-<!-- r3po = tm_shape(california_raster3) + -->
-<!--   tm_raster(legend.show = TRUE, title = "Values: ", style = "fixed", breaks = c(0, 1, 25, 50, 75, 100)) + -->
-<!--   tm_shape(california) + -->
-<!--   tm_borders() + -->
-<!--   tm_layout(outer.margins = rep(0.01, 4), -->
-<!--             inner.margins = rep(0, 4)) -->
-<!-- ``` -->
-<p>It is also possible to use the <code>field</code> or <code>fun</code> arguments for lines and polygons rasterizations.</p>
-<div class="figure" style="text-align: center"><span id="fig:vector-rasterization2"></span>
-<img src="figures/vector-rasterization2-1.png" alt="Examples of line and polygon rasterizations." width="576" />
-<p class="caption">
-Figure 5.18: Examples of line and polygon rasterizations.
-</p>
-</div>
-<p>While <code>rasterize</code> works well for most cases, it is not performance optimized. Fortunately, there are several alternatives, including the <code>fasterize::fasterize()</code><a href="#fn34" class="footnoteRef" id="fnref34"><sup>34</sup></a> and <code>gdalUtils::gdal_rasterize()</code>. The former is much (100 times+) faster than <code>rasterize()</code> but is currently limited to polygon rasterization. The latter is part of GDAL and therefore requires a vector file, instead of an <code>sf</code> object, as an input and rasterization parameters, instead of a <code>Raster*</code> template object.<a href="#fn35" class="footnoteRef" id="fnref35"><sup>35</sup></a></p>
-</div>
 </div>
 <div id="geo-ras" class="section level2">
 <h2><span class="header-section-number">5.4</span> Geometric operations on raster data</h2>
@@ -975,14 +923,14 @@ Figure 5.18: Examples of line and polygon rasterizations.
 <div id="extent-and-origin" class="section level3">
 <h3><span class="header-section-number">5.4.1</span> Extent and origin</h3>
 <p>When merging or performing map algebra on rasters, their resolution, projection, origin and/or extent has to match. Otherwise, how should we add the values of one raster with a resolution of 0.2 decimal degrees to a second with a resolution of 1 decimal degree? The same problem arises when we would like to merge satellite imagery from different sensors with different projections and resolutions. We can deal with such mismatches by aligning the rasters.</p>
-<p>In the simplest case, two images only differ in a mismatch in extent. <!--The `projectRaster()` function reprojects one raster to a desired projection, say from UTM to WGS84.--> Following code adds one row and two columns to each side of the raster while setting all new values to an elevation of 1000 meters (<a href="transform.html#fig:extend-example">5.19</a>).</p>
+<p>In the simplest case, two images only differ in a mismatch in extent. <!--The `projectRaster()` function reprojects one raster to a desired projection, say from UTM to WGS84.--> Following code adds one row and two columns to each side of the raster while setting all new values to an elevation of 1000 meters (<a href="transform.html#fig:extend-example">5.17</a>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(elev, <span class="dt">package =</span> <span class="st">&quot;spData&quot;</span>)
 elev_2 =<span class="st"> </span><span class="kw">extend</span>(elev, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">value =</span> <span class="dv">1000</span>)
 <span class="kw">plot</span>(elev_2)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:extend-example"></span>
 <img src="figures/extend-example-1.png" alt="Original raster extended by 1 one row on each side (top, bottom) and two columns on each side (right, left)." width="576" />
 <p class="caption">
-Figure 5.19: Original raster extended by 1 one row on each side (top, bottom) and two columns on each side (right, left).
+Figure 5.17: Original raster extended by 1 one row on each side (top, bottom) and two columns on each side (right, left).
 </p>
 </div>
 <p>Performing an algebraic operation on two objects with differing extents in R, the <strong>raster</strong> package returns the result for the intersection, and says so in a warning.</p>
@@ -994,7 +942,7 @@ Figure 5.19: Original raster extended by 1 one row on each side (top, bottom) an
 <p>The origin is the point closest to (0, 0) if you moved towards it in steps of x and y resolution.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">origin</span>(elev_4)
 <span class="co">#&gt; [1] 0 0</span></code></pre></div>
-<p>If two rasters have different origins, their cells do not overlap completely which would make map algebra impossible. To change the origin , use <code>origin()</code>.<a href="#fn36" class="footnoteRef" id="fnref36"><sup>36</sup></a> Looking at figure <a href="transform.html#fig:origin-example">5.20</a> reveals the effect of changing the origin.</p>
+<p>If two rasters have different origins, their cells do not overlap completely which would make map algebra impossible. To change the origin , use <code>origin()</code>.<a href="#fn34" class="footnoteRef" id="fnref34"><sup>34</sup></a> Looking at figure <a href="transform.html#fig:origin-example">5.18</a> reveals the effect of changing the origin.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># change the origin</span>
 <span class="kw">origin</span>(elev_4) =<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.25</span>, <span class="fl">0.25</span>)
 <span class="kw">plot</span>(elev_4)
@@ -1003,7 +951,7 @@ Figure 5.19: Original raster extended by 1 one row on each side (top, bottom) an
 <div class="figure" style="text-align: center"><span id="fig:origin-example"></span>
 <img src="figures/origin-example-1.png" alt="Plotting rasters with the same values but different origins." width="576" />
 <p class="caption">
-Figure 5.20: Plotting rasters with the same values but different origins.
+Figure 5.18: Plotting rasters with the same values but different origins.
 </p>
 </div>
 <p>Note that changing the resolution frequently (next section) also changes the origin.</p>
@@ -1011,7 +959,7 @@ Figure 5.20: Plotting rasters with the same values but different origins.
 <div id="aggregation-and-disaggregation" class="section level3">
 <h3><span class="header-section-number">5.4.2</span> Aggregation and disaggregation</h3>
 <!-- differentiate between spatial, spectral, temporal and radiometric resolution-->
-<p>Raster datasets can also differ with regard to their resolution. To match resolutions, one can either decrease (<code>aggregate()</code>) or increase (<code>disaggregate()</code>) the resolution of one raster.<a href="#fn37" class="footnoteRef" id="fnref37"><sup>37</sup></a> As an example, we here change the spatial resolution of <code>elev</code> from 0.5 to 2 decimal degree, that means, we aggregate by a factor of 2 (Fig. <a href="transform.html#fig:aggregate-example">5.21</a>). Additionally, the output cell value should correspond to the mean of the input cells (note that one could use other functions as well, such as <code>median()</code>, <code>sum()</code> etc.):</p>
+<p>Raster datasets can also differ with regard to their resolution. To match resolutions, one can either decrease (<code>aggregate()</code>) or increase (<code>disaggregate()</code>) the resolution of one raster.<a href="#fn35" class="footnoteRef" id="fnref35"><sup>35</sup></a> As an example, we here change the spatial resolution of <code>elev</code> from 0.5 to 2 decimal degree, that means, we aggregate by a factor of 2 (Fig. <a href="transform.html#fig:aggregate-example">5.19</a>). Additionally, the output cell value should correspond to the mean of the input cells (note that one could use other functions as well, such as <code>median()</code>, <code>sum()</code> etc.):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_agg =<span class="st"> </span><span class="kw">aggregate</span>(elev, <span class="dt">fact =</span> <span class="dv">2</span>, <span class="dt">fun =</span> mean)
 <span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
 <span class="kw">plot</span>(elev)
@@ -1019,18 +967,18 @@ Figure 5.20: Plotting rasters with the same values but different origins.
 <div class="figure" style="text-align: center"><span id="fig:aggregate-example"></span>
 <img src="figures/aggregate-example-1.png" alt="Original raster (left). Aggregated raster (right)." width="576" />
 <p class="caption">
-Figure 5.21: Original raster (left). Aggregated raster (right).
+Figure 5.19: Original raster (left). Aggregated raster (right).
 </p>
 </div>
-<p>By contrast, the<code>disaggregate()</code> function increases the resolution. However, we have to specify a method how to fill the new cells. The <code>disaggregate()</code> function provides two methods. The first (nearest neighbor, <code>method = &quot;&quot;</code>) simply gives all output cells the value of the nearest input cell, and hence duplicates values which leads to a blocky output image. For example, the four cells building up the upper left cell of the aggregated raster (Fig. <a href="transform.html#fig:aggregate-example">5.21</a>) will retrieve all the same value, namely 4.5.</p>
-<p>The <code>bilinear</code> method, in turn, is an interpolation technique that uses the four nearest pixel centers of the input image (salmon colored points in Fig. <a href="transform.html#fig:bilinear">5.22</a>) to compute an average weighted by distance (arrows in Fig. <a href="transform.html#fig:bilinear">5.22</a> as the value of the output cell - square in the upper left corner in Fig. <a href="transform.html#fig:bilinear">5.22</a>).</p>
+<p>By contrast, the<code>disaggregate()</code> function increases the resolution. However, we have to specify a method how to fill the new cells. The <code>disaggregate()</code> function provides two methods. The first (nearest neighbor, <code>method = &quot;&quot;</code>) simply gives all output cells the value of the nearest input cell, and hence duplicates values which leads to a blocky output image. For example, the four cells building up the upper left cell of the aggregated raster (Fig. <a href="transform.html#fig:aggregate-example">5.19</a>) will retrieve all the same value, namely 4.5.</p>
+<p>The <code>bilinear</code> method, in turn, is an interpolation technique that uses the four nearest pixel centers of the input image (salmon colored points in Fig. <a href="transform.html#fig:bilinear">5.20</a>) to compute an average weighted by distance (arrows in Fig. <a href="transform.html#fig:bilinear">5.20</a> as the value of the output cell - square in the upper left corner in Fig. <a href="transform.html#fig:bilinear">5.20</a>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_disagg =<span class="st"> </span><span class="kw">disaggregate</span>(elev_agg, <span class="dt">fact =</span> <span class="dv">2</span>, <span class="dt">method =</span> <span class="st">&quot;bilinear&quot;</span>)
 <span class="kw">all</span>(<span class="kw">values</span>(elev) ==<span class="st"> </span><span class="kw">values</span>(elev_disagg))
 <span class="co">#&gt; [1] TRUE</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:bilinear"></span>
 <img src="figures/bilinear-1.png" alt="The distance-weighted average of the four closest input cells determine the output when using the bilinear method for disaggregation." width="768" />
 <p class="caption">
-Figure 5.22: The distance-weighted average of the four closest input cells determine the output when using the bilinear method for disaggregation.
+Figure 5.20: The distance-weighted average of the four closest input cells determine the output when using the bilinear method for disaggregation.
 </p>
 </div>
 <p>Comparing the values of <code>elev</code> and <code>elev_disagg</code> tells us that both are identical (you can also use <code>compareRaster()</code> or <code>all.equal()</code>). Please note that the disaggregation only predicted correctly the values at a higher resolution due to our artificial input data set (<code>elev</code>) and the fact that we have used the mean for the aggregation (<code>elev_agg</code>). However, this is usually not to be expected, since disaggregating is a simple interpolation technique. It is important to keep in mind that disaggregating results in a finer resolution, the corresponding values, however, are only as accurate as their lower resolution source.</p>
@@ -1043,65 +991,6 @@ elev_disagg_2 =<span class="st"> </span><span class="kw">resample</span>(elev_ag
 <li>Lets you work with raster datasets that are too large to fit into the main memory (RAM) by only processing chunks of it.</li>
 <li>Tries to facilitate parallel processing. For more information see the help pages of <code>beginCluster()</code> and <code>clusteR()</code>. Additionally, check out the <em>Multi-core functions</em> section in <code>vignette(&quot;functions&quot;, package = &quot;raster&quot;)</code>.</li>
 </ol>
-</div>
-<div id="spatial-vectorization" class="section level3">
-<h3><span class="header-section-number">5.4.3</span> Spatial vectorization</h3>
-<p>Spatial vectorization is the counterpart of rasterization <a href="transform.html#rasterization">5.3.8</a>, and hence the process of converting continuous raster data into discrete vector data such as points, lines or polygons.</p>
-
-<div class="rmdnote">
-Be careful with the wording! In R vectorization refers to the possibility of replacing <code>for</code>-loops and alike by doing things like <code>1:10 / 2</code> (see also <span class="citation">Wickham (<a href="#ref-wickham_advanced_2014">2014</a>)</span>).
-</div>
-<p></p>
-<p>The simplest form of vectorization is to convert a raster into points by keeping the cell values and replacing the grid cells by its centroids. The <code>rasterToPoints()</code> does exactly this for all non-<code>NA</code> raster grid cells (Figure <a href="transform.html#fig:raster-vectorization1">5.23</a>). Setting the <code>spatial</code> parameter to <code>TRUE</code> makes sure that the output is a spatial object, otherwise a matrix is returned.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_point =<span class="st"> </span><span class="kw">rasterToPoints</span>(elev, <span class="dt">spatial =</span> <span class="ot">TRUE</span>) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">st_as_sf</span>()</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:raster-vectorization1"></span>
-<img src="figures/raster-vectorization1-1.png" alt="Raster and point representation of `elev`." width="576" />
-<p class="caption">
-Figure 5.23: Raster and point representation of <code>elev</code>.
-</p>
-</div>
-<p>Another common application is the representation of a digital elevation model as contour lines, hence, converting raster data into spatial lines. Here, we will us a real-world DEM since our artificial raster <code>elev</code> produces parallel lines (give it a try yourself) because when creating it we made the upper left corner the lowest and the lower right corner the highest value while increasing cell values by one from left to right. <code>rasterToContour()</code> is a wrapper around <code>contourLines()</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># not shown</span>
-<span class="kw">data</span>(dem, <span class="dt">package =</span> <span class="st">&quot;RQGIS&quot;</span>)
-<span class="kw">plot</span>(dem, <span class="dt">axes =</span> <span class="ot">FALSE</span>)
-<span class="kw">plot</span>(<span class="kw">rasterToContour</span>(dem), <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<p>Use <code>contour()</code>, <code>rasterVis::contourplot()</code> or <code>tmap::tm_iso()</code> if you want to add contour lines to a plot with isoline labels (Fig. <a href="transform.html#fig:contour">5.24</a>).</p>
-<div class="figure" style="text-align: center"><span id="fig:contour"></span>
-<img src="figures/contour-1.png" alt="DEM hillshade of the southern flank of Mt. Mongón overlaid with contour lines." width="576" />
-<p class="caption">
-Figure 5.24: DEM hillshade of the southern flank of Mt. Mongón overlaid with contour lines.
-</p>
-</div>
-<p>Finally, <code>rasterToPolygons()</code> converts each raster cell into one polygon consisting of five coordinates all of which need to be explicitly stored. Be careful with this approach when using large raster datasets since you might run into memory problems. Here, we convert <code>grain</code> into polygons and subsequently dissolve the output in accordance with the grain size categories which <code>rasterToPolygons()</code> stored in an attribute named <code>layer</code> (see section <a href="transform.html#geometry-unions">5.3.6</a> and Figure <a href="transform.html#fig:raster-vectorization2">5.25</a>). A convenient alternative for converting rasters into polygons is <code>spex::polygonize()</code> which by default returns an <code>sf</code> object.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grain_poly =<span class="st"> </span><span class="kw">rasterToPolygons</span>(grain) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">st_as_sf</span>()
-grain_poly2 =<span class="st"> </span>grain_poly %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(layer) %&gt;%
-<span class="st">  </span><span class="kw">summarize</span>()</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:raster-vectorization2"></span>
-<img src="figures/raster-vectorization2-1.png" alt="Illustration of vectorization of raster (left) into polygon (center) and polygon aggregation (right)." width="576" />
-<p class="caption">
-Figure 5.25: Illustration of vectorization of raster (left) into polygon (center) and polygon aggregation (right).
-</p>
-</div>
-<!-- ```{r} -->
-<!-- nlcd2011 = raster(system.file("raster/nlcd2011.tif", package = "spDataLarge")) -->
-<!-- plot(nlcd2011) -->
-<!-- ``` -->
-<!-- it's slow - maybe it worth to use https://www.rdocumentation.org/packages/spex/versions/0.4.0 -->
-<!-- ```{r} -->
-<!-- nlcd2011_poly = rasterToPolygons(nlcd2011) -->
-<!-- plot(nlcd2011_poly) -->
-<!-- ``` -->
-<!-- ```{r} -->
-<!-- system.time({nlcd2011_poly2 = polygonize(nlcd2011)}) -->
-<!-- ``` -->
-<!-- ```{r} -->
-<!-- nlcd2011_cont = rasterToContour(nlcd2011) %>%  -->
-<!--   st_as_sf() -->
-<!-- plot(nlcd2011_cont) -->
-<!-- ``` -->
 </div>
 </div>
 <div id="exercises-3" class="section level2">
@@ -1135,20 +1024,10 @@ Figure 5.25: Illustration of vectorization of raster (left) into polygon (center
 <li>Using an intermediary object created with <code>st_intersection()</code>.</li>
 </ul></li>
 <li><p>Calculate the length of the boundary lines of US states in meters. Which state has the longest border and which has the shortest? Hint: The <code>st_length</code> function computes the length of a <code>LINESTRING</code> or <code>MULTILINESTRING</code> geometry.</p></li>
-<li>Subset points higher than 3100 meters in New Zealand (the <code>nz_height</code> object). Using the new object:
-<ul>
-<li>Count numbers of the highest points in grid cells with a resolution of 3 km.</li>
-<li>Find maximum elevation value for grid cells with a resolution of 3 km.</li>
-</ul></li>
 <li>Aggregate the raster counting high points in New Zealand (created in the previous exercise), reduce its geographic resolution by half (so cells are 6 by 6 km) and plot the result.
 <ul>
 <li>Resample the lower resolution raster back to a resolution of 3 km. How have the results changed?</li>
 <li>Name two advantages and disadvantages of reducing raster resolution.</li>
-</ul></li>
-<li>Polygonize the <code>grain</code> dataset and filter all squares representing clay.
-<ul>
-<li>Name two advantages and disadvantages of vector data over raster data.</li>
-<li>At which points would it be useful to convert rasters to vectors in your work?</li>
 </ul></li>
 </ol>
 <!-- advances exercise - rotate nz as a whole - union new zeleand and rotate it around its centroid by 180 degrees -->
@@ -1178,9 +1057,6 @@ Figure 5.25: Illustration of vectorization of raster (left) into polygon (center
 <div id="ref-liu_essential_2009">
 <p>Liu, Jian-Guo, and Philippa J. Mason. 2009. <em>Essential Image Processing and GIS for Remote Sensing</em>. Chichester, West Sussex, UK ; Hoboken, NJ: Wiley-Blackwell.</p>
 </div>
-<div id="ref-wickham_advanced_2014">
-<p>Wickham, Hadley. 2014. <em>Advanced R</em>. CRC Press. <a href="http://www.crcpress.com/product/isbn/9781466586963 http://adv-r.had.co.nz http://www.crcpress.com/product/isbn/9781466586963 http://adv-r.had.co.nz" class="uri">http://www.crcpress.com/product/isbn/9781466586963 http://adv-r.had.co.nz http://www.crcpress.com/product/isbn/9781466586963 http://adv-r.had.co.nz</a>.</p>
-</div>
 </div>
 <div class="footnotes">
 <hr />
@@ -1194,10 +1070,8 @@ Figure 5.25: Illustration of vectorization of raster (left) into polygon (center
 <li id="fn31"><p>Full list of NLCD2011 land cover classes can be found at <a href="https://www.mrlc.gov/nlcd11_leg.php" class="uri">https://www.mrlc.gov/nlcd11_leg.php</a><a href="transform.html#fnref31">↩</a></p></li>
 <li id="fn32"><p>Another minor change, that is not represented in Table <a href="transform.html#tab:rastercrs">5.2</a>, is that the class of the values in the new projected raster dataset is <code>numeric</code>. This is because the <code>bilinear</code> method works with continuous data and the results are rarely coerced into whole integer values. This can have implications for file sizes when raster datasets are saved.<a href="transform.html#fnref32">↩</a></p></li>
 <li id="fn33"><p>Simplification of multipolygon objects could remove small internal polygons, even if the <code>keep_shapes</code> argument is set to TRUE. To prevent this, you need to set <code>explode = TRUE</code>. This option converts all mutlipolygons into separate polygons before its simplification.<a href="transform.html#fnref33">↩</a></p></li>
-<li id="fn34"><p>The <strong>fasterize</strong> package is available at <a href="https://github.com/ecohealthalliance/fasterize" class="uri">https://github.com/ecohealthalliance/fasterize</a>.<a href="transform.html#fnref34">↩</a></p></li>
-<li id="fn35"><p>See more at <a href="http://www.gdal.org/gdal_rasterize.html" class="uri">http://www.gdal.org/gdal_rasterize.html</a>.<a href="transform.html#fnref35">↩</a></p></li>
-<li id="fn36"><p>If the origins of two raster datasets are just marginally apart, it sometimes is sufficient to simply increase the <code>tolerance</code> argument of <code>raster::rasterOptions()</code>.<a href="transform.html#fnref36">↩</a></p></li>
-<li id="fn37"><p>It is important to note that we here are solely referring to the spatial resolution but that in remote sensing the spectral (spectral bands), temporal (observations through time of the same area) and radiometric (color depth) resolution are equally important.<a href="transform.html#fnref37">↩</a></p></li>
+<li id="fn34"><p>If the origins of two raster datasets are just marginally apart, it sometimes is sufficient to simply increase the <code>tolerance</code> argument of <code>raster::rasterOptions()</code>.<a href="transform.html#fnref34">↩</a></p></li>
+<li id="fn35"><p>It is important to note that we here are solely referring to the spatial resolution but that in remote sensing the spectral (spectral bands), temporal (observations through time of the same area) and radiometric (color depth) resolution are equally important.<a href="transform.html#fnref35">↩</a></p></li>
 </ol>
 </div>
             </section>

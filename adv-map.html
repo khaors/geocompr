@@ -217,12 +217,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.3.5" data-path="transform.html"><a href="transform.html#clipping"><i class="fa fa-check"></i><b>5.3.5</b> Clipping</a></li>
 <li class="chapter" data-level="5.3.6" data-path="transform.html"><a href="transform.html#geometry-unions"><i class="fa fa-check"></i><b>5.3.6</b> Geometry unions</a></li>
 <li class="chapter" data-level="5.3.7" data-path="transform.html"><a href="transform.html#type-trans"><i class="fa fa-check"></i><b>5.3.7</b> Type transformations</a></li>
-<li class="chapter" data-level="5.3.8" data-path="transform.html"><a href="transform.html#rasterization"><i class="fa fa-check"></i><b>5.3.8</b> Rasterization</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="transform.html"><a href="transform.html#geo-ras"><i class="fa fa-check"></i><b>5.4</b> Geometric operations on raster data</a><ul>
 <li class="chapter" data-level="5.4.1" data-path="transform.html"><a href="transform.html#extent-and-origin"><i class="fa fa-check"></i><b>5.4.1</b> Extent and origin</a></li>
 <li class="chapter" data-level="5.4.2" data-path="transform.html"><a href="transform.html#aggregation-and-disaggregation"><i class="fa fa-check"></i><b>5.4.2</b> Aggregation and disaggregation</a></li>
-<li class="chapter" data-level="5.4.3" data-path="transform.html"><a href="transform.html#spatial-vectorization"><i class="fa fa-check"></i><b>5.4.3</b> Spatial vectorization</a></li>
 </ul></li>
 <li class="chapter" data-level="5.5" data-path="transform.html"><a href="transform.html#exercises-3"><i class="fa fa-check"></i><b>5.5</b> Exercises</a></li>
 </ul></li>
@@ -298,8 +296,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="11.2" data-path="raster-vector.html"><a href="raster-vector.html#raster-masking"><i class="fa fa-check"></i><b>11.2</b> Raster masking</a></li>
 <li class="chapter" data-level="11.3" data-path="raster-vector.html"><a href="raster-vector.html#extraction"><i class="fa fa-check"></i><b>11.3</b> Extraction</a></li>
 <li class="chapter" data-level="11.4" data-path="raster-vector.html"><a href="raster-vector.html#spatial-interpolation"><i class="fa fa-check"></i><b>11.4</b> Spatial interpolation ??</a></li>
-<li class="chapter" data-level="11.5" data-path="transform.html"><a href="transform.html#rasterization"><i class="fa fa-check"></i><b>11.5</b> Rasterization ??</a></li>
-<li class="chapter" data-level="11.6" data-path="raster-vector.html"><a href="raster-vector.html#vectorization"><i class="fa fa-check"></i><b>11.6</b> Vectorization ??</a></li>
+<li class="chapter" data-level="11.5" data-path="raster-vector.html"><a href="raster-vector.html#rasterization"><i class="fa fa-check"></i><b>11.5</b> Rasterization</a></li>
+<li class="chapter" data-level="11.6" data-path="raster-vector.html"><a href="raster-vector.html#spatial-vectorization"><i class="fa fa-check"></i><b>11.6</b> Spatial vectorization</a></li>
 <li class="chapter" data-level="11.7" data-path="raster-vector.html"><a href="raster-vector.html#exercises-8"><i class="fa fa-check"></i><b>11.7</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="algorithms-and-functions-for-geocomputation.html"><a href="algorithms-and-functions-for-geocomputation.html"><i class="fa fa-check"></i><b>12</b> Algorithms and functions for geocomputation</a><ul>
@@ -561,7 +559,7 @@ m2 =<span class="st"> </span><span class="kw">tm_shape</span>(world_sf_temporal2
 In <strong>shiny</strong> apps these are often split into <code>ui.R</code> (short for user interface) and <code>server.R</code> files, naming conventions used by <a href="https://github.com/rstudio/shiny-server"><code>shiny-server</code></a>, a server-side Linux application for serving shiny apps on public-facing websites <code>shiny-server</code> also serves apps defined by a single <code>app.R</code> file in an ‘app folder’.
 </div>
 <p></p>
-<p>Before considering large apps it is worth seeing a minimal example, named ‘lifeApp’, in action.<a href="#fn58" class="footnoteRef" id="fnref58"><sup>58</sup></a> The code below defines and launches — with the command <code>shinyApp()</code> — a lifeApp, which provides an interactive slider allowing users to make countries appear with progressively lower levels of life expectancy (see Figure <a href="adv-map.html#fig:lifeApp">9.5</a>):</p>
+<p>Before considering large apps it is worth seeing a minimal example, named ‘lifeApp’, in action.<a href="#fn56" class="footnoteRef" id="fnref56"><sup>56</sup></a> The code below defines and launches — with the command <code>shinyApp()</code> — a lifeApp, which provides an interactive slider allowing users to make countries appear with progressively lower levels of life expectancy (see Figure <a href="adv-map.html#fig:lifeApp">9.5</a>):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ui =<span class="st"> </span><span class="kw">fluidPage</span>(
   <span class="kw">sliderInput</span>(<span class="dt">inputId =</span> <span class="st">&quot;life&quot;</span>, <span class="st">&quot;Life expectancy&quot;</span>, <span class="dv">0</span>, <span class="dv">80</span>, <span class="dt">value =</span> <span class="dv">80</span>),
       <span class="kw">leafletOutput</span>(<span class="dt">outputId =</span> <span class="st">&quot;map&quot;</span>)
@@ -633,8 +631,8 @@ Figure 9.6: coffeeApp, a simple web mapping application for exploring global cof
 </div>
 <div class="footnotes">
 <hr />
-<ol start="58">
-<li id="fn58"><p>The word ‘app’ in this context refers to ‘web application’ and should not be confused with smartphone apps, the more common meaning of the word.<a href="adv-map.html#fnref58">↩</a></p></li>
+<ol start="56">
+<li id="fn56"><p>The word ‘app’ in this context refers to ‘web application’ and should not be confused with smartphone apps, the more common meaning of the word.<a href="adv-map.html#fnref56">↩</a></p></li>
 </ol>
 </div>
             </section>

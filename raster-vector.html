@@ -217,12 +217,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.3.5" data-path="transform.html"><a href="transform.html#clipping"><i class="fa fa-check"></i><b>5.3.5</b> Clipping</a></li>
 <li class="chapter" data-level="5.3.6" data-path="transform.html"><a href="transform.html#geometry-unions"><i class="fa fa-check"></i><b>5.3.6</b> Geometry unions</a></li>
 <li class="chapter" data-level="5.3.7" data-path="transform.html"><a href="transform.html#type-trans"><i class="fa fa-check"></i><b>5.3.7</b> Type transformations</a></li>
-<li class="chapter" data-level="5.3.8" data-path="transform.html"><a href="transform.html#rasterization"><i class="fa fa-check"></i><b>5.3.8</b> Rasterization</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="transform.html"><a href="transform.html#geo-ras"><i class="fa fa-check"></i><b>5.4</b> Geometric operations on raster data</a><ul>
 <li class="chapter" data-level="5.4.1" data-path="transform.html"><a href="transform.html#extent-and-origin"><i class="fa fa-check"></i><b>5.4.1</b> Extent and origin</a></li>
 <li class="chapter" data-level="5.4.2" data-path="transform.html"><a href="transform.html#aggregation-and-disaggregation"><i class="fa fa-check"></i><b>5.4.2</b> Aggregation and disaggregation</a></li>
-<li class="chapter" data-level="5.4.3" data-path="transform.html"><a href="transform.html#spatial-vectorization"><i class="fa fa-check"></i><b>5.4.3</b> Spatial vectorization</a></li>
 </ul></li>
 <li class="chapter" data-level="5.5" data-path="transform.html"><a href="transform.html#exercises-3"><i class="fa fa-check"></i><b>5.5</b> Exercises</a></li>
 </ul></li>
@@ -298,8 +296,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="11.2" data-path="raster-vector.html"><a href="raster-vector.html#raster-masking"><i class="fa fa-check"></i><b>11.2</b> Raster masking</a></li>
 <li class="chapter" data-level="11.3" data-path="raster-vector.html"><a href="raster-vector.html#extraction"><i class="fa fa-check"></i><b>11.3</b> Extraction</a></li>
 <li class="chapter" data-level="11.4" data-path="raster-vector.html"><a href="raster-vector.html#spatial-interpolation"><i class="fa fa-check"></i><b>11.4</b> Spatial interpolation ??</a></li>
-<li class="chapter" data-level="11.5" data-path="transform.html"><a href="transform.html#rasterization"><i class="fa fa-check"></i><b>11.5</b> Rasterization ??</a></li>
-<li class="chapter" data-level="11.6" data-path="raster-vector.html"><a href="raster-vector.html#vectorization"><i class="fa fa-check"></i><b>11.6</b> Vectorization ??</a></li>
+<li class="chapter" data-level="11.5" data-path="raster-vector.html"><a href="raster-vector.html#rasterization"><i class="fa fa-check"></i><b>11.5</b> Rasterization</a></li>
+<li class="chapter" data-level="11.6" data-path="raster-vector.html"><a href="raster-vector.html#spatial-vectorization"><i class="fa fa-check"></i><b>11.6</b> Spatial vectorization</a></li>
 <li class="chapter" data-level="11.7" data-path="raster-vector.html"><a href="raster-vector.html#exercises-8"><i class="fa fa-check"></i><b>11.7</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="algorithms-and-functions-for-geocomputation.html"><a href="algorithms-and-functions-for-geocomputation.html"><i class="fa fa-check"></i><b>12</b> Algorithms and functions for geocomputation</a><ul>
@@ -353,6 +351,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="introduction-7" class="section level2">
 <h2><span class="header-section-number">11.1</span> Introduction</h2>
 <!-- intro -->
+<!-- and 'rasterization' is covered in section \@ref(rasterization) -->
 </div>
 <div id="raster-masking" class="section level2">
 <h2><span class="header-section-number">11.2</span> Raster masking</h2>
@@ -381,16 +380,145 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <!-- http://mdsumner.github.io/guerrilla/articles/irreg2.html -->
 </div>
 <div id="rasterization" class="section level2">
-<h2><span class="header-section-number">11.5</span> Rasterization ??</h2>
+<h2><span class="header-section-number">11.5</span> Rasterization</h2>
+<p>Rasterization is a conversion from vector objects into rasters. Usually, the output raster is used for quantitative analysis (e.g. analysis of terrain) or modeling.</p>
+<p>The <code>rasterize()</code> function takes a vector object and converts it into a raster with extent, resolution and CRS determined by another raster object. Parameters of a template raster have big impact on rasterization output – coarse resolution could not capture all of important spatial objects, while high resolution could increase computation times. However, there is no simple rules for parameters selection as it depends on the input data and rasterization purpose. For the first group of examples, we will use a template raster having the same extent and CRS as <code>cycle_hire_osm_projected</code> and spatial resolution of 1000 meters:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cycle_hire_osm_projected =<span class="st"> </span><span class="kw">st_transform</span>(cycle_hire_osm, <span class="dv">27700</span>)
+raster_template =<span class="st"> </span><span class="kw">raster</span>(<span class="kw">extent</span>(cycle_hire_osm_projected), <span class="dt">resolution =</span> <span class="dv">1000</span>,
+                         <span class="dt">crs =</span> <span class="kw">st_crs</span>(cycle_hire_osm_projected)$proj4string)</code></pre></div>
+<p>Rasterization is a very flexible operation and gives different results based not only on a template raster, but also on the type of input vector (e.g. points, polygons) and given arguments.</p>
+<p>Let’s try three different approaches to rasterize points - cycle hire locations across London (Figure <a href="raster-vector.html#fig:vector-rasterization1">11.1</a>:A). The simplest case is when we want to create a raster containing areas with cycle hire points (also known as a presence/absence raster). In this situation, <code>rasterize()</code> expects only three arguments - an input vector data, a raster template, and a value to be transferred to all non-empty cells (Figure <a href="raster-vector.html#fig:vector-rasterization1">11.1</a>:B).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ch_raster1 =<span class="st"> </span><span class="kw">rasterize</span>(cycle_hire_osm_projected, raster_template, <span class="dt">field =</span> <span class="dv">1</span>)</code></pre></div>
+<p><code>rasterize()</code> also could take a <code>fun</code> argument which specifies how attributes are transferred to the raster object. For example, the <code>fun = &quot;count&quot;</code> argument counts the number of points in each grid cell (Figure <a href="raster-vector.html#fig:vector-rasterization1">11.1</a>:C).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ch_raster2 =<span class="st"> </span><span class="kw">rasterize</span>(cycle_hire_osm_projected, raster_template, 
+                       <span class="dt">field =</span> <span class="dv">1</span>, <span class="dt">fun =</span> <span class="st">&quot;count&quot;</span>)</code></pre></div>
+<p>The new output, <code>ch_raster2</code>, shows the number of cycle hire points in each grid cell. However, the cycle hire locations have different numbers of bicycles, which is described by the <code>capacity</code> variable. We need to select a field (<code>&quot;capacity&quot;</code>) and a function (<code>sum</code>) to determine a cycle hire capacity in each grid cell (Figure <a href="raster-vector.html#fig:vector-rasterization1">11.1</a>:D). In the same way, another statistics could be calculated such as an average capacity for each grid cell, etc.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ch_raster3 =<span class="st"> </span><span class="kw">rasterize</span>(cycle_hire_osm_projected, raster_template, 
+                       <span class="dt">field =</span> <span class="st">&quot;capacity&quot;</span>, <span class="dt">fun =</span> sum)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:vector-rasterization1"></span>
+<img src="figures/vector-rasterization1-1.png" alt="Examples of point's rasterization." width="576" />
+<p class="caption">
+Figure 11.1: Examples of point’s rasterization.
+</p>
 </div>
-<div id="vectorization" class="section level2">
-<h2><span class="header-section-number">11.6</span> Vectorization ??</h2>
+<p>Additionally, we will illustrate polygons and lines rasterizations using California’s polygons (<code>california</code>) and borders (<code>california_borders</code>). A template raster here will have the resolution of a 0.5 degree:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">california =<span class="st"> </span>dplyr::<span class="kw">filter</span>(us_states, NAME ==<span class="st"> &quot;California&quot;</span>)
+california_borders =<span class="st"> </span><span class="kw">st_cast</span>(california, <span class="st">&quot;MULTILINESTRING&quot;</span>)
+raster_template2 =<span class="st"> </span><span class="kw">raster</span>(<span class="kw">extent</span>(california), <span class="dt">resolution =</span> <span class="fl">0.5</span>,
+                         <span class="dt">crs =</span> <span class="kw">st_crs</span>(california)$proj4string)</code></pre></div>
+<p>All cells that are touched by a line get a value in a line rasterization (Figure <a href="raster-vector.html#fig:vector-rasterization2">11.2</a>:A).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">california_raster1 =<span class="st"> </span><span class="kw">rasterize</span>(california_borders, raster_template2)</code></pre></div>
+<p>On the other hand, polygon rasterization is based on the positions of cells’ centers (points on Figure <a href="raster-vector.html#fig:vector-rasterization2">11.2</a>:B). Values are only given when the center of the cell lies inside of the input polygon (Figure <a href="raster-vector.html#fig:vector-rasterization2">11.2</a>:B).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">california_raster2 =<span class="st"> </span><span class="kw">rasterize</span>(california, raster_template2)</code></pre></div>
+<!-- getCover? -->
+<!-- the fraction of each grid cell that is covered by the polygons-->
+<!-- ```{r, echo=FALSE, eval=FALSE} -->
+<!-- california_raster3 = rasterize(california, raster_template2, getCover = TRUE) -->
+<!-- r3po = tm_shape(california_raster3) + -->
+<!--   tm_raster(legend.show = TRUE, title = "Values: ", style = "fixed", breaks = c(0, 1, 25, 50, 75, 100)) + -->
+<!--   tm_shape(california) + -->
+<!--   tm_borders() + -->
+<!--   tm_layout(outer.margins = rep(0.01, 4), -->
+<!--             inner.margins = rep(0, 4)) -->
+<!-- ``` -->
+<p>It is also possible to use the <code>field</code> or <code>fun</code> arguments for lines and polygons rasterizations.</p>
+<div class="figure" style="text-align: center"><span id="fig:vector-rasterization2"></span>
+<img src="figures/vector-rasterization2-1.png" alt="Examples of line and polygon rasterizations." width="576" />
+<p class="caption">
+Figure 11.2: Examples of line and polygon rasterizations.
+</p>
+</div>
+<p>While <code>rasterize</code> works well for most cases, it is not performance optimized. Fortunately, there are several alternatives, including the <code>fasterize::fasterize()</code><a href="#fn59" class="footnoteRef" id="fnref59"><sup>59</sup></a> and <code>gdalUtils::gdal_rasterize()</code>. The former is much (100 times+) faster than <code>rasterize()</code> but is currently limited to polygon rasterization. The latter is part of GDAL and therefore requires a vector file, instead of an <code>sf</code> object, as an input and rasterization parameters, instead of a <code>Raster*</code> template object.<a href="#fn60" class="footnoteRef" id="fnref60"><sup>60</sup></a></p>
+</div>
+<div id="spatial-vectorization" class="section level2">
+<h2><span class="header-section-number">11.6</span> Spatial vectorization</h2>
+<p>Spatial vectorization is the counterpart of rasterization <a href="raster-vector.html#rasterization">11.5</a>, and hence the process of converting continuous raster data into discrete vector data such as points, lines or polygons.</p>
+
+<div class="rmdnote">
+Be careful with the wording! In R vectorization refers to the possibility of replacing <code>for</code>-loops and alike by doing things like <code>1:10 / 2</code> (see also <span class="citation">Wickham (<a href="#ref-wickham_advanced_2014">2014</a>)</span>).
+</div>
+<p></p>
+<p>The simplest form of vectorization is to convert a raster into points by keeping the cell values and replacing the grid cells by its centroids. The <code>rasterToPoints()</code> does exactly this for all non-<code>NA</code> raster grid cells (Figure <a href="raster-vector.html#fig:raster-vectorization1">11.3</a>). Setting the <code>spatial</code> parameter to <code>TRUE</code> makes sure that the output is a spatial object, otherwise a matrix is returned.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_point =<span class="st"> </span><span class="kw">rasterToPoints</span>(elev, <span class="dt">spatial =</span> <span class="ot">TRUE</span>) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">st_as_sf</span>()</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:raster-vectorization1"></span>
+<img src="figures/raster-vectorization1-1.png" alt="Raster and point representation of `elev`." width="576" />
+<p class="caption">
+Figure 11.3: Raster and point representation of <code>elev</code>.
+</p>
+</div>
+<p>Another common application is the representation of a digital elevation model as contour lines, hence, converting raster data into spatial lines. Here, we will us a real-world DEM since our artificial raster <code>elev</code> produces parallel lines (give it a try yourself) because when creating it we made the upper left corner the lowest and the lower right corner the highest value while increasing cell values by one from left to right. <code>rasterToContour()</code> is a wrapper around <code>contourLines()</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># not shown</span>
+<span class="kw">data</span>(dem, <span class="dt">package =</span> <span class="st">&quot;RQGIS&quot;</span>)
+<span class="kw">plot</span>(dem, <span class="dt">axes =</span> <span class="ot">FALSE</span>)
+<span class="kw">plot</span>(<span class="kw">rasterToContour</span>(dem), <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p>Use <code>contour()</code>, <code>rasterVis::contourplot()</code> or <code>tmap::tm_iso()</code> if you want to add contour lines to a plot with isoline labels (Fig. <a href="raster-vector.html#fig:contour">11.4</a>).</p>
+<div class="figure" style="text-align: center"><span id="fig:contour"></span>
+<img src="figures/contour-1.png" alt="DEM hillshade of the southern flank of Mt. Mongón overlaid with contour lines." width="576" />
+<p class="caption">
+Figure 11.4: DEM hillshade of the southern flank of Mt. Mongón overlaid with contour lines.
+</p>
+</div>
+<p>Finally, <code>rasterToPolygons()</code> converts each raster cell into one polygon consisting of five coordinates all of which need to be explicitly stored. Be careful with this approach when using large raster datasets since you might run into memory problems. Here, we convert <code>grain</code> into polygons and subsequently dissolve the output in accordance with the grain size categories which <code>rasterToPolygons()</code> stored in an attribute named <code>layer</code> (see section <a href="transform.html#geometry-unions">5.3.6</a> and Figure <a href="raster-vector.html#fig:raster-vectorization2">11.5</a>). A convenient alternative for converting rasters into polygons is <code>spex::polygonize()</code> which by default returns an <code>sf</code> object.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grain_poly =<span class="st"> </span><span class="kw">rasterToPolygons</span>(grain) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">st_as_sf</span>()
+grain_poly2 =<span class="st"> </span>grain_poly %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(layer) %&gt;%
+<span class="st">  </span><span class="kw">summarize</span>()</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:raster-vectorization2"></span>
+<img src="figures/raster-vectorization2-1.png" alt="Illustration of vectorization of raster (left) into polygon (center) and polygon aggregation (right)." width="576" />
+<p class="caption">
+Figure 11.5: Illustration of vectorization of raster (left) into polygon (center) and polygon aggregation (right).
+</p>
+</div>
+<!-- ```{r} -->
+<!-- nlcd2011 = raster(system.file("raster/nlcd2011.tif", package = "spDataLarge")) -->
+<!-- plot(nlcd2011) -->
+<!-- ``` -->
+<!-- it's slow - maybe it worth to use https://www.rdocumentation.org/packages/spex/versions/0.4.0 -->
+<!-- ```{r} -->
+<!-- nlcd2011_poly = rasterToPolygons(nlcd2011) -->
+<!-- plot(nlcd2011_poly) -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- system.time({nlcd2011_poly2 = polygonize(nlcd2011)}) -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- nlcd2011_cont = rasterToContour(nlcd2011) %>%  -->
+<!--   st_as_sf() -->
+<!-- plot(nlcd2011_cont) -->
+<!-- ``` -->
 <!-- distances? -->
 </div>
 <div id="exercises-8" class="section level2">
 <h2><span class="header-section-number">11.7</span> Exercises</h2>
+<ol style="list-style-type: decimal">
+<li>Subset points higher than 3100 meters in New Zealand (the <code>nz_height</code> object). Using the new object:
+<ul>
+<li>Count numbers of the highest points in grid cells with a resolution of 3 km.</li>
+<li>Find maximum elevation value for grid cells with a resolution of 3 km.</li>
+</ul></li>
+<li>Polygonize the <code>grain</code> dataset and filter all squares representing clay.
+<ul>
+<li>Name two advantages and disadvantages of vector data over raster data.</li>
+<li>At which points would it be useful to convert rasters to vectors in your work?</li>
+</ul></li>
+</ol>
 
 </div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-wickham_advanced_2014">
+<p>Wickham, Hadley. 2014. <em>Advanced R</em>. CRC Press. <a href="http://www.crcpress.com/product/isbn/9781466586963 http://adv-r.had.co.nz http://www.crcpress.com/product/isbn/9781466586963 http://adv-r.had.co.nz" class="uri">http://www.crcpress.com/product/isbn/9781466586963 http://adv-r.had.co.nz http://www.crcpress.com/product/isbn/9781466586963 http://adv-r.had.co.nz</a>.</p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="59">
+<li id="fn59"><p>The <strong>fasterize</strong> package is available at <a href="https://github.com/ecohealthalliance/fasterize" class="uri">https://github.com/ecohealthalliance/fasterize</a>.<a href="raster-vector.html#fnref59">↩</a></p></li>
+<li id="fn60"><p>See more at <a href="http://www.gdal.org/gdal_rasterize.html" class="uri">http://www.gdal.org/gdal_rasterize.html</a>.<a href="raster-vector.html#fnref60">↩</a></p></li>
+</ol>
 </div>
             </section>
 
