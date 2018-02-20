@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-02-19">
+<meta name="date" content="2018-02-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -293,9 +293,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="11" data-path="raster-vector.html"><a href="raster-vector.html"><i class="fa fa-check"></i><b>11</b> Raster-vector interactions</a><ul>
 <li class="chapter" data-level="" data-path="raster-vector.html"><a href="raster-vector.html#prerequisites-8"><i class="fa fa-check"></i>Prerequisites</a></li>
 <li class="chapter" data-level="11.1" data-path="raster-vector.html"><a href="raster-vector.html#introduction-7"><i class="fa fa-check"></i><b>11.1</b> Introduction</a></li>
-<li class="chapter" data-level="11.2" data-path="raster-vector.html"><a href="raster-vector.html#raster-masking"><i class="fa fa-check"></i><b>11.2</b> Raster masking</a></li>
-<li class="chapter" data-level="11.3" data-path="raster-vector.html"><a href="raster-vector.html#extraction"><i class="fa fa-check"></i><b>11.3</b> Extraction</a></li>
-<li class="chapter" data-level="11.4" data-path="raster-vector.html"><a href="raster-vector.html#spatial-interpolation"><i class="fa fa-check"></i><b>11.4</b> Spatial interpolation ??</a></li>
+<li class="chapter" data-level="11.2" data-path="raster-vector.html"><a href="raster-vector.html#raster-cliping"><i class="fa fa-check"></i><b>11.2</b> Raster cliping</a></li>
+<li class="chapter" data-level="11.3" data-path="raster-vector.html"><a href="raster-vector.html#vector-cliping"><i class="fa fa-check"></i><b>11.3</b> Vector cliping</a></li>
+<li class="chapter" data-level="11.4" data-path="raster-vector.html"><a href="raster-vector.html#extraction"><i class="fa fa-check"></i><b>11.4</b> Extraction</a></li>
 <li class="chapter" data-level="11.5" data-path="raster-vector.html"><a href="raster-vector.html#rasterization"><i class="fa fa-check"></i><b>11.5</b> Rasterization</a></li>
 <li class="chapter" data-level="11.6" data-path="raster-vector.html"><a href="raster-vector.html#spatial-vectorization"><i class="fa fa-check"></i><b>11.6</b> Spatial vectorization</a></li>
 <li class="chapter" data-level="11.7" data-path="raster-vector.html"><a href="raster-vector.html#exercises-8"><i class="fa fa-check"></i><b>11.7</b> Exercises</a></li>
@@ -354,7 +354,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="co">#&gt; ── Attaching packages ────────────────────────────────── tidyverse 1.2.1 ──</span>
 <span class="co">#&gt; ✔ ggplot2 2.2.1     ✔ purrr   0.2.4</span>
 <span class="co">#&gt; ✔ tibble  1.3.4     ✔ dplyr   0.7.4</span>
-<span class="co">#&gt; ✔ tidyr   0.7.2     ✔ stringr 1.2.0</span>
+<span class="co">#&gt; ✔ tidyr   0.7.2     ✔ stringr 1.3.0</span>
 <span class="co">#&gt; ✔ readr   1.1.1     ✔ forcats 0.2.0</span>
 <span class="co">#&gt; ── Conflicts ───────────────────────────────────── tidyverse_conflicts() ──</span>
 <span class="co">#&gt; ✖ tidyr::extract() masks raster::extract()</span>
@@ -369,8 +369,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <!-- intro -->
 <!-- and 'rasterization' is covered in section \@ref(rasterization) -->
 </div>
-<div id="raster-masking" class="section level2">
-<h2><span class="header-section-number">11.2</span> Raster masking</h2>
+<div id="raster-cliping" class="section level2">
+<h2><span class="header-section-number">11.2</span> Raster cliping</h2>
 <!-- replace with spDataLarge::elevation in the future -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">srtm =<span class="st"> </span><span class="kw">raster</span>((<span class="kw">system.file</span>(<span class="st">&quot;raster/srtm.tif&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;spDataLarge&quot;</span>)))</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion =<span class="st"> </span><span class="kw">st_read</span>((<span class="kw">system.file</span>(<span class="st">&quot;vector/zion.gpkg&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;spDataLarge&quot;</span>))) %&gt;%<span class="st"> </span>
@@ -386,13 +386,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">srtm_masked =<span class="st"> </span><span class="kw">mask</span>(srtm_cropped, zion)</code></pre></div>
 <p><img src="figures/cropmask-1.png" width="576" style="display: block; margin: auto;" /><img src="figures/cropmask-2.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
+<div id="vector-cliping" class="section level2">
+<h2><span class="header-section-number">11.3</span> Vector cliping</h2>
+</div>
 <div id="extraction" class="section level2">
-<h2><span class="header-section-number">11.3</span> Extraction</h2>
+<h2><span class="header-section-number">11.4</span> Extraction</h2>
 <!-- extract -->
 <!-- zonal stats -->
-</div>
-<div id="spatial-interpolation" class="section level2">
-<h2><span class="header-section-number">11.4</span> Spatial interpolation ??</h2>
+<!-- ## Spatial interpolation ?? -->
 <!-- http://mdsumner.github.io/guerrilla/articles/irreg2.html -->
 </div>
 <div id="rasterization" class="section level2">
@@ -487,23 +488,6 @@ grain_poly2 =<span class="st"> </span>grain_poly %&gt;%<span class="st"> </span>
 Figure 11.5: Illustration of vectorization of raster (left) into polygon (center) and polygon aggregation (right).
 </p>
 </div>
-<!-- ```{r} -->
-<!-- nlcd2011 = raster(system.file("raster/nlcd2011.tif", package = "spDataLarge")) -->
-<!-- plot(nlcd2011) -->
-<!-- ``` -->
-<!-- it's slow - maybe it worth to use https://www.rdocumentation.org/packages/spex/versions/0.4.0 -->
-<!-- ```{r} -->
-<!-- nlcd2011_poly = rasterToPolygons(nlcd2011) -->
-<!-- plot(nlcd2011_poly) -->
-<!-- ``` -->
-<!-- ```{r} -->
-<!-- system.time({nlcd2011_poly2 = polygonize(nlcd2011)}) -->
-<!-- ``` -->
-<!-- ```{r} -->
-<!-- nlcd2011_cont = rasterToContour(nlcd2011) %>%  -->
-<!--   st_as_sf() -->
-<!-- plot(nlcd2011_cont) -->
-<!-- ``` -->
 <!-- distances? -->
 </div>
 <div id="exercises-8" class="section level2">
