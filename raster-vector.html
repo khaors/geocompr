@@ -293,12 +293,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="11" data-path="raster-vector.html"><a href="raster-vector.html"><i class="fa fa-check"></i><b>11</b> Raster-vector interactions</a><ul>
 <li class="chapter" data-level="" data-path="raster-vector.html"><a href="raster-vector.html#prerequisites-8"><i class="fa fa-check"></i>Prerequisites</a></li>
 <li class="chapter" data-level="11.1" data-path="raster-vector.html"><a href="raster-vector.html#introduction-7"><i class="fa fa-check"></i><b>11.1</b> Introduction</a></li>
-<li class="chapter" data-level="11.2" data-path="raster-vector.html"><a href="raster-vector.html#raster-cliping"><i class="fa fa-check"></i><b>11.2</b> Raster cliping</a></li>
-<li class="chapter" data-level="11.3" data-path="raster-vector.html"><a href="raster-vector.html#vector-cliping"><i class="fa fa-check"></i><b>11.3</b> Vector cliping</a></li>
-<li class="chapter" data-level="11.4" data-path="raster-vector.html"><a href="raster-vector.html#extraction"><i class="fa fa-check"></i><b>11.4</b> Extraction</a></li>
-<li class="chapter" data-level="11.5" data-path="raster-vector.html"><a href="raster-vector.html#rasterization"><i class="fa fa-check"></i><b>11.5</b> Rasterization</a></li>
-<li class="chapter" data-level="11.6" data-path="raster-vector.html"><a href="raster-vector.html#spatial-vectorization"><i class="fa fa-check"></i><b>11.6</b> Spatial vectorization</a></li>
-<li class="chapter" data-level="11.7" data-path="raster-vector.html"><a href="raster-vector.html#exercises-8"><i class="fa fa-check"></i><b>11.7</b> Exercises</a></li>
+<li class="chapter" data-level="11.2" data-path="raster-vector.html"><a href="raster-vector.html#raster-clipping"><i class="fa fa-check"></i><b>11.2</b> Raster clipping</a></li>
+<li class="chapter" data-level="11.3" data-path="raster-vector.html"><a href="raster-vector.html#raster-extraction"><i class="fa fa-check"></i><b>11.3</b> Raster extraction</a></li>
+<li class="chapter" data-level="11.4" data-path="raster-vector.html"><a href="raster-vector.html#rasterization"><i class="fa fa-check"></i><b>11.4</b> Rasterization</a></li>
+<li class="chapter" data-level="11.5" data-path="raster-vector.html"><a href="raster-vector.html#spatial-vectorization"><i class="fa fa-check"></i><b>11.5</b> Spatial vectorization</a></li>
+<li class="chapter" data-level="11.6" data-path="raster-vector.html"><a href="raster-vector.html#exercises-8"><i class="fa fa-check"></i><b>11.6</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="algorithms-and-functions-for-geocomputation.html"><a href="algorithms-and-functions-for-geocomputation.html"><i class="fa fa-check"></i><b>12</b> Algorithms and functions for geocomputation</a><ul>
 <li class="chapter" data-level="" data-path="algorithms-and-functions-for-geocomputation.html"><a href="algorithms-and-functions-for-geocomputation.html#prerequisites-9"><i class="fa fa-check"></i>Prerequisites</a></li>
@@ -367,10 +366,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="introduction-7" class="section level2">
 <h2><span class="header-section-number">11.1</span> Introduction</h2>
 <!-- intro -->
+<!-- operations are not symmetrical, for example: -->
+<!-- - raster clipping - no vector counterpart -->
+<!-- - raster extraction is connected to some methods used in vectorization and rasterization -->
+<!-- - etc. -->
 <!-- and 'rasterization' is covered in section \@ref(rasterization) -->
 </div>
-<div id="raster-cliping" class="section level2">
-<h2><span class="header-section-number">11.2</span> Raster cliping</h2>
+<div id="raster-clipping" class="section level2">
+<h2><span class="header-section-number">11.2</span> Raster clipping</h2>
 <!-- replace with spDataLarge::elevation in the future -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">srtm =<span class="st"> </span><span class="kw">raster</span>((<span class="kw">system.file</span>(<span class="st">&quot;raster/srtm.tif&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;spDataLarge&quot;</span>)))</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion =<span class="st"> </span><span class="kw">st_read</span>((<span class="kw">system.file</span>(<span class="st">&quot;vector/zion.gpkg&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;spDataLarge&quot;</span>))) %&gt;%<span class="st"> </span>
@@ -386,18 +389,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">srtm_masked =<span class="st"> </span><span class="kw">mask</span>(srtm_cropped, zion)</code></pre></div>
 <p><img src="figures/cropmask-1.png" width="576" style="display: block; margin: auto;" /><img src="figures/cropmask-2.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
-<div id="vector-cliping" class="section level2">
-<h2><span class="header-section-number">11.3</span> Vector cliping</h2>
-</div>
-<div id="extraction" class="section level2">
-<h2><span class="header-section-number">11.4</span> Extraction</h2>
+<div id="raster-extraction" class="section level2">
+<h2><span class="header-section-number">11.3</span> Raster extraction</h2>
 <!-- extract -->
+<!-- extract to points -->
+<!-- extract to line -->
+<!-- extract to polygons (or extents) -->
 <!-- zonal stats -->
 <!-- ## Spatial interpolation ?? -->
 <!-- http://mdsumner.github.io/guerrilla/articles/irreg2.html -->
 </div>
 <div id="rasterization" class="section level2">
-<h2><span class="header-section-number">11.5</span> Rasterization</h2>
+<h2><span class="header-section-number">11.4</span> Rasterization</h2>
 <p>Rasterization is a conversion from vector objects into rasters. Usually, the output raster is used for quantitative analysis (e.g. analysis of terrain) or modeling.</p>
 <p>The <code>rasterize()</code> function takes a vector object and converts it into a raster with extent, resolution and CRS determined by another raster object. Parameters of a template raster have big impact on rasterization output – coarse resolution could not capture all of important spatial objects, while high resolution could increase computation times. However, there is no simple rules for parameters selection as it depends on the input data and rasterization purpose. For the first group of examples, we will use a template raster having the same extent and CRS as <code>cycle_hire_osm_projected</code> and spatial resolution of 1000 meters:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cycle_hire_osm_projected =<span class="st"> </span><span class="kw">st_transform</span>(cycle_hire_osm, <span class="dv">27700</span>)
@@ -448,8 +451,8 @@ Figure 11.2: Examples of line and polygon rasterizations.
 <p>While <code>rasterize</code> works well for most cases, it is not performance optimized. Fortunately, there are several alternatives, including the <code>fasterize::fasterize()</code><a href="#fn59" class="footnoteRef" id="fnref59"><sup>59</sup></a> and <code>gdalUtils::gdal_rasterize()</code>. The former is much (100 times+) faster than <code>rasterize()</code> but is currently limited to polygon rasterization. The latter is part of GDAL and therefore requires a vector file, instead of an <code>sf</code> object, as an input and rasterization parameters, instead of a <code>Raster*</code> template object.<a href="#fn60" class="footnoteRef" id="fnref60"><sup>60</sup></a></p>
 </div>
 <div id="spatial-vectorization" class="section level2">
-<h2><span class="header-section-number">11.6</span> Spatial vectorization</h2>
-<p>Spatial vectorization is the counterpart of rasterization <a href="raster-vector.html#rasterization">11.5</a>, and hence the process of converting continuous raster data into discrete vector data such as points, lines or polygons.</p>
+<h2><span class="header-section-number">11.5</span> Spatial vectorization</h2>
+<p>Spatial vectorization is the counterpart of rasterization <a href="raster-vector.html#rasterization">11.4</a>, and hence the process of converting continuous raster data into discrete vector data such as points, lines or polygons.</p>
 
 <div class="rmdnote">
 Be careful with the wording! In R vectorization refers to the possibility of replacing <code>for</code>-loops and alike by doing things like <code>1:10 / 2</code> (see also <span class="citation">Wickham (<a href="#ref-wickham_advanced_2014">2014</a>)</span>).
@@ -488,10 +491,10 @@ grain_poly2 =<span class="st"> </span>grain_poly %&gt;%<span class="st"> </span>
 Figure 11.5: Illustration of vectorization of raster (left) into polygon (center) and polygon aggregation (right).
 </p>
 </div>
-<!-- distances? -->
+<!-- ## distances? -->
 </div>
 <div id="exercises-8" class="section level2">
-<h2><span class="header-section-number">11.7</span> Exercises</h2>
+<h2><span class="header-section-number">11.6</span> Exercises</h2>
 <ol style="list-style-type: decimal">
 <li>Subset points higher than 3100 meters in New Zealand (the <code>nz_height</code> object). Using the new object:
 <ul>

@@ -293,12 +293,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="11" data-path="raster-vector.html"><a href="raster-vector.html"><i class="fa fa-check"></i><b>11</b> Raster-vector interactions</a><ul>
 <li class="chapter" data-level="" data-path="raster-vector.html"><a href="raster-vector.html#prerequisites-8"><i class="fa fa-check"></i>Prerequisites</a></li>
 <li class="chapter" data-level="11.1" data-path="raster-vector.html"><a href="raster-vector.html#introduction-7"><i class="fa fa-check"></i><b>11.1</b> Introduction</a></li>
-<li class="chapter" data-level="11.2" data-path="raster-vector.html"><a href="raster-vector.html#raster-cliping"><i class="fa fa-check"></i><b>11.2</b> Raster cliping</a></li>
-<li class="chapter" data-level="11.3" data-path="raster-vector.html"><a href="raster-vector.html#vector-cliping"><i class="fa fa-check"></i><b>11.3</b> Vector cliping</a></li>
-<li class="chapter" data-level="11.4" data-path="raster-vector.html"><a href="raster-vector.html#extraction"><i class="fa fa-check"></i><b>11.4</b> Extraction</a></li>
-<li class="chapter" data-level="11.5" data-path="raster-vector.html"><a href="raster-vector.html#rasterization"><i class="fa fa-check"></i><b>11.5</b> Rasterization</a></li>
-<li class="chapter" data-level="11.6" data-path="raster-vector.html"><a href="raster-vector.html#spatial-vectorization"><i class="fa fa-check"></i><b>11.6</b> Spatial vectorization</a></li>
-<li class="chapter" data-level="11.7" data-path="raster-vector.html"><a href="raster-vector.html#exercises-8"><i class="fa fa-check"></i><b>11.7</b> Exercises</a></li>
+<li class="chapter" data-level="11.2" data-path="raster-vector.html"><a href="raster-vector.html#raster-clipping"><i class="fa fa-check"></i><b>11.2</b> Raster clipping</a></li>
+<li class="chapter" data-level="11.3" data-path="raster-vector.html"><a href="raster-vector.html#raster-extraction"><i class="fa fa-check"></i><b>11.3</b> Raster extraction</a></li>
+<li class="chapter" data-level="11.4" data-path="raster-vector.html"><a href="raster-vector.html#rasterization"><i class="fa fa-check"></i><b>11.4</b> Rasterization</a></li>
+<li class="chapter" data-level="11.5" data-path="raster-vector.html"><a href="raster-vector.html#spatial-vectorization"><i class="fa fa-check"></i><b>11.5</b> Spatial vectorization</a></li>
+<li class="chapter" data-level="11.6" data-path="raster-vector.html"><a href="raster-vector.html#exercises-8"><i class="fa fa-check"></i><b>11.6</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="algorithms-and-functions-for-geocomputation.html"><a href="algorithms-and-functions-for-geocomputation.html"><i class="fa fa-check"></i><b>12</b> Algorithms and functions for geocomputation</a><ul>
 <li class="chapter" data-level="" data-path="algorithms-and-functions-for-geocomputation.html"><a href="algorithms-and-functions-for-geocomputation.html#prerequisites-9"><i class="fa fa-check"></i>Prerequisites</a></li>
@@ -730,7 +729,7 @@ if (<span class="kw">any</span>(ind)) {
 shops =<span class="st"> </span><span class="kw">map</span>(shops, dplyr::select, osm_id, shop) %&gt;%
 <span class="st">  </span><span class="kw">reduce</span>(rbind)</code></pre></div>
 <p>It would have been easier to simply use <code>map_dfr()</code>. Unfortunately, so far it does not work in harmony with <code>sf</code> objects.</p>
-<p>The only thing left to do is to convert the spatial point object into a raster (see section <a href="raster-vector.html#rasterization">11.5</a>). The <code>sf</code> object, <code>shops</code>, is converted into a raster having the same parameters (dimensions, resolution, CRS) as the <code>reclass</code> object. Importantly, the <code>count()</code> function is used here to calculate the number shops in each cell.</p>
+<p>The only thing left to do is to convert the spatial point object into a raster (see section <a href="raster-vector.html#rasterization">11.4</a>). The <code>sf</code> object, <code>shops</code>, is converted into a raster having the same parameters (dimensions, resolution, CRS) as the <code>reclass</code> object. Importantly, the <code>count()</code> function is used here to calculate the number shops in each cell.</p>
 
 <div class="rmdnote">
 If the <code>shop</code> column were used instead of the <code>osm_id</code> column, we would have retrieved fewer shops per grid cell. This is because the <code>shop</code> column contains <code>NA</code> values, which the <code>count()</code> function omits when rasterizing vector objects.

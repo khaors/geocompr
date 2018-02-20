@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve9e81407715dd727b
+preserve254cf14f5915be30
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3084,7 +3084,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve2f5ab55718ef6ee7
+preserve55aa1f6ee4ab7c8f
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5975,7 +5975,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve63b769cc0099f921
+preservecafdf41e51130598
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6594,7 +6594,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve293d09ef464cbae8
+preserveedc68641e0d7f2fe
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7642,9 +7642,13 @@ library(spDataLarge)
 ## Introduction
 
 <!-- intro -->
+<!-- operations are not symmetrical, for example: -->
+<!-- - raster clipping - no vector counterpart -->
+<!-- - raster extraction is connected to some methods used in vectorization and rasterization -->
+<!-- - etc. -->
 <!-- and 'rasterization' is covered in section \@ref(rasterization) -->
 
-## Raster cliping
+## Raster clipping
 
 <!-- replace with spDataLarge::elevation in the future -->
 
@@ -7678,12 +7682,13 @@ srtm_masked = mask(srtm_cropped, zion)
 
 <img src="figures/cropmask-1.png" width="576" style="display: block; margin: auto;" /><img src="figures/cropmask-2.png" width="576" style="display: block; margin: auto;" />
 
-## Vector cliping
 
-
-## Extraction
+## Raster extraction
 
 <!-- extract -->
+<!-- extract to points -->
+<!-- extract to line -->
+<!-- extract to polygons (or extents) -->
 <!-- zonal stats -->
 
 <!-- ## Spatial interpolation ?? -->
@@ -7852,7 +7857,7 @@ grain_poly2 = grain_poly %>%
 <p class="caption">(\#fig:raster-vectorization2)Illustration of vectorization of raster (left) into polygon (center) and polygon aggregation (right).</p>
 </div>
 
-<!-- distances? -->
+<!-- ## distances? -->
 
 ## Exercises
 1. Subset points higher than 3100 meters in New Zealand (the `nz_height` object). 
