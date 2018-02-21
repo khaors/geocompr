@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-02-20'
+date: '2018-02-21'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-02-20 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-02-21 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve254cf14f5915be30
+preserve40acd05ae2abad5c
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3084,7 +3084,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve55aa1f6ee4ab7c8f
+preservea79397f53f62536f
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5975,7 +5975,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservecafdf41e51130598
+preserve355298a448bd0ca1
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6594,7 +6594,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveedc68641e0d7f2fe
+preservee8d1e9fd7b55fd89
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -8190,6 +8190,24 @@ Hence, using this information in our modeling is like a sneak preview, i.e. usin
 1. Use the squared slope as a further predictor.
 Repeat the modeling. 
 How has the spatially cross-validaded mean AUROC value changed compared to the model without the squared altitude predictor?
+
+<!--
+spatial CV with 5-fold partioning repeated 100 times.
+This means we divide a dataset into 5 spatially disjoint folds.
+Each of these folds serves once as a test set.
+Hence, five models form one repetition.
+We repeat this 100 times.
+
+hyperparameter tuning:
+The training data is again partitioned into 5 folds but only once.
+Now each fold is used once as a test set, and the remaining training data is used to find the optimal hyperparameter tuning via a random search with 50 (or whatever number) iterations -> 250 iterations to find the optimal hyperparameter combination. 
+This combination serves as input for the model in the outer level.
+
+Hyperparameters are always tuned in mlr in an inner loop (I suppose). 
+But why do we need the inner tuning.
+Well, otherwise we would tune our hyperparameters on the test set of the outer loop, and this is like taking a sneak preview.
+-->
+
 
 
 <!--chapter:end:13-spatial-cv.Rmd-->
