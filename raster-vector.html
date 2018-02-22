@@ -346,20 +346,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>This chapter requires the following packages:</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sf)
-<span class="co">#&gt; Linking to GEOS 3.5.0, GDAL 2.2.2, proj.4 4.8.0</span>
 <span class="kw">library</span>(raster)
-<span class="co">#&gt; Loading required package: sp</span>
 <span class="kw">library</span>(tidyverse)
-<span class="co">#&gt; ── Attaching packages ────────────────────────────────── tidyverse 1.2.1 ──</span>
-<span class="co">#&gt; ✔ ggplot2 2.2.1     ✔ purrr   0.2.4</span>
-<span class="co">#&gt; ✔ tibble  1.3.4     ✔ dplyr   0.7.4</span>
-<span class="co">#&gt; ✔ tidyr   0.7.2     ✔ stringr 1.3.0</span>
-<span class="co">#&gt; ✔ readr   1.1.1     ✔ forcats 0.2.0</span>
-<span class="co">#&gt; ── Conflicts ───────────────────────────────────── tidyverse_conflicts() ──</span>
-<span class="co">#&gt; ✖ tidyr::extract() masks raster::extract()</span>
-<span class="co">#&gt; ✖ dplyr::filter()  masks stats::filter()</span>
-<span class="co">#&gt; ✖ dplyr::lag()     masks stats::lag()</span>
-<span class="co">#&gt; ✖ dplyr::select()  masks raster::select()</span>
 <span class="kw">library</span>(spData)
 <span class="kw">library</span>(spDataLarge)</code></pre></div>
 </div>
@@ -374,7 +362,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="raster-clipping" class="section level2">
 <h2><span class="header-section-number">11.2</span> Raster clipping</h2>
-<!-- replace with spDataLarge::elevation in the future -->
+<!-- replace with spDataLarge::elevation in the future? -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">srtm =<span class="st"> </span><span class="kw">raster</span>((<span class="kw">system.file</span>(<span class="st">&quot;raster/srtm.tif&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;spDataLarge&quot;</span>)))</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion =<span class="st"> </span><span class="kw">st_read</span>((<span class="kw">system.file</span>(<span class="st">&quot;vector/zion.gpkg&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;spDataLarge&quot;</span>))) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">st_transform</span>(<span class="dv">4326</span>)
