@@ -957,7 +957,7 @@ r_brick
 raster_in_memory =<span class="st"> </span><span class="kw">raster</span>(<span class="dt">xmn =</span> <span class="dv">301905</span>, <span class="dt">xmx =</span> <span class="dv">335745</span>, <span class="dt">ymn =</span> <span class="dv">4111245</span>, <span class="dt">ymx =</span> <span class="dv">4154085</span>, <span class="dt">res =</span> <span class="dv">30</span>)
 <span class="kw">values</span>(raster_in_memory) =<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span>:<span class="kw">ncell</span>(raster_in_memory))
 <span class="kw">crs</span>(raster_in_memory) =<span class="st"> </span><span class="kw">crs</span>(raster_on_disk)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">r_stack &lt;-<span class="st"> </span><span class="kw">stack</span>(raster_in_memory, raster_on_disk)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">r_stack =<span class="st"> </span><span class="kw">stack</span>(raster_in_memory, raster_on_disk)
 r_stack
 <span class="co">#&gt; class       : RasterStack </span>
 <span class="co">#&gt; dimensions  : 1428, 1128, 1610784, 2  (nrow, ncol, ncell, nlayers)</span>
