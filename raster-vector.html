@@ -365,14 +365,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <!-- replace with spDataLarge::elevation in the future? -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">srtm =<span class="st"> </span><span class="kw">raster</span>((<span class="kw">system.file</span>(<span class="st">&quot;raster/srtm.tif&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;spDataLarge&quot;</span>)))</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion =<span class="st"> </span><span class="kw">st_read</span>((<span class="kw">system.file</span>(<span class="st">&quot;vector/zion.gpkg&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;spDataLarge&quot;</span>))) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">st_transform</span>(<span class="dv">4326</span>)
-<span class="co">#&gt; Reading layer `zion&#39; from data source `/home/travis/R/Library/spDataLarge/vector/zion.gpkg&#39; using driver `GPKG&#39;</span>
-<span class="co">#&gt; Simple feature collection with 1 feature and 11 fields</span>
-<span class="co">#&gt; geometry type:  POLYGON</span>
-<span class="co">#&gt; dimension:      XY</span>
-<span class="co">#&gt; bbox:           xmin: 302903.1 ymin: 4112244 xmax: 334735.5 ymax: 4153087</span>
-<span class="co">#&gt; epsg (SRID):    NA</span>
-<span class="co">#&gt; proj4string:    +proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span></code></pre></div>
+<span class="st">  </span><span class="kw">st_transform</span>(<span class="dv">4326</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">srtm_cropped =<span class="st"> </span><span class="kw">crop</span>(srtm, <span class="kw">as</span>(zion, <span class="st">&quot;Spatial&quot;</span>))</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">srtm_masked =<span class="st"> </span><span class="kw">mask</span>(srtm_cropped, zion)</code></pre></div>
 <!-- update the color palette in the future (+ the same in ch2) -->
@@ -382,7 +375,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h2><span class="header-section-number">11.3</span> Raster extraction</h2>
 <!-- intro -->
 <!-- extract -->
+<!-- faster alternative to raster::extract?? -->
 <!-- extract to points -->
+<!-- mention buffer arg -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">2018-02-21</span>)
 zion_points =<span class="st"> </span><span class="kw">st_sample</span>(zion, <span class="dt">size =</span> <span class="dv">30</span>)
 <span class="co">#&gt; although coordinates are longitude/latitude, st_intersects assumes that they are planar</span></code></pre></div>
@@ -403,6 +398,15 @@ rast_poly_point</code></pre></div>
 <!-- ?? -->
 <!-- zonal stats -->
 <!-- land cover categories to polygon -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nlcd =<span class="st"> </span><span class="kw">raster</span>((<span class="kw">system.file</span>(<span class="st">&quot;raster/nlcd2011.tif&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;spDataLarge&quot;</span>)))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nlcd_zion =<span class="st"> </span>raster::<span class="kw">extract</span>(nlcd, zion, <span class="dt">df =</span> <span class="ot">TRUE</span>)
+<span class="co">#&gt; Warning in .local(x, y, ...): Transforming SpatialPolygons to the CRS of</span>
+<span class="co">#&gt; the Raster</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nlcd_zion_df =<span class="st"> </span>nlcd_zion %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(ID, nlcd2011) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>()) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">spread</span>(nlcd2011, n)
+zion_new =<span class="st"> </span><span class="kw">bind_cols</span>(zion, nlcd_zion_df)</code></pre></div>
 <!-- ## Spatial interpolation ?? -->
 <!-- http://mdsumner.github.io/guerrilla/articles/irreg2.html -->
 </div>

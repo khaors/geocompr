@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve17187a85bea7b09d
+preserve55452a0ec3eb2606
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3084,7 +3084,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve6b1c54b8bc379189
+preserve9d090add3bf71cd4
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5975,7 +5975,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve686a4f6423795297
+preserve835548ff45ebb728
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6594,7 +6594,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve73ccc9a768932544
+preservee5b127e5d23e9870
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7649,13 +7649,6 @@ srtm = raster((system.file("raster/srtm.tif", package = "spDataLarge")))
 ```r
 zion = st_read((system.file("vector/zion.gpkg", package = "spDataLarge"))) %>% 
   st_transform(4326)
-#> Reading layer `zion' from data source `/home/travis/R/Library/spDataLarge/vector/zion.gpkg' using driver `GPKG'
-#> Simple feature collection with 1 feature and 11 fields
-#> geometry type:  POLYGON
-#> dimension:      XY
-#> bbox:           xmin: 302903.1 ymin: 4112244 xmax: 334735.5 ymax: 4153087
-#> epsg (SRID):    NA
-#> proj4string:    +proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs
 ```
 
 
@@ -7676,7 +7669,10 @@ srtm_masked = mask(srtm_cropped, zion)
 <!-- intro -->
 
 <!-- extract -->
+<!-- faster alternative to raster::extract?? -->
 <!-- extract to points -->
+<!-- mention buffer arg -->
+
 
 ```r
 set.seed(2018-02-21)
@@ -7708,6 +7704,27 @@ rast_poly_point
 
 <!-- zonal stats -->
 <!-- land cover categories to polygon -->
+
+
+```r
+nlcd = raster((system.file("raster/nlcd2011.tif", package = "spDataLarge")))
+```
+
+
+```r
+nlcd_zion = raster::extract(nlcd, zion, df = TRUE)
+#> Warning in .local(x, y, ...): Transforming SpatialPolygons to the CRS of
+#> the Raster
+```
+
+
+```r
+nlcd_zion_df = nlcd_zion %>% 
+  group_by(ID, nlcd2011) %>% 
+  summarise(n = n()) %>% 
+  spread(nlcd2011, n)
+zion_new = bind_cols(zion, nlcd_zion_df)
+```
 
 <!-- ## Spatial interpolation ?? -->
 <!-- http://mdsumner.github.io/guerrilla/articles/irreg2.html -->
