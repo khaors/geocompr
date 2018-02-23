@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-02-22'
+date: '2018-02-23'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-02-22 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-02-23 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveb1cbfbfdf3c7c7fe
+preserve17187a85bea7b09d
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -354,15 +354,15 @@ See the [r-spatial](https://github.com/r-spatial/) organisation and conversation
 ] and a growing number of actively developed packages which are designed to work in harmony with **sf** (Table \@ref(tab:revdep)). 
 
 
-Table: (\#tab:revdep)The top 5 most downloaded packages that depend on sf, in terms of average number of downloads per day over the previous month. As of 2018-02-20 there are 58 packages which import sf.
+Table: (\#tab:revdep)The top 5 most downloaded packages that depend on sf, in terms of average number of downloads per day over the previous month. As of 2018-02-21 there are 58 packages which import sf.
 
 package    Downloads
 --------  ----------
-plotly          1762
-raster          1553
-spData           841
+plotly          1772
+raster          1557
+spData           845
 spdep            777
-leaflet          588
+leaflet          597
 
 ## The history of R-spatial
 
@@ -3084,7 +3084,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve59bb296adc80cf82
+preserve6b1c54b8bc379189
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5975,7 +5975,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserveaa7a8d37e8429601
+preserve686a4f6423795297
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6594,7 +6594,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve21775777c71e1ad4
+preserve73ccc9a768932544
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7673,8 +7673,31 @@ srtm_masked = mask(srtm_cropped, zion)
 
 ## Raster extraction
 
+<!-- intro -->
+
 <!-- extract -->
 <!-- extract to points -->
+
+```r
+set.seed(2018-02-21)
+zion_points = st_sample(zion, size = 30)
+#> although coordinates are longitude/latitude, st_intersects assumes that they are planar
+```
+
+
+```r
+library(tmap)
+library(grid)
+
+rast_poly_point = tm_shape(srtm) +
+  tm_raster() + 
+  tm_shape(zion) +
+  tm_borders() +
+  tm_shape(zion_points) + 
+  tm_dots()
+rast_poly_point
+```
+
 <!-- elevation to points (zion) -->
 
 <!-- extract to line -->
