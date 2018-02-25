@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-02-23'
+date: '2018-02-25'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-02-23 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-02-25 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve55452a0ec3eb2606
+preserve31c84d5b74bd759a
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3084,7 +3084,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve9d090add3bf71cd4
+preserve899921cff39fbbc5
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5975,7 +5975,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve835548ff45ebb728
+preserve2c0a215cc0db3be7
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6594,7 +6594,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservee5b127e5d23e9870
+preserve21151db3030049c9
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7636,25 +7636,37 @@ library(spDataLarge)
 <!-- - etc. -->
 <!-- and 'rasterization' is covered in section \@ref(rasterization) -->
 
-## Raster clipping
+## Raster cropping
+
+<!-- many cases when raster data extent is larger than area of interest -->
+<!-- two techniques could be used in this cases - raster cropping and masking-->
+<!-- this processes have many positive outcomes as they reduce the object (file) size and therefore decrese computational times of the next operations -->
+<!-- additionally, they are often use to create a map of the area of interest. -->
 
 <!-- replace with spDataLarge::elevation in the future? -->
+<!-- we are going to ilustrate raster cropping and masking using the `srtm` object - raster representing elevation of the area in south west Utah and the `zion` object - vector of the Zion National Park area. -->
+<!-- ref a -->
+<!-- we also reprojected the Zion borders to fit the projection of the srtm object -->
 
 
 ```r
 srtm = raster((system.file("raster/srtm.tif", package = "spDataLarge")))
-```
-
-
-```r
 zion = st_read((system.file("vector/zion.gpkg", package = "spDataLarge"))) %>% 
   st_transform(4326)
 ```
+
+<!-- the crop function is used to decreate the extent of a raster based on the oxtent of another spatial object -->
+<!-- ref b -->
 
 
 ```r
 srtm_cropped = crop(srtm, as(zion, "Spatial"))
 ```
+
+<!-- the role of the mask function is little bit different - it only keeps the raster values in the area of interest. -->
+<!-- values of the outsie of the area of interestt are set to NA -->
+<!-- this process can be also inversed (everything except...) -->
+<!-- ref c -->
 
 
 ```r
@@ -7662,7 +7674,10 @@ srtm_masked = mask(srtm_cropped, zion)
 ```
 
 <!-- update the color palette in the future (+ the same in ch2) -->
-<img src="figures/cropmask-1.png" width="576" style="display: block; margin: auto;" /><img src="figures/cropmask-2.png" width="576" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures/cropmask-1.png" alt="Illustration of raster cropping (center) and raster masking aggregation (right)." width="576" /><img src="figures/cropmask-2.png" alt="Illustration of raster cropping (center) and raster masking aggregation (right)." width="576" />
+<p class="caption">(\#fig:cropmask)Illustration of raster cropping (center) and raster masking aggregation (right).</p>
+</div>
 
 ## Raster extraction
 
