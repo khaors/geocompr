@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve31c84d5b74bd759a
+preserve84b74956cbdf00c9
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3084,7 +3084,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve899921cff39fbbc5
+preserve55b4f4cc78f7eab1
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5975,7 +5975,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve2c0a215cc0db3be7
+preserve881c1f58c2692f55
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6594,7 +6594,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve21151db3030049c9
+preserve829102b70c72e467
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7638,15 +7638,14 @@ library(spDataLarge)
 
 ## Raster cropping
 
-<!-- many cases when raster data extent is larger than area of interest -->
-<!-- two techniques could be used in this cases - raster cropping and masking-->
-<!-- this processes have many positive outcomes as they reduce the object (file) size and therefore decrese computational times of the next operations -->
-<!-- additionally, they are often use to create a map of the area of interest. -->
+Many spatial analysis involve integrating data from many different sources, e.g. remote sensing images (rasters) and administrative boundaries (vectors).
+This often means that the extent of a raster is larger than the area of interest. 
+Two techniques, raster cropping and raster masking, can be used to unify the analyzed area.
+They could be vital for many projects as they reduce the object size and therefore decrease computational times needed for the following calculations.
+Additionally, they are often used to prepare the data before creating maps.
 
-<!-- replace with spDataLarge::elevation in the future? -->
-<!-- we are going to ilustrate raster cropping and masking using the `srtm` object - raster representing elevation of the area in south west Utah and the `zion` object - vector of the Zion National Park area. -->
-<!-- ref a -->
-<!-- we also reprojected the Zion borders to fit the projection of the srtm object -->
+We are going to illustrate raster cropping and masking using the `srtm` object, a elevation raster of the Southwestern Utah, and the `zion` object, a vector representing the area of the Zion National Park (Figure \@ref(fig:cropmask):A).
+Both objects should have the same projection, therefore we need to transform `zion` to fit the projection of `srtm` before raster cropping or masking:
 
 
 ```r
@@ -7655,23 +7654,25 @@ zion = st_read((system.file("vector/zion.gpkg", package = "spDataLarge"))) %>%
   st_transform(4326)
 ```
 
-<!-- the crop function is used to decreate the extent of a raster based on the oxtent of another spatial object -->
-<!-- ref b -->
+The role of the `crop` function is to decrease the extent of a raster based on the extent of another spatial object.
+It this example, we crop the elevation data to the extent of the Zion National Park area (Figure \@ref(fig:cropmask):B): 
 
 
 ```r
 srtm_cropped = crop(srtm, as(zion, "Spatial"))
 ```
 
-<!-- the role of the mask function is little bit different - it only keeps the raster values in the area of interest. -->
-<!-- values of the outsie of the area of interestt are set to NA -->
-<!-- this process can be also inversed (everything except...) -->
-<!-- ref c -->
+The goal of the `mask` function is a little bit different - it keeps the raster values only in the area of interest, while the values outside of the analyzed area are set to `NA`.
+The code below masks every cell outside of the the Zion National Park boundaries (Figure \@ref(fig:cropmask):C). 
 
 
 ```r
 srtm_masked = mask(srtm_cropped, zion)
 ```
+
+The `mask` function also can be modified to give different results.
+For example a value of mask (`NA`) can be changed with the `maskvalue` argument and the `inverse` argument set to `TRUE` masks an area of interest keeping everything else intact.
+You can learn more in the function's help file - `?mask`.
 
 <!-- update the color palette in the future (+ the same in ch2) -->
 <div class="figure" style="text-align: center">
