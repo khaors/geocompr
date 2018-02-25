@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve3ea0d2fe505710ac
+preservedb0e6ad4443449d7
 <p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
 </div>
 
@@ -3084,7 +3084,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve1b4c9c71e73f39ee
+preservef657b10ebc2a471f
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5975,7 +5975,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve1124fba0368967c1
+preserve0a9601542d2022c0
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6594,7 +6594,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve4ebb2ea09b7ab653
+preserve95d86eaef46f5e43
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7694,21 +7694,6 @@ You can learn more in the function's help file - `?mask`.
 set.seed(2018-02-21)
 zion_points = st_sample(zion, size = 30) %>% 
   st_sf()
-```
-
-
-```r
-library(tmap)
-library(grid)
-
-rast_poly_point = tm_shape(srtm) +
-  tm_raster(title = "Elevation (m)", style = "cont") + 
-  tm_shape(zion) +
-  tm_borders(lwd = 2) + 
-  tm_shape(zion_points) + 
-  tm_symbols() + 
-  tm_layout(legend.frame = TRUE, legend.position = c("right", "top"))
-rast_poly_point
 ```
 
 <img src="figures/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;" />

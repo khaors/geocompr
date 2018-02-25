@@ -390,17 +390,6 @@ Figure 11.1: Illustration of raster cropping (center) and raster masking (right)
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">2018-02-21</span>)
 zion_points =<span class="st"> </span><span class="kw">st_sample</span>(zion, <span class="dt">size =</span> <span class="dv">30</span>) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">st_sf</span>()</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tmap)
-<span class="kw">library</span>(grid)
-
-rast_poly_point =<span class="st"> </span><span class="kw">tm_shape</span>(srtm) +
-<span class="st">  </span><span class="kw">tm_raster</span>(<span class="dt">title =</span> <span class="st">&quot;Elevation (m)&quot;</span>, <span class="dt">style =</span> <span class="st">&quot;cont&quot;</span>) +<span class="st"> </span>
-<span class="st">  </span><span class="kw">tm_shape</span>(zion) +
-<span class="st">  </span><span class="kw">tm_borders</span>(<span class="dt">lwd =</span> <span class="dv">2</span>) +<span class="st"> </span>
-<span class="st">  </span><span class="kw">tm_shape</span>(zion_points) +<span class="st"> </span>
-<span class="st">  </span><span class="kw">tm_symbols</span>() +<span class="st"> </span>
-<span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">legend.frame =</span> <span class="ot">TRUE</span>, <span class="dt">legend.position =</span> <span class="kw">c</span>(<span class="st">&quot;right&quot;</span>, <span class="st">&quot;top&quot;</span>))
-rast_poly_point</code></pre></div>
 <p><img src="figures/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;" /></p>
 <!-- elevation to points (zion) -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_points$elevation =<span class="st"> </span>raster::<span class="kw">extract</span>(srtm, zion_points)</code></pre></div>
