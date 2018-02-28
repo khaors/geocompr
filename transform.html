@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-02-25">
+<meta name="date" content="2018-02-28">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -661,9 +661,9 @@ Of course, the limitations of 2D Earth projections apply as much to vector as to
 <p>Simplification is a process for generalization of vector objects (lines and polygons) usually for use in smaller scale maps. Another reason for simplifying objects is to reduce the amount of memory, disk space and network bandwidth they consume: it may be wise to simplify complex geometries before publishing them as interactive maps. The <strong>sf</strong> package provides <code>st_simplify()</code>, which uses the GEOS implementation of the Douglas-Peucker algorithm to reduce the vertex count. <code>st_simplify()</code> uses the <code>dTolerance</code> to control the level of generalization in map units <span class="citation">(see Douglas and Peucker <a href="#ref-douglas_algorithms_1973">1973</a> for details)</span>. <!-- I have no idea what the next sentence means --> <!-- As a result, all vertices in the simplified geometry will be within this value from the original ones. --> Figure <a href="transform.html#fig:seine-simp">5.6</a> illustrates simplification of a <code>LINESTRING</code> geometry representing the river Seine and tributaries. The simplified geometry was created by the following command:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">seine_simp =<span class="st"> </span><span class="kw">st_simplify</span>(seine, <span class="dt">dTolerance =</span> <span class="dv">2000</span>)  <span class="co"># 2000 m</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:seine-simp"></span>
-<img src="figures/seine-simp-1.png" alt="Comparison of the original data of the Seine, Marne and Yonne rivers and its simplified version using `st_simplify`." width="576" />
+<img src="figures/seine-simp-1.png" alt="Comparison of the original and simplified `seine` geometry." width="576" />
 <p class="caption">
-Figure 5.6: Comparison of the original data of the Seine, Marne and Yonne rivers and its simplified version using <code>st_simplify</code>.
+Figure 5.6: Comparison of the original and simplified <code>seine</code> geometry.
 </p>
 </div>
 <p>The resulting <code>seine_simp</code> object is a copy of the original <code>seine</code> but with fewer vertices. This is apparent, with the result being visually simpler (Figure <a href="transform.html#fig:seine-simp">5.6</a>, right) and consuming less memory than the original object, as verified below:</p>
@@ -681,9 +681,9 @@ us_states_simp2 =<span class="st"> </span>rmapshaper::<span class="kw">ms_simpli
                                           <span class="dt">keep_shapes =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p>Finally, the visual comparison of the original dataset and the two simplified versions shows differences between the Douglas-Peucker (<code>st_simplify</code>) and Visvalingam (<code>ms_simplify</code>) algorithm outputs (Figure <a href="transform.html#fig:us-simp">5.7</a>):</p>
 <div class="figure" style="text-align: center"><span id="fig:us-simp"></span>
-<img src="figures/us-simp-1.png" alt="Comparison of the original data of the contiguous United States and two simplified versions using `st_simplify` and `ms_simplify`." width="576" />
+<img src="figures/us-simp-1.png" alt="Polygon simplification in action, comparing the original geometry of the contiguous United States with simplified versions, generated with functions from **sf** (center) and **rmapshaper** (right) packages." width="576" />
 <p class="caption">
-Figure 5.7: Comparison of the original data of the contiguous United States and two simplified versions using <code>st_simplify</code> and <code>ms_simplify</code>.
+Figure 5.7: Polygon simplification in action, comparing the original geometry of the contiguous United States with simplified versions, generated with functions from <strong>sf</strong> (center) and <strong>rmapshaper</strong> (right) packages.
 </p>
 </div>
 </div>
@@ -700,9 +700,9 @@ seine_centroid =<span class="st"> </span><span class="kw">st_centroid</span>(sei
 seine_pos =<span class="st"> </span><span class="kw">st_point_on_surface</span>(seine)</code></pre></div>
 <p>This ensures that the created point lies on the given object (see red points on Figure <a href="transform.html#fig:centr">5.8</a>).</p>
 <div class="figure" style="text-align: center"><span id="fig:centr"></span>
-<img src="figures/centr-1.png" alt="Comparison between the outputs of `st_centroid()` (black points) and `st_point_on_surface()` (red points) on New Zeleand's regions (left) and the Seine, Marne and Yonne rivers (right)." width="576" />
+<img src="figures/centr-1.png" alt="Centroids (black points) and 'points on surface' (red points) of New Zeleand's regions (left) and the Seine (right) datasets." width="576" />
 <p class="caption">
-Figure 5.8: Comparison between the outputs of <code>st_centroid()</code> (black points) and <code>st_point_on_surface()</code> (red points) on New Zeleand’s regions (left) and the Seine, Marne and Yonne rivers (right).
+Figure 5.8: Centroids (black points) and ‘points on surface’ (red points) of New Zeleand’s regions (left) and the Seine (right) datasets.
 </p>
 </div>
 </div>
@@ -836,9 +836,9 @@ Figure 5.14: Spatial aggregation on contiguous polygons, illustrated by aggregat
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">linestring =<span class="st"> </span><span class="kw">st_cast</span>(multipoint, <span class="st">&quot;LINESTRING&quot;</span>)
 polyg =<span class="st"> </span><span class="kw">st_cast</span>(multipoint, <span class="st">&quot;POLYGON&quot;</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:single-cast"></span>
-<img src="figures/single-cast-1.png" alt="Examples of linestring and polygon created based on multipoint using the `st_cast` function" width="576" />
+<img src="figures/single-cast-1.png" alt="Examples of linestring and polygon 'casted' from a multipoint geometry." width="576" />
 <p class="caption">
-Figure 5.15: Examples of linestring and polygon created based on multipoint using the <code>st_cast</code> function
+Figure 5.15: Examples of linestring and polygon ‘casted’ from a multipoint geometry.
 </p>
 </div>
 <p>This process can be also reversed using <code>st_cast</code>:</p>

@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-02-25">
+<meta name="date" content="2018-02-28">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -496,9 +496,9 @@ streets =<span class="st"> </span><span class="kw">opq</span>(b_box) %&gt;%
 <span class="st">  `</span><span class="dt">[[</span><span class="st">`</span>(., <span class="st">&quot;osm_lines&quot;</span>)</code></pre></div>
 <p>Now that we have the data, we can go on and initiate a GRASS session, i.e., we have to create a GRASS geodatabase. The GRASS geodatabase system is based on SQLite. Consequently, different users can easily work on the same project, possibly with different read/write permissions. However, one has to set up this geodatabase (also from within R), and users used to a GIS GUI popping up by one click might find this process a bit intimidating in the beginning. First of all, the GRASS database requires its own directory, and contains a location (Figure <a href="gis.html#fig:grass-loc">10.1</a>). The location in turn simply contains the geodata for one project. Within one location several mapsets can exist, and typically refer to different users. PERMANENT is a mandatory mapset, and created automatically. It stores the projection, the spatial extent and the default resolution for raster data. In order to share spatial data with all users of a project, the database owner can add spatial data to the PERMANENT mapset. Please refer to <span class="citation">Neteler and Mitasova (<a href="#ref-neteler_open_2008">2008</a>)</span> and the <a href="https://grass.osgeo.org/grass72/manuals/helptext.html">GRASS GIS quick start</a> for more information on the GRASS geodatabase system.</p>
 <div class="figure" style="text-align: center"><span id="fig:grass-loc"></span>
-<img src="https://grass.osgeo.org/grass72/manuals/help_loc_struct.png" alt="Structure of the GRASS geodatabase system including locations and mapsets Figure was taken from https://grass.osgeo.org/grass72/manuals/help_loc_struct.png."  />
+<img src="https://grass.osgeo.org/grass72/manuals/help_loc_struct.png" alt="Structure of the GRASS geodatabase system including locations and mapsets. Source: [grass.osgeo.org](https://grass.osgeo.org/grass72/manuals/help_loc_struct.png)."  />
 <p class="caption">
-Figure 10.1: Structure of the GRASS geodatabase system including locations and mapsets Figure was taken from <a href="https://grass.osgeo.org/grass72/manuals/help_loc_struct.png" class="uri">https://grass.osgeo.org/grass72/manuals/help_loc_struct.png</a>.
+Figure 10.1: Structure of the GRASS geodatabase system including locations and mapsets. Source: <a href="https://grass.osgeo.org/grass72/manuals/help_loc_struct.png">grass.osgeo.org</a>.
 </p>
 </div>
 <p>You have to set up a location and a mapset if you want to use GRASS from within R. First of all, we need to find out if and where GRASS7 is installed on the computer.</p>

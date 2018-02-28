@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-02-25'
+date: '2018-02-28'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-02-25 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-02-28 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -254,11 +254,11 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservedb0e6ad4443449d7
-<p class="caption">(\#fig:interactive)World at night imagery from NASA overlaid by the authors' approximate home locations to illustrate interactive mapping with R.</p>
+preservee74e32f50a90aec1
+<p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. See the online version at [robinlovelace.net/geocompr](http://geocompr.robinlovelace.net/intro.html) and click on the markers for interactivity.</p>
 </div>
 
-It would have been difficult to produce Figure \@ref(fig:interactive) using R a few years ago, let alone embed the results in an interactive html page (the interactive version can be viewed at [robinlovelace.net/geocompr](http://geocompr.robinlovelace.net/intro.html)).
+It would have been difficult to produce Figure \@ref(fig:interactive) using R a few years ago, let alone as an interactive map.
 This illustrates R's flexibility and how, thanks to developments such as **knitr** and **leaflet**, it can be used as an interface to other software, a theme that will recur throughout this book.
 The use of R code, therefore, enables teaching geocomputation with reference to reproducible examples such as that provided in \@ref(fig:interactive) rather than abstract concepts.
 
@@ -2237,8 +2237,8 @@ plot(world_coffee["coffee_production_2017"])
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/coffeemap-1.png" alt="World coffee production (thousand 60 kg bags) by country, 2017. Source: International Coffee Organization. See `?coffee_data` for details." width="576" />
-<p class="caption">(\#fig:coffeemap)World coffee production (thousand 60 kg bags) by country, 2017. Source: International Coffee Organization. See `?coffee_data` for details.</p>
+<img src="figures/coffeemap-1.png" alt="World coffee production (thousand 60 kg bags) by country, 2017. Source: International Coffee Organization." width="576" />
+<p class="caption">(\#fig:coffeemap)World coffee production (thousand 60 kg bags) by country, 2017. Source: International Coffee Organization.</p>
 </div>
 
 For joining to work a 'key variable' must be supplied in both datasets.
@@ -2703,8 +2703,8 @@ canterbury_height = nz_height[canterbury, ]
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/nz-subset-1.png" alt="Illustration of spatial subsetting with red triangles representing 101 high points in New Zealand, clustered near the central Canterbuy region. The right-hand map contains points, subset with the command `nz_height[canterbury, ]`, located in Canterbury (highlighted in grey)." width="576" />
-<p class="caption">(\#fig:nz-subset)Illustration of spatial subsetting with red triangles representing 101 high points in New Zealand, clustered near the central Canterbuy region. The right-hand map contains points, subset with the command `nz_height[canterbury, ]`, located in Canterbury (highlighted in grey).</p>
+<img src="figures/nz-subset-1.png" alt="Illustration of spatial subsetting with red triangles representing 101 high points in New Zealand, clustered near the central Canterbuy region (left). The points in Canterbury were created with the `[` subsetting operator (highlighted in grey, right)." width="576" />
+<p class="caption">(\#fig:nz-subset)Illustration of spatial subsetting with red triangles representing 101 high points in New Zealand, clustered near the central Canterbuy region (left). The points in Canterbury were created with the `[` subsetting operator (highlighted in grey, right).</p>
 </div>
 
 Like attribute subsetting `x[y, ]` subsets features of a *target* 
@@ -3084,7 +3084,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservef657b10ebc2a471f
+preserve0fbe0fc0968aef1c
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -3167,8 +3167,8 @@ The result of the previous operation is illustrated in Figure \@ref(fig:spatial-
 The same result can also be generated using the 'tidy' functions `group_by()` and `summarize()` (used in combination with `st_join()`):
 
 <div class="figure" style="text-align: center">
-<img src="figures/spatial-aggregation-1.png" alt="Average height of high points (stored in the `nz_height` object) across the regions of New Zealand (stored in `nz`.)" width="576" />
-<p class="caption">(\#fig:spatial-aggregation)Average height of high points (stored in the `nz_height` object) across the regions of New Zealand (stored in `nz`.)</p>
+<img src="figures/spatial-aggregation-1.png" alt="Average height of the top 101 high points across the regions of New Zealand." width="576" />
+<p class="caption">(\#fig:spatial-aggregation)Average height of the top 101 high points across the regions of New Zealand.</p>
 </div>
 
 
@@ -4168,8 +4168,8 @@ seine_simp = st_simplify(seine, dTolerance = 2000)  # 2000 m
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/seine-simp-1.png" alt="Comparison of the original data of the Seine, Marne and Yonne rivers and its simplified version using `st_simplify`." width="576" />
-<p class="caption">(\#fig:seine-simp)Comparison of the original data of the Seine, Marne and Yonne rivers and its simplified version using `st_simplify`.</p>
+<img src="figures/seine-simp-1.png" alt="Comparison of the original and simplified `seine` geometry." width="576" />
+<p class="caption">(\#fig:seine-simp)Comparison of the original and simplified `seine` geometry.</p>
 </div>
 
 The resulting `seine_simp` object is a copy of the original `seine` but with fewer vertices.
@@ -4218,8 +4218,8 @@ us_states_simp2 = rmapshaper::ms_simplify(us_states2163, keep = 0.01,
 Finally, the visual comparison of the original dataset and the two simplified versions shows differences between the Douglas-Peucker (`st_simplify`) and Visvalingam (`ms_simplify`) algorithm outputs (Figure \@ref(fig:us-simp)):
 
 <div class="figure" style="text-align: center">
-<img src="figures/us-simp-1.png" alt="Comparison of the original data of the contiguous United States and two simplified versions using `st_simplify` and `ms_simplify`." width="576" />
-<p class="caption">(\#fig:us-simp)Comparison of the original data of the contiguous United States and two simplified versions using `st_simplify` and `ms_simplify`.</p>
+<img src="figures/us-simp-1.png" alt="Polygon simplification in action, comparing the original geometry of the contiguous United States with simplified versions, generated with functions from **sf** (center) and **rmapshaper** (right) packages." width="576" />
+<p class="caption">(\#fig:us-simp)Polygon simplification in action, comparing the original geometry of the contiguous United States with simplified versions, generated with functions from **sf** (center) and **rmapshaper** (right) packages.</p>
 </div>
 
 ### Centroids
@@ -4252,8 +4252,8 @@ seine_pos = st_point_on_surface(seine)
 This ensures that the created point lies on the given object (see red points on Figure \@ref(fig:centr)).
 
 <div class="figure" style="text-align: center">
-<img src="figures/centr-1.png" alt="Comparison between the outputs of `st_centroid()` (black points) and `st_point_on_surface()` (red points) on New Zeleand's regions (left) and the Seine, Marne and Yonne rivers (right)." width="576" />
-<p class="caption">(\#fig:centr)Comparison between the outputs of `st_centroid()` (black points) and `st_point_on_surface()` (red points) on New Zeleand's regions (left) and the Seine, Marne and Yonne rivers (right).</p>
+<img src="figures/centr-1.png" alt="Centroids (black points) and 'points on surface' (red points) of New Zeleand's regions (left) and the Seine (right) datasets." width="576" />
+<p class="caption">(\#fig:centr)Centroids (black points) and 'points on surface' (red points) of New Zeleand's regions (left) and the Seine (right) datasets.</p>
 </div>
 
 ### Buffers
@@ -4506,8 +4506,8 @@ polyg = st_cast(multipoint, "POLYGON")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/single-cast-1.png" alt="Examples of linestring and polygon created based on multipoint using the `st_cast` function" width="576" />
-<p class="caption">(\#fig:single-cast)Examples of linestring and polygon created based on multipoint using the `st_cast` function</p>
+<img src="figures/single-cast-1.png" alt="Examples of linestring and polygon 'casted' from a multipoint geometry." width="576" />
+<p class="caption">(\#fig:single-cast)Examples of linestring and polygon 'casted' from a multipoint geometry.</p>
 </div>
 
 This process can be also reversed using `st_cast`:
@@ -5665,8 +5665,8 @@ plot(desire_lines$geometry, lwd = desire_lines$all / 500)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/desire-1.png" alt="Desire lines representing trip patterns in the Bristol Travel to Work Area. The four black lines represent the object `od_top5` created previously and illustrated in Table 8.1." width="576" />
-<p class="caption">(\#fig:desire)Desire lines representing trip patterns in the Bristol Travel to Work Area. The four black lines represent the object `od_top5` created previously and illustrated in Table 8.1.</p>
+<img src="figures/desire-1.png" alt="Desire lines representing trip patterns in the Bristol Travel to Work Area. The four black lines represent the object the top 5 desire lines illustrated in Table 7.1." width="576" />
+<p class="caption">(\#fig:desire)Desire lines representing trip patterns in the Bristol Travel to Work Area. The four black lines represent the object the top 5 desire lines illustrated in Table 7.1.</p>
 </div>
 
 ## Routes
@@ -5975,7 +5975,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve0a9601542d2022c0
+preservefbe04706c0ed97e0
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6594,7 +6594,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve95d86eaef46f5e43
+preserve6733c12b1ce4896b
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6757,6 +6757,7 @@ Typically, this will involve plotting the same geometry data multiple times, onc
 However, facets can also represent shifting geometries, e.g. as the spatial distribution of a point pattern evolves over time.
 This use case of faceted plot is illustrated in Figure \@ref(fig:urban-facet).
 
+<!-- revert eval=TRUE -->
 
 ```r
 tm_shape(world) +
@@ -6765,11 +6766,6 @@ tm_shape(world) +
   tm_dots(size = "population_millions") +
   tm_facets(by = "year")
 ```
-
-<div class="figure" style="text-align: center">
-<img src="figures/urban-facet-1.png" alt="Faceted map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations." width="576" />
-<p class="caption">(\#fig:urban-facet)Faceted map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations.</p>
-</div>
 
 ### Inset maps
 
@@ -6905,6 +6901,7 @@ knitr::include_graphics("figures/urban-animated.gif")
 <p class="caption">(\#fig:urban-animated)Animated map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations.</p>
 </div>
 
+<!-- revert eval=TRUE -->
 
 ```r
 m = tm_shape(world) + 
@@ -7435,8 +7432,8 @@ In order to share spatial data with all users of a project, the database owner c
 Please refer to @neteler_open_2008 and the [GRASS GIS quick start](https://grass.osgeo.org/grass72/manuals/helptext.html) for more information on the GRASS geodatabase system.
 
 <div class="figure" style="text-align: center">
-<img src="https://grass.osgeo.org/grass72/manuals/help_loc_struct.png" alt="Structure of the GRASS geodatabase system including locations and mapsets Figure was taken from https://grass.osgeo.org/grass72/manuals/help_loc_struct.png."  />
-<p class="caption">(\#fig:grass-loc)Structure of the GRASS geodatabase system including locations and mapsets Figure was taken from https://grass.osgeo.org/grass72/manuals/help_loc_struct.png.</p>
+<img src="https://grass.osgeo.org/grass72/manuals/help_loc_struct.png" alt="Structure of the GRASS geodatabase system including locations and mapsets. Source: [grass.osgeo.org](https://grass.osgeo.org/grass72/manuals/help_loc_struct.png)."  />
+<p class="caption">(\#fig:grass-loc)Structure of the GRASS geodatabase system including locations and mapsets. Source: [grass.osgeo.org](https://grass.osgeo.org/grass72/manuals/help_loc_struct.png).</p>
 </div>
 
 You have to set up a location and a mapset if you want to use GRASS from within R.
@@ -7676,7 +7673,7 @@ You can learn more in the function's help file - `?mask`.
 
 <!-- update the color palette in the future (+ the same in ch2) -->
 <div class="figure" style="text-align: center">
-<img src="figures/cropmask-1.png" alt="Illustration of raster cropping (center) and raster masking (right)." width="576" /><img src="figures/cropmask-2.png" alt="Illustration of raster cropping (center) and raster masking (right)." width="576" />
+<img src="figures/cropmask-1.png" alt="Illustration of raster cropping (center) and raster masking (right)." width="576" />
 <p class="caption">(\#fig:cropmask)Illustration of raster cropping (center) and raster masking (right).</p>
 </div>
 
@@ -7696,25 +7693,50 @@ zion_points = st_sample(zion, size = 30) %>%
   st_sf()
 ```
 
-<img src="figures/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;" />
-
 <!-- elevation to points (zion) -->
-
 
 ```r
 zion_points$elevation = raster::extract(srtm, zion_points)
 ```
 
 <!-- extract to line -->
-<!-- create a transect -->
-<!-- ```{r} -->
-<!-- raster::extract(x, y, along = TRUE) -->
-<!-- ``` -->
-<!-- ? -->
+
+```r
+zion_transect = st_sfc(st_linestring(rbind(c(-113.2, 37.45), c(-112.9, 37.2)))) %>% 
+  st_sf()
+```
+
+
+
+
+```r
+transect_df = raster::extract(srtm, zion_transect, along = TRUE, cellnumbers = TRUE) %>%
+  data.frame()
+transect_coords = xyFromCell(srtm, transect_df$cell)
+transect_df = cbind(transect_df, transect_coords)
+library(geosphere)
+transect_df$dist = distm(transect_coords)[, 1]
+ggplot(transect_df, aes(dist, srtm)) + geom_line()
+```
+
+<img src="figures/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;" />
 
 <!-- extract to polygons (or extents) -->
-<!-- calculate elevation stats for zion np -->
-<!-- ?? -->
+
+```r
+zion_srtm_values = raster::extract(x = srtm, y = zion)
+```
+
+
+```r
+zion_srtm_df = c(min, mean, max) %>% 
+  map_dfr(~raster::extract(x = srtm, y = zion, fun = ., df = TRUE)) %>% 
+  mutate(stat = c("minimum", "mean", "maximum")) %>% 
+  spread(stat, srtm)
+zion_srtm_new = bind_cols(zion, zion_srtm_df)
+```
+
+<img src="figures/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto;" />
 
 <!-- zonal stats -->
 <!-- land cover categories to polygon -->
@@ -7726,16 +7748,16 @@ nlcd = raster((system.file("raster/nlcd2011.tif", package = "spDataLarge")))
 
 
 ```r
-nlcd_zion = raster::extract(nlcd, zion, df = TRUE)
+zion_nlcd = raster::extract(nlcd, zion, df = TRUE)
 ```
 
 
 ```r
-nlcd_zion_df = nlcd_zion %>% 
+zion_nlcd_df = zion_nlcd %>% 
   group_by(ID, nlcd2011) %>% 
   summarise(n = n()) %>% 
   spread(nlcd2011, n)
-zion_new = bind_cols(zion, nlcd_zion_df)
+zion_nlcd_new = bind_cols(zion, zion_nlcd_df)
 ```
 
 <!-- ## Spatial interpolation ?? -->
@@ -8069,6 +8091,12 @@ The added columns are:
 
 ## Introduction to spatial CV
 
+"Resampling methods are an indispensable tool in modern statistics. They involve repeatedly drawing samples from a training set and refitting a model of interest on each sample in order to obtain additional information about the fitted model. For example, in order to estimate the variability of a linear regression fit, we can repeatedly draw different samples from the training data, fit a linear regression to each new sample, and then examine the extent to which the resulting fits differ. Such an approach may allow us to obtain information that would not be available from fitting the model only once using the original training sample.
+Resampling approaches can be computationally expensive, because they involve fitting the same statistical method multiple times using different subsets of the training data. However, due to recent advances in computing power, the computational requirements of resampling methods generally are not prohibitive. In this chapter, we discuss two of the most commonly used resampling methods, cross-validation and the bootstrap."
+
+Cross-validation belongs to the family of resampling methods.
+The basic idea is to repeatedly split a dataset into training and test sets whereby the first is used to fit a model which then is applied to the test set
+
 figure showing difference between spatial and non-spatial random sampling
 cross-reference **sperrorest** which has been integrated into **mlr**
 
@@ -8080,8 +8108,8 @@ The standardized **mlr** interface is based on so-called basic building blocks (
 
 <!-- @Jakub: yes, I will ask if we me may use the figure -->
 <div class="figure" style="text-align: center">
-<img src="http://openml.github.io/articles/slides/useR2017_tutorial/slides_tutorial_files/ml_abstraction-crop.png" alt="Basic building blocks of the **mlr** package. Figure was taken from http://openml.github.io/articles/slides/useR2017_tutorial/slides_tutorial_files/ml_abstraction-crop.png."  />
-<p class="caption">(\#fig:building-blocks)Basic building blocks of the **mlr** package. Figure was taken from http://openml.github.io/articles/slides/useR2017_tutorial/slides_tutorial_files/ml_abstraction-crop.png.</p>
+<img src="http://openml.github.io/articles/slides/useR2017_tutorial/slides_tutorial_files/ml_abstraction-crop.png" alt="Basic building blocks of the **mlr** package. Source: [openml.github.io](http://openml.github.io/articles/slides/useR2017_tutorial/slides_tutorial_files/ml_abstraction-crop.png)."  />
+<p class="caption">(\#fig:building-blocks)Basic building blocks of the **mlr** package. Source: [openml.github.io](http://openml.github.io/articles/slides/useR2017_tutorial/slides_tutorial_files/ml_abstraction-crop.png).</p>
 </div>
 
 First, we need to create a task containing the data, specifically the response and predictor variables, for the model and the model type (such as regression or classification).
@@ -8131,7 +8159,7 @@ We opt for the binomial classification method from the **stats** package impleme
 Additionally, we have to specify the link-function.
 We choose the `logit` link which is also the default when using the `binomial` family in `glm`.
 `predict.type` determines the type of the prediction with
-<!--Setting it to `response` produces class labels as output, which would be in our case `TRUE` or `FALSE`.-->
+<!-- Setting it to `response` produces class labels as output, which would be in our case `TRUE` or `FALSE`. -->
  `prob` resulting in a predicted probability for landslide occurrence between 0 and 1.^[Note that this corresponds to `type = response` in `predict.glm`.]
 
 
@@ -8168,7 +8196,7 @@ identical(fit$coefficients, mlr_fit$coefficients)
 
 In the beginning, it might seem a bit tedious to learn the **mlr** interface for modeling.
 But remember that one only has to learn one single interface to run 171 learners.
-Additionally, resampling in **mlr** is really easy and only requires two more steps.
+Additionally, resampling in **mlr** is really easy and only requires two more steps.^[Further advantages are the easy parallelization of resampling techniques and the tuning of machine learning hyperparameters in an inner fold.]
 The first thing to to is specifying a resampling method.
 Spatial repeated cross-validation
 

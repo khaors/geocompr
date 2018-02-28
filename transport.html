@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-02-25">
+<meta name="date" content="2018-02-28">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -523,9 +523,9 @@ desire_lines =<span class="st"> </span><span class="kw">od2line</span>(od_inter,
 <p>The first two lines of the preceding code chunk split the <code>bristol_od</code> dataset into two mutually exclusive objects, <code>od_intra</code> (which only contains OD pairs representing intrazone trips) and <code>od_inter</code> (which represents interzonal travel). The third line generates a geographic object <code>desire_lines</code> (of class <code>sf</code>) that allows a subsequent geographic visualization of interzone trips. An illustration of the results is presented in Figure <a href="transport.html#fig:desire">7.3</a> (we will cover the visualization methods that produced this plot in Chapter 9)<!-- to do: add reference to chapter -->. The map shows that the city center dominates transport patterns in the region, suggesting policies should be prioritized there, although a number of peripheral sub-centers can also be seen. Next it would be interesting to have a look at the distribution of interzonal modes, e.g. between which zones is cycling the least or the most common means of transport. <!-- maybe an idea for an exercise? --> <!-- These include Bradley Stoke to the North and Portishead to the West. --></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(desire_lines$geometry, <span class="dt">lwd =</span> desire_lines$all /<span class="st"> </span><span class="dv">500</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:desire"></span>
-<img src="figures/desire-1.png" alt="Desire lines representing trip patterns in the Bristol Travel to Work Area. The four black lines represent the object `od_top5` created previously and illustrated in Table 8.1." width="576" />
+<img src="figures/desire-1.png" alt="Desire lines representing trip patterns in the Bristol Travel to Work Area. The four black lines represent the object the top 5 desire lines illustrated in Table 7.1." width="576" />
 <p class="caption">
-Figure 7.3: Desire lines representing trip patterns in the Bristol Travel to Work Area. The four black lines represent the object <code>od_top5</code> created previously and illustrated in Table 8.1.
+Figure 7.3: Desire lines representing trip patterns in the Bristol Travel to Work Area. The four black lines represent the object the top 5 desire lines illustrated in Table 7.1.
 </p>
 </div>
 </div>

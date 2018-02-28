@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-02-25">
+<meta name="date" content="2018-02-28">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -374,7 +374,7 @@ zion =<span class="st"> </span><span class="kw">st_read</span>((<span class="kw"
 <p>The <code>mask</code> function also can be modified to give different results. For example a value of mask (<code>NA</code>) can be changed with the <code>maskvalue</code> argument and the <code>inverse</code> argument set to <code>TRUE</code> masks an area of interest keeping everything else intact. You can learn more in the function’s help file - <code>?mask</code>.</p>
 <!-- update the color palette in the future (+ the same in ch2) -->
 <div class="figure" style="text-align: center"><span id="fig:cropmask"></span>
-<img src="figures/cropmask-1.png" alt="Illustration of raster cropping (center) and raster masking (right)." width="576" /><img src="figures/cropmask-2.png" alt="Illustration of raster cropping (center) and raster masking (right)." width="576" />
+<img src="figures/cropmask-1.png" alt="Illustration of raster cropping (center) and raster masking (right)." width="576" />
 <p class="caption">
 Figure 11.1: Illustration of raster cropping (center) and raster masking (right).
 </p>
@@ -390,27 +390,36 @@ Figure 11.1: Illustration of raster cropping (center) and raster masking (right)
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">2018-02-21</span>)
 zion_points =<span class="st"> </span><span class="kw">st_sample</span>(zion, <span class="dt">size =</span> <span class="dv">30</span>) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">st_sf</span>()</code></pre></div>
-<p><img src="figures/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;" /></p>
 <!-- elevation to points (zion) -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_points$elevation =<span class="st"> </span>raster::<span class="kw">extract</span>(srtm, zion_points)</code></pre></div>
 <!-- extract to line -->
-<!-- create a transect -->
-<!-- ```{r} -->
-<!-- raster::extract(x, y, along = TRUE) -->
-<!-- ``` -->
-<!-- ? -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_transect =<span class="st"> </span><span class="kw">st_sfc</span>(<span class="kw">st_linestring</span>(<span class="kw">rbind</span>(<span class="kw">c</span>(-<span class="fl">113.2</span>, <span class="fl">37.45</span>), <span class="kw">c</span>(-<span class="fl">112.9</span>, <span class="fl">37.2</span>)))) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">st_sf</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">transect_df =<span class="st"> </span>raster::<span class="kw">extract</span>(srtm, zion_transect, <span class="dt">along =</span> <span class="ot">TRUE</span>, <span class="dt">cellnumbers =</span> <span class="ot">TRUE</span>) %&gt;%
+<span class="st">  </span><span class="kw">data.frame</span>()
+transect_coords =<span class="st"> </span><span class="kw">xyFromCell</span>(srtm, transect_df$cell)
+transect_df =<span class="st"> </span><span class="kw">cbind</span>(transect_df, transect_coords)
+<span class="kw">library</span>(geosphere)
+transect_df$dist =<span class="st"> </span><span class="kw">distm</span>(transect_coords)[, <span class="dv">1</span>]
+<span class="kw">ggplot</span>(transect_df, <span class="kw">aes</span>(dist, srtm)) +<span class="st"> </span><span class="kw">geom_line</span>()</code></pre></div>
+<p><img src="figures/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;" /></p>
 <!-- extract to polygons (or extents) -->
-<!-- calculate elevation stats for zion np -->
-<!-- ?? -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_srtm_values =<span class="st"> </span>raster::<span class="kw">extract</span>(<span class="dt">x =</span> srtm, <span class="dt">y =</span> zion)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_srtm_df =<span class="st"> </span><span class="kw">c</span>(min, mean, max) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">map_dfr</span>(~raster::<span class="kw">extract</span>(<span class="dt">x =</span> srtm, <span class="dt">y =</span> zion, <span class="dt">fun =</span> ., <span class="dt">df =</span> <span class="ot">TRUE</span>)) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">stat =</span> <span class="kw">c</span>(<span class="st">&quot;minimum&quot;</span>, <span class="st">&quot;mean&quot;</span>, <span class="st">&quot;maximum&quot;</span>)) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">spread</span>(stat, srtm)
+zion_srtm_new =<span class="st"> </span><span class="kw">bind_cols</span>(zion, zion_srtm_df)</code></pre></div>
+<p><img src="figures/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto;" /></p>
 <!-- zonal stats -->
 <!-- land cover categories to polygon -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nlcd =<span class="st"> </span><span class="kw">raster</span>((<span class="kw">system.file</span>(<span class="st">&quot;raster/nlcd2011.tif&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;spDataLarge&quot;</span>)))</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nlcd_zion =<span class="st"> </span>raster::<span class="kw">extract</span>(nlcd, zion, <span class="dt">df =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nlcd_zion_df =<span class="st"> </span>nlcd_zion %&gt;%<span class="st"> </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_nlcd =<span class="st"> </span>raster::<span class="kw">extract</span>(nlcd, zion, <span class="dt">df =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_nlcd_df =<span class="st"> </span>zion_nlcd %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">group_by</span>(ID, nlcd2011) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>()) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">spread</span>(nlcd2011, n)
-zion_new =<span class="st"> </span><span class="kw">bind_cols</span>(zion, nlcd_zion_df)</code></pre></div>
+zion_nlcd_new =<span class="st"> </span><span class="kw">bind_cols</span>(zion, zion_nlcd_df)</code></pre></div>
 <!-- ## Spatial interpolation ?? -->
 <!-- http://mdsumner.github.io/guerrilla/articles/irreg2.html -->
 </div>

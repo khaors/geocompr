@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-02-25">
+<meta name="date" content="2018-02-28">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -372,9 +372,9 @@ It is important to note that spatial operations that use two spatial objects rel
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">canterbury =<span class="st"> </span>nz %&gt;%<span class="st"> </span><span class="kw">filter</span>(REGC2017_NAME ==<span class="st"> &quot;Canterbury Region&quot;</span>)
 canterbury_height =<span class="st"> </span>nz_height[canterbury, ]</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:nz-subset"></span>
-<img src="figures/nz-subset-1.png" alt="Illustration of spatial subsetting with red triangles representing 101 high points in New Zealand, clustered near the central Canterbuy region. The right-hand map contains points, subset with the command `nz_height[canterbury, ]`, located in Canterbury (highlighted in grey)." width="576" />
+<img src="figures/nz-subset-1.png" alt="Illustration of spatial subsetting with red triangles representing 101 high points in New Zealand, clustered near the central Canterbuy region (left). The points in Canterbury were created with the `[` subsetting operator (highlighted in grey, right)." width="576" />
 <p class="caption">
-Figure 4.1: Illustration of spatial subsetting with red triangles representing 101 high points in New Zealand, clustered near the central Canterbuy region. The right-hand map contains points, subset with the command <code>nz_height[canterbury, ]</code>, located in Canterbury (highlighted in grey).
+Figure 4.1: Illustration of spatial subsetting with red triangles representing 101 high points in New Zealand, clustered near the central Canterbuy region (left). The points in Canterbury were created with the <code>[</code> subsetting operator (highlighted in grey, right).
 </p>
 </div>
 <p>Like attribute subsetting <code>x[y, ]</code> subsets features of a <em>target</em> <code>x</code> using the contents of a <em>source</em> object <code>y</code>. Instead of <code>y</code> being of class <code>logical</code> or <code>integer</code> — a vector of <code>TRUE</code> and <code>FALSE</code> values or whole numbers — for spatial subsetting it is another spatial (<code>sf</code>) object.</p>
@@ -621,9 +621,9 @@ sel =<span class="st"> </span><span class="kw">st_is_within_distance</span>(cycl
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_avheight =<span class="st"> </span><span class="kw">aggregate</span>(<span class="dt">x =</span> nz_height, nz, <span class="dt">FUN =</span> mean)</code></pre></div>
 <p>The result of the previous command is an <code>sf</code> object with the same geometry as the (spatial) aggregating object (<code>nz</code>).<a href="#fn24" class="footnoteRef" id="fnref24"><sup>24</sup></a> The result of the previous operation is illustrated in Figure <a href="spatial-operations.html#fig:spatial-aggregation">4.5</a>. The same result can also be generated using the ‘tidy’ functions <code>group_by()</code> and <code>summarize()</code> (used in combination with <code>st_join()</code>):</p>
 <div class="figure" style="text-align: center"><span id="fig:spatial-aggregation"></span>
-<img src="figures/spatial-aggregation-1.png" alt="Average height of high points (stored in the `nz_height` object) across the regions of New Zealand (stored in `nz`.)" width="576" />
+<img src="figures/spatial-aggregation-1.png" alt="Average height of the top 101 high points across the regions of New Zealand." width="576" />
 <p class="caption">
-Figure 4.5: Average height of high points (stored in the <code>nz_height</code> object) across the regions of New Zealand (stored in <code>nz</code>.)
+Figure 4.5: Average height of the top 101 high points across the regions of New Zealand.
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_avheight2 =<span class="st"> </span><span class="kw">st_join</span>(nz, nz_height) %&gt;%
