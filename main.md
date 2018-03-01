@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservecfaf9c0da1706694
+preserveef25dc4b9af50cd5
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3084,7 +3084,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve5b61106a016ae6bd
+preservec6671e21fb00e302
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5975,7 +5975,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserveab9934caad72fd2f
+preserve4015904c7c19d7d0
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6594,7 +6594,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve9509ff3dbdae3863
+preserve40c854dc04a76189
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7715,6 +7715,8 @@ zion_points = st_sample(zion, size = 30) %>%
 zion_points$elevation = raster::extract(srtm, zion_points)
 ```
 
+<img src="figures/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;" />
+
 <!-- extract to line -->
 
 ```r
@@ -7730,12 +7732,15 @@ transect_df = raster::extract(srtm, zion_transect, along = TRUE, cellnumbers = T
   data.frame()
 transect_coords = xyFromCell(srtm, transect_df$cell)
 transect_df = cbind(transect_df, transect_coords)
-library(geosphere)
-transect_df$dist = distm(transect_coords)[, 1]
-ggplot(transect_df, aes(dist, srtm)) + geom_line()
 ```
 
-<img src="figures/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;" />
+
+```r
+library(geosphere)
+transect_df$dist = distm(transect_coords)[, 1]
+```
+
+<img src="figures/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto;" />
 
 <!-- extract to polygons (or extents) -->
 
@@ -7751,8 +7756,6 @@ zion_srtm_df = c(min, mean, max) %>%
   spread(stat, srtm)
 zion_srtm_new = bind_cols(zion, zion_srtm_df)
 ```
-
-<img src="figures/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto;" />
 
 <!-- zonal stats -->
 <!-- land cover categories to polygon -->
@@ -7775,6 +7778,9 @@ zion_nlcd_df = zion_nlcd %>%
   spread(nlcd2011, n)
 zion_nlcd_new = bind_cols(zion, zion_nlcd_df)
 ```
+
+<!-- fix colors ncld!! -->
+<img src="figures/unnamed-chunk-19-1.png" width="576" style="display: block; margin: auto;" />
 
 <!-- ## Spatial interpolation ?? -->
 <!-- http://mdsumner.github.io/guerrilla/articles/irreg2.html -->

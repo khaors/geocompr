@@ -392,17 +392,17 @@ zion_points =<span class="st"> </span><span class="kw">st_sample</span>(zion, <s
 <span class="st">  </span><span class="kw">st_sf</span>()</code></pre></div>
 <!-- elevation to points (zion) -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_points$elevation =<span class="st"> </span>raster::<span class="kw">extract</span>(srtm, zion_points)</code></pre></div>
+<p><img src="figures/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;" /></p>
 <!-- extract to line -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_transect =<span class="st"> </span><span class="kw">st_sfc</span>(<span class="kw">st_linestring</span>(<span class="kw">rbind</span>(<span class="kw">c</span>(-<span class="fl">113.2</span>, <span class="fl">37.45</span>), <span class="kw">c</span>(-<span class="fl">112.9</span>, <span class="fl">37.2</span>)))) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">st_sf</span>()</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">transect_df =<span class="st"> </span>raster::<span class="kw">extract</span>(srtm, zion_transect, <span class="dt">along =</span> <span class="ot">TRUE</span>, <span class="dt">cellnumbers =</span> <span class="ot">TRUE</span>) %&gt;%
 <span class="st">  </span><span class="kw">data.frame</span>()
 transect_coords =<span class="st"> </span><span class="kw">xyFromCell</span>(srtm, transect_df$cell)
-transect_df =<span class="st"> </span><span class="kw">cbind</span>(transect_df, transect_coords)
-<span class="kw">library</span>(geosphere)
-transect_df$dist =<span class="st"> </span><span class="kw">distm</span>(transect_coords)[, <span class="dv">1</span>]
-<span class="kw">ggplot</span>(transect_df, <span class="kw">aes</span>(dist, srtm)) +<span class="st"> </span><span class="kw">geom_line</span>()</code></pre></div>
-<p><img src="figures/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;" /></p>
+transect_df =<span class="st"> </span><span class="kw">cbind</span>(transect_df, transect_coords)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(geosphere)
+transect_df$dist =<span class="st"> </span><span class="kw">distm</span>(transect_coords)[, <span class="dv">1</span>]</code></pre></div>
+<p><img src="figures/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto;" /></p>
 <!-- extract to polygons (or extents) -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_srtm_values =<span class="st"> </span>raster::<span class="kw">extract</span>(<span class="dt">x =</span> srtm, <span class="dt">y =</span> zion)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_srtm_df =<span class="st"> </span><span class="kw">c</span>(min, mean, max) %&gt;%<span class="st"> </span>
@@ -410,7 +410,6 @@ transect_df$dist =<span class="st"> </span><span class="kw">distm</span>(transec
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">stat =</span> <span class="kw">c</span>(<span class="st">&quot;minimum&quot;</span>, <span class="st">&quot;mean&quot;</span>, <span class="st">&quot;maximum&quot;</span>)) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">spread</span>(stat, srtm)
 zion_srtm_new =<span class="st"> </span><span class="kw">bind_cols</span>(zion, zion_srtm_df)</code></pre></div>
-<p><img src="figures/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto;" /></p>
 <!-- zonal stats -->
 <!-- land cover categories to polygon -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nlcd =<span class="st"> </span><span class="kw">raster</span>((<span class="kw">system.file</span>(<span class="st">&quot;raster/nlcd2011.tif&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;spDataLarge&quot;</span>)))</code></pre></div>
@@ -420,6 +419,8 @@ zion_srtm_new =<span class="st"> </span><span class="kw">bind_cols</span>(zion, 
 <span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>()) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">spread</span>(nlcd2011, n)
 zion_nlcd_new =<span class="st"> </span><span class="kw">bind_cols</span>(zion, zion_nlcd_df)</code></pre></div>
+<!-- fix colors ncld!! -->
+<p><img src="figures/unnamed-chunk-19-1.png" width="576" style="display: block; margin: auto;" /></p>
 <!-- ## Spatial interpolation ?? -->
 <!-- http://mdsumner.github.io/guerrilla/articles/irreg2.html -->
 </div>
