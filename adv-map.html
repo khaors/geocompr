@@ -374,13 +374,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p><strong>tmap</strong> generates maps with sensible defaults for a wide range of spatial objects with <code>tm_shape()</code> (which accepts raster and vector objects), followed by one or more layer elements such as <code>tm_fill()</code> and <code>tm_border()</code>. These functions are used singularly and in combination in the code chunk below, which generates Figure <a href="adv-map.html#fig:tmshape">9.1</a>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tmap)
 <span class="co"># Add fill layer to nz shape</span>
-<span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>()
+m1 =<span class="st"> </span><span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>() 
 <span class="co"># Add border layer to nz shape</span>
-<span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_borders</span>()
+m2 =<span class="st"> </span><span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_borders</span>() 
 <span class="co"># Add fill and border layers to nz shape</span>
-<span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>() +<span class="st"> </span><span class="kw">tm_borders</span>()</code></pre></div>
+m3 =<span class="st"> </span><span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>() +<span class="st"> </span><span class="kw">tm_borders</span>() 
+<span class="kw">tmap_arrange</span>(m1, m2, m3, <span class="dt">nrow =</span> <span class="dv">1</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:tmshape"></span>
-<img src="figures/tmshape-1.png" alt="New Zealand's shape plotted with fill (left), border (middle) and fill *and* border (right) layers added using **tmap** functions." width="30%" /><img src="figures/tmshape-2.png" alt="New Zealand's shape plotted with fill (left), border (middle) and fill *and* border (right) layers added using **tmap** functions." width="30%" /><img src="figures/tmshape-3.png" alt="New Zealand's shape plotted with fill (left), border (middle) and fill *and* border (right) layers added using **tmap** functions." width="30%" />
+<img src="figures/tmshape-1.png" alt="New Zealand's shape plotted with fill (left), border (middle) and fill *and* border (right) layers added using **tmap** functions." width="576" />
 <p class="caption">
 Figure 9.1: New Zealand’s shape plotted with fill (left), border (middle) and fill <em>and</em> border (right) layers added using <strong>tmap</strong> functions.
 </p>
