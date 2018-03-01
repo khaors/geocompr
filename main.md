@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve15cad5e64f0c0634
+preserve5af6aaa338cea5b6
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3084,7 +3084,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve426648c5bf1125c6
+preserveb8b17ed7d23a7d22
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5975,7 +5975,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve258f794bc75caf92
+preserve5c18c6d8982d3db4
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6594,7 +6594,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservefd5bc74391e62efc
+preservea52182775919ee68
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6728,14 +6728,12 @@ These functions are used singularly and in combination in the code chunk below, 
 
 
 ```r
-library(tmap)
 # Add fill layer to nz shape
-m1 = tm_shape(nz) + tm_fill() 
+tm_shape(nz) + tm_fill() 
 # Add border layer to nz shape
-m2 = tm_shape(nz) + tm_borders() 
+tm_shape(nz) + tm_borders() 
 # Add fill and border layers to nz shape
-m3 = tm_shape(nz) + tm_fill() + tm_borders() 
-tmap_arrange(m1, m2, m3, nrow = 1)
+tm_shape(nz) + tm_fill() + tm_borders() 
 ```
 
 <div class="figure" style="text-align: center">
@@ -6748,7 +6746,12 @@ First a 'shape' element is created by `tm_shape()` and then layers are iterative
 It is a flexible approach to map making because the common task of adding new layers to a map is a simple as adding `+` followed by a command that creates a new layer.
 This 'layering' is demonstrated by adding a border *on top of* the fill layer for `nz` in the third command of the previous code chunk (the order in which layers are added is the order in which they are rendered).
 
-
+\BeginKnitrBlock{rmdnote}<div class="rmdnote">`qtm()` is a handy function for **q**uickly creating **t**map **m**aps (hence the snappy name).
+It is concise and provides a good default visualization in many cases:
+`qtm(nz)`, for example, is equivalent to `tm_shape(nz) + tm_fill() + tm_borders()`.
+Further, layers can be added concisely using multiple `qtm()` calls, such as `qtm(nz) + qtm(nz_height)`.
+The disadvantage is that it makes aesthetics of individual layers harder to control.
+While we advocate its use for quick interactive map creation, we avoid teaching it preferring clarity and control over conciseness.</div>\EndKnitrBlock{rmdnote}
 
 <!-- I'm not sure if we can fill it all in the book, but it could be worth to try these three packages on the same problems/data -->
 <!-- base plots (one example) -->

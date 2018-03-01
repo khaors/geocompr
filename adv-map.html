@@ -372,14 +372,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="basics" class="section level3">
 <h3><span class="header-section-number">9.2.1</span> Basics</h3>
 <p><strong>tmap</strong> generates maps with sensible defaults for a wide range of spatial objects with <code>tm_shape()</code> (which accepts raster and vector objects), followed by one or more layer elements such as <code>tm_fill()</code> and <code>tm_border()</code>. These functions are used singularly and in combination in the code chunk below, which generates Figure <a href="adv-map.html#fig:tmshape">9.1</a>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tmap)
-<span class="co"># Add fill layer to nz shape</span>
-m1 =<span class="st"> </span><span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>() 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Add fill layer to nz shape</span>
+<span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>() 
 <span class="co"># Add border layer to nz shape</span>
-m2 =<span class="st"> </span><span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_borders</span>() 
+<span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_borders</span>() 
 <span class="co"># Add fill and border layers to nz shape</span>
-m3 =<span class="st"> </span><span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>() +<span class="st"> </span><span class="kw">tm_borders</span>() 
-<span class="kw">tmap_arrange</span>(m1, m2, m3, <span class="dt">nrow =</span> <span class="dv">1</span>)</code></pre></div>
+<span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>() +<span class="st"> </span><span class="kw">tm_borders</span>() </code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:tmshape"></span>
 <img src="figures/tmshape-1.png" alt="New Zealand's shape plotted with fill (left), border (middle) and fill *and* border (right) layers added using **tmap** functions." width="576" />
 <p class="caption">
@@ -387,6 +385,11 @@ Figure 9.1: New Zealand’s shape plotted with fill (left), border (middle) and 
 </p>
 </div>
 <p>The commands demonstrate how <strong>tmap</strong> works. First a ‘shape’ element is created by <code>tm_shape()</code> and then layers are iteratively added to the map. It is a flexible approach to map making because the common task of adding new layers to a map is a simple as adding <code>+</code> followed by a command that creates a new layer. This ‘layering’ is demonstrated by adding a border <em>on top of</em> the fill layer for <code>nz</code> in the third command of the previous code chunk (the order in which layers are added is the order in which they are rendered).</p>
+
+<div class="rmdnote">
+<code>qtm()</code> is a handy function for <strong>q</strong>uickly creating <strong>t</strong>map <strong>m</strong>aps (hence the snappy name). It is concise and provides a good default visualization in many cases: <code>qtm(nz)</code>, for example, is equivalent to <code>tm_shape(nz) + tm_fill() + tm_borders()</code>. Further, layers can be added concisely using multiple <code>qtm()</code> calls, such as <code>qtm(nz) + qtm(nz_height)</code>. The disadvantage is that it makes aesthetics of individual layers harder to control. While we advocate its use for quick interactive map creation, we avoid teaching it preferring clarity and control over conciseness.
+</div>
+<p></p>
 <!-- I'm not sure if we can fill it all in the book, but it could be worth to try these three packages on the same problems/data -->
 <!-- base plots (one example) -->
 <!-- ggplots  (geom_sf, coord_sf; one example)-->
