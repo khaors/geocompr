@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve0371e3445b1d8f0e
+preserve6633e5e28e398b8c
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3084,7 +3084,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve2f2d4a0e8cae801b
+preservedd7d87464693fd54
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5975,7 +5975,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve18adc6ac39f845b5
+preserveb58e80d8ce56d04e
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6594,7 +6594,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve03b7895127255430
+preserve6c07da2838b6c25d
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -8044,10 +8044,10 @@ Here, spatial CV will come to the rescue which will be the main topic of this ch
 
 ## Case study: landslide susceptibility {#case-study}
 
-To introduce spatial CV by example, we will use a landslide dataset from Southern Ecuador.
+To introduce spatial CV by example, we will use a landslide dataset from Southern Ecuador (Figure \@ref(fig:lsl-map)).
 For a detailed description of the dataset and the study area please refer to @muenchow_geomorphic_2012.
 One can find a subset of the corresponding data in the **RSAGA** package.
-The following command loads two datasets, a `data.frame` named `landslides` and a `list` named `dem`.
+The following command loads three datasets, a `data.frame` named `landslides`, a `list` named `dem`, and an `sf`-object named `study_area`.
 
 
 ```r
@@ -8075,7 +8075,7 @@ To transform this list into a `raster`, we can write:
 ```r
 dem = 
   raster(dem$data, 
-         crs = "+proj=utm +zone=17 +south +datum=WGS84 +units=m +no_defs",
+         crs = dem$header$proj4string,
          xmn = dem$header$xllcorner, 
          xmx = dem$header$xllcorner + dem$header$ncols * dem$header$cellsize,
          ymn = dem$header$yllcorner,
@@ -8086,7 +8086,6 @@ To model the probability for landslide occurrence, we need some predictors.
 Here, we use selected terrain attributes frequently associated with landsliding [@muenchow_geomorphic_2012], all of which can be computed from the provided digital elevation model (`dem`) using R-GIS bridges (see Chapter \@ref(gis)).
 We leave it as an exercise to the reader to compute the terrain attribute rasters and extract the corresponding values to our landslide/non-landslide dataframe (see also exercises).
 The first three rows of the resulting dataframe (still named `lsl`) could look like this:
-
 <!-- has anybody an idea why I have to run the following code chunk two times to make it work when rendering the book with `bookdown::render_book()`?-->
 
 
@@ -8095,10 +8094,10 @@ The first three rows of the resulting dataframe (still named `lsl`) could look l
 
 ```r
 head(lsl, 3)
-#>           x       y lslpts slope   cplan   cprof elev log_carea
-#> 622  713668 9558047  FALSE  33.6  0.0208 0.01323 2493      2.63
-#> 1485 713958 9559837  FALSE  16.7  0.0432 0.00923 2226      2.26
-#> 1327 713478 9558717  FALSE  40.3 -0.0133 0.00593 2251      3.56
+#>           x       y lslpts slope    cplan    cprof elev log_carea
+#> 1337 715378 9559007  FALSE  39.7  0.02512 -0.00311 2357      2.66
+#> 384  714358 9560017  FALSE  55.7 -0.03212 -0.00491 2093      2.96
+#> 1551 713958 9560807  FALSE  36.7 -0.00347  0.00615 1815      2.82
 ```
 
 The added columns are:
@@ -8109,11 +8108,88 @@ The added columns are:
 - `elev`: elevation (m a.s.l.) as the representation of different altitudinal zones of vegetation and precipitation in the study area.
 - `log_carea`: the decadic logarithm of the catchment area (log m^2^) representing the amount of water flowing towards a location.
 
+<div class="figure" style="text-align: center">
+<img src="figures/lsl-map-1.png" alt="Landslide initiation points (red) and points unaffected by landsliding (blue) in Southern Ecuador. Randomly selected test points are marked by a golden border. CRS: UTM zone 17S (EPSG: 32717)." width="576" />
+<p class="caption">(\#fig:lsl-map)Landslide initiation points (red) and points unaffected by landsliding (blue) in Southern Ecuador. Randomly selected test points are marked by a golden border. CRS: UTM zone 17S (EPSG: 32717).</p>
+</div>
+
+
+## Conventional modeling approach in R
+Before diving into the **mlr** package it is worth to take a look at the conventional modeling interface in R.
+This way we introduce statistical supervised modeling in R which in turn will contribute to get a better grasp on the **mlr** approach introduced later on, and provides the required skillset for doing spatial CV.
+Usually, we model the response variable as a function of predictors. 
+Therefore, modeling functions in R such as `lm`, `glm` and many more use the so-called formula interface.
+Let's put this into practice by modeling the landslide occurence as a function of terrain attributes.
+Since our response (landslide occurence) belongs to the binary category, we use a binomial generalized linear model instead of a simple linear model which would expect a normally distributed numeric response variable.
+
+
+```r
+fit = glm(lslpts ~ slope + cplan + cprof + elev + log_carea, 
+          data = lsl, family = binomial())
+# the same as:
+# fit = glm(lslpts ~ ., data = select(lsl, -x, -y))
+fit
+#> 
+#> Call:  glm(formula = lslpts ~ slope + cplan + cprof + elev + log_carea, 
+#>     family = binomial(), data = lsl)
+#> 
+#> Coefficients:
+#> (Intercept)        slope        cplan        cprof         elev  
+#>    2.39e+00     1.22e-01    -1.96e+01    -2.22e+01    -3.98e-04  
+#>   log_carea  
+#>   -2.32e+00  
+#> 
+#> Degrees of Freedom: 349 Total (i.e. Null);  344 Residual
+#> Null Deviance:	    485 
+#> Residual Deviance: 356 	AIC: 368
+```
+
+Subsequently, we can use the estimated model coefficients for predictions.
+The generic `predict()` function does this for us automatically.
+The `response` option gives back the predicted probabilities (of landslide occurrence) for each observation in `lsl` (see `? predict.glm`).
+
+
+
+```r
+head(predict(object = fit, type = "response"))
+```
+
+We can also predict spatially by applying the coefficients to our predictor rasters. 
+We could do this manually but can also use **raster**'s `predict()` function.
+This function also expects the fitted model as input as well as a raster stack containing the same predictors we have used in the model as raster objects (Figure \@ref(fig:lsl-susc)).
+
+
+```r
+pred = raster::predict(object = ta, model = fit, type = "response")
+```
 
 <div class="figure" style="text-align: center">
-<img src="figures/unnamed-chunk-9-1.png" alt="Landslide initiation points (red) and points unaffected by landsliding (blue) in Southern Ecuador. Randomly selected test points are marked by a golden border. Projection: UTM zone 17S (EPSG: 32717)." width="576" />
-<p class="caption">(\#fig:unnamed-chunk-9)Landslide initiation points (red) and points unaffected by landsliding (blue) in Southern Ecuador. Randomly selected test points are marked by a golden border. Projection: UTM zone 17S (EPSG: 32717).</p>
+<img src="figures/lsl-susc-1.png" alt="Spatial prediction of landslide susceptibility using a  GLM. CRS: UTM zone 17S (EPSG: 32717)." width="576" />
+<p class="caption">(\#fig:lsl-susc)Spatial prediction of landslide susceptibility using a  GLM. CRS: UTM zone 17S (EPSG: 32717).</p>
 </div>
+
+Here, when making predictions we neglect spatial autocorrelation since we assume that on average predictive accuracies of parametric models remain the same with or without spatial autocorrelation structures.
+However, it is possible to include spatial autocorrelation structures into models as well as into the predictions.
+This is, however, beyond the scope of this book.
+Nevertheless, we give the interested reader some pointers where to look it up.
+There are three main directions:
+
+1. The predictions of universal kriging are the predictions of a simple linear model plus the kriged model's residuals, i.e. spatially interpolated residuals [@bivand_applied_2013]. 
+1. Adding a spatial correlation (dependency) structure to a generalized least squares model  [`nlme::gls()`; @zuur_mixed_2009; @zuur_beginners_2017].  ^[These correlation structures can also be included in `MASS::glmmPQL()` and `mgcv::gamm()`.]
+1. Finally, there are mixed-effect modeling approaches.
+Basically, a random effect imposes a dependency structure on the response variable which in turn allows for observations of once class to be more similar to each other than to those of another class [@zuur_mixed_2009]. 
+Classes can be for example bee hives, owl nests, vegetation transects or an altitudinal stratification.
+This mixed modeling approach assumes normal and independent distributed random intercepts.^[Note that for spatial predictions one would usually use the population intercept.]
+This can even be extended by using a random intercept that is normal and spatially dependent.
+For this, however, you will have to resort most likely to Bayesian modeling approaches since frequentist software tools are rather limited in this respect especially for more complex models [@blangiardo_spatial_2015; @zuur_beginners_2017]. 
+
+Spatial predictions are one very important outcome of a model.
+Even more important is how good the model is at making predictions.
+Therefore, we need a measure which tells us 
+
+
+AUROC: To assess the model's performance we use the AUROC.
+Add short explanation. 
 
 
 ## Introduction to spatial CV
@@ -8201,8 +8277,41 @@ lrn = makeLearner(cl = "classif.binomial",
 # helpLearner(learner)
 ```
 
-Having specified a learner and a task, we can train our model. 
+In the beginning, it might seem a bit tedious to learn the **mlr** interface for modeling.
+But remember that one only has to learn one single interface to run 171 learners.
+Additionally, resampling in **mlr** is really easy and only requires two more steps.^[Further advantages are the easy parallelization of resampling techniques and the tuning of machine learning hyperparameters, also spatially, in an inner fold.]
+The first thing to to is specifying a resampling method.
+Spatial repeated cross-validation
 
+
+```r
+resampling = makeResampleDesc(method = "SpRepCV", folds = 5, reps = 10)
+```
+
+Executing the resampling method and set the preferred performance measure.
+
+
+```r
+set.seed(02192018)
+sp_cv = mlr::resample(learner = lrn, task = task, resampling = resampling, 
+                      measures = auc)
+sp_cv$measures.test$auc
+#>  [1] 0.799 0.765 0.851 0.792 0.692 0.765 0.692 0.792 0.851 0.799 0.799
+#> [12] 0.792 0.765 0.851 0.692 0.692 0.851 0.799 0.792 0.765 0.757 0.722
+#> [23] 0.815 0.838 0.849 0.792 0.799 0.851 0.757 0.747 0.747 0.757 0.799
+#> [34] 0.851 0.792 0.757 0.799 0.747 0.792 0.851 0.849 0.838 0.757 0.722
+#> [45] 0.815 0.792 0.799 0.757 0.747 0.851
+# the same as:
+mean(sp_cv$measures.test$auc)
+#> [1] 0.787
+```
+
+To put it into perspective, we compare this result with that of a non-spatial cross-validation.
+
+
+
+
+Having specified a learner and a task, we can train our model. 
 
 
 ```r
@@ -8221,36 +8330,6 @@ identical(fit$coefficients, mlr_fit$coefficients)
 #> [1] TRUE
 ```
 
-In the beginning, it might seem a bit tedious to learn the **mlr** interface for modeling.
-But remember that one only has to learn one single interface to run 171 learners.
-Additionally, resampling in **mlr** is really easy and only requires two more steps.^[Further advantages are the easy parallelization of resampling techniques and the tuning of machine learning hyperparameters in an inner fold.]
-The first thing to to is specifying a resampling method.
-Spatial repeated cross-validation
-
-
-```r
-resampling = makeResampleDesc(method = "SpRepCV", folds = 5, reps = 10)
-```
-
-Executing the resampling method and set the preferred performance measure.
-
-
-```r
-set.seed(02192018)
-sp_cv = mlr::resample(learner = lrn, task = task, resampling = resampling, 
-                      measures = auc)
-sp_cv$measures.test$auc
-#>  [1] 0.825 0.838 0.804 0.865 0.731 0.811 0.849 0.774 0.894 0.842 0.815
-#> [12] 0.832 0.654 0.862 0.825 0.815 0.825 0.862 0.832 0.654 0.797 0.872
-#> [23] 0.880 0.839 0.772 0.774 0.842 0.811 0.894 0.849 0.849 0.782 0.801
-#> [34] 0.869 0.800 0.842 0.811 0.849 0.774 0.894 0.869 0.849 0.772 0.800
-#> [45] 0.819 0.849 0.774 0.894 0.811 0.842
-# the same as:
-mean(sp_cv$measures.test$auc)
-#> [1] 0.822
-```
-
-To put it into perspective, we compare this result with that of a non-spatial cross-validation.
 
 
 
