@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve6633e5e28e398b8c
+preserve80bf6e741a6d71a7
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3084,7 +3084,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservedd7d87464693fd54
+preservee6ddf744e2ffbc7a
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5975,7 +5975,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserveb58e80d8ce56d04e
+preservecf82caa6c0714fc2
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6594,7 +6594,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve6c07da2838b6c25d
+preserve4c1077f7a8e8deb1
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6723,17 +6723,23 @@ This section teaches how to make static maps with **tmap**, emphasizing aestheti
 
 ### Basics
 
-**tmap** generates maps with sensible defaults for a wide range of spatial objects using the command `qtm()` (short for 'quick tmap map'), as illustrated below for New Zealand:
+**tmap** generates maps with sensible defaults for a wide range of spatial objects with `tm_shape()` (which accepts raster and vector objects), followed by one or more layer elements such as `tm_fill()` and `tm_border()`.
+These functions are used singularly and in combination in the code chunk below, which generates Figure \@ref(fig:tmshape):
 
 
 ```r
 library(tmap)
-qtm(nz)
+# Add fill layer to nz shape
+tm_shape(nz) + tm_fill()
+# Add border layer to nz shape
+tm_shape(nz) + tm_borders()
+# Add fill and border layers to nz shape
+tm_shape(nz) + tm_fill() + tm_borders()
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/qtm-1.png" alt="Default output of the`qtm()` basic plotting function from the **tmap** package." width="50%" />
-<p class="caption">(\#fig:qtm)Default output of the`qtm()` basic plotting function from the **tmap** package.</p>
+<img src="figures/tmshape-1.png" alt="Default output of the`qtm()` basic plotting function from the **tmap** package." width="30%" /><img src="figures/tmshape-2.png" alt="Default output of the`qtm()` basic plotting function from the **tmap** package." width="30%" /><img src="figures/tmshape-3.png" alt="Default output of the`qtm()` basic plotting function from the **tmap** package." width="30%" />
+<p class="caption">(\#fig:tmshape)Default output of the`qtm()` basic plotting function from the **tmap** package.</p>
 </div>
 
 

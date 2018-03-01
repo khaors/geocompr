@@ -371,11 +371,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p><strong>tmap</strong> is a powerful and flexible map-making package with sensible defaults. It has a concise syntax that will be familiar to <strong>ggplot2</strong> users and has a unique capability to generate static and interactive maps using the same code via a switch activated by <code>tmap_mode()</code> (see section <a href="adv-map.html#interactive-maps">9.4</a>). <strong>tmap</strong> is well documented in the vignettes <a href="https://cran.r-project.org/web/packages/tmap/vignettes/tmap-nutshell.html"><code>tmap-nutshell</code></a> and <a href="https://cran.r-project.org/web/packages/tmap/vignettes/tmap-modes.html"><code>tmap-modes</code></a>. This section teaches how to make static maps with <strong>tmap</strong>, emphasizing aesthetic features and adornments commonly needed for clear and useful visualisations of raster and vector datasets we saw in the previous section.</p>
 <div id="basics" class="section level3">
 <h3><span class="header-section-number">9.2.1</span> Basics</h3>
-<p><strong>tmap</strong> generates maps with sensible defaults for a wide range of spatial objects using the command <code>qtm()</code> (short for ‘quick tmap map’), as illustrated below for New Zealand:</p>
+<p><strong>tmap</strong> generates maps with sensible defaults for a wide range of spatial objects with <code>tm_shape()</code> (which accepts raster and vector objects), followed by one or more layer elements such as <code>tm_fill()</code> and <code>tm_border()</code>. These functions are used singularly and in combination in the code chunk below, which generates Figure <a href="adv-map.html#fig:tmshape">9.1</a>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tmap)
-<span class="kw">qtm</span>(nz)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:qtm"></span>
-<img src="figures/qtm-1.png" alt="Default output of the`qtm()` basic plotting function from the **tmap** package." width="50%" />
+<span class="co"># Add fill layer to nz shape</span>
+<span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>()
+<span class="co"># Add border layer to nz shape</span>
+<span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_borders</span>()
+<span class="co"># Add fill and border layers to nz shape</span>
+<span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>() +<span class="st"> </span><span class="kw">tm_borders</span>()</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:tmshape"></span>
+<img src="figures/tmshape-1.png" alt="Default output of the`qtm()` basic plotting function from the **tmap** package." width="30%" /><img src="figures/tmshape-2.png" alt="Default output of the`qtm()` basic plotting function from the **tmap** package." width="30%" /><img src="figures/tmshape-3.png" alt="Default output of the`qtm()` basic plotting function from the **tmap** package." width="30%" />
 <p class="caption">
 Figure 9.1: Default output of the<code>qtm()</code> basic plotting function from the <strong>tmap</strong> package.
 </p>
