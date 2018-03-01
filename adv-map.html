@@ -385,6 +385,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 Figure 9.1: New Zealand’s shape plotted with fill (left), border (middle) and fill <em>and</em> border (right) layers added using <strong>tmap</strong> functions.
 </p>
 </div>
+<p>The commands demonstrate how <strong>tmap</strong> works. First a ‘shape’ element is created by <code>tm_shape()</code> and then layers are iteratively added to the map. It is a flexible approach to map making because the common task of adding new layers to a map is a simple as adding <code>+</code> followed by a command that creates a new layer. This ‘layering’ is demonstrated by adding a border <em>on top of</em> the fill layer for <code>nz</code> in the third command of the previous code chunk (the order in which layers are added is the order in which they are rendered).</p>
 <!-- I'm not sure if we can fill it all in the book, but it could be worth to try these three packages on the same problems/data -->
 <!-- base plots (one example) -->
 <!-- ggplots  (geom_sf, coord_sf; one example)-->
