@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-02-28">
+<meta name="date" content="2018-03-01">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -270,7 +270,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="9" data-path="adv-map.html"><a href="adv-map.html"><i class="fa fa-check"></i><b>9</b> Making maps with R</a><ul>
 <li class="chapter" data-level="" data-path="adv-map.html"><a href="adv-map.html#prerequisites-7"><i class="fa fa-check"></i>Prerequisites</a></li>
 <li class="chapter" data-level="9.1" data-path="adv-map.html"><a href="adv-map.html#introduction-6"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
-<li class="chapter" data-level="9.2" data-path="adv-map.html"><a href="adv-map.html#static-maps"><i class="fa fa-check"></i><b>9.2</b> Static maps</a><ul>
+<li class="chapter" data-level="9.2" data-path="adv-map.html"><a href="adv-map.html#static-maps-with-tmap"><i class="fa fa-check"></i><b>9.2</b> Static maps with tmap</a><ul>
 <li class="chapter" data-level="9.2.1" data-path="adv-map.html"><a href="adv-map.html#basics"><i class="fa fa-check"></i><b>9.2.1</b> Basics</a></li>
 <li class="chapter" data-level="9.2.2" data-path="adv-map.html"><a href="adv-map.html#map-styling"><i class="fa fa-check"></i><b>9.2.2</b> Map styling</a></li>
 <li class="chapter" data-level="9.2.3" data-path="adv-map.html"><a href="adv-map.html#class-intervals"><i class="fa fa-check"></i><b>9.2.3</b> Class intervals</a></li>
@@ -406,7 +406,7 @@ popup =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot
 <div id="htmlwidget-ec897849c5c50a6f7846" style="width:100%;height:355.968px;" class="leaflet html-widget"></div>
 <script type="application/json" data-for="htmlwidget-ec897849c5c50a6f7846">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["NASAGIBS.ViirsEarthAtNight2012",null,null,{"errorTileUrl":"","noWrap":false,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false}]},{"method":"addAwesomeMarkers","args":[[52,53,49],[-3,23,11],null,null,null,{"clickable":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["Robin","Jakub","Jannes"],null,null,null,null,null,null]}],"limits":{"lat":[49,53],"lng":[-3,23]}},"evals":[],"jsHooks":[]}</script>
 <p class="caption">
-Figure 1.1: Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. See the online version at <a href="http://geocompr.robinlovelace.net/intro.html">robinlovelace.net/geocompr</a> and click on the markers for interactivity.
+Figure 1.1: Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.
 </p>
 </div>
 <p>It would have been difficult to produce Figure <a href="intro.html#fig:interactive">1.1</a> using R a few years ago, let alone as an interactive map. This illustrates R’s flexibility and how, thanks to developments such as <strong>knitr</strong> and <strong>leaflet</strong>, it can be used as an interface to other software, a theme that will recur throughout this book. The use of R code, therefore, enables teaching geocomputation with reference to reproducible examples such as that provided in <a href="intro.html#fig:interactive">1.1</a> rather than abstract concepts.</p>

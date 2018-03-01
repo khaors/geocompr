@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-02-28'
+date: '2018-03-01'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-02-28 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-03-01 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -254,8 +254,8 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservee74e32f50a90aec1
-<p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. See the online version at [robinlovelace.net/geocompr](http://geocompr.robinlovelace.net/intro.html) and click on the markers for interactivity.</p>
+preservef8dfd22a4bcd3d15
+<p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
 It would have been difficult to produce Figure \@ref(fig:interactive) using R a few years ago, let alone as an interactive map.
@@ -3084,7 +3084,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve0fbe0fc0968aef1c
+preservee3441be47bef8707
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5975,7 +5975,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservefbe04706c0ed97e0
+preserve77a9717c91121b59
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6594,7 +6594,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve6733c12b1ce4896b
+preserve30bf69a3660e7b16
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6706,6 +6706,7 @@ Map making is therefore a critical part of geocomputation and its emphasis on ch
 We have already seen how to create maps using methods building on the substantial graphical capabilities of base R in section \@ref(basic-map).
 It is possible to go far with these methods, as illustrated in Chapter [14](https://www.stat.auckland.ac.nz/~paul/RG2e/chapter14.html) of the book *R Graphics* [@murrell_r_2016].
 The focus of this chapter, however, is creating maps using packages that are dedicated to this purpose.
+
 In many cases the simplicity and speed of maps created using `plot()` commands will be sufficient, especially when using R interactively to understand data quickly.
 In some case you may benefit from the flexibility of low-level control over graphical parameters offered by `plot()` and functions provided by the **grid** package.
 If your aim is to produce publication-quality or high-impact maps in minimal time and code, this chapter is for you.
@@ -6713,7 +6714,9 @@ If your aim is to produce publication-quality or high-impact maps in minimal tim
 <!-- info about relation between efficiency and editability -->
 <!-- intro to the chapter structure -->
 
-## Static maps
+## Static maps with tmap
+
+
 
 ### Basics
 
