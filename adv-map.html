@@ -421,17 +421,22 @@ Figure 9.1: New Zealand’s shape plotted with fill (left), border (middle) and 
 <div id="faceted-maps" class="section level3">
 <h3><span class="header-section-number">9.2.4</span> Faceted maps</h3>
 <p>Faceted maps are a common and potentially effective way of visualizing spatial relationships that are more complex that a single relationship. The population of cities at one moment in time can be represented easily on a single map, for example by making the size of symbols variable for each city depending on population. However, to represent the populations of cities at multiple moments in time requires an <em>extra dimension</em>. This could be added by an additional <em>aesthetic</em> such as color but this risks cluttering the map because it will involve multiple overlapping points (cities do not tend to move over time!).</p>
-<p>Faceted maps overcome this issue by creating ‘small multiples’ of spatial information. Typically, this will involve plotting the same geometry data multiple times, once for each variable present in the attribute data (this is the default plotting method for <code>sf</code> objects, as we saw in Chapter 2). However, facets can also represent shifting geometries, e.g. as the spatial distribution of a point pattern evolves over time. This use case of faceted plot is illustrated in Figure <a href="#fig:urban-facet"><strong>??</strong></a>.</p>
-<!-- revert eval=TRUE -->
+<p>Faceted maps overcome this issue by creating ‘small multiples’ of spatial information. Typically, this will involve plotting the same geometry data multiple times, once for each variable present in the attribute data (this is the default plotting method for <code>sf</code> objects, as we saw in Chapter 2). However, facets can also represent shifting geometries, e.g. as the spatial distribution of a point pattern evolves over time. This use case of faceted plot is illustrated in Figure <a href="adv-map.html#fig:urban-facet">9.2</a>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tm_shape</span>(world) +
 <span class="st">  </span><span class="kw">tm_polygons</span>() +<span class="st"> </span>
 <span class="st">  </span><span class="kw">tm_shape</span>(urban_agglomerations) +
 <span class="st">  </span><span class="kw">tm_dots</span>(<span class="dt">size =</span> <span class="st">&quot;population_millions&quot;</span>) +
 <span class="st">  </span><span class="kw">tm_facets</span>(<span class="dt">by =</span> <span class="st">&quot;year&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:urban-facet"></span>
+<img src="figures/urban-facet-1.png" alt="Faceted map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations." width="576" />
+<p class="caption">
+Figure 9.2: Faceted map showing the top 30 largest ‘urban agglomerations’ from 1950 to 2030 based on population projects by the United Nations.
+</p>
+</div>
 </div>
 <div id="inset-maps" class="section level3">
 <h3><span class="header-section-number">9.2.5</span> Inset maps</h3>
-<p>The role of spatial visualizations is to provide an information in the most accessible form. This is often done with the use of inset maps. They could be used to focus on a smaller area in more detail (Figure <a href="adv-map.html#fig:insetmap1">9.2</a>) or to bring some non-contiguous regions closer to ease their comparison (Figure <a href="adv-map.html#fig:insetmap2">9.3</a>). <!-- find the best distribution of insets --> In this section we focus on a creation of inset maps, so to learn about map styling go to section <a href="adv-map.html#map-styling">9.2.2</a>.</p>
+<p>The role of spatial visualizations is to provide an information in the most accessible form. This is often done with the use of inset maps. They could be used to focus on a smaller area in more detail (Figure <a href="adv-map.html#fig:insetmap1">9.3</a>) or to bring some non-contiguous regions closer to ease their comparison (Figure <a href="adv-map.html#fig:insetmap2">9.4</a>). <!-- find the best distribution of insets --> In this section we focus on a creation of inset maps, so to learn about map styling go to section <a href="adv-map.html#map-styling">9.2.2</a>.</p>
 <!-- example1: classic inset map -->
 <p>Inset map usually covers an area with densely located phenomena that cannot be clearly visible at the original map scale. In the example below, we would create an inset map of the central part of the New Zealand’s Southern Alps. The first step is to define the area of interest, which can be done by creating a new spatial object, <code>nz_region</code>. <!--# mapview::mapview(nz_height, native.crs = TRUE) or mapedit??--></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_region =<span class="st"> </span><span class="kw">st_bbox</span>(<span class="kw">c</span>(<span class="dt">xmin =</span> <span class="dv">1340000</span>, <span class="dt">xmax =</span> <span class="dv">1450000</span>, <span class="dt">ymin =</span> <span class="dv">5130000</span>, <span class="dt">ymax =</span> <span class="dv">5210000</span>),
@@ -457,7 +462,7 @@ nz_map
 <div class="figure" style="text-align: center"><span id="fig:insetmap1"></span>
 <img src="figures/insetmap1-1.png" alt="Inset map showing the central part of the Southern Alps in New Zealand." width="576" />
 <p class="caption">
-Figure 9.2: Inset map showing the central part of the Southern Alps in New Zealand.
+Figure 9.3: Inset map showing the central part of the Southern Alps in New Zealand.
 </p>
 </div>
 <p>Inset map can be save to file either by using a graphic device (see section <a href="read-write.html#visual-outputs">6.6</a>) or the <code>save_tmap()</code> function and its arguments - <code>insets_tm</code> and <code>insets_vp</code>.</p>
@@ -481,7 +486,7 @@ alaska_map =<span class="st"> </span><span class="kw">tm_shape</span>(alaska) +
 <div class="figure" style="text-align: center"><span id="fig:insetmap2"></span>
 <img src="figures/insetmap2-1.png" alt="Map of the United States." width="576" />
 <p class="caption">
-Figure 9.3: Map of the United States.
+Figure 9.4: Map of the United States.
 </p>
 </div>
 <p>The code presented above is very compact and allows for creation of many similar maps, however the map do not represent sizes and locations of Hawaii and Alaska well. You can see an alternative approach in the <a href="https://github.com/Robinlovelace/geocompr/blob/master/vignettes/us-map.Rmd"><code>vignettes/us-map.Rmd</code></a> file in the book’s GitHub repo, which tries to mitigate this issues.</p>
@@ -492,15 +497,14 @@ Figure 9.3: Map of the United States.
 <div id="animations" class="section level2">
 <h2><span class="header-section-number">9.3</span> Animations</h2>
 <p>Animated maps can be useful for communicating how spatial phenomena shift over time. An advantage of faceted plots are that they can be printed, but the approach has disadvantages: faceted maps can become very small with more than ~9 maps in one figure, and it can be hard to see the spatial relationships between each facet when each map is on a different part of the page! Furthermore, with the increasing proportion of communication that happens via digital screens, the disadvantage that animations cannot be printed is diminished. You can always link readers to a web-page containing an animated (or interactive) version of a printed map to help make it come alive.</p>
-<p>Figure <a href="adv-map.html#fig:urban-animated">9.4</a> is a simple example of the benefits of an animated map. Unlike the faceted plot presented in the previous section, it does not squeeze all 17 for them all to be displayed simultaneously (see the book’s website for the animated version).</p>
+<p>Figure <a href="adv-map.html#fig:urban-animated">9.5</a> is a simple example of the benefits of an animated map. Unlike the faceted plot presented in the previous section, it does not squeeze all 17 for them all to be displayed simultaneously (see the book’s website for the animated version).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr::<span class="kw">include_graphics</span>(<span class="st">&quot;figures/urban-animated.gif&quot;</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:urban-animated"></span>
 <img src="figures/urban-animated.gif" alt="Animated map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations."  />
 <p class="caption">
-Figure 9.4: Animated map showing the top 30 largest ‘urban agglomerations’ from 1950 to 2030 based on population projects by the United Nations.
+Figure 9.5: Animated map showing the top 30 largest ‘urban agglomerations’ from 1950 to 2030 based on population projects by the United Nations.
 </p>
 </div>
-<!-- revert eval=TRUE -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m =<span class="st"> </span><span class="kw">tm_shape</span>(world) +<span class="st"> </span>
 <span class="st">  </span><span class="kw">tm_polygons</span>() +
 <span class="st">  </span><span class="kw">tm_shape</span>(urban_agglomerations) +
@@ -575,7 +579,7 @@ m2 =<span class="st"> </span><span class="kw">tm_shape</span>(world_sf_temporal2
 In <strong>shiny</strong> apps these are often split into <code>ui.R</code> (short for user interface) and <code>server.R</code> files, naming conventions used by <a href="https://github.com/rstudio/shiny-server"><code>shiny-server</code></a>, a server-side Linux application for serving shiny apps on public-facing websites <code>shiny-server</code> also serves apps defined by a single <code>app.R</code> file in an ‘app folder’.
 </div>
 <p></p>
-<p>Before considering large apps it is worth seeing a minimal example, named ‘lifeApp’, in action.<a href="#fn56" class="footnoteRef" id="fnref56"><sup>56</sup></a> The code below defines and launches — with the command <code>shinyApp()</code> — a lifeApp, which provides an interactive slider allowing users to make countries appear with progressively lower levels of life expectancy (see Figure <a href="adv-map.html#fig:lifeApp">9.5</a>):</p>
+<p>Before considering large apps it is worth seeing a minimal example, named ‘lifeApp’, in action.<a href="#fn56" class="footnoteRef" id="fnref56"><sup>56</sup></a> The code below defines and launches — with the command <code>shinyApp()</code> — a lifeApp, which provides an interactive slider allowing users to make countries appear with progressively lower levels of life expectancy (see Figure <a href="adv-map.html#fig:lifeApp">9.6</a>):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ui =<span class="st"> </span><span class="kw">fluidPage</span>(
   <span class="kw">sliderInput</span>(<span class="dt">inputId =</span> <span class="st">&quot;life&quot;</span>, <span class="st">&quot;Life expectancy&quot;</span>, <span class="dv">0</span>, <span class="dv">80</span>, <span class="dt">value =</span> <span class="dv">80</span>),
       <span class="kw">leafletOutput</span>(<span class="dt">outputId =</span> <span class="st">&quot;map&quot;</span>)
@@ -590,10 +594,10 @@ server =<span class="st"> </span>function(input, output) {
 <iframe src="https://bookdown.org/robinlovelace/lifeapp/?showcase=0" width="576" height="400px">
 </iframe>
 <p class="caption">
-Figure 9.5: Minimal example of a web mapping application created with <strong>shiny</strong>.
+Figure 9.6: Minimal example of a web mapping application created with <strong>shiny</strong>.
 </p>
 </div>
-<p>The <strong>user interface</strong> (<code>ui</code>) of lifeApp is created by <code>fluidPage()</code>. This contains input ‘widgets’ — a <code>sliderInput()</code> in this case (many other <code>*Input()</code> functions are available) — and outputs, a <code>leafletOutput()</code> in this case. Elements added to a <code>fluidPage()</code> are arranged row-wise by default, explaining why the slider interface is placed directly above the map in Figure <a href="adv-map.html#fig:lifeApp">9.5</a> (<code>?column</code> explains how to add content column-wise). The <strong>server side</strong> (<code>server</code>) is a function with <code>input</code> and <code>output</code> arguments. <code>output</code> is a list of objects containing elements generated by <code>render*()</code> function — <code>renderLeaflet()</code> which generates <code>output$map</code> in this case. Inputs elements such as <code>input$life</code> referred to in the server must relate to elements that exist in the <code>ui</code> — defined by <code>inputId = &quot;life&quot;</code> in the code above. The function <code>shinyApp()</code> combines both the <code>ui</code> and <code>server</code> elements and serves the results interactively via a new R process. When you move the slider in in Figure <a href="adv-map.html#fig:lifeApp">9.5</a>, you are actually causing R code to re-run, although this is hidden from view in the user interface.</p>
+<p>The <strong>user interface</strong> (<code>ui</code>) of lifeApp is created by <code>fluidPage()</code>. This contains input ‘widgets’ — a <code>sliderInput()</code> in this case (many other <code>*Input()</code> functions are available) — and outputs, a <code>leafletOutput()</code> in this case. Elements added to a <code>fluidPage()</code> are arranged row-wise by default, explaining why the slider interface is placed directly above the map in Figure <a href="adv-map.html#fig:lifeApp">9.6</a> (<code>?column</code> explains how to add content column-wise). The <strong>server side</strong> (<code>server</code>) is a function with <code>input</code> and <code>output</code> arguments. <code>output</code> is a list of objects containing elements generated by <code>render*()</code> function — <code>renderLeaflet()</code> which generates <code>output$map</code> in this case. Inputs elements such as <code>input$life</code> referred to in the server must relate to elements that exist in the <code>ui</code> — defined by <code>inputId = &quot;life&quot;</code> in the code above. The function <code>shinyApp()</code> combines both the <code>ui</code> and <code>server</code> elements and serves the results interactively via a new R process. When you move the slider in in Figure <a href="adv-map.html#fig:lifeApp">9.6</a>, you are actually causing R code to re-run, although this is hidden from view in the user interface.</p>
 <p>Building on this basic example and knowing where to find help (see <code>?shiny</code>), the best way forward may be to stop reading and start programming! The recommended next step is to open the previously mentioned <a href="https://github.com/Robinlovelace/geocompr/blob/master/coffeeApp/app.R"><code>coffeeApp/app.R</code></a> script in an IDE of choice, modify it and re-run it repeatedly. The example contains some of the components of a web mapping application implemented in <strong>shiny</strong> and should ‘shine’ a light on how they behave (pun intended). The <code>coffeeApp/app.R</code> script contains <strong>shiny</strong> functions that go beyond those demonstrated in the simple ‘lifeApp’ example. These include <code>reactive()</code> and <code>observe()</code> (for creating outputs that respond to the user interface — see <code>?reactive</code>) and <code>leafletProxy()</code> (for modifying a <code>leaflet</code> object that has already been created). Such elements are critical to the creation of web mapping applications implemented in <strong>shiny</strong>.</p>
 <div class="rmdnote">
 <p>
@@ -608,7 +612,7 @@ There are a number of ways to run a <strong>shiny</strong> app. For RStudio user
 <iframe src="https://bookdown.org/robinlovelace/coffeeapp/?showcase=0" width="576" height="400px">
 </iframe>
 <p class="caption">
-Figure 9.6: coffeeApp, a simple web mapping application for exploring global coffee production in 2016 and 2017.
+Figure 9.7: coffeeApp, a simple web mapping application for exploring global coffee production in 2016 and 2017.
 </p>
 </div>
 </div>
