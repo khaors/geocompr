@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserved332a3f1a4716cef
+preservec8783ee2caa728c5
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3084,7 +3084,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve10c3def1f02b4f27
+preserve05cabfbe24a98c8e
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5975,7 +5975,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve016590d5f1ef9306
+preserve9cb1e880323f79d5
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6594,7 +6594,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve028294633df40c0d
+preserveeb292cdf6a182ea4
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6693,7 +6693,8 @@ library(shiny)
 
 The most satisfying part of many projects involving geocomputation is producing and communicating the results in the form of maps.
 Map making --- the art of Cartography --- is an ancient skill that involves precision, consideration of the map-reader and often an element of creativity.
-The basic maps in section \@ref(basic-map) were straightforward to produce but elaborating maps for others is an advanced topic.
+The basic maps in section \@ref(basic-map) were straightforward to produce.
+Elaborating maps for others is an advanced topic.
 
 Maps have been used for several thousand years for a wide variety of purposes.
 From asserting control over real estate in Babylon to illustrating a scientific worldview in Ptolemy's Ancient Greek masterpiece *Geography* [@talbert_ancient_2014], they have historically been out of reach for everyday people.
