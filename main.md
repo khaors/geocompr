@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-03-01'
+date: '2018-03-02'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-03-01 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-03-02 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve20084ae96b6bddd7
+preserve0bc50023d21fabd3
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3084,7 +3084,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservea6cd684718708a22
+preservee10e49aebfe8b656
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5975,7 +5975,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve52aa6293b4432db1
+preservef19487ee6051efb0
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6594,7 +6594,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservecf37fb263eb6ae22
+preserve661b0f1cdc56f552
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6695,10 +6695,11 @@ The most satisfying part of many projects involving geocomputation is producing 
 Map making --- the art of Cartography --- is an ancient skill that involves precision, consideration of the map-reader and often an element of creativity.
 
 Maps have been used for several thousand years for a wide variety of purposes.
-From asserting control real estate in ancient Mesopotamia to illustrating a scientific worldview in Ptolomy's Greek masterpiece *Geography* nearly 2,000 years ago [@talbert_ancient_2014], they have historically been out of reach for everyday people.
-The advent of modern computing has changed this, however.
-Open data and software has played a major role in the democratization of map making.
-This chapter teaches a range of methods to amplify the clarity, reach and attractiveness of your maps.
+From asserting control over real estate in ancient Mesopotamia to illustrating a scientific worldview in Ptolemy's Ancient Greek masterpiece *Geography* [@talbert_ancient_2014], they have historically been out of reach for everyday people.
+Modern computing has the potential to change this.
+Open data and software enables map making to be democratized.
+
+With this altruistic aim in mind this chapter teaches a range of methods to amplify the clarity, reach and attractiveness of your maps.
 From a research perspective maps are often the best way to present the results of geocomputational research.
 From the perspective of public engagement and policy impact, a map may be the best way to get a message across.
 Map making is therefore a critical part of geocomputation and its emphasis on changing the world outlined in Chapter \@ref(intro).
@@ -6719,7 +6720,7 @@ If your aim is to produce publication-quality or high-impact maps in minimal tim
 **tmap** is a powerful and flexible map-making package with sensible defaults.
 It has a concise syntax that will be familiar to **ggplot2** users and has a unique capability to generate static and interactive maps using the same code via a switch activated by `tmap_mode()` (see section \@ref(interactive-maps)).
 **tmap** is well documented in the vignettes [`tmap-nutshell`](https://cran.r-project.org/web/packages/tmap/vignettes/tmap-nutshell.html) and [`tmap-modes`](https://cran.r-project.org/web/packages/tmap/vignettes/tmap-modes.html).
-This section teaches how to make static maps with **tmap**, emphasizing aesthetic features and adornments commonly needed for clear and useful visualisations of raster and vector datasets we saw in the previous section.
+This section teaches how to make static maps with **tmap**, emphasizing aesthetic features and adornments commonly needed for clear and useful visualizations of raster and vector datasets we saw in the previous section.
 
 ### Basics
 
@@ -6841,7 +6842,7 @@ nz_map = tm_shape(nz) +
 ```
 
 The third step consists of the inset map creation. 
-This is a place where the most imporant message is stated. 
+This is a place where the most important message is stated. 
 
 
 ```r
@@ -7082,7 +7083,7 @@ These include `reactive()` and `observe()` (for creating outputs that respond to
 Such elements are critical to the creation of web mapping applications implemented in **shiny**.
 
 <div class="rmdnote">
-<p>There are a number of ways to run a <strong>shiny</strong> app. For RStudio users the simplest way is probably to click on the 'Run App' button located in the top right of the source pane when an <code>app.R</code>, <code>ui.R</code> or <code>server.R</code> script is open. <strong>shiny</strong> apps can also be initiated by using <code>runApp()</code> with the first argument being the folder containing the app code and data: <code>runApp(&quot;coffeeApp&quot;)</code> in this case (which assumes a folder named <code>coffeeApp</code> containing the <code>app.R</code> script is in your working directory). You can also launch apps from a unix command line with the command <code>Rscript -e 'shiny::runApp(&quot;coffeeApp&quot;)'</code>.</p>
+<p>There are a number of ways to run a <strong>shiny</strong> app. For RStudio users the simplest way is probably to click on the 'Run App' button located in the top right of the source pane when an <code>app.R</code>, <code>ui.R</code> or <code>server.R</code> script is open. <strong>shiny</strong> apps can also be initiated by using <code>runApp()</code> with the first argument being the folder containing the app code and data: <code>runApp(&quot;coffeeApp&quot;)</code> in this case (which assumes a folder named <code>coffeeApp</code> containing the <code>app.R</code> script is in your working directory). You can also launch apps from a Unix command line with the command <code>Rscript -e 'shiny::runApp(&quot;coffeeApp&quot;)'</code>.</p>
 </div>
 
 Experimenting with apps such as `coffeeApp` will build not only your knowledge of web mapping applications in R but your practical skills.
@@ -7096,7 +7097,7 @@ The Propensity to Cycle Tool (PCT) hosted at [pct.bike](http://www.pct.bike/), f
 The PCT is used by dozens of people each day and has multiple interactive elements based on more than 1000 lines of [code](https://github.com/npct/pct-shiny/blob/master/regions_www/m/server.R) [@lovelace_propensity_2017].
 
 While such apps undoubtedly take time and effort to develop, **shiny** provides a framework for reproducible prototyping that should aid the development process.
-One potential problem with the ease of developing prototypes with **shiny** is the temptation to start programming too early, before the purpose of the mapping application has been envisioined in detail.
+One potential problem with the ease of developing prototypes with **shiny** is the temptation to start programming too early, before the purpose of the mapping application has been envisioned in detail.
 For that reason, despite advocating **shiny**, we recommend starting with the longer established technology of a pen and paper as the first stage for interactive mapping projects.
 This way your prototype web applications should be limited not by technical considerations but by your motivations and imagination.
 
