@@ -385,42 +385,52 @@ Figure 11.1: Illustration of raster cropping (center) and raster masking (right)
 <h2><span class="header-section-number">11.3</span> Raster extraction</h2>
 <!-- intro -->
 <!-- extract -->
+<!-- extract to point, line, polygon - are different -->
 <!-- faster alternative to raster::extract?? -->
 <!-- extract to points -->
 <!-- mention buffer arg -->
+<!-- prepare artificial data points  -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">2018-02-21</span>)
 zion_points =<span class="st"> </span><span class="kw">st_sample</span>(zion, <span class="dt">size =</span> <span class="dv">30</span>) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">st_sf</span>()</code></pre></div>
 <!-- elevation to points (zion) -->
+<p>adding a column with the elevation values</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_points$elevation =<span class="st"> </span>raster::<span class="kw">extract</span>(srtm, zion_points)</code></pre></div>
 <p><img src="figures/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;" /></p>
 <!-- extract to line -->
+<!-- transect example and creation -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_transect =<span class="st"> </span><span class="kw">st_sfc</span>(<span class="kw">st_linestring</span>(<span class="kw">rbind</span>(<span class="kw">c</span>(-<span class="fl">113.2</span>, <span class="fl">37.45</span>), <span class="kw">c</span>(-<span class="fl">112.9</span>, <span class="fl">37.2</span>)))) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">st_sf</span>()</code></pre></div>
+<!-- extract elevation along transect (along arg) -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">transect_df =<span class="st"> </span>raster::<span class="kw">extract</span>(srtm, zion_transect, <span class="dt">along =</span> <span class="ot">TRUE</span>, <span class="dt">cellnumbers =</span> <span class="ot">TRUE</span>) %&gt;%
-<span class="st">  </span><span class="kw">data.frame</span>()
-transect_coords =<span class="st"> </span><span class="kw">xyFromCell</span>(srtm, transect_df$cell)
-transect_df =<span class="st"> </span><span class="kw">cbind</span>(transect_df, transect_coords)</code></pre></div>
+<span class="st">  </span><span class="kw">data.frame</span>()</code></pre></div>
+<!-- calculate distances along transect -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(geosphere)
+transect_coords =<span class="st"> </span><span class="kw">xyFromCell</span>(srtm, transect_df$cell)
 transect_df$dist =<span class="st"> </span><span class="kw">distm</span>(transect_coords)[, <span class="dv">1</span>]</code></pre></div>
 <p><img src="figures/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto;" /></p>
 <!-- extract to polygons (or extents) -->
+<!-- depends on the type of data (continuous or categorical) -->
+<!-- the simplest example is to extract all values into a list -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_srtm_values =<span class="st"> </span>raster::<span class="kw">extract</span>(<span class="dt">x =</span> srtm, <span class="dt">y =</span> zion)</code></pre></div>
+<!-- it can be used for more advanced examples, like calculating stats for each polygon -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_srtm_df =<span class="st"> </span><span class="kw">c</span>(min, mean, max) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">map_dfr</span>(~raster::<span class="kw">extract</span>(<span class="dt">x =</span> srtm, <span class="dt">y =</span> zion, <span class="dt">fun =</span> ., <span class="dt">df =</span> <span class="ot">TRUE</span>)) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">stat =</span> <span class="kw">c</span>(<span class="st">&quot;minimum&quot;</span>, <span class="st">&quot;mean&quot;</span>, <span class="st">&quot;maximum&quot;</span>)) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">spread</span>(stat, srtm)
 zion_srtm_new =<span class="st"> </span><span class="kw">bind_cols</span>(zion, zion_srtm_df)</code></pre></div>
-<!-- zonal stats -->
 <!-- land cover categories to polygon -->
+<!-- we can extract numbers of cells for each category in case of categorical raster -->
+<!-- simplify the nlcd data! -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nlcd =<span class="st"> </span><span class="kw">raster</span>((<span class="kw">system.file</span>(<span class="st">&quot;raster/nlcd2011.tif&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;spDataLarge&quot;</span>)))</code></pre></div>
+<!-- extract categorical data -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_nlcd =<span class="st"> </span>raster::<span class="kw">extract</span>(nlcd, zion, <span class="dt">df =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<!-- reshape the data -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_nlcd_df =<span class="st"> </span>zion_nlcd %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">group_by</span>(ID, nlcd2011) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>()) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">spread</span>(nlcd2011, n)
 zion_nlcd_new =<span class="st"> </span><span class="kw">bind_cols</span>(zion, zion_nlcd_df)</code></pre></div>
-<!-- fix colors ncld!! -->
 <p><img src="figures/unnamed-chunk-19-1.png" width="576" style="display: block; margin: auto;" /></p>
 <!-- ## Spatial interpolation ?? -->
 <!-- http://mdsumner.github.io/guerrilla/articles/irreg2.html -->

@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve0ff7426b4d867421
+preserveab53ce9793ef7ef0
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3084,7 +3084,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve48759bda44dc2313
+preserve89794d08914716f6
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5975,7 +5975,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservef9cb6d3694f069e3
+preserveb12482023141776b
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6594,7 +6594,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve2b23e760e6812790
+preserve9ebbfaf44fac7577
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7721,11 +7721,13 @@ You can learn more in the function's help file - `?mask`.
 ## Raster extraction
 
 <!-- intro -->
-
 <!-- extract -->
+<!-- extract to point, line, polygon - are different -->
 <!-- faster alternative to raster::extract?? -->
+
 <!-- extract to points -->
 <!-- mention buffer arg -->
+<!-- prepare artificial data points  -->
 
 
 ```r
@@ -7735,6 +7737,7 @@ zion_points = st_sample(zion, size = 30) %>%
 ```
 
 <!-- elevation to points (zion) -->
+adding a column with the elevation values
 
 ```r
 zion_points$elevation = raster::extract(srtm, zion_points)
@@ -7743,6 +7746,7 @@ zion_points$elevation = raster::extract(srtm, zion_points)
 <img src="figures/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;" />
 
 <!-- extract to line -->
+<!-- transect example and creation -->
 
 ```r
 zion_transect = st_sfc(st_linestring(rbind(c(-113.2, 37.45), c(-112.9, 37.2)))) %>% 
@@ -7751,28 +7755,32 @@ zion_transect = st_sfc(st_linestring(rbind(c(-113.2, 37.45), c(-112.9, 37.2)))) 
 
 
 
+<!-- extract elevation along transect (along arg) -->
 
 ```r
 transect_df = raster::extract(srtm, zion_transect, along = TRUE, cellnumbers = TRUE) %>%
   data.frame()
-transect_coords = xyFromCell(srtm, transect_df$cell)
-transect_df = cbind(transect_df, transect_coords)
 ```
 
+<!-- calculate distances along transect -->
 
 ```r
 library(geosphere)
+transect_coords = xyFromCell(srtm, transect_df$cell)
 transect_df$dist = distm(transect_coords)[, 1]
 ```
 
 <img src="figures/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto;" />
 
 <!-- extract to polygons (or extents) -->
+<!-- depends on the type of data (continuous or categorical) -->
+<!-- the simplest example is to extract all values into a list -->
 
 ```r
 zion_srtm_values = raster::extract(x = srtm, y = zion)
 ```
 
+<!-- it can be used for more advanced examples, like calculating stats for each polygon -->
 
 ```r
 zion_srtm_df = c(min, mean, max) %>% 
@@ -7782,19 +7790,22 @@ zion_srtm_df = c(min, mean, max) %>%
 zion_srtm_new = bind_cols(zion, zion_srtm_df)
 ```
 
-<!-- zonal stats -->
 <!-- land cover categories to polygon -->
+<!-- we can extract numbers of cells for each category in case of categorical raster -->
 
+<!-- simplify the nlcd data! -->
 
 ```r
 nlcd = raster((system.file("raster/nlcd2011.tif", package = "spDataLarge")))
 ```
 
+<!-- extract categorical data -->
 
 ```r
 zion_nlcd = raster::extract(nlcd, zion, df = TRUE)
 ```
 
+<!-- reshape the data -->
 
 ```r
 zion_nlcd_df = zion_nlcd %>% 
@@ -7804,7 +7815,6 @@ zion_nlcd_df = zion_nlcd %>%
 zion_nlcd_new = bind_cols(zion, zion_nlcd_df)
 ```
 
-<!-- fix colors ncld!! -->
 <img src="figures/unnamed-chunk-19-1.png" width="576" style="display: block; margin: auto;" />
 
 <!-- ## Spatial interpolation ?? -->
@@ -8298,7 +8308,7 @@ lrn = makeLearner(cl = "classif.binomial",
 ```
 
 In the beginning, it might seem a bit tedious to learn the **mlr** interface for modeling.
-But remember that one only has to learn one single interface to run 171 learners.
+But remember that one only has to learn one single interface to run 169 learners.
 Additionally, resampling in **mlr** is really easy and only requires two more steps.^[Further advantages are the easy parallelization of resampling techniques and the tuning of machine learning hyperparameters, also spatially, in an inner fold.]
 The first thing to to is specifying a resampling method.
 Spatial repeated cross-validation
