@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve6f48add5295218b5
+preserve01a851b258d064e6
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3084,7 +3084,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve3ad58855ec2a3748
+preserve1549db6b143a3bf3
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5975,7 +5975,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve455f8a79952c2310
+preservea38868df90094f96
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6594,7 +6594,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve4722bf8b75f4b7d3
+preserveea62a3769ac8c2c3
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6715,20 +6715,22 @@ Map making is therefore a critical part of geocomputation and its emphasis not o
 
 ## Static maps
 
-We learned how the generic `plot()` function works with common spatial object classes in sections \@ref(basic-map) and \@ref(basic-map-raster).
-In many cases the simplicity and speed of this approach will be sufficient, especially during the development phase of a project.
-Early-on in projects your maps' aesthetics matter less: you may be the only person who sees them!
-You can go far with base R graphics, as illustrated in Chapter [14](https://www.stat.auckland.ac.nz/~paul/RG2e/chapter14.html) of *R Graphics* [@murrell_r_2016]:
-detailed control over graphical parameters provided by `plot()` and the **grid** package are well-suited to some applications.
-The focus of this chapter, however, is on dedicated map-making packages.
-For many applications these will enable the creation of publication-quality and engaging maps in minimal time and code.
+Static maps are fixed images that can be included in printed outputs or published online.
+The majority of maps contained in this book are static maps saved as `.png` files, as opposed to interactive maps which are exclusively for publication online (the are covered in section \@ref(interactive-maps)).
 
-**tmap** is a powerful and flexible map-making package with sensible defaults.
+The generic `plot()` function is often the fastest way to create a static maps from vector and raster spatial objects, as demonstrated in sections \@ref(basic-map) and \@ref(basic-map-raster).
+Sometimes the simplicity and speed of this approach to producing static maps is sufficient, especially during the development phase of a project:
+when using R interactively to understand a geographic dataset, you will likely be the only person who sees them.
+The base R approach is also extensible, as illustrated in Chapter [14](https://www.stat.auckland.ac.nz/~paul/RG2e/chapter14.html) of *R Graphics* [@murrell_r_2016], allowing detailed control over graphical parameters provided by `plot()` and the **grid** package.
+The focus of this section, however, is map making publication-quality and engaging maps using minimal time and code with dedicated packages, particularly **tmap**.
+
+Why **tmap**?
+It is a powerful and flexible map-making package with sensible defaults.
 It has a concise syntax that will be familiar to **ggplot2** users and has a unique capability to generate static and interactive maps using the same code via `tmap_mode()` (see section \@ref(interactive-maps)).
 **tmap** is well documented in the vignettes [`tmap-nutshell`](https://cran.r-project.org/web/packages/tmap/vignettes/tmap-nutshell.html) and [`tmap-modes`](https://cran.r-project.org/web/packages/tmap/vignettes/tmap-modes.html).
 This section teaches how to make static maps with **tmap**, emphasizing aesthetic features and adornments commonly for communicating raster and vector datasets introduced in previous chapters.
 
-### Basics
+### tmap basics
 
 **tmap** generates maps with sensible defaults for a wide range of spatial objects with `tm_shape()` (which accepts raster and vector objects), followed by one or more layer elements such as `tm_fill()` and `tm_border()`.
 These functions are used singularly and in combination in the code chunk below, which generates Figure \@ref(fig:tmshape):
@@ -6752,6 +6754,7 @@ The commands demonstrate how **tmap** works.
 First a 'shape' element is created by `tm_shape()` and then layers are iteratively added to the map.
 It is a flexible approach to map making because the common task of adding new layers to a map is a simple as adding `+` followed by a command that creates a new layer.
 This 'layering' is demonstrated by adding a border *on top of* the fill layer for `nz` in the third command of the previous code chunk (the order in which layers are added is the order in which they are rendered).
+Additional elements such as north arrows, scale bars and layout options can also be added using the `+` same notation as we'll see in sections.
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">`qtm()` is a handy function for **q**uickly creating **t**map **m**aps (hence the snappy name).
 It is concise and provides a good default visualization in many cases:
@@ -6764,6 +6767,8 @@ While we advocate its use for quick interactive map creation, we avoid teaching 
 <!-- base plots (one example) -->
 <!-- ggplots  (geom_sf, coord_sf; one example)-->
 <!-- tmap (more than one example) -->
+
+### Map layouts
 
 ### Map styling
 
@@ -6926,6 +6931,11 @@ You can see an alternative approach in the [`vignettes/us-map.Rmd`](https://gith
 The main goal of this section is to present how to generate and arrange inset maps.
 The next step is to use the knowledge from the previous sections to improve the map style or to add another data layers.
 Moreover, the same skills can be applied to combine maps and plots.
+
+## Other static mapping packages
+
+
+
 
 ## Animations
 

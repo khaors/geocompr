@@ -271,17 +271,19 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="adv-map.html"><a href="adv-map.html#prerequisites-7"><i class="fa fa-check"></i>Prerequisites</a></li>
 <li class="chapter" data-level="9.1" data-path="adv-map.html"><a href="adv-map.html#introduction-6"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
 <li class="chapter" data-level="9.2" data-path="adv-map.html"><a href="adv-map.html#static-maps"><i class="fa fa-check"></i><b>9.2</b> Static maps</a><ul>
-<li class="chapter" data-level="9.2.1" data-path="adv-map.html"><a href="adv-map.html#basics"><i class="fa fa-check"></i><b>9.2.1</b> Basics</a></li>
-<li class="chapter" data-level="9.2.2" data-path="adv-map.html"><a href="adv-map.html#map-styling"><i class="fa fa-check"></i><b>9.2.2</b> Map styling</a></li>
-<li class="chapter" data-level="9.2.3" data-path="adv-map.html"><a href="adv-map.html#class-intervals"><i class="fa fa-check"></i><b>9.2.3</b> Class intervals</a></li>
-<li class="chapter" data-level="9.2.4" data-path="adv-map.html"><a href="adv-map.html#faceted-maps"><i class="fa fa-check"></i><b>9.2.4</b> Faceted maps</a></li>
-<li class="chapter" data-level="9.2.5" data-path="adv-map.html"><a href="adv-map.html#inset-maps"><i class="fa fa-check"></i><b>9.2.5</b> Inset maps</a></li>
+<li class="chapter" data-level="9.2.1" data-path="adv-map.html"><a href="adv-map.html#tmap-basics"><i class="fa fa-check"></i><b>9.2.1</b> tmap basics</a></li>
+<li class="chapter" data-level="9.2.2" data-path="adv-map.html"><a href="adv-map.html#map-layouts"><i class="fa fa-check"></i><b>9.2.2</b> Map layouts</a></li>
+<li class="chapter" data-level="9.2.3" data-path="adv-map.html"><a href="adv-map.html#map-styling"><i class="fa fa-check"></i><b>9.2.3</b> Map styling</a></li>
+<li class="chapter" data-level="9.2.4" data-path="adv-map.html"><a href="adv-map.html#class-intervals"><i class="fa fa-check"></i><b>9.2.4</b> Class intervals</a></li>
+<li class="chapter" data-level="9.2.5" data-path="adv-map.html"><a href="adv-map.html#faceted-maps"><i class="fa fa-check"></i><b>9.2.5</b> Faceted maps</a></li>
+<li class="chapter" data-level="9.2.6" data-path="adv-map.html"><a href="adv-map.html#inset-maps"><i class="fa fa-check"></i><b>9.2.6</b> Inset maps</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="adv-map.html"><a href="adv-map.html#animations"><i class="fa fa-check"></i><b>9.3</b> Animations</a></li>
-<li class="chapter" data-level="9.4" data-path="adv-map.html"><a href="adv-map.html#interactive-maps"><i class="fa fa-check"></i><b>9.4</b> Interactive maps</a></li>
-<li class="chapter" data-level="9.5" data-path="adv-map.html"><a href="adv-map.html#pseudo-unusual-maps"><i class="fa fa-check"></i><b>9.5</b> Pseudo (unusual) maps</a></li>
-<li class="chapter" data-level="9.6" data-path="adv-map.html"><a href="adv-map.html#web-mapping-applications-with-shiny"><i class="fa fa-check"></i><b>9.6</b> Web mapping applications with shiny</a></li>
-<li class="chapter" data-level="9.7" data-path="adv-map.html"><a href="adv-map.html#exercises-6"><i class="fa fa-check"></i><b>9.7</b> Exercises</a></li>
+<li class="chapter" data-level="9.3" data-path="adv-map.html"><a href="adv-map.html#other-static-mapping-packages"><i class="fa fa-check"></i><b>9.3</b> Other static mapping packages</a></li>
+<li class="chapter" data-level="9.4" data-path="adv-map.html"><a href="adv-map.html#animations"><i class="fa fa-check"></i><b>9.4</b> Animations</a></li>
+<li class="chapter" data-level="9.5" data-path="adv-map.html"><a href="adv-map.html#interactive-maps"><i class="fa fa-check"></i><b>9.5</b> Interactive maps</a></li>
+<li class="chapter" data-level="9.6" data-path="adv-map.html"><a href="adv-map.html#pseudo-unusual-maps"><i class="fa fa-check"></i><b>9.6</b> Pseudo (unusual) maps</a></li>
+<li class="chapter" data-level="9.7" data-path="adv-map.html"><a href="adv-map.html#web-mapping-applications-with-shiny"><i class="fa fa-check"></i><b>9.7</b> Web mapping applications with shiny</a></li>
+<li class="chapter" data-level="9.8" data-path="adv-map.html"><a href="adv-map.html#exercises-6"><i class="fa fa-check"></i><b>9.8</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="gis.html"><a href="gis.html"><i class="fa fa-check"></i><b>10</b> Bridges to GIS software</a><ul>
 <li class="chapter" data-level="10.1" data-path="gis.html"><a href="gis.html#rqgis"><i class="fa fa-check"></i><b>10.1</b> (R)QGIS</a></li>
@@ -371,10 +373,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="static-maps" class="section level2">
 <h2><span class="header-section-number">9.2</span> Static maps</h2>
-<p>We learned how the generic <code>plot()</code> function works with common spatial object classes in sections <a href="spatial-class.html#basic-map">2.1.3</a> and <a href="spatial-class.html#basic-map-raster">2.2.2</a>. In many cases the simplicity and speed of this approach will be sufficient, especially during the development phase of a project. Early-on in projects your maps’ aesthetics matter less: you may be the only person who sees them! You can go far with base R graphics, as illustrated in Chapter <a href="https://www.stat.auckland.ac.nz/~paul/RG2e/chapter14.html">14</a> of <em>R Graphics</em> <span class="citation">(Murrell <a href="#ref-murrell_r_2016">2016</a>)</span>: detailed control over graphical parameters provided by <code>plot()</code> and the <strong>grid</strong> package are well-suited to some applications. The focus of this chapter, however, is on dedicated map-making packages. For many applications these will enable the creation of publication-quality and engaging maps in minimal time and code.</p>
-<p><strong>tmap</strong> is a powerful and flexible map-making package with sensible defaults. It has a concise syntax that will be familiar to <strong>ggplot2</strong> users and has a unique capability to generate static and interactive maps using the same code via <code>tmap_mode()</code> (see section <a href="adv-map.html#interactive-maps">9.4</a>). <strong>tmap</strong> is well documented in the vignettes <a href="https://cran.r-project.org/web/packages/tmap/vignettes/tmap-nutshell.html"><code>tmap-nutshell</code></a> and <a href="https://cran.r-project.org/web/packages/tmap/vignettes/tmap-modes.html"><code>tmap-modes</code></a>. This section teaches how to make static maps with <strong>tmap</strong>, emphasizing aesthetic features and adornments commonly for communicating raster and vector datasets introduced in previous chapters.</p>
-<div id="basics" class="section level3">
-<h3><span class="header-section-number">9.2.1</span> Basics</h3>
+<p>Static maps are fixed images that can be included in printed outputs or published online. The majority of maps contained in this book are static maps saved as <code>.png</code> files, as opposed to interactive maps which are exclusively for publication online (the are covered in section <a href="adv-map.html#interactive-maps">9.5</a>).</p>
+<p>The generic <code>plot()</code> function is often the fastest way to create a static maps from vector and raster spatial objects, as demonstrated in sections <a href="spatial-class.html#basic-map">2.1.3</a> and <a href="spatial-class.html#basic-map-raster">2.2.2</a>. Sometimes the simplicity and speed of this approach to producing static maps is sufficient, especially during the development phase of a project: when using R interactively to understand a geographic dataset, you will likely be the only person who sees them. The base R approach is also extensible, as illustrated in Chapter <a href="https://www.stat.auckland.ac.nz/~paul/RG2e/chapter14.html">14</a> of <em>R Graphics</em> <span class="citation">(Murrell <a href="#ref-murrell_r_2016">2016</a>)</span>, allowing detailed control over graphical parameters provided by <code>plot()</code> and the <strong>grid</strong> package. The focus of this section, however, is map making publication-quality and engaging maps using minimal time and code with dedicated packages, particularly <strong>tmap</strong>.</p>
+<p>Why <strong>tmap</strong>? It is a powerful and flexible map-making package with sensible defaults. It has a concise syntax that will be familiar to <strong>ggplot2</strong> users and has a unique capability to generate static and interactive maps using the same code via <code>tmap_mode()</code> (see section <a href="adv-map.html#interactive-maps">9.5</a>). <strong>tmap</strong> is well documented in the vignettes <a href="https://cran.r-project.org/web/packages/tmap/vignettes/tmap-nutshell.html"><code>tmap-nutshell</code></a> and <a href="https://cran.r-project.org/web/packages/tmap/vignettes/tmap-modes.html"><code>tmap-modes</code></a>. This section teaches how to make static maps with <strong>tmap</strong>, emphasizing aesthetic features and adornments commonly for communicating raster and vector datasets introduced in previous chapters.</p>
+<div id="tmap-basics" class="section level3">
+<h3><span class="header-section-number">9.2.1</span> tmap basics</h3>
 <p><strong>tmap</strong> generates maps with sensible defaults for a wide range of spatial objects with <code>tm_shape()</code> (which accepts raster and vector objects), followed by one or more layer elements such as <code>tm_fill()</code> and <code>tm_border()</code>. These functions are used singularly and in combination in the code chunk below, which generates Figure <a href="adv-map.html#fig:tmshape">9.1</a>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Add fill layer to nz shape</span>
 <span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>() 
@@ -388,7 +391,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 Figure 9.1: New Zealand’s shape plotted with fill (left), border (middle) and fill <em>and</em> border (right) layers added using <strong>tmap</strong> functions.
 </p>
 </div>
-<p>The commands demonstrate how <strong>tmap</strong> works. First a ‘shape’ element is created by <code>tm_shape()</code> and then layers are iteratively added to the map. It is a flexible approach to map making because the common task of adding new layers to a map is a simple as adding <code>+</code> followed by a command that creates a new layer. This ‘layering’ is demonstrated by adding a border <em>on top of</em> the fill layer for <code>nz</code> in the third command of the previous code chunk (the order in which layers are added is the order in which they are rendered).</p>
+<p>The commands demonstrate how <strong>tmap</strong> works. First a ‘shape’ element is created by <code>tm_shape()</code> and then layers are iteratively added to the map. It is a flexible approach to map making because the common task of adding new layers to a map is a simple as adding <code>+</code> followed by a command that creates a new layer. This ‘layering’ is demonstrated by adding a border <em>on top of</em> the fill layer for <code>nz</code> in the third command of the previous code chunk (the order in which layers are added is the order in which they are rendered). Additional elements such as north arrows, scale bars and layout options can also be added using the <code>+</code> same notation as we’ll see in sections.</p>
 
 <div class="rmdnote">
 <code>qtm()</code> is a handy function for <strong>q</strong>uickly creating <strong>t</strong>map <strong>m</strong>aps (hence the snappy name). It is concise and provides a good default visualization in many cases: <code>qtm(nz)</code>, for example, is equivalent to <code>tm_shape(nz) + tm_fill() + tm_borders()</code>. Further, layers can be added concisely using multiple <code>qtm()</code> calls, such as <code>qtm(nz) + qtm(nz_height)</code>. The disadvantage is that it makes aesthetics of individual layers harder to control. While we advocate its use for quick interactive map creation, we avoid teaching it preferring clarity and control over conciseness.
@@ -399,8 +402,11 @@ Figure 9.1: New Zealand’s shape plotted with fill (left), border (middle) and 
 <!-- ggplots  (geom_sf, coord_sf; one example)-->
 <!-- tmap (more than one example) -->
 </div>
+<div id="map-layouts" class="section level3">
+<h3><span class="header-section-number">9.2.2</span> Map layouts</h3>
+</div>
 <div id="map-styling" class="section level3">
-<h3><span class="header-section-number">9.2.2</span> Map styling</h3>
+<h3><span class="header-section-number">9.2.3</span> Map styling</h3>
 <!-- 
 - lines widths, polygon lines vs polygon areas, etc.
 - alpha colors
@@ -414,7 +420,7 @@ Figure 9.1: New Zealand’s shape plotted with fill (left), border (middle) and 
 -->
 </div>
 <div id="class-intervals" class="section level3">
-<h3><span class="header-section-number">9.2.3</span> Class intervals</h3>
+<h3><span class="header-section-number">9.2.4</span> Class intervals</h3>
 <!--
 - color palettes (viridis, etc.)
 - class intervals ("cat", "fixed", "sd", "equal", "pretty", "quantile", "kmeans", "hclust", "bclust", "fisher", and "jenks")
@@ -423,7 +429,7 @@ Figure 9.1: New Zealand’s shape plotted with fill (left), border (middle) and 
 -->
 </div>
 <div id="faceted-maps" class="section level3">
-<h3><span class="header-section-number">9.2.4</span> Faceted maps</h3>
+<h3><span class="header-section-number">9.2.5</span> Faceted maps</h3>
 <p>Faceted maps are a common and potentially effective way of visualizing spatial relationships that are more complex that a single relationship. The population of cities at one moment in time can be represented easily on a single map, for example by making the size of symbols variable for each city depending on population. However, to represent the populations of cities at multiple moments in time requires an <em>extra dimension</em>. This could be added by an additional <em>aesthetic</em> such as color but this risks cluttering the map because it will involve multiple overlapping points (cities do not tend to move over time!).</p>
 <p>Faceted maps overcome this issue by creating ‘small multiples’ of spatial information. Typically, this will involve plotting the same geometry data multiple times, once for each variable present in the attribute data (this is the default plotting method for <code>sf</code> objects, as we saw in Chapter 2). However, facets can also represent shifting geometries, e.g. as the spatial distribution of a point pattern evolves over time. This use case of faceted plot is illustrated in Figure <a href="adv-map.html#fig:urban-facet">9.2</a>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tm_shape</span>(world) +
@@ -439,8 +445,8 @@ Figure 9.2: Faceted map showing the top 30 largest ‘urban agglomerations’ fr
 </div>
 </div>
 <div id="inset-maps" class="section level3">
-<h3><span class="header-section-number">9.2.5</span> Inset maps</h3>
-<p>The role of spatial visualizations is to provide an information in the most accessible form. This is often done with the use of inset maps. They could be used to focus on a smaller area in more detail (Figure <a href="adv-map.html#fig:insetmap1">9.3</a>) or to bring some non-contiguous regions closer to ease their comparison (Figure <a href="adv-map.html#fig:insetmap2">9.4</a>). <!-- find the best distribution of insets --> In this section we focus on a creation of inset maps, so to learn about map styling go to section <a href="adv-map.html#map-styling">9.2.2</a>.</p>
+<h3><span class="header-section-number">9.2.6</span> Inset maps</h3>
+<p>The role of spatial visualizations is to provide an information in the most accessible form. This is often done with the use of inset maps. They could be used to focus on a smaller area in more detail (Figure <a href="adv-map.html#fig:insetmap1">9.3</a>) or to bring some non-contiguous regions closer to ease their comparison (Figure <a href="adv-map.html#fig:insetmap2">9.4</a>). <!-- find the best distribution of insets --> In this section we focus on a creation of inset maps, so to learn about map styling go to section <a href="adv-map.html#map-styling">9.2.3</a>.</p>
 <!-- example1: classic inset map -->
 <p>Inset map usually covers an area with densely located phenomena that cannot be clearly visible at the original map scale. In the example below, we would create an inset map of the central part of the New Zealand’s Southern Alps. The first step is to define the area of interest, which can be done by creating a new spatial object, <code>nz_region</code>. <!--# mapview::mapview(nz_height, native.crs = TRUE) or mapedit??--></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_region =<span class="st"> </span><span class="kw">st_bbox</span>(<span class="kw">c</span>(<span class="dt">xmin =</span> <span class="dv">1340000</span>, <span class="dt">xmax =</span> <span class="dv">1450000</span>, <span class="dt">ymin =</span> <span class="dv">5130000</span>, <span class="dt">ymax =</span> <span class="dv">5210000</span>),
@@ -498,8 +504,11 @@ Figure 9.4: Map of the United States.
 <p>The main goal of this section is to present how to generate and arrange inset maps. The next step is to use the knowledge from the previous sections to improve the map style or to add another data layers. Moreover, the same skills can be applied to combine maps and plots.</p>
 </div>
 </div>
+<div id="other-static-mapping-packages" class="section level2">
+<h2><span class="header-section-number">9.3</span> Other static mapping packages</h2>
+</div>
 <div id="animations" class="section level2">
-<h2><span class="header-section-number">9.3</span> Animations</h2>
+<h2><span class="header-section-number">9.4</span> Animations</h2>
 <p>Animated maps can be useful for communicating how spatial phenomena shift over time. An advantage of faceted plots are that they can be printed, but the approach has disadvantages: faceted maps can become very small with more than ~9 maps in one figure, and it can be hard to see the spatial relationships between each facet when each map is on a different part of the page! Furthermore, with the increasing proportion of communication that happens via digital screens, the disadvantage that animations cannot be printed is diminished. You can always link readers to a web-page containing an animated (or interactive) version of a printed map to help make it come alive.</p>
 <p>Figure <a href="adv-map.html#fig:urban-animated">9.5</a> is a simple example of the benefits of an animated map. Unlike the faceted plot presented in the previous section, it does not squeeze all 17 for them all to be displayed simultaneously (see the book’s website for the animated version).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr::<span class="kw">include_graphics</span>(<span class="st">&quot;figures/urban-animated.gif&quot;</span>)</code></pre></div>
@@ -550,7 +559,7 @@ m2 =<span class="st"> </span><span class="kw">tm_shape</span>(world_sf_temporal2
 <span class="kw">animation_tmap</span>(m2, <span class="dt">filename =</span> <span class="st">&quot;figures/11-lifeExp_sa_animation.gif&quot;</span>, <span class="dt">width =</span> <span class="dv">1600</span>, <span class="dt">height =</span> <span class="dv">1000</span>, <span class="dt">delay =</span> <span class="dv">40</span>)</code></pre></div>
 </div>
 <div id="interactive-maps" class="section level2">
-<h2><span class="header-section-number">9.4</span> Interactive maps</h2>
+<h2><span class="header-section-number">9.5</span> Interactive maps</h2>
 <!-- leaflet -->
 <!-- leaflet plugins -->
 <!-- mapview -->
@@ -558,7 +567,7 @@ m2 =<span class="st"> </span><span class="kw">tm_shape</span>(world_sf_temporal2
 <!-- are we going to focus on leaflet or mapview? -->
 </div>
 <div id="pseudo-unusual-maps" class="section level2">
-<h2><span class="header-section-number">9.5</span> Pseudo (unusual) maps</h2>
+<h2><span class="header-section-number">9.6</span> Pseudo (unusual) maps</h2>
 <!--we need better name -->
 <!-- geofacet -->
 <!-- e.g. population lines -->
@@ -568,8 +577,8 @@ m2 =<span class="st"> </span><span class="kw">tm_shape</span>(world_sf_temporal2
 <!-- shiny? -->
 </div>
 <div id="web-mapping-applications-with-shiny" class="section level2">
-<h2><span class="header-section-number">9.6</span> Web mapping applications with shiny</h2>
-<p>The interactive web maps demonstrated in section <a href="adv-map.html#interactive-maps">9.4</a> can go far. Careful selection of layers to display, base-maps and pop-ups can be used to communicate the main results of many projects involving Geocomputation. But the web mapping approach to interactivity has limitations:</p>
+<h2><span class="header-section-number">9.7</span> Web mapping applications with shiny</h2>
+<p>The interactive web maps demonstrated in section <a href="adv-map.html#interactive-maps">9.5</a> can go far. Careful selection of layers to display, base-maps and pop-ups can be used to communicate the main results of many projects involving Geocomputation. But the web mapping approach to interactivity has limitations:</p>
 <ul>
 <li>Although the map is interactive in terms of panning, zooming and clicking, the code is static, meaning the user interface is fixed.</li>
 <li>All map content is generally static in a web map, meaning that web maps cannot scale to handle large datasets easily.</li>
@@ -621,7 +630,7 @@ Figure 9.7: coffeeApp, a simple web mapping application for exploring global cof
 </div>
 </div>
 <div id="exercises-6" class="section level2">
-<h2><span class="header-section-number">9.7</span> Exercises</h2>
+<h2><span class="header-section-number">9.8</span> Exercises</h2>
 <ol style="list-style-type: decimal">
 <li>Sketch out on paper ideas for a web mapping app that could be used to make transport or land-use policies more evidence based:</li>
 </ol>
