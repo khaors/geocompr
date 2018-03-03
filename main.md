@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve70cff2bc0695c013
+preserve6f48add5295218b5
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3084,7 +3084,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve40ac5653c045cbb3
+preserve3ad58855ec2a3748
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5975,7 +5975,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve4e1bd79abebedd6f
+preserve455f8a79952c2310
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6594,7 +6594,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve78ea69e836798f20
+preserve4722bf8b75f4b7d3
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6710,6 +6710,11 @@ From a research perspective clear maps are often be the best way to present the 
 From policy and 'citizen science' perspectives, attractive and engaging maps can help change peoples' minds, based on the evidence.
 Map making is therefore a critical part of geocomputation and its emphasis not only describing, but also changing the world (see Chapter \@ref(intro)).
 
+<!-- info about relation between efficiency and editability -->
+<!-- intro to the chapter structure -->
+
+## Static maps
+
 We learned how the generic `plot()` function works with common spatial object classes in sections \@ref(basic-map) and \@ref(basic-map-raster).
 In many cases the simplicity and speed of this approach will be sufficient, especially during the development phase of a project.
 Early-on in projects your maps' aesthetics matter less: you may be the only person who sees them!
@@ -6717,11 +6722,6 @@ You can go far with base R graphics, as illustrated in Chapter [14](https://www.
 detailed control over graphical parameters provided by `plot()` and the **grid** package are well-suited to some applications.
 The focus of this chapter, however, is on dedicated map-making packages.
 For many applications these will enable the creation of publication-quality and engaging maps in minimal time and code.
-
-<!-- info about relation between efficiency and editability -->
-<!-- intro to the chapter structure -->
-
-## Static maps with tmap
 
 **tmap** is a powerful and flexible map-making package with sensible defaults.
 It has a concise syntax that will be familiar to **ggplot2** users and has a unique capability to generate static and interactive maps using the same code via `tmap_mode()` (see section \@ref(interactive-maps)).
