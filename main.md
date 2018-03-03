@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve99ba4aac9558337b
+preserve463f13e144bfd256
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3084,7 +3084,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservea3f1323eeb44376b
+preserve5adc6c8d1db4a6e7
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5975,7 +5975,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve2d6b3dcbbcb28822
+preserve8758230ccc834be1
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6594,7 +6594,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservef720497c96eca462
+preservece7e9d1254664b7c
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6693,14 +6693,14 @@ library(tmap)    # for static and interactive maps
 
 The most satisfying part of many projects involving geocomputation is producing and communicating the results in the form of maps.
 Map making --- the art of Cartography --- is an ancient skill that involves precision, consideration of the map-reader and often an element of creativity.
-The basic maps in section \@ref(basic-map) were straightforward to produce.
-Elaborating maps for others is an advanced topic.
+Making basic maps is straightforward with `plot()` (see section \@ref(basic-map)).
+Making maps for publication, with carefully selected aesthetic, layout and other settings, is an advanced topic that is often tackled in the final stages of a project.
+
+<!-- Todo: consider adding footnote saying it's good to focus on visualization early as in R4DS but that we cover it later because there's a risk of getting distracted by pretty pictures to the detriment of good analysis. -->
 
 Maps have been used for several thousand years for a wide variety of purposes.
 From asserting control over real estate in Babylon to illustrating a scientific worldview in Ptolemy's Ancient Greek masterpiece *Geography* [@talbert_ancient_2014], they have historically been out of reach for everyday people.
-Modern computing has the potential to change this, for the better.
-
-With such lofty thoughts in mind this chapter teaches ways to amplify the impact of your maps.
+Modern computing has the potential to change this and this chapter aims to show how good map making skills can benefit research and public engagement objectives.
 From a research perspective clear maps can be the best way to present the results of geocomputational research.
 From a policy and 'citizen science' perspective, attractive and engaging maps can help change peoples' minds, based on the evidence.
 Map making is therefore a critical part of geocomputation and its emphasis not only describing, but also changing the world (see Chapter \@ref(intro)).
