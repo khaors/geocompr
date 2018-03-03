@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve62600691a639e7c7
+preservedea99c80b282229a
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3084,7 +3084,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve219b37ebf3772e2e
+preservea630a9e37a76d0f4
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5975,7 +5975,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve92bf63e75eb8d808
+preserved01fecba3d5feea5
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6594,7 +6594,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveb834eaa54e9694e4
+preserveea1976c46feedcf0
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6727,14 +6727,14 @@ The focus of this section, however, is map making publication-quality and engagi
 
 Why **tmap**?
 It is a powerful and flexible map-making package with sensible defaults.
-It has a concise syntax that will be familiar to **ggplot2** users and has a unique capability to generate static and interactive maps using the same code via `tmap_mode()` (see section \@ref(interactive-maps)).
+It has a concise syntax that will be familiar to **ggplot2** users and has a unique capability to generate static and interactive maps using the same code via `tmap_mode()`.
 **tmap** is well documented in the vignettes [`tmap-nutshell`](https://cran.r-project.org/web/packages/tmap/vignettes/tmap-nutshell.html) and [`tmap-modes`](https://cran.r-project.org/web/packages/tmap/vignettes/tmap-modes.html).
 This section teaches how to make static maps with **tmap**, emphasizing aesthetic features and adornments commonly for communicating raster and vector datasets introduced in previous chapters.
 
 ### tmap basics
 
-**tmap** generates maps with sensible defaults for a wide range of spatial objects with `tm_shape()` (which accepts raster and vector objects), followed by one or more layer elements such as `tm_fill()` and `tm_border()`.
-These functions are used singularly and in combination in the code chunk below, which generates Figure \@ref(fig:tmshape):
+**tmap** generates maps with sensible defaults for a wide range of spatial objects with `tm_shape()` (which accepts raster and vector objects), followed by one or more layer elements such as `tm_fill()` and `tm_dots()`.
+These functions are used singularly and in combination in the code chunk below, which generates the maps presented in Figure \@ref(fig:tmshape):
 
 
 ```r
@@ -6751,10 +6751,10 @@ tm_shape(nz) + tm_fill() + tm_borders()
 <p class="caption">(\#fig:tmshape)New Zealand's shape plotted with fill (left), border (middle) and fill *and* border (right) layers added using **tmap** functions.</p>
 </div>
 
-The commands demonstrate how **tmap** works.
-First a 'shape' element is created by `tm_shape()` and then layers are iteratively added to the map.
-It is a flexible approach to map making because the common task of adding new layers to a map is a simple as adding `+` followed by a command that creates a new layer.
-This 'layering' is demonstrated by adding a border *on top of* the fill layer for `nz` in the third command of the previous code chunk (the order in which layers are added is the order in which they are rendered).
+The object passed to `tm_shape()` in this case is `nz`, which represents the regions of New Zealand.
+Layers are iteratively added to represent this shape visually, with `tm_fill()` and `tm_borders()` in this case.
+This is an intuitive approach, making the common task of adding new layers as simple as adding `+` followed by `tm_*()` where `*` is replaced by an element of your choice (see ``?`tmap-element`` for a list of available elements).
+This 'layering' is illustrated in the right panel of Figure \@ref(fig:tmshape), which shows the result of adding a border *on top of* the fill layer (the order in which layers are added is the order in which they are rendered).
 Additional elements such as north arrows, scale bars and layout options can also be added using the `+` same notation as we'll see in sections.
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">`qtm()` is a handy function for **q**uickly creating **t**map **m**aps (hence the snappy name).
