@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-03-02">
+<meta name="date" content="2018-03-03">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -481,7 +481,7 @@ task =<span class="st"> </span><span class="kw">makeClassifTask</span>(<span cla
 <span class="co"># and how to access the corresponding help file(s)</span>
 <span class="co"># getLearnerPackages(learner)</span>
 <span class="co"># helpLearner(learner)</span></code></pre></div>
-<p>In the beginning, it might seem a bit tedious to learn the <strong>mlr</strong> interface for modeling. But remember that one only has to learn one single interface to run 169 learners. Additionally, resampling in <strong>mlr</strong> is really easy and only requires two more steps.<a href="#fn68" class="footnoteRef" id="fnref68"><sup>68</sup></a> The first thing to to is specifying a resampling method. Spatial repeated cross-validation</p>
+<p>In the beginning, it might seem a bit tedious to learn the <strong>mlr</strong> interface for modeling. But remember that one only has to learn one single interface to run 171 learners. Additionally, resampling in <strong>mlr</strong> is really easy and only requires two more steps.<a href="#fn68" class="footnoteRef" id="fnref68"><sup>68</sup></a> The first thing to to is specifying a resampling method. Spatial repeated cross-validation</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">resampling =<span class="st"> </span><span class="kw">makeResampleDesc</span>(<span class="dt">method =</span> <span class="st">&quot;SpRepCV&quot;</span>, <span class="dt">folds =</span> <span class="dv">5</span>, <span class="dt">reps =</span> <span class="dv">10</span>)</code></pre></div>
 <p>Executing the resampling method and set the preferred performance measure.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">02192018</span>)
