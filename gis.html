@@ -439,10 +439,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="rsaga" class="section level2">
 <h2><span class="header-section-number">10.2</span> (R)SAGA</h2>
 <p>Similar to QGIS, the System for Automated Geoscientific Analyses (SAGA; Table <a href="gis.html#tab:gis-comp">10.1</a>) provides the possibility to run SAGA modules from Python (SAGA Python API). In addition, there is also a command line interface (saga_cmd.exe) to execute SAGA modules (see also <a href="https://sourceforge.net/p/saga-gis/wiki/Executing%20Modules%20with%20SAGA%20CMD/">https://sourceforge.net/p/saga-gis/wiki/Executing%20Modules%20with%20SAGA%20CMD/</a>). <strong>RSAGA</strong> uses the latter to run SAGA from within R.</p>
-<p>Though SAGA is a hybrid GIS, its main focus has been on raster processing, and here particularly on digital elevation models (soil properties, terrain attributes, climate parameters). Hence, SAGA is especially good at the fast processing of large (high-resolution) rasters datasets <span class="citation">(Conrad et al. <a href="#ref-conrad_system_2015">2015</a>)</span>. Therefore, we will introduce <strong>RSAGA</strong> with a raster and use case from <span class="citation">Muenchow, Brenning, and Richter (<a href="#ref-muenchow_geomorphic_2012">2012</a>)</span>. Specifically, we would like to compute the SAGA wetness index from a digital elevation model. First of all, we need to make sure that <strong>RSAGA</strong> will find SAGA on the computer when called. For this, all <strong>RSAGA</strong> functions using SAGA in the background make use of <code>rsaga.env()</code>. Usually, <code>rsaga.env()</code> will detect SAGA automatically by searching several likely directories (see its help for more information). However, we have ‘hidden’ SAGA in the OSGEO4W-installation, a location <code>rsaga.env()</code> does not search automatically. <code>linkSAGA</code> searches your computer for a valid SAGA installation. If it finds one, it adds it to the PATH environment variable thereby making sure that <code>rsaga.env</code> runs successfully.</p>
+<p>Though SAGA is a hybrid GIS, its main focus has been on raster processing, and here particularly on digital elevation models (soil properties, terrain attributes, climate parameters). Hence, SAGA is especially good at the fast processing of large (high-resolution) rasters datasets <span class="citation">(Conrad et al. <a href="#ref-conrad_system_2015">2015</a>)</span>. Therefore, we will introduce <strong>RSAGA</strong> with a raster and use case from <span class="citation">Muenchow, Brenning, and Richter (<a href="#ref-muenchow_geomorphic_2012">2012</a>)</span>. Specifically, we would like to compute the SAGA wetness index from a digital elevation model. First of all, we need to make sure that <strong>RSAGA</strong> will find SAGA on the computer when called. For this, all <strong>RSAGA</strong> functions using SAGA in the background make use of <code>rsaga.env()</code>. Usually, <code>rsaga.env()</code> will detect SAGA automatically by searching several likely directories (see its help for more information). However, we have ‘hidden’ SAGA in the OSGEO4W-installation, a location <code>rsaga.env()</code> does not search automatically. <code>linkSAGA</code> searches your computer for a valid SAGA installation. If it finds one, it adds the newest version to the PATH environment variable thereby making sure that <code>rsaga.env</code> runs successfully.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(RSAGA)
 <span class="kw">library</span>(link2GI)
-<span class="kw">linkSAGA</span>()
+saga &lt;-<span class="kw">linkSAGA</span>()
 <span class="kw">rsaga.env</span>()</code></pre></div>
 <p>Secondly, we need to write the digital elevation model to a SAGA-format. Note that calling <code>data(landslides)</code> attaches two object to the global environment - <code>dem</code>, a digital elevation model in the form of a <code>list</code>, and <code>landslides</code>, a <code>data.frame</code> containing observations representing the presence or absence of a landslide:</p>
 <!-- The following examples only work with SAGA < 2.3. We have informed the package maintainer to update SAGA -->
@@ -506,30 +506,26 @@ Figure 10.1: Structure of the GRASS geodatabase system including locations and m
 </div>
 <p>You have to set up a location and a mapset if you want to use GRASS from within R. First of all, we need to find out if and where GRASS7 is installed on the computer.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(link2GI)
-if (<span class="kw">Sys.info</span>()[<span class="st">&quot;sysname&quot;</span>] ==<span class="st"> &quot;Windows&quot;</span>) {
-  link =<span class="st"> </span>link2GI::<span class="kw">searchGRASSW</span>()  
-} else {
-  link =<span class="st"> </span>link2GI::<span class="kw">searchGRASSX</span>()
-}
-<span class="co">#&gt; Warning in link2GI::searchGRASSX(): Did not find any valid GRASS</span>
-<span class="co">#&gt; installation at mount point /usr</span></code></pre></div>
-<p><code>link</code> is a <code>data.frame</code> which contains in its rows the GRASS installations on your computer. Here, we will use a GRASS7 installation. If you have not installed GRASS7 on your computer, we recommend that you do so now. Assuming that we have found a working installation on your computer, we use the corresponding path in <code>initGRASS</code>. Additionally, we specify where to store the geodatabase (gisDbase), name the location <code>london</code>, and use the PERMANENT mapset.</p>
+link =<span class="st"> </span>link2GI::<span class="kw">findGRASS</span>() 
+<span class="co">#&gt; Warning in link2GI::searchGRASSX(MP = searchLocation): Did not find any</span>
+<span class="co">#&gt; valid GRASS installation at mount point /usr</span></code></pre></div>
+<p><code>link</code> is a <code>data.frame</code> which contains in its rows the GRASS 7 installations on your computer. Here, we will use a GRASS7 installation. If you have not installed GRASS7 on your computer, we recommend that you do so now. Assuming that we have found a working installation on your computer, we use the corresponding path in <code>initGRASS</code>. Additionally, we specify where to store the geodatabase (gisDbase), name the location <code>london</code>, and use the PERMANENT mapset.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rgrass7)
 <span class="co"># find a GRASS7 installation, and use the first one</span>
 ind =<span class="st"> </span><span class="kw">grep</span>(<span class="st">&quot;7&quot;</span>, link$version)[<span class="dv">1</span>]
 <span class="co"># next line of code only necessary if we want to use GRASS as installed by </span>
 <span class="co"># OSGeo4W. Among others, this adds some paths to PATH, which are also needed</span>
 <span class="co"># for running GRASS.</span>
-link2GI::<span class="kw">getparams_GRASS4W</span>(link[ind, ])
+link2GI::<span class="kw">paramGRASSw</span>(link[ind, ])
 grass_path =<span class="st"> </span><span class="kw">ifelse</span>(!<span class="kw">is.null</span>(link$installation_type) &amp;&amp;<span class="st"> </span>
 <span class="st">                      </span>link$installation_type[ind] ==<span class="st"> &quot;osgeo4W&quot;</span>,
-                     <span class="kw">file.path</span>(link$instDir[ind], <span class="st">&quot;apps/grass&quot;</span>, link$version[ind]),
-                     link$instDir)
+                    <span class="kw">file.path</span>(link$instDir[ind], <span class="st">&quot;apps/grass&quot;</span>, link$version[ind]),
+                    link$instDir)
 <span class="kw">initGRASS</span>(<span class="dt">gisBase =</span> grass_path,
           <span class="co"># home parameter necessary under UNIX-based systems</span>
           <span class="dt">home =</span> <span class="kw">tempdir</span>(),
           <span class="dt">gisDbase =</span> <span class="kw">tempdir</span>(), <span class="dt">location =</span> <span class="st">&quot;london&quot;</span>, 
-          <span class="dt">mapset =</span> <span class="st">&quot;PERMANENT&quot;</span>)</code></pre></div>
+          <span class="dt">mapset =</span> <span class="st">&quot;PERMANENT&quot;</span>, <span class="dt">override =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p>Subsequently, we define the projection, the extent and the resolution.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">execGRASS</span>(<span class="st">&quot;g.proj&quot;</span>, <span class="dt">flags =</span> <span class="kw">c</span>(<span class="st">&quot;c&quot;</span>, <span class="st">&quot;quiet&quot;</span>), 
           <span class="dt">proj4 =</span> sf::<span class="kw">st_crs</span>(streets)$proj4string)
@@ -539,7 +535,7 @@ b_box =<span class="st"> </span>sf::<span class="kw">st_bbox</span>(streets)
           <span class="dt">e =</span> <span class="kw">as.character</span>(b_box[<span class="st">&quot;xmax&quot;</span>]), <span class="dt">w =</span> <span class="kw">as.character</span>(b_box[<span class="st">&quot;xmin&quot;</span>]), 
           <span class="dt">res =</span> <span class="st">&quot;1&quot;</span>)</code></pre></div>
 <p>Once you are familiar how to set up the GRASS environment, it becomes tedious to do so over and over again. Luckily, <code>linkGRASS7</code> of the <strong>link2GI</strong> packages lets you do it with one line of code. The only thing you need to provide is a spatial object which determines the projection and the extent of the geodatabase. First, <code>linkGRASS7</code> finds all GRASS installations on your computer. Since we have set <code>ver_select</code> to <code>TRUE</code>, we can interactively choose one of the found GRASS-installations. If there is just one installation, the <code>linkGRASS7</code> automatically chooses this one. Secondly, <code>linkGRASS7</code> establishes a connection to GRASS7.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">linkGRASS7</span>(streets, <span class="dt">ver_select =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">link2GI::<span class="kw">linkGRASS7</span>(streets, <span class="dt">ver_select =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p>Before we can use GRASS geoalgorithms, we need to add data to GRASS’s spatial database. Luckily, the convenience function <code>writeVECT</code> does this for us. (Use <code>writeRast</code> in the case of raster data.) In our case we add the street and cycle hire point data while using only the first attribute column, and name them also <code>streets</code> and <code>points</code>.</p>
 <!-- in time we can also use sf- and raster-objects with rgrass7, Roger has already implemented this in the rgrass7 developer version -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">writeVECT</span>(<span class="kw">as</span>(streets[, <span class="dv">1</span>], <span class="st">&quot;Spatial&quot;</span>), <span class="dt">vname =</span> <span class="st">&quot;streets&quot;</span>)

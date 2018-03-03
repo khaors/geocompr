@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve6c0c3e6ecb7bfb14
+preservefb4e26abf92b51bd
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3084,7 +3084,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve56dc17fbb60bdef5
+preserve32d7c1b02186dbf8
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5975,7 +5975,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservebeaf0279cd8cab3f
+preserve328fbecc4877e18b
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6594,7 +6594,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserved6e2d0c485b28246
+preserve3b60ff10686ff64a
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7341,13 +7341,13 @@ First of all, we need to make sure that **RSAGA** will find SAGA on the computer
 For this, all **RSAGA** functions using SAGA in the background make use of `rsaga.env()`. 
 Usually, `rsaga.env()` will detect SAGA automatically by searching several likely directories (see its help for more information). However, we have 'hidden' SAGA in the OSGEO4W-installation, a location `rsaga.env()` does not search automatically. 
 `linkSAGA` searches your computer for a valid SAGA installation. 
-If it finds one, it adds it to the PATH environment variable thereby making sure that `rsaga.env` runs successfully.
+If it finds one, it adds the newest version to the PATH environment variable thereby making sure that `rsaga.env` runs successfully.
 
 
 ```r
 library(RSAGA)
 library(link2GI)
-linkSAGA()
+saga <-linkSAGA()
 rsaga.env()
 ```
 
@@ -7499,16 +7499,12 @@ First of all, we need to find out if and where GRASS7 is installed on the comput
 
 ```r
 library(link2GI)
-if (Sys.info()["sysname"] == "Windows") {
-  link = link2GI::searchGRASSW()  
-} else {
-  link = link2GI::searchGRASSX()
-}
-#> Warning in link2GI::searchGRASSX(): Did not find any valid GRASS
-#> installation at mount point /usr
+link = link2GI::findGRASS() 
+#> Warning in link2GI::searchGRASSX(MP = searchLocation): Did not find any
+#> valid GRASS installation at mount point /usr
 ```
 
-`link` is a `data.frame` which contains in its rows the GRASS installations on your computer. 
+`link` is a `data.frame` which contains in its rows the GRASS 7 installations on your computer. 
 Here, we will use a GRASS7 installation.
 If you have not installed GRASS7 on your computer, we recommend that you do so now.
 Assuming that we have found a working installation on your computer, we use the corresponding path in `initGRASS`. 
@@ -7522,16 +7518,16 @@ ind = grep("7", link$version)[1]
 # next line of code only necessary if we want to use GRASS as installed by 
 # OSGeo4W. Among others, this adds some paths to PATH, which are also needed
 # for running GRASS.
-link2GI::getparams_GRASS4W(link[ind, ])
+link2GI::paramGRASSw(link[ind, ])
 grass_path = ifelse(!is.null(link$installation_type) && 
                       link$installation_type[ind] == "osgeo4W",
-                     file.path(link$instDir[ind], "apps/grass", link$version[ind]),
-                     link$instDir)
+                    file.path(link$instDir[ind], "apps/grass", link$version[ind]),
+                    link$instDir)
 initGRASS(gisBase = grass_path,
           # home parameter necessary under UNIX-based systems
           home = tempdir(),
           gisDbase = tempdir(), location = "london", 
-          mapset = "PERMANENT")
+          mapset = "PERMANENT", override = TRUE)
 ```
 
 Subsequently, we define the projection, the extent and the resolution.
@@ -7556,7 +7552,7 @@ Secondly, `linkGRASS7` establishes a connection to GRASS7.
  
 
 ```r
-linkGRASS7(streets, ver_select = TRUE)
+link2GI::linkGRASS7(streets, ver_select = TRUE)
 ```
 
 Before we can use GRASS geoalgorithms, we need to add data to GRASS's spatial database.
