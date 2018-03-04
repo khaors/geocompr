@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve238a977ee95d5de7
+preservea1ed5b8df464b6c5
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3084,7 +3084,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve31e1471e69cf8eee
+preserve94b06d68d1bd6090
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5975,7 +5975,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve1bd7067d8a3304ee
+preserve8349331931c765ce
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6594,7 +6594,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve47c31665b4a74e53
+preserve00856e86f8fc3daf
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7733,17 +7733,15 @@ You can learn more in the function's help file - `?mask`.
 ## Raster extraction
 
 Raster extraction is a process of pulling out values from rasters based on the locations of vector data.
-It behavies differently depending on the type of secondary data (points, lines or polygons) and selected arguments.
+It behaves differently depending on the type of secondary data (points, lines or polygons) and selected arguments.
 We will present some of the most often use cases below using the `raster::extract()` function.
 <!-- faster alternative to raster::extract?? -->
-The reverse process of transfering vector data into rasters is usually done by rasterization (see section \@ref(rasterization)).
+The reverse process of transferring vector data into rasters is usually done by rasterization (see section \@ref(rasterization)).
 
+The simplest example of raster extraction is when values of raster cells are extracted based on coordinates of points.
 
-
-<!-- extract to points -->
+<!-- \@ref(fig:pointext)) -->
 <!-- mention buffer arg -->
-<!-- prepare artificial data points  -->
-
 <!-- add to spdatalarge -->
 
 ```r
@@ -7759,7 +7757,10 @@ zion_points = st_sample(zion, size = 30) %>%
 zion_points$elevation = raster::extract(srtm, zion_points)
 ```
 
-<img src="figures/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures/pointext-1.png" alt="Locations of points used for raster extraction." width="576" />
+<p class="caption">(\#fig:pointext)Locations of points used for raster extraction.</p>
+</div>
 
 <!-- extract to line -->
 <!-- transect example and creation -->
@@ -7786,7 +7787,7 @@ transect_coords = xyFromCell(srtm, transect_df$cell)
 transect_df$dist = distm(transect_coords)[, 1]
 ```
 
-<img src="figures/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/lineext-1.png" width="576" style="display: block; margin: auto;" />
 
 <!-- extract to polygons (or extents) -->
 <!-- depends on the type of data (continuous or categorical) -->
@@ -7832,7 +7833,7 @@ zion_nlcd_df = zion_nlcd %>%
 zion_nlcd_new = bind_cols(zion, zion_nlcd_df)
 ```
 
-<img src="figures/unnamed-chunk-19-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/polyext-1.png" width="576" style="display: block; margin: auto;" />
 
 <!-- ## Spatial interpolation ?? -->
 <!-- http://mdsumner.github.io/guerrilla/articles/irreg2.html -->
