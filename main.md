@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-03-03'
+date: '2018-03-04'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-03-03 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-03-04 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservefb4e26abf92b51bd
+preserveb8114ade45be1084
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3084,7 +3084,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve32d7c1b02186dbf8
+preservee638f0c5448cc453
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5975,7 +5975,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve328fbecc4877e18b
+preserve0221e8f2aa8af65e
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6594,7 +6594,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve3b60ff10686ff64a
+preserve6df2fb67bf88e1ac
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7732,15 +7732,16 @@ You can learn more in the function's help file - `?mask`.
 
 ## Raster extraction
 
-<!-- intro -->
-<!-- extract -->
-<!-- extract to point, line, polygon - are different -->
+Raster extraction is a process of pulling out values from rasters based on the locations of vector data.
+It behavies differently depending on the type of secondary data (points, lines or polygons) and selected arguments
+The reverse process of transfering vector data into rasters is usually done by rasterization (see section \@ref(rasterization)).
 <!-- faster alternative to raster::extract?? -->
 
 <!-- extract to points -->
 <!-- mention buffer arg -->
 <!-- prepare artificial data points  -->
 
+<!-- add to spdatalarge -->
 
 ```r
 set.seed(2018-02-21)
@@ -7749,7 +7750,7 @@ zion_points = st_sample(zion, size = 30) %>%
 ```
 
 <!-- elevation to points (zion) -->
-adding a column with the elevation values
+<!-- adding a column with the elevation values -->
 
 ```r
 zion_points$elevation = raster::extract(srtm, zion_points)
@@ -7793,6 +7794,7 @@ zion_srtm_values = raster::extract(x = srtm, y = zion)
 ```
 
 <!-- it can be used for more advanced examples, like calculating stats for each polygon -->
+<!-- summarized into some value of interest (e.g. mean, maximum, total). -->
 
 ```r
 zion_srtm_df = c(min, mean, max) %>% 
@@ -8320,7 +8322,7 @@ lrn = makeLearner(cl = "classif.binomial",
 ```
 
 In the beginning, it might seem a bit tedious to learn the **mlr** interface for modeling.
-But remember that one only has to learn one single interface to run 171 learners.
+But remember that one only has to learn one single interface to run 169 learners.
 Additionally, resampling in **mlr** is really easy and only requires two more steps.^[Further advantages are the easy parallelization of resampling techniques and the tuning of machine learning hyperparameters, also spatially, in an inner fold.]
 The first thing to to is specifying a resampling method.
 Spatial repeated cross-validation

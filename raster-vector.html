@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-03-03">
+<meta name="date" content="2018-03-04">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -385,18 +385,16 @@ Figure 11.1: Illustration of raster cropping (center) and raster masking (right)
 </div>
 <div id="raster-extraction" class="section level2">
 <h2><span class="header-section-number">11.3</span> Raster extraction</h2>
-<!-- intro -->
-<!-- extract -->
-<!-- extract to point, line, polygon - are different -->
-<!-- faster alternative to raster::extract?? -->
+<p>Raster extraction is a process of pulling out values from rasters based on the locations of vector data. It behavies differently depending on the type of secondary data (points, lines or polygons) and selected arguments The reverse process of transfering vector data into rasters is usually done by rasterization (see section <a href="raster-vector.html#rasterization">11.4</a>). <!-- faster alternative to raster::extract?? --></p>
 <!-- extract to points -->
 <!-- mention buffer arg -->
 <!-- prepare artificial data points  -->
+<!-- add to spdatalarge -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">2018-02-21</span>)
 zion_points =<span class="st"> </span><span class="kw">st_sample</span>(zion, <span class="dt">size =</span> <span class="dv">30</span>) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">st_sf</span>()</code></pre></div>
 <!-- elevation to points (zion) -->
-<p>adding a column with the elevation values</p>
+<!-- adding a column with the elevation values -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_points$elevation =<span class="st"> </span>raster::<span class="kw">extract</span>(srtm, zion_points)</code></pre></div>
 <p><img src="figures/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;" /></p>
 <!-- extract to line -->
@@ -416,6 +414,7 @@ transect_df$dist =<span class="st"> </span><span class="kw">distm</span>(transec
 <!-- the simplest example is to extract all values into a list -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_srtm_values =<span class="st"> </span>raster::<span class="kw">extract</span>(<span class="dt">x =</span> srtm, <span class="dt">y =</span> zion)</code></pre></div>
 <!-- it can be used for more advanced examples, like calculating stats for each polygon -->
+<!-- summarized into some value of interest (e.g. mean, maximum, total). -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_srtm_df =<span class="st"> </span><span class="kw">c</span>(min, mean, max) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">map_dfr</span>(~raster::<span class="kw">extract</span>(<span class="dt">x =</span> srtm, <span class="dt">y =</span> zion, <span class="dt">fun =</span> ., <span class="dt">df =</span> <span class="ot">TRUE</span>)) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">stat =</span> <span class="kw">c</span>(<span class="st">&quot;minimum&quot;</span>, <span class="st">&quot;mean&quot;</span>, <span class="st">&quot;maximum&quot;</span>)) %&gt;%<span class="st"> </span>
