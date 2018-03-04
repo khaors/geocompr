@@ -388,7 +388,7 @@ Figure 11.1: Illustration of raster cropping (center) and raster masking (right)
 <p>Raster extraction is a process of pulling out values from rasters based on the locations of vector data. It behaves differently depending on the type of secondary data (points, lines or polygons) and selected arguments. We will present some of the most often use cases below using the <code>raster::extract()</code> function. <!-- faster alternative to raster::extract?? --> The reverse process of transferring vector data into rasters is usually done by rasterization (see section <a href="raster-vector.html#rasterization">11.4</a>).</p>
 <p>The simplest example of raster extraction is when values of raster cells are extracted based on coordinates of points.</p>
 <!-- \@ref(fig:pointext)) -->
-<!-- mention buffer arg -->
+<!-- mention buffer arg + ref to poly extraction as it is more similar -->
 <!-- add to spdatalarge -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">2018-02-21</span>)
 zion_points =<span class="st"> </span><span class="kw">st_sample</span>(zion, <span class="dt">size =</span> <span class="dv">30</span>) %&gt;%<span class="st"> </span>
