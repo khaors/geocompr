@@ -178,7 +178,7 @@ Hence, you should also be able to apply the learned methods and mastered skills 
 Moreover, throughout the book we encourage you to make geographic research more reproducible, scientific and socially beneficial. 
 
 This book is also related to a movement that has been labelled Geographical Data Science (GDS).
-This recent concept essentially combines 'data science' with GIS and, like Geocomputation, can be defined in comparison with GIS (see Table \@ref(tab:gdsl)).
+This recent concept essentially combines 'data science' with GIS and, like geocomputation, can be defined in comparison with GIS (see Table \@ref(tab:gdsl)).
 The focus on reproducibility and a command-line interface in this book is aligned with GDS.
 
 
@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservee630c668260abe8c
+preserve3f59d53e91feb849
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3084,7 +3084,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve3982566e1422f259
+preserve768c0915766ba43e
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5975,7 +5975,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve765a1e1f1902641a
+preserveee1229d65f303dd5
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6594,7 +6594,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve4728b7a12561c544
+preserveeed7f501fb0b3b8c
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6691,7 +6691,7 @@ library(tmap)    # for static and interactive maps
 
 ## Introduction
 
-A satisfying and important aspect of Geocomputation is producing and communicating the results in the form of maps.
+A satisfying and important aspect of geocomputation is producing and communicating the results in the form of maps.
 Map making --- the art of Cartography --- is an ancient skill that involves precision, consideration of the map-reader and often an element of creativity.
 Making basic maps is straightforward with `plot()` (see section \@ref(basic-map)).
 Making advanced maps, however, is an advanced topic.
@@ -6715,7 +6715,7 @@ Map making is therefore a critical part of geocomputation and its emphasis not o
 
 ## Static maps
 
-Static maps are the most common type of visual output from Geocomputation.
+Static maps are the most common type of visual output from geocomputation.
 They are fixed images that can be included in printed outputs or published online.
 The majority of maps contained in this book, for example, are static maps saved as `.png` files (interactive maps are covered in section \@ref(interactive-maps)).
 
@@ -7097,7 +7097,7 @@ animation_tmap(m2, filename = "figures/11-lifeExp_sa_animation.gif", width = 160
 ## Web mapping applications with shiny
 
 The interactive web maps demonstrated in section \@ref(interactive-maps) can go far.
-Careful selection of layers to display, base-maps and pop-ups can be used to communicate the main results of many projects involving Geocomputation.
+Careful selection of layers to display, base-maps and pop-ups can be used to communicate the main results of many projects involving geocomputation.
 But the web mapping approach to interactivity has limitations:
 
 - Although the map is interactive in terms of panning, zooming and clicking, the code is static, meaning the user interface is fixed.
