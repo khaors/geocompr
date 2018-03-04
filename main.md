@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve26d5367288eef8d1
+preserve4b51f9eea65e04d8
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3084,7 +3084,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve46d63de22e64128d
+preserveb3393bf44ac42967
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5975,7 +5975,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve0025899ac3b0bd08
+preservec876c213f3932c26
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6594,7 +6594,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve4dec495b04c82747
+preserve9c972c10ad9555f8
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6755,23 +6755,82 @@ The object passed to `tm_shape()` in this case is `nz`, which represents the reg
 Layers are iteratively added to represent this shape visually, with `tm_fill()` and `tm_borders()` in this case.
 This is an intuitive approach, making the common task of adding new layers as simple as adding `+` followed by `tm_*()` where `*` is replaced by an element of your choice (see ``?`tmap-element`` for a list of available elements).
 This 'layering' is illustrated in the right panel of Figure \@ref(fig:tmshape), which shows the result of adding a border *on top of* the fill layer (the order in which layers are added is the order in which they are rendered).
-Additional elements such as north arrows, scale bars and layout options can also be added using the `+` same notation as we'll see in sections.
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">`qtm()` is a handy function for **q**uickly creating **t**map **m**aps (hence the snappy name).
 It is concise and provides a good default visualization in many cases:
 `qtm(nz)`, for example, is equivalent to `tm_shape(nz) + tm_fill() + tm_borders()`.
 Further, layers can be added concisely using multiple `qtm()` calls, such as `qtm(nz) + qtm(nz_height)`.
-The disadvantage is that it makes aesthetics of individual layers harder to control.
-While we advocate its use for quick interactive map creation, we avoid teaching it preferring clarity and control over conciseness.</div>\EndKnitrBlock{rmdnote}
+The disadvantage is that it makes aesthetics of individual layers harder to control, explaining why we avoid teaching it in this chapter.</div>\EndKnitrBlock{rmdnote}
 
-<!-- I'm not sure if we can fill it all in the book, but it could be worth to try these three packages on the same problems/data -->
-<!-- base plots (one example) -->
-<!-- ggplots  (geom_sf, coord_sf; one example)-->
-<!-- tmap (more than one example) -->
+### Map objects and layers
+
+A useful feature of **tmap** is its ability to store objects representing maps.
+The code chunk below demonstrates this by saving the last plot in Figure \@ref(fig:tmshape) as an object of class `tmap`:
+
+
+```r
+map_nz = tm_shape(nz) + tm_fill() + tm_borders()
+class(map_nz)
+#> [1] "tmap"
+```
+
+We can later use `map_nz` to plot its contents with `print(map_nz)`.
+Alternatively `tmap` objects can be used as the basis of other maps:
+in addition to new layers for a single shape, the `+` operator can be used to add new shapes to a map with an extra `+ tm_shape()`.
+
+All subsequent layer functions after a new shape will refer to the newly added shape, until a new shape is added, allowing many layers to added.
+This is illustrated in the code chunk below which creates a new map object (called `map_nz1`) building on `map_nz`.
+`map_nz1` contains an additional layer representing high points in New Zealand, as illustrated in Figure \@ref(fig:tmlayers) (left).
+
+
+```r
+map_nz1 = map_nz +
+  tm_shape(nz_height) + tm_bubbles()
+```
+
+In turn, another layer can be added to the newly created map object `map_nz1`.
+This is illustrated in the code chunk below which first creates `nz_water`, representing New Zealand's [territorial waters](https://en.wikipedia.org/wiki/Territorial_waters) and then plots this on top of the pre-existing map object, saving the result as `map_nz2`:
+
+
+```r
+nz_water = st_union(nz) %>% st_buffer(22200) %>%
+  st_cast(to = "LINESTRING")
+map_nz2 = map_nz1 +
+  tm_shape(nz_water) + tm_lines()
+```
+
+There is no limit to the number of layers in a `tmap` map and the same shape can be used multiple times.
+This is illustrated in the right-hand panel of Figure \@ref(fig:tmlayers), which represents `map_nz3`, created by adding another layer based on `nz_height` to the previously created `map_nz2` object:
+
+
+```r
+map_nz3 = map_nz2 +
+  tm_shape(nz_height) + tm_dots()
+```
+
+A useful and little known feature of **tmap** is that multiple map objects can be arranged in a single 'metaplot' with `tmap_arrange()`.
+This is demonstrated in the code chunk below which plots `map_nz1` to `map_nz3`, resulting in Figure \@ref(fig:tmlayers).
+
+
+```r
+tmap_arrange(map_nz1, map_nz2, map_nz3)
+```
+
+<div class="figure" style="text-align: center">
+<img src="figures/tmlayers-1.png" alt="Maps with additional layers added to the final map of Figure 9.1." width="576" />
+<p class="caption">(\#fig:tmlayers)Maps with additional layers added to the final map of Figure 9.1.</p>
+</div>
+
+Additional elements such as north arrows, scale bars and layout options can also be added using the `+` same notation as we'll see in subsequent sections.
+
+### Aestetics
+
+Now we understand how **tmap**'s syntax can be used to plot multiple layers, a logical next step is to change their aesthetics.
 
 ### Map layouts
 
-### Map styling
+
+
 
 <!-- 
 - lines widths, polygon lines vs polygon areas, etc.
