@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve4b51f9eea65e04d8
+preserveedeba1ad1e303c46
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -354,15 +354,15 @@ See the [r-spatial](https://github.com/r-spatial/) organisation and conversation
 ] and a growing number of actively developed packages which are designed to work in harmony with **sf** (Table \@ref(tab:revdep)). 
 
 
-Table: (\#tab:revdep)The top 5 most downloaded packages that depend on sf, in terms of average number of downloads per day over the previous month. As of 2018-02-28 there are 59 packages which import sf.
+Table: (\#tab:revdep)The top 5 most downloaded packages that depend on sf, in terms of average number of downloads per day over the previous month. As of 2018-03-03 there are 60 packages which import sf.
 
 package    Downloads
 --------  ----------
-plotly          1664
-raster          1457
-spData           825
-spdep            747
-leaflet          567
+plotly          1611
+raster          1390
+spData           777
+spdep            730
+leaflet          551
 
 ## The history of R-spatial
 
@@ -3084,7 +3084,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveb3393bf44ac42967
+preservead72a150108fd082
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5975,7 +5975,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservec876c213f3932c26
+preserve8e0f264a53cc9dd2
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6594,7 +6594,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve9c972c10ad9555f8
+preservebfd2f4e7a949e783
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7797,18 +7797,10 @@ We will present some of the most often use cases below using the `raster::extrac
 <!-- faster alternative to raster::extract?? -->
 The reverse process of transferring vector data into rasters is usually done by rasterization (see section \@ref(rasterization)).
 
-The simplest example of raster extraction is when values of raster cells are extracted based on coordinates of points.
+The simplest example of raster extraction is when values of raster cells are extracted based on points coordinates.
+The `zion_points` dataset consists of 30 points located in the Zion National Park \@ref(fig:pointext)). 
 
-<!-- \@ref(fig:pointext)) -->
 <!-- mention buffer arg + ref to poly extraction as it is more similar -->
-<!-- add to spdatalarge -->
-
-```r
-set.seed(2018-02-21)
-zion_points = st_sample(zion, size = 30) %>% 
-  st_sf()
-```
-
 <!-- elevation to points (zion) -->
 <!-- adding a column with the elevation values -->
 

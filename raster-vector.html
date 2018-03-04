@@ -387,13 +387,8 @@ Figure 11.1: Illustration of raster cropping (center) and raster masking (right)
 <div id="raster-extraction" class="section level2">
 <h2><span class="header-section-number">11.3</span> Raster extraction</h2>
 <p>Raster extraction is a process of pulling out values from rasters based on the locations of vector data. It behaves differently depending on the type of secondary data (points, lines or polygons) and selected arguments. We will present some of the most often use cases below using the <code>raster::extract()</code> function. <!-- faster alternative to raster::extract?? --> The reverse process of transferring vector data into rasters is usually done by rasterization (see section <a href="raster-vector.html#rasterization">11.4</a>).</p>
-<p>The simplest example of raster extraction is when values of raster cells are extracted based on coordinates of points.</p>
-<!-- \@ref(fig:pointext)) -->
+<p>The simplest example of raster extraction is when values of raster cells are extracted based on points coordinates. The <code>zion_points</code> dataset consists of 30 points located in the Zion National Park <a href="raster-vector.html#fig:pointext">11.2</a>).</p>
 <!-- mention buffer arg + ref to poly extraction as it is more similar -->
-<!-- add to spdatalarge -->
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">2018-02-21</span>)
-zion_points =<span class="st"> </span><span class="kw">st_sample</span>(zion, <span class="dt">size =</span> <span class="dv">30</span>) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">st_sf</span>()</code></pre></div>
 <!-- elevation to points (zion) -->
 <!-- adding a column with the elevation values -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_points$elevation =<span class="st"> </span>raster::<span class="kw">extract</span>(srtm, zion_points)</code></pre></div>
