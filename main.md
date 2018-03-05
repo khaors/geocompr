@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve9482b2fcf7aff17c
+preservef40999747a10da9a
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3084,7 +3084,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve9e8acb0be54b8e34
+preserveb7ffa8e7d543a932
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5975,7 +5975,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve36dd26d3b4c21f2b
+preserveecc4727beeb81ea7
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6594,7 +6594,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservebe879b187aac5a4f
+preserve1aae5c8dea262411
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6822,9 +6822,61 @@ tmap_arrange(map_nz1, map_nz2, map_nz3)
 
 Additional elements such as north arrows, scale bars and layout options can also be added using the `+` same notation as we'll see in subsequent sections.
 
-### Aestetics
+### Aesthetics
 
-Now we understand how **tmap**'s syntax can be used to plot multiple layers, a logical next step is to change their aesthetics.
+The plots in the previous section demonstrate **tmap**'s default aesthetic settings.
+Grey shades are used for `tm_fill()` and  `tm_bubbles()` layers and continuous red line is used to represent lines created with `tm_lines()`.
+These are reasonable defaults, but you will likely want to fine-grained control over these, and other aesthetics, when preparing maps for publication.
+
+There are two main types of map aesthetics: those that change with the data and those that are constant.
+Unlike **ggplot2** which uses the helper function `aes()` to represent the former, **tmap** layer functions accept aesthetic arguments that are either constant values *or* variable fields.
+The most commonly used aesthetics for fill and border layers include color, transparency, line width and line type, (set with `col`, `alpha`, `lwd`, and `lty` arguments respectively).
+The impact of setting these with fixed values is illustrated in Figure \@ref(fig:tmstatic).
+
+
+```r
+ma1 = tm_shape(nz) + tm_fill(col = "red")
+ma2 = tm_shape(nz) + tm_fill(col = "red", alpha = 0.3)
+ma3 = tm_shape(nz) + tm_borders(col = "blue")
+ma4 = tm_shape(nz) + tm_borders(lwd = 3)
+ma5 = tm_shape(nz) + tm_borders(lty = 2)
+ma6 = tm_shape(nz) + tm_fill(col = "red", alpha = 0.3) +
+  tm_borders(col = "blue", lwd = 3, lty = 2)
+tmap_arrange(ma1, ma2, ma3, ma4, ma5, ma6)
+```
+
+<div class="figure" style="text-align: center">
+<img src="figures/tmstatic-1.png" alt="The impact of changing commonly used fill and border aesthetics to fixed values." width="576" />
+<p class="caption">(\#fig:tmstatic)The impact of changing commonly used fill and border aesthetics to fixed values.</p>
+</div>
+
+Like base R plots, arguments defining aesthetics can also receive values that vary.
+Unlike base R, **tmap** aesthetic arguments will not accept a vector of values, explaining why the first line in the code chunk works but the second fails (results not shown):
+
+
+```r
+plot(nz$geometry, col = 1:nrow(nz))      # works
+tm_shape(nz) + tm_fill(col = 1:nrow(nz)) # fails:
+#> Error: Fill argument neither colors nor valid variable name(s)
+```
+
+Instead, you must enter a text string containing the name of an attribute name *contained within* the shape being plotted.
+This functionality is illustrated below, which demonstrates how fill color can be set to vary depending on the area of each region in New Zealand.
+The plot also illustrates how the number and palette of colors can be altered by passing integer and text values to the arguments `n` and `palette` respectively: 
+
+
+```r
+tm_shape(nz) + tm_fill(col = "AREA_SQ_KM")
+tm_shape(nz) + tm_fill(col = "AREA_SQ_KM", n = 3)
+tm_shape(nz) + tm_fill(col = "AREA_SQ_KM", palette = "RdBu")
+```
+
+<div class="figure" style="text-align: center">
+<img src="figures/unnamed-chunk-10-1.png" alt="Illustration of a variable aesthetic: the color of each region is dependent on its area." width="30%" /><img src="figures/unnamed-chunk-10-2.png" alt="Illustration of a variable aesthetic: the color of each region is dependent on its area." width="30%" /><img src="figures/unnamed-chunk-10-3.png" alt="Illustration of a variable aesthetic: the color of each region is dependent on its area." width="30%" />
+<p class="caption">(\#fig:unnamed-chunk-10)Illustration of a variable aesthetic: the color of each region is dependent on its area.</p>
+</div>
+
+
 
 ### Map layouts
 
