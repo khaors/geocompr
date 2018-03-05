@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-03-04">
+<meta name="date" content="2018-03-05">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -362,13 +362,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="introduction-6" class="section level2">
 <h2><span class="header-section-number">9.1</span> Introduction</h2>
-<p>A satisfying and important aspect of geocomputation is producing and communicating the results in the form of maps. Map making — the art of Cartography — is an ancient skill that involves precision, consideration of the map-reader and often an element of creativity. Making basic maps is straightforward with <code>plot()</code> (see section <a href="spatial-class.html#basic-map">2.1.3</a>). Making advanced maps, however, is an advanced topic. Geocomputation can generate useful results but Cartography is required to communicate them effectively to a wider audience <span class="citation">(Brewer <a href="#ref-brewer_designing_2015">2015</a>)</span>:</p>
+<p>A satisfying and important aspect of geographic research is producing and communicating the results in the form of maps. Map making — the art of Cartography — is an ancient skill that involves precision, consideration of the map-reader and often an element of creativity. Basic plotting of geographic data is straightforward with <code>plot()</code> (see section <a href="spatial-class.html#basic-map">2.1.3</a>) but making maps for publication is an advanced and time-consuming skill. It is a skill worth learning, however: a carefully crafted map can communicate results effectively and avoid time spent generating them going to waste due to poor presentation <span class="citation">(Brewer <a href="#ref-brewer_designing_2015">2015</a>)</span>:</p>
 <blockquote>
 <p>Amateur-looking maps can undermine your audience’s ability to understand important information and weaken the presentation of a professional data investigation.</p>
 </blockquote>
 <!-- Todo: consider adding footnote saying it's good to focus on visualization early as in R4DS but that we cover it later because there's a risk of getting distracted by pretty pictures to the detriment of good analysis. -->
-<p>Maps have been used for several thousand years for a wide variety of purposes. From asserting control over real estate in Babylon to illustrating a scientific worldview in Ptolemy’s Ancient Greek masterpiece <em>Geography</em>, they have historically been out of reach for everyday people <span class="citation">(Talbert <a href="#ref-talbert_ancient_2014">2014</a>)</span>. Modern computing has the potential to change this.</p>
-<p>Map making skills can also help meet research and public engagement objectives. From a research perspective clear maps are often be the best way to present the results of geocomputational research. From policy and ‘citizen science’ perspectives, attractive and engaging maps can help change peoples’ minds, based on the evidence. Map making is therefore a critical part of geocomputation and its emphasis not only describing, but also changing the world (see Chapter <a href="intro.html#intro">1</a>).</p>
+<p>Maps have been used for several thousand years for a wide variety of purposes. From asserting control over real estate in Babylon to illustrating a scientific worldview in Ptolemy’s Ancient Greek masterpiece <em>Geography</em>, they have historically been out of reach for everyday people <span class="citation">(Talbert <a href="#ref-talbert_ancient_2014">2014</a>)</span>. Modern computing has the potential to change this. Map making skills can also help meet research and public engagement objectives. From a research perspective clear maps are often be the best way to present the results of geocomputational research. From policy and ‘citizen science’ perspectives, attractive and engaging maps can help change peoples’ minds, based on the evidence. Map making is therefore a critical part of geocomputation and its emphasis not only describing, but also changing the world (see Chapter <a href="intro.html#intro">1</a>).</p>
 <!-- info about relation between efficiency and editability -->
 <!-- intro to the chapter structure -->
 </div>
@@ -406,7 +405,7 @@ Figure 9.1: New Zealand’s shape plotted with fill (left), border (middle) and 
 <span class="kw">class</span>(map_nz)
 <span class="co">#&gt; [1] &quot;tmap&quot;</span></code></pre></div>
 <p>We can later use <code>map_nz</code> to plot its contents with <code>print(map_nz)</code>. Alternatively <code>tmap</code> objects can be used as the basis of other maps: in addition to new layers for a single shape, the <code>+</code> operator can be used to add new shapes to a map with an extra <code>+ tm_shape()</code>.</p>
-<p>All subsequent layer functions after a new shape will refer to the newly added shape, until a new shape is added, allowing many layers to added. This is illustrated in the code chunk below which creates a new map object (called <code>map_nz1</code>) building on <code>map_nz</code>. <code>map_nz1</code> contains an additional layer representing high points in New Zealand, as illustrated in Figure <a href="adv-map.html#fig:tmlayers">9.2</a> (left).</p>
+<p>All subsequent layer functions after a new shape will refer to the newly added shape, until a new shape is added, allowing one or more layers to be added for each shape. This is illustrated in the code chunk below which creates a new map object (called <code>map_nz1</code>) building on <code>map_nz</code>. <code>map_nz1</code> contains an additional layer representing high points in New Zealand, as illustrated in Figure <a href="adv-map.html#fig:tmlayers">9.2</a> (left).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">map_nz1 =<span class="st"> </span>map_nz +
 <span class="st">  </span><span class="kw">tm_shape</span>(nz_height) +<span class="st"> </span><span class="kw">tm_bubbles</span>()</code></pre></div>
 <p>In turn, another layer can be added to the newly created map object <code>map_nz1</code>. This is illustrated in the code chunk below which first creates <code>nz_water</code>, representing New Zealand’s <a href="https://en.wikipedia.org/wiki/Territorial_waters">territorial waters</a> and then plots this on top of the pre-existing map object, saving the result as <code>map_nz2</code>:</p>

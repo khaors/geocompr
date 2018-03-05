@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-03-04'
+date: '2018-03-05'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-03-04 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-03-05 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve3f59d53e91feb849
+preserve9482b2fcf7aff17c
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3084,7 +3084,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve768c0915766ba43e
+preserve9e8acb0be54b8e34
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5975,7 +5975,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserveee1229d65f303dd5
+preserve36dd26d3b4c21f2b
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6594,7 +6594,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveeed7f501fb0b3b8c
+preservebe879b187aac5a4f
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6691,11 +6691,11 @@ library(tmap)    # for static and interactive maps
 
 ## Introduction
 
-A satisfying and important aspect of geocomputation is producing and communicating the results in the form of maps.
+A satisfying and important aspect of geographic research is producing and communicating the results in the form of maps.
 Map making --- the art of Cartography --- is an ancient skill that involves precision, consideration of the map-reader and often an element of creativity.
-Making basic maps is straightforward with `plot()` (see section \@ref(basic-map)).
-Making advanced maps, however, is an advanced topic.
-Geocomputation can generate useful results but Cartography is required to communicate them effectively to a wider audience [@brewer_designing_2015]:
+Basic plotting of geographic data is straightforward with `plot()` (see section \@ref(basic-map)) but making maps for publication is an advanced and time-consuming skill.
+It is a skill worth learning, however:
+a carefully crafted map can communicate results effectively and avoid time spent generating them going to waste due to poor presentation [@brewer_designing_2015]:
 
 > Amateur-looking maps can undermine your audience’s ability to understand important information and weaken the presentation of a professional data investigation.
 
@@ -6704,7 +6704,6 @@ Geocomputation can generate useful results but Cartography is required to commun
 Maps have been used for several thousand years for a wide variety of purposes.
 From asserting control over real estate in Babylon to illustrating a scientific worldview in Ptolemy's Ancient Greek masterpiece *Geography*, they have historically been out of reach for everyday people [@talbert_ancient_2014].
 Modern computing has the potential to change this.
-
 Map making skills can also help meet research and public engagement objectives.
 From a research perspective clear maps are often be the best way to present the results of geocomputational research.
 From policy and 'citizen science' perspectives, attractive and engaging maps can help change peoples' minds, based on the evidence.
@@ -6778,7 +6777,7 @@ We can later use `map_nz` to plot its contents with `print(map_nz)`.
 Alternatively `tmap` objects can be used as the basis of other maps:
 in addition to new layers for a single shape, the `+` operator can be used to add new shapes to a map with an extra `+ tm_shape()`.
 
-All subsequent layer functions after a new shape will refer to the newly added shape, until a new shape is added, allowing many layers to added.
+All subsequent layer functions after a new shape will refer to the newly added shape, until a new shape is added, allowing one or more layers to be added for each shape.
 This is illustrated in the code chunk below which creates a new map object (called `map_nz1`) building on `map_nz`.
 `map_nz1` contains an additional layer representing high points in New Zealand, as illustrated in Figure \@ref(fig:tmlayers) (left).
 
