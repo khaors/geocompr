@@ -116,7 +116,7 @@ Other languages such as Python, Java and C++ can be used for geocomputation  and
 None of these provide the unique combination of package ecosystem, statistical capabilities, visualisation options, powerful IDEs offered by the R community.
 Furthermore, by teaching how to use one language (R) in depth, this book will equip you with the concepts and confidence needed to do geocomputation in other languages.
 
-*Geocomputation with R* will equip you with knowledge and skills to tackle a wide range scientific, societal and environmental issues manifested in geographic data.
+*Geocomputation with R* will equip you with knowledge and skills to tackle a wide range of issues, including those with scientific, societal and environmental implications, manifested in geographic data.
 As described in section \@ref(what-is-geocomputation), geocomputation is not only about using computers to process geographic data:
 it is also about real-world impact.
 If you are interested in the wider context and motivations behind this book, read on:
@@ -267,7 +267,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveb516659414faca19
+preserve082b054bd6a2548f
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3097,7 +3097,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve8f68d6479f6add40
+preserve7296595721e31546
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5990,7 +5990,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve55f9cb6e75ef09d6
+preserve618512feb0928772
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6609,7 +6609,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve3d843b42501e9b33
+preserve59f8d5ea80db6b16
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
