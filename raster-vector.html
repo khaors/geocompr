@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-03-05">
+<meta name="date" content="2018-03-06">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -376,7 +376,6 @@ zion =<span class="st"> </span><span class="kw">st_read</span>((<span class="kw"
 <p>The goal of the <code>mask</code> function is a little bit different - it keeps the raster values only in the area of interest, while the values outside of the analyzed area are set to <code>NA</code>. The code below masks every cell outside of the the Zion National Park boundaries (Figure <a href="raster-vector.html#fig:cropmask">11.1</a>:C):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">srtm_masked =<span class="st"> </span><span class="kw">mask</span>(srtm_cropped, zion)</code></pre></div>
 <p>The <code>mask</code> function also can be modified to give different results. For example a value of mask (<code>NA</code>) can be changed with the <code>maskvalue</code> argument and the <code>inverse</code> argument set to <code>TRUE</code> masks an area of interest keeping everything else intact. You can learn more in the function’s help file - <code>?mask</code>.</p>
-<!-- update the color palette in the future (+ the same in ch2) -->
 <div class="figure" style="text-align: center"><span id="fig:cropmask"></span>
 <img src="figures/cropmask-1.png" alt="Illustration of raster cropping (center) and raster masking (right)." width="576" />
 <p class="caption">
@@ -386,28 +385,32 @@ Figure 11.1: Illustration of raster cropping (center) and raster masking (right)
 </div>
 <div id="raster-extraction" class="section level2">
 <h2><span class="header-section-number">11.3</span> Raster extraction</h2>
-<p>Raster extraction is a process of pulling out values from rasters based on the locations of vector data. It behaves differently depending on the type of secondary data (points, lines or polygons) and selected arguments. We will present some of the most often use cases below using the <code>raster::extract()</code> function. <!-- faster alternative to raster::extract?? --> The reverse process of transferring vector data into rasters is usually done by rasterization (see section <a href="raster-vector.html#rasterization">11.4</a>).</p>
-<p>The simplest example of raster extraction is when values of raster cells are extracted based on points coordinates. The <code>zion_points</code> dataset consists of 30 points located in the Zion National Park <a href="raster-vector.html#fig:pointext">11.2</a>). We can think about them as places where soils properties were measured and we want to know what is the elevation of each point. In this case, we just need to add a new column (<code>elevation</code>) to the point dataset, which would store values extracted from the <code>srtm</code> object:</p>
+<p>Raster extraction is a process of pulling out values from rasters based on the locations of vector data. It behaves differently depending on the type of secondary data (points, lines or polygons) and selected arguments. We will present some of the most often use cases below using the <code>raster::extract()</code> function. <!-- faster alternative to raster::extract??: tabularaster, stars? --> The reverse process of transferring vector data into rasters is usually done by rasterization (see section <a href="raster-vector.html#rasterization">11.4</a>).</p>
+<p>The simplest example of raster extraction is when values of raster cells are extracted based on points coordinates. The <code>zion_points</code> dataset consists of 30 points located in the Zion National Park (<a href="raster-vector.html#fig:pointext">11.2</a>). We can think about them as places where soils properties were measured and we want to know what is the elevation of each point. In this case, we just need to add a new column (<code>elevation</code>) to the point dataset, which would store values extracted from the <code>srtm</code> object:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_points$elevation =<span class="st"> </span>raster::<span class="kw">extract</span>(srtm, zion_points)</code></pre></div>
-<p>In the <code>extract()</code> function it is also possible to provide the radius of a buffer (in meters) around each point. This allows for similar operations as in extraction by polygon (see examples below).</p>
+<p>In the <code>extract()</code> function it is also possible to provide the radius of a buffer (in meters) around each point. This allows for similar operations to the extraction by polygon (see examples below).</p>
 <div class="figure" style="text-align: center"><span id="fig:pointext"></span>
 <img src="figures/pointext-1.png" alt="Locations of points used for raster extraction." width="576" />
 <p class="caption">
 Figure 11.2: Locations of points used for raster extraction.
 </p>
 </div>
-<!-- extract to line -->
-<!-- transect example and creation -->
+<p>The second example involves raster extraction along a line or lines. For this purpose, we will create a simple line going from northwest to southeast of the Zion National Park (<a href="raster-vector.html#fig:lineext">11.3</a>:A):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_transect =<span class="st"> </span><span class="kw">st_sfc</span>(<span class="kw">st_linestring</span>(<span class="kw">rbind</span>(<span class="kw">c</span>(-<span class="fl">113.2</span>, <span class="fl">37.45</span>), <span class="kw">c</span>(-<span class="fl">112.9</span>, <span class="fl">37.2</span>)))) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">st_sf</span>()</code></pre></div>
-<!-- extract elevation along transect (along arg) -->
+<p>Importantly, it does not need to be a straight line. Try to imagine that you are planing to go on a hike - you can extract elevation along your proposed path. To extract a raster by line, the <code>along</code> argument needs to be set to <code>TRUE</code>. We also want to add identifiers (<code>cellnumbers = TRUE</code>) and convert a new object to <code>data.frame</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">transect_df =<span class="st"> </span>raster::<span class="kw">extract</span>(srtm, zion_transect, <span class="dt">along =</span> <span class="ot">TRUE</span>, <span class="dt">cellnumbers =</span> <span class="ot">TRUE</span>) %&gt;%
 <span class="st">  </span><span class="kw">data.frame</span>()</code></pre></div>
-<!-- calculate distances along transect -->
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(geosphere)
-transect_coords =<span class="st"> </span><span class="kw">xyFromCell</span>(srtm, transect_df$cell)
-transect_df$dist =<span class="st"> </span><span class="kw">distm</span>(transect_coords)[, <span class="dv">1</span>]</code></pre></div>
-<p><img src="figures/lineext-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>This would allow us to estimate the distances along measurements on the line. However, firstly we need to extract the coordinates of measurements and based on them we can calculate the distance using the <code>geosphere::distm()</code> function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">transect_coords =<span class="st"> </span><span class="kw">xyFromCell</span>(srtm, transect_df$cell)
+transect_df$dist =<span class="st"> </span>geosphere::<span class="kw">distm</span>(transect_coords)[, <span class="dv">1</span>]</code></pre></div>
+<p>The final <code>data.frame</code> can be used to create a plot in <a href="raster-vector.html#fig:lineext">11.3</a>:B.</p>
+<div class="figure" style="text-align: center"><span id="fig:lineext"></span>
+<img src="figures/lineext-1.png" alt="Location of a line used for raster extraction (left) and the elevation along this line (right)." width="576" />
+<p class="caption">
+Figure 11.3: Location of a line used for raster extraction (left) and the elevation along this line (right).
+</p>
+</div>
 <!-- extract to polygons (or extents) -->
 <!-- depends on the type of data (continuous or categorical) -->
 <!-- the simplest example is to extract all values into a list -->
@@ -443,18 +446,18 @@ zion_nlcd_new =<span class="st"> </span><span class="kw">bind_cols</span>(zion, 
 raster_template =<span class="st"> </span><span class="kw">raster</span>(<span class="kw">extent</span>(cycle_hire_osm_projected), <span class="dt">resolution =</span> <span class="dv">1000</span>,
                          <span class="dt">crs =</span> <span class="kw">st_crs</span>(cycle_hire_osm_projected)$proj4string)</code></pre></div>
 <p>Rasterization is a very flexible operation and gives different results based not only on a template raster, but also on the type of input vector (e.g. points, polygons) and given arguments.</p>
-<p>Let’s try three different approaches to rasterize points - cycle hire locations across London (Figure <a href="raster-vector.html#fig:vector-rasterization1">11.3</a>:A). The simplest case is when we want to create a raster containing areas with cycle hire points (also known as a presence/absence raster). In this situation, <code>rasterize()</code> expects only three arguments - an input vector data, a raster template, and a value to be transferred to all non-empty cells (Figure <a href="raster-vector.html#fig:vector-rasterization1">11.3</a>:B).</p>
+<p>Let’s try three different approaches to rasterize points - cycle hire locations across London (Figure <a href="raster-vector.html#fig:vector-rasterization1">11.4</a>:A). The simplest case is when we want to create a raster containing areas with cycle hire points (also known as a presence/absence raster). In this situation, <code>rasterize()</code> expects only three arguments - an input vector data, a raster template, and a value to be transferred to all non-empty cells (Figure <a href="raster-vector.html#fig:vector-rasterization1">11.4</a>:B).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ch_raster1 =<span class="st"> </span><span class="kw">rasterize</span>(cycle_hire_osm_projected, raster_template, <span class="dt">field =</span> <span class="dv">1</span>)</code></pre></div>
-<p><code>rasterize()</code> also could take a <code>fun</code> argument which specifies how attributes are transferred to the raster object. For example, the <code>fun = &quot;count&quot;</code> argument counts the number of points in each grid cell (Figure <a href="raster-vector.html#fig:vector-rasterization1">11.3</a>:C).</p>
+<p><code>rasterize()</code> also could take a <code>fun</code> argument which specifies how attributes are transferred to the raster object. For example, the <code>fun = &quot;count&quot;</code> argument counts the number of points in each grid cell (Figure <a href="raster-vector.html#fig:vector-rasterization1">11.4</a>:C).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ch_raster2 =<span class="st"> </span><span class="kw">rasterize</span>(cycle_hire_osm_projected, raster_template, 
                        <span class="dt">field =</span> <span class="dv">1</span>, <span class="dt">fun =</span> <span class="st">&quot;count&quot;</span>)</code></pre></div>
-<p>The new output, <code>ch_raster2</code>, shows the number of cycle hire points in each grid cell. However, the cycle hire locations have different numbers of bicycles, which is described by the <code>capacity</code> variable. We need to select a field (<code>&quot;capacity&quot;</code>) and a function (<code>sum</code>) to determine a cycle hire capacity in each grid cell (Figure <a href="raster-vector.html#fig:vector-rasterization1">11.3</a>:D). In the same way, another statistics could be calculated such as an average capacity for each grid cell, etc.</p>
+<p>The new output, <code>ch_raster2</code>, shows the number of cycle hire points in each grid cell. However, the cycle hire locations have different numbers of bicycles, which is described by the <code>capacity</code> variable. We need to select a field (<code>&quot;capacity&quot;</code>) and a function (<code>sum</code>) to determine a cycle hire capacity in each grid cell (Figure <a href="raster-vector.html#fig:vector-rasterization1">11.4</a>:D). In the same way, another statistics could be calculated such as an average capacity for each grid cell, etc.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ch_raster3 =<span class="st"> </span><span class="kw">rasterize</span>(cycle_hire_osm_projected, raster_template, 
                        <span class="dt">field =</span> <span class="st">&quot;capacity&quot;</span>, <span class="dt">fun =</span> sum)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:vector-rasterization1"></span>
 <img src="figures/vector-rasterization1-1.png" alt="Examples of point's rasterization." width="576" />
 <p class="caption">
-Figure 11.3: Examples of point’s rasterization.
+Figure 11.4: Examples of point’s rasterization.
 </p>
 </div>
 <p>Additionally, we will illustrate polygons and lines rasterizations using California’s polygons (<code>california</code>) and borders (<code>california_borders</code>). A template raster here will have the resolution of a 0.5 degree:</p>
@@ -462,9 +465,9 @@ Figure 11.3: Examples of point’s rasterization.
 california_borders =<span class="st"> </span><span class="kw">st_cast</span>(california, <span class="st">&quot;MULTILINESTRING&quot;</span>)
 raster_template2 =<span class="st"> </span><span class="kw">raster</span>(<span class="kw">extent</span>(california), <span class="dt">resolution =</span> <span class="fl">0.5</span>,
                          <span class="dt">crs =</span> <span class="kw">st_crs</span>(california)$proj4string)</code></pre></div>
-<p>All cells that are touched by a line get a value in a line rasterization (Figure <a href="raster-vector.html#fig:vector-rasterization2">11.4</a>:A).</p>
+<p>All cells that are touched by a line get a value in a line rasterization (Figure <a href="raster-vector.html#fig:vector-rasterization2">11.5</a>:A).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">california_raster1 =<span class="st"> </span><span class="kw">rasterize</span>(california_borders, raster_template2)</code></pre></div>
-<p>On the other hand, polygon rasterization is based on the positions of cells’ centers (points on Figure <a href="raster-vector.html#fig:vector-rasterization2">11.4</a>:B). Values are only given when the center of the cell lies inside of the input polygon (Figure <a href="raster-vector.html#fig:vector-rasterization2">11.4</a>:B).</p>
+<p>On the other hand, polygon rasterization is based on the positions of cells’ centers (points on Figure <a href="raster-vector.html#fig:vector-rasterization2">11.5</a>:B). Values are only given when the center of the cell lies inside of the input polygon (Figure <a href="raster-vector.html#fig:vector-rasterization2">11.5</a>:B).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">california_raster2 =<span class="st"> </span><span class="kw">rasterize</span>(california, raster_template2)</code></pre></div>
 <!-- getCover? -->
 <!-- the fraction of each grid cell that is covered by the polygons-->
@@ -481,7 +484,7 @@ raster_template2 =<span class="st"> </span><span class="kw">raster</span>(<span 
 <div class="figure" style="text-align: center"><span id="fig:vector-rasterization2"></span>
 <img src="figures/vector-rasterization2-1.png" alt="Examples of line and polygon rasterizations." width="576" />
 <p class="caption">
-Figure 11.4: Examples of line and polygon rasterizations.
+Figure 11.5: Examples of line and polygon rasterizations.
 </p>
 </div>
 <p>While <code>rasterize</code> works well for most cases, it is not performance optimized. Fortunately, there are several alternatives, including the <code>fasterize::fasterize()</code><a href="#fn59" class="footnoteRef" id="fnref59"><sup>59</sup></a> and <code>gdalUtils::gdal_rasterize()</code>. The former is much (100 times+) faster than <code>rasterize()</code> but is currently limited to polygon rasterization. The latter is part of GDAL and therefore requires a vector file, instead of an <code>sf</code> object, as an input and rasterization parameters, instead of a <code>Raster*</code> template object.<a href="#fn60" class="footnoteRef" id="fnref60"><sup>60</sup></a></p>
@@ -494,13 +497,13 @@ Figure 11.4: Examples of line and polygon rasterizations.
 Be careful with the wording! In R vectorization refers to the possibility of replacing <code>for</code>-loops and alike by doing things like <code>1:10 / 2</code> (see also <span class="citation">Wickham (<a href="#ref-wickham_advanced_2014">2014</a>)</span>).
 </div>
 <p></p>
-<p>The simplest form of vectorization is to convert a raster into points by keeping the cell values and replacing the grid cells by its centroids. The <code>rasterToPoints()</code> does exactly this for all non-<code>NA</code> raster grid cells (Figure <a href="raster-vector.html#fig:raster-vectorization1">11.5</a>). Setting the <code>spatial</code> parameter to <code>TRUE</code> makes sure that the output is a spatial object, otherwise a matrix is returned.</p>
+<p>The simplest form of vectorization is to convert a raster into points by keeping the cell values and replacing the grid cells by its centroids. The <code>rasterToPoints()</code> does exactly this for all non-<code>NA</code> raster grid cells (Figure <a href="raster-vector.html#fig:raster-vectorization1">11.6</a>). Setting the <code>spatial</code> parameter to <code>TRUE</code> makes sure that the output is a spatial object, otherwise a matrix is returned.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev_point =<span class="st"> </span><span class="kw">rasterToPoints</span>(elev, <span class="dt">spatial =</span> <span class="ot">TRUE</span>) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">st_as_sf</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:raster-vectorization1"></span>
 <img src="figures/raster-vectorization1-1.png" alt="Raster and point representation of `elev`." width="576" />
 <p class="caption">
-Figure 11.5: Raster and point representation of <code>elev</code>.
+Figure 11.6: Raster and point representation of <code>elev</code>.
 </p>
 </div>
 <p>Another common application is the representation of a digital elevation model as contour lines, hence, converting raster data into spatial lines. Here, we will us a real-world DEM since our artificial raster <code>elev</code> produces parallel lines (give it a try yourself) because when creating it we made the upper left corner the lowest and the lower right corner the highest value while increasing cell values by one from left to right. <code>rasterToContour()</code> is a wrapper around <code>contourLines()</code>.</p>
@@ -508,14 +511,14 @@ Figure 11.5: Raster and point representation of <code>elev</code>.
 <span class="kw">data</span>(dem, <span class="dt">package =</span> <span class="st">&quot;RQGIS&quot;</span>)
 <span class="kw">plot</span>(dem, <span class="dt">axes =</span> <span class="ot">FALSE</span>)
 <span class="kw">plot</span>(<span class="kw">rasterToContour</span>(dem), <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<p>Use <code>contour()</code>, <code>rasterVis::contourplot()</code> or <code>tmap::tm_iso()</code> if you want to add contour lines to a plot with isoline labels (Fig. <a href="raster-vector.html#fig:contour">11.6</a>).</p>
+<p>Use <code>contour()</code>, <code>rasterVis::contourplot()</code> or <code>tmap::tm_iso()</code> if you want to add contour lines to a plot with isoline labels (Fig. <a href="raster-vector.html#fig:contour">11.7</a>).</p>
 <div class="figure" style="text-align: center"><span id="fig:contour"></span>
 <img src="figures/contour-1.png" alt="DEM hillshade of the southern flank of Mt. Mongón overlaid with contour lines." width="576" />
 <p class="caption">
-Figure 11.6: DEM hillshade of the southern flank of Mt. Mongón overlaid with contour lines.
+Figure 11.7: DEM hillshade of the southern flank of Mt. Mongón overlaid with contour lines.
 </p>
 </div>
-<p>Finally, <code>rasterToPolygons()</code> converts each raster cell into one polygon consisting of five coordinates all of which need to be explicitly stored. Be careful with this approach when using large raster datasets since you might run into memory problems. Here, we convert <code>grain</code> into polygons and subsequently dissolve the output in accordance with the grain size categories which <code>rasterToPolygons()</code> stored in an attribute named <code>layer</code> (see section <a href="transform.html#geometry-unions">5.3.6</a> and Figure <a href="raster-vector.html#fig:raster-vectorization2">11.7</a>). A convenient alternative for converting rasters into polygons is <code>spex::polygonize()</code> which by default returns an <code>sf</code> object.</p>
+<p>Finally, <code>rasterToPolygons()</code> converts each raster cell into one polygon consisting of five coordinates all of which need to be explicitly stored. Be careful with this approach when using large raster datasets since you might run into memory problems. Here, we convert <code>grain</code> into polygons and subsequently dissolve the output in accordance with the grain size categories which <code>rasterToPolygons()</code> stored in an attribute named <code>layer</code> (see section <a href="transform.html#geometry-unions">5.3.6</a> and Figure <a href="raster-vector.html#fig:raster-vectorization2">11.8</a>). A convenient alternative for converting rasters into polygons is <code>spex::polygonize()</code> which by default returns an <code>sf</code> object.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grain_poly =<span class="st"> </span><span class="kw">rasterToPolygons</span>(grain) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">st_as_sf</span>()
 grain_poly2 =<span class="st"> </span>grain_poly %&gt;%<span class="st"> </span>
@@ -524,7 +527,7 @@ grain_poly2 =<span class="st"> </span>grain_poly %&gt;%<span class="st"> </span>
 <div class="figure" style="text-align: center"><span id="fig:raster-vectorization2"></span>
 <img src="figures/raster-vectorization2-1.png" alt="Illustration of vectorization of raster (left) into polygon (center) and polygon aggregation (right)." width="576" />
 <p class="caption">
-Figure 11.7: Illustration of vectorization of raster (left) into polygon (center) and polygon aggregation (right).
+Figure 11.8: Illustration of vectorization of raster (left) into polygon (center) and polygon aggregation (right).
 </p>
 </div>
 <!-- ## distances? -->

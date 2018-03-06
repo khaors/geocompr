@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-03-05'
+date: '2018-03-06'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-03-05 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-03-06 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservee309633746a96526
+preserveeb360fe6e8ddca75
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3084,7 +3084,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve1e712f0c9377ffbf
+preservee04f8d02a1860d20
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5975,7 +5975,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservef84c1371f9ace56e
+preserve369967b3d41adf2f
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6594,7 +6594,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve83f17c9e02545d9c
+preserve0283394f3f376180
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7834,7 +7834,6 @@ The `mask` function also can be modified to give different results.
 For example a value of mask (`NA`) can be changed with the `maskvalue` argument and the `inverse` argument set to `TRUE` masks an area of interest keeping everything else intact.
 You can learn more in the function's help file - `?mask`.
 
-<!-- update the color palette in the future (+ the same in ch2) -->
 <div class="figure" style="text-align: center">
 <img src="figures/cropmask-1.png" alt="Illustration of raster cropping (center) and raster masking (right)." width="576" />
 <p class="caption">(\#fig:cropmask)Illustration of raster cropping (center) and raster masking (right).</p>
@@ -7845,11 +7844,11 @@ You can learn more in the function's help file - `?mask`.
 Raster extraction is a process of pulling out values from rasters based on the locations of vector data.
 It behaves differently depending on the type of secondary data (points, lines or polygons) and selected arguments.
 We will present some of the most often use cases below using the `raster::extract()` function.
-<!-- faster alternative to raster::extract?? -->
+<!-- faster alternative to raster::extract??: tabularaster, stars? -->
 The reverse process of transferring vector data into rasters is usually done by rasterization (see section \@ref(rasterization)).
 
 The simplest example of raster extraction is when values of raster cells are extracted based on points coordinates.
-The `zion_points` dataset consists of 30 points located in the Zion National Park \@ref(fig:pointext)). 
+The `zion_points` dataset consists of 30 points located in the Zion National Park (\@ref(fig:pointext)). 
 We can think about them as places where soils properties were measured and we want to know what is the elevation of each point.
 In this case, we just need to add a new column (`elevation`) to the point dataset, which would store values extracted from the `srtm` object: 
 
@@ -7859,15 +7858,16 @@ zion_points$elevation = raster::extract(srtm, zion_points)
 ```
 
 In the `extract()` function it is also possible to provide the radius of a buffer (in meters) around each point.
-This allows for similar operations as in extraction by polygon (see examples below).
+This allows for similar operations to the extraction by polygon (see examples below).
 
 <div class="figure" style="text-align: center">
 <img src="figures/pointext-1.png" alt="Locations of points used for raster extraction." width="576" />
 <p class="caption">(\#fig:pointext)Locations of points used for raster extraction.</p>
 </div>
 
-<!-- extract to line -->
-<!-- transect example and creation -->
+The second example involves raster extraction along a line or lines.
+For this purpose, we will create a simple line going from northwest to southeast of the Zion National Park (\@ref(fig:lineext):A):
+
 
 ```r
 zion_transect = st_sfc(st_linestring(rbind(c(-113.2, 37.45), c(-112.9, 37.2)))) %>% 
@@ -7876,22 +7876,32 @@ zion_transect = st_sfc(st_linestring(rbind(c(-113.2, 37.45), c(-112.9, 37.2)))) 
 
 
 
-<!-- extract elevation along transect (along arg) -->
+Importantly, it does not need to be a straight line.
+Try to imagine that you are planing to go on a hike - you can extract elevation along your proposed path.
+To extract a raster by line, the `along` argument needs to be set to `TRUE`. 
+We also want to add identifiers (`cellnumbers = TRUE`) and convert a new object to `data.frame`:
+
 
 ```r
 transect_df = raster::extract(srtm, zion_transect, along = TRUE, cellnumbers = TRUE) %>%
   data.frame()
 ```
 
-<!-- calculate distances along transect -->
+This would allow us to estimate the distances along measurements on the line.
+However, firstly we need to extract the coordinates of measurements and based on them we can calculate the distance using the `geosphere::distm()` function.
+
 
 ```r
-library(geosphere)
 transect_coords = xyFromCell(srtm, transect_df$cell)
-transect_df$dist = distm(transect_coords)[, 1]
+transect_df$dist = geosphere::distm(transect_coords)[, 1]
 ```
 
-<img src="figures/lineext-1.png" width="576" style="display: block; margin: auto;" />
+The final `data.frame` can be used to create a plot in \@ref(fig:lineext):B.
+
+<div class="figure" style="text-align: center">
+<img src="figures/lineext-1.png" alt="Location of a line used for raster extraction (left) and the elevation along this line (right)." width="576" />
+<p class="caption">(\#fig:lineext)Location of a line used for raster extraction (left) and the elevation along this line (right).</p>
+</div>
 
 <!-- extract to polygons (or extents) -->
 <!-- depends on the type of data (continuous or categorical) -->
