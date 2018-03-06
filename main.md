@@ -254,7 +254,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveeb360fe6e8ddca75
+preservefe36212951219b19
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3084,7 +3084,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservee04f8d02a1860d20
+preserve13a9544d935703fe
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5975,7 +5975,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve369967b3d41adf2f
+preserve4ced661abedda502
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6594,7 +6594,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve0283394f3f376180
+preserve8dc6f5b16cd6a2bc
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7848,7 +7848,7 @@ We will present some of the most often use cases below using the `raster::extrac
 The reverse process of transferring vector data into rasters is usually done by rasterization (see section \@ref(rasterization)).
 
 The simplest example of raster extraction is when values of raster cells are extracted based on points coordinates.
-The `zion_points` dataset consists of 30 points located in the Zion National Park (\@ref(fig:pointext)). 
+The `zion_points` dataset consists of 30 points located in the Zion National Park (Figure \@ref(fig:pointext)). 
 We can think about them as places where soils properties were measured and we want to know what is the elevation of each point.
 In this case, we just need to add a new column (`elevation`) to the point dataset, which would store values extracted from the `srtm` object: 
 
@@ -7896,7 +7896,7 @@ transect_coords = xyFromCell(srtm, transect_df$cell)
 transect_df$dist = geosphere::distm(transect_coords)[, 1]
 ```
 
-The final `data.frame` can be used to create a plot in \@ref(fig:lineext):B.
+The final `data.frame` can be used to create a plot in Figure \@ref(fig:lineext):B.
 
 <div class="figure" style="text-align: center">
 <img src="figures/lineext-1.png" alt="Location of a line used for raster extraction (left) and the elevation along this line (right)." width="576" />
@@ -7947,7 +7947,10 @@ zion_nlcd_df = zion_nlcd %>%
 zion_nlcd_new = bind_cols(zion, zion_nlcd_df)
 ```
 
-<img src="figures/polyext-1.png" width="576" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures/polyext-1.png" alt="Area used for continuous (left) and categorical (right) raster extraction." width="576" />
+<p class="caption">(\#fig:polyext)Area used for continuous (left) and categorical (right) raster extraction.</p>
+</div>
 
 <!-- ## Spatial interpolation ?? -->
 <!-- http://mdsumner.github.io/guerrilla/articles/irreg2.html -->
