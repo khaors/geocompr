@@ -266,7 +266,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve384c0f3da37c0d77
+preserve9681a3db6805c1f5
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3096,7 +3096,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve61f7ffee625f8d9d
+preserve00bb96f8f5b4d7e5
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5989,7 +5989,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve36d3c778705b44a2
+preserve20e9a45f756f85d9
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6608,7 +6608,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve85cf9bcedaaa184f
+preserve7b356ef44ee9fea3
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7862,7 +7862,7 @@ We will present some of the most often use cases below using the `raster::extrac
 The reverse process of transferring vector data into rasters is usually done by rasterization (see section \@ref(rasterization)).
 
 The simplest example of raster extraction is when values of raster cells are extracted based on points coordinates.
-The `zion_points` dataset consists of 30 points located in the Zion National Park (Figure \@ref(fig:pointext)). 
+The `zion_points` dataset consists of 30 points located in the Zion National Park (Figure \@ref(fig:pointextr)). 
 We can think about them as places where soils properties were measured and we want to know what is the elevation of each point.
 In this case, we just need to add a new column (`elevation`) to the point dataset, which would store values extracted from the `srtm` object: 
 
@@ -7875,12 +7875,12 @@ In the `extract()` function it is also possible to provide the radius of a buffe
 This allows for similar operations to the extraction by polygon (see examples below).
 
 <div class="figure" style="text-align: center">
-<img src="figures/pointext-1.png" alt="Locations of points used for raster extraction." width="576" />
-<p class="caption">(\#fig:pointext)Locations of points used for raster extraction.</p>
+<img src="figures/pointextr-1.png" alt="Locations of points used for raster extraction." width="576" />
+<p class="caption">(\#fig:pointextr)Locations of points used for raster extraction.</p>
 </div>
 
 The second example involves raster extraction along a line or lines.
-For this purpose, we will create a simple line going from northwest to southeast of the Zion National Park (\@ref(fig:lineext):A):
+For this purpose, we will create a simple line going from northwest to southeast of the Zion National Park (\@ref(fig:lineextr):A):
 
 
 ```r
@@ -7910,28 +7910,29 @@ transect_coords = xyFromCell(srtm, transect_df$cell)
 transect_df$dist = geosphere::distm(transect_coords)[, 1]
 ```
 
-The final `data.frame` can be used to create a plot in Figure \@ref(fig:lineext):B.
+The final `data.frame` can be used to create a plot in Figure \@ref(fig:lineextr):B.
 
 <div class="figure" style="text-align: center">
-<img src="figures/lineext-1.png" alt="Location of a line used for raster extraction (left) and the elevation along this line (right)." width="576" />
-<p class="caption">(\#fig:lineext)Location of a line used for raster extraction (left) and the elevation along this line (right).</p>
+<img src="figures/lineextr-1.png" alt="Location of a line used for raster extraction (left) and the elevation along this line (right)." width="576" />
+<p class="caption">(\#fig:lineextr)Location of a line used for raster extraction (left) and the elevation along this line (right).</p>
 </div>
 
-<!-- extract to polygons (or extents) -->
-<!-- depends on the type of data (continuous or categorical) -->
-<!-- the simplest example is to extract all values into a list -->
+The last group of example is extraction of raster values that are covered by a polygon.
+Polygons are usually larger than a single cell, therefore this kind of extraction would return many raster values for each polygon.
+In the below output, `ID` represents a row number of a polygon and `srtm` is elevation value extracted from the raster:
+
 
 ```r
-zion_srtm_values = raster::extract(x = srtm, y = zion)
+zion_srtm_values = raster::extract(x = srtm, y = zion, df = TRUE)
 ```
 
-<!-- it can be used for more advanced examples, like calculating stats for each polygon -->
+Extract by polygon also allows for more complex analysis, such as calculating statistics of continuous raster's values in each polygon (\@ref(fig:polyextr):A) or count number of categories in a categorical raster (\@ref(fig:polyextr):B).
 <!-- summarized into some value of interest (e.g. mean, maximum, total). -->
+<!-- test for multipolygon! -->
 
 ```r
-zion_srtm_df = c(min, mean, max) %>% 
-  map_dfr(~raster::extract(x = srtm, y = zion, fun = ., df = TRUE)) %>% 
-  mutate(stat = c("minimum", "mean", "maximum")) %>% 
+zion_srtm_df = c(minimum = min, mean = mean, maximum = max) %>% 
+  map_dfr(~raster::extract(x = srtm, y = zion, fun = ., df = TRUE), .id = "stat") %>% 
   spread(stat, srtm)
 zion_srtm_new = bind_cols(zion, zion_srtm_df)
 ```
@@ -7962,8 +7963,8 @@ zion_nlcd_new = bind_cols(zion, zion_nlcd_df)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/polyext-1.png" alt="Area used for continuous (left) and categorical (right) raster extraction." width="576" />
-<p class="caption">(\#fig:polyext)Area used for continuous (left) and categorical (right) raster extraction.</p>
+<img src="figures/polyextr-1.png" alt="Area used for continuous (left) and categorical (right) raster extraction." width="576" />
+<p class="caption">(\#fig:polyextr)Area used for continuous (left) and categorical (right) raster extraction.</p>
 </div>
 
 <!-- ## Spatial interpolation ?? -->

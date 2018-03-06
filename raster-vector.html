@@ -386,16 +386,16 @@ Figure 11.1: Illustration of raster cropping (center) and raster masking (right)
 <div id="raster-extraction" class="section level2">
 <h2><span class="header-section-number">11.3</span> Raster extraction</h2>
 <p>Raster extraction is a process of pulling out values from rasters based on the locations of vector data. It behaves differently depending on the type of secondary data (points, lines or polygons) and selected arguments. We will present some of the most often use cases below using the <code>raster::extract()</code> function. <!-- faster alternative to raster::extract??: tabularaster, stars? --> The reverse process of transferring vector data into rasters is usually done by rasterization (see section <a href="raster-vector.html#rasterization">11.4</a>).</p>
-<p>The simplest example of raster extraction is when values of raster cells are extracted based on points coordinates. The <code>zion_points</code> dataset consists of 30 points located in the Zion National Park (Figure <a href="raster-vector.html#fig:pointext">11.2</a>). We can think about them as places where soils properties were measured and we want to know what is the elevation of each point. In this case, we just need to add a new column (<code>elevation</code>) to the point dataset, which would store values extracted from the <code>srtm</code> object:</p>
+<p>The simplest example of raster extraction is when values of raster cells are extracted based on points coordinates. The <code>zion_points</code> dataset consists of 30 points located in the Zion National Park (Figure <a href="raster-vector.html#fig:pointextr">11.2</a>). We can think about them as places where soils properties were measured and we want to know what is the elevation of each point. In this case, we just need to add a new column (<code>elevation</code>) to the point dataset, which would store values extracted from the <code>srtm</code> object:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_points$elevation =<span class="st"> </span>raster::<span class="kw">extract</span>(srtm, zion_points)</code></pre></div>
 <p>In the <code>extract()</code> function it is also possible to provide the radius of a buffer (in meters) around each point. This allows for similar operations to the extraction by polygon (see examples below).</p>
-<div class="figure" style="text-align: center"><span id="fig:pointext"></span>
-<img src="figures/pointext-1.png" alt="Locations of points used for raster extraction." width="576" />
+<div class="figure" style="text-align: center"><span id="fig:pointextr"></span>
+<img src="figures/pointextr-1.png" alt="Locations of points used for raster extraction." width="576" />
 <p class="caption">
 Figure 11.2: Locations of points used for raster extraction.
 </p>
 </div>
-<p>The second example involves raster extraction along a line or lines. For this purpose, we will create a simple line going from northwest to southeast of the Zion National Park (<a href="raster-vector.html#fig:lineext">11.3</a>:A):</p>
+<p>The second example involves raster extraction along a line or lines. For this purpose, we will create a simple line going from northwest to southeast of the Zion National Park (<a href="raster-vector.html#fig:lineextr">11.3</a>:A):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_transect =<span class="st"> </span><span class="kw">st_sfc</span>(<span class="kw">st_linestring</span>(<span class="kw">rbind</span>(<span class="kw">c</span>(-<span class="fl">113.2</span>, <span class="fl">37.45</span>), <span class="kw">c</span>(-<span class="fl">112.9</span>, <span class="fl">37.2</span>)))) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">st_sf</span>()</code></pre></div>
 <p>Importantly, it does not need to be a straight line. Try to imagine that you are planing to go on a hike - you can extract elevation along your proposed path. To extract a raster by line, the <code>along</code> argument needs to be set to <code>TRUE</code>. We also want to add identifiers (<code>cellnumbers = TRUE</code>) and convert a new object to <code>data.frame</code>:</p>
@@ -404,22 +404,18 @@ Figure 11.2: Locations of points used for raster extraction.
 <p>This would allow us to estimate the distances along measurements on the line. However, firstly we need to extract the coordinates of measurements and based on them we can calculate the distance using the <code>geosphere::distm()</code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">transect_coords =<span class="st"> </span><span class="kw">xyFromCell</span>(srtm, transect_df$cell)
 transect_df$dist =<span class="st"> </span>geosphere::<span class="kw">distm</span>(transect_coords)[, <span class="dv">1</span>]</code></pre></div>
-<p>The final <code>data.frame</code> can be used to create a plot in Figure <a href="raster-vector.html#fig:lineext">11.3</a>:B.</p>
-<div class="figure" style="text-align: center"><span id="fig:lineext"></span>
-<img src="figures/lineext-1.png" alt="Location of a line used for raster extraction (left) and the elevation along this line (right)." width="576" />
+<p>The final <code>data.frame</code> can be used to create a plot in Figure <a href="raster-vector.html#fig:lineextr">11.3</a>:B.</p>
+<div class="figure" style="text-align: center"><span id="fig:lineextr"></span>
+<img src="figures/lineextr-1.png" alt="Location of a line used for raster extraction (left) and the elevation along this line (right)." width="576" />
 <p class="caption">
 Figure 11.3: Location of a line used for raster extraction (left) and the elevation along this line (right).
 </p>
 </div>
-<!-- extract to polygons (or extents) -->
-<!-- depends on the type of data (continuous or categorical) -->
-<!-- the simplest example is to extract all values into a list -->
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_srtm_values =<span class="st"> </span>raster::<span class="kw">extract</span>(<span class="dt">x =</span> srtm, <span class="dt">y =</span> zion)</code></pre></div>
-<!-- it can be used for more advanced examples, like calculating stats for each polygon -->
-<!-- summarized into some value of interest (e.g. mean, maximum, total). -->
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_srtm_df =<span class="st"> </span><span class="kw">c</span>(min, mean, max) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">map_dfr</span>(~raster::<span class="kw">extract</span>(<span class="dt">x =</span> srtm, <span class="dt">y =</span> zion, <span class="dt">fun =</span> ., <span class="dt">df =</span> <span class="ot">TRUE</span>)) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">stat =</span> <span class="kw">c</span>(<span class="st">&quot;minimum&quot;</span>, <span class="st">&quot;mean&quot;</span>, <span class="st">&quot;maximum&quot;</span>)) %&gt;%<span class="st"> </span>
+<p>The last group of example is extraction of raster values that are covered by a polygon. Polygons are usually larger than a single cell, therefore this kind of extraction would return many raster values for each polygon. In the below output, <code>ID</code> represents a row number of a polygon and <code>srtm</code> is elevation value extracted from the raster:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_srtm_values =<span class="st"> </span>raster::<span class="kw">extract</span>(<span class="dt">x =</span> srtm, <span class="dt">y =</span> zion, <span class="dt">df =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p>Extract by polygon also allows for more complex analysis, such as calculating statistics of continuous raster’s values in each polygon (<a href="raster-vector.html#fig:polyextr">11.4</a>:A) or count number of categories in a categorical raster (<a href="raster-vector.html#fig:polyextr">11.4</a>:B). <!-- summarized into some value of interest (e.g. mean, maximum, total). --> <!-- test for multipolygon! --></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_srtm_df =<span class="st"> </span><span class="kw">c</span>(<span class="dt">minimum =</span> min, <span class="dt">mean =</span> mean, <span class="dt">maximum =</span> max) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">map_dfr</span>(~raster::<span class="kw">extract</span>(<span class="dt">x =</span> srtm, <span class="dt">y =</span> zion, <span class="dt">fun =</span> ., <span class="dt">df =</span> <span class="ot">TRUE</span>), <span class="dt">.id =</span> <span class="st">&quot;stat&quot;</span>) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">spread</span>(stat, srtm)
 zion_srtm_new =<span class="st"> </span><span class="kw">bind_cols</span>(zion, zion_srtm_df)</code></pre></div>
 <!-- land cover categories to polygon -->
@@ -434,8 +430,8 @@ zion_srtm_new =<span class="st"> </span><span class="kw">bind_cols</span>(zion, 
 <span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>()) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">spread</span>(nlcd2011, n)
 zion_nlcd_new =<span class="st"> </span><span class="kw">bind_cols</span>(zion, zion_nlcd_df)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:polyext"></span>
-<img src="figures/polyext-1.png" alt="Area used for continuous (left) and categorical (right) raster extraction." width="576" />
+<div class="figure" style="text-align: center"><span id="fig:polyextr"></span>
+<img src="figures/polyextr-1.png" alt="Area used for continuous (left) and categorical (right) raster extraction." width="576" />
 <p class="caption">
 Figure 11.4: Area used for continuous (left) and categorical (right) raster extraction.
 </p>
