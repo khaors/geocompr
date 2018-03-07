@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-03-06'
+date: '2018-03-07'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-03-06 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-03-07 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -267,7 +267,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve082b054bd6a2548f
+preserve6bf9d589f97c0e64
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3097,7 +3097,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve7296595721e31546
+preserve152194989943061a
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5990,7 +5990,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve618512feb0928772
+preserve8a806feb89926c03
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6609,7 +6609,7 @@ result = sum(reclass)
 For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve59f8d5ea80db6b16
+preserve905f6d14f0e2a10b
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6866,7 +6866,7 @@ tmap_arrange(ma1, ma2, ma3, ma4, ma5, ma6)
 </div>
 
 Like base R plots, arguments defining aesthetics can also receive values that vary.
-Unlike base R, **tmap** aesthetic arguments will not accept a vector of values, explaining why the first line in the code chunk works but the second fails (results not shown):
+Unlike the base R code below (which generates the left panel in Figure \@ref(fig:tmcol)), **tmap** aesthetic arguments will not accept a vector of values:
 
 
 ```r
@@ -6875,20 +6875,35 @@ tm_shape(nz) + tm_fill(col = 1:nrow(nz)) # fails:
 #> Error: Fill argument neither colors nor valid variable name(s)
 ```
 
-Instead, you must enter a text string containing the name of an attribute name *contained within* the shape being plotted.
-This functionality is illustrated below, which demonstrates how fill color can be set to vary depending on the area of each region in New Zealand.
-The plot also illustrates how the number and palette of colors can be altered by passing integer and text values to the arguments `n` and `palette` respectively: 
+Instead `col` (and other aesthetics that can vary such as `lwd` for line layers and `size` for point layers) requires a character string naming an attribute associated with the geometry to be plotted.
+Thus one would acheive the desired (plotted in the right-hand panel of Figure \@ref(fig:tmcol)) result as follows:
 
 
 ```r
-tm_shape(nz) + tm_fill(col = "AREA_SQ_KM")
+nz$col = 1:nrow(nz)
+tm_shape(nz) + tm_fill(col = "col")
+```
+
+<div class="figure" style="text-align: center">
+<img src="figures/tmcol-1.png" alt="Comparison of base (left) and tmap (right) handling of a numeric color field." width="50%" /><img src="figures/tmcol-2.png" alt="Comparison of base (left) and tmap (right) handling of a numeric color field." width="50%" />
+<p class="caption">(\#fig:tmcol)Comparison of base (left) and tmap (right) handling of a numeric color field.</p>
+</div>
+
+Figure \@ref(fig:tmcol) demonstrates another benefit of **tmap**: it converts numeric variables into sensible, graduated bins (breaks of which can be set manually with `breaks`).
+Additional aesthetic settings are demonstrated in the code chunk below, which colors regions in New Zealand depending on their area which demonstrates this functionality.
+The plot also illustrates how the number and palette of colors can be altered by passing integer and text values to the arguments `n` and `palette` respectively:
+
+
+```r
+breaks = c(0, 3, 4, 5) * 1e4
+tm_shape(nz) + tm_fill(col = "AREA_SQ_KM", breaks = breaks)
 tm_shape(nz) + tm_fill(col = "AREA_SQ_KM", n = 3)
 tm_shape(nz) + tm_fill(col = "AREA_SQ_KM", palette = "RdBu")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/unnamed-chunk-10-1.png" alt="Illustration of a variable aesthetic: the color of each region is dependent on its area." width="30%" /><img src="figures/unnamed-chunk-10-2.png" alt="Illustration of a variable aesthetic: the color of each region is dependent on its area." width="30%" /><img src="figures/unnamed-chunk-10-3.png" alt="Illustration of a variable aesthetic: the color of each region is dependent on its area." width="30%" />
-<p class="caption">(\#fig:unnamed-chunk-10)Illustration of a variable aesthetic: the color of each region is dependent on its area.</p>
+<img src="figures/tmpal-1.png" alt="Illustration of aesthetic settings using the example of a continuous variable (the area in square kilometers of regions in New Zealand) converted to color with different break palette arguments." width="576" />
+<p class="caption">(\#fig:tmpal)Illustration of aesthetic settings using the example of a continuous variable (the area in square kilometers of regions in New Zealand) converted to color with different break palette arguments.</p>
 </div>
 
 
