@@ -413,22 +413,23 @@ Figure 11.3: Location of a line used for raster extraction (left) and the elevat
 </div>
 <p>The last group of example is extraction of raster values that are covered by a polygon. Polygons are usually larger than a single cell, therefore this kind of extraction would return many raster values for each polygon. In the below output, <code>ID</code> represents a row number of a polygon and <code>srtm</code> is elevation value extracted from the raster:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_srtm_values =<span class="st"> </span>raster::<span class="kw">extract</span>(<span class="dt">x =</span> srtm, <span class="dt">y =</span> zion, <span class="dt">df =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<p>Extract by polygon also allows for more complex analysis, such as calculating statistics of continuous raster’s values in each polygon (<a href="raster-vector.html#fig:polyextr">11.4</a>:A) or count number of categories in a categorical raster (<a href="raster-vector.html#fig:polyextr">11.4</a>:B). <!-- summarized into some value of interest (e.g. mean, maximum, total). --> <!-- test for multipolygon! --></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_srtm_df =<span class="st"> </span><span class="kw">c</span>(<span class="dt">minimum =</span> min, <span class="dt">mean =</span> mean, <span class="dt">maximum =</span> max) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">map_dfr</span>(~raster::<span class="kw">extract</span>(<span class="dt">x =</span> srtm, <span class="dt">y =</span> zion, <span class="dt">fun =</span> ., <span class="dt">df =</span> <span class="ot">TRUE</span>), <span class="dt">.id =</span> <span class="st">&quot;stat&quot;</span>) %&gt;%<span class="st"> </span>
+<p>Extract by polygon also allows for more complex analyses, such as calculating statistics of continuous raster’s values in each polygon (<a href="raster-vector.html#fig:polyextr">11.4</a>:A) or counting occurrences of categories in a categorical raster (<a href="raster-vector.html#fig:polyextr">11.4</a>:B). These outputs are used to characterize a single region or to compare many regions.</p>
+<p>Continuous raster’s values can be described by summary statistics. In the code below, we create a new vector, <code>our_stats</code>, which contains three statistics to calculate: <!-- test for multipolygon! --></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">our_stats =<span class="st"> </span><span class="kw">c</span>(min, mean, max)
+<span class="kw">names</span>(our_stats) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;minimum&quot;</span>, <span class="st">&quot;mean&quot;</span>, <span class="st">&quot;maximum&quot;</span>)</code></pre></div>
+<!-- ... -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_srtm_df =<span class="st"> </span>our_stats %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">map_dfr</span>(raster::extract, <span class="dt">x =</span> srtm, <span class="dt">y =</span> zion, <span class="dt">df =</span> <span class="ot">TRUE</span>, <span class="dt">.id =</span> <span class="st">&quot;stat&quot;</span>) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">spread</span>(stat, srtm)
 zion_srtm_new =<span class="st"> </span><span class="kw">bind_cols</span>(zion, zion_srtm_df)</code></pre></div>
-<!-- land cover categories to polygon -->
-<!-- we can extract numbers of cells for each category in case of categorical raster -->
-<!-- simplify the nlcd data! -->
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nlcd =<span class="st"> </span><span class="kw">raster</span>((<span class="kw">system.file</span>(<span class="st">&quot;raster/nlcd2011.tif&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;spDataLarge&quot;</span>)))</code></pre></div>
-<!-- extract categorical data -->
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_nlcd =<span class="st"> </span>raster::<span class="kw">extract</span>(nlcd, zion, <span class="dt">df =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p>Description of categorical rasters requires a different approach, as you cannot calculate the mean between category of “Forest” and “Water”. However, it is possible to count a number of occurrences of each class. We will use a land cover data, <code>nlcd</code>, to illustrate this (<a href="raster-vector.html#fig:polyextr">11.4</a>:B). Firstly, we need to extract all of the values in our polygon to a new <code>data.frame</code>: <!-- land cover categories to polygon --> <!-- we can extract numbers of cells for each category in case of categorical raster --> <!-- extract categorical data --></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(nlcd)
+zion_nlcd =<span class="st"> </span>raster::<span class="kw">extract</span>(nlcd, zion, <span class="dt">df =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <!-- reshape the data -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_nlcd_df =<span class="st"> </span>zion_nlcd %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(ID, nlcd2011) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(ID, layer) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>()) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">spread</span>(nlcd2011, n)
+<span class="st">  </span><span class="kw">spread</span>(layer, n)
 zion_nlcd_new =<span class="st"> </span><span class="kw">bind_cols</span>(zion, zion_nlcd_df)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:polyextr"></span>
 <img src="figures/polyextr-1.png" alt="Area used for continuous (left) and categorical (right) raster extraction." width="576" />

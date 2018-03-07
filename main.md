@@ -267,7 +267,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve9989984800c7ed27
+preserve2247420ac8de98fd
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3097,7 +3097,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveacf8735a1768cf14
+preservef421604cd13a0175
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5990,7 +5990,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserved0e1c15cbc147672
+preserve1499feac6340dd73
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6606,7 +6606,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve7753eea9ed0e5af8
+preserve1135964518fa88fc
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7940,29 +7940,37 @@ In the below output, `ID` represents a row number of a polygon and `srtm` is ele
 zion_srtm_values = raster::extract(x = srtm, y = zion, df = TRUE)
 ```
 
-Extract by polygon also allows for more complex analysis, such as calculating statistics of continuous raster's values in each polygon (\@ref(fig:polyextr):A) or count number of categories in a categorical raster (\@ref(fig:polyextr):B).
-<!-- summarized into some value of interest (e.g. mean, maximum, total). -->
+Extract by polygon also allows for more complex analyses, such as calculating statistics of continuous raster's values in each polygon (\@ref(fig:polyextr):A) or counting occurrences of categories in a categorical raster (\@ref(fig:polyextr):B).
+These outputs are used to characterize a single region or to compare many regions.
+
+Continuous raster's values can be described by summary statistics. 
+In the code below, we create a new vector, `our_stats`, which contains three statistics to calculate:
 <!-- test for multipolygon! -->
 
 ```r
-zion_srtm_df = c(minimum = min, mean = mean, maximum = max) %>% 
-  map_dfr(~raster::extract(x = srtm, y = zion, fun = ., df = TRUE), .id = "stat") %>% 
+our_stats = c(min, mean, max)
+names(our_stats) = c("minimum", "mean", "maximum")
+```
+
+<!-- ... -->
+
+```r
+zion_srtm_df = our_stats %>% 
+  map_dfr(raster::extract, x = srtm, y = zion, df = TRUE, .id = "stat") %>% 
   spread(stat, srtm)
 zion_srtm_new = bind_cols(zion, zion_srtm_df)
 ```
 
+Description of categorical rasters requires a different approach, as you cannot calculate the mean between category of "Forest" and "Water".
+However, it is possible to count a number of occurrences of each class. 
+We will use a land cover data, `nlcd`, to illustrate this (\@ref(fig:polyextr):B).
+Firstly, we need to extract all of the values in our polygon to a new `data.frame`:
 <!-- land cover categories to polygon -->
 <!-- we can extract numbers of cells for each category in case of categorical raster -->
-
-<!-- simplify the nlcd data! -->
-
-```r
-nlcd = raster((system.file("raster/nlcd2011.tif", package = "spDataLarge")))
-```
-
 <!-- extract categorical data -->
 
 ```r
+data(nlcd)
 zion_nlcd = raster::extract(nlcd, zion, df = TRUE)
 ```
 
@@ -7970,9 +7978,9 @@ zion_nlcd = raster::extract(nlcd, zion, df = TRUE)
 
 ```r
 zion_nlcd_df = zion_nlcd %>% 
-  group_by(ID, nlcd2011) %>% 
+  group_by(ID, layer) %>% 
   summarise(n = n()) %>% 
-  spread(nlcd2011, n)
+  spread(layer, n)
 zion_nlcd_new = bind_cols(zion, zion_nlcd_df)
 ```
 
