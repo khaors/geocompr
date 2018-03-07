@@ -448,7 +448,7 @@ Figure 9.3: The impact of changing commonly used fill and border aesthetics to f
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(nz$geometry, <span class="dt">col =</span> <span class="dv">1</span>:<span class="kw">nrow</span>(nz))      <span class="co"># works</span>
 <span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="dv">1</span>:<span class="kw">nrow</span>(nz)) <span class="co"># fails:</span>
 <span class="co">#&gt; Error: Fill argument neither colors nor valid variable name(s)</span></code></pre></div>
-<p>Instead <code>col</code> (and other aesthetics that can vary such as <code>lwd</code> for line layers and <code>size</code> for point layers) requires a character string naming an attribute associated with the geometry to be plotted. Thus one would acheive the desired (plotted in the right-hand panel of Figure <a href="adv-map.html#fig:tmcol">9.4</a>) result as follows:</p>
+<p>Instead <code>col</code> (and other aesthetics that can vary such as <code>lwd</code> for line layers and <code>size</code> for point layers) requires a character string naming an attribute associated with the geometry to be plotted. Thus one would acheive the desired (plotted in the right-hand panel of Figure <a href="adv-map.html#fig:tmcol">9.4</a>) result as follows:<a href="#fn56" class="footnoteRef" id="fnref56"><sup>56</sup></a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz$col =<span class="st"> </span><span class="dv">1</span>:<span class="kw">nrow</span>(nz)
 <span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;col&quot;</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:tmcol"></span>
@@ -457,10 +457,10 @@ Figure 9.3: The impact of changing commonly used fill and border aesthetics to f
 Figure 9.4: Comparison of base (left) and tmap (right) handling of a numeric color field.
 </p>
 </div>
-<p>Figure <a href="adv-map.html#fig:tmcol">9.4</a> demonstrates another benefit of <strong>tmap</strong>: it converts numeric variables into sensible, graduated bins (breaks of which can be set manually with <code>breaks</code>). Additional aesthetic settings are demonstrated in the code chunk below, which colors regions in New Zealand depending on their area which demonstrates this functionality. The plot also illustrates how the number and palette of colors can be altered by passing integer and text values to the arguments <code>n</code> and <code>palette</code> respectively:</p>
+<p>Additional aesthetic settings are demonstrated in the code chunk below, which colors regions in New Zealand depending on their area which demonstrates this functionality. The plot also illustrates how the number and palette of colors can be altered by passing integer and text values to the arguments <code>n</code> and <code>palette</code> respectively:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">breaks =<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>) *<span class="st"> </span><span class="fl">1e4</span>
 <span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;AREA_SQ_KM&quot;</span>, <span class="dt">breaks =</span> breaks)
-<span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;AREA_SQ_KM&quot;</span>, <span class="dt">n =</span> <span class="dv">3</span>)
+<span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;AREA_SQ_KM&quot;</span>, <span class="dt">n =</span> <span class="dv">2</span>)
 <span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;AREA_SQ_KM&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;RdBu&quot;</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:tmpal"></span>
 <img src="figures/tmpal-1.png" alt="Illustration of aesthetic settings using the example of a continuous variable (the area in square kilometers of regions in New Zealand) converted to color with different break palette arguments." width="576" />
@@ -656,7 +656,7 @@ m2 =<span class="st"> </span><span class="kw">tm_shape</span>(world_sf_temporal2
 In <strong>shiny</strong> apps these are often split into <code>ui.R</code> (short for user interface) and <code>server.R</code> files, naming conventions used by <a href="https://github.com/rstudio/shiny-server"><code>shiny-server</code></a>, a server-side Linux application for serving shiny apps on public-facing websites <code>shiny-server</code> also serves apps defined by a single <code>app.R</code> file in an ‘app folder’.
 </div>
 <p></p>
-<p>Before considering large apps it is worth seeing a minimal example, named ‘lifeApp’, in action.<a href="#fn56" class="footnoteRef" id="fnref56"><sup>56</sup></a> The code below defines and launches — with the command <code>shinyApp()</code> — a lifeApp, which provides an interactive slider allowing users to make countries appear with progressively lower levels of life expectancy (see Figure <a href="adv-map.html#fig:lifeApp">9.10</a>):</p>
+<p>Before considering large apps it is worth seeing a minimal example, named ‘lifeApp’, in action.<a href="#fn57" class="footnoteRef" id="fnref57"><sup>57</sup></a> The code below defines and launches — with the command <code>shinyApp()</code> — a lifeApp, which provides an interactive slider allowing users to make countries appear with progressively lower levels of life expectancy (see Figure <a href="adv-map.html#fig:lifeApp">9.10</a>):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ui =<span class="st"> </span><span class="kw">fluidPage</span>(
   <span class="kw">sliderInput</span>(<span class="dt">inputId =</span> <span class="st">&quot;life&quot;</span>, <span class="st">&quot;Life expectancy&quot;</span>, <span class="dv">0</span>, <span class="dv">80</span>, <span class="dt">value =</span> <span class="dv">80</span>),
       <span class="kw">leafletOutput</span>(<span class="dt">outputId =</span> <span class="st">&quot;map&quot;</span>)
@@ -732,7 +732,8 @@ Figure 9.11: coffeeApp, a simple web mapping application for exploring global co
 <div class="footnotes">
 <hr />
 <ol start="56">
-<li id="fn56"><p>The word ‘app’ in this context refers to ‘web application’ and should not be confused with smartphone apps, the more common meaning of the word.<a href="adv-map.html#fnref56">↩</a></p></li>
+<li id="fn56"><p>Figure <a href="adv-map.html#fig:tmcol">9.4</a> also demonstrates another benefit of <strong>tmap</strong>: it automatically converts numeric variables into sensible, graduated bins.<a href="adv-map.html#fnref56">↩</a></p></li>
+<li id="fn57"><p>The word ‘app’ in this context refers to ‘web application’ and should not be confused with smartphone apps, the more common meaning of the word.<a href="adv-map.html#fnref57">↩</a></p></li>
 </ol>
 </div>
             </section>
