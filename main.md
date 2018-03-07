@@ -267,7 +267,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve6bf9d589f97c0e64
+preserve8bf54700df077d02
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3097,7 +3097,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve152194989943061a
+preservec4cf98673d327e76
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5990,7 +5990,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve8a806feb89926c03
+preserve6b4bc4e9726270ad
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6436,11 +6436,10 @@ coords = st_centroid(metros_wgs) %>%
 
 Additionally, `ggmap::revgeocode()` only accepts one coordinate at a time, which is why we iterate over each coordinate of `coords` via a loop (`map_dfr()`).
 `map_dfr()` does exactly the same as `lapply()` except for returning a `data.frame` instead of a `list`.^[To learn more about the split-apply-combine strategy for data analysis, we refer the reader to @wickham_split-apply-combine_2011.]
-Sometimes, the reverse geocoding API of Google is unable to find an address returning `NA`.
-Often enough trying the same coordinate again, returns an address at the second or third attempt (see `while()-loop`).
+Sometimes, Google's reverse geocoding API is unable to find an address returning `NA`.
+Usually, trying the same coordinate again returns an address at the second or third attempt (see `while()-loop`).
 However, if three attempts have already failed, this is a good indication that the requested information is indeed unavailable.
-Since it is our interest to be a good cyberspace citizen, we try not to overburden the server with too many queries within a short amount of time. 
-Hence, we let the loop sleep between one and four seconds after each iteration before accessing the reverse geocoding API again.
+Since we aim to be good cyberspace citizens, we try not to overburden the server with too many queries within a short amount of time by letting the loop sleep between one and four seconds after each iteration before accessing the reverse geocoding API again.
 
 
 ```r
@@ -6486,14 +6485,12 @@ Instead of downloading all shops for the whole of Germany, we restrict the downl
 This relieves the OSM server resources, reduces download time and above all only gives back the shop locations we are interested in.
 The `map()` loop, the `lapply()` equivalent of **purrr**, runs through all eight metropolitan names which subsequently define the bounding box in the `opq()` function (see section \@ref(retrieving-data)).
 Alternatively, we could have provided the bounding box in the form of coordinates ourselves.
-Next, we indicate that we only would like to download `shop` features (see this [page](http://wiki.openstreetmap.org/wiki/Map_Features) for a full list of OpenStreetMap map features).
+Next, we indicate that we would only like to download `shop` features (see this [page](http://wiki.openstreetmap.org/wiki/Map_Features) for a full list of OpenStreetMap map features).
 `osmdata_sf()` returns a list with several spatial objects (points, lines, polygons, etc.).
 Here, we will only keep the point objects.
-As with Google's reverse geocode API, the OSM-download will once in a while not work at the first attempt.
+As with Google's reverse geocode API, the OSM-download will sometimes fail at the first attempt.
 The `while` loop increases the number of download trials to three. 
-If then still no features can be downloaded, most likely there are none.
-Or it is an indication that another error has occurred before. 
-For instance, the `opq()` function might have retrieved a wrong bounding box.
+If then still no features can be downloaded, it is likely that either there are none available or that another error has occurred before (e.g. due to erroneous output from `opq()`).
 
 
 ```r
@@ -6516,7 +6513,7 @@ shops = map(metro_names, function(x) {
 
 It is highly unlikely that there are no shops in any of our defined metropolitan areas.
 The following `if` condition simply checks if there is at least one shop for each region.
-If not, we would try to download again the shops for this/these specific region/s.
+If not, we would try to download the shops again for this/these specific region/s.
 
 
 ```r
@@ -6584,7 +6581,7 @@ names(poi) = "poi"
 
 The only steps that remain before combining all the layers are to add POI and delete the population from the raster stack.
 The reasoning for the latter is twofold.
-First of all, we already have delineated metropolitan areas, that is areas where the population density is above average compared to the rest of Germany.
+First of all, we have already delineated metropolitan areas, that is areas where the population density is above average compared to the rest of Germany.
 Secondly, though it is advantageous to have many potential customers within a specific catchment area, the sheer number alone might not actually represent the desired target group.
 For instance, residential tower blocks are areas with a high population density but not necessarily with a high purchasing power for expensive cycle components.
 This is achieved with the complimentary functions `addLayer()` and `dropLayer()`:
@@ -6606,11 +6603,11 @@ With clean data the final step, calculating a final score by summing up all rast
 result = sum(reclass)
 ```
 
-For instance, a score greater 9 might be a suitable threshold indicating raster cells where to place a bike shop (Figure \@ref(fig:bikeshop-berlin)).
+For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve905f6d14f0e2a10b
-<p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e., raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
+preserve0815c4fa960a2831
+<p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
 ## Discussion and next steps
@@ -6624,14 +6621,14 @@ However, we have no proof that this is in fact the case.
 A few other things remained unconsidered but might improve the analysis:
 
 - We used equal weights when calculating the final scores.
-But is, for example, the household size as important as the portion of men or the mean age?
+But is, for example, the household size as important as the portion of women or the mean age?
 - We used all points of interest. 
 Maybe it would be wiser to use only those which might be interesting for bike shops such as do-it-yourself, hardware, bicycle, fishing, hunting, motorcycles, outdoor and sports shops (see the range of shop values available on the  [OSM Wiki](http://wiki.openstreetmap.org/wiki/Map_Features#Shop)).
-- Maybe data at a better resolution changes and improves the output. For example, there is also population data at a finer resolution (100 m; see exercises).
+- Data at a better resolution may change and improve the output. For example, there is also population data at a finer resolution (100 m; see exercises).
 - We have used only a limited set of variables. 
 For example, the [INSPIRE geoportal](http://inspire-geoportal.ec.europa.eu/discovery/) might contain much more data of possible interest to our analysis (see also section \@ref(retrieving-data).
 The bike paths density might be another interesting variable as well as the purchasing power or even better the retail purchasing power for bikes.
-- Interactions remained unconsidered such as a possible interaction between the portion of men and single households.
+- Interactions remained unconsidered, such as a possible interaction between the portion of men and single households.
 However, to find out about such an interaction we would need customer data.
 
 In short, the presented analysis is far from perfect.
@@ -6642,15 +6639,15 @@ So far we have identified areas, 1 by 1 km in size, potentially suitable for a b
 We could continue the analysis as follows:
 
 - Find an optimal location based on number of inhabitants within a specific catchment area.
-For example, the shop should be reachable for as much people as possible within 15 minutes of traveling bike distance (catchment area routing).
-Thereby, we should account for the fact that the farther away the people are from the shop, the more unlikely it becomes that they actually visit it (distance decay function).
+For example, the shop should be reachable for as many people as possible within 15 minutes of traveling bike distance (catchment area routing).
+Thereby, we should account for the fact that the further away the people are from the shop, the more unlikely it becomes that they actually visit it (distance decay function).
 - Also it would be a good idea to take into account competitors. 
 That is, if there already is a bike shop in the vicinity of the chosen location, one has to distribute possible customers (or sales potential) between the competitors [@huff_probabilistic_1963; @wieland_market_2017].
 - We need to find suitable and affordable real estate (accessible, parking spots, frequency of passers-by, big windows, etc.).
 
 ## Exercises
 
-1. In our use we have used `raster::rasterFromXYZ()` to convert a `input_tidy` into a raster brick. Try to achieve the same with the help of the `sp::gridded()` function.
+1. We have used `raster::rasterFromXYZ()` to convert a `input_tidy` into a raster brick. Try to achieve the same with the help of the `sp::gridded()` function.
 <!--
 input = st_as_sf(input, coords = c("x", "y"))
 # use the correct projection (see data description)
