@@ -427,7 +427,7 @@ zion_srtm_new =<span class="st"> </span><span class="kw">bind_cols</span>(zion, 
 zion_nlcd =<span class="st"> </span>raster::<span class="kw">extract</span>(nlcd, zion, <span class="dt">df =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p>The new output, <code>zion_nlcd</code>, can be then use to count the number of occurrences of each class. Finally, we need to reshape the output to have one row per polygon and join the extracted information with the polygon dataset:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_count =<span class="st"> </span><span class="kw">count</span>(zion_nlcd, ID, layer)
-zion_nlcd_df =<span class="st"> </span><span class="kw">spread</span>(zion_count, layer, n)
+zion_nlcd_df =<span class="st"> </span><span class="kw">spread</span>(zion_count, layer, n, <span class="dt">fill =</span> <span class="dv">0</span>)
 zion_nlcd_new =<span class="st"> </span><span class="kw">bind_cols</span>(zion, zion_nlcd_df)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:polyextr"></span>
 <img src="figures/polyextr-1.png" alt="Area used for continuous (left) and categorical (right) raster extraction." width="576" />
