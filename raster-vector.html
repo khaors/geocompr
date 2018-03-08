@@ -425,7 +425,7 @@ zion_srtm_new =<span class="st"> </span><span class="kw">bind_cols</span>(zion, 
 <p>Description of categorical rasters requires a different approach, as you cannot calculate the mean between category of “Forest” and “Water”. However, it is possible to count the number of occurrences of each class. To illustrate this, we will use a land cover data <code>nlcd</code>(<a href="raster-vector.html#fig:polyextr">11.4</a>:B). Firstly, we need to extract all of the values in our polygon to a new <code>data.frame</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(nlcd)
 zion_nlcd =<span class="st"> </span>raster::<span class="kw">extract</span>(nlcd, zion, <span class="dt">df =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<p>The new output, <code>zion_nlcd</code>, can be then use to count the number of occurences of each class. Finally, we need to reshape the output to have one row per polygon and join the extracted information with the polygon dataset:</p>
+<p>The new output, <code>zion_nlcd</code>, can be then use to count the number of occurrences of each class. Finally, we need to reshape the output to have one row per polygon and join the extracted information with the polygon dataset:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_count =<span class="st"> </span><span class="kw">count</span>(zion_nlcd, ID, layer)
 zion_nlcd_df =<span class="st"> </span><span class="kw">spread</span>(zion_count, layer, n)
 zion_nlcd_new =<span class="st"> </span><span class="kw">bind_cols</span>(zion, zion_nlcd_df)</code></pre></div>
