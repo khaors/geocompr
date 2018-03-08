@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-03-07'
+date: '2018-03-08'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-03-07 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-03-08 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -267,7 +267,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve2247420ac8de98fd
+preserve0db5e6260007c080
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3097,7 +3097,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservef421604cd13a0175
+preserveedceceb84de55482
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5990,7 +5990,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve1499feac6340dd73
+preserve9e95257180e69bbc
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6606,7 +6606,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve1135964518fa88fc
+preserve9c20d0d8498951c9
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7962,25 +7962,23 @@ zion_srtm_new = bind_cols(zion, zion_srtm_df)
 ```
 
 Description of categorical rasters requires a different approach, as you cannot calculate the mean between category of "Forest" and "Water".
-However, it is possible to count a number of occurrences of each class. 
-We will use a land cover data, `nlcd`, to illustrate this (\@ref(fig:polyextr):B).
+However, it is possible to count the number of occurrences of each class. 
+To illustrate this, we will use a land cover data `nlcd`(\@ref(fig:polyextr):B).
 Firstly, we need to extract all of the values in our polygon to a new `data.frame`:
-<!-- land cover categories to polygon -->
-<!-- we can extract numbers of cells for each category in case of categorical raster -->
-<!-- extract categorical data -->
+
 
 ```r
 data(nlcd)
 zion_nlcd = raster::extract(nlcd, zion, df = TRUE)
 ```
 
-<!-- reshape the data -->
+The new output, `zion_nlcd`, can be then use to count the number of occurences of each class.
+Finally, we need to reshape the output to have one row per polygon and join the extracted information with the polygon dataset:
+
 
 ```r
-zion_nlcd_df = zion_nlcd %>% 
-  group_by(ID, layer) %>% 
-  summarise(n = n()) %>% 
-  spread(layer, n)
+zion_count = count(zion_nlcd, ID, layer)
+zion_nlcd_df = spread(zion_count, layer, n)
 zion_nlcd_new = bind_cols(zion, zion_nlcd_df)
 ```
 
@@ -7988,9 +7986,6 @@ zion_nlcd_new = bind_cols(zion, zion_nlcd_df)
 <img src="figures/polyextr-1.png" alt="Area used for continuous (left) and categorical (right) raster extraction." width="576" />
 <p class="caption">(\#fig:polyextr)Area used for continuous (left) and categorical (right) raster extraction.</p>
 </div>
-
-<!-- ## Spatial interpolation ?? -->
-<!-- http://mdsumner.github.io/guerrilla/articles/irreg2.html -->
 
 ## Rasterization {#rasterization}
 
