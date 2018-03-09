@@ -267,7 +267,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservef8555a8272ee123a
+preserve3f606078d62e4cee
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3097,7 +3097,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve20eebf4ef5310b3f
+preserve55ddbb4b35cf2547
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5990,7 +5990,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve27c0122a4617ba29
+preservef68c0eb77e7bb202
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6606,7 +6606,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve02129bc4d92b37e9
+preserve571e88aad903491e
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7944,15 +7944,17 @@ Extract by polygon also allows for more complex analyses, such as calculating st
 These outputs are used to characterize a single region or to compare many regions.
 
 Continuous raster's values can be described by summary statistics. 
-In the code below, we create a new vector, `our_stats`, which contains three statistics to calculate:
-<!-- test for multipolygon! -->
+In the code below, we create a new vector, `our_stats`, that contains three statistics functions and name them:
+
 
 ```r
 our_stats = c(min, mean, max)
 names(our_stats) = c("minimum", "mean", "maximum")
 ```
 
-<!-- ... -->
+Next, we use the `map_dfr()` function to loop through our statistics and extract them from the raster and the `spread()` function to reorganize the data.
+In the final step, we join our polygon dataset and the values of statitics.
+<!-- ... fun?? -->
 
 ```r
 zion_srtm_df = our_stats %>% 
