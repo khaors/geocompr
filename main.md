@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-03-08'
+date: '2018-03-09'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-03-08 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-03-09 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -267,7 +267,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve2e3c5765b670a08b
+preservecf014937008477fb
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -367,15 +367,15 @@ See the [r-spatial](https://github.com/r-spatial/) organisation and conversation
 ] and a growing number of actively developed packages which are designed to work in harmony with **sf** (Table \@ref(tab:revdep)). 
 
 
-Table: (\#tab:revdep)The top 5 most downloaded packages that depend on sf, in terms of average number of downloads per day over the previous month. As of 2018-03-03 there are 60 packages which import sf.
+Table: (\#tab:revdep)The top 5 most downloaded packages that depend on sf, in terms of average number of downloads per day over the previous month. As of 2018-03-07 there are 63 packages which import sf.
 
 package    Downloads
 --------  ----------
-plotly          1611
-raster          1390
-spData           777
-spdep            730
-leaflet          551
+plotly          1687
+raster          1446
+spData           794
+spdep            765
+leaflet          580
 
 ## The history of R-spatial
 
@@ -3097,7 +3097,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserved2239d58a0f17c65
+preservebcbcaf4fc6ded925
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5990,7 +5990,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve09d99dfb181fc44b
+preserveaef650320097c907
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6606,7 +6606,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservee675d7623e1edfc0
+preservec54c75ded5ef8d8a
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -8349,6 +8349,8 @@ The `response` option gives back the predicted probabilities (of landslide occur
 
 ```r
 head(predict(object = fit, type = "response"))
+#>  1337   384  1551  1555   209  1135 
+#> 0.431 0.904 0.387 0.272 0.159 0.784
 ```
 
 We can also predict spatially by applying the coefficients to our predictor rasters. 
@@ -8374,31 +8376,56 @@ There are three main directions:
 1. The predictions of universal kriging are the predictions of a simple linear model plus the kriged model's residuals, i.e. spatially interpolated residuals [@bivand_applied_2013]. 
 1. Adding a spatial correlation (dependency) structure to a generalized least squares model  [`nlme::gls()`; @zuur_mixed_2009; @zuur_beginners_2017].  ^[These correlation structures can also be included in `MASS::glmmPQL()` and `mgcv::gamm()`.]
 1. Finally, there are mixed-effect modeling approaches.
-Basically, a random effect imposes a dependency structure on the response variable which in turn allows for observations of once class to be more similar to each other than to those of another class [@zuur_mixed_2009]. 
+Basically, a random effect imposes a dependency structure on the response variable which in turn allows for observations of one class to be more similar to each other than to those of another class [@zuur_mixed_2009]. 
 Classes can be for example bee hives, owl nests, vegetation transects or an altitudinal stratification.
 This mixed modeling approach assumes normal and independent distributed random intercepts.^[Note that for spatial predictions one would usually use the population intercept.]
 This can even be extended by using a random intercept that is normal and spatially dependent.
 For this, however, you will have to resort most likely to Bayesian modeling approaches since frequentist software tools are rather limited in this respect especially for more complex models [@blangiardo_spatial_2015; @zuur_beginners_2017]. 
 
 Spatial predictions are one very important outcome of a model.
-Even more important is how good the model is at making predictions.
-Therefore, we need a measure which tells us 
+Even more important is how good the model is at making them since the most beautiful prediction map is useless if the model is bad.
+The most popular measure to assess the predictive performance of a binomial model is the Area Under the Receiver Operator Characteristic Curve (AUROC).
+This is a value between 0.5 and 1.0 with 0.5 indicating no and 1.0 indicating a perfect discrimination of the two classes. 
+Thus, the higher the AUROC the better is our model at making predictions.
+In the following we compute the receiver operator characteristic with the help of `roc()` by providing it with the response variable and the predicted values. 
+`auc()` returns the area under the curve.
 
 
-AUROC: To assess the model's performance we use the AUROC.
-Add short explanation. 
+```r
+library(pROC)
+auc(roc(lsl$lslpts, fitted(fit)))
+#> Area under the curve: 0.844
+```
 
+An AUROC of 0.84 represents a good fit.
+However, this is an overoptimistic estimation since we have computed it on the complete dataset. 
+To derive an biased-reduced assessment we have to use cross-validation and in the case of spatial data we will have to make use of spatial CV.
 
 ## Introduction to spatial CV
 
-"Resampling methods are an indispensable tool in modern statistics. They involve repeatedly drawing samples from a training set and refitting a model of interest on each sample in order to obtain additional information about the fitted model. For example, in order to estimate the variability of a linear regression fit, we can repeatedly draw different samples from the training data, fit a linear regression to each new sample, and then examine the extent to which the resulting fits differ. Such an approach may allow us to obtain information that would not be available from fitting the model only once using the original training sample.
-Resampling approaches can be computationally expensive, because they involve fitting the same statistical method multiple times using different subsets of the training data. However, due to recent advances in computing power, the computational requirements of resampling methods generally are not prohibitive. In this chapter, we discuss two of the most commonly used resampling methods, cross-validation and the bootstrap."
+Cross-validation belongs to the family of resampling methods [@james_introduction_2013].
+The basic idea is to split (repeatedly) a dataset into training and test sets whereby the training data is used to fit a model which then is applied to the test set.
+Comparing the predicted values with the known response values from the test set (using a performance measure such as the AUROC in the binomial case) gives a bias-reduced assessement of the model's capability to generalize the learned relationship to independent data.
+For example, a 10-repeated 5-fold cross-validation means to randomly split the data into five partitions (folds) with each fold using a 1/5 of the available data as test and 4/5 as training data (see upper row of Figure \@ref(fig:partitioning)). 
+This guarantees that each observation is used in the test set, and requires the fitting of five models.
+Subsequently, this procedure is repeated 10 times.
+Of course, the data spliting will differ (though often only slightly) in each repetition.
+Overall, this amounts to fitting 50 models whereas the mean performance measure (AUROC) of all models is the model's overall prediction power.
 
-Cross-validation belongs to the family of resampling methods.
-The basic idea is to repeatedly split a dataset into training and test sets whereby the first is used to fit a model which then is applied to the test set
+However, geographic data is special.
+Remember that the first law of geography states that points close to each other tend to be, on average, more similar compared to points further away (Chapter \@ref(transportation); @miller_toblers_2004).
+This means these points are not statistically independent or put differently that training and test points in classical cross-validation are often too close to each other (see first row of \@ref(fig:partition)).
+Using this information in our modeling is like a sneak preview, i.e. using information that should be unavailable to the training dataset.
+To overcome this problem, we should make use of spatial partitioning which splits the observations spatially using its coordinates in a *k*-means clustering (second row of Figure \@ref(fig:partition); @brenning_spatial_2012).
+The partitioning strategy is **the** distinguishing feature between spatial and classical cross-validation, everything else remains the same.
+As a result spatial cv leads to a bias-reduced assessement of a model's predictive performance, and hence helps to avoid overfitting.
+We emphasize that spatial cv reduces the bias introduced by spatial autocorrelation but not completely removes it. 
+This is because there are still a few points in the test and training data which are still neighbors (see second row of \@ref(fig:partition)).
 
-figure showing difference between spatial and non-spatial random sampling
-cross-reference **sperrorest** which has been integrated into **mlr**
+<div class="figure" style="text-align: center">
+<img src="figures/13_partitioning.png" alt="Spatial and random partitioning."  />
+<p class="caption">(\#fig:partitioning)Spatial and random partitioning.</p>
+</div>
 
 ## Modeling and spatial CV with **mlr**
 In R there are literally hundreds of packages available for statistical learning (e.g., have a look at the [CRAN task machine learning](https://CRAN.R-project.org/view=MachineLearning)).
@@ -8443,7 +8470,7 @@ For a specific task, we can run:
 
 
 ```r
-lrns = listLearners(task)
+lrns = mlr::listLearners(task)
 head(lrns[, 1:4])
 #>                 class                         name  short.name package
 #> 1    classif.binomial          Binomial Regression    binomial   stats
@@ -8477,6 +8504,8 @@ lrn = makeLearner(cl = "classif.binomial",
 In the beginning, it might seem a bit tedious to learn the **mlr** interface for modeling.
 But remember that one only has to learn one single interface to run 169 learners.
 Additionally, resampling in **mlr** is really easy and only requires two more steps.^[Further advantages are the easy parallelization of resampling techniques and the tuning of machine learning hyperparameters, also spatially, in an inner fold.]
+Please note that **sperrorest** initially implemented spatial cross-validation in R [@brenning_spatial_2012].
+In the meantime, it was integrated into the **mlr** package which is the reason why we are using **mlr** (and not for example **caret**).
 The first thing to to is specifying a resampling method.
 Spatial repeated cross-validation
 
@@ -8491,7 +8520,7 @@ Executing the resampling method and set the preferred performance measure.
 ```r
 set.seed(02192018)
 sp_cv = mlr::resample(learner = lrn, task = task, resampling = resampling, 
-                      measures = auc)
+                      measures = mlr::auc)
 sp_cv$measures.test$auc
 #>  [1] 0.799 0.765 0.851 0.792 0.692 0.765 0.692 0.792 0.851 0.799 0.799
 #> [12] 0.792 0.765 0.851 0.692 0.692 0.851 0.799 0.792 0.765 0.757 0.722
