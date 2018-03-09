@@ -267,7 +267,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservecf014937008477fb
+preservef8555a8272ee123a
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3097,7 +3097,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservebcbcaf4fc6ded925
+preserve20eebf4ef5310b3f
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5990,7 +5990,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserveaef650320097c907
+preserve27c0122a4617ba29
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6606,7 +6606,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservec54c75ded5ef8d8a
+preserve02129bc4d92b37e9
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -8413,14 +8413,14 @@ Of course, the data spliting will differ (though often only slightly) in each re
 Overall, this amounts to fitting 50 models whereas the mean performance measure (AUROC) of all models is the model's overall prediction power.
 
 However, geographic data is special.
-Remember that the first law of geography states that points close to each other tend to be, on average, more similar compared to points further away (Chapter \@ref(transportation); @miller_toblers_2004).
-This means these points are not statistically independent or put differently that training and test points in classical cross-validation are often too close to each other (see first row of \@ref(fig:partition)).
+Remember that the first law of geography states that points close to each other tend to be, on average, more similar compared to points further away (@miller_toblers_2004; Chapter \@ref(transport)).
+This means these points are not statistically independent or put differently that training and test points in classical cross-validation are often too close to each other (see first row of \@ref(fig:partitioning)).
 Using this information in our modeling is like a sneak preview, i.e. using information that should be unavailable to the training dataset.
-To overcome this problem, we should make use of spatial partitioning which splits the observations spatially using its coordinates in a *k*-means clustering (second row of Figure \@ref(fig:partition); @brenning_spatial_2012).
+To overcome this problem, we should make use of spatial partitioning which splits the observations spatially using its coordinates in a *k*-means clustering (@brenning_spatial_2012; second row of Figure \@ref(fig:partitioning)).
 The partitioning strategy is **the** distinguishing feature between spatial and classical cross-validation, everything else remains the same.
 As a result spatial cv leads to a bias-reduced assessement of a model's predictive performance, and hence helps to avoid overfitting.
 We emphasize that spatial cv reduces the bias introduced by spatial autocorrelation but not completely removes it. 
-This is because there are still a few points in the test and training data which are still neighbors (see second row of \@ref(fig:partition)).
+This is because there are still a few points in the test and training data which are still neighbors (see second row of \@ref(fig:partitioning)).
 
 <div class="figure" style="text-align: center">
 <img src="figures/13_partitioning.png" alt="Spatial and random partitioning."  />
