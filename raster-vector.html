@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-03-09">
+<meta name="date" content="2018-03-10">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -388,7 +388,7 @@ Figure 11.1: Illustration of raster cropping (center) and raster masking (right)
 <p>Raster extraction is a process of pulling out values from rasters based on the locations of vector data. It behaves differently depending on the type of secondary data (points, lines or polygons) and selected arguments. We will present some of the most often use cases below using the <code>raster::extract()</code> function. <!-- faster alternative to raster::extract??: tabularaster, stars? --> The reverse process of transferring vector data into rasters is usually done by rasterization (see section <a href="raster-vector.html#rasterization">11.4</a>).</p>
 <p>The simplest example of raster extraction is when values of raster cells are extracted based on points coordinates. The <code>zion_points</code> dataset consists of 30 points located in the Zion National Park (Figure <a href="raster-vector.html#fig:pointextr">11.2</a>). We can think about them as places where soils properties were measured and we want to know what is the elevation of each point. In this case, we just need to add a new column (<code>elevation</code>) to the point dataset, which would store values extracted from the <code>srtm</code> object:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_points$elevation =<span class="st"> </span>raster::<span class="kw">extract</span>(srtm, zion_points)</code></pre></div>
-<p>In the <code>extract()</code> function it is also possible to provide the radius of a buffer (in meters) around each point. This allows for similar operations to the extraction by polygon (see examples below).</p>
+<p>It is also possible to provide the radius of a buffer (in meters) around each point in the <code>extract()</code> function. This allows for similar operations to the extraction by polygon (see examples below).</p>
 <div class="figure" style="text-align: center"><span id="fig:pointextr"></span>
 <img src="figures/pointextr-1.png" alt="Locations of points used for raster extraction." width="576" />
 <p class="caption">
