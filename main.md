@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-03-10'
+date: '2018-03-11'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-03-10 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-03-11 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -267,7 +267,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve8786aaade30f48f3
+preserve7fab1c3d8933b7e0
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3097,7 +3097,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve41d0c55912a3050a
+preserve4921ca71c7a9a4bf
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5990,7 +5990,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve7890f54303f366aa
+preservee47b13fa9e986bd6
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6606,7 +6606,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve00bdd84a29188e97
+preserveba2aca58c1f0d1fa
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7869,23 +7869,23 @@ You can learn more in the function's help file - `?mask`.
 
 ## Raster extraction
 
-Raster extraction is a process of pulling out values from rasters based on the locations of vector data.
+Raster extraction is a process of pulling out values from rasters based on the locations from vector data.
 It behaves differently depending on the type of secondary data (points, lines or polygons) and selected arguments.
 We will present some of the most often use cases below using the `raster::extract()` function.
 <!-- faster alternative to raster::extract??: tabularaster, stars? -->
-The reverse process of transferring vector data into rasters is usually done by rasterization (see section \@ref(rasterization)).
+The reverse process of transferring vector data values into rasters is usually done by rasterization (see section \@ref(rasterization)).
 
 The simplest example of raster extraction is when values of raster cells are extracted based on points coordinates.
 The `zion_points` dataset consists of 30 points located in the Zion National Park (Figure \@ref(fig:pointextr)). 
-We can think about them as places where soils properties were measured and we want to know what is the elevation of each point.
-In this case, we just need to add a new column (`elevation`) to the point dataset, which would store values extracted from the `srtm` object: 
+They could represent places where soils properties were measured and we want to know what is the elevation of each point.
+In this case, we just need to add a new column (`elevation`) to the point dataset that would store values extracted from the `srtm` object: 
 
 
 ```r
 zion_points$elevation = raster::extract(srtm, zion_points)
 ```
 
-It is also possible to provide the radius of a buffer (in meters) around each point in the `extract()` function.
+In extraction by points it is also possible to provide the radius of a buffer (in meters) around each point (the `buffer` argument).
 This allows for similar operations to the extraction by polygon (see examples below).
 
 <div class="figure" style="text-align: center">
@@ -7893,7 +7893,7 @@ This allows for similar operations to the extraction by polygon (see examples be
 <p class="caption">(\#fig:pointextr)Locations of points used for raster extraction.</p>
 </div>
 
-The second example involves raster extraction along a line or lines.
+The second example shows raster extraction along a line or lines.
 For this purpose, we will create a simple line going from northwest to southeast of the Zion National Park (\@ref(fig:lineextr):A):
 
 
@@ -7907,7 +7907,7 @@ zion_transect = st_sfc(st_linestring(rbind(c(-113.2, 37.45), c(-112.9, 37.2)))) 
 Importantly, it does not need to be a straight line.
 Try to imagine that you are planing to go on a hike - you can extract elevation along your proposed path.
 To extract a raster by line, the `along` argument needs to be set to `TRUE`. 
-We also want to add identifiers (`cellnumbers = TRUE`) and convert a new object to `data.frame`:
+We also add identifiers (`cellnumbers = TRUE`) and convert a new object to `data.frame`:
 
 
 ```r
@@ -7916,7 +7916,7 @@ transect_df = raster::extract(srtm, zion_transect, along = TRUE, cellnumbers = T
 ```
 
 This would allow us to estimate the distances along measurements on the line.
-However, firstly we need to extract the coordinates of measurements and based on them we can calculate the distance using the `geosphere::distm()` function.
+However, firstly we need to extract the coordinates of measurements and based on them we can calculate the distances using the `geosphere::distm()` function.
 
 
 ```r
@@ -7931,20 +7931,20 @@ The final `data.frame` can be used to create a plot in Figure \@ref(fig:lineextr
 <p class="caption">(\#fig:lineextr)Location of a line used for raster extraction (left) and the elevation along this line (right).</p>
 </div>
 
-The last group of example is extraction of raster values that are covered by a polygon.
+The last group of examples is an extraction of raster values that are covered by polygons.
 Polygons are usually larger than a single cell, therefore this kind of extraction would return many raster values for each polygon.
-In the below output, `ID` represents a row number of a polygon and `srtm` is elevation value extracted from the raster:
+In the below output, `ID` represents the row number in the polygon and `srtm` is the elevation value extracted from the raster:
 
 
 ```r
 zion_srtm_values = raster::extract(x = srtm, y = zion, df = TRUE)
 ```
 
-Extract by polygon also allows for more complex analyses, such as calculating statistics of continuous raster's values in each polygon (\@ref(fig:polyextr):A) or counting occurrences of categories in a categorical raster (\@ref(fig:polyextr):B).
+Extract by polygon also allows for more complex analyses, such as calculating statistics of continuous raster's values (\@ref(fig:polyextr):A) or counting occurrences of categorical raster's classes (\@ref(fig:polyextr):B) for each polygon.
 These outputs are used to characterize a single region or to compare many regions.
 
 Continuous raster's values can be described by summary statistics. 
-In the code below, we create a new vector, `our_stats`, that contains three statistics functions and name them:
+In the code below, we create a new vector, `our_stats`, that contains three statistics functions, and name them:
 
 
 ```r
@@ -7952,8 +7952,9 @@ our_stats = c(min, mean, max)
 names(our_stats) = c("minimum", "mean", "maximum")
 ```
 
-Next, we use the `map_dfr()` function to loop through our statistics and extract them from the raster and the `spread()` function to reorganize the data.
-In the final step, we join our polygon dataset and the values of statitics.
+We use the `map_dfr()` function to loop through our statistics functions and extract their values from the raster.
+Next, the `spread()` function reorganizes the data.
+In the final step, we join our polygon dataset and the values of statistics.
 <!-- ... fun?? -->
 
 ```r
@@ -7963,7 +7964,7 @@ zion_srtm_df = our_stats %>%
 zion_srtm_new = bind_cols(zion, zion_srtm_df)
 ```
 
-Description of categorical rasters requires a different approach, as you cannot calculate the mean between category of "Forest" and "Water".
+Description of categorical rasters requires a different approach, as we cannot calculate the mean between category of "Forest" and "Water".
 However, it is possible to count the number of occurrences of each class. 
 To illustrate this, we will use a land cover data `nlcd`(\@ref(fig:polyextr):B).
 Firstly, we need to extract all of the values in our polygon to a new `data.frame`:
@@ -7974,7 +7975,7 @@ data(nlcd)
 zion_nlcd = raster::extract(nlcd, zion, df = TRUE)
 ```
 
-The new output, `zion_nlcd`, can be then use to count the number of occurrences of each class.
+The new output, `zion_nlcd`, can then be used to count the number of occurrences of each class.
 Finally, we need to reshape the output to have one row per polygon and join the extracted information with the polygon dataset:
 
 
