@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-03-11'
+date: '2018-03-12'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-03-11 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-03-12 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -267,7 +267,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve7fab1c3d8933b7e0
+preserve7f0888764a74f4f4
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3097,7 +3097,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve4921ca71c7a9a4bf
+preserveefbfb61aab36f1ff
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5990,7 +5990,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservee47b13fa9e986bd6
+preservefac076f25b1d027c
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6606,7 +6606,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveba2aca58c1f0d1fa
+preserveef6af8a2b2789572
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -8426,8 +8426,8 @@ We emphasize that spatial cv reduces the bias introduced by spatial autocorrelat
 This is because there are still a few points in the test and training data which are still neighbors (see second row of \@ref(fig:partitioning)).
 
 <div class="figure" style="text-align: center">
-<img src="figures/13_partitioning.png" alt="Spatial and random partitioning."  />
-<p class="caption">(\#fig:partitioning)Spatial and random partitioning.</p>
+<img src="figures/13_partitioning.png" alt="Random (upper row) and spatial partitioning (lower row)." width="708" />
+<p class="caption">(\#fig:partitioning)Random (upper row) and spatial partitioning (lower row).</p>
 </div>
 
 ## Modeling and spatial CV with **mlr**
@@ -8473,7 +8473,10 @@ For a specific task, we can run:
 
 
 ```r
-lrns = mlr::listLearners(task)
+lrns = listLearners(task)
+#> Warning in listLearners.character(td$type, union(props, properties), quiet, : The following learners could not be constructed, probably because their packages are not installed:
+#> classif.ada,classif.adaboostm1,classif.bartMachine,classif.blackboost,classif.boosting,classif.bst,classif.C50,classif.cforest,classif.clusterSVM,classif.ctree,classif.cvglmnet,classif.dbnDNN,classif.dcSVM,classif.earth,classif.evtree,classif.extraTrees,classif.fdausc.glm,classif.fdausc.kernel,classif.fdausc.knn,classif.fdausc.np,classif.gamboost,classif.gaterSVM,classif.gausspr,classif.gbm,classif.geoDA,classif.glmboost,classif.glmnet,classif.h2o.deeplearning,classif.h2o.gbm,classif.h2o.glm,classif.h2o.randomForest,classif.IBk,classif.J48,classif.JRip,classif.kknn,classif.ksvm,classif.LiblineaRL1L2SVC,classif.LiblineaRL1LogReg,classif.LiblineaRL2L1SVC,classif.LiblineaRL2LogReg,classif.LiblineaRL2SVC,classif.LiblineaRMultiClassSVC,classif.linDA,classif.lqa,classif.lssvm,classif.mda,classif.mlp,classif.neuralnet,classif.nnTrain,classif.nodeHarvest,classif.OneR,classif.pamr,classif.PART,classif.penalized,classif.plr,classif.plsdaCaret,classif.quaDA,classif.randomForest,classif.randomForestSRC,classif.ranger,classif.rda,classif.rFerns,classif.rknn,classif.rotationForest,classif.RRF,classif.rrlda,classif.saeDNN,classif.sda,classif.sparseLDA,classif.xgboost,cluster.cmeans,cluster.Cobweb,cluster.dbscan,cluster.EM,cluster.FarthestFirst,cluster.kkmeans,cluster.kmeans,cluster.SimpleKMeans,cluster.XMeans,multilabel.cforest,multilabel.randomForestSRC,multilabel.rFerns,regr.bartMachine,regr.bcart,regr.bgp,regr.bgpllm,regr.blackboost,regr.blm,regr.brnn,regr.bst,regr.btgp,regr.btgpllm,regr.btlm,regr.cforest,regr.crs,regr.ctree,regr.cubist,regr.cvglmnet,regr.earth,regr.elmNN,regr.evtree,regr.extraTrees,regr.FDboost,regr.frbs,regr.gamboost,regr.gausspr,regr.gbm,regr.glmboost,regr.glmnet,regr.GPfit,regr.h2o.deeplearning,regr.h2o.gbm,regr.h2o.glm,regr.h2o.randomForest,regr.IBk,regr.kknn,regr.km,regr.ksvm,regr.laGP,regr.LiblineaRL2L1SVR,regr.LiblineaRL2L2SVR,regr.mars,regr.mob,regr.nodeHarvest,regr.pcr,regr.penalized,regr.plsr,regr.randomForest,regr.randomForestSRC,regr.ranger,regr.rknn,regr.RRF,regr.rsm,regr.rvm,regr.slim,regr.xgboost,surv.cforest,surv.CoxBoost,surv.cv.CoxBoost,surv.cvglmnet,surv.gamboost,surv.gbm,surv.glmboost,surv.glmnet,surv.randomForestSRC,surv.ranger
+#> Check ?learners to see which packages you need or install mlr with all suggestions.
 head(lrns[, 1:4])
 #>                 class                         name  short.name package
 #> 1    classif.binomial          Binomial Regression    binomial   stats
