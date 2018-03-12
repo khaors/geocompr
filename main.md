@@ -267,7 +267,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservedc4b43768ec84e02
+preserve76cd6c663b445d22
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3097,7 +3097,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve5c3d97ced9c0be0d
+preserveb159f7559fc0a6c7
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5990,7 +5990,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserveaa0b51f9d5b417a6
+preservefc8a9f34c724051a
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6606,7 +6606,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve950313d773fe9e3f
+preserve21fb49323ea7270c
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -8419,21 +8419,22 @@ To derive an biased-reduced assessment we have to use cross-validation and in th
 Cross-validation belongs to the family of resampling methods [@james_introduction_2013].
 The basic idea is to split (repeatedly) a dataset into training and test sets whereby the training data is used to fit a model which then is applied to the test set.
 Comparing the predicted values with the known response values from the test set (using a performance measure such as the AUROC in the binomial case) gives a bias-reduced assessement of the model's capability to generalize the learned relationship to independent data.
-For example, a 100-repeated 5-fold cross-validation means to randomly split the data into five partitions (folds) with each fold being used once as test set (see upper row of Figure \@ref(fig:partitioning)). 
+For example, a 100-repeated 5-fold cross-validation means to randomly split the data into five partitions (folds) with each fold being used once as a test set (see upper row of Figure \@ref(fig:partitioning)). 
 This guarantees that each observation is used once in the test set, and requires the fitting of five models.
-Subsequently, this procedure is repeated 10 times.
+Subsequently, this procedure is repeated 100 times.
 Of course, the data spliting will differ (though often only slightly) in each repetition.
 Overall, this amounts to fitting 500 models whereas the mean performance measure (AUROC) of all models is the model's overall prediction power.
 
 However, geographic data is special.
 Remember that the first law of geography states that points close to each other tend to be, on average, more similar compared to points further away (@miller_toblers_2004; Chapter \@ref(transport)).
-This means these points are not statistically independent or put differently that training and test points in classical cross-validation are often too close to each other (see first row of \@ref(fig:partitioning)).
+This means these points are not statistically independent or put differently that training and test points in conventional cross-validation are often too close to each other (see first row of \@ref(fig:partitioning)).
 Using this information in our modeling is like a sneak preview, i.e. using information that should be unavailable to the training dataset.
 To overcome this problem, we should make use of spatial partitioning which splits the observations spatially using its coordinates in a *k*-means clustering (@brenning_spatial_2012; second row of Figure \@ref(fig:partitioning)).
-The partitioning strategy is **the** distinguishing feature between spatial and classical cross-validation, everything else remains the same.
-As a result spatial cv leads to a bias-reduced assessement of a model's predictive performance, and hence helps to avoid overfitting.
+The partitioning strategy is **the** distinguishing feature between spatial and classical cross-validation.
+Everything else remains exactly the same.
+As a result spatial CV leads to a bias-reduced assessement of a model's predictive performance, and hence helps to avoid overfitting.
 It is important to note that spatial CV reduces the bias introduced by spatial autocorrelation but does not completely remove it. 
-This is because there are still a few points in the test and training data which are still neighbors (see second row of \@ref(fig:partitioning)).
+This is because there are still a few points in the test and training data which are still neighbors (@brenning_spatial_2012; see second row of \@ref(fig:partitioning)).
 
 <div class="figure" style="text-align: center">
 <img src="figures/13_partitioning.png" alt="Spatial visualization of selected test and training observations for cross-validation in one repetition. Random (upper row) and spatial partitioning (lower row)." width="708" />
@@ -8444,9 +8445,9 @@ This is because there are still a few points in the test and training data which
 In R there are literally hundreds of packages available for statistical learning (e.g., have a look at the [CRAN task machine learning](https://CRAN.R-project.org/view=MachineLearning)).
 In section \@ref(conventional-model) we used the **stats** package to fit a logistic regression using the `glm()` command.
 `glm()` uses the common R modeling interface: specify the response and predictor varilables via a formula object, build a model and make a prediction.
-However, many packages come with their own or a modified statistical learning interface which is why programmers frequently have to spend a lot of time to figure out the specifics of each of these packages or how to compare modeling results from different packages.
+However, many packages come with their own or a modified statistical learning interface which is why users frequently have to spend a lot of time to figure out the specifics of each of these packages or how to compare modeling results from different packages.
 The **mlr** package acts as a meta- or umbrella-package providing a unified interface to all popular statistical learning techniques available in R including classification, regression, survival analysis and clustering.^[As pointed out in the beginning we will solely focus on supervised learning techniques in this chapter.]
-The standardized **mlr** interface is based on so-called basic building blocks (see \@ref(fig:building-blocks)).
+The standardized **mlr** interface is based on so-called basic building blocks (Figure \@ref(fig:building-blocks)).
 
 <!-- @Jakub: yes, I will ask if we me may use the figure -->
 <div class="figure" style="text-align: center">
@@ -8588,6 +8589,14 @@ The latter is an over-optimistic assessment due to spatial autocorrelation.
 <img src="figures/boxplot-cv-1.png" alt="Boxplot showing the AUROC difference between spatial and conventional cross-validation (500 models)." width="576" />
 <p class="caption">(\#fig:boxplot-cv)Boxplot showing the AUROC difference between spatial and conventional cross-validation (500 models).</p>
 </div>
+
+## Conclusions
+point out again that the main interest here was predictive performance!
+- point to machine learning: random forests, boosting techniques, knn, 
+- reference extensive online documentation and tutorials:
+https://mlr-org.github.io/mlr-tutorial/
+https://github.com/mlr-org/mlr/wiki/user-2015-tutorial
+
 
 ## Exercises
 
