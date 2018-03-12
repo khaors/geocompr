@@ -267,7 +267,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve068939532d605271
+preserveba99f69dfb9ae726
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3097,7 +3097,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve1e2eacbc34373da8
+preservee87810795c7c6168
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5990,7 +5990,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve53e5175589bf52fc
+preserve18df18d5e38e8044
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6606,7 +6606,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservedcf471b9fa74ea58
+preservec93c2309a6afb01f
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6674,6 +6674,8 @@ Build an inhabitant raster, aggregate it to a cell resolution of 1 km, and compa
 Change the age raster accordingly, repeat the remaining analyses and compare the changes with our original result.
 
 <!--chapter:end:08-location.Rmd-->
+
+
 
 
 # (PART) Advanced methods {-}
@@ -6888,23 +6890,24 @@ tm_shape(nz) + tm_fill(col = "col")
 <p class="caption">(\#fig:tmcol)Comparison of base (left) and tmap (right) handling of a numeric color field.</p>
 </div>
 
-Additional aesthetic settings are demonstrated in the code chunk below, which colors regions in New Zealand depending on their area which demonstrates this functionality.
-The plot also illustrates how the number and palette of colors can be altered by passing integer and text values to the arguments `n` and `palette` respectively:
+Additional aesthetic settings are demonstrated in the code chunk below, which colors regions in New Zealand depending on their area.
+The results show how custom breaks can be set with the `breaks` argument (Figure \@ref(fig:tmpal) center).
+Additional palette options include `n` (which sets the number of bins into which numeric variables are categorised) and `palette` (which defines the colorscheme --- which can be selected interactively with `tmaptools::palette_explorer()`).
+Results of changing values for these simultaneously are shown in Figure \@ref(fig:tmpal) (right):
 
 
 ```r
 breaks = c(0, 3, 4, 5) * 1e4
+tm_shape(nz) + tm_fill(col = "AREA_SQ_KM")
 tm_shape(nz) + tm_fill(col = "AREA_SQ_KM", breaks = breaks)
-tm_shape(nz) + tm_fill(col = "AREA_SQ_KM", n = 2)
-tm_shape(nz) + tm_fill(col = "AREA_SQ_KM", palette = "RdBu")
+tm_shape(nz) + tm_fill(col = "AREA_SQ_KM",
+                       n = 10, palette = "RdBu")
 ```
 
 <div class="figure" style="text-align: center">
 <img src="figures/tmpal-1.png" alt="Illustration of aesthetic settings using the example of a continuous variable (the area in square kilometers of regions in New Zealand) converted to color with different break palette arguments." width="576" />
 <p class="caption">(\#fig:tmpal)Illustration of aesthetic settings using the example of a continuous variable (the area in square kilometers of regions in New Zealand) converted to color with different break palette arguments.</p>
 </div>
-
-
 
 ### Map layouts
 
