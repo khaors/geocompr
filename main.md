@@ -267,7 +267,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservefd0be900d74cda55
+preservedc4b43768ec84e02
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3097,7 +3097,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve6efd53b35fcad54f
+preserve5c3d97ced9c0be0d
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5990,7 +5990,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserveb638a2a58bbbc710
+preserveaa0b51f9d5b417a6
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6606,7 +6606,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve5b7cb65f8f5650b5
+preserve950313d773fe9e3f
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -8538,7 +8538,7 @@ identical(fit$coefficients, mlr_fit$coefficients)
 -->
 
 In the beginning, it might seem a bit tedious to learn the **mlr** interface for modeling.
-But remember that one only has to learn one single interface to run 169 learners.
+But remember that one only has to learn one single interface to run 169 learners (**mlr** package version: 2.12).
 Additionally, (spatial) resampling in **mlr** is really easy and only requires two more steps.^[Further advantages are the easy parallelization of resampling techniques and the tuning of machine learning hyperparameters, also spatially, in an inner fold.]
 Please note that package **sperrorest** initially implemented spatial cross-validation in R [@brenning_spatial_2012].
 In the meantime, its functionality was integrated into the **mlr** package which is the reason why we are using **mlr** (and not for example **caret**).
@@ -8580,7 +8580,7 @@ mean(sp_cv$measures.test$auc)
 #> [1] 0.788
 ```
 
-To put it into perspective, we compare this result with that of a non-spatial cross-validation (Figure \@ref(fig:boxplot-cv).
+To put it into perspective, we compare this result with that of a non-spatial cross-validation (Figure \@ref(fig:boxplot-cv)).
 As expected, the spatially cross-validated result yields a lower mean AUROC value than the conventional cross-validation approach.
 The latter is an over-optimistic assessment due to spatial autocorrelation.
 
