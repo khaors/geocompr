@@ -385,7 +385,7 @@ Figure 11.1: Illustration of raster cropping (center) and raster masking (right)
 </div>
 <div id="raster-extraction" class="section level2">
 <h2><span class="header-section-number">11.3</span> Raster extraction</h2>
-<p>Raster extraction is a process of pulling out values from rasters based on the locations from vector data. It behaves differently depending on the type of secondary data (points, lines or polygons) and selected arguments. We will present some of the most often use cases below using the <code>raster::extract()</code> function. <!-- faster alternative to raster::extract??: tabularaster, stars? --> The reverse process of transferring vector data values into rasters is usually done by rasterization (see section <a href="raster-vector.html#rasterization">11.4</a>).</p>
+<p>Raster extraction is a process of pulling out values from rasters based on the locations from vector data. It behaves differently depending on the type of secondary data (points, lines or polygons) and selected arguments. We will present some of the most often use cases below using the <code>raster::extract()</code> function. The reverse process of transferring vector data values into rasters is usually done by rasterization (see section <a href="raster-vector.html#rasterization">11.4</a>).</p>
 <p>The simplest example of raster extraction is when values of raster cells are extracted based on points coordinates. The <code>zion_points</code> dataset consists of 30 points located in the Zion National Park (Figure <a href="raster-vector.html#fig:pointextr">11.2</a>). They could represent places where soils properties were measured and we want to know what is the elevation of each point. In this case, we just need to add a new column (<code>elevation</code>) to the point dataset that would store values extracted from the <code>srtm</code> object:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zion_points$elevation =<span class="st"> </span>raster::<span class="kw">extract</span>(srtm, zion_points)</code></pre></div>
 <p>In extraction by points it is also possible to provide the radius of a buffer (in meters) around each point (the <code>buffer</code> argument). This allows for similar operations to the extraction by polygon (see examples below).</p>
@@ -435,6 +435,13 @@ zion_nlcd_new =<span class="st"> </span><span class="kw">bind_cols</span>(zion, 
 Figure 11.4: Area used for continuous (left) and categorical (right) raster extraction.
 </p>
 </div>
+<!-- extract performance is fine for small to medium sized data -->
+<!-- however, it could not be enough for large datasets -->
+<!-- faster alternatives to raster::extract -->
+<!-- velox (ref to the website - https://hunzikp.github.io/velox/extract.html) -->
+<!-- RQGIS? -->
+<!-- tabularaster (ref to the vignette - https://cran.r-project.org/web/packages/tabularaster/vignettes/tabularaster-usage.html)-->
+<!-- parallel? -->
 </div>
 <div id="rasterization" class="section level2">
 <h2><span class="header-section-number">11.4</span> Rasterization</h2>

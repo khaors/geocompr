@@ -267,7 +267,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve0ca37327ee1947b7
+preserve068939532d605271
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3097,7 +3097,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservedfbb3a4909240785
+preserve1e2eacbc34373da8
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5990,7 +5990,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve14a3c62c3caae7f4
+preserve53e5175589bf52fc
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6606,7 +6606,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve4eb09913b1255423
+preservedcf471b9fa74ea58
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7872,7 +7872,6 @@ You can learn more in the function's help file - `?mask`.
 Raster extraction is a process of pulling out values from rasters based on the locations from vector data.
 It behaves differently depending on the type of secondary data (points, lines or polygons) and selected arguments.
 We will present some of the most often use cases below using the `raster::extract()` function.
-<!-- faster alternative to raster::extract??: tabularaster, stars? -->
 The reverse process of transferring vector data values into rasters is usually done by rasterization (see section \@ref(rasterization)).
 
 The simplest example of raster extraction is when values of raster cells are extracted based on points coordinates.
@@ -7989,6 +7988,14 @@ zion_nlcd_new = bind_cols(zion, zion_nlcd_df)
 <img src="figures/polyextr-1.png" alt="Area used for continuous (left) and categorical (right) raster extraction." width="576" />
 <p class="caption">(\#fig:polyextr)Area used for continuous (left) and categorical (right) raster extraction.</p>
 </div>
+
+<!-- extract performance is fine for small to medium sized data -->
+<!-- however, it could not be enough for large datasets -->
+<!-- faster alternatives to raster::extract -->
+<!-- velox (ref to the website - https://hunzikp.github.io/velox/extract.html) -->
+<!-- RQGIS? -->
+<!-- tabularaster (ref to the vignette - https://cran.r-project.org/web/packages/tabularaster/vignettes/tabularaster-usage.html)-->
+<!-- parallel? -->
 
 ## Rasterization {#rasterization}
 
