@@ -477,6 +477,7 @@ data =<span class="st"> </span>dplyr::<span class="kw">select</span>(lsl, -x, -y
 task =<span class="st"> </span><span class="kw">makeClassifTask</span>(<span class="dt">data =</span> data, <span class="dt">target =</span> <span class="st">&quot;lslpts&quot;</span>,
                        <span class="dt">positive =</span> <span class="st">&quot;TRUE&quot;</span>, <span class="dt">coordinates =</span> coords)</code></pre></div>
 <p><code>makeLearner()</code> determines the statistical learning method to use. All classification <strong>learners</strong> start with <code>classif.</code> and all regression learners with <code>regr.</code> (see <code>?makeLearners</code> for more details). <code>listLearners()</code> helps to find out about all available learners and from which package <strong>mlr</strong> imports them. For a specific task, we can run:</p>
+<!-- no idea, why render_book() fails frequently because function listLearners() cannot be found...-->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lrns =<span class="st"> </span>mlr::<span class="kw">listLearners</span>(task)
 <span class="kw">head</span>(lrns[, <span class="dv">1</span>:<span class="dv">4</span>])
 <span class="co">#&gt;                 class                         name  short.name package</span>
@@ -531,11 +532,11 @@ I really don't understand why I have to load spatialcv.Rdata here a third time..
 <span class="co"># mean AUROC of the 500 models</span>
 <span class="kw">mean</span>(sp_cv$measures.test$auc)
 <span class="co">#&gt; [1] 0.788</span></code></pre></div>
-<p>To put it into perspective, we compare this result with that of a non-spatial cross-validation (Figure <a href="spatial-cv.html#fig:boxplot-cv">13.5</a>). As expected, the spatially cross-validated result yields a lower mean AUROC value than the conventional cross-validation approach. The latter is an over-optimistic assessment due to spatial autocorrelation.</p>
+<p>To put it into perspective, we compare this result with that of a 100-repeated 5-fold non-spatial cross-validation (Figure <a href="spatial-cv.html#fig:boxplot-cv">13.5</a>; the code for the non-spatial cross-validation is not shown here but will be explored in the exercise section). As expected, the spatially cross-validated result yields lower AUROC values on average than the conventional cross-validation approach, and relates to the over-optimistic predictive performance due to spatial autocorrelation.</p>
 <div class="figure" style="text-align: center"><span id="fig:boxplot-cv"></span>
-<img src="figures/boxplot-cv-1.png" alt="Boxplot showing the AUROC difference between spatial and conventional cross-validation (500 models)." width="576" />
+<img src="figures/boxplot-cv-1.png" alt="Boxplot showing the difference in AUROC values between spatial and conventional cross-validation (500 models)." width="576" />
 <p class="caption">
-Figure 13.5: Boxplot showing the AUROC difference between spatial and conventional cross-validation (500 models).
+Figure 13.5: Boxplot showing the difference in AUROC values between spatial and conventional cross-validation (500 models).
 </p>
 </div>
 </div>
@@ -548,7 +549,7 @@ Figure 13.5: Boxplot showing the AUROC difference between spatial and convention
 <ol style="list-style-type: decimal">
 <li>Compute the terrain attributes slope, plan curvature, profile curvature and catchment area from <code>dem</code> (provided by <code>data(&quot;landslides&quot;, package = &quot;RSAGA&quot;)</code>) with the help of R-GIS bridges, and extract the values from the corresponding output rasters to landslides/non-landslides dataframe.</li>
 <li>Reproduce the spatial prediction with the derived terrain attribute rasters (see Figure <a href="spatial-cv.html#fig:lsl-susc">13.2</a>).</li>
-<li>Compute a non-spatial cross-validation and make boxplots to compare the AUROC from a spatial and a non-spatial cv (see Figure <a href="spatial-cv.html#fig:boxplot-cv">13.5</a>).</li>
+<li>Compute a non-spatial cross-validation and make boxplots to compare the AUROC from a spatial and a non-spatial cv (see Figure <a href="spatial-cv.html#fig:boxplot-cv">13.5</a>). Hint: You need to specify a non-spatial task and resampling strategy.</li>
 <li>Use the squared slope as a further predictor. Repeat the modeling. How has the spatially cross-validaded mean AUROC value changed compared to the model without the squared altitude predictor?</li>
 </ol>
 <!--
