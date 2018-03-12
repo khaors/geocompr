@@ -267,7 +267,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveba99f69dfb9ae726
+preservefd0be900d74cda55
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3097,7 +3097,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservee87810795c7c6168
+preserve6efd53b35fcad54f
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5990,7 +5990,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve18df18d5e38e8044
+preserveb638a2a58bbbc710
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6606,7 +6606,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservec93c2309a6afb01f
+preserve5b7cb65f8f5650b5
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -8252,7 +8252,7 @@ Since points close to each other are more similar compared to points further awa
 The consequence is that cross-validation would fail to detect overfitting in the presence of spatial autocorrelation.
 Here, spatial CV will come to the rescue which will be the main topic of this chapter.
 
-## Case study: landslide susceptibility {#case-study}
+## Case study: landslide susceptibility
 
 To introduce spatial CV by example, we will use a landslide dataset from Southern Ecuador (Figure \@ref(fig:lsl-map)).
 For a detailed description of the dataset and the study area please refer to @muenchow_geomorphic_2012.
@@ -8414,7 +8414,7 @@ An AUROC of 0.84 represents a good fit.
 However, this is an overoptimistic estimation since we have computed it on the complete dataset. 
 To derive an biased-reduced assessment we have to use cross-validation and in the case of spatial data we will have to make use of spatial CV.
 
-## Introduction to spatial CV
+## Introduction to (spatial) cross-validation {#intro-cv} 
 
 Cross-validation belongs to the family of resampling methods [@james_introduction_2013].
 The basic idea is to split (repeatedly) a dataset into training and test sets whereby the training data is used to fit a model which then is applied to the test set.
@@ -8442,7 +8442,9 @@ This is because there are still a few points in the test and training data which
 
 ## Modeling and spatial CV with **mlr**
 In R there are literally hundreds of packages available for statistical learning (e.g., have a look at the [CRAN task machine learning](https://CRAN.R-project.org/view=MachineLearning)).
-Many of them come with their own interface which is why programmers frequently have to spend a lot of time to figure out the specifics of each of these packages or how to compare modeling results from different packages.
+In section \@ref(conventional-model) we used the **stats** package to fit a logistic regression using the `glm()` command.
+`glm()` uses the common R modeling interface: specify the response and predictor varilables via a formula object, build a model and make a prediction.
+However, many packages come with their own or a modified statistical learning interface which is why programmers frequently have to spend a lot of time to figure out the specifics of each of these packages or how to compare modeling results from different packages.
 The **mlr** package acts as a meta- or umbrella-package providing a unified interface to all popular statistical learning techniques available in R including classification, regression, survival analysis and clustering.^[As pointed out in the beginning we will solely focus on supervised learning techniques in this chapter.]
 The standardized **mlr** interface is based on so-called basic building blocks (see \@ref(fig:building-blocks)).
 
@@ -8452,19 +8454,19 @@ The standardized **mlr** interface is based on so-called basic building blocks (
 <p class="caption">(\#fig:building-blocks)Basic building blocks of the **mlr** package. Source: [openml.github.io](http://openml.github.io/articles/slides/useR2017_tutorial/slides_tutorial_files/ml_abstraction-crop.png).</p>
 </div>
 
-First, we need to create a task containing the data, specifically the response and predictor variables, for the model and the model type (such as regression or classification).
-Secondly, a learner defines the specific model that models the task data or differently put learns a structure inherent in the provided data.
-Thirdly, we assess the predictive performance of the model, i.e. the model's ability to generalize the learned relationship to new data (repetitive resampling).
+First, we need to create a **task** containing the data, specifically the response and predictor variables, for the model and the model type (such as regression or classification).
+Secondly, a **learner** defines the specific model that models the task data or differently put learns a structure inherent in the provided data.
+Thirdly, we assess the predictive performance of the model, i.e. the model's ability to generalize the learned relationship to new data via a repetitive **resampling** approach (see also section \@ref(intro-cv)).
 
-To put it into practice, we create a task using our landslide data.
-Since we have a binary response, we will make use of the classification task, namely `makeClassifTask()`.^[In the case of a regression problem, we would use `makeRegrTask()`.
+To put this into practice, we create a **task** using our landslide data.
+Since we have a binary response, which is in fact a two-category variable, we will make use of the classification task, namely `makeClassifTask()`.^[In the case of a regression problem, we would use `makeRegrTask()`.
 Type `?makeClassifTask` to find out about all available modeling tasks.
 ]
 First, we specifiy the data which will be used.
-The `target` parameter expects the response variable and the `positive` parameter determines which of the two factor levels of the response variable indicates the landslide initiation point.
+The `target` parameter expects the response variable and the `positive` parameter determines which of the two factor levels of the response variable indicate the landslide initiation point.
 All other variables of the provided dataset will serve as predictors (check out with `getTaskFormula(task)`).
-As we will perform a spatial CV later on, we need to specify the coordinates which will form the basis of the spatial partioning (see also \@ref(fig:partitioning)).
-These have to be provided in parameter `coordinates` as a dataframe. 
+As we will perform a spatial CV later on, we need to specify the coordinates which will form the basis of the spatial partioning (see section \@ref(intro-cv) and Figure \@ref(fig:partitioning)).
+These have to be provided as a dataframe in parameter `coordinates`. 
 
 
 ```r
@@ -8477,7 +8479,7 @@ task = makeClassifTask(data = data, target = "lslpts",
 ```
 
 `makeLearner()` determines the statistical learning method to use.
-All classification learners start with `classif.` and all regression learners with `regr.` (see `?makeLearners` for more details). 
+All classification **learners** start with `classif.` and all regression learners with `regr.` (see `?makeLearners` for more details). 
 `listLearners()` helps to find out about all available learners and from which package **mlr** imports them. 
 For a specific task, we can run:
 
@@ -8497,7 +8499,7 @@ head(lrns[, 1:4])
 This yields all learners able to model two-class problems (landslide yes or no).
 We opt for the binomial classification method from the **stats** package which we already have used in section \@ref(conventional-model) and which is implemented in **mlr** as `classif.binomial`.
 Additionally, we have to specify the link-function.
-We choose the `logit` link which is also the default when using the `binomial` family in `glm`.
+We choose the `logit` link which is also the default when using the `binomial` family in `glm` (run `binomial()` to verify).
 `predict.type` determines the type of the prediction with
 <!-- Setting it to `response` produces class labels as output, which would be in our case `TRUE` or `FALSE`. -->
  `prob` resulting in a predicted probability for landslide occurrence between 0 and 1.^[Note that this corresponds to `type = response` in `predict.glm`.]
@@ -8514,56 +8516,8 @@ lrn = makeLearner(cl = "classif.binomial",
 # helpLearner(learner)
 ```
 
-In the beginning, it might seem a bit tedious to learn the **mlr** interface for modeling.
-But remember that one only has to learn one single interface to run 169 learners.
-Additionally, (spatial) resampling in **mlr** is really easy and only requires two more steps.^[Further advantages are the easy parallelization of resampling techniques and the tuning of machine learning hyperparameters, also spatially, in an inner fold.]
-Please note that package **sperrorest** initially implemented spatial cross-validation in R [@brenning_spatial_2012].
-In the meantime, its functionality was integrated into the **mlr** package which is the reason why we are using **mlr** (and not for example **caret**).
-The first thing to do is specifying a resampling method.
-We will use a 100-repeated 5-fold spatial CV.
-This ensures that a spatial partitioning with five partitions is chosen based on the provided coordinates in our `task` and that the partitioning is repeated 100 times.
-
-
-```r
-resampling = makeResampleDesc(method = "SpRepCV", folds = 5, reps = 100)
-```
-
-To execute the spatial resampling, we run `resample()` using the specified learnter, task, resampling strategy and of course the performance measure, here the AUROC.
-
-
-
-```r
-set.seed(012348)
-sp_cv = mlr::resample(learner = lrn, task = task, resampling = resampling, 
-                      measures = mlr::auc)
-```
-
-<!-- sp_cv and conv_cv have been saved in spatialcv.Rdata. I needed to run the modeling outside of the book since knitr sets its own seed and I am not sure if this actually helps to make sure that the same partitions are used in the cv.
-I really don't understand why I have to load spatialcv.Rdata here a third time...-->
-
-
-
-
-```r
-# summary statistics of the 500 models
-summary(sp_cv$measures.test$auc)
-#>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#>   0.692   0.757   0.792   0.788   0.838   0.872
-# mean AUROC of the 500 models
-mean(sp_cv$measures.test$auc)
-#> [1] 0.788
-```
-
-As expected, the spatially cross-validated result yields a lower AUROC than 
-To put it into perspective, we compare this result with that of a non-spatial cross-validation.
-
-<div class="figure" style="text-align: center">
-<img src="figures/boxplot-cv-1.png" alt="AUROC difference between spatial and conventional cross-validation." width="576" />
-<p class="caption">(\#fig:boxplot-cv)AUROC difference between spatial and conventional cross-validation.</p>
-</div>
-
-
-Having specified a learner and a task, we can train our model. 
+<!--
+Having specified a learner and a task, we can train our model which basically executes the `glm()` command in the background for our task. 
 
 
 ```r
@@ -8581,45 +8535,65 @@ fit = glm(lslpts ~ ., family = binomial(link = "logit"), data = data)
 identical(fit$coefficients, mlr_fit$coefficients)
 #> [1] TRUE
 ```
+-->
+
+In the beginning, it might seem a bit tedious to learn the **mlr** interface for modeling.
+But remember that one only has to learn one single interface to run 169 learners.
+Additionally, (spatial) resampling in **mlr** is really easy and only requires two more steps.^[Further advantages are the easy parallelization of resampling techniques and the tuning of machine learning hyperparameters, also spatially, in an inner fold.]
+Please note that package **sperrorest** initially implemented spatial cross-validation in R [@brenning_spatial_2012].
+In the meantime, its functionality was integrated into the **mlr** package which is the reason why we are using **mlr** (and not for example **caret**).
+The first thing to do is specifying a resampling method.
+We will use a 100-repeated 5-fold spatial CV.
+This ensures that a spatial partitioning with five partitions is chosen based on the provided coordinates in our `task` and that the partitioning is repeated 100 times.
+
+
+```r
+resampling = makeResampleDesc(method = "SpRepCV", folds = 5, reps = 100)
+```
+
+To execute the spatial resampling, we run `resample()` using the specified learner, task, resampling strategy and of course the performance measure, here the AUROC.
+This takes a short while because we ask R to compute the AUROC from 500 models. 
 
 
 
+```r
+set.seed(012348)
+sp_cv = mlr::resample(learner = lrn, task = task, resampling = resampling, 
+                      measures = mlr::auc)
+```
 
-i.e. the fact that points close to each other tend to share similarities compared to points further apart.
-Simply put, if it rains at one location it is pretty likely that it also rains if we moved 1 meter in any direction.
-But if we moved 10 or 100 km this might not longer be the case. 
-
-- short intro spatial autocorrelation, maybe by showing artificial spatial datasets with different sills, nuggets, ranges (don't show the code but just the concept of spatial autocorrelation)
+<!-- sp_cv and conv_cv have been saved in spatialcv.Rdata. I needed to run the modeling outside of the book since knitr sets its own seed and I am not sure if this actually helps to make sure that the same partitions are used in the cv.
+I really don't understand why I have to load spatialcv.Rdata here a third time...-->
 
 
-@muenchow_geomorphic_2012
-@brenning_spatial_2012
-@james_introduction_2013
-@blangiardo_spatial_2015
-@zuur_beginners_2017
-@zuur_mixed_2009
 
-- What is spatial modeling and for what do we use it?
-- What is cross-validation, why do we need it?
-- What is spatial cv?
+The output is a bias-reduced assessment of the model's predictive performance. 
 
-Spatial modeling: species distribution models, landslide susceptibility, epidemiology, disease mapping, rock glaciers, etc.
 
-When we are interested in the accuracy of a model, i.e., when we want to assess a model's predictive performance, we want to avoid overfitting.^[short definition of overfitting]
-Spatial autocorrelation will lead to overfitting when the training dataset is not independent of the test dataset which is frequently the case in temporal and spatial settings.
+```r
+# summary statistics of the 500 models
+summary(sp_cv$measures.test$auc)
+#>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#>   0.692   0.757   0.792   0.788   0.838   0.872
+# mean AUROC of the 500 models
+mean(sp_cv$measures.test$auc)
+#> [1] 0.788
+```
 
-Cross-validation separates test and training datasets randomly.
-Let's take our landslide dataset as an example.
-Randomly selecting 20% of all points leads to an unwanted effect, namely that test and training points might be close to each other (see Figure ??).
-The first law of geography states that points close to each other tend to be, on average, more similar compared to points further apart.
-This means these points are not independent.
-Hence, using this information in our modeling is like a sneak preview, i.e. using information that should be unavailable to the test dataset.
+To put it into perspective, we compare this result with that of a non-spatial cross-validation (Figure \@ref(fig:boxplot-cv).
+As expected, the spatially cross-validated result yields a lower mean AUROC value than the conventional cross-validation approach.
+The latter is an over-optimistic assessment due to spatial autocorrelation.
+
+<div class="figure" style="text-align: center">
+<img src="figures/boxplot-cv-1.png" alt="Boxplot showing the AUROC difference between spatial and conventional cross-validation (500 models)." width="576" />
+<p class="caption">(\#fig:boxplot-cv)Boxplot showing the AUROC difference between spatial and conventional cross-validation (500 models).</p>
+</div>
 
 ## Exercises
 
 1. Compute the terrain attributes slope, plan curvature, profile curvature and catchment area from `dem` (provided by `data("landslides", package = "RSAGA")`) with the help of R-GIS bridges, and extract the values from the corresponding output rasters to landslides/non-landslides dataframe.
-1. Reproduce the spatial prediction with the derived terrain attribute rasters (see Figure ??).
-1. Compute a non-spatial cross-validation and make boxplots to compare the AUROC from a spatial and a non-spatial cv (see also Figure ??).
+1. Reproduce the spatial prediction with the derived terrain attribute rasters (see Figure \@ref(fig:lsl-susc)).
+1. Compute a non-spatial cross-validation and make boxplots to compare the AUROC from a spatial and a non-spatial cv (see Figure \@ref(fig:boxplot-cv)).
 1. Use the squared slope as a further predictor.
 Repeat the modeling. 
 How has the spatially cross-validaded mean AUROC value changed compared to the model without the squared altitude predictor?
