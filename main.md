@@ -267,7 +267,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve7f0888764a74f4f4
+preserve0ca37327ee1947b7
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3097,7 +3097,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveefbfb61aab36f1ff
+preservedfbb3a4909240785
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5990,7 +5990,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservefac076f25b1d027c
+preserve14a3c62c3caae7f4
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6606,7 +6606,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveef6af8a2b2789572
+preserve4eb09913b1255423
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -8223,7 +8223,7 @@ Using either regression or machine learning techniques depends on the aim: stati
 Regression techniques are especially useful if the aim is statistical inference, i.e. if we are interested if a predictor significantly contributes to a model and how much.
 To trust the model outcomes we need to perform a thorough model validation testing if one or several of the underlying model assumptions (heterogeneity, independence, etc.) have been violated [@zuur_mixed_2009].
 By contrast, machine learning approaches are especially appealing due to their lack of assumptions.
-Though statistical inference is impossible [@james_introduction_2013], various studies have shown that machine learning outperform regression techniques with regard to predictive performance [@schratz_performance_nodate]. <!-- add one more source -->
+Though statistical inference is impossible [@james_introduction_2013], various studies have shown that machine learning  are at least at par with regression techniques regarding to predictive performance [e.g., @schratz_performance_nodate]. <!-- add one more source -->
 Naturally, with the advent of big data, machine learning has even gained in popularity since frequently the underlying relationship between variables is less important than the prediction such as future customer behavior.
 
 Though prediction will be the aim of the modeling in this chapter, we will not use machine learning but a simple generalized linear model (GLM).^[Nevertheless, a generalized additive model or a machine learning approach would be more suitable for our dataset (see exercises).
@@ -8232,7 +8232,7 @@ This is because we can use also regression techniques such as a GLM without havi
 Additionally, GLMs are probably familiar to most readers, and therefore instead of explaining in detail the model building we can focus on the speciality of geographic data in a modeling context and spatial CV.^[Readers who are in need of refreshing their regression skills might have a look at @zuur_mixed_2009 and @james_introduction_2013, respectively.]
 
 CV determines a model's ability to predict new data or differently put its ability to generalize.
-To achieve this, CV splits a dataset into a test and a training dataset.
+To achieve this, CV splits a dataset (repeatedly) into test and training data.
 It uses the training data to fit the model, and checks if the trained model is able to predict the correct results for the test data.
 Basically, cross-validation helps to detect over-fitting since a model that fits too closely the training data and its specific peculiarities (noise, random fluctuations) will have a bad prediction performance on the test data.
 However, the basic requirement for this is, that the test data is independent of the training data.
@@ -8309,12 +8309,12 @@ The added columns are:
 - `log_carea`: the decadic logarithm of the catchment area (log m^2^) representing the amount of water flowing towards a location.
 
 <div class="figure" style="text-align: center">
-<img src="figures/lsl-map-1.png" alt="Landslide initiation points (red) and points unaffected by landsliding (blue) in Southern Ecuador. Randomly selected test points are marked by a golden border. CRS: UTM zone 17S (EPSG: 32717)." width="576" />
-<p class="caption">(\#fig:lsl-map)Landslide initiation points (red) and points unaffected by landsliding (blue) in Southern Ecuador. Randomly selected test points are marked by a golden border. CRS: UTM zone 17S (EPSG: 32717).</p>
+<img src="figures/lsl-map-1.png" alt="Landslide initiation points (red) and points unaffected by landsliding (blue) in Southern Ecuador. CRS: UTM zone 17S (EPSG: 32717)." width="576" />
+<p class="caption">(\#fig:lsl-map)Landslide initiation points (red) and points unaffected by landsliding (blue) in Southern Ecuador. CRS: UTM zone 17S (EPSG: 32717).</p>
 </div>
 
 
-## Conventional modeling approach in R
+## Conventional modeling approach in R {#conventional-model}
 Before diving into the **mlr** package it is worth to take a look at the conventional modeling interface in R.
 This way we introduce statistical supervised modeling in R which in turn will contribute to get a better grasp on the **mlr** approach introduced later on, and provides the required skillset for doing spatial CV.
 Usually, we model the response variable as a function of predictors. 
@@ -8345,7 +8345,7 @@ fit
 ```
 
 Subsequently, we can use the estimated model coefficients for predictions.
-The generic `predict()` function does this for us automatically.
+The generic `predict()` function does this automatically for us.
 The `response` option gives back the predicted probabilities (of landslide occurrence) for each observation in `lsl` (see `? predict.glm`).
 
 
@@ -8358,7 +8358,7 @@ head(predict(object = fit, type = "response"))
 
 We can also predict spatially by applying the coefficients to our predictor rasters. 
 We could do this manually but can also use **raster**'s `predict()` function.
-This function also expects the fitted model as input as well as a raster stack containing the same predictors we have used in the model as raster objects (Figure \@ref(fig:lsl-susc)).
+This function also expects the fitted model as input as well as a raster stack with the predictors exactly named as in the fitted model (Figure \@ref(fig:lsl-susc)).
 
 
 ```r
@@ -8386,7 +8386,7 @@ This can even be extended by using a random intercept that is normal and spatial
 For this, however, you will have to resort most likely to Bayesian modeling approaches since frequentist software tools are rather limited in this respect especially for more complex models [@blangiardo_spatial_2015; @zuur_beginners_2017]. 
 
 Spatial predictions are one very important outcome of a model.
-Even more important is how good the model is at making them since the most beautiful prediction map is useless if the model is bad.
+Even more important is how good the model is at making them since the most beautiful prediction map is useless if a model's predictive performance is bad.
 The most popular measure to assess the predictive performance of a binomial model is the Area Under the Receiver Operator Characteristic Curve (AUROC).
 This is a value between 0.5 and 1.0 with 0.5 indicating no and 1.0 indicating a perfect discrimination of the two classes. 
 Thus, the higher the AUROC the better is our model at making predictions.
@@ -8409,11 +8409,11 @@ To derive an biased-reduced assessment we have to use cross-validation and in th
 Cross-validation belongs to the family of resampling methods [@james_introduction_2013].
 The basic idea is to split (repeatedly) a dataset into training and test sets whereby the training data is used to fit a model which then is applied to the test set.
 Comparing the predicted values with the known response values from the test set (using a performance measure such as the AUROC in the binomial case) gives a bias-reduced assessement of the model's capability to generalize the learned relationship to independent data.
-For example, a 10-repeated 5-fold cross-validation means to randomly split the data into five partitions (folds) with each fold using a 1/5 of the available data as test and 4/5 as training data (see upper row of Figure \@ref(fig:partitioning)). 
-This guarantees that each observation is used in the test set, and requires the fitting of five models.
+For example, a 100-repeated 5-fold cross-validation means to randomly split the data into five partitions (folds) with each fold being used once as test set (see upper row of Figure \@ref(fig:partitioning)). 
+This guarantees that each observation is used once in the test set, and requires the fitting of five models.
 Subsequently, this procedure is repeated 10 times.
 Of course, the data spliting will differ (though often only slightly) in each repetition.
-Overall, this amounts to fitting 50 models whereas the mean performance measure (AUROC) of all models is the model's overall prediction power.
+Overall, this amounts to fitting 500 models whereas the mean performance measure (AUROC) of all models is the model's overall prediction power.
 
 However, geographic data is special.
 Remember that the first law of geography states that points close to each other tend to be, on average, more similar compared to points further away (@miller_toblers_2004; Chapter \@ref(transport)).
@@ -8422,12 +8422,12 @@ Using this information in our modeling is like a sneak preview, i.e. using infor
 To overcome this problem, we should make use of spatial partitioning which splits the observations spatially using its coordinates in a *k*-means clustering (@brenning_spatial_2012; second row of Figure \@ref(fig:partitioning)).
 The partitioning strategy is **the** distinguishing feature between spatial and classical cross-validation, everything else remains the same.
 As a result spatial cv leads to a bias-reduced assessement of a model's predictive performance, and hence helps to avoid overfitting.
-We emphasize that spatial cv reduces the bias introduced by spatial autocorrelation but not completely removes it. 
+It is important to note that spatial CV reduces the bias introduced by spatial autocorrelation but does not completely remove it. 
 This is because there are still a few points in the test and training data which are still neighbors (see second row of \@ref(fig:partitioning)).
 
 <div class="figure" style="text-align: center">
-<img src="figures/13_partitioning.png" alt="Random (upper row) and spatial partitioning (lower row)." width="708" />
-<p class="caption">(\#fig:partitioning)Random (upper row) and spatial partitioning (lower row).</p>
+<img src="figures/13_partitioning.png" alt="Spatial visualization of selected test and training observations for cross-validation in one repetition. Random (upper row) and spatial partitioning (lower row)." width="708" />
+<p class="caption">(\#fig:partitioning)Spatial visualization of selected test and training observations for cross-validation in one repetition. Random (upper row) and spatial partitioning (lower row).</p>
 </div>
 
 ## Modeling and spatial CV with **mlr**
@@ -8453,8 +8453,8 @@ Type `?makeClassifTask` to find out about all available modeling tasks.
 First, we specifiy the data which will be used.
 The `target` parameter expects the response variable and the `positive` parameter determines which of the two factor levels of the response variable indicates the landslide initiation point.
 All other variables of the provided dataset will serve as predictors (check out with `getTaskFormula(task)`).
-As we will perform a spatial CV later on, we need to specify the coordinates which will form the basis of the spatial partioning.
-These have to be provided in an additional dataframe in `coordinates`. 
+As we will perform a spatial CV later on, we need to specify the coordinates which will form the basis of the spatial partioning (see also \@ref(fig:partitioning)).
+These have to be provided in parameter `coordinates` as a dataframe. 
 
 
 ```r
@@ -8473,10 +8473,7 @@ For a specific task, we can run:
 
 
 ```r
-lrns = listLearners(task)
-#> Warning in listLearners.character(td$type, union(props, properties), quiet, : The following learners could not be constructed, probably because their packages are not installed:
-#> classif.ada,classif.adaboostm1,classif.bartMachine,classif.blackboost,classif.boosting,classif.bst,classif.C50,classif.cforest,classif.clusterSVM,classif.ctree,classif.cvglmnet,classif.dbnDNN,classif.dcSVM,classif.earth,classif.evtree,classif.extraTrees,classif.fdausc.glm,classif.fdausc.kernel,classif.fdausc.knn,classif.fdausc.np,classif.gamboost,classif.gaterSVM,classif.gausspr,classif.gbm,classif.geoDA,classif.glmboost,classif.glmnet,classif.h2o.deeplearning,classif.h2o.gbm,classif.h2o.glm,classif.h2o.randomForest,classif.IBk,classif.J48,classif.JRip,classif.kknn,classif.ksvm,classif.LiblineaRL1L2SVC,classif.LiblineaRL1LogReg,classif.LiblineaRL2L1SVC,classif.LiblineaRL2LogReg,classif.LiblineaRL2SVC,classif.LiblineaRMultiClassSVC,classif.linDA,classif.lqa,classif.lssvm,classif.mda,classif.mlp,classif.neuralnet,classif.nnTrain,classif.nodeHarvest,classif.OneR,classif.pamr,classif.PART,classif.penalized,classif.plr,classif.plsdaCaret,classif.quaDA,classif.randomForest,classif.randomForestSRC,classif.ranger,classif.rda,classif.rFerns,classif.rknn,classif.rotationForest,classif.RRF,classif.rrlda,classif.saeDNN,classif.sda,classif.sparseLDA,classif.xgboost,cluster.cmeans,cluster.Cobweb,cluster.dbscan,cluster.EM,cluster.FarthestFirst,cluster.kkmeans,cluster.kmeans,cluster.SimpleKMeans,cluster.XMeans,multilabel.cforest,multilabel.randomForestSRC,multilabel.rFerns,regr.bartMachine,regr.bcart,regr.bgp,regr.bgpllm,regr.blackboost,regr.blm,regr.brnn,regr.bst,regr.btgp,regr.btgpllm,regr.btlm,regr.cforest,regr.crs,regr.ctree,regr.cubist,regr.cvglmnet,regr.earth,regr.elmNN,regr.evtree,regr.extraTrees,regr.FDboost,regr.frbs,regr.gamboost,regr.gausspr,regr.gbm,regr.glmboost,regr.glmnet,regr.GPfit,regr.h2o.deeplearning,regr.h2o.gbm,regr.h2o.glm,regr.h2o.randomForest,regr.IBk,regr.kknn,regr.km,regr.ksvm,regr.laGP,regr.LiblineaRL2L1SVR,regr.LiblineaRL2L2SVR,regr.mars,regr.mob,regr.nodeHarvest,regr.pcr,regr.penalized,regr.plsr,regr.randomForest,regr.randomForestSRC,regr.ranger,regr.rknn,regr.RRF,regr.rsm,regr.rvm,regr.slim,regr.xgboost,surv.cforest,surv.CoxBoost,surv.cv.CoxBoost,surv.cvglmnet,surv.gamboost,surv.gbm,surv.glmboost,surv.glmnet,surv.randomForestSRC,surv.ranger
-#> Check ?learners to see which packages you need or install mlr with all suggestions.
+lrns = mlr::listLearners(task)
 head(lrns[, 1:4])
 #>                 class                         name  short.name package
 #> 1    classif.binomial          Binomial Regression    binomial   stats
@@ -8488,7 +8485,7 @@ head(lrns[, 1:4])
 ```
 
 This yields all learners able to model two-class problems (landslide yes or no).
-We opt for the binomial classification method from the **stats** package implemented in **mlr** as `classif.binomial`.
+We opt for the binomial classification method from the **stats** package which we already have used in section \@ref(conventional-model) and which is implemented in **mlr** as `classif.binomial`.
 Additionally, we have to specify the link-function.
 We choose the `logit` link which is also the default when using the `binomial` family in `glm`.
 `predict.type` determines the type of the prediction with
@@ -8509,38 +8506,51 @@ lrn = makeLearner(cl = "classif.binomial",
 
 In the beginning, it might seem a bit tedious to learn the **mlr** interface for modeling.
 But remember that one only has to learn one single interface to run 169 learners.
-Additionally, resampling in **mlr** is really easy and only requires two more steps.^[Further advantages are the easy parallelization of resampling techniques and the tuning of machine learning hyperparameters, also spatially, in an inner fold.]
-Please note that **sperrorest** initially implemented spatial cross-validation in R [@brenning_spatial_2012].
-In the meantime, it was integrated into the **mlr** package which is the reason why we are using **mlr** (and not for example **caret**).
-The first thing to to is specifying a resampling method.
-Spatial repeated cross-validation
+Additionally, (spatial) resampling in **mlr** is really easy and only requires two more steps.^[Further advantages are the easy parallelization of resampling techniques and the tuning of machine learning hyperparameters, also spatially, in an inner fold.]
+Please note that package **sperrorest** initially implemented spatial cross-validation in R [@brenning_spatial_2012].
+In the meantime, its functionality was integrated into the **mlr** package which is the reason why we are using **mlr** (and not for example **caret**).
+The first thing to do is specifying a resampling method.
+We will use a 100-repeated 5-fold spatial CV.
+This ensures that a spatial partitioning with five partitions is chosen based on the provided coordinates in our `task` and that the partitioning is repeated 100 times.
 
 
 ```r
-resampling = makeResampleDesc(method = "SpRepCV", folds = 5, reps = 10)
+resampling = makeResampleDesc(method = "SpRepCV", folds = 5, reps = 100)
 ```
 
-Executing the resampling method and set the preferred performance measure.
+To execute the spatial resampling, we run `resample()` using the specified learnter, task, resampling strategy and of course the performance measure, here the AUROC.
+
 
 
 ```r
-set.seed(02192018)
+set.seed(012348)
 sp_cv = mlr::resample(learner = lrn, task = task, resampling = resampling, 
                       measures = mlr::auc)
-sp_cv$measures.test$auc
-#>  [1] 0.799 0.765 0.851 0.792 0.692 0.765 0.692 0.792 0.851 0.799 0.799
-#> [12] 0.792 0.765 0.851 0.692 0.692 0.851 0.799 0.792 0.765 0.757 0.722
-#> [23] 0.815 0.838 0.849 0.792 0.799 0.851 0.757 0.747 0.747 0.757 0.799
-#> [34] 0.851 0.792 0.757 0.799 0.747 0.792 0.851 0.849 0.838 0.757 0.722
-#> [45] 0.815 0.792 0.799 0.757 0.747 0.851
-# the same as:
-mean(sp_cv$measures.test$auc)
-#> [1] 0.787
 ```
 
+<!-- sp_cv and conv_cv have been saved in spatialcv.Rdata. I needed to run the modeling outside of the book since knitr sets its own seed and I am not sure if this actually helps to make sure that the same partitions are used in the cv.
+I really don't understand why I have to load spatialcv.Rdata here a third time...-->
+
+
+
+
+```r
+# summary statistics of the 500 models
+summary(sp_cv$measures.test$auc)
+#>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#>   0.692   0.757   0.792   0.788   0.838   0.872
+# mean AUROC of the 500 models
+mean(sp_cv$measures.test$auc)
+#> [1] 0.788
+```
+
+As expected, the spatially cross-validated result yields a lower AUROC than 
 To put it into perspective, we compare this result with that of a non-spatial cross-validation.
 
-
+<div class="figure" style="text-align: center">
+<img src="figures/boxplot-cv-1.png" alt="AUROC difference between spatial and conventional cross-validation." width="576" />
+<p class="caption">(\#fig:boxplot-cv)AUROC difference between spatial and conventional cross-validation.</p>
+</div>
 
 
 Having specified a learner and a task, we can train our model. 
