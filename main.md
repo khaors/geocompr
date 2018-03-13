@@ -242,8 +242,7 @@ In this book we treat R as a 'tool for the trade' for the latter.
 R is a multi-platform, open source language and environment for statistical computing and graphics ([https://www.r-project.org/](https://www.r-project.org/)).
 With a wide range of packages R also supports advanced geospatial statistics, modeling and visualization.^[The integrated development environment (IDE) [RStudio](https://www.rstudio.com/) deserves mention here from a user perspective as it has made the interactive use of R more accessible].
 At its core R is an object-oriented, [functional programming language](http://adv-r.had.co.nz/Functional-programming.html) [@wickham_advanced_2014], and was specifically designed as an interactive interface to other software [@chambers_extending_2016]. 
-The latter also includes many 'bridges' to a treasure trove of GIS software, 'geolibraries' and functions.
-<!-- todo - add this reference to ref(gis) -->
+The latter also includes many 'bridges' to a treasure trove of GIS software, 'geolibraries' and functions (see Chapter \@ref(gis)).
 It is thus ideal for quickly creating 'geo-tools', without needing to master lower level languages (compared to R) such as C, FORTRAN and Java (see section \@ref(software-for-geocomputation)). 
 This can feel like breaking free from the metaphorical 'glass ceiling' imposed by GUI-based proprietary geographic information systems (see Table \@ref(tab:gdsl) for a definition of GUI).
 What is more, advanced users might even extend R with the power of other languages (e.g., C++ through **Rcpp** or Python through **reticulate**; see also section \@ref(software-for-geocomputation)).
@@ -267,7 +266,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve1cd696ff4c8179ae
+preserve4a60c8f98999f917
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -289,7 +288,7 @@ Usually, people find it harder to learn than Python or R.
 It is also likely that you have to invest a lot of time to code things that are readily available in R.
 Therefore, we would recommend to learn R, and subsequently to learn C++ through **Rcpp** if a need for performance optimization arises.
 Subsequently, you could even implement geoalgorithms you are missing from the most common desktop GIS with the help of **Rcpp**^[Though, in that case we would recommend to contribute the C++ code to one of the open-source GIS packages since this would make the geoalgorithm available to a wider audience.
-In turn, you could access the GIS software via one of the available R-GIS interfaces. <!--(ref(gis))-->].
+In turn, you could access the GIS software via one of the available R-GIS interfaces (Chapter \@ref(gis)).
 
 Java is another important (and versatile) language used in GIScience.
 For example, the open-source desktop GIS [gvSig](http://www.gvsig.com/en/products/gvsig-desktop), [OpenJump](http://openjump.org/) and [uDig](http://udig.refractions.net/) are written in Java.
@@ -444,8 +443,8 @@ A key feature of **raster** is its ability to work with datasets that are too la
 
 In parallel with or partly even preceding the development of spatial classes and methods came the support for R as an interface to dedicated GIS software.
 The **GRASS** package [@bivand_using_2000] and follow-on packages **spgrass6** and **rgrass7** (for GRASS GIS 6 and 7, respectively) were prominent examples in this direction [@bivand_spgrass6:_2016;@bivand_rgrass7:_2016].
-Other examples of bridges between R and GIS include **RSAGA** [@R-RSAGA, first published in 2008], **ArcGIS** [@brenning_arcgis_2012, first published in 2008], and **RQGIS** [@R-RQGIS, first published in 2016].
-<!-- More information about interfaces between R and GIS software could be find in ref(gis). -->
+Other examples of bridges between R and GIS include **RSAGA** [@R-RSAGA, first published in 2008], **ArcGIS** [@brenning_arcgis_2012, first published in 2008], and **RQGIS** [@muenchow_rqgis:_2017, first published in 2016].
+Chapter \@ref(gis) will give a thorough introduction to open-source R/GIS bridges.
 
 Map making was not a focus of R's early spatial capabilities.
 But soon **sp** provided methods for advanced map making using both the base and lattice plotting system. 
@@ -3097,7 +3096,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveb39384cc91f26fca
+preserve38f8b8ba9c9de14a
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5986,7 +5985,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve6536a57da4762f49
+preserve66e82f7419919684
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6602,7 +6601,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveae832412570c863f
+preserve7513ee148c6d8c78
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -8217,7 +8216,7 @@ library(sf)
 Section \@ref(software-for-geocomputation) mentioned several programming languages suitable for command-line based geocomputation.
 The advantages of geocomputation with R were discussed, including its unparalleled statistical power.
 This chapter makes use of some of this statistical power, by demonstrating methods for predictive mapping by means of statistical learning [@james_introduction_2013].
-The focus is the use of spatial cross-validation (or 'spatial CV' for short, a term we will define shortly) to assess model performance and reduce spatial bias.
+The main focus, however, is the use of spatial cross-validation (or 'spatial CV' for short, a term we will define shortly) to assess model performance and reduce spatial bias.
 Spatial CV is an excellent example of using statistical methods to model spatial data and, at the time of writing, the technique is better supported in R than any other language.
 
 Statistical learning aims at understanding data by building models which disentangle underlying relationships.
@@ -8320,8 +8319,9 @@ The added columns are:
 
 
 ## Conventional modeling approach in R {#conventional-model}
-Before diving into the **mlr** package it is worth to take a look at the conventional modeling interface in R.
-This way we introduce statistical supervised modeling in R which in turn will contribute to get a better grasp on the **mlr** approach introduced later on, and provides the required skill set for doing spatial CV.
+Later on we will introduce the **mlr** package, an umbrella-package providing a unified interface to hundreds of modeling approaches. 
+Before doing so, it is worth taking a look at the conventional modeling interface in R.
+This way we introduce statistical supervised modeling in R which provides the required skill set for doing spatial CV and additionally contributes to a better grasp on the **mlr** approach introduced later on.
 Usually, we model the response variable as a function of predictors. 
 Therefore, modeling functions in R such as `lm`, `glm` and many more use the so-called formula interface.
 Let's put this into practice by modeling the landslide occurrence as a function of terrain attributes.
@@ -8424,7 +8424,7 @@ Remember that the first law of geography states that points close to each other 
 This means these points are not statistically independent or put differently that training and test points in conventional cross-validation are often too close to each other (see first row of \@ref(fig:partitioning)).
 Using this information in our modeling is like a sneak preview, i.e. using information that should be unavailable to the training dataset.
 To overcome this problem, we should make use of spatial partitioning which splits the observations into spatially disjoint folds (using the observations' coordinates in a *k*-means clustering; @brenning_spatial_2012; second row of Figure \@ref(fig:partitioning)).
-The partitioning strategy is **the** distinguishing feature between spatial and classical cross-validation.
+The partitioning strategy is **the** distinguishing feature between spatial and conventional cross-validation.
 Everything else remains exactly the same.
 As a result spatial CV leads to a bias-reduced assessment of a model's predictive performance, and hence helps to avoid over-fitting.
 It is important to note that spatial CV reduces the bias introduced by spatial autocorrelation but does not completely remove it. 
@@ -8483,7 +8483,7 @@ For a specific task, we can run:
 
 
 ```r
-lrns = mlr::listLearners(task)
+lrns = listLearners(task)
 head(lrns[, 1:4])
 #>                 class                         name  short.name package
 #> 1    classif.binomial          Binomial Regression    binomial   stats
@@ -8591,23 +8591,28 @@ Resampling methods are a crucial part of a modern data scientist's toolbox [@jam
 In this chapter we used cross-validation to assess a model's predictive performance.
 Spatial data is statistically often not independent due to spatial autocorrelation, which violates a fundamental assumption of cross-validation.
 Therefore, we introduced spatial CV, which reduces the bias introduced by spatial autocorrelation. 
-The **mlr** package makes it easy to use resampling techniques for many other statistical learning techniques including of course linear regression, semi-parametric models (e.g., generalized additive models) and machine learning techniques such as random forests, support vector machines or boosted regression trees [@bischl_mlr:_2016;@schratz_performance_nodate].
-Please check out also the fantastic **mlr** online documentation:
+The **mlr** package makes it easy to use (spatial) resampling techniques with many other statistical learning techniques including, of course, linear regression, but also semi-parametric models (e.g., generalized additive models) and machine learning techniques such as random forests, support vector machines or boosted regression trees [@bischl_mlr:_2016;@schratz_performance_nodate].
+Machine learning algorithms often require the tuning of so-called hyperparameters.
+This should be done using a nested (spatial) cross-validation approach [@schratz_performance_nodate], a topic we will explore in more detail in Chapter \@ref(eco).
+As a preview, this requires the fitting of hundreds of additional models, and is therefore computationally more demanding.
+Naturally, computation time additionally increases with the size of the input data.
+To reduce computing time, **mlr** makes parallelization easy through various supported methods (see Chapter \@ref(eco)).
+
+Finally, for more details please check out also the fantastic **mlr** online documentation:
 
 - https://mlr-org.github.io/mlr-tutorial/
 - https://github.com/mlr-org/mlr/wiki/user-2015-tutorial
-
 
 ## Exercises
 
 1. Compute the terrain attributes slope, plan curvature, profile curvature and catchment area from `dem` (provided by `data("landslides", package = "RSAGA")`) with the help of R-GIS bridges, and extract the values from the corresponding output rasters to the `landslides` dataframe (`data(landslides, package = "RSAGA"`)).
 Keep all landslide initation points and 175 randomly selected non-landslide points (see section \@ref(case-landslide)).
-1. Reproduce the spatial prediction with the derived terrain attribute rasters (see Figure \@ref(fig:lsl-susc)).
+1. Make a spatial prediction map similar to Figure \@ref(fig:lsl-susc)) with the derived model results and terrain attribute rasters.
 1. Compute a non-spatial cross-validation and make boxplots to compare the AUROC from a spatial and a non-spatial CV (see Figure \@ref(fig:boxplot-cv)).
 Hint: You need to specify a non-spatial task and a non-spatial resampling strategy.
-1. Use the squared slope as a further predictor.
-Repeat the resampling. 
-How has the spatially cross-validated mean AUROC value changed compared to the model without the squared altitude predictor?
+1. Model landslide susceptibility using a quadratic discriminant analysis [QDA, @james_introduction_2013].
+Assess the predictive performance of the QDA. 
+What is the a difference between the spatially cross-validated mean AUROC value of the QDA and the GLM?
 
 <!--
 hyperparameter tuning:
@@ -8619,8 +8624,6 @@ Hyperparameters are always tuned in mlr in an inner loop (I suppose).
 But why do we need the inner tuning.
 Well, otherwise we would tune our hyperparameters on the test set of the outer loop, and this is like taking a sneak preview.
 -->
-
-
 
 <!--chapter:end:13-spatial-cv.Rmd-->
 

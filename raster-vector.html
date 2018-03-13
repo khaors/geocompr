@@ -494,7 +494,7 @@ raster_template2 =<span class="st"> </span><span class="kw">raster</span>(<span 
 Figure 11.6: Examples of line and polygon rasterizations.
 </p>
 </div>
-<p>While <code>rasterize</code> works well for most cases, it is not performance optimized. Fortunately, there are several alternatives, including the <code>fasterize::fasterize()</code><a href="#fn60" class="footnoteRef" id="fnref60"><sup>60</sup></a> and <code>gdalUtils::gdal_rasterize()</code>. The former is much (100 times+) faster than <code>rasterize()</code> but is currently limited to polygon rasterization. The latter is part of GDAL and therefore requires a vector file, instead of an <code>sf</code> object, as an input and rasterization parameters, instead of a <code>Raster*</code> template object.<a href="#fn61" class="footnoteRef" id="fnref61"><sup>61</sup></a></p>
+<p>While <code>rasterize</code> works well for most cases, it is not performance optimized. Fortunately, there are several alternatives, including the <code>fasterize::fasterize()</code><a href="#fn59" class="footnoteRef" id="fnref59"><sup>59</sup></a> and <code>gdalUtils::gdal_rasterize()</code>. The former is much (100 times+) faster than <code>rasterize()</code> but is currently limited to polygon rasterization. The latter is part of GDAL and therefore requires a vector file, instead of an <code>sf</code> object, as an input and rasterization parameters, instead of a <code>Raster*</code> template object.<a href="#fn60" class="footnoteRef" id="fnref60"><sup>60</sup></a></p>
 </div>
 <div id="spatial-vectorization" class="section level2">
 <h2><span class="header-section-number">11.5</span> Spatial vectorization</h2>
@@ -564,9 +564,9 @@ Figure 11.9: Illustration of vectorization of raster (left) into polygon (center
 </div>
 <div class="footnotes">
 <hr />
-<ol start="60">
-<li id="fn60"><p>The <strong>fasterize</strong> package is available at <a href="https://github.com/ecohealthalliance/fasterize" class="uri">https://github.com/ecohealthalliance/fasterize</a>.<a href="raster-vector.html#fnref60">↩</a></p></li>
-<li id="fn61"><p>See more at <a href="http://www.gdal.org/gdal_rasterize.html" class="uri">http://www.gdal.org/gdal_rasterize.html</a>.<a href="raster-vector.html#fnref61">↩</a></p></li>
+<ol start="59">
+<li id="fn59"><p>The <strong>fasterize</strong> package is available at <a href="https://github.com/ecohealthalliance/fasterize" class="uri">https://github.com/ecohealthalliance/fasterize</a>.<a href="raster-vector.html#fnref59">↩</a></p></li>
+<li id="fn60"><p>See more at <a href="http://www.gdal.org/gdal_rasterize.html" class="uri">http://www.gdal.org/gdal_rasterize.html</a>.<a href="raster-vector.html#fnref60">↩</a></p></li>
 </ol>
 </div>
             </section>
