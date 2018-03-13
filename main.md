@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-03-12'
+date: '2018-03-13'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-03-12 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-03-13 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -267,7 +267,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve11a8c685ab8e7fa8
+preserve379dff16b9fe577b
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3097,7 +3097,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserved670e4b4ae363f4e
+preservec0cb452aa825cd7d
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5090,7 +5090,7 @@ For some drivers, `dsn` could be provided as a folder name, access credentials f
 Some vector driver formats can store multiple data layers.
 By default, `st_read` automatically reads the first layer of the file specified in `dsn`, however, using the `layer` argument you can specify any other layer.
 
-Naturally, some options are specific to certain drivers.[^1]
+Naturally, some options are specific to certain drivers.^[A list of supported vector formats and theirs options can be found at http://www.gdal.org/ogr_formats.html.]
 For example, think of coordinates stored in a spreadsheet format (`.csv`).
 To read in such files as spatial objects, we naturally have to specify the names of the columns (`X` and `Y` in our example below) representing the coordinates.
 We can do this with the help of the `options` parameter.
@@ -5306,7 +5306,7 @@ writeRaster(x = single_layer,
 
 The `raster` file format (native to the `raster` package) is used when a file extension is invalid or missing. 
 Some raster file formats come with additional options.
-You can use them with the `options` parameter.[^2]
+You can use them with the `options` parameter.^[Full list of supported raster formats with theirs options can be found at http://www.gdal.org/formats_list.html.]
 For example, GeoTIFF allows you to compress the output raster with the `COMPRESS` option^[Find out about GeoTIFF options under http://www.gdal.org/frmt_gtiff.html.]:
 
 
@@ -5384,10 +5384,6 @@ Extract the June values, and save them to a file named `tmin_june.tif` file (hin
 
 1. Create an interactive map using data from the `cycle_hire_xy.csv` file. 
 Export this map to a file called `cycle_hire.html`.
-
-[^1]: A list of supported vector formats and theirs options can be found at http://www.gdal.org/ogr_formats.html.
-
-[^2]: Full list of supported raster formats with theirs options can be found at http://www.gdal.org/formats_list.html.
 
 <!--chapter:end:06-read-write-plot.Rmd-->
 
@@ -5990,7 +5986,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservef6526a43c7091830
+preservef76ee0c35a56a1d8
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6606,7 +6602,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservebeb82faaeaeebb19
+preserve1df51d17313e2202
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 

@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-03-12">
+<meta name="date" content="2018-03-13">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1122,7 +1122,9 @@ Figure 2.10: Examples of geographic (WGS 84; left) and projected (NAD83 / UTM zo
 <div class="footnotes">
 <hr />
 <ol start="13">
-<li id="fn13"><p>A list of supported vector formats and theirs options can be found at <a href="http://www.gdal.org/ogr_formats.html" class="uri">http://www.gdal.org/ogr_formats.html</a>.<a href="spatial-class.html#fnref13">↩</a></p></li>
+<li id="fn13"><p>If you need to install R, we recommend reading <a href="https://csgillespie.github.io/efficientR/set-up.html#r-version">section 2.3</a> and <a href="https://csgillespie.github.io/efficientR/set-up.html#rstudio">section 2.5</a> of the freely available book <em>Efficient R Programming</em> <span class="citation">Gillespie and Lovelace (<a href="#ref-gillespie_efficient_2016">2016</a>)</span>. Packages can be kept up-to-date with <code>update.packages()</code>.</p>
+<p>If you are not a regular R user, we recommend that you familiarize yourself with the language before proceeding with this chapter. You can do so using resources such as <span class="citation">Gillespie and Lovelace (<a href="#ref-gillespie_efficient_2016">2016</a>)</span>, <span class="citation">Grolemund and Wickham (<a href="#ref-grolemund_r_2016">2016</a>)</span> as well as online interactive guides such as <a href="https://www.datacamp.com/courses/free-introduction-to-r">DataCamp</a>.</p>
+<p>We recommend organising your work as you learn, for example with the help of an RStudio ‘<a href="https://csgillespie.github.io/efficientR/set-up.html#project-management">project</a>’ called <code>geocomp-learning</code>. Creating new script for each chapter or section of interest will help consolidate and extend the skills learned. The code you type to help learn the content of this chapter could be placed in a file called <code>chapter-02.R</code>, for example. Everyone learns in a different way; structure your work so it makes sense to you; and avoid copy-pasting to get used to typing code.<a href="spatial-class.html#fnref13">↩</a></p></li>
 <li id="fn14"><p>The origin we are referring to, depicted in blue in Figure <a href="spatial-class.html#fig:vectorplots">2.1</a>, is in fact the ‘false’ origin. The ‘true’ origin, the location at which distortions are at a minimum, is located at 2° W and 49° N. This was selected by the <a href="https://www.ordnancesurvey.co.uk/support/the-national-grid.html">Ordnance Survey</a> to be roughly in the center of the British landmass longitudinally.<a href="spatial-class.html#fnref14">↩</a></p></li>
 <li id="fn15"><p>The full OGC standard includes rather exotic geometry types including ‘surface’ and ‘curve’ geometry types, which currently have limited application in real world applications. All 68 types can be represented with the <strong>sf</strong> package, although (at the time of writing) all methods, such as plotting, are only supported for the 7 types described in this chapter.<a href="spatial-class.html#fnref15">↩</a></p></li>
 <li id="fn16"><p>The development version, which may contain new features, can be installed with <code>devtools::install_github(&quot;r-spatial/sf&quot;).</code><a href="spatial-class.html#fnref16">↩</a></p></li>
