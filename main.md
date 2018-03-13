@@ -266,7 +266,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve4a60c8f98999f917
+preservea1877008ab4191d5
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3096,7 +3096,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve38f8b8ba9c9de14a
+preserve9e50883319f27d4e
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5985,7 +5985,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve66e82f7419919684
+preserve52f978b2faeafaff
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6601,7 +6601,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve7513ee148c6d8c78
+preserve62448955d20e5174
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7985,13 +7985,19 @@ zion_nlcd_new = bind_cols(zion, zion_nlcd_df)
 <p class="caption">(\#fig:polyextr)Area used for continuous (left) and categorical (right) raster extraction.</p>
 </div>
 
-<!-- The `extract` function is well suited for a small to medium-sized data, however it is not efficient for large datasets. -->
-<!-- There are several alternatives to consider in those cases. -->
-<!-- Firstly, raster extraction by many vector objects could be parallelized. -->
-<!-- explain -->
+The `extract` function is well suited for a small to medium-sized data, however it is not very efficient for large datasets.
+There are several alternatives to consider in those cases.
+Firstly, raster extraction could be parallelized when many vector objects are used.
+Instead of using just one CPU thread for the whole operation, vector objects could be split into several groups.
+Next, extraction would be performed independently for each group and the results would be combined.
+<!-- `?clusterR` + ref to big data chapter?? -->
 <!-- tabularaster (ref to the vignette - https://cran.r-project.org/web/packages/tabularaster/vignettes/tabularaster-usage.html)-->
-<!-- Furthermore, the **velox** package (REF) provides a fast method for extracting raster data https://hunzikp.github.io/velox/extract.html. -->
-<!-- Finally, R-GIS bridges - investigate (REF to the chapter). -->
+Secondly, the **velox** package (\@ref(hunziker_velox:_2017)) provides a fast method for extracting raster data that fits in the RAM memory.
+This process is described in detail at https://hunzikp.github.io/velox/extract.html.
+<!-- Finally, it could be worthwhile to consider using R-GIS bridges. -->
+<!-- Methods similar to `raster::extract` can be found in GRASS GIS (e.g. v.rast.stats) -->
+<!-- https://grass.osgeo.org/grass74/manuals/v.rast.stats.html - test -->
+<!-- R-GIS bridges - investigate (REF to the chapter). -->
 <!-- RQGIS? -->
 
 ## Rasterization {#rasterization}
