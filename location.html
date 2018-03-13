@@ -313,7 +313,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="13" data-path="spatial-cv.html"><a href="spatial-cv.html"><i class="fa fa-check"></i><b>13</b> Spatial cross-validation</a><ul>
 <li class="chapter" data-level="" data-path="spatial-cv.html"><a href="spatial-cv.html#prerequisites-10"><i class="fa fa-check"></i>Prerequisites</a></li>
 <li class="chapter" data-level="13.1" data-path="spatial-cv.html"><a href="spatial-cv.html#introduction-8"><i class="fa fa-check"></i><b>13.1</b> Introduction</a></li>
-<li class="chapter" data-level="13.2" data-path="spatial-cv.html"><a href="spatial-cv.html#case-study-landslide-susceptibility"><i class="fa fa-check"></i><b>13.2</b> Case study: landslide susceptibility</a></li>
+<li class="chapter" data-level="13.2" data-path="spatial-cv.html"><a href="spatial-cv.html#case-landslide"><i class="fa fa-check"></i><b>13.2</b> Case study: landslide susceptibility</a></li>
 <li class="chapter" data-level="13.3" data-path="spatial-cv.html"><a href="spatial-cv.html#conventional-model"><i class="fa fa-check"></i><b>13.3</b> Conventional modeling approach in R</a></li>
 <li class="chapter" data-level="13.4" data-path="spatial-cv.html"><a href="spatial-cv.html#intro-cv"><i class="fa fa-check"></i><b>13.4</b> Introduction to (spatial) cross-validation</a></li>
 <li class="chapter" data-level="13.5" data-path="spatial-cv.html"><a href="spatial-cv.html#modeling-and-spatial-cv-with-mlr"><i class="fa fa-check"></i><b>13.5</b> Modeling and spatial CV with <strong>mlr</strong></a></li>
@@ -565,7 +565,7 @@ rcl_age =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw
                  <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)
 rcl_hh =<span class="st"> </span>rcl_women
 rcl =<span class="st"> </span><span class="kw">list</span>(rcl_pop, rcl_women, rcl_age, rcl_hh)</code></pre></div>
-<p>We can loop with <code>map2()</code>, the <strong>purrr</strong> version of base R’s <code>mapply()</code>, in parallel over two vectors (here <code>lists</code>; for more information please refer to <span class="citation">Wickham (<a href="#ref-wickham_advanced_2014">2014</a>)</span> and <span class="citation">Grolemund and Wickham (<a href="#ref-grolemund_r_2016">2016</a>)</span>). Note that we have to transform the raster brick into a list for the loop to work. Finally, we convert the output list back into a raster stack.</p>
+<p>We can loop with <code>map2()</code>, the <strong>purrr</strong> version of base R’s <code>mapply()</code>, in parallel over two vectors (here <code>lists</code>; for more information please refer to <span class="citation">Wickham (<a href="#ref-wickham_advanced_2014">2014</a>)</span> and <span class="citation">(<span class="citeproc-not-found" data-reference-id="grolemund_r_2016"><strong>???</strong></span>)</span>). Note that we have to transform the raster brick into a list for the loop to work. Finally, we convert the output list back into a raster stack.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">reclass =<span class="st"> </span><span class="kw">map2</span>(<span class="kw">as.list</span>(input_ras), rcl, function(x, y) {
   <span class="kw">reclassify</span>(<span class="dt">x =</span> x, <span class="dt">rcl =</span> y, <span class="dt">right =</span> <span class="ot">NA</span>)
 }) %&gt;%<span class="st"> </span>
@@ -826,9 +826,6 @@ input = stack(input)
 </div>
 <div id="ref-wickham_advanced_2014">
 <p>Wickham, Hadley. 2014. <em>Advanced R</em>. CRC Press. <a href="http://www.crcpress.com/product/isbn/9781466586963 http://adv-r.had.co.nz http://www.crcpress.com/product/isbn/9781466586963 http://adv-r.had.co.nz" class="uri">http://www.crcpress.com/product/isbn/9781466586963 http://adv-r.had.co.nz http://www.crcpress.com/product/isbn/9781466586963 http://adv-r.had.co.nz</a>.</p>
-</div>
-<div id="ref-grolemund_r_2016">
-<p>Grolemund, Garrett, and Hadley Wickham. 2016. <em>R for Data Science</em>. 1 edition. O’Reilly Media.</p>
 </div>
 <div id="ref-longley_geographic_2015">
 <p>Longley, Paul. 2015. <em>Geographic Information Science &amp; Systems</em>. Fourth edition. Hoboken, NJ: Wiley.</p>

@@ -313,7 +313,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="13" data-path="spatial-cv.html"><a href="spatial-cv.html"><i class="fa fa-check"></i><b>13</b> Spatial cross-validation</a><ul>
 <li class="chapter" data-level="" data-path="spatial-cv.html"><a href="spatial-cv.html#prerequisites-10"><i class="fa fa-check"></i>Prerequisites</a></li>
 <li class="chapter" data-level="13.1" data-path="spatial-cv.html"><a href="spatial-cv.html#introduction-8"><i class="fa fa-check"></i><b>13.1</b> Introduction</a></li>
-<li class="chapter" data-level="13.2" data-path="spatial-cv.html"><a href="spatial-cv.html#case-study-landslide-susceptibility"><i class="fa fa-check"></i><b>13.2</b> Case study: landslide susceptibility</a></li>
+<li class="chapter" data-level="13.2" data-path="spatial-cv.html"><a href="spatial-cv.html#case-landslide"><i class="fa fa-check"></i><b>13.2</b> Case study: landslide susceptibility</a></li>
 <li class="chapter" data-level="13.3" data-path="spatial-cv.html"><a href="spatial-cv.html#conventional-model"><i class="fa fa-check"></i><b>13.3</b> Conventional modeling approach in R</a></li>
 <li class="chapter" data-level="13.4" data-path="spatial-cv.html"><a href="spatial-cv.html#intro-cv"><i class="fa fa-check"></i><b>13.4</b> Introduction to (spatial) cross-validation</a></li>
 <li class="chapter" data-level="13.5" data-path="spatial-cv.html"><a href="spatial-cv.html#modeling-and-spatial-cv-with-mlr"><i class="fa fa-check"></i><b>13.5</b> Modeling and spatial CV with <strong>mlr</strong></a></li>
@@ -436,13 +436,14 @@ zion_nlcd_new =<span class="st"> </span><span class="kw">bind_cols</span>(zion, 
 Figure 11.4: Area used for continuous (left) and categorical (right) raster extraction.
 </p>
 </div>
-<!-- extract performance is fine for small to medium sized data -->
-<!-- however, it could not be enough for large datasets -->
-<!-- faster alternatives to raster::extract -->
-<!-- velox (ref to the website - https://hunzikp.github.io/velox/extract.html) -->
-<!-- RQGIS? -->
+<!-- The `extract` function is well suited for a small to medium-sized data, however it is not efficient for large datasets. -->
+<!-- There are several alternatives to consider in those cases. -->
+<!-- Firstly, raster extraction by many vector objects could be parallelized. -->
+<!-- explain -->
 <!-- tabularaster (ref to the vignette - https://cran.r-project.org/web/packages/tabularaster/vignettes/tabularaster-usage.html)-->
-<!-- parallel? -->
+<!-- Furthermore, the **velox** package (REF) provides a fast method for extracting raster data https://hunzikp.github.io/velox/extract.html. -->
+<!-- Finally, R-GIS bridges - investigate (REF to the chapter). -->
+<!-- RQGIS? -->
 </div>
 <div id="rasterization" class="section level2">
 <h2><span class="header-section-number">11.4</span> Rasterization</h2>
