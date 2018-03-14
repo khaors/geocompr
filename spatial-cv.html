@@ -488,7 +488,7 @@ data =<span class="st"> </span>dplyr::<span class="kw">select</span>(lsl, -x, -y
 task =<span class="st"> </span><span class="kw">makeClassifTask</span>(<span class="dt">data =</span> data, <span class="dt">target =</span> <span class="st">&quot;lslpts&quot;</span>,
                        <span class="dt">positive =</span> <span class="st">&quot;TRUE&quot;</span>, <span class="dt">coordinates =</span> coords)</code></pre></div>
 <p><code>makeLearner()</code> determines the statistical learning method to use. All classification <strong>learners</strong> start with <code>classif.</code> and all regression learners with <code>regr.</code> (see <code>?makeLearners</code> for more details). <code>listLearners()</code> helps to find out about all available learners and from which package <strong>mlr</strong> imports them. For a specific task, we can run:</p>
-<!-- no idea, why render_book() fails frequently because function listLearners() cannot be found...-->
+<!-- no idea, why render_book() fails frequently because function listLearners() cannot be found...: I also have this issue (RL)-->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lrns =<span class="st"> </span><span class="kw">listLearners</span>(task)
 dplyr::<span class="kw">select</span>(lrns, class, name, package) %&gt;%
 <span class="st">  </span>head
