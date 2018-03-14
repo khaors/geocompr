@@ -266,7 +266,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve9ec8e6d508b962f1
+preserve9ad7fa702abd2f4e
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3105,7 +3105,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve3ca3a557b62e4446
+preserve6c42deebece44959
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5994,7 +5994,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve9a63b6f16bb7c8ef
+preserve00e767db79fe1b0f
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6610,7 +6610,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve8b3ee52281cb8b4a
+preservee87043555aa3dba7
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -8462,13 +8462,7 @@ In section \@ref(conventional-model) we used the **stats** package to fit a logi
 `glm()` uses the common R modeling interface: specify the response and predictor variables via a formula object, build a model and make a prediction.
 However, many packages come with their own or a modified statistical learning interface which is why users frequently have to spend a lot of time to figure out the specifics of each of these packages or how to compare modeling results from different packages.
 The **mlr** package acts as a meta- or umbrella-package providing a unified interface to all popular statistical learning techniques available in R including classification, regression, survival analysis and clustering [@bischl_mlr:_2016].^[As pointed out in the beginning we will solely focus on supervised learning techniques in this chapter.]
-The standardized **mlr** interface is based on so-called basic building blocks (Figure \@ref(fig:building-blocks)).
-
-<!-- @Jakub: yes, I will ask if we me may use the figure -->
-<div class="figure" style="text-align: center">
-<img src="http://openml.github.io/articles/slides/useR2017_tutorial/slides_tutorial_files/ml_abstraction-crop.png" alt="Basic building blocks of the **mlr** package. Source: [openml.github.io](http://openml.github.io/articles/slides/useR2017_tutorial/slides_tutorial_files/ml_abstraction-crop.png)."  />
-<p class="caption">(\#fig:building-blocks)Basic building blocks of the **mlr** package. Source: [openml.github.io](http://openml.github.io/articles/slides/useR2017_tutorial/slides_tutorial_files/ml_abstraction-crop.png).</p>
-</div>
+The standardized **mlr** interface is based on so-called basic building blocks (see the [`mlr` vignette](https://cran.r-project.org/web/packages/mlr/vignettes/mlr.html) for further details).
 
 First, we need to create a **task** containing the data, specifically the response and predictor variables, for the model and the model type (such as regression or classification).
 Secondly, a **learner** defines the specific model that models the task data or differently put learns a structure inherent in the provided data.
