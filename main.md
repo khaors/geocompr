@@ -266,7 +266,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve9ad7fa702abd2f4e
+preserveb1b5cd3441625533
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3105,7 +3105,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve6c42deebece44959
+preservedd296557f64ec0f9
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5994,7 +5994,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve00e767db79fe1b0f
+preserve624bec395c061815
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6610,7 +6610,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservee87043555aa3dba7
+preserve78810db89799dbc8
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -8498,7 +8498,7 @@ For a specific task, we can run:
 
 
 ```r
-lrns = listLearners(task)
+lrns = mlr::listLearners(task)
 dplyr::select(lrns, class, name, package) %>%
   head
 #>                 class                         name package
@@ -8605,6 +8605,13 @@ As expected, the spatially cross-validated result yields lower AUROC values on a
 <p class="caption">(\#fig:boxplot-cv)Boxplot showing the difference in AUROC values between spatial and conventional 100-repeated 5-fold cross-validation.</p>
 </div>
 
+## (Spatial) Tuning of machine-learning hyperparameters
+
+difference parameters and hyperparameters
+example: random forest and short intro what it is
+best practice: inner fold -> Patrick figure
+parallelization (conclusion -> server/remote modeling)
+
 ## Conclusions
 Resampling methods are a crucial part of a modern data scientist's toolbox [@james_introduction_2013]. 
 In this chapter we used cross-validation to assess a model's predictive performance.
@@ -8613,7 +8620,7 @@ Therefore, we introduced spatial CV, which reduces the bias introduced by spatia
 The **mlr** package makes it easy to use (spatial) resampling techniques with many other statistical learning techniques including, of course, linear regression, but also semi-parametric models (e.g., generalized additive models) and machine learning techniques such as random forests, support vector machines or boosted regression trees [@bischl_mlr:_2016;@schratz_performance_nodate].
 Machine learning algorithms often require the tuning of so-called hyperparameters.
 This should be done using a nested (spatial) cross-validation approach [@schratz_performance_nodate], a topic we will explore in more detail in Chapter \@ref(eco).
-As a preview, this requires the fitting of hundreds of additional models, and is therefore computationally more demanding.
+As a preview, this requires the fitting of tens of thousands of additional models, and is therefore computationally more demanding.
 Naturally, computation time additionally increases with the size of the input data.
 To reduce computing time, **mlr** makes parallelization easy through various supported methods (see Chapter \@ref(eco)).
 
@@ -8624,13 +8631,13 @@ Finally, for more details please check out also the fantastic **mlr** online doc
 
 ## Exercises
 
-1. Compute the terrain attributes slope, plan curvature, profile curvature and catchment area from `dem` (provided by `data("landslides", package = "RSAGA")`) with the help of R-GIS bridges, and extract the values from the corresponding output rasters to the `landslides` dataframe (`data(landslides, package = "RSAGA"`)).
+1. Compute the terrain attributes slope, plan curvature, profile curvature and catchment area from `dem` (provided by `data("landslides", package = "RSAGA")`) with the help of R-GIS bridges (see Chapter \@ref(gis)), and extract the values from the corresponding output rasters to the `landslides` dataframe (`data(landslides, package = "RSAGA"`)).
 Keep all landslide initation points and 175 randomly selected non-landslide points (see section \@ref(case-landslide)).
-1. Make a spatial prediction map similar to Figure \@ref(fig:lsl-susc)) with the derived model results and terrain attribute rasters.
-1. Compute a non-spatial cross-validation and make boxplots to compare the AUROC from a spatial and a non-spatial CV (see Figure \@ref(fig:boxplot-cv)).
+1. Use the derived terrain attributs rasters in combination with a GLM to make a spatial prediction map similar to Figure \@ref(fig:lsl-susc).
+1. Compute a 100-repeated 5-fold non-spatial cross-validation and spatial CV based on the GLM learner and compare the AUROC values from both resampling strategies with the help of boxplots (see Figure \@ref(fig:boxplot-cv)).
 Hint: You need to specify a non-spatial task and a non-spatial resampling strategy.
 1. Model landslide susceptibility using a quadratic discriminant analysis [QDA, @james_introduction_2013].
-Assess the predictive performance of the QDA. 
+Assess the predictive performance (AUROC) of the QDA. 
 What is the a difference between the spatially cross-validated mean AUROC value of the QDA and the GLM?
 
 <!--
