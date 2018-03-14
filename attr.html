@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-03-13">
+<meta name="date" content="2018-03-14">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -508,18 +508,24 @@ world6 =<span class="st"> </span><span class="kw">filter</span>(world, lifeExp &
 </div>
 <div id="vector-attribute-aggregation" class="section level3">
 <h3><span class="header-section-number">3.2.2</span> Vector attribute aggregation</h3>
-<p>Aggregation operations summarize datasets by a ‘grouping variable’ (typically an attribute column) or a spatial object. Imagine we would like to calculate the number of people per continent. The <code>world</code> dataset contains the necessary ingredients, with the <code>pop</code> column containing the population per country and the grouping variable <code>continent</code>. Aggregation in this context finding the <code>sum()</code> of country populations for each continent. In base R this is done with <code>aggregate()</code> as follows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">aggregate</span>(pop ~<span class="st"> </span>continent, <span class="dt">FUN =</span> sum, <span class="dt">data =</span> world, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<p>The result is a non-spatial data frame with six rows, one per continent, and two columns (see Table <a href="attr.html#tab:continents">3.2</a> with results for the top 3 most populous continents).</p>
-<p><code>summarize()</code> is the <strong>dplyr</strong> equivalent of <code>aggregate()</code>, which uses the function <code>group_by()</code> to create the grouping variable. The tidy equivalent of the <code>aggregate()</code> method is as follows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">group_by</span>(world, continent) %&gt;%
+<p>Aggregation operations summarize datasets by a ‘grouping variable’, typically an attribute column (spatial aggregation is covered in the next chapter). An example of attribute aggregation is calculating the number of people per continent based on country-level data (one row per country). The <code>world</code> dataset contains the necessary ingredients: the columns <code>pop</code> and <code>continent</code>, the population and the grouping variable respectively. The aim is to find the <code>sum()</code> of country populations for each continent. This can be done with the base R function <code>aggregate()</code> as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_agg1 =<span class="st"> </span><span class="kw">aggregate</span>(pop ~<span class="st"> </span>continent, <span class="dt">FUN =</span> sum, <span class="dt">data =</span> world, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)
+<span class="kw">class</span>(world_agg1)
+<span class="co">#&gt; [1] &quot;data.frame&quot;</span></code></pre></div>
+<p>The result is a non-spatial data frame with six rows, one per continent, and two columns reporting the name and population of each continent (see Table <a href="attr.html#tab:continents">3.2</a> with results for the top 3 most populous continents).</p>
+<p><code>aggregate()</code> is a generic function which means that it behaves differently depending on its inputs. <strong>sf</strong> provides a function that can be called directly with <code>sf:::aggregate()</code> that is activated when a <code>by</code> argument is provided, rather than using the <code>~</code> to refer to the grouping variable:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_agg2 =<span class="st"> </span><span class="kw">aggregate</span>(world[<span class="st">&quot;pop&quot;</span>], <span class="dt">by =</span> <span class="kw">list</span>(world$continent),
+                       <span class="dt">FUN =</span> sum, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)
+<span class="kw">class</span>(world_agg2)
+<span class="co">#&gt; [1] &quot;sf&quot;         &quot;data.frame&quot;</span></code></pre></div>
+<p>As illustrated above, an object of class <code>sf</code> is returned this time. <code>world_agg2</code> which is a spatial object containing 6 polygons representing the columns of the world.</p>
+<p><code>summarize()</code> is the <strong>dplyr</strong> equivalent of <code>aggregate()</code>. It usually follows <code>group_by()</code>, which specifies the grouping variable, as illustrated below:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_agg3 =<span class="st"> </span><span class="kw">group_by</span>(world, continent) %&gt;%
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">pop =</span> <span class="kw">sum</span>(pop, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</code></pre></div>
-<p>This approach is flexible, allowing the resulting columns to be named. Further, omitting the grouping variable puts everything in one group. This means <code>summarize()</code> can be used to calculate the Earth’s total population (~7 billion) and number of countries:</p>
+<p>This approach is flexible, allowing the resulting columns to be named. <code>summarize()</code> can also be used to calculate the Earth’s total population (~7 billion) and number of countries as you will see if execute the following command (result not shown):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">pop =</span> <span class="kw">sum</span>(pop, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="dt">n_countries =</span> <span class="kw">n</span>())</code></pre></div>
-<pre><code>#&gt;        pop n_countries
-#&gt; 1 7.21e+09         177</code></pre>
-<p>The result is a spatial data frame of class <code>sf</code> (only the non-spatial results are shown): the aggregation procedure dissolves boundaries within continental land masses (explained in detail in section <a href="transform.html#geometry-unions">5.3.6</a>). In the previous code chunk <code>pop</code> and <code>n_countries</code> are column names in the result. <code>sum()</code> and <code>n()</code> were the aggregating functions.</p>
+<p>Again, this returns spatial data frame of class <code>sf</code>: the aggregation procedure dissolves boundaries within continental land masses (explained in detail in section <a href="transform.html#geometry-unions">5.3.6</a>), resulting in a single feature representing the world. In the previous code chunk <code>pop</code> and <code>n_countries</code> are column names in the result. <code>sum()</code> and <code>n()</code> were the aggregating functions.</p>
 <p>Let’s combine what we’ve learned so far about <strong>dplyr</strong> by chaining together functions to find the world’s 3 most populous continents (with <code>dplyr::n()</code> ) and the number of countries they contain. The output of the following code is presented in Table <a href="attr.html#tab:continents">3.2</a>):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world %&gt;%<span class="st"> </span>
 <span class="st">  </span>dplyr::<span class="kw">select</span>(pop, continent) %&gt;%<span class="st"> </span>
