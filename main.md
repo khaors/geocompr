@@ -266,7 +266,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveb5bc608d8515ebeb
+preserved7a48df5c6fa7f24
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3105,7 +3105,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservecb7d07d5e1d46b2a
+preserve80cc604fe511db63
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5994,7 +5994,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve4fe6e081e4cb2cc0
+preserve0a44a8d2169741de
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6610,7 +6610,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve93b87e9b7c4cafe2
+preserved29b6d9de40b4c1f
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -8222,6 +8222,7 @@ library(pROC)
 library(raster)
 library(RSAGA)
 library(sf)
+library(tidyverse)
 ```
 
 - Required data will be downloaded in due course.
@@ -8282,9 +8283,15 @@ To make the ratio between landslide and non-landslide points more balanced, we r
 
 
 ```r
-non = landslides[landslides$lslpts == FALSE, ]
-ind = sample(1:nrow(non), nrow(landslides[landslides$lslpts == TRUE, ]))
-lsl = rbind(non[ind, ], landslides[landslides$lslpts == TRUE, ])
+# select non-landslide points
+non = filter(landslides, lslpts == FALSE)
+# select landslide points
+lsl_pts = filter(landslides, lslpts == TRUE)
+# randomly select 175 non-landslide points
+ind = sample(1:nrow(non), nrow(lsl_pts))
+# rowbind randomly selected non-landslide points and 
+# landslide points
+lsl = rbind(non[ind, ], lsl_pts)
 ```
 
 `dem` is in fact a digital elevation model and consists of two list elements with the first being a raster header and the second being a matrix containing the altitudinal values.
@@ -8296,15 +8303,17 @@ dem =
   raster(dem$data, 
          crs = dem$header$proj4string,
          xmn = dem$header$xllcorner, 
-         xmx = dem$header$xllcorner + dem$header$ncols * dem$header$cellsize,
+         xmx = dem$header$xllcorner + 
+           dem$header$ncols * dem$header$cellsize,
          ymn = dem$header$yllcorner,
-         ymx = dem$header$yllcorner + dem$header$nrows * dem$header$cellsize)
+         ymx = dem$header$yllcorner + 
+           dem$header$nrows * dem$header$cellsize)
 ```
 
 To model the probability for landslide occurrence, we need some predictors.
 We will use selected terrain attributes frequently associated with landsliding [@muenchow_geomorphic_2012], all of which can be computed from the provided digital elevation model (`dem`) using R-GIS bridges (see Chapter \@ref(gis)).
 We leave it as an exercise to the reader to compute the terrain attribute rasters and extract the corresponding values to our landslide/non-landslide dataframe (see also exercises).
-The first three rows of the resulting dataframe (still named `lsl`) could look like this:
+The first three rows of the resulting dataframe (still named `lsl`) excluding the coordinates could look like this:
 <!-- has anybody an idea why I have to run the following code chunk two times to make it work when rendering the book with `bookdown::render_book()`?-->
 
 
@@ -8312,11 +8321,12 @@ The first three rows of the resulting dataframe (still named `lsl`) could look l
 
 
 ```r
-head(lsl, 3)
-#>           x       y lslpts slope    cplan    cprof elev log_carea
-#> 1337 715378 9559007  FALSE  39.7  0.02512 -0.00311 2357      2.66
-#> 384  714358 9560017  FALSE  55.7 -0.03212 -0.00491 2093      2.96
-#> 1551 713958 9560807  FALSE  36.7 -0.00347  0.00615 1815      2.82
+dplyr::select(lsl, -x, -y) %>%
+  head(., 3)
+#>      lslpts slope    cplan    cprof elev log_carea
+#> 1337  FALSE  39.7  0.02512 -0.00311 2357      2.66
+#> 384   FALSE  55.7 -0.03212 -0.00491 2093      2.96
+#> 1551  FALSE  36.7 -0.00347  0.00615 1815      2.82
 ```
 
 The added columns are:
@@ -8382,7 +8392,8 @@ This function also expects the fitted model as input as well as a raster stack w
 
 
 ```r
-pred = raster::predict(object = ta, model = fit, type = "response")
+pred = raster::predict(object = ta, model = fit,
+                       type = "response")
 ```
 
 <div class="figure" style="text-align: center">
@@ -8499,14 +8510,15 @@ For a specific task, we can run:
 
 ```r
 lrns = listLearners(task)
-head(lrns[, 1:4])
-#>                 class                         name  short.name package
-#> 1    classif.binomial          Binomial Regression    binomial   stats
-#> 2 classif.featureless       Featureless classifier featureless     mlr
-#> 3         classif.fnn     Fast k-Nearest Neighbour         fnn     FNN
-#> 4         classif.knn           k-Nearest Neighbor         knn   class
-#> 5         classif.lda Linear Discriminant Analysis         lda    MASS
-#> 6      classif.logreg          Logistic Regression      logreg   stats
+dplyr::select(lrns, class, name, package) %>%
+  head
+#>                 class                         name package
+#> 1    classif.binomial          Binomial Regression   stats
+#> 2 classif.featureless       Featureless classifier     mlr
+#> 3         classif.fnn     Fast k-Nearest Neighbour     FNN
+#> 4         classif.knn           k-Nearest Neighbor   class
+#> 5         classif.lda Linear Discriminant Analysis    MASS
+#> 6      classif.logreg          Logistic Regression   stats
 ```
 
 This yields all learners able to model two-class problems (landslide yes or no).
@@ -8523,8 +8535,9 @@ lrn = makeLearner(cl = "classif.binomial",
                   link = "logit",
                   predict.type = "prob",
                   fix.factors.prediction = TRUE)
-# run the following lines to find out from which package the learner is taken
-# and how to access the corresponding help file(s)
+# run the following lines to find out from which package the
+# learner is taken and how to access the corresponding help 
+# file(s)
 # getLearnerPackages(learner)
 # helpLearner(learner)
 ```
@@ -8561,7 +8574,8 @@ This ensures that a spatial partitioning with five partitions is chosen based on
 
 
 ```r
-resampling = makeResampleDesc(method = "SpRepCV", folds = 5, reps = 100)
+resampling = makeResampleDesc(method = "SpRepCV", folds = 5, 
+                              reps = 100)
 ```
 
 To execute the spatial resampling, we run `resample()` using the specified learner, task, resampling strategy and of course the performance measure, here the AUROC.
@@ -8571,7 +8585,8 @@ This takes a short while because we ask R to compute the AUROC from 500 models.
 
 ```r
 set.seed(012348)
-sp_cv = mlr::resample(learner = lrn, task = task, resampling = resampling, 
+sp_cv = mlr::resample(learner = lrn, task = task,
+                      resampling = resampling, 
                       measures = mlr::auc)
 ```
 

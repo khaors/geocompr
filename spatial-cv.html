@@ -353,7 +353,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">library</span>(pROC)
 <span class="kw">library</span>(raster)
 <span class="kw">library</span>(RSAGA)
-<span class="kw">library</span>(sf)</code></pre></div>
+<span class="kw">library</span>(sf)
+<span class="kw">library</span>(tidyverse)</code></pre></div>
 <ul>
 <li>Required data will be downloaded in due course.</li>
 </ul>
@@ -370,23 +371,32 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>To introduce spatial CV by example, we will use a landslide dataset from Southern Ecuador (Figure <a href="spatial-cv.html#fig:lsl-map">13.1</a>). For a detailed description of the dataset and the study area please refer to <span class="citation">Muenchow, Brenning, and Richter (<a href="#ref-muenchow_geomorphic_2012">2012</a>)</span>. One can find a subset of the corresponding data in the <strong>RSAGA</strong> package. The following command loads three datasets, a <code>data.frame</code> named <code>landslides</code>, a <code>list</code> named <code>dem</code>, and an <code>sf</code>-object named <code>study_area</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;landslides&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;RSAGA&quot;</span>)</code></pre></div>
 <p><code>landslides</code> contains a factor column <code>lslpts</code> where <code>TRUE</code> corresponds to an observed landslide initiation point and <code>FALSE</code> to points where no landsliding occurred. Columns <code>x</code> and <code>y</code> contain the corresponding coordinates. The landslide initiation point is located in the scarp of a landslide polygon. The coordinates for the non-landslide points were sampled randomly with the restriction to fall outside of the slightly buffered landslide polygons. <code>summary(landslides$lslpts)</code> tells us that 175 landslide points and 1360 non-landslide points are available. To make the ratio between landslide and non-landslide points more balanced, we randomly sample 175 from the 1360 non-landslide points.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">non =<span class="st"> </span>landslides[landslides$lslpts ==<span class="st"> </span><span class="ot">FALSE</span>, ]
-ind =<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span>:<span class="kw">nrow</span>(non), <span class="kw">nrow</span>(landslides[landslides$lslpts ==<span class="st"> </span><span class="ot">TRUE</span>, ]))
-lsl =<span class="st"> </span><span class="kw">rbind</span>(non[ind, ], landslides[landslides$lslpts ==<span class="st"> </span><span class="ot">TRUE</span>, ])</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># select non-landslide points</span>
+non =<span class="st"> </span><span class="kw">filter</span>(landslides, lslpts ==<span class="st"> </span><span class="ot">FALSE</span>)
+<span class="co"># select landslide points</span>
+lsl_pts =<span class="st"> </span><span class="kw">filter</span>(landslides, lslpts ==<span class="st"> </span><span class="ot">TRUE</span>)
+<span class="co"># randomly select 175 non-landslide points</span>
+ind =<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span>:<span class="kw">nrow</span>(non), <span class="kw">nrow</span>(lsl_pts))
+<span class="co"># rowbind randomly selected non-landslide points and </span>
+<span class="co"># landslide points</span>
+lsl =<span class="st"> </span><span class="kw">rbind</span>(non[ind, ], lsl_pts)</code></pre></div>
 <p><code>dem</code> is in fact a digital elevation model and consists of two list elements with the first being a raster header and the second being a matrix containing the altitudinal values. To transform this list into a <code>raster</code> object, we can write:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dem =<span class="st"> </span>
 <span class="st">  </span><span class="kw">raster</span>(dem$data, 
          <span class="dt">crs =</span> dem$header$proj4string,
          <span class="dt">xmn =</span> dem$header$xllcorner, 
-         <span class="dt">xmx =</span> dem$header$xllcorner +<span class="st"> </span>dem$header$ncols *<span class="st"> </span>dem$header$cellsize,
+         <span class="dt">xmx =</span> dem$header$xllcorner +<span class="st"> </span>
+<span class="st">           </span>dem$header$ncols *<span class="st"> </span>dem$header$cellsize,
          <span class="dt">ymn =</span> dem$header$yllcorner,
-         <span class="dt">ymx =</span> dem$header$yllcorner +<span class="st"> </span>dem$header$nrows *<span class="st"> </span>dem$header$cellsize)</code></pre></div>
-<p>To model the probability for landslide occurrence, we need some predictors. We will use selected terrain attributes frequently associated with landsliding <span class="citation">(Muenchow, Brenning, and Richter <a href="#ref-muenchow_geomorphic_2012">2012</a>)</span>, all of which can be computed from the provided digital elevation model (<code>dem</code>) using R-GIS bridges (see Chapter <a href="gis.html#gis">10</a>). We leave it as an exercise to the reader to compute the terrain attribute rasters and extract the corresponding values to our landslide/non-landslide dataframe (see also exercises). The first three rows of the resulting dataframe (still named <code>lsl</code>) could look like this: <!-- has anybody an idea why I have to run the following code chunk two times to make it work when rendering the book with `bookdown::render_book()`?--></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(lsl, <span class="dv">3</span>)
-<span class="co">#&gt;           x       y lslpts slope    cplan    cprof elev log_carea</span>
-<span class="co">#&gt; 1337 715378 9559007  FALSE  39.7  0.02512 -0.00311 2357      2.66</span>
-<span class="co">#&gt; 384  714358 9560017  FALSE  55.7 -0.03212 -0.00491 2093      2.96</span>
-<span class="co">#&gt; 1551 713958 9560807  FALSE  36.7 -0.00347  0.00615 1815      2.82</span></code></pre></div>
+         <span class="dt">ymx =</span> dem$header$yllcorner +<span class="st"> </span>
+<span class="st">           </span>dem$header$nrows *<span class="st"> </span>dem$header$cellsize)</code></pre></div>
+<p>To model the probability for landslide occurrence, we need some predictors. We will use selected terrain attributes frequently associated with landsliding <span class="citation">(Muenchow, Brenning, and Richter <a href="#ref-muenchow_geomorphic_2012">2012</a>)</span>, all of which can be computed from the provided digital elevation model (<code>dem</code>) using R-GIS bridges (see Chapter <a href="gis.html#gis">10</a>). We leave it as an exercise to the reader to compute the terrain attribute rasters and extract the corresponding values to our landslide/non-landslide dataframe (see also exercises). The first three rows of the resulting dataframe (still named <code>lsl</code>) excluding the coordinates could look like this: <!-- has anybody an idea why I have to run the following code chunk two times to make it work when rendering the book with `bookdown::render_book()`?--></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dplyr::<span class="kw">select</span>(lsl, -x, -y) %&gt;%
+<span class="st">  </span><span class="kw">head</span>(., <span class="dv">3</span>)
+<span class="co">#&gt;      lslpts slope    cplan    cprof elev log_carea</span>
+<span class="co">#&gt; 1337  FALSE  39.7  0.02512 -0.00311 2357      2.66</span>
+<span class="co">#&gt; 384   FALSE  55.7 -0.03212 -0.00491 2093      2.96</span>
+<span class="co">#&gt; 1551  FALSE  36.7 -0.00347  0.00615 1815      2.82</span></code></pre></div>
 <p>The added columns are:</p>
 <ul>
 <li><code>slope</code>: slope angle (°)</li>
@@ -428,7 +438,8 @@ fit
 <span class="co">#&gt;  1337   384  1551  1555   209  1135 </span>
 <span class="co">#&gt; 0.431 0.904 0.387 0.272 0.159 0.784</span></code></pre></div>
 <p>We can also predict spatially by applying the coefficients to our predictor rasters. We could do this manually but can also use <strong>raster</strong>’s <code>predict()</code> function. This function also expects the fitted model as input as well as a raster stack with the predictors exactly named as in the fitted model (Figure <a href="spatial-cv.html#fig:lsl-susc">13.2</a>).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pred =<span class="st"> </span>raster::<span class="kw">predict</span>(<span class="dt">object =</span> ta, <span class="dt">model =</span> fit, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pred =<span class="st"> </span>raster::<span class="kw">predict</span>(<span class="dt">object =</span> ta, <span class="dt">model =</span> fit,
+                       <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:lsl-susc"></span>
 <img src="figures/lsl-susc-1.png" alt="Spatial prediction of landslide susceptibility using a  GLM. CRS: UTM zone 17S (EPSG: 32717)." width="576" />
 <p class="caption">
@@ -479,21 +490,23 @@ task =<span class="st"> </span><span class="kw">makeClassifTask</span>(<span cla
 <p><code>makeLearner()</code> determines the statistical learning method to use. All classification <strong>learners</strong> start with <code>classif.</code> and all regression learners with <code>regr.</code> (see <code>?makeLearners</code> for more details). <code>listLearners()</code> helps to find out about all available learners and from which package <strong>mlr</strong> imports them. For a specific task, we can run:</p>
 <!-- no idea, why render_book() fails frequently because function listLearners() cannot be found...-->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lrns =<span class="st"> </span><span class="kw">listLearners</span>(task)
-<span class="kw">head</span>(lrns[, <span class="dv">1</span>:<span class="dv">4</span>])
-<span class="co">#&gt;                 class                         name  short.name package</span>
-<span class="co">#&gt; 1    classif.binomial          Binomial Regression    binomial   stats</span>
-<span class="co">#&gt; 2 classif.featureless       Featureless classifier featureless     mlr</span>
-<span class="co">#&gt; 3         classif.fnn     Fast k-Nearest Neighbour         fnn     FNN</span>
-<span class="co">#&gt; 4         classif.knn           k-Nearest Neighbor         knn   class</span>
-<span class="co">#&gt; 5         classif.lda Linear Discriminant Analysis         lda    MASS</span>
-<span class="co">#&gt; 6      classif.logreg          Logistic Regression      logreg   stats</span></code></pre></div>
+dplyr::<span class="kw">select</span>(lrns, class, name, package) %&gt;%
+<span class="st">  </span>head
+<span class="co">#&gt;                 class                         name package</span>
+<span class="co">#&gt; 1    classif.binomial          Binomial Regression   stats</span>
+<span class="co">#&gt; 2 classif.featureless       Featureless classifier     mlr</span>
+<span class="co">#&gt; 3         classif.fnn     Fast k-Nearest Neighbour     FNN</span>
+<span class="co">#&gt; 4         classif.knn           k-Nearest Neighbor   class</span>
+<span class="co">#&gt; 5         classif.lda Linear Discriminant Analysis    MASS</span>
+<span class="co">#&gt; 6      classif.logreg          Logistic Regression   stats</span></code></pre></div>
 <p>This yields all learners able to model two-class problems (landslide yes or no). We opt for the binomial classification method from the <strong>stats</strong> package which we already have used in section <a href="spatial-cv.html#conventional-model">13.3</a> and is implemented as <code>classif.binomial</code> in <strong>mlr</strong>. Additionally, we have to specify the link-function. We choose the <code>logit</code> link which is also the default when using the <code>binomial</code> family in <code>glm</code> (run <code>binomial()</code> to verify). <code>predict.type</code> determines the type of the prediction with <!-- Setting it to `response` produces class labels as output, which would be in our case `TRUE` or `FALSE`. --> <code>prob</code> resulting in a predicted probability for landslide occurrence between 0 and 1.<a href="#fn67" class="footnoteRef" id="fnref67"><sup>67</sup></a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lrn =<span class="st"> </span><span class="kw">makeLearner</span>(<span class="dt">cl =</span> <span class="st">&quot;classif.binomial&quot;</span>,
                   <span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>,
                   <span class="dt">predict.type =</span> <span class="st">&quot;prob&quot;</span>,
                   <span class="dt">fix.factors.prediction =</span> <span class="ot">TRUE</span>)
-<span class="co"># run the following lines to find out from which package the learner is taken</span>
-<span class="co"># and how to access the corresponding help file(s)</span>
+<span class="co"># run the following lines to find out from which package the</span>
+<span class="co"># learner is taken and how to access the corresponding help </span>
+<span class="co"># file(s)</span>
 <span class="co"># getLearnerPackages(learner)</span>
 <span class="co"># helpLearner(learner)</span></code></pre></div>
 <!--
@@ -517,10 +530,12 @@ identical(fit$coefficients, mlr_fit$coefficients)
 ```
 -->
 <p>In the beginning, it might seem a bit tedious to learn the <strong>mlr</strong> interface for modeling. But remember that one only has to learn one single interface to run 169 learners (<strong>mlr</strong> package version: 2.12). Additionally, (spatial) resampling in <strong>mlr</strong> is really easy and only requires two more steps.<a href="#fn68" class="footnoteRef" id="fnref68"><sup>68</sup></a> Please note that package <strong>sperrorest</strong> initially implemented spatial cross-validation in R <span class="citation">(A. Brenning <a href="#ref-brenning_spatial_2012">2012</a><a href="#ref-brenning_spatial_2012">b</a>)</span>. In the meantime, its functionality was integrated into the <strong>mlr</strong> package which is the reason why we are using <strong>mlr</strong>.<a href="#fn69" class="footnoteRef" id="fnref69"><sup>69</sup></a> The first thing to do is specifying a resampling method. We will use a 100-repeated 5-fold spatial CV. This ensures that a spatial partitioning with five partitions is chosen based on the provided coordinates in our <code>task</code> and that the partitioning is repeated 100 times.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">resampling =<span class="st"> </span><span class="kw">makeResampleDesc</span>(<span class="dt">method =</span> <span class="st">&quot;SpRepCV&quot;</span>, <span class="dt">folds =</span> <span class="dv">5</span>, <span class="dt">reps =</span> <span class="dv">100</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">resampling =<span class="st"> </span><span class="kw">makeResampleDesc</span>(<span class="dt">method =</span> <span class="st">&quot;SpRepCV&quot;</span>, <span class="dt">folds =</span> <span class="dv">5</span>, 
+                              <span class="dt">reps =</span> <span class="dv">100</span>)</code></pre></div>
 <p>To execute the spatial resampling, we run <code>resample()</code> using the specified learner, task, resampling strategy and of course the performance measure, here the AUROC. This takes a short while because we ask R to compute the AUROC from 500 models.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">012348</span>)
-sp_cv =<span class="st"> </span>mlr::<span class="kw">resample</span>(<span class="dt">learner =</span> lrn, <span class="dt">task =</span> task, <span class="dt">resampling =</span> resampling, 
+sp_cv =<span class="st"> </span>mlr::<span class="kw">resample</span>(<span class="dt">learner =</span> lrn, <span class="dt">task =</span> task,
+                      <span class="dt">resampling =</span> resampling, 
                       <span class="dt">measures =</span> mlr::auc)</code></pre></div>
 <!-- sp_cv and conv_cv have been saved in spatialcv.Rdata. I needed to run the modeling outside of the book since knitr sets its own seed and I am not sure if this actually helps to make sure that the same partitions are used in the cv.
 I really don't understand why I have to load spatialcv.Rdata here a third time...-->
