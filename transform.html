@@ -567,7 +567,7 @@ It is possible to use a EPSG code in a <code>proj4string</code> definition with 
 cat_raster_wgs84 =<span class="st"> </span><span class="kw">projectRaster</span>(cat_raster, <span class="dt">crs =</span> wgs84, <span class="dt">method =</span> <span class="st">&quot;ngb&quot;</span>)</code></pre></div>
 <p>Many properties of the new object differ from the previous one, which include the number of columns and rows (and therefore number of cells), resolution (transformed from meters into degrees), and extent, as illustrated in Table <a href="transform.html#tab:catraster">5.1</a> (note that the number of categories increases from 14 to 15 because of the addition of <code>NA</code> values, not because a new category has been created — the land cover classes are preserved). <!-- freq(cat_raster_wgs84) --> <!-- freq(cat_raster) --></p>
 <table>
-<caption><span id="tab:catraster">Table 5.1: </span>Key attributes original <code>cat_raster</code> and projected <code>cat_raster_wgs84</code> raster datasets.</caption>
+<caption><span id="tab:catraster">Table 5.1: </span>Key attributes in the original and projected categorical raster datasets.</caption>
 <thead>
 <tr class="header">
 <th align="left">CRS</th>
