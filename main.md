@@ -266,7 +266,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve5ff18f382356fac7
+preservef4148e82334ae3b1
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3105,7 +3105,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve3a4555b5218f92b7
+preserve64a8a915f294dda2
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5994,7 +5994,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve09c81492376ac119
+preserve2fcc760818b123ac
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6610,7 +6610,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservea9a19fdad4cd2e35
+preserve36be9b1cbd9dcb7a
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7901,8 +7901,6 @@ zion_transect = st_sfc(st_linestring(rbind(c(-113.2, 37.45), c(-112.9, 37.2)))) 
   st_sf()
 ```
 
-
-
 Importantly, it does not need to be a straight line.
 Try to imagine that you are planing to go on a hike - you can extract elevation along your proposed path.
 To extract a raster by line, the `along` argument needs to be set to `TRUE`. 
@@ -7994,7 +7992,7 @@ There are several alternatives to consider in those cases.
 Firstly, raster extraction could be parallelized when many vector objects are used.
 Instead of using just one CPU thread for the whole operation, vector objects could be split into several groups.
 Next, extraction would be performed independently for each group and the results would be combined.
-<!-- `?clusterR` + ref to big data chapter?? -->
+See the `?raster::clusterR()` for more information.
 <!-- tabularaster (ref to the vignette - https://cran.r-project.org/web/packages/tabularaster/vignettes/tabularaster-usage.html)-->
 Secondly, the **velox** package [@hunziker_velox:_2017] provides a fast method for extracting raster data that fits in the RAM memory.
 This process is described in detail at https://hunzikp.github.io/velox/extract.html.
@@ -8171,18 +8169,17 @@ grain_poly2 = grain_poly %>%
 
 ## Exercises
 
-1. The next two exercises will use a vector (`random_points`) and raster dataset (`ndvi`) from **RQGIS** package.
+The next two exercises will use a vector (`random_points`) and raster dataset (`ndvi`) from **RQGIS** package.
 We will also create a convex hull of the vector dataset (`ch`), which will represent an area of interest:
 
 ```r
 library(RQGIS)
-#> Loading required package: reticulate
 data(random_points)
 data(ndvi)
 ch = st_combine(random_points) %>% 
   st_convex_hull()
 ```
-Crop the `ndvi` raster using (1) the `random_points` dataset and (2) the `ch` dataset.
+1. Crop the `ndvi` raster using (1) the `random_points` dataset and (2) the `ch` dataset.
 Are there any difference in the output maps?
 Next, mask `ndvi` using these two datasets.
 Can you see any difference now?
