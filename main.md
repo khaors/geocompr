@@ -266,7 +266,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservef4148e82334ae3b1
+preserve172b13486f0f7af0
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3105,7 +3105,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve64a8a915f294dda2
+preserve2d3b850c2856f4b9
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5994,7 +5994,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve2fcc760818b123ac
+preserveb80af3b419a34838
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6610,7 +6610,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve36be9b1cbd9dcb7a
+preserve28ffe31f7a0db428
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -8169,17 +8169,18 @@ grain_poly2 = grain_poly %>%
 
 ## Exercises
 
-The next two exercises will use a vector (`random_points`) and raster dataset (`ndvi`) from **RQGIS** package.
+1. The next two exercises will use a vector (`random_points`) and raster dataset (`ndvi`) from **RQGIS** package.
 We will also create a convex hull of the vector dataset (`ch`), which will represent an area of interest:
 
 ```r
 library(RQGIS)
+#> Loading required package: reticulate
 data(random_points)
 data(ndvi)
 ch = st_combine(random_points) %>% 
   st_convex_hull()
 ```
-1. Crop the `ndvi` raster using (1) the `random_points` dataset and (2) the `ch` dataset.
+Crop the `ndvi` raster using (1) the `random_points` dataset and (2) the `ch` dataset.
 Are there any difference in the output maps?
 Next, mask `ndvi` using these two datasets.
 Can you see any difference now?

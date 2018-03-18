@@ -535,14 +535,17 @@ Figure 11.9: Illustration of vectorization of raster (left) into polygon (center
 </div>
 <div id="exercises-8" class="section level2">
 <h2><span class="header-section-number">11.6</span> Exercises</h2>
-<p>The next two exercises will use a vector (<code>random_points</code>) and raster dataset (<code>ndvi</code>) from <strong>RQGIS</strong> package. We will also create a convex hull of the vector dataset (<code>ch</code>), which will represent an area of interest:</p>
+<ol style="list-style-type: decimal">
+<li>The next two exercises will use a vector (<code>random_points</code>) and raster dataset (<code>ndvi</code>) from <strong>RQGIS</strong> package. We will also create a convex hull of the vector dataset (<code>ch</code>), which will represent an area of interest:</li>
+</ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(RQGIS)
+<span class="co">#&gt; Loading required package: reticulate</span>
 <span class="kw">data</span>(random_points)
 <span class="kw">data</span>(ndvi)
 ch =<span class="st"> </span><span class="kw">st_combine</span>(random_points) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">st_convex_hull</span>()</code></pre></div>
+<p>Crop the <code>ndvi</code> raster using (1) the <code>random_points</code> dataset and (2) the <code>ch</code> dataset. Are there any difference in the output maps? Next, mask <code>ndvi</code> using these two datasets. Can you see any difference now? How can you explain that?</p>
 <ol style="list-style-type: decimal">
-<li><p>Crop the <code>ndvi</code> raster using (1) the <code>random_points</code> dataset and (2) the <code>ch</code> dataset. Are there any difference in the output maps? Next, mask <code>ndvi</code> using these two datasets. Can you see any difference now? How can you explain that?</p></li>
 <li><p>Firstly, extract values from <code>ndvi</code> using <code>random_points</code>. Next, extract average values of <code>ndvi</code> using 90 meters buffers around each point from <code>random_points</code>. Compare these two sets of values. When extract by buffer could be more suitable than an extract by point?</p></li>
 <li>Subset points higher than 3100 meters in New Zealand (the <code>nz_height</code> object). Using the new object:
 <ul>
