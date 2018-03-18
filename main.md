@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-03-16'
+date: '2018-03-18'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-03-16 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-03-18 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -266,7 +266,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservee2198fb4c17a64b6
+preserve5ff18f382356fac7
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -366,15 +366,15 @@ See the [r-spatial](https://github.com/r-spatial/) organisation and conversation
 ] and a growing number of actively developed packages which are designed to work in harmony with **sf** (Table \@ref(tab:revdep)). 
 
 
-Table: (\#tab:revdep)The top 5 most downloaded packages that depend on sf, in terms of average number of downloads per day over the previous month. As of 2018-03-07 there are 63 packages which import sf.
+Table: (\#tab:revdep)The top 5 most downloaded packages that depend on sf, in terms of average number of downloads per day over the previous month. As of 2018-03-15 there are 64 packages which import sf.
 
 package    Downloads
 --------  ----------
-plotly          1687
-raster          1446
-spData           794
-spdep            765
-leaflet          580
+plotly          2162
+raster          1579
+spData           869
+spdep            837
+leaflet          654
 
 ## The history of R-spatial
 
@@ -3105,7 +3105,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve4cb2fe77efd18306
+preserve3a4555b5218f92b7
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5994,7 +5994,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve543cd995549a7e63
+preserve09c81492376ac119
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6610,7 +6610,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve60e50fc4a139acb0
+preservea9a19fdad4cd2e35
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -8171,15 +8171,27 @@ grain_poly2 = grain_poly %>%
 
 ## Exercises
 
-<!-- 1. -->
-<!-- info about the data (ndvi + random points) -->
-<!-- create a convex hull -->
-<!-- ex: crop by convex hull -->
-<!-- ex: mask by random points and mask by convex hull -->
-<!-- ex: compare the results -->
-<!-- 2. -->
-<!-- ex: extract nvdi by the random points with 90 meters buffer -->
-<!-- explain why -->
+1. The next two exercises will use a vector (`random_points`) and raster dataset (`ndvi`) from **RQGIS** package.
+We will also create a convex hull of the vector dataset (`ch`), which will represent an area of interest:
+
+```r
+library(RQGIS)
+#> Loading required package: reticulate
+data(random_points)
+data(ndvi)
+ch = st_combine(random_points) %>% 
+  st_convex_hull()
+```
+Crop the `ndvi` raster using (1) the `random_points` dataset and (2) the `ch` dataset.
+Are there any difference in the output maps?
+Next, mask `ndvi` using these two datasets.
+Can you see any difference now?
+How can you explain that?
+
+1. Firstly, extract values from `ndvi` using `random_points`.
+Next, extract average values of `ndvi` using 90 meters buffers around each point from `random_points`. 
+Compare these two sets of values. 
+When extract by buffer could be more suitable than an extract by point?
 
 1. Subset points higher than 3100 meters in New Zealand (the `nz_height` object). 
 Using the new object:
