@@ -266,7 +266,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveb385dadd4a6eb3fb
+preserve1f2fcf1b71c3bdc5
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3105,7 +3105,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservebae59f56e89959e9
+preservecd89ca78df1ef6bb
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4641,7 +4641,7 @@ As mentioned before, most of the times, we need these operations in order to ali
 A matching projection is of course also required but is already covered in section \@ref(reprojecting-raster-geometries).
 In any case, there are other reasons why to perform a geometric operation on a single raster image.
 For instance, in chapter \@ref(location) we define metropolitan areas in Germany as 20 km^2^ pixels with more than 500,000 inhabitants. 
-The original inhabitant raster, however, has a resolution of 1 km^2^ which is why we will decrease (aggregate) the resolution by a factor of 20 (see section \@ref(define-metropolitan-areas).
+The original inhabitant raster, however, has a resolution of 1 km^2^ which is why we will decrease (aggregate) the resolution by a factor of 20 (see section \@ref(define-metropolitan-areas)).
 
 ### Extent and origin
 
@@ -5993,7 +5993,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservec031e81df0ba2677
+preserve55e537d54bc4879f
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6609,7 +6609,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve738aa7037cd3c84f
+preserved5e16469b6f4f9ce
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7816,12 +7816,16 @@ library(spDataLarge)
 
 ## Introduction
 
-<!-- intro -->
+In this section we will focus on the interactions between a raster and vector model.
+It includes four main techniques.
+Raster cropping and masking using vector objects is covered in section \@ref(raster-cropping).
+In section \@ref(raster-extraction), we will describe how raster values can be extract using different types of vector data - points, lines and polygons.
+Finally, sections \@ref(rasterization) \@ref(spatial-vectorization) show how to convert vectors into rasters and raster images into vectors.
+We will illustrate these concepts and suggest when they can be useful.
 <!-- operations are not symmetrical, for example: -->
 <!-- - raster clipping - no vector counterpart -->
 <!-- - raster extraction is connected to some methods used in vectorization and rasterization -->
 <!-- - etc. -->
-<!-- and 'rasterization' is covered in section \@ref(rasterization) -->
 
 ## Raster cropping
 
