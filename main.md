@@ -266,7 +266,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve1ff71882ad5ecb5c
+preserve6b62af1c763bba76
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3105,7 +3105,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve476dfe0a50463452
+preserve00bace0cf676c328
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5994,7 +5994,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservea4b7fe23cdd2b3d5
+preservefc42f2cf699eea62
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6610,7 +6610,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve23e5adf45b8fe049
+preserve87c98c495a85b6bf
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -8221,12 +8221,12 @@ Using the new object:
 <!--chapter:end:12-algorithms.Rmd-->
 
 
-# Spatial modeling and cross-validation {#spatial-cv}
+# Spatial cross-validation for machine learning {#spatial-cv}
 
 ## Prerequisites {-}
 
 This chapter requires a strong grasp of spatial data analysis and processing, covered in chapters \@ref(spatial-class) to \@ref(transform).
-You should also be familiar with linear regression and its generalized extensions [e.g. @zuur_mixed_2009;@james_introduction_2013].
+You should also be familiar with linear regression, its generalized extensions and machine learning [e.g. @zuur_mixed_2009;@james_introduction_2013].
 
 The chapter uses the following packages:
 
@@ -8250,17 +8250,18 @@ This chapter makes use of some of this statistical power, by demonstrating metho
 The main focus, however, is the use of spatial cross-validation (or 'spatial CV' for short, a term we will define shortly) to assess model performance and reduce spatial bias.
 Spatial CV is an excellent example of using statistical methods to model spatial data and, at the time of writing, the technique is better supported in R than any other language.
 
-Statistical learning aims at understanding data by building models which disentangle underlying relationships.
-Statistical learning can be roughly grouped into supervised and unsupervised techniques, both of which are used throughout a vast range of disciplines such as economics, physics, medicine, biology, ecology and geography [@james_introduction_2013].
+Statistical learning comprises a large suite of techniques for understanding data.
+Statistical learning can be roughly grouped into supervised and unsupervised techniques, both of which are used throughout a vast range of disciplines including economics, physics, medicine, biology, ecology and geography [@james_introduction_2013].
 In this chapter we will focus on supervised techniques, i.e., we have a response variable, in our case this will be a binary one (landslide vs. non-landslide occurrence) but could be also a numeric (pH value), an integer (species richness) or a categorical variable (land use).
-Supervised techniques such as regression and machine learning model the relationship between the response variable and various predictors.
-Using either regression or machine learning techniques depends on the aim: statistical inference or prediction.
-(Semi-)Parametric regression techniques are especially useful if the aim is statistical inference, i.e. if we are interested in a predictor's significance or its contribution to a specific model.
-To trust these interpretations we need to perform a thorough model validation testing if one or several of the underlying model assumptions (heterogeneity, independence, etc.) have been violated [@zuur_mixed_2009].
-This is what we typically attribute to the fields of statistics.
-By contrast, machine learning aims at predictions and is especially appealing due to their lack of assumptions.
-Though statistical inference is impossible [@james_introduction_2013], various studies have shown that machine learning are at least at par with regression techniques regarding predictive performance [e.g., @schratz_performance_nodate]. <!-- add one more source -->
-Naturally, with the advent of big data, machine learning has even gained in popularity since frequently the underlying relationship between variables is less important than the prediction such as future customer behavior.
+Supervised techniques model the relationship between the response variable and various predictors.
+For this we can use either regression or machine learning techniques depending on the aim: statistical inference or prediction.
+(Semi-)Parametric regression techniques are especially useful if the aim is statistical inference, i.e. if we are interested in a predictor's significance or its importance for a specific model.
+To trust the p-values and standard errors of such model we need to perform a thorough model validation testing if one or several of the underlying model assumptions (heterogeneity, independence, etc.) have been violated [@zuur_mixed_2009].
+The classical field of statistics usually deals with this kind of knowledge building.
+By contrast, machine learning aims at predictions and is especially appealing due to the lack of assumptions.
+Though statistical inference is impossible [@james_introduction_2013], various studies have shown that machine learning is at least at par with regression techniques regarding predictive performance [e.g., @schratz_performance_nodate]. <!-- add one more source -->
+Naturally, with the advent of big data, machine learning has even gained in popularity since frequently the underlying relationship between variables is less important than the prediction.
+Think for instance of future customer behavior or the classification of e-mails as spam.
 Hence, the difference between classical statistics and machine learning is the aim. 
 The former is used to explain relationships, and the latter is used for predictions.
 Note that we can borrow regression techniques from statistics for machine learning when the aim is prediction.
