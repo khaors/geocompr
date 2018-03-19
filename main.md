@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-03-18'
+date: '2018-03-19'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-03-18 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-03-19 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -266,7 +266,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve413257032d69dcee
+preserve1ff71882ad5ecb5c
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3105,7 +3105,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveb8e80d1003e320c6
+preserve476dfe0a50463452
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5994,7 +5994,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve7550fe758e11729b
+preservea4b7fe23cdd2b3d5
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6610,7 +6610,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve405922b78c5f1ada
+preserve23e5adf45b8fe049
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7901,8 +7901,6 @@ zion_transect = st_sfc(st_linestring(rbind(c(-113.2, 37.45), c(-112.9, 37.2)))) 
   st_sf()
 ```
 
-
-
 Importantly, it does not need to be a straight line.
 Try to imagine that you are planing to go on a hike - you can extract elevation along your proposed path.
 To extract a raster by line, the `along` argument needs to be set to `TRUE`. 
@@ -7994,7 +7992,7 @@ There are several alternatives to consider in those cases.
 Firstly, raster extraction could be parallelized when many vector objects are used.
 Instead of using just one CPU thread for the whole operation, vector objects could be split into several groups.
 Next, extraction would be performed independently for each group and the results would be combined.
-<!-- `?clusterR` + ref to big data chapter?? -->
+See the `?raster::clusterR()` for more information.
 <!-- tabularaster (ref to the vignette - https://cran.r-project.org/web/packages/tabularaster/vignettes/tabularaster-usage.html)-->
 Secondly, the **velox** package [@hunziker_velox:_2017] provides a fast method for extracting raster data that fits in the RAM memory.
 This process is described in detail at https://hunzikp.github.io/velox/extract.html.
@@ -8171,18 +8169,17 @@ grain_poly2 = grain_poly %>%
 
 ## Exercises
 
-1. The next two exercises will use a vector (`random_points`) and raster dataset (`ndvi`) from **RQGIS** package.
+The next two exercises will use a vector (`random_points`) and raster dataset (`ndvi`) from **RQGIS** package.
 We will also create a convex hull of the vector dataset (`ch`), which will represent an area of interest:
 
 ```r
 library(RQGIS)
-#> Loading required package: reticulate
 data(random_points)
 data(ndvi)
 ch = st_combine(random_points) %>% 
   st_convex_hull()
 ```
-Crop the `ndvi` raster using (1) the `random_points` dataset and (2) the `ch` dataset.
+1. Crop the `ndvi` raster using (1) the `random_points` dataset and (2) the `ch` dataset.
 Are there any difference in the output maps?
 Next, mask `ndvi` using these two datasets.
 Can you see any difference now?
@@ -8224,7 +8221,7 @@ Using the new object:
 <!--chapter:end:12-algorithms.Rmd-->
 
 
-# Spatial cross-validation {#spatial-cv}
+# Spatial modeling and cross-validation {#spatial-cv}
 
 ## Prerequisites {-}
 
@@ -8258,16 +8255,19 @@ Statistical learning can be roughly grouped into supervised and unsupervised tec
 In this chapter we will focus on supervised techniques, i.e., we have a response variable, in our case this will be a binary one (landslide vs. non-landslide occurrence) but could be also a numeric (pH value), an integer (species richness) or a categorical variable (land use).
 Supervised techniques such as regression and machine learning model the relationship between the response variable and various predictors.
 Using either regression or machine learning techniques depends on the aim: statistical inference or prediction.
-Regression techniques are especially useful if the aim is statistical inference, i.e. if we are interested in a predictor's significance or its contribution to a specific model.
-To trust the model outcomes we need to perform a thorough model validation testing if one or several of the underlying model assumptions (heterogeneity, independence, etc.) have been violated [@zuur_mixed_2009].
-By contrast, machine learning approaches are especially appealing due to their lack of assumptions.
+(Semi-)Parametric regression techniques are especially useful if the aim is statistical inference, i.e. if we are interested in a predictor's significance or its contribution to a specific model.
+To trust these interpretations we need to perform a thorough model validation testing if one or several of the underlying model assumptions (heterogeneity, independence, etc.) have been violated [@zuur_mixed_2009].
+This is what we typically attribute to the fields of statistics.
+By contrast, machine learning aims at predictions and is especially appealing due to their lack of assumptions.
 Though statistical inference is impossible [@james_introduction_2013], various studies have shown that machine learning are at least at par with regression techniques regarding predictive performance [e.g., @schratz_performance_nodate]. <!-- add one more source -->
 Naturally, with the advent of big data, machine learning has even gained in popularity since frequently the underlying relationship between variables is less important than the prediction such as future customer behavior.
-
-Though prediction will be the aim of the modeling in this chapter, we will not use machine learning but a simple generalized linear model (GLM).^[Nevertheless, a generalized additive model or a machine learning approach would be more suitable for our dataset (see exercises).
-We will show in chapter \@ref(eco) how to use spatial cross-validation with a machine learning approach.]
-This is because we can use also regression techniques such as a GLM without having to worry too much about possible model misspecifications when the aim is prediction.
-Additionally, GLMs are probably familiar to most readers, and therefore instead of explaining in detail the model building we can focus on the specialty of geographic data in a modeling context and spatial CV.^[Readers who are in need of refreshing their regression skills might have a look at @zuur_mixed_2009 and @james_introduction_2013, respectively.]
+Hence, the difference between classical statistics and machine learning is the aim. 
+The former is used to explain relationships, and the latter is used for predictions.
+Note that we can borrow regression techniques from statistics for machine learning when the aim is prediction.
+In this case we do not have too worry too much about possible model misspecifications since we explicitly do not want to do statistical inference.
+In fact, in this chapter the aim will be the (spatial) prediction of landslide susceptibility. 
+We will start out with a generalized linear model (GLM) which is probably familiar to most readers^[Readers who are in need of refreshing their regression skills might have a look at @zuur_mixed_2009 and @james_introduction_2013, respectively.], before moving on to using a typical machine learning algorithm, namely a random forest model.
+Instead of explaining in detail the models we will focus on the specialty of geographic data in a modeling context and the models' predictive performance via spatial CV.
 
 CV determines a model's ability to predict new data or differently put its ability to generalize.
 To achieve this, CV splits a dataset (repeatedly) into test and training sets.
@@ -8629,7 +8629,16 @@ As expected, the spatially cross-validated result yields lower AUROC values on a
 </div>
 
 ## (Spatial) Tuning of machine-learning hyperparameters
+<!-- exercise: assess predictive performance without using an inner fold -->
+What is machine-learning?
 
+> Machine learning, more specifically the field of predictive modeling is primarily concerned with minimizing the error of a model or making the most accurate predictions possible, at the expense of explainability. In applied machine learning we will borrow, reuse and steal algorithms from many different fields, including statistics and use them towards these ends.
+
+[Jason Brownlee](https://machinelearningmastery.com/linear-regression-for-machine-learning/)
+
+This means that parametric models such as (generalized) linear regression are also used in the field of ma
+
+Machine-learning differs from parametric models in that 
 difference parameters and hyperparameters
 example: random forest and short intro what it is
 best practice: inner fold -> Patrick figure
