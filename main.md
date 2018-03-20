@@ -266,7 +266,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve5cdbe8995273f204
+preserve9157d304f2b38121
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3105,7 +3105,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservedd3ada1098dbb6d7
+preservecfb06545c597ec4b
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5993,7 +5993,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve37bb9fc378cc4966
+preserve9ec56a5021cfc91c
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6609,7 +6609,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve479c135e1f5decb1
+preserveed57772eaf8969e1
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6898,16 +6898,15 @@ Results of changing values for these simultaneously are shown in Figure \@ref(fi
 
 
 ```r
-breaks = c(0, 3, 4, 5) * 1e4
 tm_shape(nz) + tm_fill(col = "AREA_SQ_KM")
 tm_shape(nz) + tm_fill(col = "AREA_SQ_KM", breaks = breaks)
-tm_shape(nz) + tm_fill(col = "AREA_SQ_KM",
-                       n = 10, palette = "RdBu")
+tm_shape(nz) + tm_fill(col = "AREA_SQ_KM", n = 10)
+tm_shape(nz) + tm_fill(col = "AREA_SQ_KM", palette = "RdBu")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/tmpal-1.png" alt="Illustration of aesthetic settings using the example of a continuous variable (the area in square kilometers of regions in New Zealand) converted to color with different break palette arguments." width="576" />
-<p class="caption">(\#fig:tmpal)Illustration of aesthetic settings using the example of a continuous variable (the area in square kilometers of regions in New Zealand) converted to color with different break palette arguments.</p>
+<img src="figures/tmpal-1.png" alt="Illustration of settings that affect variable aesthetics. The result shows a continuous variable (the area in square kilometers of regions in New Zealand) converted to color with (from left to right): default settings, manual breaks, n breaks, and an alternative palette." width="576" />
+<p class="caption">(\#fig:tmpal)Illustration of settings that affect variable aesthetics. The result shows a continuous variable (the area in square kilometers of regions in New Zealand) converted to color with (from left to right): default settings, manual breaks, n breaks, and an alternative palette.</p>
 </div>
 
 ### Map layouts

@@ -460,15 +460,14 @@ Figure 9.4: Comparison of base (left) and tmap (right) handling of a numeric col
 </p>
 </div>
 <p>Additional aesthetic settings are demonstrated in the code chunk below, which colors regions in New Zealand depending on their area. The results show how custom breaks can be set with the <code>breaks</code> argument (Figure <a href="adv-map.html#fig:tmpal">9.5</a> center). Additional palette options include <code>n</code> (which sets the number of bins into which numeric variables are categorised) and <code>palette</code> (which defines the colorscheme — which can be selected interactively with <code>tmaptools::palette_explorer()</code>). Results of changing values for these simultaneously are shown in Figure <a href="adv-map.html#fig:tmpal">9.5</a> (right):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">breaks =<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>) *<span class="st"> </span><span class="fl">1e4</span>
-<span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;AREA_SQ_KM&quot;</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;AREA_SQ_KM&quot;</span>)
 <span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;AREA_SQ_KM&quot;</span>, <span class="dt">breaks =</span> breaks)
-<span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;AREA_SQ_KM&quot;</span>,
-                       <span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">palette =</span> <span class="st">&quot;RdBu&quot;</span>)</code></pre></div>
+<span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;AREA_SQ_KM&quot;</span>, <span class="dt">n =</span> <span class="dv">10</span>)
+<span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;AREA_SQ_KM&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;RdBu&quot;</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:tmpal"></span>
-<img src="figures/tmpal-1.png" alt="Illustration of aesthetic settings using the example of a continuous variable (the area in square kilometers of regions in New Zealand) converted to color with different break palette arguments." width="576" />
+<img src="figures/tmpal-1.png" alt="Illustration of settings that affect variable aesthetics. The result shows a continuous variable (the area in square kilometers of regions in New Zealand) converted to color with (from left to right): default settings, manual breaks, n breaks, and an alternative palette." width="576" />
 <p class="caption">
-Figure 9.5: Illustration of aesthetic settings using the example of a continuous variable (the area in square kilometers of regions in New Zealand) converted to color with different break palette arguments.
+Figure 9.5: Illustration of settings that affect variable aesthetics. The result shows a continuous variable (the area in square kilometers of regions in New Zealand) converted to color with (from left to right): default settings, manual breaks, n breaks, and an alternative palette.
 </p>
 </div>
 </div>
