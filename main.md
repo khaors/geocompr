@@ -266,7 +266,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve9157d304f2b38121
+preserve839bf0d981193bcf
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3105,7 +3105,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservecfb06545c597ec4b
+preserve6637865d04d8be35
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5993,7 +5993,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve9ec56a5021cfc91c
+preserve7b2939b89fe91781
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6609,7 +6609,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveed57772eaf8969e1
+preservee78a13530a15b2c0
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6911,6 +6911,22 @@ tm_shape(nz) + tm_fill(col = "AREA_SQ_KM", palette = "RdBu")
 
 ### Map layouts
 
+Layout refers not to the map itself but to its wider surroundings.
+**tmap** allows a wide variety of layout settings to be changed, some of which are illustrated in Figure \@ref(fig:layout1), produced using the following code (see `args(tm_layout)` or `?tm_layout` for a full list):
+
+
+```r
+map_nz + tm_layout(title = "New Zealand")
+map_nz + tm_layout(scale = 5)
+map_nz + tm_layout(bg.color = "lightblue")
+map_nz + tm_layout(frame = FALSE)
+```
+
+
+<div class="figure" style="text-align: center">
+<img src="figures/layout1-1.png" alt="Layout options specified by (from left to right) title, scale, bg.color and frame arguments." width="576" />
+<p class="caption">(\#fig:layout1)Layout options specified by (from left to right) title, scale, bg.color and frame arguments.</p>
+</div>
 
 
 
