@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveefa23396b8fc53e6
+preserve5dc8dea1cbab1554
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3109,7 +3109,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservea16073d048877946
+preservef8e737be5b1c468d
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5997,7 +5997,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserved72262dda11b310f
+preserve897b313dbca690b7
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6613,7 +6613,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservefb4fbdfef617e460
+preserve9a8e114ee1a01527
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7113,7 +7113,6 @@ Moreover, the same skills can be applied to combine maps and plots.
 
 
 
-
 ## Animations
 
 Animated maps can be useful for communicating how spatial phenomena shift over time.
@@ -7123,12 +7122,7 @@ Furthermore, with the increasing proportion of communication that happens via di
 You can always link readers to a web-page containing an animated (or interactive) version of a printed map to help make it come alive.
 
 Figure \@ref(fig:urban-animated) is a simple example of the benefits of an animated map.
-Unlike the faceted plot presented in the previous section, it does not squeeze all 17 for them all to be displayed simultaneously (see the book's website for the animated version).
-
-
-```r
-knitr::include_graphics("figures/urban-animated.gif")
-```
+Unlike the faceted plot presented in section \@ref(faceted-maps), it does not squeeze all 17 for them all to be displayed simultaneously (see the book's website for the animated version).
 
 <div class="figure" style="text-align: center">
 <img src="figures/urban-animated.gif" alt="Animated map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations."  />
@@ -7149,49 +7143,10 @@ m = tm_shape(world) +
 <!-- Robin, check the differences between by="year" and along="year" -->
 
 
-```r
-options(scipen = 999)
-
-wb_data_create = function(indicator, our_name, year, ...){
-  df = wb(indicator = indicator, startdate = year, enddate = year, ...) %>%
-    as_data_frame() %>%
-    select(iso_a2=iso2c, value) %>%
-    mutate(indicator = our_name) %>%
-    spread(indicator, value)
-  return(df)
-}
-
-data_lifeExp = seq(1963, 2013, by=5) %>%
-  set_names(.) %>%
-  map_df(~wb_data_create(.x, indicator = "SP.DYN.LE00.IN",
-                   our_name = "lifeExp",
-                   country = "countries_only"), .id='year') %>%
-  spread(year, lifeExp)
-
-world_sf_temporal = ne_countries(returnclass = 'sf') %>%
-  left_join(., data_lifeExp, by = c('iso_a2')) %>%
-  mutate(area_km2 = set_units(st_area(.), km^2)) %>%
-  select(iso_a2, name_long, continent, region_un, subregion, type, area_km2, `1963`:`2013`) %>%
-  gather(year, lifeExp, `1963`:`2013`)
-```
 
 
-```r
-m1 = tm_shape(world_sf_temporal) + 
-  tm_polygons("lifeExp") +
-  tm_facets(by = "year", nrow = 1, ncol = 1, drop.units = TRUE)
-
-animation_tmap(m1, filename = "figures/11-lifeExp_animation.gif", width = 2000, height = 600, delay = 40)
-```
 
 
-```r
-world_sf_temporal2 = filter(world_sf_temporal, continent == "South America")
-m2 = tm_shape(world_sf_temporal2) +
-  tm_polygons("lifeExp", n = 12) +
-  tm_facets(by = "name_long", along = "year", drop.units = TRUE, free.coords = TRUE)
-animation_tmap(m2, filename = "figures/11-lifeExp_sa_animation.gif", width = 1600, height = 1000, delay = 40)
-```
 
 ## Interactive maps
 

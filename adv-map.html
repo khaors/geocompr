@@ -598,8 +598,7 @@ Figure 9.9: Map of the United States.
 <div id="animations" class="section level2">
 <h2><span class="header-section-number">9.4</span> Animations</h2>
 <p>Animated maps can be useful for communicating how spatial phenomena shift over time. An advantage of faceted plots are that they can be printed, but the approach has disadvantages: faceted maps can become very small with more than ~9 maps in one figure, and it can be hard to see the spatial relationships between each facet when each map is on a different part of the page! Furthermore, with the increasing proportion of communication that happens via digital screens, the disadvantage that animations cannot be printed is diminished. You can always link readers to a web-page containing an animated (or interactive) version of a printed map to help make it come alive.</p>
-<p>Figure <a href="adv-map.html#fig:urban-animated">9.10</a> is a simple example of the benefits of an animated map. Unlike the faceted plot presented in the previous section, it does not squeeze all 17 for them all to be displayed simultaneously (see the book’s website for the animated version).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr::<span class="kw">include_graphics</span>(<span class="st">&quot;figures/urban-animated.gif&quot;</span>)</code></pre></div>
+<p>Figure <a href="adv-map.html#fig:urban-animated">9.10</a> is a simple example of the benefits of an animated map. Unlike the faceted plot presented in section <a href="adv-map.html#faceted-maps">9.2.6</a>, it does not squeeze all 17 for them all to be displayed simultaneously (see the book’s website for the animated version).</p>
 <div class="figure" style="text-align: center"><span id="fig:urban-animated"></span>
 <img src="figures/urban-animated.gif" alt="Animated map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations."  />
 <p class="caption">
@@ -612,39 +611,6 @@ Figure 9.10: Animated map showing the top 30 largest ‘urban agglomerations’ 
 <span class="st">  </span><span class="kw">tm_dots</span>(<span class="dt">size =</span> <span class="st">&quot;population_millions&quot;</span>) +
 <span class="st">  </span><span class="kw">tm_facets</span>(<span class="dt">by =</span> <span class="st">&quot;year&quot;</span>, <span class="dt">nrow =</span> <span class="dv">1</span>, <span class="dt">ncol =</span> <span class="dv">1</span>) </code></pre></div>
 <!-- Robin, check the differences between by="year" and along="year" -->
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">scipen =</span> <span class="dv">999</span>)
-
-wb_data_create =<span class="st"> </span>function(indicator, our_name, year, ...){
-  df =<span class="st"> </span><span class="kw">wb</span>(<span class="dt">indicator =</span> indicator, <span class="dt">startdate =</span> year, <span class="dt">enddate =</span> year, ...) %&gt;%
-<span class="st">    </span><span class="kw">as_data_frame</span>() %&gt;%
-<span class="st">    </span><span class="kw">select</span>(<span class="dt">iso_a2=</span>iso2c, value) %&gt;%
-<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">indicator =</span> our_name) %&gt;%
-<span class="st">    </span><span class="kw">spread</span>(indicator, value)
-  <span class="kw">return</span>(df)
-}
-
-data_lifeExp =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1963</span>, <span class="dv">2013</span>, <span class="dt">by=</span><span class="dv">5</span>) %&gt;%
-<span class="st">  </span><span class="kw">set_names</span>(.) %&gt;%
-<span class="st">  </span><span class="kw">map_df</span>(~<span class="kw">wb_data_create</span>(.x, <span class="dt">indicator =</span> <span class="st">&quot;SP.DYN.LE00.IN&quot;</span>,
-                   <span class="dt">our_name =</span> <span class="st">&quot;lifeExp&quot;</span>,
-                   <span class="dt">country =</span> <span class="st">&quot;countries_only&quot;</span>), <span class="dt">.id=</span><span class="st">&#39;year&#39;</span>) %&gt;%
-<span class="st">  </span><span class="kw">spread</span>(year, lifeExp)
-
-world_sf_temporal =<span class="st"> </span><span class="kw">ne_countries</span>(<span class="dt">returnclass =</span> <span class="st">&#39;sf&#39;</span>) %&gt;%
-<span class="st">  </span><span class="kw">left_join</span>(., data_lifeExp, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&#39;iso_a2&#39;</span>)) %&gt;%
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">area_km2 =</span> <span class="kw">set_units</span>(<span class="kw">st_area</span>(.), km^<span class="dv">2</span>)) %&gt;%
-<span class="st">  </span><span class="kw">select</span>(iso_a2, name_long, continent, region_un, subregion, type, area_km2, <span class="st">`</span><span class="dt">1963</span><span class="st">`</span>:<span class="st">`</span><span class="dt">2013</span><span class="st">`</span>) %&gt;%
-<span class="st">  </span><span class="kw">gather</span>(year, lifeExp, <span class="st">`</span><span class="dt">1963</span><span class="st">`</span>:<span class="st">`</span><span class="dt">2013</span><span class="st">`</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m1 =<span class="st"> </span><span class="kw">tm_shape</span>(world_sf_temporal) +<span class="st"> </span>
-<span class="st">  </span><span class="kw">tm_polygons</span>(<span class="st">&quot;lifeExp&quot;</span>) +
-<span class="st">  </span><span class="kw">tm_facets</span>(<span class="dt">by =</span> <span class="st">&quot;year&quot;</span>, <span class="dt">nrow =</span> <span class="dv">1</span>, <span class="dt">ncol =</span> <span class="dv">1</span>, <span class="dt">drop.units =</span> <span class="ot">TRUE</span>)
-
-<span class="kw">animation_tmap</span>(m1, <span class="dt">filename =</span> <span class="st">&quot;figures/11-lifeExp_animation.gif&quot;</span>, <span class="dt">width =</span> <span class="dv">2000</span>, <span class="dt">height =</span> <span class="dv">600</span>, <span class="dt">delay =</span> <span class="dv">40</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_sf_temporal2 =<span class="st"> </span><span class="kw">filter</span>(world_sf_temporal, continent ==<span class="st"> &quot;South America&quot;</span>)
-m2 =<span class="st"> </span><span class="kw">tm_shape</span>(world_sf_temporal2) +
-<span class="st">  </span><span class="kw">tm_polygons</span>(<span class="st">&quot;lifeExp&quot;</span>, <span class="dt">n =</span> <span class="dv">12</span>) +
-<span class="st">  </span><span class="kw">tm_facets</span>(<span class="dt">by =</span> <span class="st">&quot;name_long&quot;</span>, <span class="dt">along =</span> <span class="st">&quot;year&quot;</span>, <span class="dt">drop.units =</span> <span class="ot">TRUE</span>, <span class="dt">free.coords =</span> <span class="ot">TRUE</span>)
-<span class="kw">animation_tmap</span>(m2, <span class="dt">filename =</span> <span class="st">&quot;figures/11-lifeExp_sa_animation.gif&quot;</span>, <span class="dt">width =</span> <span class="dv">1600</span>, <span class="dt">height =</span> <span class="dv">1000</span>, <span class="dt">delay =</span> <span class="dv">40</span>)</code></pre></div>
 </div>
 <div id="interactive-maps" class="section level2">
 <h2><span class="header-section-number">9.5</span> Interactive maps</h2>
