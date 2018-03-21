@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservefa162b88f6050ccc
+preserveefa23396b8fc53e6
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3109,7 +3109,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve9850dd453847486a
+preservea16073d048877946
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5997,7 +5997,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve0d803cad8b6d2ed5
+preserved72262dda11b310f
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6613,7 +6613,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve14800323d251291e
+preservefb4fbdfef617e460
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7027,7 +7027,7 @@ Importantly, this map needs to clearly indicate the location of the inset map, f
 nz_map = tm_shape(nz) +
   tm_polygons() +
   tm_shape(nz_height) +
-  tm_symbols(shape = 2, col = "red") + 
+  tm_symbols(shape = 2, col = "red", size = 0.1) + 
   tm_shape(nz_region) +
   tm_borders(lwd = 3) + 
   tm_layout(frame = FALSE)
@@ -7041,7 +7041,7 @@ This is a place where the most important message is stated.
 nz_height_map = tm_shape(nz, bbox = tmaptools::bb(nz_region)) +
   tm_polygons() +
   tm_shape(nz_height) +
-  tm_symbols(shape = 2, col = "red")
+  tm_symbols(shape = 2, col = "red", size = 0.1)
 ```
 
 Finally, we combine the two maps.
