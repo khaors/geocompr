@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-03-20'
+date: '2018-03-21'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-03-20 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-03-21 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -72,8 +72,9 @@ Further details can be found at [github.com/Robinlovelace/geocompr](https://gith
 # Preface {-}
 
 This book is aimed at people who want to do spatial data analysis, visualization and modeling using open source software and reproducible workflows.
-It is based on R, a flexible language for 'data science' with powerful geospatial capabilities thanks to an evolving ecosystem of add-on packages.
-Furthermore, R enables reproducibility through its command-line interace and ensures accessibility because it is freely available and works on any operating system.
+It is based on R, a flexible language for 'data science' with powerful geospatial capabilities and a strong ecosystem of add-on packages dedicated to spatial data (see the 'Spatial Task View' at [cran.r-project.org/web/views](https://cran.r-project.org/web/views/Spatial.html)).
+
+R enables reproducibility through its command-line interace and ensures accessibility because it is freely available and works on most modern operating systems (including Linux, Windows and Mac).
 The book will therefore be of interest to a wide range of people worldwide, although we expect it to be especially useful for:
 
 - People who have learned spatial analysis skills using a desktop Geographic Information System (GIS) such as [QGIS](http://qgis.org/en/site/), [ArcMap](http://desktop.arcgis.com/en/arcmap/), [GRASS](https://grass.osgeo.org/) or [SAGA](http://www.saga-gis.org/en/index.html), who want access to a powerful (geo)statistical and visualization programming language and the benefits of a command-line approach [@sherman_desktop_2008]:
@@ -85,9 +86,12 @@ The book will therefore be of interest to a wide range of people worldwide, alth
 - Applied researchers and analysts in public, private or third-sector organisations who need the reproducibility, speed and flexibility of a command-line language such as R in applications dealing with spatial data as diverse as Urban and Transport Planning, Logistics, Geo-marketing (store location analysis) and Emergency Planning <!-- please add further examples-->
 
 The book is designed for intermediate-to-advanced R users interested in geocomputation and R beginners who have prior experience with geographic data.
-If you are new to both R and geographic data do not be discouraged: we provide links to further materials and describe the nature of spatial data from a beginner's perspective in Chapter \@ref(spatial-class) and in links provided in the next paragraph.
-The chapters tend to increase difficulty and within each chapter we cover content that is easier and most important first.
-Completing the exercises at the end of each chapter will ensure you have understood their content.
+If you are new to both R and geographic data do not be discouraged: we provide links to further materials and describe the nature of spatial data from a beginner's perspective in Chapter \@ref(spatial-class) and in links provided below.
+
+We aim to make R's famously steep learning curve more mellow and less rollercoaster:
+the chapters increase in difficulty as the book progresses; each chapter starts relatively easy and covers the most important topics first to make the book as accessible as possible.
+Exercises can be found at the end of each chapter.
+Completing these encourages using R interactively to solve geospatial problems, ensuring you can operationalize the concepts and code in each chapter.
 
 Impatient readers are welcome to dive straight into the practical examples, starting in Chapter \@ref(spatial-class).
 However, we recommend reading about the wider context of *Geocomputation with R* in Chapter \@ref(intro) first.
@@ -266,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve839bf0d981193bcf
+preserve9a94d06405cb6f6f
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3105,7 +3109,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve6637865d04d8be35
+preservee98f5760bcb45672
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5993,7 +5997,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve7b2939b89fe91781
+preserve5634959056cd2cdb
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6609,7 +6613,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservee78a13530a15b2c0
+preservefb4ae66ed30196c4
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7836,11 +7840,11 @@ It includes four main techniques.
 Raster cropping and masking using vector objects is covered in section \@ref(raster-cropping).
 In section \@ref(raster-extraction), we will describe how raster values can be extract using different types of vector data - points, lines and polygons.
 Finally, sections \@ref(rasterization) and \@ref(spatial-vectorization) show how to convert vectors into rasters and raster images into vectors.
-We will illustrate these concepts and suggest when they can be useful.
 <!-- operations are not symmetrical, for example: -->
 <!-- - raster clipping - no vector counterpart -->
 <!-- - raster extraction is connected to some methods used in vectorization and rasterization -->
 <!-- - etc. -->
+We will illustrate the above concepts and suggest when they can be useful.
 
 ## Raster cropping
 
@@ -8014,11 +8018,11 @@ See the `?raster::clusterR()` for more information.
 <!-- tabularaster (ref to the vignette - https://cran.r-project.org/web/packages/tabularaster/vignettes/tabularaster-usage.html)-->
 Secondly, the **velox** package [@hunziker_velox:_2017] provides a fast method for extracting raster data that fits in the RAM memory.
 This process is described in detail at https://hunzikp.github.io/velox/extract.html.
-<!-- Finally, it could be worthwhile to consider using R-GIS bridges. -->
+Finally, it could be worthwhile to consider using R-GIS bridges.
+For example, efficient calculation of polygon in raster statistics exist in SAGA and can be called using **RQGIS** (`saga:gridstatisticsforpolygons`).
 <!-- Methods similar to `raster::extract` can be found in GRASS GIS (e.g. v.rast.stats) -->
 <!-- https://grass.osgeo.org/grass74/manuals/v.rast.stats.html - test -->
-<!-- R-GIS bridges - investigate (REF to the chapter). -->
-<!-- RQGIS? -->
+To learn more visit chapter \@ref(gis).
 
 ## Rasterization {#rasterization}
 
