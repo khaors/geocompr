@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserved5345f2bb7672043
+preserve848319163c5cabb3
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3109,7 +3109,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve23a1bd28f6ecf5dc
+preservef2bc19dbed3da06d
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5997,7 +5997,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve5737b47e4a4aee08
+preserve2c4cdf4fb1cdc54b
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6613,7 +6613,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve3f28c8b6100839f1
+preserve461cc8616f9aface
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -8250,16 +8250,14 @@ Statistical learning comprises a large suite of techniques for understanding dat
 Statistical learning can be roughly grouped into supervised and unsupervised techniques, both of which are used throughout a vast range of disciplines including economics, physics, medicine, biology, ecology and geography [@james_introduction_2013].
 In this chapter we will focus on supervised techniques, i.e., we have a response variable, in our case this will be a binary one (landslide vs. non-landslide occurrence) but could be also a numeric (pH value), an integer (species richness) or a categorical variable (land use).
 Supervised techniques model the relationship between the response variable and various predictors.
-For this we can use either regression or machine learning techniques depending on the aim: statistical inference or prediction.
-(Semi-)Parametric regression techniques are especially useful if the aim is statistical inference, i.e. if we are interested in a predictor's significance or its importance for a specific model.
-To trust the p-values and standard errors of such model we need to perform a thorough model validation testing if one or several of the underlying model assumptions (heterogeneity, independence, etc.) have been violated [@zuur_mixed_2009].
-The classical field of statistics usually deals with this kind of knowledge building.
-By contrast, machine learning aims at predictions and is especially appealing due to the lack of assumptions.
+For this we can use techniques from the field of statistics or from the field of machine learning.
+Which to use depends on the aim: statistical inference or prediction.
+(Semi-)Parametric regression techniques are especially useful if the aim is statistical inference, i.e. if we are interested in a predictor's significance, its importance for a specific model and to explain relationships between response and predictors.
+To trust the p-values and standard errors of such models we need to perform a thorough model validation testing if one or several of the underlying model assumptions (heterogeneity, independence, etc.) have been violated [@zuur_mixed_2009].
+By contrast, machine learning aims at predictions and is especially appealing due its lack of assumptions.
 Though statistical inference is impossible [@james_introduction_2013], various studies have shown that machine learning is at least at par with regression techniques regarding predictive performance [e.g., @schratz_performance_nodate]. <!-- add one more source -->
 Naturally, with the advent of big data, machine learning has even gained in popularity since frequently the underlying relationship between variables is less important than the prediction.
 Think for instance of future customer behavior or the classification of e-mails as spam.
-Hence, the difference between classical statistics and machine learning is the aim. 
-The former is used to explain relationships, and the latter is used for predictions.
 Note that we can borrow regression techniques from statistics for machine learning when the aim is prediction.
 In this case we do not have too worry too much about possible model misspecifications since we explicitly do not want to do statistical inference.
 In fact, in this chapter the aim will be the (spatial) prediction of landslide susceptibility. 
@@ -8476,13 +8474,24 @@ This is because there are still a few points in the test and training data which
 <p class="caption">(\#fig:partitioning)Spatial visualization of selected test and training observations for cross-validation in one repetition. Random (upper row) and spatial partitioning (lower row).</p>
 </div>
 
-## Modeling and spatial CV with **mlr**
+## Spatial CV with **mlr**
 In R there are literally hundreds of packages available for statistical learning (e.g., have a look at the [CRAN task machine learning](https://CRAN.R-project.org/view=MachineLearning)).
 In section \@ref(conventional-model) we used the **stats** package to fit a logistic regression using the `glm()` command.
-`glm()` uses the common R modeling interface: specify the response and predictor variables via a formula object, build a model and make a prediction.
-However, many packages come with their own or a modified statistical learning interface which is why users frequently have to spend a lot of time to figure out the specifics of each of these packages or how to compare modeling results from different packages.
-The **mlr** package acts as a meta- or umbrella-package providing a unified interface to all popular statistical learning techniques available in R including classification, regression, survival analysis and clustering [@bischl_mlr:_2016].^[As pointed out in the beginning we will solely focus on supervised learning techniques in this chapter.]
-The standardized **mlr** interface is based on so-called basic building blocks (see the [`mlr` vignette](https://cran.r-project.org/web/packages/mlr/vignettes/mlr.html) for further details).
+`glm()` uses the common R modeling interface: 
+
+1. specify the response and predictor variables via a formula object
+2. build a model
+3. make a prediction.
+
+However, many packages come with their own or a modified statistical learning interface which is why users frequently have to spend a lot of time to figure out the specifics of each of these packages, how to carry out cross-valdiation and hyperparameter tuning or how to compare modeling results from different packages.
+The **mlr** package acts as a meta- or umbrella-package providing a unified interface to the most popular statistical learning techniques available in R including classification, regression, survival analysis and clustering [@bischl_mlr:_2016].^[As pointed out in the beginning we will solely focus on supervised learning techniques in this chapter.]
+The standardized **mlr** interface is based on so-called basic building blocks (Figure \@ref(fig:building-blocks)).
+
+<!-- @Jakub: yes, I will ask if we me may use the figure -->
+<div class="figure" style="text-align: center">
+<img src="figures/13_ml_abstraction_crop.png" alt="Basic building blocks of the **mlr** package. Source: [openml.github.io](http://openml.github.io/articles/slides/useR2017_tutorial/slides_tutorial_files/ml_abstraction-crop.png)." width="862" />
+<p class="caption">(\#fig:building-blocks)Basic building blocks of the **mlr** package. Source: [openml.github.io](http://openml.github.io/articles/slides/useR2017_tutorial/slides_tutorial_files/ml_abstraction-crop.png).</p>
+</div>
 
 First, we need to create a **task** containing the data, specifically the response and predictor variables, for the model and the model type (such as regression or classification).
 Secondly, a **learner** defines the specific model that models the task data or differently put learns a structure inherent in the provided data.
