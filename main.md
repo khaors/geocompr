@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve848319163c5cabb3
+preserve747034cf18a3faf8
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3109,7 +3109,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservef2bc19dbed3da06d
+preserve8cedcf0b920560a9
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5997,7 +5997,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve2c4cdf4fb1cdc54b
+preserve615c2621b37e5852
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6613,7 +6613,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve461cc8616f9aface
+preservedba50437c5a8fe62
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -8261,7 +8261,7 @@ Think for instance of future customer behavior or the classification of e-mails 
 Note that we can borrow regression techniques from statistics for machine learning when the aim is prediction.
 In this case we do not have too worry too much about possible model misspecifications since we explicitly do not want to do statistical inference.
 In fact, in this chapter the aim will be the (spatial) prediction of landslide susceptibility. 
-We will start out with a generalized linear model (GLM) which is probably familiar to most readers^[Readers who are in need of refreshing their regression skills might have a look at @zuur_mixed_2009 and @james_introduction_2013, respectively.], before moving on to using a typical machine learning algorithm, namely a random forest model.
+We will start out with a generalized linear model (GLM) which is probably familiar to most readers^[Readers who are in need of refreshing their regression skills might have a look at @zuur_mixed_2009 and @james_introduction_2013, respectively.], before moving on to using a typical machine learning algorithm, namely a support vector machine.
 Instead of explaining in detail the models we will focus on the specialty of geographic data in a modeling context and the models' predictive performance via spatial CV.
 
 CV determines a model's ability to predict new data or differently put its ability to generalize.
@@ -8642,13 +8642,37 @@ What is machine-learning?
 
 [Jason Brownlee](https://machinelearningmastery.com/linear-regression-for-machine-learning/)
 
-This means that parametric models such as (generalized) linear regression are also used in the field of ma
+
+This means that parametric models such as (generalized) linear regression are also used in the field of machine learning when the aim is prediction.
 
 Machine-learning differs from parametric models in that 
 difference parameters and hyperparameters
-example: random forest and short intro what it is
+example: support vector machine and short intro what it is
 best practice: inner fold -> Patrick figure
-parallelization (conclusion -> server/remote modeling)
+parallelization (conclusion -> server/remote modeling + mc.core.seed)
+
+
+> Model selection without nested CV uses the same data to tune model parameters and evaluate model performance. Information may thus “leak” into the model and overfit the data. The magnitude of this effect is primarily dependent on the size of the dataset and the stability of the model. 
+
+http://scikit-learn.org/stable/auto_examples/model_selection/plot_nested_cross_validation_iris.html
+
+SVM
+> The idea of finding a hyperplane that separates the data as well as possible, while allowing some violations to this separation, seemed distinctly different from classical approaches for classification, such as logistic regression and linear discriminant analysis. Moreover, the idea of using a kernel to expand the feature space in order to accommodate non-linear class boundaries appeared to be a unique and valuable characteristic.
+
+James et al., 2013
+Support vector machines always require tuning to find the optimal hyperparameters.
+Some software packages/implementations come with an automated tuning.
+which is usually based on random sampling.
+This is useful in the case of non-spatial data but of less use in the case of spatial data where spatial tuning should be preferred.
+Therefore, we will make sure to replace automated by spatial hyperparameter tuning.
+Without going into too much detail SVM 
+
+Multicore processing is easier under Linux.
+Overall, cloud computing is done on Linux servers.
+What is more, setting a seed for each thread/core/cpu is only available for R/Linux (mc.core.seeds).
+Therefore, we will present how to do nested cross-validatation using R code only working under Linux. 
+We recommend Windows users to install a virtual machine on their system to reproduce the subsequent code.
+
 
 ## Conclusions
 Resampling methods are a crucial part of a modern data scientist's toolbox [@james_introduction_2013]. 
@@ -8674,9 +8698,11 @@ Keep all landslide initation points and 175 randomly selected non-landslide poin
 1. Use the derived terrain attributs rasters in combination with a GLM to make a spatial prediction map similar to Figure \@ref(fig:lsl-susc).
 1. Compute a 100-repeated 5-fold non-spatial cross-validation and spatial CV based on the GLM learner and compare the AUROC values from both resampling strategies with the help of boxplots (see Figure \@ref(fig:boxplot-cv)).
 Hint: You need to specify a non-spatial task and a non-spatial resampling strategy.
+Before running the spatial cross-validation for both tasks set a seed to make sure that both use the same partitions which in turn guarantees comparability.
 1. Model landslide susceptibility using a quadratic discriminant analysis [QDA, @james_introduction_2013].
 Assess the predictive performance (AUROC) of the QDA. 
 What is the a difference between the spatially cross-validated mean AUROC value of the QDA and the GLM?
+Hint: Before running the spatial cross-validation for both learners set a seed to make sure that both use the same partitions which in turn guarantees comparability.
 
 <!--
 hyperparameter tuning:
