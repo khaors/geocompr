@@ -484,6 +484,15 @@ map_nz +<span class="st"> </span><span class="kw">tm_layout</span>(<span class="
 Figure 9.6: Layout options specified by (from left to right) title, scale, bg.color and frame arguments.
 </p>
 </div>
+<p>The other arguments in <code>tm_layout()</code> provide control over many more aspects of the map in relation to the canvas on which it is placed. The most useful layout settings include (see <code>?tm_layout</code> for full list):</p>
+<ul>
+<li>Default colors of aesthetic layers (<code>aes.color</code>), map attributes such as the frame (<code>attr.color</code>).</li>
+<li>Color settings controlling <code>sepia.intensity</code> (how yellowy the map looks) and <code>saturation</code> (a color-greyscale).</li>
+<li>Frame width (<code>frame.lwd</code>) and an option to allow double lines (<code>frame.double.line</code>).</li>
+<li>Margin settings including <code>outer.margin</code> and <code>inner.margin</code>.</li>
+<li>Font settings, controlled by <code>fontface</code> and <code>fontfamily</code>.</li>
+<li>Legend settings including binary options such as <code>legend.show</code> (whether or not to show the legend) <code>legend.only</code> (omit the map) and <code>legend.outside</code> (should the legend go outside the map?), as well as multiple choice settings such as <code>legend.position</code>.</li>
+</ul>
 <!-- 
 - lines widths, polygon lines vs polygon areas, etc.
 - alpha colors

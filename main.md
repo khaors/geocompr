@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve9a94d06405cb6f6f
+preserve52cc265004e1fadb
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3109,7 +3109,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservee98f5760bcb45672
+preservee1174f8e2ada6893
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5997,7 +5997,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve5634959056cd2cdb
+preserve07fc150a849d6d60
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6613,7 +6613,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservefb4ae66ed30196c4
+preservea365e24740f2b437
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6926,11 +6926,22 @@ map_nz + tm_layout(bg.color = "lightblue")
 map_nz + tm_layout(frame = FALSE)
 ```
 
-
 <div class="figure" style="text-align: center">
 <img src="figures/layout1-1.png" alt="Layout options specified by (from left to right) title, scale, bg.color and frame arguments." width="576" />
 <p class="caption">(\#fig:layout1)Layout options specified by (from left to right) title, scale, bg.color and frame arguments.</p>
 </div>
+
+The other arguments in `tm_layout()` provide control over many more aspects of the map in relation to the canvas on which it is placed.
+The most useful layout settings include (see `?tm_layout` for full list):
+
+- Default colors of aesthetic layers (`aes.color`), map attributes such as the frame (`attr.color`).
+- Color settings controlling `sepia.intensity` (how yellowy the map looks) and `saturation` (a color-greyscale).
+- Frame width (`frame.lwd`) and an option to allow double lines (`frame.double.line`).
+- Margin settings including `outer.margin` and `inner.margin`.
+- Font settings, controlled by `fontface` and `fontfamily`.
+- Legend settings including binary options such as `legend.show` (whether or not to show the legend) `legend.only` (omit the map) and `legend.outside` (should the legend go outside the map?), as well as multiple choice settings such as `legend.position`.
+
+
 
 
 
