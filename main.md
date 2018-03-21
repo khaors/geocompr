@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve1d58c5745b3f1ab5
+preservebfac0b1f0f19f969
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3109,7 +3109,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve7dbd4c566537342d
+preserve76bdfb0b8dfaa126
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5997,7 +5997,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserved8046acfe5755b57
+preserve2d4109886ff4b1bc
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6613,7 +6613,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve0978eddfd0968ee0
+preserve302edc9b68f2d2e3
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6792,13 +6792,11 @@ class(map_nz)
 #> [1] "tmap"
 ```
 
-We can later use `map_nz` to plot its contents with `print(map_nz)`.
-Alternatively `tmap` objects can be used as the basis of other maps:
-in addition to new layers for a single shape, the `+` operator can be used to add new shapes to a map with an extra `+ tm_shape()`.
+`map_nz` can be plotted later, for example by adding additional layers (as we'll below) or simply running `map_nz` in the console, which is equivalent to `print(map_nz)`.
+To use `tmap` objects as the basis of other maps new layers or settings can be added with the `+` operator.
 
-All subsequent layer functions after a new shape will refer to the newly added shape, until a new shape is added, allowing one or more layers to be added for each shape.
-This is illustrated in the code chunk below which creates a new map object (called `map_nz1`) building on `map_nz`.
-`map_nz1` contains an additional layer representing high points in New Zealand, as illustrated in Figure \@ref(fig:tmlayers) (left).
+When another shape is added to a `tmap` object with `+ tm_shape()`, all subsequent aesthetic functions refer to the newly added shape, until another new shape is added.
+This syntax allows the creation of maps involving multiple shapes and one or more layers for each shape, as demonstrated in the code chunk below:
 
 
 ```r
@@ -6806,8 +6804,8 @@ map_nz1 = map_nz +
   tm_shape(nz_height) + tm_bubbles()
 ```
 
-In turn, another layer can be added to the newly created map object `map_nz1`.
-This is illustrated in the code chunk below which first creates `nz_water`, representing New Zealand's [territorial waters](https://en.wikipedia.org/wiki/Territorial_waters) and then plots this on top of the pre-existing map object, saving the result as `map_nz2`:
+Building on the previously created `map_nz` object the preceding code creates a new map object `map_nz1` which contains another shape representing high points in New Zealand (see Figure \@ref(fig:tmlayers), left).
+More shapes and layers can be added, as illustrated in the code chunk below which creates `nz_water`, representing New Zealand's [territorial waters](https://en.wikipedia.org/wiki/Territorial_waters), and adds the resulting lines to an existing map object.
 
 
 ```r
