@@ -358,7 +358,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="introduction-3" class="section level2">
 <h2><span class="header-section-number">6.1</span> Introduction</h2>
-<p>This chapter is about reading and writing geographic data. Geographic data <em>import</em> is an essential part of geocomputational software because without data real-world applications are impossible. The skills taught in this book will enable you to <em>add value</em> to data meaning that, for others to benefit from the results, data <em>output</em> is also vital. These two processes go hand-in-hand and are referred to as I/O — short for input/output — in Computer Science <span class="citation">(<span class="citeproc-not-found" data-reference-id="gillespie_efficient_2016"><strong>???</strong></span>)</span>. Hence the title of this chapter.</p>
+<p>This chapter is about reading and writing geographic data. Geographic data <em>import</em> is an essential part of geocomputational software because without data real-world applications are impossible. The skills taught in this book will enable you to <em>add value</em> to data meaning that, for others to benefit from the results, data <em>output</em> is also vital. These two processes go hand-in-hand and are referred to as I/O — short for input/output — in Computer Science <span class="citation">(Gillespie and Lovelace <a href="#ref-gillespie_efficient_2016">2016</a>)</span>. Hence the title of this chapter.</p>
 <p>Geographic data I/O is almost always part of a wider process. It depends on knowing which datasets are <em>available</em>, where they can be <em>found</em> and how to <em>retrieve</em> them, topics covered in section <a href="read-write.html#retrieving-data">6.2</a>. This section demonstrates how to access open access <em>geoportals</em> which collectively contain many terrabytes of data. There is a wide range of geographic file formats, each of which has pros and cons. These are described in section <a href="read-write.html#file-formats">6.3</a>. The process of actually reading and writing such file formats efficiently is not covered until sections <a href="read-write.html#data-input">6.4</a> and <a href="read-write.html#data-output">6.5</a> respectively. The final section (<a href="read-write.html#visual-outputs">6.6</a>) demonstrates methods for saving visual outputs (maps), in preparation for a subsequent chapter dedicated to visualization. <!-- Todo: Add reference to vis chapter (RL) --></p>
 </div>
 <div id="retrieving-data" class="section level2">
@@ -446,7 +446,7 @@ world_raw =<span class="st"> </span><span class="kw">st_read</span>(world_raw_fi
 <span class="co">#&gt; bbox:           xmin: -180 ymin: -90 xmax: 180 ymax: 83.64513</span>
 <span class="co">#&gt; epsg (SRID):    4326</span>
 <span class="co">#&gt; proj4string:    +proj=longlat +datum=WGS84 +no_defs</span></code></pre></div>
-<p>Find more information on getting data using R packages in <a href="https://csgillespie.github.io/efficientR/input-output.html#download">section 5.5</a> and <a href="https://csgillespie.github.io/efficientR/input-output.html#accessing-data-stored-in-packages">section 5.6</a> of <span class="citation">(<span class="citeproc-not-found" data-reference-id="gillespie_efficient_2016"><strong>???</strong></span>)</span>.</p>
+<p>Find more information on getting data using R packages in <a href="https://csgillespie.github.io/efficientR/input-output.html#download">section 5.5</a> and <a href="https://csgillespie.github.io/efficientR/input-output.html#accessing-data-stored-in-packages">section 5.6</a> of <span class="citation">Gillespie and Lovelace (<a href="#ref-gillespie_efficient_2016">2016</a>)</span>.</p>
 </div>
 <div id="file-formats" class="section level2">
 <h2><span class="header-section-number">6.3</span> File formats</h2>
@@ -823,6 +823,9 @@ mapview_obj =<span class="st"> </span><span class="kw">mapview</span>(world, <sp
 
 <h3>References</h3>
 <div id="refs" class="references">
+<div id="ref-gillespie_efficient_2016">
+<p>Gillespie, Colin, and Robin Lovelace. 2016. <em>Efficient R Programming: A Practical Guide to Smarter Programming</em>. O’Reilly Media. <a href="https://csgillespie.github.io/efficientR/" class="uri">https://csgillespie.github.io/efficientR/</a>.</p>
+</div>
 <div id="ref-R-osmdata">
 <p>Padgham, Mark, Bob Rudis, Robin Lovelace, and Maëlle Salmon. 2018. <em>Osmdata: Import ’OpenStreetMap’ Data as Simple Features or Spatial Objects</em>. <a href="https://github.com/ropensci/osmdata" class="uri">https://github.com/ropensci/osmdata</a>.</p>
 </div>
