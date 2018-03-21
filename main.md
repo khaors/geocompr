@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve5dc8dea1cbab1554
+preserved5345f2bb7672043
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3109,7 +3109,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservef8e737be5b1c468d
+preserve23a1bd28f6ecf5dc
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5997,7 +5997,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve897b313dbca690b7
+preserve5737b47e4a4aee08
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6613,7 +6613,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve9a8e114ee1a01527
+preserve3f28c8b6100839f1
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7129,13 +7129,17 @@ Unlike the faceted plot presented in section \@ref(faceted-maps), it does not sq
 <p class="caption">(\#fig:urban-animated)Animated map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations.</p>
 </div>
 
+<!-- desribe how to use `tm_facets` for animation -->
+<!-- next, focus on `animation_tmap` -->
+<!-- add a new animation excersize -->
+
 
 ```r
 m = tm_shape(world) + 
   tm_polygons() +
   tm_shape(urban_agglomerations) +
-  tm_dots(size = "population_millions") +
-  tm_facets(by = "year", nrow = 1, ncol = 1) 
+  tm_dots(size = "population_millions", col = "red") +
+  tm_facets(by = "year", nrow = 1, ncol = 1)
 ```
 
 
