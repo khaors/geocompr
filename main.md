@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve6c7c36406c193499
+preservef324697d5eafe614
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3109,7 +3109,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve508149aaf37d9518
+preserve37019e3c0e54c8c3
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5997,7 +5997,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserveb0739c7144bd7b09
+preserve24d0333c59323c88
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6613,7 +6613,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve064b655002d4403a
+preserve4a9a667422920360
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7164,28 +7164,33 @@ Unlike the faceted plot presented in section \@ref(faceted-maps), it does not sq
 <p class="caption">(\#fig:urban-animated)Animated map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations.</p>
 </div>
 
-<!-- desribe how to use `tm_facets` for animation -->
+<!-- 1/ desribe how to use `tm_facets` for animation -->
+<!-- 2/ by , nrow, ncol -->
 <!-- next, focus on `animation_tmap` -->
-<!-- add a new animation excersize -->
 
 
 ```r
-m = tm_shape(world) + 
+us_anim = tm_shape(world) + 
   tm_polygons() +
   tm_shape(urban_agglomerations) +
-  tm_dots(size = "population_millions", col = "red") +
+  tm_dots(size = "population_millions", col = "red", alpha = 0.5) +
   tm_facets(by = "year", nrow = 1, ncol = 1)
 ```
 
 
 
-<!-- Robin, check the differences between by="year" and along="year" -->
+<!-- 3/ along -->
+<!-- 4/ by and along -->
 
 
 
 
 
 
+
+
+
+<!-- add a new animation exercise -->
 
 ## Interactive maps
 
@@ -8132,9 +8137,9 @@ It is also possible to use the `field` or `fun` arguments for lines and polygons
 </div>
 
 While `rasterize` works well for most cases, it is not performance optimized. 
-Fortunately, there are several alternatives, including the `fasterize::fasterize()`^[The **fasterize** package is available at https://github.com/ecohealthalliance/fasterize.] and `gdalUtils::gdal_rasterize()`. 
+Fortunately, there are several alternatives, including the `fasterize::fasterize()` and `gdalUtils::gdal_rasterize()`. 
 The former is much (100 times+) faster than `rasterize()` but is currently limited to polygon rasterization.
-The latter is part of GDAL and therefore requires a vector file, instead of an `sf` object, as an input and rasterization parameters, instead of a `Raster*` template object.^[See more at http://www.gdal.org/gdal_rasterize.html.]
+The latter is part of GDAL and therefore requires a vector file (instead of an `sf` object) and rasterization parameters (instead of a `Raster*` template object) as inputs.^[See more at http://www.gdal.org/gdal_rasterize.html.]
 
 ## Spatial vectorization
 
@@ -8672,6 +8677,7 @@ As expected, the spatially cross-validated result yields lower AUROC values on a
 
 ## (Spatial) Tuning of machine-learning hyperparameters
 <!-- exercise: assess predictive performance without using an inner fold -->
+little test
 What is machine-learning?
 
 > Machine learning, more specifically the field of predictive modeling is primarily concerned with minimizing the error of a model or making the most accurate predictions possible, at the expense of explainability. In applied machine learning we will borrow, reuse and steal algorithms from many different fields, including statistics and use them towards these ends.

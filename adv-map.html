@@ -629,15 +629,17 @@ Figure 9.11: Map of the United States.
 Figure 9.12: Animated map showing the top 30 largest ‘urban agglomerations’ from 1950 to 2030 based on population projects by the United Nations.
 </p>
 </div>
-<!-- desribe how to use `tm_facets` for animation -->
+<!-- 1/ desribe how to use `tm_facets` for animation -->
+<!-- 2/ by , nrow, ncol -->
 <!-- next, focus on `animation_tmap` -->
-<!-- add a new animation excersize -->
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m =<span class="st"> </span><span class="kw">tm_shape</span>(world) +<span class="st"> </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">us_anim =<span class="st"> </span><span class="kw">tm_shape</span>(world) +<span class="st"> </span>
 <span class="st">  </span><span class="kw">tm_polygons</span>() +
 <span class="st">  </span><span class="kw">tm_shape</span>(urban_agglomerations) +
-<span class="st">  </span><span class="kw">tm_dots</span>(<span class="dt">size =</span> <span class="st">&quot;population_millions&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>) +
+<span class="st">  </span><span class="kw">tm_dots</span>(<span class="dt">size =</span> <span class="st">&quot;population_millions&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>) +
 <span class="st">  </span><span class="kw">tm_facets</span>(<span class="dt">by =</span> <span class="st">&quot;year&quot;</span>, <span class="dt">nrow =</span> <span class="dv">1</span>, <span class="dt">ncol =</span> <span class="dv">1</span>)</code></pre></div>
-<!-- Robin, check the differences between by="year" and along="year" -->
+<!-- 3/ along -->
+<!-- 4/ by and along -->
+<!-- add a new animation exercise -->
 </div>
 <div id="interactive-maps" class="section level2">
 <h2><span class="header-section-number">9.5</span> Interactive maps</h2>
