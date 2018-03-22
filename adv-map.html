@@ -474,15 +474,15 @@ Figure 9.5: Illustration of settings that affect variable aesthetics. The result
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">legend_title =<span class="st"> </span><span class="kw">expression</span>(<span class="st">&quot;Area (km&quot;</span>^<span class="dv">2</span>*<span class="st">&quot;)&quot;</span>)
 map_nza =<span class="st"> </span><span class="kw">tm_shape</span>(nz) +
 <span class="st">  </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;AREA_SQ_KM&quot;</span>, <span class="dt">title =</span> legend_title) +<span class="st"> </span><span class="kw">tm_borders</span>()</code></pre></div>
-<p>The resulting <code>tmap</code> object <code>map_nza</code> will be used to illustrate different layout settings in the next section.</p>
+<p>The resulting <code>tmap</code> object <code>map_nza</code> will be used alongside <code>map_nz</code> (created previously) to illustrate different layout settings in the next section.</p>
 </div>
 <div id="map-layouts" class="section level3">
 <h3><span class="header-section-number">9.2.4</span> Map layouts</h3>
 <p>Layout refers not to the map itself but to its wider surroundings. <strong>tmap</strong> allows a wide variety of layout settings to be changed, some of which are illustrated in Figure <a href="adv-map.html#fig:layout1">9.6</a>, produced using the following code (see <code>args(tm_layout)</code> or <code>?tm_layout</code> for a full list):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">map_nza +<span class="st"> </span><span class="kw">tm_layout</span>(<span class="dt">title =</span> <span class="st">&quot;New Zealand&quot;</span>)
-map_nza +<span class="st"> </span><span class="kw">tm_layout</span>(<span class="dt">scale =</span> <span class="dv">5</span>)
-map_nza +<span class="st"> </span><span class="kw">tm_layout</span>(<span class="dt">bg.color =</span> <span class="st">&quot;lightblue&quot;</span>)
-map_nza +<span class="st"> </span><span class="kw">tm_layout</span>(<span class="dt">frame =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">map_nz +<span class="st"> </span><span class="kw">tm_layout</span>(<span class="dt">title =</span> <span class="st">&quot;New Zealand&quot;</span>)
+map_nz +<span class="st"> </span><span class="kw">tm_layout</span>(<span class="dt">scale =</span> <span class="dv">5</span>)
+map_nz +<span class="st"> </span><span class="kw">tm_layout</span>(<span class="dt">bg.color =</span> <span class="st">&quot;lightblue&quot;</span>)
+map_nz +<span class="st"> </span><span class="kw">tm_layout</span>(<span class="dt">frame =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:layout1"></span>
 <img src="figures/layout1-1.png" alt="Layout options specified by (from left to right) title, scale, bg.color and frame arguments." width="576" />
 <p class="caption">

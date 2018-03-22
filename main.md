@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservead795be9440c01b9
+preserve7f5917ce06531b52
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3109,7 +3109,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve98ee3871355aec37
+preservee2cc3a81872e2c90
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5997,7 +5997,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve15ac754586d4bd8f
+preservec80e7061b5e8793b
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6613,7 +6613,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservec3daa8223d0988ce
+preservece8d91e0cdf8d7a1
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6923,7 +6923,7 @@ map_nza = tm_shape(nz) +
   tm_fill(col = "AREA_SQ_KM", title = legend_title) + tm_borders()
 ```
 
-The resulting `tmap` object `map_nza` will be used to illustrate different layout settings in the next section.
+The resulting `tmap` object `map_nza` will be used alongside `map_nz` (created previously) to illustrate different layout settings in the next section.
 
 
 ### Map layouts
@@ -6933,10 +6933,10 @@ Layout refers not to the map itself but to its wider surroundings.
 
 
 ```r
-map_nza + tm_layout(title = "New Zealand")
-map_nza + tm_layout(scale = 5)
-map_nza + tm_layout(bg.color = "lightblue")
-map_nza + tm_layout(frame = FALSE)
+map_nz + tm_layout(title = "New Zealand")
+map_nz + tm_layout(scale = 5)
+map_nz + tm_layout(bg.color = "lightblue")
+map_nz + tm_layout(frame = FALSE)
 ```
 
 <div class="figure" style="text-align: center">
