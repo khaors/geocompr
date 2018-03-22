@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservea3427719e0fe7179
+preservef6400d38748b89a7
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3109,7 +3109,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservef497a6126ec1e25d
+preserve5d88cb956bc2d96f
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5997,7 +5997,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservec642b95befbca30c
+preserveb25518e52f1c035d
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6613,7 +6613,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve4576c6bea4c04920
+preservecf0ec71bc0e65798
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6681,6 +6681,7 @@ Build an inhabitant raster, aggregate it to a cell resolution of 1 km, and compa
 Change the age raster accordingly, repeat the remaining analyses and compare the changes with our original result.
 
 <!--chapter:end:08-location.Rmd-->
+
 
 
 # (PART) Advanced methods {-}
@@ -6912,6 +6913,19 @@ tm_shape(nz) + tm_fill(col = "AREA_SQ_KM", palette = "RdBu")
 <p class="caption">(\#fig:tmpal)Illustration of settings that affect variable aesthetics. The result shows a continuous variable (the area in square kilometers of regions in New Zealand) converted to color with (from left to right): default settings, manual breaks, n breaks, and an alternative palette.</p>
 </div>
 
+An important argument in functions defining aesthetic layers such as `tm_fill()` is `title`, which sets the title of the associated legend.
+The following code chunk demonstrates this functionality by providing a more attractive name than the variable name `AREA_SQ_KM` used in the previous figures (note the use of `expression()` for to create superscript text):
+
+
+```r
+legend_title = expression("Area (km"^2*")")
+map_nza = tm_shape(nz) +
+  tm_fill(col = "AREA_SQ_KM", title = legend_title) + tm_borders()
+```
+
+The resulting `tmap` object `map_nza` will be used to illustrate different layout settings in the next section.
+
+
 ### Map layouts
 
 Layout refers not to the map itself but to its wider surroundings.
@@ -6919,10 +6933,10 @@ Layout refers not to the map itself but to its wider surroundings.
 
 
 ```r
-map_nz + tm_layout(title = "New Zealand")
-map_nz + tm_layout(scale = 5)
-map_nz + tm_layout(bg.color = "lightblue")
-map_nz + tm_layout(frame = FALSE)
+map_nza + tm_layout(title = "New Zealand")
+map_nza + tm_layout(scale = 5)
+map_nza + tm_layout(bg.color = "lightblue")
+map_nza + tm_layout(frame = FALSE)
 ```
 
 <div class="figure" style="text-align: center">
@@ -6931,7 +6945,7 @@ map_nz + tm_layout(frame = FALSE)
 </div>
 
 The other arguments in `tm_layout()` provide control over many more aspects of the map in relation to the canvas on which it is placed.
-The most useful layout settings include (see `?tm_layout` for full list):
+Some most useful layout settings are listed below and illustrated in Figure \@ref(fig:layout2) (see `?tm_layout` for full list):
 
 - Default colors of aesthetic layers (`aes.color`), map attributes such as the frame (`attr.color`).
 - Color settings controlling `sepia.intensity` (how yellowy the map looks) and `saturation` (a color-greyscale).
@@ -6940,13 +6954,36 @@ The most useful layout settings include (see `?tm_layout` for full list):
 - Font settings, controlled by `fontface` and `fontfamily`.
 - Legend settings including binary options such as `legend.show` (whether or not to show the legend) `legend.only` (omit the map) and `legend.outside` (should the legend go outside the map?), as well as multiple choice settings such as `legend.position`.
 
+<!-- Todo: add more of these options to the figure (RL) -->
 
 
+```r
+source("code/09-layout2.R")
+```
+
+<div class="figure" style="text-align: center">
+<img src="figures/layout2-1.png" alt="Illustration of selected color-related layout options." width="576" />
+<p class="caption">(\#fig:layout2)Illustration of selected color-related layout options.</p>
+</div>
 
 Beyond this low-level control over layouts, **tmap** also offers high-level styles using `tm_style_` functions.
-Some styles such as `tm_style_cobalt()` result in stylized maps while others such as `tm_style_grey()` make more subtle changes.
+Some styles such as `tm_style_cobalt()` result in stylized maps while others such as `tm_style_grey()` make more subtle changes (see Figure \@ref(fig:tmstyles)).
 
-<!-- Todo: add maps showing styles -->
+
+```r
+source("code/09-tmstyles.R")
+```
+
+<div class="figure" style="text-align: center">
+<img src="figures/tmstyles-1.png" alt="Selected tmap styles, illustrated with data on the area of New Zealand's regions." width="576" />
+<p class="caption">(\#fig:tmstyles)Selected tmap styles, illustrated with data on the area of New Zealand's regions.</p>
+</div>
+
+
+\BeginKnitrBlock{rmdnote}<div class="rmdnote">A preview of predefined styles can be generated by executing `style_catalogue()`.
+This creates a folder called `tmap_style_previews` containing (in **tmap** 2.0) 10 images.
+Each image, from `tm_style_albatross.png` to `tm_style_white.png` shows a facetted map of Europe in the corresponding style.
+Note: `style_catalogue()` takes some time to run.</div>\EndKnitrBlock{rmdnote}
 
 <!-- 
 - lines widths, polygon lines vs polygon areas, etc.
