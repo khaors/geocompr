@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-03-22">
+<meta name="date" content="2018-03-24">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -443,7 +443,7 @@ world_raw =<span class="st"> </span><span class="kw">st_read</span>(world_raw_fi
 <span class="co">#&gt; Simple feature collection with 177 features and 10 fields</span>
 <span class="co">#&gt; geometry type:  MULTIPOLYGON</span>
 <span class="co">#&gt; dimension:      XY</span>
-<span class="co">#&gt; bbox:           xmin: -180 ymin: -90 xmax: 180 ymax: 83.64513</span>
+<span class="co">#&gt; bbox:           xmin: -180 ymin: -90 xmax: 180 ymax: 83.6</span>
 <span class="co">#&gt; epsg (SRID):    4326</span>
 <span class="co">#&gt; proj4string:    +proj=longlat +datum=WGS84 +no_defs</span></code></pre></div>
 <p>Find more information on getting data using R packages in <a href="https://csgillespie.github.io/efficientR/input-output.html#download">section 5.5</a> and <a href="https://csgillespie.github.io/efficientR/input-output.html#accessing-data-stored-in-packages">section 5.6</a> of <span class="citation">Gillespie and Lovelace (<a href="#ref-gillespie_efficient_2016">2016</a>)</span>.</p>
@@ -563,6 +563,7 @@ world_raw =<span class="st"> </span><span class="kw">st_read</span>(world_raw_fi
 <th align="left">copy</th>
 <th align="left">is_raster</th>
 <th align="left">is_vector</th>
+<th align="left">vsi</th>
 </tr>
 </thead>
 <tbody>
@@ -573,6 +574,7 @@ world_raw =<span class="st"> </span><span class="kw">st_read</span>(world_raw_fi
 <td align="left">FALSE</td>
 <td align="left">FALSE</td>
 <td align="left">TRUE</td>
+<td align="left">TRUE</td>
 </tr>
 <tr class="even">
 <td align="left">GPX</td>
@@ -580,6 +582,7 @@ world_raw =<span class="st"> </span><span class="kw">st_read</span>(world_raw_fi
 <td align="left">TRUE</td>
 <td align="left">FALSE</td>
 <td align="left">FALSE</td>
+<td align="left">TRUE</td>
 <td align="left">TRUE</td>
 </tr>
 <tr class="odd">
@@ -589,6 +592,7 @@ world_raw =<span class="st"> </span><span class="kw">st_read</span>(world_raw_fi
 <td align="left">FALSE</td>
 <td align="left">FALSE</td>
 <td align="left">TRUE</td>
+<td align="left">TRUE</td>
 </tr>
 <tr class="even">
 <td align="left">GeoJSON</td>
@@ -597,10 +601,12 @@ world_raw =<span class="st"> </span><span class="kw">st_read</span>(world_raw_fi
 <td align="left">FALSE</td>
 <td align="left">FALSE</td>
 <td align="left">TRUE</td>
+<td align="left">TRUE</td>
 </tr>
 <tr class="odd">
 <td align="left">GPKG</td>
 <td align="left">GeoPackage</td>
+<td align="left">TRUE</td>
 <td align="left">TRUE</td>
 <td align="left">TRUE</td>
 <td align="left">TRUE</td>
@@ -617,7 +623,7 @@ world =<span class="st"> </span><span class="kw">st_read</span>(vector_filepath)
 <span class="co">#&gt; Simple feature collection with 177 features and 10 fields</span>
 <span class="co">#&gt; geometry type:  MULTIPOLYGON</span>
 <span class="co">#&gt; dimension:      XY</span>
-<span class="co">#&gt; bbox:           xmin: -180 ymin: -90 xmax: 180 ymax: 83.64513</span>
+<span class="co">#&gt; bbox:           xmin: -180 ymin: -90 xmax: 180 ymax: 83.6</span>
 <span class="co">#&gt; epsg (SRID):    4326</span>
 <span class="co">#&gt; proj4string:    +proj=longlat +datum=WGS84 +no_defs</span></code></pre></div>
 <p>For some drivers, <code>dsn</code> could be provided as a folder name, access credentials for a database, or a GeoJSON string representation (see the examples of the <code>st_read()</code> help page for more details).</p>
@@ -827,7 +833,7 @@ mapview_obj =<span class="st"> </span><span class="kw">mapview</span>(world, <sp
 <p>Gillespie, Colin, and Robin Lovelace. 2016. <em>Efficient R Programming: A Practical Guide to Smarter Programming</em>. O’Reilly Media. <a href="https://csgillespie.github.io/efficientR/" class="uri">https://csgillespie.github.io/efficientR/</a>.</p>
 </div>
 <div id="ref-R-osmdata">
-<p>Padgham, Mark, Bob Rudis, Robin Lovelace, and Maëlle Salmon. 2018. <em>Osmdata: Import ’OpenStreetMap’ Data as Simple Features or Spatial Objects</em>. <a href="https://github.com/ropensci/osmdata" class="uri">https://github.com/ropensci/osmdata</a>.</p>
+<p>Padgham, Mark, Bob Rudis, Robin Lovelace, and Maëlle Salmon. 2018. <em>Osmdata: Import ’OpenStreetMap’ Data as Simple Features or Spatial Objects</em>. <a href="https://CRAN.R-project.org/package=osmdata" class="uri">https://CRAN.R-project.org/package=osmdata</a>.</p>
 </div>
 <div id="ref-coppock_history_1991">
 <p>Coppock, J Terry, and David W Rhind. 1991. “The History of GIS.” <em>Geographical Information Systems: Principles and Applications, Vol. 1.</em> 1 (1): 21–43. <a href="https://www.geos.ed.ac.uk/~gisteac/ilw/generic_resources/books_and_papers/Thx1ARTICLE.pdf" class="uri">https://www.geos.ed.ac.uk/~gisteac/ilw/generic_resources/books_and_papers/Thx1ARTICLE.pdf</a>.</p>

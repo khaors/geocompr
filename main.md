@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-03-22'
+date: '2018-03-24'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-03-22 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-03-24 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservecc539b8e2b640670
+preserveb2a795dc9b41e9bc
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -370,15 +370,15 @@ See the [r-spatial](https://github.com/r-spatial/) organisation and conversation
 ] and a growing number of actively developed packages which are designed to work in harmony with **sf** (Table \@ref(tab:revdep)). 
 
 
-Table: (\#tab:revdep)The top 5 most downloaded packages that depend on sf, in terms of average number of downloads per day over the previous month. As of 2018-03-18 there are 65 packages which import sf.
+Table: (\#tab:revdep)The top 5 most downloaded packages that depend on sf, in terms of average number of downloads per day over the previous month. As of 2018-03-21 there are 66 packages which import sf.
 
 package    Downloads
 --------  ----------
-plotly          2098
-raster          1527
-spData           831
-spdep            802
-leaflet          649
+plotly          2202
+raster          1629
+spData           890
+spdep            861
+leaflet          700
 
 ## The history of R-spatial
 
@@ -700,7 +700,7 @@ world[1:2, 1:3]
 #> Simple feature collection with 2 features and 3 fields
 #> geometry type:  MULTIPOLYGON
 #> dimension:      XY
-#> bbox:           xmin: 11.6401 ymin: -17.93064 xmax: 75.15803 ymax: 38.48628
+#> bbox:           xmin: 11.6 ymin: -17.9 xmax: 75.2 ymax: 38.5
 #> epsg (SRID):    4326
 #> proj4string:    +proj=longlat +datum=WGS84 +no_defs
 #>   iso_a2   name_long continent                           geom
@@ -3073,7 +3073,7 @@ joined = st_join(x = asia, y = urb) %>%
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/spatial-join-1.png" alt="Illustration of a spatial join: the populations of the world's three largest agglomerations joined onto their respective countries." width="576" />
+<img src="figures/spatial-join-1.png" alt="Illustration of a spatial join: the populations of the world's three largest agglomerations joined onto their respective countries." width="576" /><img src="figures/spatial-join-2.png" alt="Illustration of a spatial join: the populations of the world's three largest agglomerations joined onto their respective countries." width="576" />
 <p class="caption">(\#fig:spatial-join)Illustration of a spatial join: the populations of the world's three largest agglomerations joined onto their respective countries.</p>
 </div>
 
@@ -3109,7 +3109,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservea0b43847b3a7e249
+preservedd35edb67f66878b
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4992,7 +4992,7 @@ world_raw = st_read(world_raw_filepath)
 #> Simple feature collection with 177 features and 10 fields
 #> geometry type:  MULTIPOLYGON
 #> dimension:      XY
-#> bbox:           xmin: -180 ymin: -90 xmax: 180 ymax: 83.64513
+#> bbox:           xmin: -180 ymin: -90 xmax: 180 ymax: 83.6
 #> epsg (SRID):    4326
 #> proj4string:    +proj=longlat +datum=WGS84 +no_defs
 ```
@@ -5068,13 +5068,13 @@ head(sf_drivers, n = 5)
 
 Table: (\#tab:drivers)Sample of available drivers for reading/writing vector data (it could vary between different GDAL versions).
 
-name             long_name                       write   copy    is_raster   is_vector 
----------------  ------------------------------  ------  ------  ----------  ----------
-ESRI Shapefile   ESRI Shapefile                  TRUE    FALSE   FALSE       TRUE      
-GPX              GPX                             TRUE    FALSE   FALSE       TRUE      
-KML              Keyhole Markup Language (KML)   TRUE    FALSE   FALSE       TRUE      
-GeoJSON          GeoJSON                         TRUE    FALSE   FALSE       TRUE      
-GPKG             GeoPackage                      TRUE    TRUE    TRUE        TRUE      
+name             long_name                       write   copy    is_raster   is_vector   vsi  
+---------------  ------------------------------  ------  ------  ----------  ----------  -----
+ESRI Shapefile   ESRI Shapefile                  TRUE    FALSE   FALSE       TRUE        TRUE 
+GPX              GPX                             TRUE    FALSE   FALSE       TRUE        TRUE 
+KML              Keyhole Markup Language (KML)   TRUE    FALSE   FALSE       TRUE        TRUE 
+GeoJSON          GeoJSON                         TRUE    FALSE   FALSE       TRUE        TRUE 
+GPKG             GeoPackage                      TRUE    TRUE    TRUE        TRUE        TRUE 
 
 <!-- One of the major advantages of **sf** is that it is fast. -->
 <!-- reference to the vignette -->
@@ -5091,7 +5091,7 @@ world = st_read(vector_filepath)
 #> Simple feature collection with 177 features and 10 fields
 #> geometry type:  MULTIPOLYGON
 #> dimension:      XY
-#> bbox:           xmin: -180 ymin: -90 xmax: 180 ymax: 83.64513
+#> bbox:           xmin: -180 ymin: -90 xmax: 180 ymax: 83.6
 #> epsg (SRID):    4326
 #> proj4string:    +proj=longlat +datum=WGS84 +no_defs
 ```
@@ -5997,7 +5997,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve7919e4dd711ed3be
+preserve31fcc68437408d05
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6613,7 +6613,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve155943110df3642d
+preservef5edc9a3c9286205
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6747,7 +6747,7 @@ Why **tmap**?
 It is a powerful and flexible map-making package with sensible defaults.
 It has a concise syntax that will be familiar to **ggplot2** users and has a unique capability to generate static and interactive maps using the same code via `tmap_mode()`.
 **tmap** is well documented in the vignettes [`tmap-nutshell`](https://cran.r-project.org/web/packages/tmap/vignettes/tmap-nutshell.html) and [`tmap-modes`](https://cran.r-project.org/web/packages/tmap/vignettes/tmap-modes.html).
-This section teaches how to make static maps with **tmap**, emphasizing aesthetic features and adornments commonly for communicating raster and vector datasets introduced in previous chapters.
+This section teaches how to make static maps with **tmap**, emphasizing the important aesthetic and layout options.
 
 ### tmap basics
 
@@ -8037,6 +8037,8 @@ For example, efficient calculation of polygon in raster statistics exist in SAGA
 <!-- Methods similar to `raster::extract` can be found in GRASS GIS (e.g. v.rast.stats) -->
 <!-- https://grass.osgeo.org/grass74/manuals/v.rast.stats.html - test -->
 To learn more visit chapter \@ref(gis).
+<!-- https://twitter.com/mdsumner/status/976978499402571776 -->
+<!-- https://gist.github.com/mdsumner/d0b26238321a5d2c2c2ba663ff684183 -->
 
 ## Rasterization {#rasterization}
 
@@ -8623,7 +8625,7 @@ identical(fit$coefficients, mlr_fit$coefficients)
 -->
 
 In the beginning, it might seem a bit tedious to learn the **mlr** interface for modeling.
-But remember that one only has to learn one single interface to run many learners (**mlr** package version: 2.12).
+But remember that one only has to learn one single interface to run many learners (**mlr** package version: 2.13).
 Additionally, (spatial) resampling in **mlr** is really easy and only requires two more steps.^[Further advantages are the easy parallelization of resampling techniques and the tuning of machine learning hyperparameters, also spatially, in an inner fold.]
 Please note that package **sperrorest** initially implemented spatial cross-validation in R [@brenning_spatial_2012].
 In the meantime, its functionality was integrated into the **mlr** package which is the reason why we are using **mlr**.^[The **caret** package is another umbrella-package [@kuhn_applied_2013] for streamlined modeling in R, however, so far it does not provide spatial CV which is why we refrain from using it for spatial data.]
@@ -8677,12 +8679,12 @@ As expected, the spatially cross-validated result yields lower AUROC values on a
 
 ## (Spatial) Tuning of machine-learning hyperparameters
 <!-- exercise: assess predictive performance without using an inner fold -->
-little test
-What is machine-learning?
+In the beginning we have already distinguished the field of statistics from the field of machine learning.
+As a reminder we define machine learning here again with the words of [Jason Brownlee](https://machinelearningmastery.com/linear-regression-for-machine-learning/):
 
 > Machine learning, more specifically the field of predictive modeling is primarily concerned with minimizing the error of a model or making the most accurate predictions possible, at the expense of explainability. In applied machine learning we will borrow, reuse and steal algorithms from many different fields, including statistics and use them towards these ends.
 
-[Jason Brownlee](https://machinelearningmastery.com/linear-regression-for-machine-learning/)
+In the previous section we have used a GLM for predicting landslide susceptibility, in this section we will introduce the support vector machine (SVM) for the same purpose.
 
 
 This means that parametric models such as (generalized) linear regression are also used in the field of machine learning when the aim is prediction.
@@ -8714,6 +8716,78 @@ Overall, cloud computing is done on Linux servers.
 What is more, setting a seed for each thread/core/cpu is only available for R/Linux (mc.core.seeds).
 Therefore, we will present how to do nested cross-validatation using R code only working under Linux. 
 We recommend Windows users to install a virtual machine on their system to reproduce the subsequent code.
+
+
+Setting up the **mlr** building blocks follows the exact same procedure introduced in the previous section, i.e. we define a task, a learner and a resampling strategy.
+The task remains the same, hence we can use the one already defined in the previous section, namely `task`.
+However, we have to define a new learner since we are going to use a SVM.
+So let us find out which SVM functions are available in the **mlr** package.
+
+
+```r
+lrns = mlr::listLearners(task)
+lrns[grep("svm", lrns$class), ]
+dplyr::select(lrns, class, name, package) 
+#>            class                                 name short.name package
+#> 6   classif.ksvm              Support Vector Machines       ksvm kernlab
+#> 9  classif.lssvm Least Squares Support Vector Machine      lssvm kernlab
+#> 17   classif.svm     Support Vector Machines (libsvm)        svm   e1071
+```
+
+We will use `ksvm()` from the kernlab package.
+To allow for non-linearity we use the radial basis function (or Gaussian) kernel which is also the default of `ksvm()` and probably the most popular SVM kernel in general.
+
+
+```r
+lrn_ksvm = makeLearner("classif.ksvm",
+                        predict.type = "prob",
+                        kernel = "rbfdot")
+```
+
+Hence, the only thing left to do is to specify a resampling strategy.
+Again we will use a 100-repeated 5-fold spatial CV.
+
+These in turn will be used for the models in the outer resampling loop.
+
+```r
+# outer resampling loop
+outer = makeResampleDesc("SpRepCV", folds = 5, reps = 100)
+```
+
+However, we need to additionally tune the SVM hyperparameters.
+Doing this while using same data for the performance assessment would potentially lead to overoptimistic results.
+To avoid this we will use a nested spatial CV.
+This means that we split each fold again into five spatially disjoint subfolds which are used to determine the optimal hyperparameters.
+
+
+```r
+inner = makeResampleDesc("SpCV", iters = 5)
+```
+
+Next, we tell **mlr** to fit 50 models in each of these subfolds with randomly selected values for the hyperparameters.
+This implies that we ask R to fit 250 models to determine the optimal hyperparameters which are then used for the performance assessment in the first fold of the outer resampling loop.
+We have to repeat this five times for each fold in the outer fold which leads to 250 * 5 models for one repetition in the outer loop.
+Since we are requesting 100 repetitions this leads to a total of 125,000 models. 
+This is computationally quite demanding even with the small dataset used here.
+
+
+```r
+ctrl = makeTuneControlRandom(maxit = 50)
+```
+
+Finally, we restrict the search to tuning space to limits suggested in the literature [@schratz_performance_nodate].
+
+
+```r
+ps = makeParamSet(
+  makeNumericParam("C", lower = -12, upper = 15, trafo = function(x) 2^x),
+  makeNumericParam("sigma", lower = -15, upper = 6, trafo = function(x) 2^x)
+  )
+```
+
+
+
+
 
 
 ## Conclusions
