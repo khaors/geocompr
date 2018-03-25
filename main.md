@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-03-24'
+date: '2018-03-25'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-03-24 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-03-25 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveb2a795dc9b41e9bc
+preservecb71a9d2f27301c9
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3109,7 +3109,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservedd35edb67f66878b
+preservefde1ff1a70bfcb1e
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5997,7 +5997,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve31fcc68437408d05
+preserve440422869c696f76
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6613,7 +6613,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservef5edc9a3c9286205
+preservee0cc4988ccdabb58
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7150,35 +7150,45 @@ Moreover, the same skills can be applied to combine maps and plots.
 
 ## Animations
 
-Animated maps can be useful for communicating how spatial phenomena shift over time.
+Both faceted and animated maps can be useful for communicating how spatial phenomena shift over time.
 An advantage of faceted plots are that they can be printed, but the approach has disadvantages:
 faceted maps can become very small with more than ~9 maps in one figure, and it can be hard to see the spatial relationships between each facet when each map is on a different part of the page!
 Furthermore, with the increasing proportion of communication that happens via digital screens, the disadvantage that animations cannot be printed is diminished.
 You can always link readers to a web-page containing an animated (or interactive) version of a printed map to help make it come alive.
 
 Figure \@ref(fig:urban-animated) is a simple example of the benefits of an animated map.
-Unlike the faceted plot presented in section \@ref(faceted-maps), it does not squeeze all 17 for them all to be displayed simultaneously (see the book's website for the animated version).
+Unlike the faceted plot it does not squeeze all 17 for them all to be displayed simultaneously (see the book's website for the animated version).
 
 <div class="figure" style="text-align: center">
 <img src="figures/urban-animated.gif" alt="Animated map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations."  />
 <p class="caption">(\#fig:urban-animated)Animated map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations.</p>
 </div>
 
-<!-- 1/ desribe how to use `tm_facets` for animation -->
-<!-- 2/ by , nrow, ncol -->
-<!-- next, focus on `animation_tmap` -->
+
+
+Creation of this animatied map is almost identical to the creation of faceted map presented in section \@ref(faceted-maps).
+We just need to add two new arguments to the `tm_facets()` - `nrow = 1` and `ncol = 1`.
 
 
 ```r
-us_anim = tm_shape(world) + 
-  tm_polygons() +
+us_anim = tm_shape(world) +
+  tm_polygons() + 
   tm_shape(urban_agglomerations) +
-  tm_dots(size = "population_millions", col = "red", alpha = 0.5) +
+  tm_dots(size = "population_millions") +
   tm_facets(by = "year", nrow = 1, ncol = 1)
 ```
 
+The code above creates a set of separate maps for each year.
+Next, we combine them into and save as an animation file with `tmap_animation()`:
 
 
+```r
+tmap_animation(us_anim, filename = "us_anim.gif", delay = 25)
+```
+
+<!-- 1/ desribe how to use `tm_facets` for animation -->
+<!-- 2/ by , nrow, ncol -->
+<!-- next, focus on `animation_tmap` -->
 <!-- 3/ along -->
 <!-- 4/ by and along -->
 

@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-03-24">
+<meta name="date" content="2018-03-25">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -621,22 +621,25 @@ Figure 9.11: Map of the United States.
 </div>
 <div id="animations" class="section level2">
 <h2><span class="header-section-number">9.4</span> Animations</h2>
-<p>Animated maps can be useful for communicating how spatial phenomena shift over time. An advantage of faceted plots are that they can be printed, but the approach has disadvantages: faceted maps can become very small with more than ~9 maps in one figure, and it can be hard to see the spatial relationships between each facet when each map is on a different part of the page! Furthermore, with the increasing proportion of communication that happens via digital screens, the disadvantage that animations cannot be printed is diminished. You can always link readers to a web-page containing an animated (or interactive) version of a printed map to help make it come alive.</p>
-<p>Figure <a href="adv-map.html#fig:urban-animated">9.12</a> is a simple example of the benefits of an animated map. Unlike the faceted plot presented in section <a href="adv-map.html#faceted-maps">9.2.6</a>, it does not squeeze all 17 for them all to be displayed simultaneously (see the book’s website for the animated version).</p>
+<p>Both faceted and animated maps can be useful for communicating how spatial phenomena shift over time. An advantage of faceted plots are that they can be printed, but the approach has disadvantages: faceted maps can become very small with more than ~9 maps in one figure, and it can be hard to see the spatial relationships between each facet when each map is on a different part of the page! Furthermore, with the increasing proportion of communication that happens via digital screens, the disadvantage that animations cannot be printed is diminished. You can always link readers to a web-page containing an animated (or interactive) version of a printed map to help make it come alive.</p>
+<p>Figure <a href="adv-map.html#fig:urban-animated">9.12</a> is a simple example of the benefits of an animated map. Unlike the faceted plot it does not squeeze all 17 for them all to be displayed simultaneously (see the book’s website for the animated version).</p>
 <div class="figure" style="text-align: center"><span id="fig:urban-animated"></span>
 <img src="figures/urban-animated.gif" alt="Animated map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations."  />
 <p class="caption">
 Figure 9.12: Animated map showing the top 30 largest ‘urban agglomerations’ from 1950 to 2030 based on population projects by the United Nations.
 </p>
 </div>
+<p>Creation of this animatied map is almost identical to the creation of faceted map presented in section <a href="adv-map.html#faceted-maps">9.2.6</a>. We just need to add two new arguments to the <code>tm_facets()</code> - <code>nrow = 1</code> and <code>ncol = 1</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">us_anim =<span class="st"> </span><span class="kw">tm_shape</span>(world) +
+<span class="st">  </span><span class="kw">tm_polygons</span>() +<span class="st"> </span>
+<span class="st">  </span><span class="kw">tm_shape</span>(urban_agglomerations) +
+<span class="st">  </span><span class="kw">tm_dots</span>(<span class="dt">size =</span> <span class="st">&quot;population_millions&quot;</span>) +
+<span class="st">  </span><span class="kw">tm_facets</span>(<span class="dt">by =</span> <span class="st">&quot;year&quot;</span>, <span class="dt">nrow =</span> <span class="dv">1</span>, <span class="dt">ncol =</span> <span class="dv">1</span>)</code></pre></div>
+<p>The code above creates a set of separate maps for each year. Next, we combine them into and save as an animation file with <code>tmap_animation()</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tmap_animation</span>(us_anim, <span class="dt">filename =</span> <span class="st">&quot;us_anim.gif&quot;</span>, <span class="dt">delay =</span> <span class="dv">25</span>)</code></pre></div>
 <!-- 1/ desribe how to use `tm_facets` for animation -->
 <!-- 2/ by , nrow, ncol -->
 <!-- next, focus on `animation_tmap` -->
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">us_anim =<span class="st"> </span><span class="kw">tm_shape</span>(world) +<span class="st"> </span>
-<span class="st">  </span><span class="kw">tm_polygons</span>() +
-<span class="st">  </span><span class="kw">tm_shape</span>(urban_agglomerations) +
-<span class="st">  </span><span class="kw">tm_dots</span>(<span class="dt">size =</span> <span class="st">&quot;population_millions&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>) +
-<span class="st">  </span><span class="kw">tm_facets</span>(<span class="dt">by =</span> <span class="st">&quot;year&quot;</span>, <span class="dt">nrow =</span> <span class="dv">1</span>, <span class="dt">ncol =</span> <span class="dv">1</span>)</code></pre></div>
 <!-- 3/ along -->
 <!-- 4/ by and along -->
 <!-- add a new animation exercise -->
