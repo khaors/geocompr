@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservecb71a9d2f27301c9
+preserveaba42525e8babf84
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3109,7 +3109,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservefde1ff1a70bfcb1e
+preservee145b575230f0e3f
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5997,7 +5997,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve440422869c696f76
+preservee9a2f96852799783
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6613,7 +6613,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservee0cc4988ccdabb58
+preserve50305e45b6081251
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7166,8 +7166,9 @@ Unlike the faceted plot it does not squeeze all 17 for them all to be displayed 
 
 
 
-Creation of this animatied map is almost identical to the creation of faceted map presented in section \@ref(faceted-maps).
-We just need to add two new arguments to the `tm_facets()` - `nrow = 1` and `ncol = 1`.
+Creation of this animated map is almost identical to the creation of faceted map presented in section \@ref(faceted-maps).
+We just need to add three new arguments to the `tm_facets()`.
+The first one, `free.coords = FALSE` maintains the same extend in all of the partial maps, while `nrow = 1` and `ncol = 1` forces to create only one facet per `"year"`.
 
 
 ```r
@@ -7175,7 +7176,7 @@ us_anim = tm_shape(world) +
   tm_polygons() + 
   tm_shape(urban_agglomerations) +
   tm_dots(size = "population_millions") +
-  tm_facets(by = "year", nrow = 1, ncol = 1)
+  tm_facets(by = "year", free.coords = FALSE, nrow = 1, ncol = 1)
 ```
 
 The code above creates a set of separate maps for each year.

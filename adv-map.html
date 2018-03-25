@@ -629,12 +629,12 @@ Figure 9.11: Map of the United States.
 Figure 9.12: Animated map showing the top 30 largest ‘urban agglomerations’ from 1950 to 2030 based on population projects by the United Nations.
 </p>
 </div>
-<p>Creation of this animatied map is almost identical to the creation of faceted map presented in section <a href="adv-map.html#faceted-maps">9.2.6</a>. We just need to add two new arguments to the <code>tm_facets()</code> - <code>nrow = 1</code> and <code>ncol = 1</code>.</p>
+<p>Creation of this animated map is almost identical to the creation of faceted map presented in section <a href="adv-map.html#faceted-maps">9.2.6</a>. We just need to add three new arguments to the <code>tm_facets()</code>. The first one, <code>free.coords = FALSE</code> maintains the same extend in all of the partial maps, while <code>nrow = 1</code> and <code>ncol = 1</code> forces to create only one facet per <code>&quot;year&quot;</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">us_anim =<span class="st"> </span><span class="kw">tm_shape</span>(world) +
 <span class="st">  </span><span class="kw">tm_polygons</span>() +<span class="st"> </span>
 <span class="st">  </span><span class="kw">tm_shape</span>(urban_agglomerations) +
 <span class="st">  </span><span class="kw">tm_dots</span>(<span class="dt">size =</span> <span class="st">&quot;population_millions&quot;</span>) +
-<span class="st">  </span><span class="kw">tm_facets</span>(<span class="dt">by =</span> <span class="st">&quot;year&quot;</span>, <span class="dt">nrow =</span> <span class="dv">1</span>, <span class="dt">ncol =</span> <span class="dv">1</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">tm_facets</span>(<span class="dt">by =</span> <span class="st">&quot;year&quot;</span>, <span class="dt">free.coords =</span> <span class="ot">FALSE</span>, <span class="dt">nrow =</span> <span class="dv">1</span>, <span class="dt">ncol =</span> <span class="dv">1</span>)</code></pre></div>
 <p>The code above creates a set of separate maps for each year. Next, we combine them into and save as an animation file with <code>tmap_animation()</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tmap_animation</span>(us_anim, <span class="dt">filename =</span> <span class="st">&quot;us_anim.gif&quot;</span>, <span class="dt">delay =</span> <span class="dv">25</span>)</code></pre></div>
 <!-- 1/ desribe how to use `tm_facets` for animation -->
