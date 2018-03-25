@@ -635,7 +635,7 @@ Figure 9.12: Animated map showing the top 30 largest ‘urban agglomerations’ 
 <span class="st">  </span><span class="kw">tm_shape</span>(urban_agglomerations) +
 <span class="st">  </span><span class="kw">tm_dots</span>(<span class="dt">size =</span> <span class="st">&quot;population_millions&quot;</span>) +
 <span class="st">  </span><span class="kw">tm_facets</span>(<span class="dt">by =</span> <span class="st">&quot;year&quot;</span>, <span class="dt">free.coords =</span> <span class="ot">FALSE</span>, <span class="dt">nrow =</span> <span class="dv">1</span>, <span class="dt">ncol =</span> <span class="dv">1</span>)</code></pre></div>
-<p>The code above creates a set of separate maps for each year. Next, we combine them into and save as an animation file with <code>tmap_animation()</code>:</p>
+<p>The code above creates a set of separate maps for each year. Next, we combine them and save as an animation file with <code>tmap_animation()</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tmap_animation</span>(us_anim, <span class="dt">filename =</span> <span class="st">&quot;us_anim.gif&quot;</span>, <span class="dt">delay =</span> <span class="dv">25</span>)</code></pre></div>
 <!-- 1/ desribe how to use `tm_facets` for animation -->
 <!-- 2/ by , nrow, ncol -->
