@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-03-25">
+<meta name="date" content="2018-03-26">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -576,7 +576,10 @@ Figure 13.5: Boxplot showing the difference in AUROC values between spatial and 
 <p>Model selection without nested CV uses the same data to tune model parameters and evaluate model performance. Information may thus “leak” into the model and overfit the data. The magnitude of this effect is primarily dependent on the size of the dataset and the stability of the model.</p>
 </blockquote>
 <p><a href="http://scikit-learn.org/stable/auto_examples/model_selection/plot_nested_cross_validation_iris.html" class="uri">http://scikit-learn.org/stable/auto_examples/model_selection/plot_nested_cross_validation_iris.html</a></p>
-<p>SVM &gt; The idea of finding a hyperplane that separates the data as well as possible, while allowing some violations to this separation, seemed distinctly different from classical approaches for classification, such as logistic regression and linear discriminant analysis. Moreover, the idea of using a kernel to expand the feature space in order to accommodate non-linear class boundaries appeared to be a unique and valuable characteristic.</p>
+<p>SVM</p>
+<blockquote>
+<p>The idea of finding a hyperplane that separates the data as well as possible, while allowing some violations to this separation, seemed distinctly different from classical approaches for classification, such as logistic regression and linear discriminant analysis. Moreover, the idea of using a kernel to expand the feature space in order to accommodate non-linear class boundaries appeared to be a unique and valuable characteristic.</p>
+</blockquote>
 <p>James et al., 2013 Support vector machines always require tuning to find the optimal hyperparameters. Some software packages/implementations come with an automated tuning. which is usually based on random sampling. This is useful in the case of non-spatial data but of less use in the case of spatial data where spatial tuning should be preferred. Therefore, we will make sure to replace automated by spatial hyperparameter tuning. Without going into too much detail SVM</p>
 <p>Multicore processing is easier under Linux. Overall, cloud computing is done on Linux servers. What is more, setting a seed for each thread/core/cpu is only available for R/Linux (mc.core.seeds). Therefore, we will present how to do nested cross-validatation using R code only working under Linux. We recommend Windows users to install a virtual machine on their system to reproduce the subsequent code.</p>
 <p>Setting up the <strong>mlr</strong> building blocks follows the exact same procedure introduced in the previous section, i.e. we define a task, a learner and a resampling strategy. The task remains the same, hence we can use the one already defined in the previous section, namely <code>task</code>. However, we have to define a new learner since we are going to use a SVM. So let us find out which SVM functions are available in the <strong>mlr</strong> package.</p>
@@ -595,15 +598,17 @@ dplyr::<span class="kw">select</span>(lrns, class, name, package)
 <p>These in turn will be used for the models in the outer resampling loop.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># outer resampling loop</span>
 outer =<span class="st"> </span><span class="kw">makeResampleDesc</span>(<span class="st">&quot;SpRepCV&quot;</span>, <span class="dt">folds =</span> <span class="dv">5</span>, <span class="dt">reps =</span> <span class="dv">100</span>)</code></pre></div>
-<p>However, we need to additionally tune the SVM hyperparameters. Doing this while using same data for the performance assessment would potentially lead to overoptimistic results. To avoid this we will use a nested spatial CV. This means that we split each fold again into five spatially disjoint subfolds which are used to determine the optimal hyperparameters.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">inner =<span class="st"> </span><span class="kw">makeResampleDesc</span>(<span class="st">&quot;SpCV&quot;</span>, <span class="dt">iters =</span> <span class="dv">5</span>)</code></pre></div>
-<p>Next, we tell <strong>mlr</strong> to fit 50 models in each of these subfolds with randomly selected values for the hyperparameters. This implies that we ask R to fit 250 models to determine the optimal hyperparameters which are then used for the performance assessment in the first fold of the outer resampling loop. We have to repeat this five times for each fold in the outer fold which leads to 250 * 5 models for one repetition in the outer loop. Since we are requesting 100 repetitions this leads to a total of 125,000 models. This is computationally quite demanding even with the small dataset used here.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ctrl =<span class="st"> </span><span class="kw">makeTuneControlRandom</span>(<span class="dt">maxit =</span> <span class="dv">50</span>)</code></pre></div>
-<p>Finally, we restrict the search to tuning space to limits suggested in the literature <span class="citation">(Schratz et al. <a href="#ref-schratz_performance_nodate">2018</a>)</span>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ps =<span class="st"> </span><span class="kw">makeParamSet</span>(
+<p>However, we need to additionally tune the SVM hyperparameters. Using the same data for the performance assessment and for the tuning would potentially lead to overoptimistic results. To avoid this we will use a nested spatial CV. This means that we split each fold again into five spatially disjoint subfolds which are used to determine the optimal hyperparameters (<code>inner</code> object in the code chunk below).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># five spatially disjoint partitions</span>
+inner =<span class="st"> </span><span class="kw">makeResampleDesc</span>(<span class="st">&quot;SpCV&quot;</span>, <span class="dt">iters =</span> <span class="dv">5</span>)
+<span class="co"># use 50 randomly selected hyperparameters</span>
+ctrl =<span class="st"> </span><span class="kw">makeTuneControlRandom</span>(<span class="dt">maxit =</span> <span class="dv">50</span>)
+<span class="co"># define the outer limits of the randomly selected hyperparameters</span>
+ps =<span class="st"> </span><span class="kw">makeParamSet</span>(
   <span class="kw">makeNumericParam</span>(<span class="st">&quot;C&quot;</span>, <span class="dt">lower =</span> -<span class="dv">12</span>, <span class="dt">upper =</span> <span class="dv">15</span>, <span class="dt">trafo =</span> function(x) <span class="dv">2</span>^x),
   <span class="kw">makeNumericParam</span>(<span class="st">&quot;sigma&quot;</span>, <span class="dt">lower =</span> -<span class="dv">15</span>, <span class="dt">upper =</span> <span class="dv">6</span>, <span class="dt">trafo =</span> function(x) <span class="dv">2</span>^x)
   )</code></pre></div>
+<p>Next, we tell <strong>mlr</strong> to fit 50 models in each of these subfolds while making use of randomly selected hyperparameter values (<code>ctrl</code> object in the above code chunk) within a predefined tuning space (<code>ps</code> object) in accordance with the literature <span class="citation">(Schratz et al. <a href="#ref-schratz_performance_nodate">2018</a>)</span>. This implies that we ask R to fit 250 models to determine the optimal hyperparameters which are then used for the performance assessment in the first fold of the outer resampling loop. We have to repeat this five times for each fold in the outer fold which leads to 250 * 5 models for one repetition in the outer loop. Since we are requesting 100 repetitions this leads to a total of 125,000 models. This is computationally quite demanding even with the small dataset used here.</p>
 </div>
 <div id="conclusions" class="section level2">
 <h2><span class="header-section-number">13.7</span> Conclusions</h2>

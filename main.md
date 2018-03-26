@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-03-25'
+date: '2018-03-26'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-03-25 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-03-26 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveca10ed3ed80cd3ea
+preserve5b25f3ad9b00406a
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3109,7 +3109,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservefc2cab54f9b92fc6
+preserve7ed089120ac5d737
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5997,7 +5997,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserveba765b9b7c9c5e7a
+preserve4e43c15c4b413382
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6613,7 +6613,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservebb2ca1ade6aac9fd
+preserve937e459f7a5d4418
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -8712,6 +8712,7 @@ parallelization (conclusion -> server/remote modeling + mc.core.seed)
 http://scikit-learn.org/stable/auto_examples/model_selection/plot_nested_cross_validation_iris.html
 
 SVM
+
 > The idea of finding a hyperplane that separates the data as well as possible, while allowing some violations to this separation, seemed distinctly different from classical approaches for classification, such as logistic regression and linear discriminant analysis. Moreover, the idea of using a kernel to expand the feature space in order to accommodate non-linear class boundaries appeared to be a unique and valuable characteristic.
 
 James et al., 2013
@@ -8766,35 +8767,30 @@ outer = makeResampleDesc("SpRepCV", folds = 5, reps = 100)
 ```
 
 However, we need to additionally tune the SVM hyperparameters.
-Doing this while using same data for the performance assessment would potentially lead to overoptimistic results.
+Using the same data for the performance assessment and for the tuning would potentially lead to overoptimistic results.
 To avoid this we will use a nested spatial CV.
-This means that we split each fold again into five spatially disjoint subfolds which are used to determine the optimal hyperparameters.
+This means that we split each fold again into five spatially disjoint subfolds which are used to determine the optimal hyperparameters (`inner` object in the code chunk below).
 
 
 ```r
+# five spatially disjoint partitions
 inner = makeResampleDesc("SpCV", iters = 5)
+# use 50 randomly selected hyperparameters
+ctrl = makeTuneControlRandom(maxit = 50)
+# define the outer limits of the randomly selected hyperparameters
+ps = makeParamSet(
+  makeNumericParam("C", lower = -12, upper = 15, trafo = function(x) 2^x),
+  makeNumericParam("sigma", lower = -15, upper = 6, trafo = function(x) 2^x)
+  )
 ```
 
-Next, we tell **mlr** to fit 50 models in each of these subfolds with randomly selected values for the hyperparameters.
+Next, we tell **mlr** to fit 50 models in each of these subfolds while making use of randomly selected hyperparameter values (`ctrl` object in the above code chunk) within a predefined tuning space (`ps` object) in accordance with the literature [@schratz_performance_nodate].
 This implies that we ask R to fit 250 models to determine the optimal hyperparameters which are then used for the performance assessment in the first fold of the outer resampling loop.
 We have to repeat this five times for each fold in the outer fold which leads to 250 * 5 models for one repetition in the outer loop.
 Since we are requesting 100 repetitions this leads to a total of 125,000 models. 
 This is computationally quite demanding even with the small dataset used here.
 
 
-```r
-ctrl = makeTuneControlRandom(maxit = 50)
-```
-
-Finally, we restrict the search to tuning space to limits suggested in the literature [@schratz_performance_nodate].
-
-
-```r
-ps = makeParamSet(
-  makeNumericParam("C", lower = -12, upper = 15, trafo = function(x) 2^x),
-  makeNumericParam("sigma", lower = -15, upper = 6, trafo = function(x) 2^x)
-  )
-```
 
 
 
