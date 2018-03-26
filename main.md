@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve66e046716e514a78
+preserve18c1ff887a7b3430
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3108,7 +3108,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve427e7965985989e9
+preserve8e7e58d38d3b5d1b
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5996,7 +5996,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve17ab6b0ae53f4a06
+preserve7f2fec7dca3422a2
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6612,7 +6612,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve106f07d6bb3cb400
+preserve58fade777368e479
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6769,9 +6769,13 @@ tm_shape(nz) + tm_fill() + tm_borders()
 </div>
 
 The object passed to `tm_shape()` in this case is `nz`, which represents the regions of New Zealand.
-Layers are iteratively added to represent this shape visually, with `tm_fill()` and `tm_borders()` in this case.
-This is an intuitive approach, making the common task of adding new layers as simple as adding `+` followed by `tm_*()` where `*` is replaced by an element of your choice (see ``?`tmap-element`` for a list of available elements).
-This 'layering' is illustrated in the right panel of Figure \@ref(fig:tmshape), which shows the result of adding a border *on top of* the fill layer (the order in which layers are added is the order in which they are rendered).
+Layers are added to represent `nz` visually, with `tm_fill()` and `tm_borders()` creating shaded areas (right panel) and border outlines (middle panel) in Figure \@ref(fig:tmshape), respectively.
+
+This is an intuitive approach to map making:
+the common task of *adding* new layers is undertaken by the addition operator `+`, followed by `tm_*()`.
+`*` can be a wide range of layer types which have self-explanatory names including `fill`, `borders` (demonstrated above), `bubbles`, `text` and `raster`  (see ``?`tmap-element`` for a list of available elements).
+This 'layering' is illustrated in the right panel of Figure \@ref(fig:tmshape), which shows the result of adding a border *on top of* the fill layer.
+The order in which layers are added is the order in which they are rendered.
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">`qtm()` is a handy function for **q**uickly creating **t**map **m**aps (hence the snappy name).
 It is concise and provides a good default visualization in many cases:
