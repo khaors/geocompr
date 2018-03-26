@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservefb222003bcfab2d4
+preserve99d4f449002edc00
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3109,7 +3109,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservef332bf5183367755
+preserveccdd90eb35064d07
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5997,7 +5997,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservecb2192e978b50584
+preserve8032e06c49b557bb
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6613,7 +6613,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve2724a5e73bff83d9
+preserve1deba6ca5a2d669a
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -8723,12 +8723,6 @@ This is useful in the case of non-spatial data but of less use in the case of sp
 Therefore, we will make sure to replace automated by spatial hyperparameter tuning.
 Without going into too much detail SVM 
 
-Multicore processing is easier under Linux.
-Overall, cloud computing is done on Linux servers.
-What is more, setting a seed for each thread/core/cpu is only available for R/Linux (mc.core.seeds).
-Therefore, we will present how to do nested cross-validatation using R code only working under Linux. 
-We recommend Windows users to install a virtual machine on their system to reproduce the subsequent code.
-
 
 Setting up the **mlr** building blocks follows the exact same procedure introduced in the previous section, i.e. we define a task, a learner and a resampling strategy.
 The task remains the same, hence we can use the one already defined in the previous section, namely `task`.
@@ -8766,7 +8760,7 @@ outer = makeResampleDesc("SpRepCV", folds = 5, reps = 100)
 ```
 
 However, we need to additionally tune the SVM hyperparameters.
-Using the same data for the performance assessment and for the tuning would potentially lead to overoptimistic results.
+Using the same data for the performance assessment and for the tuning would potentially lead to overoptimistic results [@cawley_on_2010].
 To avoid this we will use a nested spatial CV.
 
 <div class="figure" style="text-align: center">
@@ -8789,13 +8783,18 @@ ps = makeParamSet(
   )
 ```
 
-Next, we tell **mlr** to fit 50 models in each of these subfolds while making use of randomly selected hyperparameter values (`ctrl` object in the above code chunk) within a predefined tuning space (`ps` object) in accordance with the literature [@schratz_performance_nodate].
-This implies that we ask R to fit 250 models to determine the optimal hyperparameters which are then used for the performance assessment in the first fold of the outer resampling loop.
+Next, we tell **mlr** to fit 50 models in each of these subfolds while making use of randomly selected hyperparameter values (`ctrl` object in the above code chunk) within a predefined tuning space (`ps` object).
+The latter was chosen with values recommended in the literature [@schratz_performance_nodate].
+Overall, this set up implies that we ask R to fit 250 models to determine the optimal hyperparameters which are then used for the performance assessment in the first fold of the outer resampling loop.
 We have to repeat this five times for each fold in the outer fold which leads to 250 * 5 models for one repetition in the outer loop.
 Since we are requesting 100 repetitions this leads to a total of 125,000 models. 
 This is computationally quite demanding even with the small dataset used here.
 
-
+Multicore processing is easier under Linux.
+Overall, cloud computing is done on Linux servers.
+What is more, setting a seed for each thread/core/cpu is only available for R/Linux (mc.core.seeds).
+Therefore, we will present how to do nested cross-validatation using R code only working under Linux. 
+We recommend Windows users to install a virtual machine on their system to reproduce the subsequent code.
 
 
 
