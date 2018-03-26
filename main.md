@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve99d4f449002edc00
+preservef2fb356177c30127
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3109,7 +3109,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveccdd90eb35064d07
+preservebafcfecc4586dd49
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5997,7 +5997,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve8032e06c49b557bb
+preserve5d0de3edfac7c706
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6613,7 +6613,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve1deba6ca5a2d669a
+preserve7a1e82f3eb05ac5e
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -8769,6 +8769,9 @@ To avoid this we will use a nested spatial CV.
 </div>
 
 This means that we split each fold again into five spatially disjoint subfolds which are used to determine the optimal hyperparameters (`inner` object in the code chunk below; see Figure \@ref(fig:inner-outer) for a visual representation).
+To find the optimal hyperparameter combination we would like to fit 50 models in each of these subfolds with randomly selected hyperparameter values (`ctrl` object in the code chunk below).
+Additionally, we restrict the randomly chosen values to a predefined tuning space (`ps` object).
+The latter was chosen with values recommended in the literature [@schratz_performance_nodate].
 
 
 ```r
@@ -8783,18 +8786,69 @@ ps = makeParamSet(
   )
 ```
 
-Next, we tell **mlr** to fit 50 models in each of these subfolds while making use of randomly selected hyperparameter values (`ctrl` object in the above code chunk) within a predefined tuning space (`ps` object).
-The latter was chosen with values recommended in the literature [@schratz_performance_nodate].
+Finally, we add all the parameters defining the inner hyperparameter loop to our learner `lrn_ksvm` through a wrapper function.
+
+
+```r
+wrapped_lrn_ksvm = makeTuneWrapper(learner = lrn_ksvm, 
+                                   resampling = inner,
+                                   par.set = ps,
+                                   control = ctrl, 
+                                   show.info = TRUE,
+                                   measures = mlr::auc)
+```
+
 Overall, this set up implies that we ask R to fit 250 models to determine the optimal hyperparameters which are then used for the performance assessment in the first fold of the outer resampling loop.
 We have to repeat this five times for each fold in the outer fold which leads to 250 * 5 models for one repetition in the outer loop.
 Since we are requesting 100 repetitions this leads to a total of 125,000 models. 
 This is computationally quite demanding even with the small dataset used here.
+So before starting the actual resampling it would be wise to reduce runtime with the help of a parallelization approach. 
+In general, multicore processing is easier on Linux than Windows systems.
+In fact, cloud computing is usually done and developed on Linux servers.
+Therefore, we will present how to do nested cross-validatation using a parallelization approach working only under Linux.^[Note also that the `mc.set.seeds` parameter used later on is only available for Linux machines].
+Windows users have at least two options:
 
-Multicore processing is easier under Linux.
-Overall, cloud computing is done on Linux servers.
-What is more, setting a seed for each thread/core/cpu is only available for R/Linux (mc.core.seeds).
-Therefore, we will present how to do nested cross-validatation using R code only working under Linux. 
-We recommend Windows users to install a virtual machine on their system to reproduce the subsequent code.
+1. Run the code without inializing the parallelization though this might take a while.
+2. Install a virtual machine (e.g. [Oracle VirtualBox](https://www.virtualbox.org/)) to reproduce the subsequent code.
+
+
+
+```r
+configureMlr(on.learner.error = "warn", on.error.dump = TRUE)
+# check the number of cores
+n = parallel::detectCores()
+# parallelize the tuning, i.e. the inner fold
+parallelStart(mode = "multicore", level = "mlr.tuneParams", 
+              cpus = round(n / 2),
+              mc.set.seed = TRUE) 
+
+set.seed(12345)
+resa_svm_spatial = mlr::resample(wrapper_ksvm, task,
+                                 resampling = outer, extract = getTuneResult,
+                                 show.info = TRUE, measures = mlr::auc)
+
+# Aggregated Result: auc.test.mean=0.7583375
+parallelStop()
+# save your result
+# saveRDS(resa_svm_spatial, "extdata/svm_sp_sp_rbf_50it.rda")
+
+# Exploring the results
+# run time in minutes
+resa_svm_spatial$runtime / 60
+# final aggregated AUROC 
+resa_svm_spatial$aggr
+# same as
+mean(resa_svm_spatial$measures.test$auc)
+# used hyperparameters for the outer fold, i.e. the best combination out of 50 *
+# 5 models
+resa_svm_spatial$extract[[1]]
+# and here one can observe that the AUC of the tuning data is usually higher
+# than for the model on the outer fold
+resa_svm_spatial$measures.test[1, ]
+```
+
+
+
 
 
 

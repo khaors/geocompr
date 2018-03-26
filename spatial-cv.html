@@ -603,7 +603,7 @@ outer =<span class="st"> </span><span class="kw">makeResampleDesc</span>(<span c
 Figure 13.6: Visual representation of inner and outer folds in spatial and non-spatial cross-validation. Permission for reproducing the figure was kindly provided by Patrick Schratz <span class="citation">(Schratz et al. <a href="#ref-schratz_performance_nodate">2018</a>)</span>
 </p>
 </div>
-<p>This means that we split each fold again into five spatially disjoint subfolds which are used to determine the optimal hyperparameters (<code>inner</code> object in the code chunk below; see Figure <a href="spatial-cv.html#fig:inner-outer">13.6</a> for a visual representation).</p>
+<p>This means that we split each fold again into five spatially disjoint subfolds which are used to determine the optimal hyperparameters (<code>inner</code> object in the code chunk below; see Figure <a href="spatial-cv.html#fig:inner-outer">13.6</a> for a visual representation). To find the optimal hyperparameter combination we would like to fit 50 models in each of these subfolds with randomly selected hyperparameter values (<code>ctrl</code> object in the code chunk below). Additionally, we restrict the randomly chosen values to a predefined tuning space (<code>ps</code> object). The latter was chosen with values recommended in the literature <span class="citation">(Schratz et al. <a href="#ref-schratz_performance_nodate">2018</a>)</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># five spatially disjoint partitions</span>
 inner =<span class="st"> </span><span class="kw">makeResampleDesc</span>(<span class="st">&quot;SpCV&quot;</span>, <span class="dt">iters =</span> <span class="dv">5</span>)
 <span class="co"># use 50 randomly selected hyperparameters</span>
@@ -613,8 +613,49 @@ ps =<span class="st"> </span><span class="kw">makeParamSet</span>(
   <span class="kw">makeNumericParam</span>(<span class="st">&quot;C&quot;</span>, <span class="dt">lower =</span> -<span class="dv">12</span>, <span class="dt">upper =</span> <span class="dv">15</span>, <span class="dt">trafo =</span> function(x) <span class="dv">2</span>^x),
   <span class="kw">makeNumericParam</span>(<span class="st">&quot;sigma&quot;</span>, <span class="dt">lower =</span> -<span class="dv">15</span>, <span class="dt">upper =</span> <span class="dv">6</span>, <span class="dt">trafo =</span> function(x) <span class="dv">2</span>^x)
   )</code></pre></div>
-<p>Next, we tell <strong>mlr</strong> to fit 50 models in each of these subfolds while making use of randomly selected hyperparameter values (<code>ctrl</code> object in the above code chunk) within a predefined tuning space (<code>ps</code> object). The latter was chosen with values recommended in the literature <span class="citation">(Schratz et al. <a href="#ref-schratz_performance_nodate">2018</a>)</span>. Overall, this set up implies that we ask R to fit 250 models to determine the optimal hyperparameters which are then used for the performance assessment in the first fold of the outer resampling loop. We have to repeat this five times for each fold in the outer fold which leads to 250 * 5 models for one repetition in the outer loop. Since we are requesting 100 repetitions this leads to a total of 125,000 models. This is computationally quite demanding even with the small dataset used here.</p>
-<p>Multicore processing is easier under Linux. Overall, cloud computing is done on Linux servers. What is more, setting a seed for each thread/core/cpu is only available for R/Linux (mc.core.seeds). Therefore, we will present how to do nested cross-validatation using R code only working under Linux. We recommend Windows users to install a virtual machine on their system to reproduce the subsequent code.</p>
+<p>Finally, we add all the parameters defining the inner hyperparameter loop to our learner <code>lrn_ksvm</code> through a wrapper function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wrapped_lrn_ksvm =<span class="st"> </span><span class="kw">makeTuneWrapper</span>(<span class="dt">learner =</span> lrn_ksvm, 
+                                   <span class="dt">resampling =</span> inner,
+                                   <span class="dt">par.set =</span> ps,
+                                   <span class="dt">control =</span> ctrl, 
+                                   <span class="dt">show.info =</span> <span class="ot">TRUE</span>,
+                                   <span class="dt">measures =</span> mlr::auc)</code></pre></div>
+<p>Overall, this set up implies that we ask R to fit 250 models to determine the optimal hyperparameters which are then used for the performance assessment in the first fold of the outer resampling loop. We have to repeat this five times for each fold in the outer fold which leads to 250 * 5 models for one repetition in the outer loop. Since we are requesting 100 repetitions this leads to a total of 125,000 models. This is computationally quite demanding even with the small dataset used here. So before starting the actual resampling it would be wise to reduce runtime with the help of a parallelization approach. In general, multicore processing is easier on Linux than Windows systems. In fact, cloud computing is usually done and developed on Linux servers. Therefore, we will present how to do nested cross-validatation using a parallelization approach working only under Linux.<a href="#fn68" class="footnoteRef" id="fnref68"><sup>68</sup></a>. Windows users have at least two options:</p>
+<ol style="list-style-type: decimal">
+<li>Run the code without inializing the parallelization though this might take a while.</li>
+<li>Install a virtual machine (e.g. <a href="https://www.virtualbox.org/">Oracle VirtualBox</a>) to reproduce the subsequent code.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">configureMlr</span>(<span class="dt">on.learner.error =</span> <span class="st">&quot;warn&quot;</span>, <span class="dt">on.error.dump =</span> <span class="ot">TRUE</span>)
+<span class="co"># check the number of cores</span>
+n =<span class="st"> </span>parallel::<span class="kw">detectCores</span>()
+<span class="co"># parallelize the tuning, i.e. the inner fold</span>
+<span class="kw">parallelStart</span>(<span class="dt">mode =</span> <span class="st">&quot;multicore&quot;</span>, <span class="dt">level =</span> <span class="st">&quot;mlr.tuneParams&quot;</span>, 
+              <span class="dt">cpus =</span> <span class="kw">round</span>(n /<span class="st"> </span><span class="dv">2</span>),
+              <span class="dt">mc.set.seed =</span> <span class="ot">TRUE</span>) 
+
+<span class="kw">set.seed</span>(<span class="dv">12345</span>)
+resa_svm_spatial =<span class="st"> </span>mlr::<span class="kw">resample</span>(wrapper_ksvm, task,
+                                 <span class="dt">resampling =</span> outer, <span class="dt">extract =</span> getTuneResult,
+                                 <span class="dt">show.info =</span> <span class="ot">TRUE</span>, <span class="dt">measures =</span> mlr::auc)
+
+<span class="co"># Aggregated Result: auc.test.mean=0.7583375</span>
+<span class="kw">parallelStop</span>()
+<span class="co"># save your result</span>
+<span class="co"># saveRDS(resa_svm_spatial, &quot;extdata/svm_sp_sp_rbf_50it.rda&quot;)</span>
+
+<span class="co"># Exploring the results</span>
+<span class="co"># run time in minutes</span>
+resa_svm_spatial$runtime /<span class="st"> </span><span class="dv">60</span>
+<span class="co"># final aggregated AUROC </span>
+resa_svm_spatial$aggr
+<span class="co"># same as</span>
+<span class="kw">mean</span>(resa_svm_spatial$measures.test$auc)
+<span class="co"># used hyperparameters for the outer fold, i.e. the best combination out of 50 *</span>
+<span class="co"># 5 models</span>
+resa_svm_spatial$extract[[<span class="dv">1</span>]]
+<span class="co"># and here one can observe that the AUC of the tuning data is usually higher</span>
+<span class="co"># than for the model on the outer fold</span>
+resa_svm_spatial$measures.test[<span class="dv">1</span>, ]</code></pre></div>
 </div>
 <div id="conclusions" class="section level2">
 <h2><span class="header-section-number">13.7</span> Conclusions</h2>
@@ -690,6 +731,7 @@ Well, otherwise we would tune our hyperparameters on the test set of the outer l
 <li id="fn65"><p>Note that this corresponds to <code>type = response</code> in <code>predict.glm</code>.<a href="spatial-cv.html#fnref65">↩</a></p></li>
 <li id="fn66"><p>Further advantages are the easy parallelization of resampling techniques and the tuning of machine learning hyperparameters, also spatially, in an inner fold.<a href="spatial-cv.html#fnref66">↩</a></p></li>
 <li id="fn67"><p>The <strong>caret</strong> package is another umbrella-package <span class="citation">(Kuhn and Johnson <a href="#ref-kuhn_applied_2013">2013</a>)</span> for streamlined modeling in R, however, so far it does not provide spatial CV which is why we refrain from using it for spatial data.<a href="spatial-cv.html#fnref67">↩</a></p></li>
+<li id="fn68"><p>Note also that the <code>mc.set.seeds</code> parameter used later on is only available for Linux machines<a href="spatial-cv.html#fnref68">↩</a></p></li>
 </ol>
 </div>
             </section>
