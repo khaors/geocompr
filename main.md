@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve5b25f3ad9b00406a
+preservefb222003bcfab2d4
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3109,7 +3109,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve7ed089120ac5d737
+preservef332bf5183367755
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5997,7 +5997,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve4e43c15c4b413382
+preservecb2192e978b50584
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6613,7 +6613,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve937e459f7a5d4418
+preserve2724a5e73bff83d9
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -8759,7 +8759,6 @@ lrn_ksvm = makeLearner("classif.ksvm",
 Hence, the only thing left to do is to specify a resampling strategy.
 Again we will use a 100-repeated 5-fold spatial CV.
 
-These in turn will be used for the models in the outer resampling loop.
 
 ```r
 # outer resampling loop
@@ -8769,7 +8768,13 @@ outer = makeResampleDesc("SpRepCV", folds = 5, reps = 100)
 However, we need to additionally tune the SVM hyperparameters.
 Using the same data for the performance assessment and for the tuning would potentially lead to overoptimistic results.
 To avoid this we will use a nested spatial CV.
-This means that we split each fold again into five spatially disjoint subfolds which are used to determine the optimal hyperparameters (`inner` object in the code chunk below).
+
+<div class="figure" style="text-align: center">
+<img src="figures/13_cv.png" alt="Visual representation of inner and outer folds in spatial and non-spatial cross-validation. Permission for reproducing the figure was kindly provided by Patrick Schratz [@schratz_performance_nodate]" width="500" />
+<p class="caption">(\#fig:inner-outer)Visual representation of inner and outer folds in spatial and non-spatial cross-validation. Permission for reproducing the figure was kindly provided by Patrick Schratz [@schratz_performance_nodate]</p>
+</div>
+
+This means that we split each fold again into five spatially disjoint subfolds which are used to determine the optimal hyperparameters (`inner` object in the code chunk below; see Figure \@ref(fig:inner-outer) for a visual representation).
 
 
 ```r
