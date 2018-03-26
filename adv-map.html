@@ -403,8 +403,8 @@ Figure 9.1: New Zealand’s shape plotted with fill (left), border (middle) and 
 </div>
 <div id="map-objects-and-layers" class="section level3">
 <h3><span class="header-section-number">9.2.2</span> Map objects and layers</h3>
-<p>A useful feature of <strong>tmap</strong> is its ability to store objects representing maps. The code chunk below demonstrates this by saving the last plot in Figure <a href="adv-map.html#fig:tmshape">9.1</a> as an object of class <code>tmap</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">map_nz =<span class="st"> </span><span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>() +<span class="st"> </span><span class="kw">tm_borders</span>()
+<p>A useful feature of <strong>tmap</strong> is its ability to store objects representing maps. The code chunk below demonstrates this by saving the last plot in Figure <a href="adv-map.html#fig:tmshape">9.1</a> as an object of class <code>tmap</code> (note the use of <code>tm_polygons()</code> which condenses <code>tm_fill()  + tm_borders()</code> into a single function):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">map_nz =<span class="st"> </span><span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_polygons</span>()
 <span class="kw">class</span>(map_nz)
 <span class="co">#&gt; [1] &quot;tmap&quot;</span></code></pre></div>
 <p><code>map_nz</code> can be plotted later, for example by adding additional layers (as we’ll below) or simply running <code>map_nz</code> in the console, which is equivalent to <code>print(map_nz)</code>. To use <code>tmap</code> objects as the basis of other maps new layers or settings can be added with the <code>+</code> operator.</p>
