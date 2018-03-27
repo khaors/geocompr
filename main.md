@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve6cf813c8089b587e
+preserve7996f56e9369830e
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3108,7 +3108,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservede72e6c32e5e3147
+preserve93dd48813e396109
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5996,7 +5996,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserveed4216d455f36efa
+preserve8fe5eaec87e0d4d6
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6612,7 +6612,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve5666af566266b2c0
+preservec0ef4caf33c1d0f2
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7163,10 +7163,12 @@ Moreover, the same skills can be applied to combine maps and plots.
 
 ## Animated maps
 
-Faceted plots are that they can be printed, but the approach has disadvantages:
-faceted maps can become very small with more than ~9 maps in one figure, and it can be hard to see the spatial relationships between each facet when each map is on a different part of the page!
-Furthermore, with the increasing proportion of communication that happens via digital screens, the disadvantage that animations cannot be printed is diminished.
-You can always link readers to a web-page containing an animated (or interactive) version of a printed map to help make it come alive.
+Faceted maps, described in \@ref(faceted-maps), provide a way of showing how spatial relationships vary but the approach has disadvantages.
+Facets become tiny when many of them are squeezed into a single plot, potentially hiding *any* spatial relationships.
+Furthermore the fact that each facet is separated by space on the screen or page means that subtle differences between facets can be hard to detect.
+
+With an increasing proportion of communication happening via digital screens, animated maps are becoming more popular.
+Animated maps can even be useful for paper reports: you can always link readers to a web-page containing an animated (or interactive) version of a printed map to help make it come alive.
 
 Figure \@ref(fig:urban-animated) is a simple example of the benefits of an animated map.
 Unlike the faceted plot it does not squeeze all 17 for them all to be displayed simultaneously (see the book's website for the animated version).
@@ -7198,6 +7200,34 @@ Next, we combine them and save as an animation file with `tmap_animation()`:
 ```r
 tmap_animation(us_anim, filename = "us_anim.gif", delay = 25)
 ```
+
+The power of animated maps is illustrated in Figure \@ref(fig:animus), which shows the colonization of the United States progressively from the East to the West and then into the interior.
+
+
+```r
+devtools::install_github("ropensci/historydata")
+library(tmap)
+statepop = historydata::us_state_populations %>%
+  select(-GISJOIN) %>% rename(NAME = state)
+statepop_wide = spread(statepop, year, population, sep = "_")
+statepop_sf = left_join(spData::us_states, statepop_wide)
+map_dbl(statepop_sf, ~sum(is.na(.)))  # looks about right
+year_vars = names(statepop_sf)[grepl("year", names(statepop_sf))]
+facet_anim = tm_shape(statepop_sf) + tm_fill(year_vars) + tm_facets(free.scales.fill = FALSE, 
+  ncol = 1, nrow = 1)
+animation_tmap(tm = facet_anim, filename = "figures/09-us_pop.gif")
+```
+
+
+```r
+knitr::include_graphics("figures/09-us_pop.gif")
+```
+
+<img src="figures/09-us_pop.gif" style="display: block; margin: auto;" />
+
+
+
+ <!-- More description: it shows their creation using data arranged wit -->
 
 <!-- 1/ desribe how to use `tm_facets` for animation -->
 <!-- 2/ by , nrow, ncol -->

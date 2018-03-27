@@ -633,7 +633,8 @@ Figure 9.11: Map of the United States.
 </div>
 <div id="animated-maps" class="section level2">
 <h2><span class="header-section-number">9.4</span> Animated maps</h2>
-<p>Faceted plots are that they can be printed, but the approach has disadvantages: faceted maps can become very small with more than ~9 maps in one figure, and it can be hard to see the spatial relationships between each facet when each map is on a different part of the page! Furthermore, with the increasing proportion of communication that happens via digital screens, the disadvantage that animations cannot be printed is diminished. You can always link readers to a web-page containing an animated (or interactive) version of a printed map to help make it come alive.</p>
+<p>Faceted maps, described in <a href="adv-map.html#faceted-maps">9.2.6</a>, provide a way of showing how spatial relationships vary but the approach has disadvantages. Facets become tiny when many of them are squeezed into a single plot, potentially hiding <em>any</em> spatial relationships. Furthermore the fact that each facet is separated by space on the screen or page means that subtle differences between facets can be hard to detect.</p>
+<p>With an increasing proportion of communication happening via digital screens, animated maps are becoming more popular. Animated maps can even be useful for paper reports: you can always link readers to a web-page containing an animated (or interactive) version of a printed map to help make it come alive.</p>
 <p>Figure <a href="adv-map.html#fig:urban-animated">9.12</a> is a simple example of the benefits of an animated map. Unlike the faceted plot it does not squeeze all 17 for them all to be displayed simultaneously (see the book’s website for the animated version).</p>
 <div class="figure" style="text-align: center"><span id="fig:urban-animated"></span>
 <img src="figures/urban-animated.gif" alt="Animated map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations."  />
@@ -649,6 +650,21 @@ Figure 9.12: Animated map showing the top 30 largest ‘urban agglomerations’ 
 <span class="st">  </span><span class="kw">tm_facets</span>(<span class="dt">by =</span> <span class="st">&quot;year&quot;</span>, <span class="dt">free.coords =</span> <span class="ot">FALSE</span>, <span class="dt">nrow =</span> <span class="dv">1</span>, <span class="dt">ncol =</span> <span class="dv">1</span>)</code></pre></div>
 <p>The code above creates a set of separate maps for each year. Next, we combine them and save as an animation file with <code>tmap_animation()</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tmap_animation</span>(us_anim, <span class="dt">filename =</span> <span class="st">&quot;us_anim.gif&quot;</span>, <span class="dt">delay =</span> <span class="dv">25</span>)</code></pre></div>
+<p>The power of animated maps is illustrated in Figure <a href="#fig:animus"><strong>??</strong></a>, which shows the colonization of the United States progressively from the East to the West and then into the interior.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_github</span>(<span class="st">&quot;ropensci/historydata&quot;</span>)
+<span class="kw">library</span>(tmap)
+statepop =<span class="st"> </span>historydata::us_state_populations %&gt;%
+<span class="st">  </span><span class="kw">select</span>(-GISJOIN) %&gt;%<span class="st"> </span><span class="kw">rename</span>(<span class="dt">NAME =</span> state)
+statepop_wide =<span class="st"> </span><span class="kw">spread</span>(statepop, year, population, <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>)
+statepop_sf =<span class="st"> </span><span class="kw">left_join</span>(spData::us_states, statepop_wide)
+<span class="kw">map_dbl</span>(statepop_sf, ~<span class="kw">sum</span>(<span class="kw">is.na</span>(.)))  <span class="co"># looks about right</span>
+year_vars =<span class="st"> </span><span class="kw">names</span>(statepop_sf)[<span class="kw">grepl</span>(<span class="st">&quot;year&quot;</span>, <span class="kw">names</span>(statepop_sf))]
+facet_anim =<span class="st"> </span><span class="kw">tm_shape</span>(statepop_sf) +<span class="st"> </span><span class="kw">tm_fill</span>(year_vars) +<span class="st"> </span><span class="kw">tm_facets</span>(<span class="dt">free.scales.fill =</span> <span class="ot">FALSE</span>, 
+  <span class="dt">ncol =</span> <span class="dv">1</span>, <span class="dt">nrow =</span> <span class="dv">1</span>)
+<span class="kw">animation_tmap</span>(<span class="dt">tm =</span> facet_anim, <span class="dt">filename =</span> <span class="st">&quot;figures/09-us_pop.gif&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr::<span class="kw">include_graphics</span>(<span class="st">&quot;figures/09-us_pop.gif&quot;</span>)</code></pre></div>
+<p><img src="figures/09-us_pop.gif" style="display: block; margin: auto;" /></p>
+<p><!-- More description: it shows their creation using data arranged wit --></p>
 <!-- 1/ desribe how to use `tm_facets` for animation -->
 <!-- 2/ by , nrow, ncol -->
 <!-- next, focus on `animation_tmap` -->
