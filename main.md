@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve3aaec61f82b539a5
+preservea0b039a1eff0cd8b
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3108,7 +3108,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve47cde237031bd5b4
+preserve49c2610acfa15156
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5996,7 +5996,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserveef250b55bf905641
+preserve48ad5c1db41c26e4
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6612,7 +6612,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve0f4c9c65e91c34f6
+preserve52c49723a59e2bcf
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -8592,7 +8592,9 @@ First, we need to create a **task** containing the data, specifically the respon
 Secondly, a **learner** defines the specific model that models the task data or differently put learns a structure inherent in the provided data.
 Thirdly, we assess the predictive performance of the model, i.e. the model's ability to generalize the learned relationship to new data via a repetitive **resampling** approach (see also section \@ref(intro-cv)).
 
-To put this into practice, we create a **task** using our landslide data.
+### Generalized linear model {#glm}
+
+To put the **mlr** approach into practice, we first create a **task** using our landslide data.
 Since we have a binary response, which is in fact a two-category variable, we will make use of the classification task, namely `makeClassifTask()`.^[In the case of a regression problem, we would use `makeRegrTask()`.
 Type `?makeClassifTask` to find out about all available modeling tasks.
 ]
@@ -8600,7 +8602,7 @@ First, we specify the data which will be used.
 The `target` parameter expects the response variable and the `positive` parameter determines which of the two factor levels of the response variable indicate the landslide initiation point.
 All other variables of the provided dataset will serve as predictors (check out with `getTaskFormula(task)`).
 As we will perform a spatial CV later on, we need to specify the coordinates which will form the basis of the spatial partitioning (see section \@ref(intro-cv) and Figure \@ref(fig:partitioning)).
-These have to be provided as a dataframe in parameter `coordinates`. 
+These have to be provided in a separate dataframe object in parameter `coordinates`. 
 
 
 ```r
@@ -8679,12 +8681,13 @@ identical(fit$coefficients, mlr_fit$coefficients)
 
 In the beginning, it might seem a bit tedious to learn the **mlr** interface for modeling.
 But remember that one only has to learn one single interface to run many learners (**mlr** package version: 2.13).
-Additionally, (spatial) resampling in **mlr** is really easy and only requires two more steps.^[Further advantages are the easy parallelization of resampling techniques and the tuning of machine learning hyperparameters, also spatially, in an inner fold.]
-Please note that package **sperrorest** initially implemented spatial cross-validation in R [@brenning_spatial_2012].
-In the meantime, its functionality was integrated into the **mlr** package which is the reason why we are using **mlr**.^[The **caret** package is another umbrella-package [@kuhn_applied_2013] for streamlined modeling in R, however, so far it does not provide spatial CV which is why we refrain from using it for spatial data.]
+Further advantages are the easy parallelization of resampling techniques and the tuning of machine learning hyperparameters, also spatially, in an inner fold (see section \@ref(svm)).
+Most importantly, (spatial) resampling in **mlr** is really easy, and only requires two more steps
 The first thing to do is specifying a resampling method.
 We will use a 100-repeated 5-fold spatial CV.
 This ensures that a spatial partitioning with five partitions is chosen based on the provided coordinates in our `task` and that the partitioning is repeated 100 times.
+Please note that package **sperrorest** initially implemented spatial cross-validation in R [@brenning_spatial_2012].
+In the meantime, its functionality was integrated into the **mlr** package which is the reason why we are using **mlr**.^[The **caret** package is another umbrella-package [@kuhn_applied_2013] for streamlined modeling in R, however, so far it does not provide spatial CV which is why we refrain from using it for spatial data.]
 
 
 ```r
@@ -8730,14 +8733,14 @@ As expected, the spatially cross-validated result yields lower AUROC values on a
 <p class="caption">(\#fig:boxplot-cv)Boxplot showing the difference in AUROC values between spatial and conventional 100-repeated 5-fold cross-validation.</p>
 </div>
 
-## (Spatial) Tuning of machine-learning hyperparameters
+### (Spatial) Tuning of machine-learning hyperparameters {#svm}
 <!-- exercise: assess predictive performance without using an inner fold -->
 In the beginning we have already distinguished the field of statistics from the field of machine learning.
 As a reminder we define machine learning here again with the words of [Jason Brownlee](https://machinelearningmastery.com/linear-regression-for-machine-learning/):
 
 > Machine learning, more specifically the field of predictive modeling is primarily concerned with minimizing the error of a model or making the most accurate predictions possible, at the expense of explainability. In applied machine learning we will borrow, reuse and steal algorithms from many different fields, including statistics and use them towards these ends.
 
-In the previous section we have used a GLM for predicting landslide susceptibility, in this section we will introduce the support vector machine (SVM) for the same purpose.
+In the previous section (section \@ref(glm)) we have used a GLM for predicting landslide susceptibility, in this section we will introduce the support vector machine (SVM) for the same purpose.
 
 
 This means that parametric models such as (generalized) linear regression are also used in the field of machine learning when the aim is prediction.
@@ -8759,8 +8762,8 @@ Therefore, we will make sure to replace automated by spatial hyperparameter tuni
 Without going into too much detail SVM 
 
 
-Setting up the **mlr** building blocks follows the exact same procedure introduced in the previous section, i.e. we define a task, a learner and a resampling strategy.
-The task remains the same, hence we can use the one already defined in the previous section, namely `task`.
+Setting up the **mlr** building blocks follows the exact same procedure introduced in the previous section (section \@ref(glm)), i.e. we define a task, a learner and a resampling strategy.
+The task remains the same, hence we can use the one already defined in the previous section (section \@ref(glm)), namely `task`.
 However, we have to define a new learner since we are going to use a SVM.
 So let us find out which SVM functions are available in the **mlr** package.
 
@@ -8795,7 +8798,7 @@ outer = makeResampleDesc("SpRepCV", folds = 5, reps = 100)
 ```
 
 So far, this is exactly the same as we have done when using the GLM, however, now we need to additionally tune the SVM hyperparameters.
-Using the same data for the performance assessment and for the tuning would potentially lead to overoptimistic results [@cawley_on_2010].
+Using the same data for the performance assessment and the tuning would potentially lead to overoptimistic results [@cawley_on_2010].
 To avoid this we will use a nested spatial CV.
 
 <div class="figure" style="text-align: center">
@@ -8810,10 +8813,12 @@ The latter was chosen with values recommended in the literature [@schratz_perfor
 
 <!--
 Questions Pat:
+- why not using e1071 svm -> inner hyperparameter tuning also possible I guess...
 - explanation correct?
 - trafo-function?
 - 125,000 models
-- mc.set.seed = TRUE -> make sure that the partitioning remains the same
+- mc.set.seed = TRUE -> make sure that the partitioning remains the same in each thread
+- can I compare the mean AUROC of the GLM and the SVM when using the same seed? Or is seeding not strictly necessary? I mean, ok, the partitions vary a bit but overall...
 -->
 
 
@@ -8863,7 +8868,7 @@ This is quite handy since you really want to avoid that the processing stops aft
 configureMlr(on.learner.error = "warn", on.error.dump = TRUE)
 ```
 
-First, we set the `mode` to `multicore` which will use `mclapply()` in the background on a single machine.^[Check out `?parallelStart` for further modes and the **parallelMap** [github page](https://github.com/berndbischl/parallelMap) for more information on the unified interface to popular parallelization back-ends. Note also that `mclapply()´ only supports multicore processing on Linux-based machines.]
+First, we set the `mode` to `multicore` which will use `mclapply()` in the background on a single machine.^[Check out `?parallelStart` for further modes and the **parallelMap** [github page](https://github.com/berndbischl/parallelMap) for more information on the unified interface to popular parallelization back-ends. Note also that `mclapply()` only supports multicore processing on Linux-based machines.]
 `level` defines the level where to enable the parallelization with `mlr.tuneParams` determing that the inner resampling fold should be parallelized, i.e. the optimal hyperparameter tuning (see lower part of Figure \@ref(fig:inner-outer); and use parallelMap::parallelGetRegisteredLevels() for supported levels as well as the **mlr** [parallelization tutorial](https://mlr-org.github.io/mlr-tutorial/release/html/parallelization/index.html#parallelization-levels)).
 Probably we are not the only ones using the server, therefore we are friendly and will use only half of its cores which in our case corresponds to 24 (`cpus` parameter).
 To make sure that the same partitions are used in each parallelized thread, we set `mc.set.seed` to `TRUE`.
@@ -8879,19 +8884,18 @@ parallelStart(mode = "multicore",
 ```
 
 Finally, we are all set up for conducting the nested spatial CV.
-Specifying the `resample()` parameters follows the exact same procedure as presented when using a GLM with the only difference that we tell it additionally to give back the hyperparameter tuning results (`extract` parameter).
+Specifying the `resample()` parameters follows the exact same procedure as presented when using a GLM with the only difference that we additionally tell it to give back the hyperparameter tuning results (`extract` parameter).
 After the processing, it is good practice to explicitly stop the parallelization which is exactly what `parallelStop()` is doing.
 Of course, after a long processing it is a good idea to save your results.
 
 
 ```r
 set.seed(12345)
-result = mlr::resample(learner = wrapper_ksvm, 
+result = mlr::resample(learner = wrapped_lrn_ksvm, 
                        task = task,
                        resampling = outer,
                        extract = getTuneResult,
-                       measures = mlr::auc,
-                       show.info = TRUE)
+                       measures = mlr::auc)
 # stop parallelization
 parallelStop()
 # save your result, e.g.:
@@ -8906,8 +8910,8 @@ Running 125,000 models using 24 cores took more than 37 minutes.
 ```r
 # Exploring the results
 # run time in minutes
-round(result$runtime / 60)
-#> [1] 37
+round(result$runtime / 60, 2)
+#> [1] 37.4
 ```
 
 Naturally, even more important than the runtime is the final aggregated AUROC, i.e. the model's ability to discriminate the two classes. 
@@ -8923,6 +8927,7 @@ mean(result$measures.test$auc)
 #> [1] 0.758
 ```
 
+So it appears that the GLM is slightly better than the SVM in this specific case.
 Finally, we can have a look at the results of the found optimal hyperparameters for each outer loop iteration.
 Here, we just have a short glance at the optimal hyperparameters combination and the result which was obtained with them in the first iteration of the outer loop
 
