@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-03-26">
+<meta name="date" content="2018-03-27">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -272,7 +272,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="9.1" data-path="adv-map.html"><a href="adv-map.html#introduction-6"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
 <li class="chapter" data-level="9.2" data-path="adv-map.html"><a href="adv-map.html#static-maps"><i class="fa fa-check"></i><b>9.2</b> Static maps</a><ul>
 <li class="chapter" data-level="9.2.1" data-path="adv-map.html"><a href="adv-map.html#tmap-basics"><i class="fa fa-check"></i><b>9.2.1</b> tmap basics</a></li>
-<li class="chapter" data-level="9.2.2" data-path="adv-map.html"><a href="adv-map.html#map-objects-and-layers"><i class="fa fa-check"></i><b>9.2.2</b> Map objects and layers</a></li>
+<li class="chapter" data-level="9.2.2" data-path="adv-map.html"><a href="adv-map.html#map-objects-shapes-and-layers"><i class="fa fa-check"></i><b>9.2.2</b> Map objects, shapes and layers</a></li>
 <li class="chapter" data-level="9.2.3" data-path="adv-map.html"><a href="adv-map.html#aesthetics"><i class="fa fa-check"></i><b>9.2.3</b> Aesthetics</a></li>
 <li class="chapter" data-level="9.2.4" data-path="adv-map.html"><a href="adv-map.html#map-layouts"><i class="fa fa-check"></i><b>9.2.4</b> Map layouts</a></li>
 <li class="chapter" data-level="9.2.5" data-path="adv-map.html"><a href="adv-map.html#class-intervals"><i class="fa fa-check"></i><b>9.2.5</b> Class intervals</a></li>
@@ -401,14 +401,14 @@ Figure 9.1: New Zealand’s shape plotted with fill (left), border (middle) and 
 </div>
 <p></p>
 </div>
-<div id="map-objects-and-layers" class="section level3">
-<h3><span class="header-section-number">9.2.2</span> Map objects and layers</h3>
-<p>A useful feature of <strong>tmap</strong> is its ability to store objects representing maps. The code chunk below demonstrates this by saving the last plot in Figure <a href="adv-map.html#fig:tmshape">9.1</a> as an object of class <code>tmap</code> (note the use of <code>tm_polygons()</code> which condenses <code>tm_fill()  + tm_borders()</code> into a single function):</p>
+<div id="map-objects-shapes-and-layers" class="section level3">
+<h3><span class="header-section-number">9.2.2</span> Map objects, shapes and layers</h3>
+<p>A useful feature of <strong>tmap</strong> is its ability to store <em>objects</em> representing maps. The code chunk below demonstrates this by saving the last plot in Figure <a href="adv-map.html#fig:tmshape">9.1</a> as an object of class <code>tmap</code> (note the use of <code>tm_polygons()</code> which condenses <code>tm_fill()  + tm_borders()</code> into a single function):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">map_nz =<span class="st"> </span><span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_polygons</span>()
 <span class="kw">class</span>(map_nz)
 <span class="co">#&gt; [1] &quot;tmap&quot;</span></code></pre></div>
-<p><code>map_nz</code> can be plotted later, for example by adding additional layers (as we’ll below) or simply running <code>map_nz</code> in the console, which is equivalent to <code>print(map_nz)</code>. To use <code>tmap</code> objects as the basis of other maps new layers or settings can be added with the <code>+</code> operator.</p>
-<p>When another shape is added to a <code>tmap</code> object with <code>+ tm_shape()</code>, all subsequent aesthetic functions refer to the newly added shape, until another new shape is added. This syntax allows the creation of maps involving multiple shapes and one or more layers for each shape, as demonstrated in the code chunk below:</p>
+<p><code>map_nz</code> can be plotted later, for example by adding additional layers (as we’ll below) or simply running <code>map_nz</code> in the console, which is equivalent to <code>print(map_nz)</code>.</p>
+<p>New <em>shapes</em> can added with <code>+ tm_shape(new_obj)</code>. In this case <code>new_obj</code> represents a new spatial object to be plotted on top of preceding layers. When a new new shape is added in this way all subsequent aesthetic functions refer to it, until another new shape is added. This syntax allows the creation of maps with multiple shapes and layers:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">map_nz1 =<span class="st"> </span>map_nz +
 <span class="st">  </span><span class="kw">tm_shape</span>(nz_height) +<span class="st"> </span><span class="kw">tm_bubbles</span>()</code></pre></div>
 <p>Building on the previously created <code>map_nz</code> object the preceding code creates a new map object <code>map_nz1</code> which contains another shape representing high points in New Zealand (see Figure <a href="adv-map.html#fig:tmlayers">9.2</a>, left). More shapes and layers can be added, as illustrated in the code chunk below which creates <code>nz_water</code>, representing New Zealand’s <a href="https://en.wikipedia.org/wiki/Territorial_waters">territorial waters</a>, and adds the resulting lines to an existing map object.</p>

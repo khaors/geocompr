@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-03-26'
+date: '2018-03-27'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-03-26 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-03-27 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve3593d70a2729b46a
+preservedbd3b4ba336c92af
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3108,7 +3108,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservebf902268c5b9ac9e
+preserve930248acb0b03d75
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5996,7 +5996,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve5911ff54a328c84d
+preserve1fb208054074c12f
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6612,7 +6612,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve5a084a302b6a655c
+preserve6ae2656408eca1cb
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6783,9 +6783,9 @@ It is concise and provides a good default visualization in many cases:
 Further, layers can be added concisely using multiple `qtm()` calls, such as `qtm(nz) + qtm(nz_height)`.
 The disadvantage is that it makes aesthetics of individual layers harder to control, explaining why we avoid teaching it in this chapter.</div>\EndKnitrBlock{rmdnote}
 
-### Map objects and layers
+### Map objects, shapes and layers
 
-A useful feature of **tmap** is its ability to store objects representing maps.
+A useful feature of **tmap** is its ability to store *objects* representing maps.
 The code chunk below demonstrates this by saving the last plot in Figure \@ref(fig:tmshape) as an object of class `tmap` (note the use of `tm_polygons()` which condenses `tm_fill()  + tm_borders()` into a single function):
 
 
@@ -6796,10 +6796,11 @@ class(map_nz)
 ```
 
 `map_nz` can be plotted later, for example by adding additional layers (as we'll below) or simply running `map_nz` in the console, which is equivalent to `print(map_nz)`.
-To use `tmap` objects as the basis of other maps new layers or settings can be added with the `+` operator.
 
-When another shape is added to a `tmap` object with `+ tm_shape()`, all subsequent aesthetic functions refer to the newly added shape, until another new shape is added.
-This syntax allows the creation of maps involving multiple shapes and one or more layers for each shape, as demonstrated in the code chunk below:
+New *shapes* can added with `+ tm_shape(new_obj)`.
+In this case `new_obj` represents a new spatial object to be plotted on top of preceding layers.
+When a new new shape is added in this way all subsequent aesthetic functions refer to it, until another new shape is added.
+This syntax allows the creation of maps with multiple shapes and layers:
 
 
 ```r
