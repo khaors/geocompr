@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve3c47c0a45250f2c1
+preserve53265003b685c599
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3108,7 +3108,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve67e10843a38fb353
+preserve35be10ee2bd775df
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5996,7 +5996,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservee02423bc4a8a0688
+preservee3e7db2f7549c0b4
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6612,7 +6612,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservedf311078a7be93f6
+preserve04ac95a221da3dd4
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7009,14 +7009,14 @@ Note: `style_catalogue()` takes some time to run.</div>\EndKnitrBlock{rmdnote}
 
 ### Faceted maps
 
-Faceted maps are a common and potentially effective way of visualizing spatial relationships that are more complex that a single relationship.
-The population of cities at one moment in time can be represented easily on a single map, for example by making the size of symbols variable for each city depending on population.
-However, to represent the populations of cities at multiple moments in time requires an *extra dimension*.
-This could be added by an additional *aesthetic* such as color but this risks cluttering the map because it will involve multiple overlapping points (cities do not tend to move over time!).
+Faceted maps, also referred to as 'small multiples', are composed of many maps arranged side-by-side (and sometimes stacked vertically also).
+Facets enable the visualization of how spatial relationships change with respect to another variable, such as time.
+The changing populations of settlements, for example, can be represented in a facetted map with each panel representing the population at a particular moment in time.
+The time dimension could be represented via another *aesthetic* such as color.
+However, this risks cluttering the map because it will involve multiple overlapping points (cities do not tend to move over time!).
 
-Faceted maps overcome this issue by creating 'small multiples' of spatial information.
-Typically, this will involve plotting the same geometry data multiple times, once for each variable present in the attribute data (this is the default plotting method for `sf` objects, as we saw in Chapter 2).
-However, facets can also represent shifting geometries, e.g. as the spatial distribution of a point pattern evolves over time.
+Typically all individual facets in a facetted map contain the same geometry data repeated multiple times, once for each column in the attribute data (this is the default plotting method for `sf` objects, as we saw in Chapter 2).
+However, facets can also represent shifting geometries such as as the evolution of a point pattern over time.
 This use case of faceted plot is illustrated in Figure \@ref(fig:urban-facet).
 
 
