@@ -461,7 +461,8 @@ Figure 9.4: Comparison of base (left) and tmap (right) handling of a numeric col
 </p>
 </div>
 <p>Additional aesthetic settings are demonstrated in the code chunk below, which colors regions in New Zealand depending on their area. The results show how custom breaks can be set with the <code>breaks</code> argument (Figure <a href="adv-map.html#fig:tmpal">9.5</a> center). Additional palette options include <code>n</code> (which sets the number of bins into which numeric variables are categorised) and <code>palette</code> (which defines the colorscheme — which can be selected interactively with <code>tmaptools::palette_explorer()</code>). Results of changing values for these simultaneously are shown in Figure <a href="adv-map.html#fig:tmpal">9.5</a> (right):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;AREA_SQ_KM&quot;</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">breaks =<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>) *<span class="st"> </span><span class="fl">1e4</span>
+<span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;AREA_SQ_KM&quot;</span>)
 <span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;AREA_SQ_KM&quot;</span>, <span class="dt">breaks =</span> breaks)
 <span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;AREA_SQ_KM&quot;</span>, <span class="dt">n =</span> <span class="dv">10</span>)
 <span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;AREA_SQ_KM&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;RdBu&quot;</span>)</code></pre></div>
@@ -475,7 +476,7 @@ Figure 9.5: Illustration of settings that affect variable aesthetics. The result
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">legend_title =<span class="st"> </span><span class="kw">expression</span>(<span class="st">&quot;Area (km&quot;</span>^<span class="dv">2</span>*<span class="st">&quot;)&quot;</span>)
 map_nza =<span class="st"> </span><span class="kw">tm_shape</span>(nz) +
 <span class="st">  </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;AREA_SQ_KM&quot;</span>, <span class="dt">title =</span> legend_title) +<span class="st"> </span><span class="kw">tm_borders</span>()</code></pre></div>
-<p>The resulting <code>tmap</code> object <code>map_nza</code> will be used alongside <code>map_nz</code> (created previously) to illustrate different layout settings in the next section.</p>
+<p>The resulting <code>tmap</code> object <code>map_nza</code> will be used, alongside <code>map_nz</code>, to illustrate different layout settings in the next section.</p>
 </div>
 <div id="map-layouts" class="section level3">
 <h3><span class="header-section-number">9.2.4</span> Map layouts</h3>
@@ -499,16 +500,17 @@ Figure 9.6: Layout options specified by (from left to right) title, scale, bg.co
 <li>Font settings, controlled by <code>fontface</code> and <code>fontfamily</code>.</li>
 <li>Legend settings including binary options such as <code>legend.show</code> (whether or not to show the legend) <code>legend.only</code> (omit the map) and <code>legend.outside</code> (should the legend go outside the map?), as well as multiple choice settings such as <code>legend.position</code>.</li>
 </ul>
-<!-- Todo: add more of these options to the figure (RL) -->
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">source</span>(<span class="st">&quot;code/09-layout2.R&quot;</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:layout2"></span>
 <img src="figures/layout2-1.png" alt="Illustration of selected color-related layout options." width="576" />
 <p class="caption">
 Figure 9.7: Illustration of selected color-related layout options.
 </p>
 </div>
-<p>Beyond this low-level control over layouts, <strong>tmap</strong> also offers high-level styles using <code>tm_style_</code> functions. Some styles such as <code>tm_style_cobalt()</code> result in stylized maps while others such as <code>tm_style_grey()</code> make more subtle changes (see Figure <a href="adv-map.html#fig:tmstyles">9.8</a>).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">source</span>(<span class="st">&quot;code/09-tmstyles.R&quot;</span>)</code></pre></div>
+<p>Beyond this low-level control over layouts, <strong>tmap</strong> also offers high-level styles using <code>tm_style_</code> functions. Some styles such as <code>tm_style_cobalt()</code> result in stylized maps while others such as <code>tm_style_grey()</code> make more subtle changes, as illustrated in Figure <a href="adv-map.html#fig:tmstyles">9.8</a>, created using code below (see <code>09-tmstyles.R</code>):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">map_nza +<span class="st"> </span><span class="kw">tm_style_bw</span>()
+map_nza +<span class="st"> </span><span class="kw">tm_style_classic</span>()
+map_nza +<span class="st"> </span><span class="kw">tm_style_cobalt</span>()
+map_nza +<span class="st"> </span><span class="kw">tm_style_col_blind</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:tmstyles"></span>
 <img src="figures/tmstyles-1.png" alt="Selected tmap styles, illustrated with data on the area of New Zealand's regions." width="576" />
 <p class="caption">
