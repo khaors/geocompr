@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve5523e3c70944e13d
+preserveb29c1bcfe63a4e36
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3108,7 +3108,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve377a1eb80cd50ac5
+preservedf6901b96cbb2ae5
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5996,7 +5996,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve3832c1a2df9cbaa7
+preserve9c405a3f88231e8f
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6612,7 +6612,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservec4d4084a158ec6cb
+preservec1369cacebd35eed
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7036,6 +7036,14 @@ tm_shape(world) + tm_polygons() +
 <p class="caption">(\#fig:urban-facet)Faceted map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations.</p>
 </div>
 
+The preceding code chunk demonstrates key features of facetted maps created with **tmap**:
+
+- Shapes that do not have a facet variable are repeated (the countries in `world` in this case).
+- The `by` argument which varies depending on a variable (`year` in this case).
+- `nrow`/`ncol` setting specifying the number of rows and columns that facets should be arranged into.
+
+In addition to their utility for showing changing spatial relationships, facet maps are also useful as the foundation for animated maps (see \@ref(animated-maps)).
+
 ### Inset maps
 
 The role of spatial visualizations is to provide an information in the most accessible form. 
@@ -7153,7 +7161,7 @@ Moreover, the same skills can be applied to combine maps and plots.
 
 
 
-## Animations
+## Animated maps
 
 Both faceted and animated maps can be useful for communicating how spatial phenomena shift over time.
 An advantage of faceted plots are that they can be printed, but the approach has disadvantages:
