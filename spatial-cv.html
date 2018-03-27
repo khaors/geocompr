@@ -637,7 +637,7 @@ ps =<span class="st"> </span><span class="kw">makeParamSet</span>(
               <span class="co"># just use half of the available cores</span>
               <span class="dt">cpus =</span> <span class="kw">round</span>(parallel::<span class="kw">detectCores</span>() /<span class="st"> </span><span class="dv">2</span>),
               <span class="dt">mc.set.seed =</span> <span class="ot">TRUE</span>) </code></pre></div>
-<p>Finally, we are all set up for the resampling. Specifying the <code>resample()</code> parameters follows the exact same procedure as presented when using a GLM with the only difference that we tell it additionally to give back the hyperparameter tuning results (<code>extract</code> parameter). It is good practice to explicitly stop the parallelization which is exactly what <code>parallelStop()</code> is doing. Of course, after a possible long processing it is a good idea to save your results.</p>
+<p>Finally, we are all set up for conducting the nested spatial CV. Specifying the <code>resample()</code> parameters follows the exact same procedure as presented when using a GLM with the only difference that we tell it additionally to give back the hyperparameter tuning results (<code>extract</code> parameter). After the processing, it is good practice to explicitly stop the parallelization which is exactly what <code>parallelStop()</code> is doing. Of course, after a long processing it is a good idea to save your results.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">12345</span>)
 result =<span class="st"> </span>mlr::<span class="kw">resample</span>(<span class="dt">learner =</span> wrapper_ksvm, 
                        <span class="dt">task =</span> task,
@@ -645,23 +645,25 @@ result =<span class="st"> </span>mlr::<span class="kw">resample</span>(<span cla
                        <span class="dt">extract =</span> getTuneResult,
                        <span class="dt">measures =</span> mlr::auc,
                        <span class="dt">show.info =</span> <span class="ot">TRUE</span>)
-
-<span class="co"># Aggregated Result: auc.test.mean=0.7583375</span>
+<span class="co"># stop parallelization</span>
 <span class="kw">parallelStop</span>()
-<span class="co"># save your result</span>
+<span class="co"># save your result, e.g.:</span>
 <span class="co"># saveRDS(resa_svm_spatial, &quot;svm_sp_sp_rbf_50it.rda&quot;)</span></code></pre></div>
+<p>Running 125,000 models using 24 cores took more than 37 minutes.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Exploring the results</span>
 <span class="co"># run time in minutes</span>
 <span class="kw">round</span>(result$runtime /<span class="st"> </span><span class="dv">60</span>)
-<span class="co">#&gt; [1] 37</span>
-<span class="co"># final aggregated AUROC </span>
+<span class="co">#&gt; [1] 37</span></code></pre></div>
+<p>Naturally, even more important than the runtime is the final aggregated AUROC, i.e. the model’s ability to discriminate the two classes.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># final aggregated AUROC </span>
 result$aggr
 <span class="co">#&gt; auc.test.mean </span>
 <span class="co">#&gt;         0.758</span>
 <span class="co"># same as</span>
 <span class="kw">mean</span>(result$measures.test$auc)
-<span class="co">#&gt; [1] 0.758</span>
-<span class="co"># used hyperparameters for the outer fold, i.e. the best combination out of 50 *</span>
+<span class="co">#&gt; [1] 0.758</span></code></pre></div>
+<p>Finally, we can have a look at the results of the found optimal hyperparameters for each outer loop iteration. Here, we just have a short glance at the optimal hyperparameters combination and the result which was obtained with them in the first iteration of the outer loop</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># used hyperparameters for the outer fold, i.e. the best combination out of 50 *</span>
 <span class="co"># 5 models</span>
 result$extract[[<span class="dv">1</span>]]
 <span class="co">#&gt; Tune result:</span>

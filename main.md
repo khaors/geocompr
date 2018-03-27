@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve043ddf070b3b607c
+preserve3aaec61f82b539a5
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3108,7 +3108,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservef2f2a740f16e5652
+preserve47cde237031bd5b4
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5996,7 +5996,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve35de36b44910a875
+preserveef250b55bf905641
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6612,7 +6612,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve5ed1a9b871e180c5
+preserve0f4c9c65e91c34f6
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -8878,10 +8878,10 @@ parallelStart(mode = "multicore",
               mc.set.seed = TRUE) 
 ```
 
-Finally, we are all set up for the resampling.
+Finally, we are all set up for conducting the nested spatial CV.
 Specifying the `resample()` parameters follows the exact same procedure as presented when using a GLM with the only difference that we tell it additionally to give back the hyperparameter tuning results (`extract` parameter).
-It is good practice to explicitly stop the parallelization which is exactly what `parallelStop()` is doing.
-Of course, after a possible long processing it is a good idea to save your results.
+After the processing, it is good practice to explicitly stop the parallelization which is exactly what `parallelStop()` is doing.
+Of course, after a long processing it is a good idea to save your results.
 
 
 ```r
@@ -8892,14 +8892,15 @@ result = mlr::resample(learner = wrapper_ksvm,
                        extract = getTuneResult,
                        measures = mlr::auc,
                        show.info = TRUE)
-
-# Aggregated Result: auc.test.mean=0.7583375
+# stop parallelization
 parallelStop()
-# save your result
+# save your result, e.g.:
 # saveRDS(resa_svm_spatial, "svm_sp_sp_rbf_50it.rda")
 ```
 
 
+
+Running 125,000 models using 24 cores took more than 37 minutes.
 
 
 ```r
@@ -8907,6 +8908,12 @@ parallelStop()
 # run time in minutes
 round(result$runtime / 60)
 #> [1] 37
+```
+
+Naturally, even more important than the runtime is the final aggregated AUROC, i.e. the model's ability to discriminate the two classes. 
+
+
+```r
 # final aggregated AUROC 
 result$aggr
 #> auc.test.mean 
@@ -8914,6 +8921,13 @@ result$aggr
 # same as
 mean(result$measures.test$auc)
 #> [1] 0.758
+```
+
+Finally, we can have a look at the results of the found optimal hyperparameters for each outer loop iteration.
+Here, we just have a short glance at the optimal hyperparameters combination and the result which was obtained with them in the first iteration of the outer loop
+
+
+```r
 # used hyperparameters for the outer fold, i.e. the best combination out of 50 *
 # 5 models
 result$extract[[1]]
@@ -8926,7 +8940,6 @@ result$measures.test[1, ]
 #>   iter   auc
 #> 1    1 0.799
 ```
-
 
 ## Conclusions
 Resampling methods are a crucial part of a modern data scientist's toolbox [@james_introduction_2013]. 
