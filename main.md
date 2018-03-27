@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve7996f56e9369830e
+preserve043ddf070b3b607c
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3108,7 +3108,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve93dd48813e396109
+preservef2f2a740f16e5652
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5996,7 +5996,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve8fe5eaec87e0d4d6
+preserve35de36b44910a875
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6612,7 +6612,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservec0ef4caf33c1d0f2
+preserve5ed1a9b871e180c5
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -8352,7 +8352,7 @@ To trust the p-values and standard errors of such models we need to perform a th
 By contrast, machine learning aims at predictions and is especially appealing due its lack of assumptions.
 Though statistical inference is impossible [@james_introduction_2013], various studies have shown that machine learning is at least at par with regression techniques regarding predictive performance [e.g., @schratz_performance_nodate]. <!-- add one more source -->
 Naturally, with the advent of big data, machine learning has even gained in popularity since frequently the underlying relationship between variables is less important than the prediction.
-Think for instance of future customer behavior or the classification of e-mails as spam.
+Think for instance of future customer behavior, recommendation services (music, movies, what to by next), face recognition, autonomous driving and classifying e-mails as spam to name but a few.
 Note that we can borrow regression techniques from statistics for machine learning when the aim is prediction.
 In this case we do not have too worry too much about possible model misspecifications since we explicitly do not want to do statistical inference.
 In fact, in this chapter the aim will be the (spatial) prediction of landslide susceptibility. 
@@ -8745,19 +8745,12 @@ This means that parametric models such as (generalized) linear regression are al
 Machine-learning differs from parametric models in that 
 difference parameters and hyperparameters
 example: support vector machine and short intro what it is
-best practice: inner fold -> Patrick figure
-parallelization (conclusion -> server/remote modeling + mc.core.seed)
-
-
-> Model selection without nested CV uses the same data to tune model parameters and evaluate model performance. Information may thus “leak” into the model and overfit the data. The magnitude of this effect is primarily dependent on the size of the dataset and the stability of the model. 
-
-http://scikit-learn.org/stable/auto_examples/model_selection/plot_nested_cross_validation_iris.html
 
 SVM
 
 > The idea of finding a hyperplane that separates the data as well as possible, while allowing some violations to this separation, seemed distinctly different from classical approaches for classification, such as logistic regression and linear discriminant analysis. Moreover, the idea of using a kernel to expand the feature space in order to accommodate non-linear class boundaries appeared to be a unique and valuable characteristic.
 
-James et al., 2013
+[@James et al., 2013]
 Support vector machines always require tuning to find the optimal hyperparameters.
 Some software packages/implementations come with an automated tuning.
 which is usually based on random sampling.
@@ -8783,7 +8776,7 @@ dplyr::select(lrns, class, name, package)
 ```
 
 We will use `ksvm()` from the kernlab package.
-To allow for non-linearity we use the radial basis function (or Gaussian) kernel which is also the default of `ksvm()` and probably the most popular SVM kernel in general.
+To allow for non-linear relationships we use the radial basis function (or Gaussian) kernel which is also the default of `ksvm()` and probably the most popular SVM kernel in general.
 
 
 ```r
@@ -8801,19 +8794,27 @@ Again we will use a 100-repeated 5-fold spatial CV.
 outer = makeResampleDesc("SpRepCV", folds = 5, reps = 100)
 ```
 
-However, we need to additionally tune the SVM hyperparameters.
+So far, this is exactly the same as we have done when using the GLM, however, now we need to additionally tune the SVM hyperparameters.
 Using the same data for the performance assessment and for the tuning would potentially lead to overoptimistic results [@cawley_on_2010].
 To avoid this we will use a nested spatial CV.
 
 <div class="figure" style="text-align: center">
-<img src="figures/13_cv.png" alt="Visual representation of inner and outer folds in spatial and non-spatial cross-validation. Permission for reproducing the figure was kindly provided by Patrick Schratz [@schratz_performance_nodate]" width="500" />
-<p class="caption">(\#fig:inner-outer)Visual representation of inner and outer folds in spatial and non-spatial cross-validation. Permission for reproducing the figure was kindly provided by Patrick Schratz [@schratz_performance_nodate]</p>
+<img src="figures/13_cv.png" alt="Visual representation of inner and outer folds in spatial and non-spatial cross-validation. Permission for reproducing the figure was kindly granted by Patrick Schratz [@schratz_performance_nodate]." width="500" />
+<p class="caption">(\#fig:inner-outer)Visual representation of inner and outer folds in spatial and non-spatial cross-validation. Permission for reproducing the figure was kindly granted by Patrick Schratz [@schratz_performance_nodate].</p>
 </div>
 
 This means that we split each fold again into five spatially disjoint subfolds which are used to determine the optimal hyperparameters (`inner` object in the code chunk below; see Figure \@ref(fig:inner-outer) for a visual representation).
-To find the optimal hyperparameter combination we would like to fit 50 models in each of these subfolds with randomly selected hyperparameter values (`ctrl` object in the code chunk below).
+To find the optimal hyperparameter combination we here fit 50 models in each of these subfolds with randomly selected hyperparameter values (`ctrl` object in the code chunk below).
 Additionally, we restrict the randomly chosen values to a predefined tuning space (`ps` object).
 The latter was chosen with values recommended in the literature [@schratz_performance_nodate].
+
+<!--
+Questions Pat:
+- explanation correct?
+- trafo-function?
+- 125,000 models
+- mc.set.seed = TRUE -> make sure that the partitioning remains the same
+-->
 
 
 ```r
@@ -8828,7 +8829,7 @@ ps = makeParamSet(
   )
 ```
 
-Finally, we add all the parameters defining the inner hyperparameter loop to our learner `lrn_ksvm` through a wrapper function.
+Finally, we modify our learner `lrn_ksvm` in accordance with all the parameters defining the inner hyperparameter through a wrapper function.
 
 
 ```r
@@ -8845,56 +8846,86 @@ We have to repeat this five times for each fold in the outer fold which leads to
 Since we are requesting 100 repetitions this leads to a total of 125,000 models. 
 This is computationally quite demanding even with the small dataset used here.
 So before starting the actual resampling it would be wise to reduce runtime with the help of a parallelization approach. 
-In general, multicore processing is easier on Linux than Windows systems.
+In general, multicore processing is easier on Linux than on Windows systems.
 In fact, cloud computing is usually done and developed on Linux servers.
-Therefore, we will present how to do nested cross-validatation using a parallelization approach working only under Linux.^[Note also that the `mc.set.seeds` parameter used later on is only available for Linux machines].
+Therefore, we will present how to do nested cross-validatation using a parallelization approach working only under Linux-based systems.^[Note also that the `mc.set.seeds` parameter used later on is only available for Linux machines].
 Windows users have at least two options:
 
-1. Run the code without inializing the parallelization though this might take a while.
-2. Install a virtual machine (e.g. [Oracle VirtualBox](https://www.virtualbox.org/)) to reproduce the subsequent code.
+1. Run the resampling without parallelizing it though this might take a while.
+2. Install a virtual machine (e.g. [Oracle VirtualBox](https://www.virtualbox.org/)) to reproduce the parallelization code.
 
+Before starting the parallelization, we make sure that the processing continues even if one of the models throws an error by setting `on.learner.error` to `warn`.
+To inspect errored models after the processing has completed we dump them.
+This is quite handy since you really want to avoid that the processing stops after you have run a server at full capacity for several days just because one model cannot be fitted.
 
 
 ```r
 configureMlr(on.learner.error = "warn", on.error.dump = TRUE)
-# check the number of cores
-n = parallel::detectCores()
-# parallelize the tuning, i.e. the inner fold
-parallelStart(mode = "multicore", level = "mlr.tuneParams", 
-              cpus = round(n / 2),
-              mc.set.seed = TRUE) 
+```
 
+First, we set the `mode` to `multicore` which will use `mclapply()` in the background on a single machine.^[Check out `?parallelStart` for further modes and the **parallelMap** [github page](https://github.com/berndbischl/parallelMap) for more information on the unified interface to popular parallelization back-ends. Note also that `mclapply()´ only supports multicore processing on Linux-based machines.]
+`level` defines the level where to enable the parallelization with `mlr.tuneParams` determing that the inner resampling fold should be parallelized, i.e. the optimal hyperparameter tuning (see lower part of Figure \@ref(fig:inner-outer); and use parallelMap::parallelGetRegisteredLevels() for supported levels as well as the **mlr** [parallelization tutorial](https://mlr-org.github.io/mlr-tutorial/release/html/parallelization/index.html#parallelization-levels)).
+Probably we are not the only ones using the server, therefore we are friendly and will use only half of its cores which in our case corresponds to 24 (`cpus` parameter).
+To make sure that the same partitions are used in each parallelized thread, we set `mc.set.seed` to `TRUE`.
+
+
+```r
+# parallelize the tuning, i.e. the inner fold
+parallelStart(mode = "multicore", 
+              level = "mlr.tuneParams", 
+              # just use half of the available cores
+              cpus = round(parallel::detectCores() / 2),
+              mc.set.seed = TRUE) 
+```
+
+Finally, we are all set up for the resampling.
+Specifying the `resample()` parameters follows the exact same procedure as presented when using a GLM with the only difference that we tell it additionally to give back the hyperparameter tuning results (`extract` parameter).
+It is good practice to explicitly stop the parallelization which is exactly what `parallelStop()` is doing.
+Of course, after a possible long processing it is a good idea to save your results.
+
+
+```r
 set.seed(12345)
-resa_svm_spatial = mlr::resample(wrapper_ksvm, task,
-                                 resampling = outer, extract = getTuneResult,
-                                 show.info = TRUE, measures = mlr::auc)
+result = mlr::resample(learner = wrapper_ksvm, 
+                       task = task,
+                       resampling = outer,
+                       extract = getTuneResult,
+                       measures = mlr::auc,
+                       show.info = TRUE)
 
 # Aggregated Result: auc.test.mean=0.7583375
 parallelStop()
 # save your result
-# saveRDS(resa_svm_spatial, "extdata/svm_sp_sp_rbf_50it.rda")
-
-# Exploring the results
-# run time in minutes
-resa_svm_spatial$runtime / 60
-# final aggregated AUROC 
-resa_svm_spatial$aggr
-# same as
-mean(resa_svm_spatial$measures.test$auc)
-# used hyperparameters for the outer fold, i.e. the best combination out of 50 *
-# 5 models
-resa_svm_spatial$extract[[1]]
-# and here one can observe that the AUC of the tuning data is usually higher
-# than for the model on the outer fold
-resa_svm_spatial$measures.test[1, ]
+# saveRDS(resa_svm_spatial, "svm_sp_sp_rbf_50it.rda")
 ```
 
 
 
 
-
-
-
+```r
+# Exploring the results
+# run time in minutes
+round(result$runtime / 60)
+#> [1] 37
+# final aggregated AUROC 
+result$aggr
+#> auc.test.mean 
+#>         0.758
+# same as
+mean(result$measures.test$auc)
+#> [1] 0.758
+# used hyperparameters for the outer fold, i.e. the best combination out of 50 *
+# 5 models
+result$extract[[1]]
+#> Tune result:
+#> Op. pars: C=0.458; sigma=0.023
+#> auc.test.mean=0.823
+# and here one can observe that the AUC of the tuning data is usually higher
+# than for the model on the outer fold
+result$measures.test[1, ]
+#>   iter   auc
+#> 1    1 0.799
+```
 
 
 ## Conclusions
@@ -8904,10 +8935,8 @@ Spatial data is statistically often not independent due to spatial autocorrelati
 Therefore, we introduced spatial CV, which reduces the bias introduced by spatial autocorrelation. 
 The **mlr** package makes it easy to use (spatial) resampling techniques with many other statistical learning techniques including, of course, linear regression, but also semi-parametric models (e.g., generalized additive models) and machine learning techniques such as random forests, support vector machines or boosted regression trees [@bischl_mlr:_2016;@schratz_performance_nodate].
 Machine learning algorithms often require the tuning of so-called hyperparameters.
-This should be done using a nested (spatial) cross-validation approach [@schratz_performance_nodate], a topic we will explore in more detail in Chapter \@ref(eco).
-As a preview, this requires the fitting of tens of thousands of additional models, and is therefore computationally more demanding.
 Naturally, computation time additionally increases with the size of the input data.
-To reduce computing time, **mlr** makes parallelization easy through various supported methods (see Chapter \@ref(eco)).
+To reduce computing time, **mlr** makes parallelization easy through various supported methods.
 
 Finally, for more details please check out also the fantastic **mlr** online documentation:
 
