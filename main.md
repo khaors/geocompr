@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve096cd220cd34ce16
+preserve3b30fc3fd8edb116
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3108,7 +3108,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve1eb5dc64fc25ba15
+preservec54a90d37dcc8160
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5996,7 +5996,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve1efbec2be534ec4f
+preserve037a547e29bcc32a
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6612,7 +6612,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveb6998aff80b558ef
+preserve94ad59c991bd59d8
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -8457,7 +8457,7 @@ Before doing so, it is worth taking a look at the conventional modeling interfac
 This way we introduce statistical supervised modeling in R which provides the required skill set for doing spatial CV and additionally contributes to a better grasp on the **mlr** approach introduced later on.
 Usually, we model the response variable as a function of predictors. 
 Therefore, modeling functions in R such as `lm`, `glm` and many more use the so-called formula interface.
-Let's put this into practice by modeling the landslide occurrence as a function of terrain attributes.
+We put this into practice by modeling the landslide occurrence as a function of terrain attributes.
 Since our response (landslide occurrence) belongs to the binary category, we use a binomial generalized linear model instead of a simple linear model which would expect a normally distributed numeric response variable.
 
 
@@ -8521,7 +8521,7 @@ There are three main directions:
 1. Adding a spatial correlation (dependency) structure to a generalized least squares model  [`nlme::gls()`; @zuur_mixed_2009; @zuur_beginners_2017].  ^[These correlation structures can also be included in `MASS::glmmPQL()` and `mgcv::gamm()`.]
 1. Finally, there are mixed-effect modeling approaches.
 Basically, a random effect imposes a dependency structure on the response variable which in turn allows for observations of one class to be more similar to each other than to those of another class [@zuur_mixed_2009]. 
-Classes can be for example bee hives, owl nests, vegetation transects or an altitudinal stratification.
+Classes can be, for example, bee hives, owl nests, vegetation transects or an altitudinal stratification.
 This mixed modeling approach assumes normal and independent distributed random intercepts.^[Note that for spatial predictions one would usually use the population intercept.]
 This can even be extended by using a random intercept that is normal and spatially dependent.
 For this, however, you will have to resort most likely to Bayesian modeling approaches since frequentist software tools are rather limited in this respect especially for more complex models [@blangiardo_spatial_2015; @zuur_beginners_2017]. 
@@ -8550,9 +8550,9 @@ Cross-validation belongs to the family of resampling methods [@james_introductio
 The basic idea is to split (repeatedly) a dataset into training and test sets whereby the training data is used to fit a model which then is applied to the test set.
 Comparing the predicted values with the known response values from the test set (using a performance measure such as the AUROC in the binomial case) gives a bias-reduced assessment of the model's capability to generalize the learned relationship to independent data.
 For example, a 100-repeated 5-fold cross-validation means to randomly split the data into five partitions (folds) with each fold being used once as a test set (see upper row of Figure \@ref(fig:partitioning)). 
-This guarantees that each observation is used once in one of the test set, and requires the fitting of five models.
+This guarantees that each observation is used once in one of the test sets, and requires the fitting of five models.
 Subsequently, this procedure is repeated 100 times.
-Of course, the data splitting will differ (though often only slightly) in each repetition.
+Of course, the data splitting will differ in each repetition.
 Overall, this amounts to fitting 500 models whereas the mean performance measure (AUROC) of all models is the model's overall prediction power.
 
 However, geographic data is special.
@@ -8841,19 +8841,19 @@ This amounts to 250 * 5 models for one repetition
 Since we are requesting 100 repetitions this leads to a total of 125,000 models. 
 This is computationally quite demanding even with the small dataset used here.
 So before starting the actual resampling it would be wise to reduce runtime with the help of a parallelization approach. 
-In general, multicore processing is easier on Linux than on Windows systems.
+In general, multicore processing is easier on Unix-based systems than on Windows systems.
 In fact, cloud computing is usually done and developed on Linux servers.
-Therefore, we will present how to do nested cross-validation using a parallelization approach working only under Linux-based systems.^[Note also that the `mc.set.seeds` parameter used later on is only available on Unix-based systems].
+Therefore, we will present how to do nested cross-validation using a parallelization approach working only under Unix-based systems.^[Note also that the `mc.set.seeds` parameter used later on is only available on Unix-based systems].
 Windows users have at least three options:
 
-1. Run the resampling without parallelizing it though this might take a while.
+1. Run the resampling without parallelizing it though this will take most likely more than half a day.
 2. Install a virtual machine (e.g. [Oracle VirtualBox](https://www.virtualbox.org/)) to reproduce the parallelization code.
 3. Connect remotely to a Linux-Server (which is what we have done).
 Of course, this also implies that R and all related packages are installed on the server.
 
 Before starting the parallelization, we make sure that the processing continues even if one of the models throws an error by setting `on.learner.error` to `warn`.
-This is quite handy since you really want to avoid that the processing stops just because of one failed model after you have run a server at full capacity for several days.
-To inspect the failed models after the processing has completed we dump them.
+This is quite handy since we really want to avoid that the processing stops just because of one failed model after running a server at full capacity for several days.
+To inspect the failed models once the processing is completed, we dump them.
 
 
 ```r
@@ -8862,7 +8862,7 @@ configureMlr(on.learner.error = "warn", on.error.dump = TRUE)
 
 To start the parallelization, we set the `mode` to `multicore` which will use `mclapply()` in the background on a single machine.^[Check out `?parallelStart` for further modes and the **parallelMap** [github page](https://github.com/berndbischl/parallelMap) for more information on the unified interface to popular parallelization back-ends.
 Note also that `mclapply()` only supports multicore processing on Unix-based systems.]
-`level` defines the level where to enable the parallelization with `mlr.tuneParams` determining that the inner resampling fold should be parallelized, i.e. the hyperparameter tuning (see lower left part of Figure \@ref(fig:inner-outer); and use `parallelMap::parallelGetRegisteredLevels()` for supported levels as well as the **mlr** [parallelization tutorial](https://mlr-org.github.io/mlr-tutorial/release/html/parallelization/index.html#parallelization-levels)).
+`level` defines the level where to enable the parallelization with `mlr.tuneParams` determining that the inner resampling fold should be parallelized, i.e. the hyperparameter tuning (see lower left part of Figure \@ref(fig:inner-outer); and have a look at `parallelMap::parallelGetRegisteredLevels()` for supported levels as well as at the **mlr** [parallelization tutorial](https://mlr-org.github.io/mlr-tutorial/release/html/parallelization/index.html#parallelization-levels)).
 Probably we are not the only ones using the server, therefore we are friendly and will use only half of its cores which in our case corresponds to 24 (`cpus` parameter).
 To make sure that the same partitions are used in each parallelized thread, we set `mc.set.seed` to `TRUE`.
 
@@ -8892,7 +8892,7 @@ result = mlr::resample(learner = wrapped_lrn_ksvm,
 # stop parallelization
 parallelStop()
 # save your result, e.g.:
-# saveRDS(resa_svm_spatial, "svm_sp_sp_rbf_50it.rda")
+# saveRDS(result, "svm_sp_sp_rbf_50it.rda")
 ```
 
 
@@ -8920,7 +8920,7 @@ mean(result$measures.test$auc)
 #> [1] 0.758
 ```
 
-So it appears that the GLM is slightly better than the SVM in this specific case.
+It appears that the GLM (aggregated AUROC was 0.788) is slightly better than the SVM in this specific case.
 However, using 200 instead of 50 iterations in the random search would probably yield even better hyperparameter combinations resulting in a better AUROC [@schratz_performance_nodate].
 On the other hand, this would increase the number of models to be fitted from 125,000 to 500,000.^[Have also a look at @james_introduction_2013 for a short discussion on the simililarity of logistic regression and SVM.]
 
@@ -8958,7 +8958,7 @@ Finally, for more details please check out also the fantastic **mlr** online doc
 - https://github.com/mlr-org/mlr/wiki/user-2015-tutorial
 
 ## Acknowledgments
-We dearly thank Patrick Schratz (University of Jena) for fruitful discussions on **mlr**, providing code input and for integrating the **sperrorest** functionality into **mlr**.
+We dearly thank Patrick Schratz (University of Jena) for fruitful discussions on **mlr** and for providing code input.
 
 
 ## Exercises
@@ -8976,6 +8976,7 @@ Hint: Before running the spatial cross-validation for both learners set a seed t
 1. Run the SVM without tuning the hyperparameters.
 Use the `rbfdot` kernel with $\sigma$ = 1 and *C* = 1. 
 Leaving the hyperparameters unspecified in **kernlab**'s `ksvm()` would otherwise initialize an automatic non-spatial hyperparameter tuning.
+For a discussion on the need for (spatial) tuning of hyperparameters please refer to @schratz_performance_nodate.
 1. Model landslide susceptibility with the help of **mlr** using a random forest model as implemented by the **ranger** package.
 Apply a nested spatial CV.
 Parallelize the tuning level.
