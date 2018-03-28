@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-03-27'
+date: '2018-03-28'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-03-27 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-03-28 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve8de3cfa7447aa57a
+preserve096cd220cd34ce16
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3108,7 +3108,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservec609f55aec87009b
+preserve1eb5dc64fc25ba15
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5996,7 +5996,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve25299bb5300b0a01
+preserve1efbec2be534ec4f
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6612,7 +6612,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservea58fdcc3dd679276
+preserveb6998aff80b558ef
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -8741,19 +8741,18 @@ As a reminder we define machine learning here again with the words of [Jason Bro
 > Machine learning, more specifically the field of predictive modeling is primarily concerned with minimizing the error of a model or making the most accurate predictions possible, at the expense of explainability. In applied machine learning we will borrow, reuse and steal algorithms from many different fields, including statistics and use them towards these ends.
 
 In the previous section (section \@ref(glm)) we have used a GLM for predicting landslide susceptibility, in this section we will introduce the support vector machine (SVM) for the same purpose.
-
-Overall, machine-learning models differ from parametric models in that they optimize hyperparameters instead of finding coefficients.
-<!-- also have a look at mlr tutorial + google difference + find a term for rf, svm, knn, etc. -->
-
 It is beyond the scope of this book to explain exactly what a SVM is.
 In short, SVMs are trying to find the best possible hyperplanes to separate classes.
 Kernels with specific hyperparameters allow for non-linear boundaries between classes [@james_introduction_2013].
-Tuning is mandatory for finding the optimal hyperparameters for a specific dataset.
+Hyperparameters should not be confused with coefficients of parametric models, which are sometimes also referred to as parameters.^[For a more detailed description of the difference between coefficients and hyperparameters, have a look at this [machine mastery blog](https://machinelearningmastery.com/difference-between-a-parameter-and-a-hyperparameter/).]
+Coefficients can be estimated from the data while hyperparameters are set before the learning begins.
+Optimal hyperparameters are usually determined within a defined range with the help of cross-validation methods.
+This is called hyperparameter tuning.
 Some SVM implementations come with an automated tuning which is usually based on random sampling (see upper row of Figure \@ref(fig:partitioning)) such as **kernlab**'s `ksvm()`.
 This is useful in the case of non-spatial data but of less use in the case of spatial data where spatial tuning should be preferred.
-Therefore, we will make sure to replace automated by spatial hyperparameter tuning.
+Therefore, we will make sure to replace automated by spatial hyperparameter tuning in the following.
 
-Setting up the **mlr** building blocks for the SVM follows the exact same procedure introduced in the previous section (section \@ref(glm)), i.e. we define a task, a learner and a resampling strategy.
+Before defining the tuning, we have to set up the **mlr** building blocks for the SVM as introduced in the previous section (section \@ref(glm)), i.e. we define a task, a learner and a resampling strategy.
 The task remains the same, hence we can use the one already defined in the previous section (section \@ref(glm)), namely `task`.
 However, we have to define a new learner since we are going to use a SVM.
 To find out which SVM functions are available we use again the `listLearners()` command.
@@ -8769,7 +8768,7 @@ dplyr::select(lrns, class, name, package)
 #> 17   classif.svm     Support Vector Machines (libsvm)        svm   e1071
 ```
 
-We will use `ksvm()` from the **kernlab** package.
+We will use `ksvm()` from the **kernlab** package [@Karatzoglou_kernlab_2004].
 To allow for non-linear relationships we use the radial basis function (or Gaussian) kernel which is also the default of `ksvm()` and probably the most popular SVM kernel in general.
 
 
@@ -8788,8 +8787,8 @@ Again we will use a 100-repeated 5-fold spatial CV.
 outer = makeResampleDesc("SpRepCV", folds = 5, reps = 100)
 ```
 
-So far, this is exactly the same as we have done when using the GLM, however, now we need to additionally tune the SVM hyperparameters.
-Using the same data for the performance assessment and the tuning would potentially lead to overoptimistic results [@cawley_on_2010].
+So far, this is exactly the same as we have done when using the GLM (section \@ref(glm)), however, now we need to additionally tune the SVM hyperparameters.
+Using the same data for the performance assessment and the tuning would potentially lead to overoptimistic results [@cawley_overfitting_2010].
 To avoid this we will use a nested spatial CV.
 
 <div class="figure" style="text-align: center">
@@ -8837,30 +8836,33 @@ wrapped_lrn_ksvm = makeTuneWrapper(learner = lrn_ksvm,
                                    measures = mlr::auc)
 ```
 
-Overall, this set up implies that we ask R to fit 250 models to determine the optimal hyperparameters which are then used for the performance assessment in the first fold of the outer resampling loop.
-We have to repeat this five times for each fold in the outer fold which leads to 250 * 5 models for one repetition in the outer loop.
+Overall, this set up implies that we ask R to fit 250 models to determine the optimal hyperparameters which are then used five times, once for each fold (see also Figure \@ref(fig:partitioning)), for the performance assessment in the first repetition of the outer resampling loop.
+This amounts to 250 * 5 models for one repetition
 Since we are requesting 100 repetitions this leads to a total of 125,000 models. 
 This is computationally quite demanding even with the small dataset used here.
 So before starting the actual resampling it would be wise to reduce runtime with the help of a parallelization approach. 
 In general, multicore processing is easier on Linux than on Windows systems.
 In fact, cloud computing is usually done and developed on Linux servers.
-Therefore, we will present how to do nested cross-validation using a parallelization approach working only under Linux-based systems.^[Note also that the `mc.set.seeds` parameter used later on is only available for Linux machines].
-Windows users have at least two options:
+Therefore, we will present how to do nested cross-validation using a parallelization approach working only under Linux-based systems.^[Note also that the `mc.set.seeds` parameter used later on is only available on Unix-based systems].
+Windows users have at least three options:
 
 1. Run the resampling without parallelizing it though this might take a while.
 2. Install a virtual machine (e.g. [Oracle VirtualBox](https://www.virtualbox.org/)) to reproduce the parallelization code.
+3. Connect remotely to a Linux-Server (which is what we have done).
+Of course, this also implies that R and all related packages are installed on the server.
 
 Before starting the parallelization, we make sure that the processing continues even if one of the models throws an error by setting `on.learner.error` to `warn`.
+This is quite handy since you really want to avoid that the processing stops just because of one failed model after you have run a server at full capacity for several days.
 To inspect the failed models after the processing has completed we dump them.
-This is quite handy since you really want to avoid that the processing stops after you have run a server at full capacity for several days just because one model cannot be fitted.
 
 
 ```r
 configureMlr(on.learner.error = "warn", on.error.dump = TRUE)
 ```
 
-First, we set the `mode` to `multicore` which will use `mclapply()` in the background on a single machine.^[Check out `?parallelStart` for further modes and the **parallelMap** [github page](https://github.com/berndbischl/parallelMap) for more information on the unified interface to popular parallelization back-ends. Note also that `mclapply()` only supports multicore processing on Linux-based machines.]
-`level` defines the level where to enable the parallelization with `mlr.tuneParams` determining that the inner resampling fold should be parallelized, i.e. the optimal hyperparameter tuning (see lower part of Figure \@ref(fig:inner-outer); and use `parallelMap::parallelGetRegisteredLevels()` for supported levels as well as the **mlr** [parallelization tutorial](https://mlr-org.github.io/mlr-tutorial/release/html/parallelization/index.html#parallelization-levels)).
+To start the parallelization, we set the `mode` to `multicore` which will use `mclapply()` in the background on a single machine.^[Check out `?parallelStart` for further modes and the **parallelMap** [github page](https://github.com/berndbischl/parallelMap) for more information on the unified interface to popular parallelization back-ends.
+Note also that `mclapply()` only supports multicore processing on Unix-based systems.]
+`level` defines the level where to enable the parallelization with `mlr.tuneParams` determining that the inner resampling fold should be parallelized, i.e. the hyperparameter tuning (see lower left part of Figure \@ref(fig:inner-outer); and use `parallelMap::parallelGetRegisteredLevels()` for supported levels as well as the **mlr** [parallelization tutorial](https://mlr-org.github.io/mlr-tutorial/release/html/parallelization/index.html#parallelization-levels)).
 Probably we are not the only ones using the server, therefore we are friendly and will use only half of its cores which in our case corresponds to 24 (`cpus` parameter).
 To make sure that the same partitions are used in each parallelized thread, we set `mc.set.seed` to `TRUE`.
 
@@ -8919,10 +8921,10 @@ mean(result$measures.test$auc)
 ```
 
 So it appears that the GLM is slightly better than the SVM in this specific case.
-However, using 200 instead of 50 iterations would probably yield even better hyperparameter combinations [@schratz_performance_nodate] resulting in a better AUROC.
+However, using 200 instead of 50 iterations in the random search would probably yield even better hyperparameter combinations resulting in a better AUROC [@schratz_performance_nodate].
 On the other hand, this would increase the number of models to be fitted from 125,000 to 500,000.^[Have also a look at @james_introduction_2013 for a short discussion on the simililarity of logistic regression and SVM.]
 
-Finally, we can have a look at the results of the found optimal hyperparameters for each outer loop iteration.
+Finally, we can have a look at the found optimal hyperparameters for each outer loop iteration.
 Here, we just have a short glance at the optimal hyperparameters combination and the result which was obtained with them in the first iteration of the outer loop
 
 
@@ -8945,7 +8947,7 @@ Resampling methods are a crucial part of a modern data scientist's toolbox [@jam
 In this chapter we used cross-validation to assess a model's predictive performance.
 Spatial data is statistically often not independent due to spatial autocorrelation, which violates a fundamental assumption of cross-validation.
 Therefore, we introduced spatial CV, which reduces the bias introduced by spatial autocorrelation. 
-The **mlr** package makes it easy to use (spatial) resampling techniques in combination with the most popular statistical learning techniques including, of course, linear regression, but also semi-parametric models (e.g., generalized additive models) and machine learning techniques such as random forests, support vector machines or boosted regression trees [@bischl_mlr:_2016;@schratz_performance_nodate].
+The **mlr** package makes it easy to use (spatial) resampling techniques in combination with the most popular statistical learning techniques including, of course, linear regression, but also semi-parametric models (e.g., generalized additive models) and typical machine learning techniques such as random forests, support vector machines or boosted regression trees [@bischl_mlr:_2016;@schratz_performance_nodate].
 Machine learning algorithms often require the tuning of so-called hyperparameters.
 Finding an optimal set of hyperparameters requires the fitting of thousands of additional models which substantially increases computing time.^[Naturally, computation time additionally increases with the size of the input data.]
 To reduce computing time, **mlr** makes parallelization easy through various supported methods.
@@ -8954,6 +8956,10 @@ Finally, for more details please check out also the fantastic **mlr** online doc
 
 - https://mlr-org.github.io/mlr-tutorial/
 - https://github.com/mlr-org/mlr/wiki/user-2015-tutorial
+
+## Acknowledgments
+We dearly thank Patrick Schratz (University of Jena) for fruitful discussions on **mlr**, providing code input and for integrating the **sperrorest** functionality into **mlr**.
+
 
 ## Exercises
 
@@ -8970,12 +8976,13 @@ Hint: Before running the spatial cross-validation for both learners set a seed t
 1. Run the SVM without tuning the hyperparameters.
 Use the `rbfdot` kernel with $\sigma$ = 1 and *C* = 1. 
 Leaving the hyperparameters unspecified in **kernlab**'s `ksvm()` would otherwise initialize an automatic non-spatial hyperparameter tuning.
-1. Model landslide susceptibility using a random forest model as implemented by the **ranger** package.
+1. Model landslide susceptibility with the help of **mlr** using a random forest model as implemented by the **ranger** package.
 Apply a nested spatial CV.
 Parallelize the tuning level.
 Use a random search with 50 iterations to find the optimal hyperparameter combination (here: `mtry` and `num.trees`).
 The tuning space limits are 1 and 4 for `mtry`, and 1 and 10,000 for `num.trees`.
-Warning: Depending on the number of cores you have available this might take a long time.
+Warning: This might take a long time.
+More cores substantially decrease computing time.
 
 
 <!--
