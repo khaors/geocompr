@@ -665,14 +665,7 @@ year_vars =<span class="st"> </span><span class="kw">names</span>(statepop_sf)[<
 facet_anim =<span class="st"> </span><span class="kw">tm_shape</span>(statepop_sf) +<span class="st"> </span><span class="kw">tm_fill</span>(year_vars) +<span class="st"> </span><span class="kw">tm_facets</span>(<span class="dt">free.scales.fill =</span> <span class="ot">FALSE</span>, 
   <span class="dt">ncol =</span> <span class="dv">1</span>, <span class="dt">nrow =</span> <span class="dv">1</span>)
 <span class="kw">animation_tmap</span>(<span class="dt">tm =</span> facet_anim, <span class="dt">filename =</span> <span class="st">&quot;figures/09-us_pop.gif&quot;</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr::<span class="kw">include_graphics</span>(<span class="st">&quot;figures/09-us_pop.gif&quot;</span>)</code></pre></div>
 <p><img src="figures/09-us_pop.gif" style="display: block; margin: auto;" /></p>
-<p><!-- More description: it shows their creation using data arranged wit --></p>
-<!-- 1/ desribe how to use `tm_facets` for animation -->
-<!-- 2/ by , nrow, ncol -->
-<!-- next, focus on `animation_tmap` -->
-<!-- 3/ along -->
-<!-- 4/ by and along -->
 <!-- add a new animation exercise -->
 </div>
 <div id="interactive-maps" class="section level2">

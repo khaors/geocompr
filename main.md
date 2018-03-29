@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservef33b6ac83712e1a6
+preserve1205f8395361b2fa
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3108,7 +3108,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservea9f707d6310fe158
+preserve04b1f5895f06d017
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5996,7 +5996,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservec3d0efbc160514fe
+preserved61af4b3bdcca92c
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6612,7 +6612,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservee7ecbf49cfdd6a94
+preservec737e89bb366f439
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7216,30 +7216,7 @@ facet_anim = tm_shape(statepop_sf) + tm_fill(year_vars) + tm_facets(free.scales.
 animation_tmap(tm = facet_anim, filename = "figures/09-us_pop.gif")
 ```
 
-
-```r
-knitr::include_graphics("figures/09-us_pop.gif")
-```
-
 <img src="figures/09-us_pop.gif" style="display: block; margin: auto;" />
-
-
-
- <!-- More description: it shows their creation using data arranged wit -->
-
-<!-- 1/ desribe how to use `tm_facets` for animation -->
-<!-- 2/ by , nrow, ncol -->
-<!-- next, focus on `animation_tmap` -->
-<!-- 3/ along -->
-<!-- 4/ by and along -->
-
-
-
-
-
-
-
-
 
 <!-- add a new animation exercise -->
 
