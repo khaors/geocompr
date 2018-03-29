@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-03-28">
+<meta name="date" content="2018-03-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -454,7 +454,7 @@ Figure 9.3: The impact of changing commonly used fill and border aesthetics to f
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(nz$geometry, <span class="dt">col =</span> <span class="dv">1</span>:<span class="kw">nrow</span>(nz))      <span class="co"># works</span>
 <span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="dv">1</span>:<span class="kw">nrow</span>(nz)) <span class="co"># fails:</span>
 <span class="co">#&gt; Error: Fill argument neither colors nor valid variable name(s)</span></code></pre></div>
-<p>Instead <code>col</code> (and other aesthetics that can vary such as <code>lwd</code> for line layers and <code>size</code> for point layers) requires a character string naming an attribute associated with the geometry to be plotted. Thus one would acheive the desired (plotted in the right-hand panel of Figure <a href="adv-map.html#fig:tmcol">9.4</a>) result as follows:<a href="#fn55" class="footnoteRef" id="fnref55"><sup>55</sup></a></p>
+<p>Instead <code>col</code> (and other aesthetics that can vary such as <code>lwd</code> for line layers and <code>size</code> for point layers) requires a character string naming an attribute associated with the geometry to be plotted. Thus one would achieve the desired (plotted in the right-hand panel of Figure <a href="adv-map.html#fig:tmcol">9.4</a>) result as follows:<a href="#fn55" class="footnoteRef" id="fnref55"><sup>55</sup></a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz$col =<span class="st"> </span><span class="dv">1</span>:<span class="kw">nrow</span>(nz)
 <span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;col&quot;</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:tmcol"></span>
@@ -463,8 +463,8 @@ Figure 9.3: The impact of changing commonly used fill and border aesthetics to f
 Figure 9.4: Comparison of base (left) and tmap (right) handling of a numeric color field.
 </p>
 </div>
-<p>Additional aesthetic settings are demonstrated in the code chunk below, which colors regions in New Zealand depending on their area. The results show how custom breaks can be set with the <code>breaks</code> argument (Figure <a href="adv-map.html#fig:tmpal">9.5</a> center). Additional palette options include <code>n</code> (which sets the number of bins into which numeric variables are categorised) and <code>palette</code> (which defines the colorscheme — which can be selected interactively with <code>tmaptools::palette_explorer()</code>). Results of changing values for these simultaneously are shown in Figure <a href="adv-map.html#fig:tmpal">9.5</a> (right):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">breaks =<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>) *<span class="st"> </span><span class="fl">1e4</span>
+<p>Additional aesthetic settings are demonstrated in the code chunk below, which colors regions in New Zealand depending on their area. The results show how custom breaks can be set with the <code>breaks</code> argument (Figure <a href="adv-map.html#fig:tmpal">9.5</a> center). Additional palette options include <code>n</code> (which sets the number of bins into which numeric variables are categorized) and <code>palette</code> (which defines the color scheme — which can be selected interactively with <code>tmaptools::palette_explorer()</code>). Results of changing values for these simultaneously are shown in Figure <a href="adv-map.html#fig:tmpal">9.5</a> (right):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">breaks =<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>) *<span class="st"> </span><span class="dv">10000</span>
 <span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;AREA_SQ_KM&quot;</span>)
 <span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;AREA_SQ_KM&quot;</span>, <span class="dt">breaks =</span> breaks)
 <span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;AREA_SQ_KM&quot;</span>, <span class="dt">n =</span> <span class="dv">10</span>)

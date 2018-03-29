@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-03-28'
+date: '2018-03-29'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-03-28 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-03-29 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve3b30fc3fd8edb116
+preserveede02cc2f42436cc
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3108,7 +3108,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservec54a90d37dcc8160
+preserve7684141bb1bb6369
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5996,7 +5996,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve037a547e29bcc32a
+preserve1a48b1e542af09b8
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6612,7 +6612,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve94ad59c991bd59d8
+preserve0cbb27f6e74f796b
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6884,7 +6884,7 @@ tm_shape(nz) + tm_fill(col = 1:nrow(nz)) # fails:
 ```
 
 Instead `col` (and other aesthetics that can vary such as `lwd` for line layers and `size` for point layers) requires a character string naming an attribute associated with the geometry to be plotted.
-Thus one would acheive the desired (plotted in the right-hand panel of Figure \@ref(fig:tmcol)) result as follows:^[
+Thus one would achieve the desired (plotted in the right-hand panel of Figure \@ref(fig:tmcol)) result as follows:^[
 Figure \@ref(fig:tmcol) also demonstrates another benefit of **tmap**: it automatically converts numeric variables into sensible, graduated bins.
 ]
 
@@ -6901,12 +6901,12 @@ tm_shape(nz) + tm_fill(col = "col")
 
 Additional aesthetic settings are demonstrated in the code chunk below, which colors regions in New Zealand depending on their area.
 The results show how custom breaks can be set with the `breaks` argument (Figure \@ref(fig:tmpal) center).
-Additional palette options include `n` (which sets the number of bins into which numeric variables are categorised) and `palette` (which defines the colorscheme --- which can be selected interactively with `tmaptools::palette_explorer()`).
+Additional palette options include `n` (which sets the number of bins into which numeric variables are categorized) and `palette` (which defines the color scheme --- which can be selected interactively with `tmaptools::palette_explorer()`).
 Results of changing values for these simultaneously are shown in Figure \@ref(fig:tmpal) (right):
 
 
 ```r
-breaks = c(0, 3, 4, 5) * 1e4
+breaks = c(0, 3, 4, 5) * 10000
 tm_shape(nz) + tm_fill(col = "AREA_SQ_KM")
 tm_shape(nz) + tm_fill(col = "AREA_SQ_KM", breaks = breaks)
 tm_shape(nz) + tm_fill(col = "AREA_SQ_KM", n = 10)
@@ -6929,7 +6929,6 @@ map_nza = tm_shape(nz) +
 ```
 
 The resulting `tmap` object `map_nza` will be used, alongside `map_nz`, to illustrate different layout settings in the next section.
-
 
 ### Map layouts
 
@@ -6958,7 +6957,6 @@ Some most useful layout settings are listed below and illustrated in Figure \@re
 - Margin settings including `outer.margin` and `inner.margin`.
 - Font settings, controlled by `fontface` and `fontfamily`.
 - Legend settings including binary options such as `legend.show` (whether or not to show the legend) `legend.only` (omit the map) and `legend.outside` (should the legend go outside the map?), as well as multiple choice settings such as `legend.position`.
-
 
 <div class="figure" style="text-align: center">
 <img src="figures/layout2-1.png" alt="Illustration of selected color-related layout options." width="576" />
