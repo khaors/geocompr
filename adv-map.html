@@ -653,7 +653,8 @@ Figure 9.12: Animated map showing the top 30 largest ‘urban agglomerations’ 
 statepop =<span class="st"> </span>historydata::us_state_populations %&gt;%
 <span class="st">  </span><span class="kw">select</span>(-GISJOIN) %&gt;%<span class="st"> </span><span class="kw">rename</span>(<span class="dt">NAME =</span> state)
 statepop_wide =<span class="st"> </span><span class="kw">spread</span>(statepop, year, population, <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>)
-statepop_sf =<span class="st"> </span><span class="kw">left_join</span>(spData::us_states, statepop_wide)
+statepop_sf =<span class="st"> </span><span class="kw">left_join</span>(spData::us_states, statepop_wide) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">st_transform</span>(<span class="dv">2163</span>)
 <span class="kw">map_dbl</span>(statepop_sf, ~<span class="kw">sum</span>(<span class="kw">is.na</span>(.)))  <span class="co"># looks about right</span>
 year_vars =<span class="st"> </span><span class="kw">names</span>(statepop_sf)[<span class="kw">grepl</span>(<span class="st">&quot;year&quot;</span>, <span class="kw">names</span>(statepop_sf))]
 facet_anim =<span class="st"> </span><span class="kw">tm_shape</span>(statepop_sf) +<span class="st"> </span><span class="kw">tm_fill</span>(year_vars) +<span class="st"> </span><span class="kw">tm_facets</span>(<span class="dt">free.scales.fill =</span> <span class="ot">FALSE</span>, 
