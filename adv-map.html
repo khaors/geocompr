@@ -590,7 +590,8 @@ Figure 9.9: Faceted map showing the top 30 largest ‘urban agglomerations’ fr
 <span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">frame =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <p>The third step consists of the inset map creation. This is a place where the most important message is stated.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_height_map =<span class="st"> </span><span class="kw">tm_shape</span>(nz_elev, <span class="dt">bbox =</span> tmaptools::<span class="kw">bb</span>(nz_region)) +
-<span class="st">  </span><span class="kw">tm_raster</span>(<span class="dt">style =</span> <span class="st">&quot;cont&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;-Spectral&quot;</span>, <span class="dt">auto.palette.mapping =</span> <span class="ot">FALSE</span>) +
+<span class="st">  </span><span class="kw">tm_raster</span>(<span class="dt">style =</span> <span class="st">&quot;cont&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;-Spectral&quot;</span>,
+            <span class="dt">auto.palette.mapping =</span> <span class="ot">FALSE</span>, <span class="dt">legend.show =</span> <span class="ot">FALSE</span>) +
 <span class="st">  </span><span class="kw">tm_shape</span>(nz_height) +
 <span class="st">  </span><span class="kw">tm_symbols</span>(<span class="dt">shape =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">size =</span> <span class="fl">0.1</span>)</code></pre></div>
 <p>Finally, we combine the two maps. A viewport from the <strong>grid</strong> package can be used by stating a center location (<code>x</code> and <code>y</code>) and a size (<code>width</code> and <code>height</code>) of the inset map.</p>
