@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve6b2a32bca25df63f
+preserve3812c09a5a976061
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3108,7 +3108,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveb976b6cce97c9ae3
+preservea896618e04e9dc78
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5996,7 +5996,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve204175589ae04376
+preservef83deba78f014362
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6612,7 +6612,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve7880a01eced59609
+preserve3223919b32bf12b8
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7022,17 +7022,17 @@ This use case of faceted plot is illustrated in Figure \@ref(fig:urban-facet).
 
 
 ```r
-urb_1950_2030 = urban_agglomerations %>% 
-  filter(year %in% c(1950, 2000, 2030))
+urb_1970_2030 = urban_agglomerations %>% 
+  filter(year %in% c(1970, 1990, 2010, 2030))
 tm_shape(world) + tm_polygons() + 
-  tm_shape(urb_1950_2030) +
+  tm_shape(urb_1970_2030) +
   tm_dots(size = "population_millions") +
-  tm_facets(by = "year", nrow = 1)
+  tm_facets(by = "year", nrow = 2)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/urban-facet-1.png" alt="Faceted map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations." width="576" />
-<p class="caption">(\#fig:urban-facet)Faceted map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations.</p>
+<img src="figures/urban-facet-1.png" alt="Faceted map showing the top 30 largest 'urban agglomerations' from 1970 to 2030 based on population projects by the United Nations." width="576" />
+<p class="caption">(\#fig:urban-facet)Faceted map showing the top 30 largest 'urban agglomerations' from 1970 to 2030 based on population projects by the United Nations.</p>
 </div>
 
 The preceding code chunk demonstrates key features of faceted maps created with **tmap**:
@@ -7074,7 +7074,7 @@ Importantly, this map needs to clearly indicate the location of the inset map, f
 nz_map = tm_shape(nz) +
   tm_polygons() +
   tm_shape(nz_height) +
-  tm_symbols(shape = 2, col = "black", size = 0.1) + 
+  tm_symbols(shape = 2, col = "red", size = 0.1) + 
   tm_shape(nz_region) +
   tm_borders(lwd = 3) + 
   tm_layout(frame = FALSE)
@@ -7089,7 +7089,7 @@ nz_height_map = tm_shape(nz_elev, bbox = tmaptools::bb(nz_region)) +
   tm_raster(style = "cont", palette = "-Spectral",
             auto.palette.mapping = FALSE, legend.show = FALSE) +
   tm_shape(nz_height) +
-  tm_symbols(shape = 2, col = "black", size = 0.1)
+  tm_symbols(shape = 2, col = "red", size = 0.1)
 ```
 
 Finally, we combine the two maps.
