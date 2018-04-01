@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-03-29'
+date: '2018-04-01'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-03-29 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-04-01 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservea86ee1d3fd3d5d5c
+preserve946f5e4648cb9571
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -370,15 +370,15 @@ See the [r-spatial](https://github.com/r-spatial/) organisation and conversation
 ] and a growing number of actively developed packages which are designed to work in harmony with **sf** (Table \@ref(tab:revdep)). 
 
 
-Table: (\#tab:revdep)The top 5 most downloaded packages that depend on sf, in terms of average number of downloads per day over the previous month. As of 2018-03-21 there are 66 packages which import sf.
+Table: (\#tab:revdep)The top 5 most downloaded packages that depend on sf, in terms of average number of downloads per day over the previous month. As of 2018-03-30 there are 68 packages which import sf.
 
 package    Downloads
 --------  ----------
-plotly          2202
-raster          1629
-spData           890
-spdep            861
-leaflet          700
+plotly          2258
+raster          1690
+spData           960
+spdep            871
+leaflet          747
 
 ## The history of R-spatial
 
@@ -3108,7 +3108,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve77cd5384968d2008
+preserveed93d342002ae9ac
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5996,7 +5996,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve4e70a7446052905b
+preserveebc349345829ee8c
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6612,7 +6612,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve1187669edc3c9bd4
+preserve4dde4bf7a00f4bc7
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6919,6 +6919,16 @@ tm_shape(nz) + tm_fill(col = "AREA_SQ_KM", palette = "RdBu")
 <p class="caption">(\#fig:tmpal)Illustration of settings that affect variable aesthetics. The result shows a continuous variable (the area in square kilometers of regions in New Zealand) converted to color with (from left to right): default settings, manual breaks, n breaks, and an alternative palette.</p>
 </div>
 
+
+<!--
+- color palettes - cont, div, cat?
+Class intervals
+- class intervals ("cat", "fixed", "sd", "equal", "pretty", "quantile", "kmeans", "hclust", "bclust", "fisher", and "jenks")
+- bicolor maps?
+- categorical rasters?
+-->
+
+
 An important argument in functions defining aesthetic layers such as `tm_fill()` is `title`, which sets the title of the associated legend.
 The following code chunk demonstrates this functionality by providing a more attractive name than the variable name `AREA_SQ_KM` used in the previous figures (note the use of `expression()` for to create superscript text):
 
@@ -6992,13 +7002,6 @@ Note: `tmap_style_catalogue()` takes some time to run.</div>\EndKnitrBlock{rmdno
 - scale bar
 -->
 
-<!--
-Class intervals
-- class intervals ("cat", "fixed", "sd", "equal", "pretty", "quantile", "kmeans", "hclust", "bclust", "fisher", and "jenks")
-- bicolor maps?
-- categorical rasters?
--->
-
 ### Faceted maps
 
 Faceted maps, also referred to as 'small multiples', are composed of many maps arranged side-by-side (and sometimes stacked vertically also).
@@ -7044,7 +7047,6 @@ They could be used to focus on a smaller area in more detail (Figure \@ref(fig:i
 <!-- find the best distribution of insets -->
 In this section we focus on a creation of inset maps, so to learn about map styling go to section \@ref(aesthetics).
 
-<!-- example1: classic inset map -->
 Inset map usually covers an area with densely located phenomena that cannot be clearly visible at the original map scale.
 In the example below, we would create an inset map of the central part of the New Zealand's Southern Alps.
 The first step is to define the area of interest, which can be done by creating a new spatial object, `nz_region`.
@@ -7060,7 +7062,6 @@ nz_region = st_bbox(c(xmin = 1340000, xmax = 1450000, ymin = 5130000, ymax = 521
 In the second step, we create a base map showing a lager area. 
 It gives a context and helps to locate the area of interest. 
 Importantly, this map needs to clearly indicate the location of the inset map, for example by stating its borders.
-<!-- should we mention tm_layout here or earlier? -->
 
 
 ```r
@@ -7102,7 +7103,6 @@ print(nz_height_map, vp = grid::viewport(0.3, 0.7, width = 0.4, height = 0.4))
 
 Inset map can be save to file either by using a graphic device (see section \@ref(visual-outputs)) or the `save_tmap()` function and its arguments - `insets_tm` and `insets_vp`.
 
-<!-- example2: us states + hawaii + alaska -->
 Inset maps are also used to create one map of non-contiguous areas.
 Probably, the most often use example is a map of United States, which consists of the contiguous United States, Hawaii and Alaska.
 It is very important to find the best projection for each individual inset in this type of cases (see section \@ref(#reproj-geo-data) to learn more).
@@ -7216,15 +7216,10 @@ animation_tmap(tm = facet_anim, filename = "figures/09-us_pop.gif")
 
 <img src="figures/09-us_pop.gif" style="display: block; margin: auto;" />
 
-<!-- add a new animation exercise -->
-
 ## Interactive maps
 
 <!-- leaflet -->
 <!-- leaflet plugins -->
-<!-- mapview -->
-<!-- mapview raster support! -->
-<!-- are we going to focus on leaflet or mapview? -->
 
 ## Pseudo (unusual) maps 
 <!--we need a better name -->
