@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve0bc42eece76f9013
+preservef9eccdd3d5207489
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3108,7 +3108,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve0c82a2a20328bc17
+preserve9651b43768caea55
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5996,7 +5996,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve7bb7b51082bb22eb
+preserve0165e3bb9f3b2473
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6612,7 +6612,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservee9d9017b911b96bb
+preserveff5e5bcc4559e886
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6919,7 +6919,6 @@ tm_shape(nz) + tm_fill(col = "AREA_SQ_KM", palette = "RdBu")
 <p class="caption">(\#fig:tmpal)Illustration of settings that affect variable aesthetics. The result shows a continuous variable (the area in square kilometers of regions in New Zealand) converted to color with (from left to right): default settings, manual breaks, n breaks, and an alternative palette.</p>
 </div>
 
-
 <!--
 - color palettes - cont, div, cat?
 Class intervals
@@ -6927,7 +6926,6 @@ Class intervals
 - bicolor maps?
 - categorical rasters?
 -->
-
 
 An important argument in functions defining aesthetic layers such as `tm_fill()` is `title`, which sets the title of the associated legend.
 The following code chunk demonstrates this functionality by providing a more attractive name than the variable name `AREA_SQ_KM` used in the previous figures (note the use of `expression()` for to create superscript text):
@@ -7225,11 +7223,11 @@ animation_tmap(tm = facet_anim, filename = "figures/09-us_pop.gif")
 ## Pseudo (unusual) maps 
 <!--we need a better name -->
 
-<!-- geofacet -->
-<!-- e.g. population lines -->
-<!-- point maps -->
-<!-- hexbin -->
+<!-- geofacet - https://hafen.github.io/geofacet/-->
+<!-- population lines - https://github.com/rCarto/linemap-->
 <!-- cartogram - https://github.com/sjewo/cartogram -->
+<!-- geogrid - https://github.com/jbaileyh/geogrid -->
+<!-- dot density maps -->
 
 ## Web mapping applications with shiny
 
