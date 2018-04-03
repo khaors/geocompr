@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserved1453463111c9c7e
+preserve7a86f5bda3b088ce
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3108,7 +3108,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveb2fe1a008b6612fc
+preservefb4a616c28a688ec
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5996,7 +5996,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve2fa9a384cc38513f
+preserve2129e9f2ba9f231a
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6612,7 +6612,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve67d947097b8dbd3f
+preserveedeb0ca11447c9f2
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7199,7 +7199,6 @@ The power of animated maps is illustrated in Figure \@ref(fig:animus), which sho
 
 
 ```r
-devtools::install_github("ropensci/historydata")
 library(tmap)
 statepop = historydata::us_state_populations %>%
   select(-GISJOIN) %>% rename(NAME = state)
@@ -7212,6 +7211,84 @@ facet_anim = tm_shape(statepop_sf) + tm_fill(year_vars) + tm_facets(free.scales.
   ncol = 1, nrow = 1)
 animation_tmap(tm = facet_anim, filename = "figures/09-us_pop.gif")
 ```
+
+
+```
+#> Simple feature collection with 51 features and 18 fields
+#> geometry type:  MULTIPOLYGON
+#> dimension:      XY
+#> bbox:           xmin: -179 ymin: 18.9 xmax: -66.9 ymax: 71.4
+#> epsg (SRID):    4326
+#> proj4string:    +proj=longlat +datum=WGS84 +no_defs
+#> First 10 features:
+#>    id_num                 name       id version start_date   end_date
+#> 3       3               Alaska ak_state       1 1959-01-03 2000-12-31
+#> 7       7              Alabama al_state       3 1820-12-19 2000-12-31
+#> 11     11             Arkansas ar_state       2 1840-05-21 2000-12-31
+#> 15     15              Arizona az_state       1 1912-02-14 2000-12-31
+#> 19     19           California ca_state       2 1959-12-31 2000-12-31
+#> 20     20             Colorado co_state       1 1876-08-01 2000-12-31
+#> 25     25          Connecticut ct_state       4 1804-12-31 2000-12-31
+#> 27     27 District of Columbia       dc       2 1846-09-07 2000-12-31
+#> 28     28             Delaware de_state       1 1783-09-03 2000-12-31
+#> 39     39              Florida fl_state       1 1845-03-03 2000-12-31
+#>                                                                                                                                                                                                                                    change
+#> 3                                                                                                                        The state of Alaska was created from Alaska Territory by Presidential proclamation; Alaska Territory eliminated.
+#> 7                                                                                                                                MARION's overlap of the state of Mississippi and TUSCALOOSA's overlap of the state of Mississippi ended.
+#> 11                           Survey of boundary between the Republic of Texas and the United States began. MILLER (original) officially became extinct and LAFAYETTE was eliminated from Texas when Texas claims to the area were upheld.
+#> 15                                                                                                                                                 The state of Arizona was created from Arizona Territory; Arizona Territory eliminated.
+#> 19 Between 1949 and 1959 (precise date unknown) SAN FRANCISCO gained a small area of the Alameda Naval Air Station when landfill expansion extended westward over the county line between SAN FRANCISCO and ALAMEDA in San Francisco Bay.
+#> 20                                                                                                                                              The state of Colorado was created from Colorado Territory; Colorado Territory eliminated.
+#> 25                                                                                                           HARTFORD lost part of the town of Southwick (the "Southwick Jog") to HAMPSHIRE (Mass.) when the state boundary was adjusted.
+#> 27                        The federal government retroceded to Virginia all of the District of Columbia west of the Potomac River, including all of ALEXANDRIA (now ARLINGTON, Va.). ALEXANDRIA eliminated from the District of Columbia.
+#> 28            The three Lower Counties, of KENT, NEW CASTLE, and SUSSEX became an independent state on 4 July 1776. The name Delaware was formally adopted on 20 September 1776. The map depicts state boundaries as of 3 September 1783.
+#> 39                                                                                                  The state of Florida was created from Florida Territory, with boundaries the same as those set in 1822; Florida Territory eliminated.
+#>                                                                                                                                                                                          citation
+#> 3                                                                                                                                                           (Swindler, 1:208-225; Van Zandt, 165)
+#> 7                                                                                                                                               (Ala. Acts 1820, 2d sess., secs. 1, 9/pp. 90, 92)
+#> 11                                                                                                                                  (U.S. Stat., vol. 5, ch. 75 [1844]/p. 674; Marshall, 235-236)
+#> 15 (U.S. Stat., vol. 34, pt. 1, ch. 3335[1906]/pp. 267-285; U.S. Stat., vol. 36, pt. 1, ch. 310[1910]/pp. 557-579; U.S. Stat., vol. 37, pt. 1, res. 8[1911]/pp. 39-43; pt. 2[1912]/pp. 1728-1729)
+#> 19                                                                                            (U.S.G.S., 7.5 Minute Series, Oakland West Quadrangle, ";Edition of 1949"; and ";Edition of 1959";)
+#> 20                                                                                                                                   (Van Zandt, 141; U.S. Stat., vol. 18, part 3 [1876], p. 474)
+#> 25                                                                                                                                                                 (Hooker, 25-26; Van Zandt, 69)
+#> 27                                                                                                                          (U.S. Stat., vol. 9, ch. 35 [1846]/pp. 35-37, and appendix 3/p. 1000)
+#> 28                                                                                                                                                 (Declaration of Independence; Swindler, 2:197)
+#> 39                                                                                                                   (Swindler, 2:332; U.S. Stat., vol. 5, ch. 48 [1845], secs. 1, 5/pp. 742-743)
+#>     start_n    end_n area_sqmi            terr_type            full_name
+#> 3  19590103 20001231    575301                State               Alaska
+#> 7  18201219 20001231     51656                State              Alabama
+#> 11 18400521 20001231     53179                State             Arkansas
+#> 15 19120214 20001231    113999                State              Arizona
+#> 19 19591231 20001231    158097                State           California
+#> 20 18760801 20001231    104093                State             Colorado
+#> 25 18041231 20001231      4975                State          Connecticut
+#> 27 18460907 20001231        68 District of Columbia District of Columbia
+#> 28 17830903 20001231      2013                State             Delaware
+#> 39 18450303 20001231     56618                State              Florida
+#>    abbr_name                        name_start state_abbr
+#> 3         AK               Alaska (1959-01-03)         AK
+#> 7         AL              Alabama (1820-12-19)         AL
+#> 11        AR             Arkansas (1840-05-21)         AR
+#> 15        AZ              Arizona (1912-02-14)         AZ
+#> 19        CA           California (1959-12-31)         CA
+#> 20        CO             Colorado (1876-08-01)         CO
+#> 25        CT          Connecticut (1804-12-31)         CT
+#> 27        DC District of Columbia (1846-09-07)         DC
+#> 28        DE             Delaware (1783-09-03)         DE
+#> 39        FL              Florida (1845-03-03)         FL
+#>              state_name state_code                       geometry
+#> 3                Alaska         02 MULTIPOLYGON (((-179 51.3, ...
+#> 7               Alabama         01 MULTIPOLYGON (((-88.1 30.2,...
+#> 11             Arkansas         05 MULTIPOLYGON (((-91.7 36.5,...
+#> 15              Arizona         04 MULTIPOLYGON (((-111 37, -1...
+#> 19           California         06 MULTIPOLYGON (((-117 32.8, ...
+#> 20             Colorado         08 MULTIPOLYGON (((-106 41, -1...
+#> 25          Connecticut         09 MULTIPOLYGON (((-73.5 41, -...
+#> 27 District of Columbia         11 MULTIPOLYGON (((-76.9 38.9,...
+#> 28             Delaware         10 MULTIPOLYGON (((-75.1 38.6,...
+#> 39              Florida         12 MULTIPOLYGON (((-81.7 24.6,...
+```
+
 
 <img src="figures/09-us_pop.gif" style="display: block; margin: auto;" />
 
