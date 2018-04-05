@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-04-03">
+<meta name="date" content="2018-04-05">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -685,6 +685,7 @@ Figure 5.6: Comparison of the original and simplified <code>seine</code> geometr
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">us_states_simp1 =<span class="st"> </span><span class="kw">st_simplify</span>(us_states2163, <span class="dt">dTolerance =</span> <span class="dv">100000</span>)  <span class="co"># 100 km</span></code></pre></div>
 <p>A limitation with <code>st_simplify()</code> is that it simplifies objects on a per-geometry basis. This means the ‘topology’ is lost, resulting in overlapping and ‘holy’ areal units illustrated in Figure <a href="transform.html#fig:us-simp">5.7</a> (middle panel). <code>ms_simplify()</code> from <strong>rmapshaper</strong> provides an alternative that overcomes this issue. By default it uses the Visvalingam algorithm, which overcomes some limitations of the Douglas-Peucker algorithm <span class="citation">(Visvalingam and Whyatt <a href="#ref-visvalingam_line_1993">1993</a>)</span>. <!-- https://bost.ocks.org/mike/simplify/ --> The following code chunk uses this function to simplify <code>us_states2163</code>. The result has only 1% of the vertices of the input (set using the argument <code>keep</code>) but its number of objects remains intact because we set <code>keep_shapes = TRUE</code><a href="#fn32" class="footnoteRef" id="fnref32"><sup>32</sup></a>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># proportion of points to retain (0-1; default 0.05)</span>
+us_states2163$AREA =<span class="st"> </span><span class="kw">as.numeric</span>(us_states2163$AREA)    
 us_states_simp2 =<span class="st"> </span>rmapshaper::<span class="kw">ms_simplify</span>(us_states2163, <span class="dt">keep =</span> <span class="fl">0.01</span>,
                                           <span class="dt">keep_shapes =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p>Finally, the visual comparison of the original dataset and the two simplified versions shows differences between the Douglas-Peucker (<code>st_simplify</code>) and Visvalingam (<code>ms_simplify</code>) algorithm outputs (Figure <a href="transform.html#fig:us-simp">5.7</a>):</p>

@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-04-03'
+date: '2018-04-05'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-04-03 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-04-05 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve7a86f5bda3b088ce
+preserve6cf9320ad0befa40
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -370,15 +370,15 @@ See the [r-spatial](https://github.com/r-spatial/) organisation and conversation
 ] and a growing number of actively developed packages which are designed to work in harmony with **sf** (Table \@ref(tab:revdep)). 
 
 
-Table: (\#tab:revdep)The top 5 most downloaded packages that depend on sf, in terms of average number of downloads per day over the previous month. As of 2018-03-30 there are 68 packages which import sf.
+Table: (\#tab:revdep)The top 5 most downloaded packages that depend on sf, in terms of average number of downloads per day over the previous month. As of 2018-04-03 there are 68 packages which import sf.
 
 package    Downloads
 --------  ----------
-plotly          2258
-raster          1690
-spData           960
-spdep            871
-leaflet          747
+plotly          2225
+raster          1669
+spData           959
+spdep            860
+leaflet          744
 
 ## The history of R-spatial
 
@@ -3108,7 +3108,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservefb4a616c28a688ec
+preservef121b2433ea1e076
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4235,6 +4235,7 @@ The result has only 1% of the vertices of the input (set using the argument `kee
 
 ```r
 # proportion of points to retain (0-1; default 0.05)
+us_states2163$AREA = as.numeric(us_states2163$AREA)    
 us_states_simp2 = rmapshaper::ms_simplify(us_states2163, keep = 0.01,
                                           keep_shapes = TRUE)
 ```
@@ -5996,7 +5997,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve2129e9f2ba9f231a
+preserve3162ce655fa209ed
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6612,7 +6613,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveedeb0ca11447c9f2
+preserve9b808e08b5f92fac
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6900,6 +6901,43 @@ tm_shape(nz) + tm_fill(col = "col")
 <p class="caption">(\#fig:tmcol)Comparison of base (left) and tmap (right) handling of a numeric color field.</p>
 </div>
 
+
+<!-- Show and describe three groups of colors to be used on the map:  -->
+<!-- - categorical (+ info about automatic tmap option on factor/character, but also style = cat) -->
+<!-- - sequential -->
+<!-- - diverging (show example of above/below median) -->
+<!-- Give pros and cons of these methods and provide some examples. -->
+<!-- Mention colorblindness and bw prining. -->
+<!-- Finally, give links/references to some resources (e.g. colorbrewer). -->
+
+<!---
+
+```r
+nz$REGC2017_NAME = as.character(nz$REGC2017_NAME)
+nz_a = nz[1:9, ]
+```
+
+
+```r
+tm_shape(nz_a) + tm_polygons(col = "AREA_SQ_KM")
+```
+
+<img src="figures/unnamed-chunk-12-1.png" width="576" style="display: block; margin: auto;" />
+
+
+```r
+tm_shape(nz_a) + tm_polygons(col = "REGC2017_NAME")
+```
+
+<img src="figures/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto;" />
+-->
+
+<!-- explain and describe classification intervals -->
+<!-- start from style = cont and expand on it -->
+<!-- describe several different methods and show their pros and cons -->
+
+<!--
+
 Additional aesthetic settings are demonstrated in the code chunk below, which colors regions in New Zealand depending on their area.
 The results show how custom breaks can be set with the `breaks` argument (Figure \@ref(fig:tmpal) center).
 Additional palette options include `n` (which sets the number of bins into which numeric variables are categorized) and `palette` (which defines the color scheme --- which can be selected interactively with `tmaptools::palette_explorer()`).
@@ -6914,10 +6952,16 @@ tm_shape(nz) + tm_fill(col = "AREA_SQ_KM", n = 10)
 tm_shape(nz) + tm_fill(col = "AREA_SQ_KM", palette = "RdBu")
 ```
 
+-->
+
+<!--
+
 <div class="figure" style="text-align: center">
 <img src="figures/tmpal-1.png" alt="Illustration of settings that affect variable aesthetics. The result shows a continuous variable (the area in square kilometers of regions in New Zealand) converted to color with (from left to right): default settings, manual breaks, n breaks, and an alternative palette." width="576" />
 <p class="caption">(\#fig:tmpal)Illustration of settings that affect variable aesthetics. The result shows a continuous variable (the area in square kilometers of regions in New Zealand) converted to color with (from left to right): default settings, manual breaks, n breaks, and an alternative palette.</p>
 </div>
+
+-->
 
 <!--
 - color palettes - cont, div, cat?
