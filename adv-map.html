@@ -274,7 +274,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="9.2.1" data-path="adv-map.html"><a href="adv-map.html#tmap-basics"><i class="fa fa-check"></i><b>9.2.1</b> tmap basics</a></li>
 <li class="chapter" data-level="9.2.2" data-path="adv-map.html"><a href="adv-map.html#map-objects-shapes-and-layers"><i class="fa fa-check"></i><b>9.2.2</b> Map objects, shapes and layers</a></li>
 <li class="chapter" data-level="9.2.3" data-path="adv-map.html"><a href="adv-map.html#aesthetics"><i class="fa fa-check"></i><b>9.2.3</b> Aesthetics</a></li>
-<li class="chapter" data-level="9.2.4" data-path="adv-map.html"><a href="adv-map.html#map-layouts"><i class="fa fa-check"></i><b>9.2.4</b> Map layouts</a></li>
+<li class="chapter" data-level="9.2.4" data-path="adv-map.html"><a href="adv-map.html#layouts-colors-and-styles"><i class="fa fa-check"></i><b>9.2.4</b> Layouts, colors and styles</a></li>
 <li class="chapter" data-level="9.2.5" data-path="adv-map.html"><a href="adv-map.html#faceted-maps"><i class="fa fa-check"></i><b>9.2.5</b> Faceted maps</a></li>
 <li class="chapter" data-level="9.2.6" data-path="adv-map.html"><a href="adv-map.html#inset-maps"><i class="fa fa-check"></i><b>9.2.6</b> Inset maps</a></li>
 </ul></li>
@@ -532,9 +532,10 @@ map_nza =<span class="st"> </span><span class="kw">tm_shape</span>(nz) +
 <span class="st">  </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;AREA_SQ_KM&quot;</span>, <span class="dt">title =</span> legend_title) +<span class="st"> </span><span class="kw">tm_borders</span>()</code></pre></div>
 <p>The resulting <code>tmap</code> object <code>map_nza</code> will be used, alongside <code>map_nz</code>, to illustrate different layout settings in the next section.</p>
 </div>
-<div id="map-layouts" class="section level3">
-<h3><span class="header-section-number">9.2.4</span> Map layouts</h3>
-<p>Layout refers not to the map itself but to its wider surroundings. <strong>tmap</strong> allows a wide variety of layout settings to be changed, some of which are illustrated in Figure <a href="adv-map.html#fig:layout1">9.5</a>, produced using the following code (see <code>args(tm_layout)</code> or <code>?tm_layout</code> for a full list):</p>
+<div id="layouts-colors-and-styles" class="section level3">
+<h3><span class="header-section-number">9.2.4</span> Layouts, colors and styles</h3>
+<p>Layout refers not to the map itself but to its wider surroundings. Color settings relate to the palette and break-points used affect how the map looks. Both may result in subtle changes that can nonetheless have a large impact on the impression left by your maps.</p>
+<p><strong>tmap</strong> allows a wide variety of layout settings to be changed, some of which are illustrated in Figure <a href="adv-map.html#fig:layout1">9.5</a>, produced using the following code (see <code>args(tm_layout)</code> or <code>?tm_layout</code> for a full list):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">map_nz +<span class="st"> </span><span class="kw">tm_layout</span>(<span class="dt">title =</span> <span class="st">&quot;New Zealand&quot;</span>)
 map_nz +<span class="st"> </span><span class="kw">tm_layout</span>(<span class="dt">scale =</span> <span class="dv">5</span>)
 map_nz +<span class="st"> </span><span class="kw">tm_layout</span>(<span class="dt">bg.color =</span> <span class="st">&quot;lightblue&quot;</span>)
@@ -545,22 +546,29 @@ map_nz +<span class="st"> </span><span class="kw">tm_layout</span>(<span class="
 Figure 9.5: Layout options specified by (from left to right) title, scale, bg.color and frame arguments.
 </p>
 </div>
-<p>The other arguments in <code>tm_layout()</code> provide control over many more aspects of the map in relation to the canvas on which it is placed. Some most useful layout settings are listed below and illustrated in Figure <a href="adv-map.html#fig:layout2">9.6</a> (see <code>?tm_layout</code> for full list):</p>
+<p>The other arguments in <code>tm_layout()</code> provide control over many more aspects of the map in relation to the canvas on which it is placed. Some useful layout settings are listed below (see Figure <a href="adv-map.html#fig:layout2">9.6</a> for illustrations of a selection of these):</p>
 <ul>
-<li>Default colors of aesthetic layers (<code>aes.color</code>), map attributes such as the frame (<code>attr.color</code>).</li>
-<li>Color settings controlling <code>sepia.intensity</code> (how yellowy the map looks) and <code>saturation</code> (a color-greyscale).</li>
 <li>Frame width (<code>frame.lwd</code>) and an option to allow double lines (<code>frame.double.line</code>).</li>
 <li>Margin settings including <code>outer.margin</code> and <code>inner.margin</code>.</li>
 <li>Font settings, controlled by <code>fontface</code> and <code>fontfamily</code>.</li>
 <li>Legend settings including binary options such as <code>legend.show</code> (whether or not to show the legend) <code>legend.only</code> (omit the map) and <code>legend.outside</code> (should the legend go outside the map?), as well as multiple choice settings such as <code>legend.position</code>.</li>
+<li>Default colors of aesthetic layers (<code>aes.color</code>), map attributes such as the frame (<code>attr.color</code>).</li>
+<li>Color settings controlling <code>sepia.intensity</code> (how yellowy the map looks) and <code>saturation</code> (a color-greyscale).</li>
 </ul>
 <div class="figure" style="text-align: center"><span id="fig:layout2"></span>
-<img src="figures/layout2-1.png" alt="Illustration of selected color-related layout options." width="576" />
+<img src="figures/layout2-1.png" alt="Illustration of selected layout options." width="576" />
 <p class="caption">
-Figure 9.6: Illustration of selected color-related layout options.
+Figure 9.6: Illustration of selected layout options.
 </p>
 </div>
-<p>Beyond this low-level control over layouts, <strong>tmap</strong> also offers high-level styles using <code>tm_style_</code> functions. Some styles such as <code>tm_style_cobalt()</code> result in stylized maps while others such as <code>tm_style_grey()</code> make more subtle changes, as illustrated in Figure <a href="adv-map.html#fig:tmstyles">9.7</a>, created using code below (see <code>09-tmstyles.R</code>):</p>
+<p>The impact of changing the color settings listed above is illustrated in Figure <a href="adv-map.html#fig:layout3">9.7</a> (see <code>?tm_layout</code> for full list):</p>
+<div class="figure" style="text-align: center"><span id="fig:layout3"></span>
+<img src="figures/layout3-1.png" alt="Illustration of selected color-related layout options." width="576" />
+<p class="caption">
+Figure 9.7: Illustration of selected color-related layout options.
+</p>
+</div>
+<p>Beyond this low-level control over layouts, <strong>tmap</strong> also offers high-level styles using <code>tm_style_</code> functions. Some styles such as <code>tm_style_cobalt()</code> result in stylized maps while others such as <code>tm_style_grey()</code> make more subtle changes, as illustrated in Figure <a href="adv-map.html#fig:tmstyles">9.8</a>, created using code below (see <code>09-tmstyles.R</code>):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">map_nza +<span class="st"> </span><span class="kw">tm_style_bw</span>()
 map_nza +<span class="st"> </span><span class="kw">tm_style_classic</span>()
 map_nza +<span class="st"> </span><span class="kw">tm_style_cobalt</span>()
@@ -568,7 +576,7 @@ map_nza +<span class="st"> </span><span class="kw">tm_style_col_blind</span>()</
 <div class="figure" style="text-align: center"><span id="fig:tmstyles"></span>
 <img src="figures/tmstyles-1.png" alt="Selected tmap styles: bw, classic, cobalt and color blind (from left to right)." width="576" />
 <p class="caption">
-Figure 9.7: Selected tmap styles: bw, classic, cobalt and color blind (from left to right).
+Figure 9.8: Selected tmap styles: bw, classic, cobalt and color blind (from left to right).
 </p>
 </div>
 
@@ -586,7 +594,7 @@ A preview of predefined styles can be generated by executing <code>tmap_style_ca
 <div id="faceted-maps" class="section level3">
 <h3><span class="header-section-number">9.2.5</span> Faceted maps</h3>
 <p>Faceted maps, also referred to as ‘small multiples’, are composed of many maps arranged side-by-side, and sometimes stacked vertically. Facets enable the visualization of how spatial relationships change with respect to another variable, such as time. The changing populations of settlements, for example, can be represented in a faceted map with each panel representing the population at a particular moment in time. The time dimension could be represented via another <em>aesthetic</em> such as color. However, this risks cluttering the map because it will involve multiple overlapping points (cities do not tend to move over time!).</p>
-<p>Typically all individual facets in a faceted map contain the same geometry data repeated multiple times, once for each column in the attribute data (this is the default plotting method for <code>sf</code> objects, as we saw in Chapter 2). However, facets can also represent shifting geometries such as as the evolution of a point pattern over time. This use case of faceted plot is illustrated in Figure <a href="adv-map.html#fig:urban-facet">9.8</a>.</p>
+<p>Typically all individual facets in a faceted map contain the same geometry data repeated multiple times, once for each column in the attribute data (this is the default plotting method for <code>sf</code> objects, as we saw in Chapter 2). However, facets can also represent shifting geometries such as as the evolution of a point pattern over time. This use case of faceted plot is illustrated in Figure <a href="adv-map.html#fig:urban-facet">9.9</a>.</p>
 <!-- todo: describe data type (long) and nrow vs ncol -->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">urb_1970_2030 =<span class="st"> </span>urban_agglomerations %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">filter</span>(year %in%<span class="st"> </span><span class="kw">c</span>(<span class="dv">1970</span>, <span class="dv">1990</span>, <span class="dv">2010</span>, <span class="dv">2030</span>))
@@ -597,7 +605,7 @@ A preview of predefined styles can be generated by executing <code>tmap_style_ca
 <div class="figure" style="text-align: center"><span id="fig:urban-facet"></span>
 <img src="figures/urban-facet-1.png" alt="Faceted map showing the top 30 largest 'urban agglomerations' from 1970 to 2030 based on population projects by the United Nations." width="576" />
 <p class="caption">
-Figure 9.8: Faceted map showing the top 30 largest ‘urban agglomerations’ from 1970 to 2030 based on population projects by the United Nations.
+Figure 9.9: Faceted map showing the top 30 largest ‘urban agglomerations’ from 1970 to 2030 based on population projects by the United Nations.
 </p>
 </div>
 <p>The preceding code chunk demonstrates key features of faceted maps created with <strong>tmap</strong>:</p>
@@ -611,7 +619,7 @@ Figure 9.8: Faceted map showing the top 30 largest ‘urban agglomerations’ fr
 </div>
 <div id="inset-maps" class="section level3">
 <h3><span class="header-section-number">9.2.6</span> Inset maps</h3>
-<p>The role of spatial visualizations is to provide an information in the most accessible form. This is often done with the use of inset maps. They could be used to focus on a smaller area in more detail (Figure <a href="adv-map.html#fig:insetmap1">9.9</a>) or to bring some non-contiguous regions closer to ease their comparison (Figure <a href="adv-map.html#fig:insetmap2">9.10</a>). <!-- find the best distribution of insets --> In this section we focus on a creation of inset maps, so to learn about map styling go to section <a href="adv-map.html#aesthetics">9.2.3</a>.</p>
+<p>The role of spatial visualizations is to provide an information in the most accessible form. This is often done with the use of inset maps. They could be used to focus on a smaller area in more detail (Figure <a href="adv-map.html#fig:insetmap1">9.10</a>) or to bring some non-contiguous regions closer to ease their comparison (Figure <a href="adv-map.html#fig:insetmap2">9.11</a>). <!-- find the best distribution of insets --> In this section we focus on a creation of inset maps, so to learn about map styling go to section <a href="adv-map.html#aesthetics">9.2.3</a>.</p>
 <p>Inset map usually covers an area with densely located phenomena that cannot be clearly visible at the original map scale. In the example below, we would create an inset map of the central part of the New Zealand’s Southern Alps. The first step is to define the area of interest, which can be done by creating a new spatial object, <code>nz_region</code>. <!--# mapview::mapview(nz_height, native.crs = TRUE) or mapedit??--></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_region =<span class="st"> </span><span class="kw">st_bbox</span>(<span class="kw">c</span>(<span class="dt">xmin =</span> <span class="dv">1340000</span>, <span class="dt">xmax =</span> <span class="dv">1450000</span>, <span class="dt">ymin =</span> <span class="dv">5130000</span>, <span class="dt">ymax =</span> <span class="dv">5210000</span>),
                     <span class="dt">crs =</span> <span class="kw">st_crs</span>(nz_height)) %&gt;%<span class="st"> </span>
@@ -637,7 +645,7 @@ nz_map
 <div class="figure" style="text-align: center"><span id="fig:insetmap1"></span>
 <img src="figures/insetmap1-1.png" alt="Inset map showing the central part of the Southern Alps in New Zealand." width="576" />
 <p class="caption">
-Figure 9.9: Inset map showing the central part of the Southern Alps in New Zealand.
+Figure 9.10: Inset map showing the central part of the Southern Alps in New Zealand.
 </p>
 </div>
 <p>Inset map can be save to file either by using a graphic device (see section <a href="read-write.html#visual-outputs">6.6</a>) or the <code>save_tmap()</code> function and its arguments - <code>insets_tm</code> and <code>insets_vp</code>.</p>
@@ -660,7 +668,7 @@ alaska_map =<span class="st"> </span><span class="kw">tm_shape</span>(alaska) +
 <div class="figure" style="text-align: center"><span id="fig:insetmap2"></span>
 <img src="figures/insetmap2-1.png" alt="Map of the United States." width="576" />
 <p class="caption">
-Figure 9.10: Map of the United States.
+Figure 9.11: Map of the United States.
 </p>
 </div>
 <p>The code presented above is very compact and allows for creation of many similar maps, however the map do not represent sizes and locations of Hawaii and Alaska well. You can see an alternative approach in the <a href="https://github.com/Robinlovelace/geocompr/blob/master/vignettes/us-map.Rmd"><code>vignettes/us-map.Rmd</code></a> file in the book’s GitHub repo, which tries to mitigate this issues.</p>
@@ -676,11 +684,11 @@ Figure 9.10: Map of the United States.
 <h2><span class="header-section-number">9.4</span> Animated maps</h2>
 <p>Faceted maps, described in <a href="adv-map.html#faceted-maps">9.2.5</a>, provide a way of showing how spatial relationships vary but the approach has disadvantages. Facets become tiny when many of them are squeezed into a single plot, potentially hiding <em>any</em> spatial relationships. Furthermore the fact that each facet is separated by space on the screen or page means that subtle differences between facets can be hard to detect.</p>
 <p>With an increasing proportion of communication happening via digital screens, animated maps are becoming more popular. Animated maps can even be useful for paper reports: you can always link readers to a web-page containing an animated (or interactive) version of a printed map to help make it come alive.</p>
-<p>Figure <a href="adv-map.html#fig:urban-animated">9.11</a> is a simple example of the benefits of an animated map. Unlike the faceted plot it does not squeeze all 17 for them all to be displayed simultaneously (see the book’s website for the animated version).</p>
+<p>Figure <a href="adv-map.html#fig:urban-animated">9.12</a> is a simple example of the benefits of an animated map. Unlike the faceted plot it does not squeeze all 17 for them all to be displayed simultaneously (see the book’s website for the animated version).</p>
 <div class="figure" style="text-align: center"><span id="fig:urban-animated"></span>
 <img src="figures/urban-animated.gif" alt="Animated map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations."  />
 <p class="caption">
-Figure 9.11: Animated map showing the top 30 largest ‘urban agglomerations’ from 1950 to 2030 based on population projects by the United Nations.
+Figure 9.12: Animated map showing the top 30 largest ‘urban agglomerations’ from 1950 to 2030 based on population projects by the United Nations.
 </p>
 </div>
 <p>Creation of this animated map is almost identical to the creation of faceted map presented in section <a href="adv-map.html#faceted-maps">9.2.5</a>. We just need to add three new arguments to the <code>tm_facets()</code>. The first one, <code>free.coords = FALSE</code> maintains the same extend in all of the partial maps, while <code>nrow = 1</code> and <code>ncol = 1</code> forces to create only one facet per <code>&quot;year&quot;</code>.</p>
@@ -808,7 +816,7 @@ facet_anim =<span class="st"> </span><span class="kw">tm_shape</span>(statepop_s
 In <strong>shiny</strong> apps these are often split into <code>ui.R</code> (short for user interface) and <code>server.R</code> files, naming conventions used by <a href="https://github.com/rstudio/shiny-server"><code>shiny-server</code></a>, a server-side Linux application for serving shiny apps on public-facing websites <code>shiny-server</code> also serves apps defined by a single <code>app.R</code> file in an ‘app folder’.
 </div>
 <p></p>
-<p>Before considering large apps it is worth seeing a minimal example, named ‘lifeApp’, in action.<a href="#fn56" class="footnoteRef" id="fnref56"><sup>56</sup></a> The code below defines and launches — with the command <code>shinyApp()</code> — a lifeApp, which provides an interactive slider allowing users to make countries appear with progressively lower levels of life expectancy (see Figure <a href="adv-map.html#fig:lifeApp">9.12</a>):</p>
+<p>Before considering large apps it is worth seeing a minimal example, named ‘lifeApp’, in action.<a href="#fn56" class="footnoteRef" id="fnref56"><sup>56</sup></a> The code below defines and launches — with the command <code>shinyApp()</code> — a lifeApp, which provides an interactive slider allowing users to make countries appear with progressively lower levels of life expectancy (see Figure <a href="adv-map.html#fig:lifeApp">9.13</a>):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ui =<span class="st"> </span><span class="kw">fluidPage</span>(
   <span class="kw">sliderInput</span>(<span class="dt">inputId =</span> <span class="st">&quot;life&quot;</span>, <span class="st">&quot;Life expectancy&quot;</span>, <span class="dv">0</span>, <span class="dv">80</span>, <span class="dt">value =</span> <span class="dv">80</span>),
       <span class="kw">leafletOutput</span>(<span class="dt">outputId =</span> <span class="st">&quot;map&quot;</span>)
@@ -823,10 +831,10 @@ server =<span class="st"> </span>function(input, output) {
 <iframe src="https://bookdown.org/robinlovelace/lifeapp/?showcase=0" width="576" height="400px">
 </iframe>
 <p class="caption">
-Figure 9.12: Minimal example of a web mapping application created with <strong>shiny</strong>.
+Figure 9.13: Minimal example of a web mapping application created with <strong>shiny</strong>.
 </p>
 </div>
-<p>The <strong>user interface</strong> (<code>ui</code>) of lifeApp is created by <code>fluidPage()</code>. This contains input ‘widgets’ — a <code>sliderInput()</code> in this case (many other <code>*Input()</code> functions are available) — and outputs, a <code>leafletOutput()</code> in this case. Elements added to a <code>fluidPage()</code> are arranged row-wise by default, explaining why the slider interface is placed directly above the map in Figure <a href="adv-map.html#fig:lifeApp">9.12</a> (<code>?column</code> explains how to add content column-wise). The <strong>server side</strong> (<code>server</code>) is a function with <code>input</code> and <code>output</code> arguments. <code>output</code> is a list of objects containing elements generated by <code>render*()</code> function — <code>renderLeaflet()</code> which generates <code>output$map</code> in this case. Inputs elements such as <code>input$life</code> referred to in the server must relate to elements that exist in the <code>ui</code> — defined by <code>inputId = &quot;life&quot;</code> in the code above. The function <code>shinyApp()</code> combines both the <code>ui</code> and <code>server</code> elements and serves the results interactively via a new R process. When you move the slider in in Figure <a href="adv-map.html#fig:lifeApp">9.12</a>, you are actually causing R code to re-run, although this is hidden from view in the user interface.</p>
+<p>The <strong>user interface</strong> (<code>ui</code>) of lifeApp is created by <code>fluidPage()</code>. This contains input ‘widgets’ — a <code>sliderInput()</code> in this case (many other <code>*Input()</code> functions are available) — and outputs, a <code>leafletOutput()</code> in this case. Elements added to a <code>fluidPage()</code> are arranged row-wise by default, explaining why the slider interface is placed directly above the map in Figure <a href="adv-map.html#fig:lifeApp">9.13</a> (<code>?column</code> explains how to add content column-wise). The <strong>server side</strong> (<code>server</code>) is a function with <code>input</code> and <code>output</code> arguments. <code>output</code> is a list of objects containing elements generated by <code>render*()</code> function — <code>renderLeaflet()</code> which generates <code>output$map</code> in this case. Inputs elements such as <code>input$life</code> referred to in the server must relate to elements that exist in the <code>ui</code> — defined by <code>inputId = &quot;life&quot;</code> in the code above. The function <code>shinyApp()</code> combines both the <code>ui</code> and <code>server</code> elements and serves the results interactively via a new R process. When you move the slider in in Figure <a href="adv-map.html#fig:lifeApp">9.13</a>, you are actually causing R code to re-run, although this is hidden from view in the user interface.</p>
 <p>Building on this basic example and knowing where to find help (see <code>?shiny</code>), the best way forward may be to stop reading and start programming! The recommended next step is to open the previously mentioned <a href="https://github.com/Robinlovelace/geocompr/blob/master/coffeeApp/app.R"><code>coffeeApp/app.R</code></a> script in an IDE of choice, modify it and re-run it repeatedly. The example contains some of the components of a web mapping application implemented in <strong>shiny</strong> and should ‘shine’ a light on how they behave (pun intended). The <code>coffeeApp/app.R</code> script contains <strong>shiny</strong> functions that go beyond those demonstrated in the simple ‘lifeApp’ example. These include <code>reactive()</code> and <code>observe()</code> (for creating outputs that respond to the user interface — see <code>?reactive</code>) and <code>leafletProxy()</code> (for modifying a <code>leaflet</code> object that has already been created). Such elements are critical to the creation of web mapping applications implemented in <strong>shiny</strong>.</p>
 <div class="rmdnote">
 <p>
@@ -841,7 +849,7 @@ There are a number of ways to run a <strong>shiny</strong> app. For RStudio user
 <iframe src="https://bookdown.org/robinlovelace/coffeeapp/?showcase=0" width="576" height="400px">
 </iframe>
 <p class="caption">
-Figure 9.13: coffeeApp, a simple web mapping application for exploring global coffee production in 2016 and 2017.
+Figure 9.14: coffeeApp, a simple web mapping application for exploring global coffee production in 2016 and 2017.
 </p>
 </div>
 </div>

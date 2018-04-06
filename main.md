@@ -270,7 +270,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveb8ded717396bf0ce
+preserve0b3cf1d9e33d3c18
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3108,7 +3108,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve809200e6a8d3c346
+preserve61261ed87a8dcb4d
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5997,7 +5997,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve6773e9d79262a4a9
+preservefeecf7d553790358
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6613,7 +6613,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservedb25ec00326b0b61
+preserve1d9bc2771e54d449
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6983,9 +6983,12 @@ map_nza = tm_shape(nz) +
 
 The resulting `tmap` object `map_nza` will be used, alongside `map_nz`, to illustrate different layout settings in the next section.
 
-### Map layouts
+### Layouts, colors and styles
 
 Layout refers not to the map itself but to its wider surroundings.
+Color settings relate to the palette and break-points used affect how the map looks.
+Both may result in subtle changes that can nonetheless have a large impact on the impression left by your maps.
+
 **tmap** allows a wide variety of layout settings to be changed, some of which are illustrated in Figure \@ref(fig:layout1), produced using the following code (see `args(tm_layout)` or `?tm_layout` for a full list):
 
 
@@ -7002,18 +7005,25 @@ map_nz + tm_layout(frame = FALSE)
 </div>
 
 The other arguments in `tm_layout()` provide control over many more aspects of the map in relation to the canvas on which it is placed.
-Some most useful layout settings are listed below and illustrated in Figure \@ref(fig:layout2) (see `?tm_layout` for full list):
+Some useful layout settings are listed below (see Figure \@ref(fig:layout2) for illustrations of a selection of these):
 
-- Default colors of aesthetic layers (`aes.color`), map attributes such as the frame (`attr.color`).
-- Color settings controlling `sepia.intensity` (how yellowy the map looks) and `saturation` (a color-greyscale).
 - Frame width (`frame.lwd`) and an option to allow double lines (`frame.double.line`).
 - Margin settings including `outer.margin` and `inner.margin`.
 - Font settings, controlled by `fontface` and `fontfamily`.
 - Legend settings including binary options such as `legend.show` (whether or not to show the legend) `legend.only` (omit the map) and `legend.outside` (should the legend go outside the map?), as well as multiple choice settings such as `legend.position`.
+- Default colors of aesthetic layers (`aes.color`), map attributes such as the frame (`attr.color`).
+- Color settings controlling `sepia.intensity` (how yellowy the map looks) and `saturation` (a color-greyscale).
 
 <div class="figure" style="text-align: center">
-<img src="figures/layout2-1.png" alt="Illustration of selected color-related layout options." width="576" />
-<p class="caption">(\#fig:layout2)Illustration of selected color-related layout options.</p>
+<img src="figures/layout2-1.png" alt="Illustration of selected layout options." width="576" />
+<p class="caption">(\#fig:layout2)Illustration of selected layout options.</p>
+</div>
+
+The impact of changing the color settings listed above is illustrated in Figure \@ref(fig:layout3) (see `?tm_layout` for full list):
+
+<div class="figure" style="text-align: center">
+<img src="figures/layout3-1.png" alt="Illustration of selected color-related layout options." width="576" />
+<p class="caption">(\#fig:layout3)Illustration of selected color-related layout options.</p>
 </div>
 
 Beyond this low-level control over layouts, **tmap** also offers high-level styles using `tm_style_` functions.
