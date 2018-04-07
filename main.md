@@ -272,7 +272,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve435ce543a10cbf58
+preservef02b04891ac56b1e
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -1325,7 +1325,7 @@ new_raster
 #> resolution  : 0.000833, 0.000833  (x, y)
 #> extent      : -113, -113, 37.1, 37.5  (xmin, xmax, ymin, ymax)
 #> coord. ref. : +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 
-#> data source : /usr/local/lib/R/site-library/spDataLarge/raster/srtm.tif 
+#> data source : /home/travis/R/Library/spDataLarge/raster/srtm.tif 
 #> names       : srtm 
 #> values      : 1024, 2892  (min, max)
 ```
@@ -1489,7 +1489,7 @@ r_brick
 #> resolution  : 30, 30  (x, y)
 #> extent      : 301905, 335745, 4111245, 4154085  (xmin, xmax, ymin, ymax)
 #> coord. ref. : +proj=utm +zone=12 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0 
-#> data source : /usr/local/lib/R/site-library/spDataLarge/raster/landsat.tif 
+#> data source : /home/travis/R/Library/spDataLarge/raster/landsat.tif 
 #> names       : landsat.1, landsat.2, landsat.3, landsat.4 
 #> min values  :      7550,      6404,      5678,      5252 
 #> max values  :     19071,     22051,     25780,     31961
@@ -3107,7 +3107,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservece6295dc840909ba
+preservebda3d207a7d9e3a3
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -4987,7 +4987,7 @@ To load such a file from the package, you need to specify the package name and t
 ```r
 world_raw_filepath = system.file("shapes/world.gpkg", package = "spData")
 world_raw = st_read(world_raw_filepath)
-#> Reading layer `wrld.gpkg' from data source `/usr/local/lib/R/site-library/spData/shapes/world.gpkg' using driver `GPKG'
+#> Reading layer `wrld.gpkg' from data source `/home/travis/R/Library/spData/shapes/world.gpkg' using driver `GPKG'
 #> Simple feature collection with 177 features and 10 fields
 #> geometry type:  MULTIPOLYGON
 #> dimension:      XY
@@ -5086,7 +5086,7 @@ In most cases, as with the ESRI Shapefile (`.shp`) or the `GeoPackage` format (`
 ```r
 vector_filepath = system.file("shapes/world.gpkg", package = "spData")
 world = st_read(vector_filepath)
-#> Reading layer `wrld.gpkg' from data source `/usr/local/lib/R/site-library/spData/shapes/world.gpkg' using driver `GPKG'
+#> Reading layer `wrld.gpkg' from data source `/home/travis/R/Library/spData/shapes/world.gpkg' using driver `GPKG'
 #> Simple feature collection with 177 features and 10 fields
 #> geometry type:  MULTIPOLYGON
 #> dimension:      XY
@@ -5996,7 +5996,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve9d74f575034a33bf
+preservef6c7b198def449b5
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6612,7 +6612,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve28f916fa3f4f12f7
+preserve9e53c54a817da4f7
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7219,7 +7219,7 @@ Moreover, the same skills can be applied to combine maps and plots.
 
 **tmap** provides a powerful interface for creating a wide range of static maps (section \@ref(interactive-maps) shows how **tmap** also supports interactive maps).
 But there are many other options for creating static maps.
-The aim of this section is to provide a taster of some of these and provide pointers for additional resources on alternatives static mapping packages.
+The aim of this section is to provide a taster of some of these and pointers for additional resources: map making is a surprisingly active area of R package development so there is more to learn than can be covered here.
 
 The most mature option is to use `plot()` methods provided by core spatial packages **sf** and **raster**, covered in sections \@ref(basic-map) and \@ref(basic-map-raster) respectively.
 What we didn't mention in those sections was that plot methods for raster and vector objects can be combined, as illustrated in the subsequent code chunk which generates Figure \@ref(fig:nz-plot).

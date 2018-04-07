@@ -441,7 +441,7 @@ parks =<span class="st"> </span><span class="kw">opq</span>(<span class="dt">bbo
 <p>Finally, R packages might contain or just consist of spatial data, such as <strong>spData</strong> which provides example datasets used in this book. You can access such data with the <code>data()</code> function. For example, you can get a list of dataset in a package, <code>data(package = &quot;spData&quot;)</code>. To attach the dataset to the global environment specify the name of a dataset (<code>data(&quot;cycle_hire&quot;, package = &quot;spData&quot;)</code>). Sometimes, packages come also with the original files.<a href="#fn36" class="footnoteRef" id="fnref36"><sup>36</sup></a> To load such a file from the package, you need to specify the package name and the relative path to the dataset, for example:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">world_raw_filepath =<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;shapes/world.gpkg&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;spData&quot;</span>)
 world_raw =<span class="st"> </span><span class="kw">st_read</span>(world_raw_filepath)
-<span class="co">#&gt; Reading layer `wrld.gpkg&#39; from data source `/usr/local/lib/R/site-library/spData/shapes/world.gpkg&#39; using driver `GPKG&#39;</span>
+<span class="co">#&gt; Reading layer `wrld.gpkg&#39; from data source `/home/travis/R/Library/spData/shapes/world.gpkg&#39; using driver `GPKG&#39;</span>
 <span class="co">#&gt; Simple feature collection with 177 features and 10 fields</span>
 <span class="co">#&gt; geometry type:  MULTIPOLYGON</span>
 <span class="co">#&gt; dimension:      XY</span>
@@ -621,7 +621,7 @@ world_raw =<span class="st"> </span><span class="kw">st_read</span>(world_raw_fi
 <p>The first argument of <code>st_read()</code> is <code>dsn</code>, which should be a text string or an object containing a single text string. The content of a text string could vary between different drivers. In most cases, as with the ESRI Shapefile (<code>.shp</code>) or the <code>GeoPackage</code> format (<code>.gpkg</code>), the <code>dsn</code> would be a file name. <code>st_read()</code> guesses the driver based on the file extension, as illustrated for a <code>.gpkg</code> file below:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vector_filepath =<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;shapes/world.gpkg&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;spData&quot;</span>)
 world =<span class="st"> </span><span class="kw">st_read</span>(vector_filepath)
-<span class="co">#&gt; Reading layer `wrld.gpkg&#39; from data source `/usr/local/lib/R/site-library/spData/shapes/world.gpkg&#39; using driver `GPKG&#39;</span>
+<span class="co">#&gt; Reading layer `wrld.gpkg&#39; from data source `/home/travis/R/Library/spData/shapes/world.gpkg&#39; using driver `GPKG&#39;</span>
 <span class="co">#&gt; Simple feature collection with 177 features and 10 fields</span>
 <span class="co">#&gt; geometry type:  MULTIPOLYGON</span>
 <span class="co">#&gt; dimension:      XY</span>
