@@ -688,11 +688,11 @@ world %&gt;%<span class="st"> </span>
 <div id="manipulating-raster-objects" class="section level2">
 <h2><span class="header-section-number">3.3</span> Manipulating raster objects</h2>
 <p>In contrast to the vector data model underlying simple features (which represents points, lines and polygons as discrete entities in space), raster data represent continuous surfaces. This section shows how raster objects work, by creating them <em>from scratch</em>, building on section <a href="spatial-class.html#an-introduction-to-raster">2.2.1</a>. Because of their unique structure, subsetting and other operations on raster datasets work in a different way, as demonstrated in section <a href="attr.html#raster-subsetting">3.3.1</a>.</p>
-<p>The following code recreates the raster dataset used in section <a href="spatial-class.html#raster-classes">2.2.3</a>, the result of which is illustrated in Figure <a href="#fig:cont-cate-rasters"><strong>??</strong></a>. This demonstrates how the <code>raster()</code> function works to create an example raster named <code>elev</code> (representing elevations).</p>
+<p>The following code recreates the raster dataset used in section <a href="spatial-class.html#raster-classes">2.2.3</a>, the result of which is illustrated in Figure <a href="attr.html#fig:cont-cate-rasters">3.2</a>. This demonstrates how the <code>raster()</code> function works to create an example raster named <code>elev</code> (representing elevations).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elev =<span class="st"> </span><span class="kw">raster</span>(<span class="dt">nrow =</span> <span class="dv">6</span>, <span class="dt">ncol =</span> <span class="dv">6</span>, <span class="dt">res =</span> <span class="fl">0.5</span>,
               <span class="dt">xmn =</span> -<span class="fl">1.5</span>, <span class="dt">xmx =</span> <span class="fl">1.5</span>, <span class="dt">ymn =</span> -<span class="fl">1.5</span>, <span class="dt">ymx =</span> <span class="fl">1.5</span>,
               <span class="dt">vals =</span> <span class="dv">1</span>:<span class="dv">36</span>)</code></pre></div>
-<p>The result is a raster object with 6 rows and 6 columns (specified by the <code>nrow</code> and <code>ncol</code> arguments), and a minimum and maximum spatial extent in x and y direction (<code>xmn</code>, <code>xmx</code>, <code>ymn</code>, <code>ymax</code>). The <code>vals</code> argument sets the values that each cell contains: numeric data ranging from 1 to 36 in this case. Raster objects can also contain categorical values of class <code>logical</code> or <code>factor</code> variables in R. The following code creates a raster representing grain sizes (Figure <a href="#fig:cont-cate-rasters"><strong>??</strong></a>):</p>
+<p>The result is a raster object with 6 rows and 6 columns (specified by the <code>nrow</code> and <code>ncol</code> arguments), and a minimum and maximum spatial extent in x and y direction (<code>xmn</code>, <code>xmx</code>, <code>ymn</code>, <code>ymax</code>). The <code>vals</code> argument sets the values that each cell contains: numeric data ranging from 1 to 36 in this case. Raster objects can also contain categorical values of class <code>logical</code> or <code>factor</code> variables in R. The following code creates a raster representing grain sizes (Figure <a href="attr.html#fig:cont-cate-rasters">3.2</a>):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grain_order =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;clay&quot;</span>, <span class="st">&quot;silt&quot;</span>, <span class="st">&quot;sand&quot;</span>)
 grain_char =<span class="st"> </span><span class="kw">sample</span>(grain_order, <span class="dv">36</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 grain_fact =<span class="st"> </span><span class="kw">factor</span>(grain_char, <span class="dt">levels =</span> grain_order)
@@ -718,6 +718,12 @@ grain =<span class="st"> </span><span class="kw">raster</span>(<span class="dt">
 <span class="co">#&gt; 1  sand     dry</span>
 <span class="co">#&gt; 2  silt   moist</span>
 <span class="co">#&gt; 3  clay     wet</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:cont-cate-rasters"></span>
+<img src="figures/cont-cate-rasters-1.png" alt="Raster datasets with numeric (left) and categorical values (right)." width="672" />
+<p class="caption">
+Figure 3.2: Raster datasets with numeric (left) and categorical values (right).
+</p>
+</div>
 <div id="raster-subsetting" class="section level3">
 <h3><span class="header-section-number">3.3.1</span> Raster subsetting</h3>
 <p>Raster subsetting is done with the base R operator <code>[</code>, which accepts a variety of inputs:</p>

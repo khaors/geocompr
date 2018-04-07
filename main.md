@@ -272,7 +272,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservef02b04891ac56b1e
+preserve3030fcb8e80df516
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -372,15 +372,15 @@ See the [r-spatial](https://github.com/r-spatial/) organisation and conversation
 ] and a growing number of actively developed packages which are designed to work in harmony with **sf** (Table \@ref(tab:revdep)). 
 
 
-Table: (\#tab:revdep)The top 5 most downloaded packages that depend on sf, in terms of average number of downloads per day over the previous month. As of 2018-04-03 there are 68 packages which import sf.
+Table: (\#tab:revdep)The top 5 most downloaded packages that depend on sf, in terms of average number of downloads per day over the previous month. As of 2018-04-05 there are 68 packages which import sf.
 
 package    Downloads
 --------  ----------
 plotly          2225
-raster          1669
-spData           959
-spdep            860
-leaflet          744
+raster          1667
+spData           966
+spdep            908
+leaflet          753
 
 ## The history of R-spatial
 
@@ -2511,7 +2511,10 @@ factorValues(grain, grain[c(1, 11, 35)])
 #> 3  clay     wet
 ```
 
-
+<div class="figure" style="text-align: center">
+<img src="figures/cont-cate-rasters-1.png" alt="Raster datasets with numeric (left) and categorical values (right)." width="672" />
+<p class="caption">(\#fig:cont-cate-rasters)Raster datasets with numeric (left) and categorical values (right).</p>
+</div>
 
 ### Raster subsetting
 
@@ -3107,7 +3110,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservebda3d207a7d9e3a3
+preserve0922fb13dd228954
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5996,7 +5999,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservef6c7b198def449b5
+preservea7932d37a7a3e8a2
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6612,7 +6615,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve9e53c54a817da4f7
+preserve82f2df4556b1f039
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6900,13 +6903,42 @@ tm_shape(nz) + tm_fill(col = "col")
 <p class="caption">(\#fig:tmcol)Comparison of base (left) and tmap (right) handling of a numeric color field.</p>
 </div>
 
+A variable, which name is provided in the `col` argument, is represented by a color palette.
+<!-- As a default... DESCRIBE THE DEFAULTS! -->
+The default color scheme can be changed using the `palette` argument.
+It expects a vector of colors or a new color palette name, which can be selected interactively with `tmaptools::palette_explorer()`.
+Decision about selected color palette should depend largely on the input data type and a map purpose.
+While this could be an uneasy decision to be made, we can give some advice.
+There are three main groups of color palettes - categorical, sequential and diverging, and each of them serve different purpose.
+Categorical palettes are used for categorical data without any particular order, for example names of states or land cover categories.
+Their colors need to be easy to distinguish and they should, if possible, reflect the most common color association.
+Therefore, for most cases you should not experiment with red rivers and green deserts.
+You also need to know the limitation of human perception - while it is usually easy to distinguish several colors from each other, this task become more and more difficult with a growing number of categories.
+<!-- expand and test how tmap behaves with a large number of classes -->
+<!-- sequential -->
+Sequential palettes are used for the maps of quantitative data to show the order of values.
+It is usually presented by changes in color brightness either for a single (e.g. the `Blues` palette going from light blue to dark blue) or multi-hue combination (e.g. the `YlGn` palette going from light yellow to dark green).
+Usually, lower values are represented by light colors and darker colors indicate larger values.
+<!-- diverging -->
+Diverging palettes are used to represent the departure of values from a reference point.
+For example, this mid-point could be a temperature of zero degree Celsius, median of a household income, probability of 50% for some event or a sex ratio of 1.
+These type of palettes are usually created by joining two single color sequential palettes with the darker colors at each end.
+<!-- one more color example -->
+<!-- mention bivariate color maps -->
+<!-- is it possible to made them with tmap?? -->
+<!-- additional tips: -->
+<!-- Importantly, try to avoid using the rainbow color palette. -->
+<!-- ONE MORE SENTENCE ABOUT IT + REFERENCES -->
+<!-- Instead try to use colorblind friendly palettes as often as possible. -->
+
+<!-- FIGURE WITH COLORS - JUST PALETTES!! -->
 
 <!-- Show and describe three groups of colors to be used on the map:  -->
 <!-- - categorical (+ info about automatic tmap option on factor/character, but also style = cat) -->
 <!-- - sequential -->
 <!-- - diverging (show example of above/below median) -->
 <!-- Give pros and cons of these methods and provide some examples. -->
-<!-- Mention colorblindness and bw prining. -->
+<!-- Mention colorblindness and bw printing. -->
 <!-- Finally, give links/references to some resources (e.g. colorbrewer). -->
 
 <!---
@@ -7264,6 +7296,18 @@ ggplot(nz) + geom_sf(aes(fill = col)) +
 
 An advantage of **ggplot2** is that it has a strong user-community and many add-on packages.
 Good additional resources can be found in the [ggplot2-book](https://github.com/hadley/ggplot2-book) open source book on the subject, plus descriptions of the multitude of '**gg**packages' such as **ggrepel** and **tidygraph**.
+
+We have covered mapping with **sf**, **raster** and **ggplot2** packages first because these packages are highly flexible, allowing for the creation of a wide range of static maps.
+Many other static mapping packages are more specific.
+
+Before we cover mapping packages for plotting a specific type of map (in the next paragraph), it is worth considering alternatives to the packages already covered for general-purpose static mapping.
+Table \@ref(tab:map-pkgs) illustrates some commonly used mapping packages, identified using the website [r-pkg.org](https://www.r-pkg.org/search.html?q=map) and visualised with the in-development GitHub package **packagemetrics**.
+
+
+```r
+libra
+```
+
 
 ## Animated maps
 
