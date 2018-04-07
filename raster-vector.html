@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-04-06">
+<meta name="date" content="2018-04-07">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -485,7 +485,7 @@ raster_template2 =<span class="st"> </span><span class="kw">raster</span>(<span 
 Figure 11.6: Examples of line and polygon rasterizations.
 </p>
 </div>
-<p>While <code>rasterize</code> works well for most cases, it is not performance optimized. Fortunately, there are several alternatives, including the <code>fasterize::fasterize()</code> and <code>gdalUtils::gdal_rasterize()</code>. The former is much (100 times+) faster than <code>rasterize()</code> but is currently limited to polygon rasterization. The latter is part of GDAL and therefore requires a vector file (instead of an <code>sf</code> object) and rasterization parameters (instead of a <code>Raster*</code> template object) as inputs.<a href="#fn59" class="footnoteRef" id="fnref59"><sup>59</sup></a></p>
+<p>While <code>rasterize</code> works well for most cases, it is not performance optimized. Fortunately, there are several alternatives, including the <code>fasterize::fasterize()</code> and <code>gdalUtils::gdal_rasterize()</code>. The former is much (100 times+) faster than <code>rasterize()</code> but is currently limited to polygon rasterization. The latter is part of GDAL and therefore requires a vector file (instead of an <code>sf</code> object) and rasterization parameters (instead of a <code>Raster*</code> template object) as inputs.<a href="#fn60" class="footnoteRef" id="fnref60"><sup>60</sup></a></p>
 </div>
 <div id="spatial-vectorization" class="section level2">
 <h2><span class="header-section-number">11.5</span> Spatial vectorization</h2>
@@ -566,8 +566,8 @@ ch =<span class="st"> </span><span class="kw">st_combine</span>(random_points) %
 </div>
 <div class="footnotes">
 <hr />
-<ol start="59">
-<li id="fn59"><p>See more at <a href="http://www.gdal.org/gdal_rasterize.html" class="uri">http://www.gdal.org/gdal_rasterize.html</a>.<a href="raster-vector.html#fnref59">↩</a></p></li>
+<ol start="60">
+<li id="fn60"><p>See more at <a href="http://www.gdal.org/gdal_rasterize.html" class="uri">http://www.gdal.org/gdal_rasterize.html</a>.<a href="raster-vector.html#fnref60">↩</a></p></li>
 </ol>
 </div>
             </section>

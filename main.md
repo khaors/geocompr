@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-04-06'
+date: '2018-04-07'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-04-06 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-04-07 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -183,18 +183,20 @@ Geocomputation is a relatively young field with a ~30 year history, dating back 
 What distinguishes geocomputation from the older quantitative geography, is its emphasis on "creative and experimental" GIS applications [@longley_geocomputation:_1998].
 Additionally, it is also about developing new, research-driven methods [@openshaw_geocomputation_2000]:
 
-> GeoComputation is about using the various different types of geodata and about
-developing relevant geo-tools within the overall context of a 'scientific'
-approach.
+> GeoComputation is about using the various different types of geodata and about developing relevant geo-tools within the overall context of a 'scientific' approach.
 
-But geocomputation and this book teach more than just methods and code: they are about *doing* "practical work that is beneficial or useful" [@openshaw_geocomputation_2000].
-Of course, reading this book will give you a solid *knowledge* of geocomputational methods, and how to use them via the reproducible examples implemented in the code chunks in each chapter.
-But there is much more.
-This book aims to teach how to do geocomputation rather than just to think about it.
-Hence, you should also be able to apply the learned methods and mastered skills to real-world data, for evidence-based analysis in your own areas of interest.
-Moreover, throughout the book we encourage you to make geographic research more reproducible, scientific and socially beneficial. 
+This book aims to go beyond teaching methods and code: by the end of it you should be able use your geocomputational skills, to do "practical work that is beneficial or useful" [@openshaw_geocomputation_2000].
 
-This book is also related to a movement that has been labelled Geographical Data Science (GDS).
+Our approach differs from early adopters such as Stan Openshaw in one important way, however.
+At the turn of the 21^st^ Century it was unrealistic to expect readers to be able to reproduce code examples, due to barriers preventing access to the necessary hardware, software and data.
+Fast-forward two decades and things have progressed rapidly.
+Anyone with access to a laptop with ~4GB RAM can realistically expect to be able to install and run software for geocompuation on publicly accessible datasets, which are more widely available than ever before (as we'll see in Chapter \@ref(read-write)).^[
+A laptop with 4GB running a modern operating system such as Ubuntu 16.04 onwards should also be able to reproduce the contents of this book.
+A laptop with this specification or above can be acquired second-hand for ~$100 in many countries nowadays, reducing the financial/hardware barrier to geocomputation far below the levels in operation in the early 2000s, when high-performance computers were unaffordable for most people.
+]
+Unlike early works in the field all the work presented in this book is reproducible using code and example data supplied alongside the book, in R packages such as **spData**, the installation of which is covered in Chapter \@ref(spatial-class).
+
+Reproducible geographic research is related to Geographical Data Science (GDS).
 This recent concept essentially combines 'data science' with GIS and, like geocomputation, can be defined in comparison with GIS (see Table \@ref(tab:gdsl)).
 The focus on reproducibility and a command-line interface in this book is aligned with GDS.
 
@@ -270,7 +272,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve0b3cf1d9e33d3c18
+preserve8c57e3033f2d5021
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -2509,10 +2511,7 @@ factorValues(grain, grain[c(1, 11, 35)])
 #> 3  clay     wet
 ```
 
-<div class="figure" style="text-align: center">
-<img src="figures/cont-cate-rasters-1.png" alt="Raster datasets with numeric (left) and categorical values (right)." width="672" />
-<p class="caption">(\#fig:cont-cate-rasters)Raster datasets with numeric (left) and categorical values (right).</p>
-</div>
+
 
 ### Raster subsetting
 
@@ -3108,7 +3107,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve61261ed87a8dcb4d
+preservef1e09a41763feba6
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5997,7 +5996,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservefeecf7d553790358
+preserveabb2aa6166a6f05f
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6613,7 +6612,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve1d9bc2771e54d449
+preservecab68dfdbe95ac90
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7019,14 +7018,25 @@ Some useful layout settings are listed below (see Figure \@ref(fig:layout2) for 
 <p class="caption">(\#fig:layout2)Illustration of selected layout options.</p>
 </div>
 
-The impact of changing the color settings listed above is illustrated in Figure \@ref(fig:layout3) (see `?tm_layout` for full list):
+The impact of changing the color settings listed above is illustrated in Figure \@ref(fig:layout3) (see `?tm_layout` for full list).
 
 <div class="figure" style="text-align: center">
 <img src="figures/layout3-1.png" alt="Illustration of selected color-related layout options." width="576" />
 <p class="caption">(\#fig:layout3)Illustration of selected color-related layout options.</p>
 </div>
 
-Beyond this low-level control over layouts, **tmap** also offers high-level styles using `tm_style_` functions.
+The word 'style' has two different meanings in **tmap**.
+The first refers to the method by which continuous variables are broken into discrete bins for plotting on the map.
+The package offers many options for specifying bins, in addition to setting `breaks` manually, as we have already seen.
+Different binning methods are with `style` argument in functions that can convert numeric variables into colors such as `tm_fill()`.
+Some of the most useful binning methods are illustrated in Figure \@ref(fig:break-styles).
+
+<div class="figure" style="text-align: center">
+<img src="figures/break-styles-1.png" alt="Illustration of different binning methods set using the syle argument in tmap." width="576" />
+<p class="caption">(\#fig:break-styles)Illustration of different binning methods set using the syle argument in tmap.</p>
+</div>
+
+Beyond this low-level control over layouts and colors, **tmap** also offers high-level styles, using `tm_style_` functions (representing the second meaning of 'style' in the package).
 Some styles such as `tm_style_cobalt()` result in stylized maps while others such as `tm_style_grey()` make more subtle changes, as illustrated in Figure \@ref(fig:tmstyles), created using code below (see `09-tmstyles.R`):
 
 
@@ -7158,7 +7168,7 @@ Inset map can be save to file either by using a graphic device (see section \@re
 
 Inset maps are also used to create one map of non-contiguous areas.
 Probably, the most often use example is a map of United States, which consists of the contiguous United States, Hawaii and Alaska.
-It is very important to find the best projection for each individual inset in this type of cases (see section \@ref(#reproj-geo-data) to learn more).
+It is very important to find the best projection for each individual inset in this type of cases (see section \@ref(reproj-geo-data) to learn more).
 We can use US National Atlas Equal Area for the map of the contiguous United States by putting its EPSG code in the `projection` argument of `tm_shape()`.
 
 
@@ -7207,7 +7217,53 @@ Moreover, the same skills can be applied to combine maps and plots.
 
 
 
-<!-- ggplot2 -->
+**tmap** provides a powerful interface for creating a wide range of static maps (section \@ref(interactive-maps) shows how **tmap** also supports interactive maps).
+But there are many other options for creating static maps.
+The aim of this section is to provide a taster of some of these and provide pointers for additional resources on alternatives static mapping packages.
+
+The most mature option is to use `plot()` methods provided by core spatial packages **sf** and **raster**, covered in sections \@ref(basic-map) and \@ref(basic-map-raster) respectively.
+What we didn't mention in those sections was that plot methods for raster and vector objects can be combined, as illustrated in the subsequent code chunk which generates Figure \@ref(fig:nz-plot).
+`plot()` has many options which can be explored by following links in the `?plot` help page and the **sf** vignette [`sf5`](https://cran.r-project.org/web/packages/sf/vignettes/sf5.html).
+
+
+```r
+g = st_graticule(nz, lon = c(170, 175), lat = c(-45, -40, -35))
+plot(nz_water, graticule = g, axes = TRUE, col = "blue")
+raster::plot(nz_elev / 1000, add = TRUE)
+plot(nz$geometry, add = TRUE)
+```
+
+<div class="figure" style="text-align: center">
+<img src="figures/nz-plot-1.png" alt="Map of New Zealand created with plot(). The legend to the left refers to elevation (1000 m above sea level)." width="576" />
+<p class="caption">(\#fig:nz-plot)Map of New Zealand created with plot(). The legend to the left refers to elevation (1000 m above sea level).</p>
+</div>
+
+
+
+
+Since version 2.2.2, the **tidyverse** plotting package **ggplot2** has supported `sf` objects with `geom_sf()`.
+The syntax is similar to that used by **tmap**:
+an initial `ggplot()` call is followed by one or more layers, that are added with `+ geom_*()`, where `*` represents a layer type such as `geom_sf()` (for sf objects) or `geom_points()` (for points).
+
+**ggplot2** plots graticules by defult.
+The default settings for the graticules can be overridden using `scale_x_continuous()` and `scale_y_continuous()`.
+Other notable features include the use of unquoted variable names encapsulated in `aes()` to indicate which aesthetics vary and switching data sources using the `data` argument, as demonstrated in the code chunk below which creates Figure \@ref(fig:nz-gg):
+
+
+```r
+library(ggplot2)
+ggplot(nz) + geom_sf(aes(fill = col)) +
+  geom_sf(data = nz_height) +
+  scale_x_continuous(breaks = c(170, 175))
+```
+
+<div class="figure" style="text-align: center">
+<img src="figures/nz-gg-1.png" alt="Map of New Zealand created with ggplot2." width="576" />
+<p class="caption">(\#fig:nz-gg)Map of New Zealand created with ggplot2.</p>
+</div>
+
+An advantage of **ggplot2** is that it has a strong user-community and many add-on packages.
+Good additional resources can be found in the [ggplot2-book](https://github.com/hadley/ggplot2-book) open source book on the subject, plus descriptions of the multitude of '**gg**packages' such as **ggrepel** and **tidygraph**.
 
 ## Animated maps
 
