@@ -272,7 +272,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve97fd4352f4001f9d
+preserve6129210598710fac
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3110,7 +3110,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve49d89c4adcaa067a
+preserveb13306359fdd88c7
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5998,7 +5998,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve1324b45c15ecc3da
+preserve9ea251c7a09b16d4
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6614,7 +6614,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve25dff3446d260de4
+preserve07bad4de0b8c6bca
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6902,6 +6902,43 @@ tm_shape(nz) + tm_fill(col = "col")
 <p class="caption">(\#fig:tmcol)Comparison of base (left) and tmap (right) handling of a numeric color field.</p>
 </div>
 
+An important argument in functions defining aesthetic layers such as `tm_fill()` is `title`, which sets the title of the associated legend.
+The following code chunk demonstrates this functionality by providing a more attractive name than the variable name `AREA_SQ_KM` used in the previous figures (note the use of `expression()` for to create superscript text):
+
+
+```r
+legend_title = expression("Area (km"^2*")")
+map_nza = tm_shape(nz) +
+  tm_fill(col = "AREA_SQ_KM", title = legend_title) + tm_borders()
+```
+
+The resulting `tmap` object `map_nza` will be used, alongside `map_nz`, to illustrate different layout settings in the next section.
+
+### Map colors and categories
+<!-- title to be improved -->
+
+Additional aesthetic settings are demonstrated in the code chunk below, which colors regions in New Zealand depending on their area.
+The results show how custom breaks can be set with the `breaks` argument (Figure \@ref(fig:tmpal) center).
+<!--explain when it is useful-->
+Additional palette options include `n` (which sets the number of bins into which numeric variables are categorized) and `palette` (which defines the color scheme --- which can be selected interactively with `tmaptools::palette_explorer()`).
+Results of changing values for these simultaneously are shown in Figure \@ref(fig:tmpal) (right):
+
+
+```r
+breaks = c(0, 3, 4, 5) * 10000
+tm_shape(nz) + tm_fill(col = "AREA_SQ_KM")
+tm_shape(nz) + tm_fill(col = "AREA_SQ_KM", breaks = breaks)
+tm_shape(nz) + tm_fill(col = "AREA_SQ_KM", n = 10)
+tm_shape(nz) + tm_fill(col = "AREA_SQ_KM", palette = "RdBu")
+```
+
+<div class="figure" style="text-align: center">
+<img src="figures/tmpal-1.png" alt="Illustration of settings that affect variable aesthetics. The result shows a continuous variable (the area in square kilometers of regions in New Zealand) converted to color with (from left to right): default settings, manual breaks, n breaks, and an alternative palette." width="576" />
+<p class="caption">(\#fig:tmpal)Illustration of settings that affect variable aesthetics. The result shows a continuous variable (the area in square kilometers of regions in New Zealand) converted to color with (from left to right): default settings, manual breaks, n breaks, and an alternative palette.</p>
+</div>
+
+<!-- intro to style and color -->
+
 A variable, which name is provided in the `col` argument, is represented by a color palette.
 <!-- As a default... DESCRIBE THE DEFAULTS! -->
 The default color scheme can be changed using the `palette` argument.
@@ -6914,6 +6951,7 @@ Their colors need to be easy to distinguish and they should, if possible, reflec
 Therefore, for most cases you should not experiment with red rivers and green deserts.
 You also need to know the limitation of human perception - while it is usually easy to distinguish several colors from each other, this task become more and more difficult with a growing number of categories.
 <!-- expand and test how tmap behaves with a large number of classes -->
+<!-- the `col = "MAP_COLORS"` argument -->
 <!-- sequential -->
 Sequential palettes are used for the maps of quantitative data to show the order of values.
 It is usually presented by changes in color brightness either for a single (e.g. the `Blues` palette going from light blue to dark blue) or multi-hue combination (e.g. the `YlGn` palette going from light yellow to dark green).
@@ -6940,6 +6978,18 @@ These type of palettes are usually created by joining two single color sequentia
 <!-- Mention colorblindness and bw printing. -->
 <!-- Finally, give links/references to some resources (e.g. colorbrewer). -->
 
+The `style` argument refers to the method by which continuous variables are plotted on the map.
+<!-- broken into discrete bins for plotting on the map-->
+The package offers many options for specifying bins, in addition to setting `breaks` manually, as we have already seen in the previous subsection.
+<!--check this statement-->
+<!-- Different binning methods are with `style` argument in functions that can convert numeric variables into colors such as `tm_fill()`. -->
+Some of the most useful binning methods are illustrated in Figure \@ref(fig:break-styles).
+
+<div class="figure" style="text-align: center">
+<img src="figures/break-styles-1.png" alt="Illustration of different binning methods set using the syle argument in tmap." width="576" />
+<p class="caption">(\#fig:break-styles)Illustration of different binning methods set using the syle argument in tmap.</p>
+</div>
+
 <!---
 
 ```r
@@ -6952,46 +7002,20 @@ nz_a = nz[1:9, ]
 tm_shape(nz_a) + tm_polygons(col = "AREA_SQ_KM")
 ```
 
-<img src="figures/unnamed-chunk-12-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-14-1.png" width="576" style="display: block; margin: auto;" />
 
 
 ```r
 tm_shape(nz_a) + tm_polygons(col = "REGC2017_NAME")
 ```
 
-<img src="figures/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto;" />
+<img src="figures/unnamed-chunk-15-1.png" width="576" style="display: block; margin: auto;" />
 -->
 
 <!-- explain and describe classification intervals -->
 <!-- start from style = cont and expand on it -->
 <!-- describe several different methods and show their pros and cons -->
 
-<!--
-
-Additional aesthetic settings are demonstrated in the code chunk below, which colors regions in New Zealand depending on their area.
-The results show how custom breaks can be set with the `breaks` argument (Figure \@ref(fig:tmpal) center).
-Additional palette options include `n` (which sets the number of bins into which numeric variables are categorized) and `palette` (which defines the color scheme --- which can be selected interactively with `tmaptools::palette_explorer()`).
-Results of changing values for these simultaneously are shown in Figure \@ref(fig:tmpal) (right):
-
-
-```r
-breaks = c(0, 3, 4, 5) * 10000
-tm_shape(nz) + tm_fill(col = "AREA_SQ_KM")
-tm_shape(nz) + tm_fill(col = "AREA_SQ_KM", breaks = breaks)
-tm_shape(nz) + tm_fill(col = "AREA_SQ_KM", n = 10)
-tm_shape(nz) + tm_fill(col = "AREA_SQ_KM", palette = "RdBu")
-```
-
--->
-
-<!--
-
-<div class="figure" style="text-align: center">
-<img src="figures/tmpal-1.png" alt="Illustration of settings that affect variable aesthetics. The result shows a continuous variable (the area in square kilometers of regions in New Zealand) converted to color with (from left to right): default settings, manual breaks, n breaks, and an alternative palette." width="576" />
-<p class="caption">(\#fig:tmpal)Illustration of settings that affect variable aesthetics. The result shows a continuous variable (the area in square kilometers of regions in New Zealand) converted to color with (from left to right): default settings, manual breaks, n breaks, and an alternative palette.</p>
-</div>
-
--->
 
 <!--
 - color palettes - cont, div, cat?
@@ -7001,19 +7025,7 @@ Class intervals
 - categorical rasters?
 -->
 
-An important argument in functions defining aesthetic layers such as `tm_fill()` is `title`, which sets the title of the associated legend.
-The following code chunk demonstrates this functionality by providing a more attractive name than the variable name `AREA_SQ_KM` used in the previous figures (note the use of `expression()` for to create superscript text):
-
-
-```r
-legend_title = expression("Area (km"^2*")")
-map_nza = tm_shape(nz) +
-  tm_fill(col = "AREA_SQ_KM", title = legend_title) + tm_borders()
-```
-
-The resulting `tmap` object `map_nza` will be used, alongside `map_nz`, to illustrate different layout settings in the next section.
-
-### Layouts, colors and styles
+### Layouts and styles
 
 Layout refers not to the map itself but to its wider surroundings.
 Color settings relate to the palette and break-points used affect how the map looks.
@@ -7056,18 +7068,7 @@ The impact of changing the color settings listed above is illustrated in Figure 
 <p class="caption">(\#fig:layout3)Illustration of selected color-related layout options.</p>
 </div>
 
-The word 'style' has two different meanings in **tmap**.
-The first refers to the method by which continuous variables are broken into discrete bins for plotting on the map.
-The package offers many options for specifying bins, in addition to setting `breaks` manually, as we have already seen.
-Different binning methods are with `style` argument in functions that can convert numeric variables into colors such as `tm_fill()`.
-Some of the most useful binning methods are illustrated in Figure \@ref(fig:break-styles).
-
-<div class="figure" style="text-align: center">
-<img src="figures/break-styles-1.png" alt="Illustration of different binning methods set using the syle argument in tmap." width="576" />
-<p class="caption">(\#fig:break-styles)Illustration of different binning methods set using the syle argument in tmap.</p>
-</div>
-
-Beyond this low-level control over layouts and colors, **tmap** also offers high-level styles, using `tm_style_` functions (representing the second meaning of 'style' in the package).
+Beyond the low-level control over layouts and colors, **tmap** also offers high-level styles, using `tm_style_` functions (representing the second meaning of 'style' in the package).
 Some styles such as `tm_style_cobalt()` result in stylized maps while others such as `tm_style_grey()` make more subtle changes, as illustrated in Figure \@ref(fig:tmstyles), created using code below (see `09-tmstyles.R`):
 
 
