@@ -273,7 +273,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservea13efaa4c0a8b6c1
+preserve7157ac3aa461de69
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3111,7 +3111,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve505aa85bd6d36ff2
+preserve6eb0e5569b195f30
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5999,7 +5999,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve6a28ed81c74f0183
+preserve559fc7cfe8f4ddd3
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6615,7 +6615,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve3d9bf375d29b716d
+preserve2ced41ec5e2722ac
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6991,40 +6991,21 @@ Some of the most useful binning methods are illustrated in Figure \@ref(fig:brea
 <p class="caption">(\#fig:break-styles)Illustration of different binning methods set using the syle argument in tmap.</p>
 </div>
 
-<!---
-
-```r
-nz$REGC2017_NAME = as.character(nz$REGC2017_NAME)
-nz_a = nz[1:9, ]
-```
-
-
-```r
-tm_shape(nz_a) + tm_polygons(col = "AREA_SQ_KM")
-```
-
-<img src="figures/unnamed-chunk-14-1.png" width="576" style="display: block; margin: auto;" />
-
-
-```r
-tm_shape(nz_a) + tm_polygons(col = "REGC2017_NAME")
-```
-
-<img src="figures/unnamed-chunk-15-1.png" width="576" style="display: block; margin: auto;" />
--->
-
 <!-- explain and describe classification intervals -->
-<!-- start from style = cont and expand on it -->
-<!-- describe several different methods and show their pros and cons -->
-
-
-<!--
-- color palettes - cont, div, cat?
-Class intervals
-- class intervals ("cat", "fixed", "sd", "equal", "pretty", "quantile", "kmeans", "hclust", "bclust", "fisher", and "jenks")
-- bicolor maps?
-- categorical rasters?
--->
+The default value of the `style` is `pretty`.
+It automatically rounds categories' breaks values and evenly spaces them.
+The `equal` style divides the range of input values into subranges of equal range.
+This style is often used on data with regular distribution of values and common values range, such as percentages.
+On the other hand, it could produce categories with a large number of elements (points, areas) and those without any observation.
+To have the same number of elements in each category, one can use the `quantile` style. 
+It is useful for ordinal data <!--examples--> and never produce empty classes. 
+This style, however, could gather very different values in the same category.
+Natural breaks method, also called `jenks`, tries to identify groups of similar values in the data.
+Breaks between classes are created to maximize the differences between categories. 
+This method provides classes that reflect the values distribution, but in the same creates classes that could be only meaningful for only this dataset.
+<!-- cont -->
+<!-- it is usually used in cases ...-->
+<!-- cat -->
 
 ### Layouts and styles
 

@@ -502,37 +502,8 @@ Figure 9.5: Illustration of settings that affect variable aesthetics. The result
 Figure 9.6: Illustration of different binning methods set using the syle argument in tmap.
 </p>
 </div>
-<!---
-
-```r
-nz$REGC2017_NAME = as.character(nz$REGC2017_NAME)
-nz_a = nz[1:9, ]
-```
-
-
-```r
-tm_shape(nz_a) + tm_polygons(col = "AREA_SQ_KM")
-```
-
-<img src="figures/unnamed-chunk-14-1.png" width="576" style="display: block; margin: auto;" />
-
-
-```r
-tm_shape(nz_a) + tm_polygons(col = "REGC2017_NAME")
-```
-
-<img src="figures/unnamed-chunk-15-1.png" width="576" style="display: block; margin: auto;" />
--->
 <!-- explain and describe classification intervals -->
-<!-- start from style = cont and expand on it -->
-<!-- describe several different methods and show their pros and cons -->
-<!--
-- color palettes - cont, div, cat?
-Class intervals
-- class intervals ("cat", "fixed", "sd", "equal", "pretty", "quantile", "kmeans", "hclust", "bclust", "fisher", and "jenks")
-- bicolor maps?
-- categorical rasters?
--->
+<p>The default value of the <code>style</code> is <code>pretty</code>. It automatically rounds categories’ breaks values and evenly spaces them. The <code>equal</code> style divides the range of input values into subranges of equal range. This style is often used on data with regular distribution of values and common values range, such as percentages. On the other hand, it could produce categories with a large number of elements (points, areas) and those without any observation. To have the same number of elements in each category, one can use the <code>quantile</code> style. It is useful for ordinal data <!--examples--> and never produce empty classes. This style, however, could gather very different values in the same category. Natural breaks method, also called <code>jenks</code>, tries to identify groups of similar values in the data. Breaks between classes are created to maximize the differences between categories. This method provides classes that reflect the values distribution, but in the same creates classes that could be only meaningful for only this dataset. <!-- cont --> <!-- it is usually used in cases ...--> <!-- cat --></p>
 </div>
 <div id="layouts-and-styles" class="section level3">
 <h3><span class="header-section-number">9.2.5</span> Layouts and styles</h3>
