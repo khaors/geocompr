@@ -272,7 +272,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve4a76dbd24f6ba79f
+preservee0740e6ed4b674fa
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3110,7 +3110,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve2e0a1e30f9e464c0
+preserveb0b93a4850a9d61d
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5440,7 +5440,7 @@ We will explore how movement patterns can be understood at multiple geographic l
 - **Routes**: these are circuitous (non-straight) routes, typically representing the 'optimal' path along the route network between origins and destinations along the desire lines defined in the previous bullet point.
 - **Nodes**: these are points in the transport system that can represent common origins and destinations (e.g. with one centroid per zone) and public transport stations such as bus stops and rail stations.
 - **Route networks**: these represent the system of roads, paths and other linear features in an area. They can be represented as geographic features (representing route segments) or structured as an interconnected graph.
-Each can be assigned values representing the level of traffic on different parts of the network, referred to as 'flow' by transport modellers [@hollander_transport_2016].
+Each can be assigned values representing the level of traffic on different parts of the network, referred to as 'flow' by transport modelers [@hollander_transport_2016].
 
 Another key level is **agents**, mobile entities like you and me.
 These can be represented computationally thanks to software such as [MATSim](http://www.matsim.org/), which captures the dynamics of transport systems using an agent-based modelling (ABM) approach at high spatial and temporal resolution [@horni_multi-agent_2016].
@@ -5803,7 +5803,7 @@ From an active travel perspective public transport 'legs' of longer journeys div
 - The destination leg, from the station of alighting to the destination.
 
 Building on the analysis conducted in section \@ref(desire-lines), public transport nodes can be used to construct three-part desire lines for trips that can be taken by bus and (the mode used in this example) rail.
-The first stage is to identify the desire lines with most public transport travel, which in our case is easy because our previoulsy created dataset `desire_lines` already contains a variable describing the number of trips by train (the public transport potential could also be estimated using public transport routing services such as [OpenTripPlanner](http://www.opentripplanner.org/)).
+The first stage is to identify the desire lines with most public transport travel, which in our case is easy because our previously created dataset `desire_lines` already contains a variable describing the number of trips by train (the public transport potential could also be estimated using public transport routing services such as [OpenTripPlanner](http://www.opentripplanner.org/)).
 To make our approach easy to follow we will select just the top three desire lines in terms of rails use:
 
 
@@ -5825,7 +5825,7 @@ mat_rail = st_coordinates(bristol_stations)
 The outputs are three matrices representing the starting points of the trips, their destinations and possible intermediary points at public transport nodes (named `orig`, `dest` and `rail` respectively).
 But how to identify *which* intermediary points to use for each desire line?
 The `knn()` function from the **nabor** package (which is used internally by **stplanr** so it should already be installed) solves this problem by finding *k nearest neighbors* between two sets of coordinates.
-By setting the `k` parameter, one can define how many nearest neighors should be returned. 
+By setting the `k` parameter, one can define how many nearest neighbors should be returned. 
 Of course, `k` cannot exceed the number of observations in the input (here: `mat_rail`).
 We are interested in just one nearest neighbor, namely, the closest railway station.
 :
@@ -5963,7 +5963,6 @@ plot(path$geometry, col = "red", lwd = 10)
 plot(ways_sln@sl$geometry, add = TRUE)
 ```
 
-
 ## Prioritizing new infrastructure
 
 This chapter's final practical section demonstrates the policy-relevance of geocomputation for transport applications by identifying locations where new transport infrastructure may be needed.
@@ -5999,7 +5998,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve935b9fd6b8fefaad
+preservef43e3639ae652604
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6028,8 +6027,8 @@ Characteristics of the route such as speed limits, busyness and the provision of
 By aggregating OpenStreetMap data using buffers and spatial data methods presented in Chapters \@ref(attr) and \@ref(spatial-operations), for example, it would be possible to detect the presence of green space in close proximity to transport routes.
 Using R's statistical modelling capabilities this could then be used to predict current and future levels of cycling, for example.
 
-This type of analysis underlies the Propensity to Cycle Tool (PCT), a publicly accessible (see [www.pct.bike](http://www.pct.bike/)) mapping tool developed in R that is being used to prioritize investment in cycling accross England [@lovelace_propensity_2017].
-Similar tools could be used to encourage evidence-based transport policies related to other topics such as air polution and public transport access around the world.
+This type of analysis underlies the Propensity to Cycle Tool (PCT), a publicly accessible (see [www.pct.bike](http://www.pct.bike/)) mapping tool developed in R that is being used to prioritize investment in cycling across England [@lovelace_propensity_2017].
+Similar tools could be used to encourage evidence-based transport policies related to other topics such as air pollution and public transport access around the world.
 
 <!-- One growing area of interest surrounds the simulation of individual people and vehicles on the road network using techniques such as spatial microsimulation and agent-based modelling (ABM). -->
 <!-- R has the capability to model people in zones, and interface with ABM software such as NetLogo. -->
@@ -6615,7 +6614,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservee0c69a3f9679a200
+preserve2b2295b1057892b6
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
