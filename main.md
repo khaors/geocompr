@@ -212,11 +212,12 @@ Reproducibility    Minimal                    Maximal
 Geocomputation is young, but it builds on older fields.
 It can be seen as a part of Geography, which has a 2000+ year history [@talbert_ancient_2014];
 and an extension of *Geographic Information Systems* (GIS) [@neteler_open_2008], which emerged in the 1960s [@coppock_history_1991].
-Geography has played an important role in explaining and influencing humanity's relationship with the natural
-world^[A good example of this is Alexander von Humboldt's travels to South America, which laid the foundations for physical and plant geography [@wulf_invention_2015].
-]
-and this book aims to contribute to this so-called 'Geographic Tradition' [@livingstone_geographical_1992].
-GIS has become almost synonymous with handling spatial data on a computer, and provides a basis for excellent open source tools which can be accessed from R, as we will see in Chapter 13.
+
+Geography has played an important role in explaining and influencing humanity's relationship with the natural world long before the invention of the computer, however.
+Alexander von Humboldt's travels to South America in the early 1800s illustrates this role:
+not only did the resulting observations lay the foundations for the traditions of physical and plant geography, they also paved the way towards policies to protect the natural world [@wulf_invention_2015].
+This book aims to contribute to the 'Geographic Tradition' [@livingstone_geographical_1992] by harnessing the power of modern computers and open source software.
+<!-- GIS has become almost synonymous with handling spatial data on a computer, and provides a basis for excellent open source tools which can be accessed from R, as we will see in Chapter 13. -->
 <!-- todo - add dynamic reference to c13-->
 
 The book's links to older disciplines were reflected in suggested titles for the book: *Geography with R* and *R for GIS*.
@@ -272,7 +273,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservedfa653681adb50f6
+preservea13efaa4c0a8b6c1
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3110,7 +3111,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserved623c30cfdeb24cd
+preserve505aa85bd6d36ff2
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5998,7 +5999,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve0f8afa0e34e6db98
+preserve6a28ed81c74f0183
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6614,7 +6615,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve777e14085fba23b3
+preserve3d9bf375d29b716d
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
