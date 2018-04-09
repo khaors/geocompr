@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-04-07">
+<meta name="date" content="2018-04-09">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -278,7 +278,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="9.2.5" data-path="adv-map.html"><a href="adv-map.html#faceted-maps"><i class="fa fa-check"></i><b>9.2.5</b> Faceted maps</a></li>
 <li class="chapter" data-level="9.2.6" data-path="adv-map.html"><a href="adv-map.html#inset-maps"><i class="fa fa-check"></i><b>9.2.6</b> Inset maps</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="adv-map.html"><a href="adv-map.html#other-static-mapping-packages"><i class="fa fa-check"></i><b>9.3</b> Other static mapping packages</a></li>
+<li class="chapter" data-level="9.3" data-path="adv-map.html"><a href="adv-map.html#other-mapping-packages"><i class="fa fa-check"></i><b>9.3</b> Other mapping packages</a></li>
 <li class="chapter" data-level="9.4" data-path="adv-map.html"><a href="adv-map.html#animated-maps"><i class="fa fa-check"></i><b>9.4</b> Animated maps</a></li>
 <li class="chapter" data-level="9.5" data-path="adv-map.html"><a href="adv-map.html#interactive-maps"><i class="fa fa-check"></i><b>9.5</b> Interactive maps</a></li>
 <li class="chapter" data-level="9.6" data-path="adv-map.html"><a href="adv-map.html#pseudo-unusual-maps"><i class="fa fa-check"></i><b>9.6</b> Pseudo (unusual) maps</a></li>
@@ -623,11 +623,12 @@ ps =<span class="st"> </span><span class="kw">makeParamSet</span>(
                                    <span class="dt">control =</span> ctrl, 
                                    <span class="dt">show.info =</span> <span class="ot">TRUE</span>,
                                    <span class="dt">measures =</span> mlr::auc)</code></pre></div>
-<p>Overall, this set up implies that we ask R to fit 250 models to determine the optimal hyperparameters which are then used five times, once for each fold (see also Figure <a href="spatial-cv.html#fig:partitioning">13.3</a>), for the performance assessment in the first repetition of the outer resampling loop. This amounts to 250 * 5 models for one repetition Since we are requesting 100 repetitions this leads to a total of 125,000 models. This is computationally quite demanding even with the small dataset used here. So before starting the actual resampling it would be wise to reduce runtime with the help of a parallelization approach. In general, multicore processing is easier on Unix-based systems than on Windows systems. In fact, cloud computing is usually done and developed on Linux servers. Therefore, we will present how to do nested cross-validation using a parallelization approach working only under Unix-based systems.<a href="#fn69" class="footnoteRef" id="fnref69"><sup>69</sup></a>. Windows users have at least three options:</p>
+<p>Overall, this set up implies that we ask R to fit 250 models to determine the optimal hyperparameters which are then used five times, once for each fold (see also Figure <a href="spatial-cv.html#fig:partitioning">13.3</a>), for the performance assessment in the first repetition of the outer resampling loop. This amounts to 250 * 5 models for one repetition Since we are requesting 100 repetitions this leads to a total of 125,000 models. This is computationally quite demanding even with the small dataset used here. So before starting the actual resampling it would be wise to reduce runtime with the help of a parallelization approach. In general, multicore processing is easier on Unix-based systems than on Windows systems. In fact, cloud computing is usually done and developed on Linux servers. Therefore, we will present how to do nested cross-validation using a parallelization approach working only under Unix-based systems.<a href="#fn69" class="footnoteRef" id="fnref69"><sup>69</sup></a>. Windows users have at least four options:</p>
 <ol style="list-style-type: decimal">
 <li>Run the resampling without parallelizing it though this will take most likely more than half a day.</li>
 <li>Install a virtual machine (e.g. <a href="https://www.virtualbox.org/">Oracle VirtualBox</a>) to reproduce the parallelization code.</li>
 <li>Connect remotely to a Linux-Server (which is what we have done). Of course, this also implies that R and all related packages are installed on the server.</li>
+<li>Install <a href="https://docs.docker.com/docker-for-windows/">Docker</a> and run a container made of Linux image with a pre-installed R configuration.</li>
 </ol>
 <p>Before starting the parallelization, we make sure that the processing continues even if one of the models throws an error by setting <code>on.learner.error</code> to <code>warn</code>. This is quite handy since we really want to avoid that the processing stops just because of one failed model after running a server at full capacity for several days. To inspect the failed models once the processing is completed, we dump them.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">configureMlr</span>(<span class="dt">on.learner.error =</span> <span class="st">&quot;warn&quot;</span>, <span class="dt">on.error.dump =</span> <span class="ot">TRUE</span>)</code></pre></div>
