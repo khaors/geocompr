@@ -272,7 +272,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservee0740e6ed4b674fa
+preserve019d3ba3a5b4501a
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3110,7 +3110,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveb0b93a4850a9d61d
+preserveebcfd460b71a058f
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5998,7 +5998,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservef43e3639ae652604
+preserve017f063da31fa756
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6614,7 +6614,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve2b2295b1057892b6
+preserved2084a1416223c04
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7302,7 +7302,6 @@ Try `plotly::ggplotly(g1)` for example, and compare the result with other **plot
 
 
 
-
 We have covered mapping with **sf**, **raster** and **ggplot2** packages first because these packages are highly flexible, allowing for the creation of a wide range of static maps.
 Many other static mapping packages are more specific.
 
@@ -7310,6 +7309,20 @@ Before we cover mapping packages for plotting a specific type of map (in the nex
 Table \@ref(tab:map-pkgs) illustrates some commonly used mapping packages, identified using the website [r-pkg.org](https://www.r-pkg.org/search.html?q=map) and visualised with the in-development GitHub package **packagemetrics**.
 
 
+Table: (\#tab:map-pkgs)Selected mapping packages, with associated metrics. 'Published' refers to the date of the last release on CRAN'.
+
+package       title                                                          published     dl_last_month  has_vignette    contributors
+------------  -------------------------------------------------------------  -----------  --------------  -------------  -------------
+cartography   Thematic Cartography                                           2017-11-13              964  TRUE                       9
+ggmap         Spatial Visualization with ggplot2                             2016-01-23            35304  FALSE                     13
+globe         Plot 2D and 3D Views of the Earth, Including Major Coastline   2017-05-12              158  FALSE                     NA
+maps          Draw Geographical Maps                                         2018-04-03            75745  FALSE                     NA
+mapmisc       Utilities for Producing Maps                                   2018-02-05              383  TRUE                      NA
+plotly        Create Interactive Web Graphics via 'plotly.js'                2017-07-29            66758  FALSE                     24
+raster        Geographic Data Analysis and Modeling                          2017-11-13            50017  FALSE                     NA
+rworldmap     Mapping Global Data                                            2016-02-03             5330  FALSE                      2
+sf            Simple Features for R                                          2018-03-22            30302  TRUE                      36
+tmap          Thematic Maps                                                  2018-02-13             7787  TRUE                      14
 
 
 ## Animated maps

@@ -715,7 +715,102 @@ Figure 9.14: Map of New Zealand created with ggplot2.
 <p>An advantage of <strong>ggplot2</strong> is that it has a strong user-community and many add-on packages. Good additional resources can be found in the <a href="https://github.com/hadley/ggplot2-book">ggplot2-book</a> open source book on the subject, plus descriptions of the multitude of ‘<strong>gg</strong>packages’ such as <strong>ggrepel</strong> and <strong>tidygraph</strong>.</p>
 <p>Another benefit of maps based on <strong>ggplot2</strong> is that they can easily be given a level of interactivity when printed using the function <code>ggplotly()</code> from the <strong>plotly</strong> package. Try <code>plotly::ggplotly(g1)</code> for example, and compare the result with other <strong>plotly</strong> mapping functions described at <a href="https://blog.cpsievert.me/2018/03/30/visualizing-geo-spatial-data-with-sf-and-plotly/">blog.cpsievert.me</a>.</p>
 <p>We have covered mapping with <strong>sf</strong>, <strong>raster</strong> and <strong>ggplot2</strong> packages first because these packages are highly flexible, allowing for the creation of a wide range of static maps. Many other static mapping packages are more specific.</p>
-<p>Before we cover mapping packages for plotting a specific type of map (in the next paragraph), it is worth considering alternatives to the packages already covered for general-purpose static mapping. Table <a href="#tab:map-pkgs"><strong>??</strong></a> illustrates some commonly used mapping packages, identified using the website <a href="https://www.r-pkg.org/search.html?q=map">r-pkg.org</a> and visualised with the in-development GitHub package <strong>packagemetrics</strong>.</p>
+<p>Before we cover mapping packages for plotting a specific type of map (in the next paragraph), it is worth considering alternatives to the packages already covered for general-purpose static mapping. Table <a href="adv-map.html#tab:map-pkgs">9.1</a> illustrates some commonly used mapping packages, identified using the website <a href="https://www.r-pkg.org/search.html?q=map">r-pkg.org</a> and visualised with the in-development GitHub package <strong>packagemetrics</strong>.</p>
+<table>
+<caption><span id="tab:map-pkgs">Table 9.1: </span>Selected mapping packages, with associated metrics. ‘Published’ refers to the date of the last release on CRAN’.</caption>
+<thead>
+<tr class="header">
+<th align="left">package</th>
+<th align="left">title</th>
+<th align="left">published</th>
+<th align="right">dl_last_month</th>
+<th align="left">has_vignette</th>
+<th align="right">contributors</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">cartography</td>
+<td align="left">Thematic Cartography</td>
+<td align="left">2017-11-13</td>
+<td align="right">964</td>
+<td align="left">TRUE</td>
+<td align="right">9</td>
+</tr>
+<tr class="even">
+<td align="left">ggmap</td>
+<td align="left">Spatial Visualization with ggplot2</td>
+<td align="left">2016-01-23</td>
+<td align="right">35304</td>
+<td align="left">FALSE</td>
+<td align="right">13</td>
+</tr>
+<tr class="odd">
+<td align="left">globe</td>
+<td align="left">Plot 2D and 3D Views of the Earth, Including Major Coastline</td>
+<td align="left">2017-05-12</td>
+<td align="right">158</td>
+<td align="left">FALSE</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="left">maps</td>
+<td align="left">Draw Geographical Maps</td>
+<td align="left">2018-04-03</td>
+<td align="right">75745</td>
+<td align="left">FALSE</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">mapmisc</td>
+<td align="left">Utilities for Producing Maps</td>
+<td align="left">2018-02-05</td>
+<td align="right">383</td>
+<td align="left">TRUE</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="left">plotly</td>
+<td align="left">Create Interactive Web Graphics via ‘plotly.js’</td>
+<td align="left">2017-07-29</td>
+<td align="right">66758</td>
+<td align="left">FALSE</td>
+<td align="right">24</td>
+</tr>
+<tr class="odd">
+<td align="left">raster</td>
+<td align="left">Geographic Data Analysis and Modeling</td>
+<td align="left">2017-11-13</td>
+<td align="right">50017</td>
+<td align="left">FALSE</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="left">rworldmap</td>
+<td align="left">Mapping Global Data</td>
+<td align="left">2016-02-03</td>
+<td align="right">5330</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">sf</td>
+<td align="left">Simple Features for R</td>
+<td align="left">2018-03-22</td>
+<td align="right">30302</td>
+<td align="left">TRUE</td>
+<td align="right">36</td>
+</tr>
+<tr class="even">
+<td align="left">tmap</td>
+<td align="left">Thematic Maps</td>
+<td align="left">2018-02-13</td>
+<td align="right">7787</td>
+<td align="left">TRUE</td>
+<td align="right">14</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="animated-maps" class="section level2">
 <h2><span class="header-section-number">9.4</span> Animated maps</h2>
