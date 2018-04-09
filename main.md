@@ -272,7 +272,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve019d3ba3a5b4501a
+preserveba7d582f38c6d92b
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3110,7 +3110,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveebcfd460b71a058f
+preserve6eba43c7ad984027
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5998,7 +5998,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve017f063da31fa756
+preservea827c8e2d772b212
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6614,7 +6614,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserved2084a1416223c04
+preserve8ac568a01ba8bbd6
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7306,24 +7306,30 @@ We have covered mapping with **sf**, **raster** and **ggplot2** packages first b
 Many other static mapping packages are more specific.
 
 Before we cover mapping packages for plotting a specific type of map (in the next paragraph), it is worth considering alternatives to the packages already covered for general-purpose static mapping.
-Table \@ref(tab:map-pkgs) illustrates some commonly used mapping packages, identified using the website [r-pkg.org](https://www.r-pkg.org/search.html?q=map) and visualised with the in-development GitHub package **packagemetrics**.
+Table \@ref(tab:map-pkgs) illustrates metrics associated with some commonly used mapping packages, identified using the website [r-pkg.org](https://www.r-pkg.org/search.html?q=map) and accessed via **packagemetrics**.
 
 
-Table: (\#tab:map-pkgs)Selected mapping packages, with associated metrics. 'Published' refers to the date of the last release on CRAN'.
+Table: (\#tab:map-pkgs)Selected mapping packages, with associated metrics.
 
-package       title                                                          published     dl_last_month  has_vignette    contributors
-------------  -------------------------------------------------------------  -----------  --------------  -------------  -------------
-cartography   Thematic Cartography                                           2017-11-13              964  TRUE                       9
-ggmap         Spatial Visualization with ggplot2                             2016-01-23            35304  FALSE                     13
-globe         Plot 2D and 3D Views of the Earth, Including Major Coastline   2017-05-12              158  FALSE                     NA
-maps          Draw Geographical Maps                                         2018-04-03            75745  FALSE                     NA
-mapmisc       Utilities for Producing Maps                                   2018-02-05              383  TRUE                      NA
-plotly        Create Interactive Web Graphics via 'plotly.js'                2017-07-29            66758  FALSE                     24
-raster        Geographic Data Analysis and Modeling                          2017-11-13            50017  FALSE                     NA
-rworldmap     Mapping Global Data                                            2016-02-03             5330  FALSE                      2
-sf            Simple Features for R                                          2018-03-22            30302  TRUE                      36
-tmap          Thematic Maps                                                  2018-02-13             7787  TRUE                      14
+package       title                                                              latest_release 
+------------  -----------------------------------------------------------------  ---------------
+cartography   Thematic Cartography                                               2017-11-13     
+cartogram     Create Cartograms with R                                           2016-09-28     
+ggplot2       Create Elegant Data Visualisations Using the Grammar of Graphics   2016-12-30     
+globe         Plot 2D and 3D Views of the Earth, Including Major Coastline       2017-05-12     
+leaflet       Create Interactive Web Maps with Leaflet                           2017-02-21     
+maps          Draw Geographical Maps                                             2018-04-03     
+mapmisc       Utilities for Producing Maps                                       2018-02-05     
+mapview       Interactive Viewing of Spatial Data in R                           2018-01-30     
+plotly        Create Interactive Web Graphics via 'plotly.js'                    2017-07-29     
+raster        Geographic Data Analysis and Modeling                              2017-11-13     
+rasterVis     Visualization Methods for Raster Data                              2018-04-05     
+rworldmap     Mapping Global Data                                                2016-02-03     
+sf            Simple Features for R                                              2018-03-22     
+tmap          Thematic Maps                                                      2018-02-13     
 
+Table \@ref(tab:map-pkgs) shows a range of mapping packages are available, and there are many others not listed in this table.
+Of note is **cartography**, which generates a range of unusual maps including choropleth, 'proportional symbol' and 'flow' maps, each of which is documented in the vignette [`cartography`](https://cran.r-project.org/web/packages/cartography/vignettes/cartography.html).
 
 ## Animated maps
 
