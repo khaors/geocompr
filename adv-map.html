@@ -804,34 +804,33 @@ Figure 9.14: Map of New Zealand created with ggplot2.
 <h2><span class="header-section-number">9.4</span> Animated maps</h2>
 <p>Faceted maps, described in <a href="adv-map.html#faceted-maps">9.2.5</a>, provide a way of showing how spatial relationships vary but the approach has disadvantages. Facets become tiny when many of them are squeezed into a single plot, potentially hiding <em>any</em> spatial relationships. Furthermore the fact that each facet is separated by space on the screen or page means that subtle differences between facets can be hard to detect.</p>
 <p>With an increasing proportion of communication happening via digital screens, animated maps are becoming more popular. Animated maps can even be useful for paper reports: you can always link readers to a web-page containing an animated (or interactive) version of a printed map to help make it come alive.</p>
-<p>Figure <a href="adv-map.html#fig:urban-animated">9.15</a> is a simple example of the benefits of an animated map. Unlike the faceted plot it does not squeeze all 17 for them all to be displayed simultaneously (see the book’s website for the animated version).</p>
+<p>Figure <a href="adv-map.html#fig:urban-animated">9.15</a> is a simple example of an animated map. Unlike the faceted plot it does not squeeze multiple maps into a single screen and allows the reader to see how the spatial distribution of the worlds top 30 agglomerations evolves over time (see the book’s website for the animated version).</p>
 <div class="figure" style="text-align: center"><span id="fig:urban-animated"></span>
 <img src="figures/urban-animated.gif" alt="Animated map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations."  />
 <p class="caption">
 Figure 9.15: Animated map showing the top 30 largest ‘urban agglomerations’ from 1950 to 2030 based on population projects by the United Nations.
 </p>
 </div>
-<p>Creation of this animated map is almost identical to the creation of faceted map presented in section <a href="adv-map.html#faceted-maps">9.2.5</a>. We just need to add three new arguments to the <code>tm_facets()</code>. The first one, <code>free.coords = FALSE</code> maintains the same extend in all of the partial maps, while <code>nrow = 1</code> and <code>ncol = 1</code> forces to create only one facet per <code>&quot;year&quot;</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">us_anim =<span class="st"> </span><span class="kw">tm_shape</span>(world) +
+<p>The animated map illustrated in Figure <a href="adv-map.html#fig:urban-animated">9.15</a> can be created using the same <strong>tmap</strong> techniques we have seen in subsequent sections. Animated maps can be created with the same code that generates faceted maps, demonstrated in section <a href="adv-map.html#faceted-maps">9.2.5</a>. There are two differences, however, related to arguments in <code>tm_facets()</code>:</p>
+<ul>
+<li><code>free.coords = FALSE</code>, which maintains the map extent for each map iteration</li>
+<li><code>nrow = 1</code> and <code>ncol = 1</code> ensure only one facet is created per year</li>
+</ul>
+<p>These additional arguments are demonstrated in the subsequent code chunk:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">urb_anim =<span class="st"> </span><span class="kw">tm_shape</span>(world) +
 <span class="st">  </span><span class="kw">tm_polygons</span>() +<span class="st"> </span>
 <span class="st">  </span><span class="kw">tm_shape</span>(urban_agglomerations) +
 <span class="st">  </span><span class="kw">tm_dots</span>(<span class="dt">size =</span> <span class="st">&quot;population_millions&quot;</span>) +
 <span class="st">  </span><span class="kw">tm_facets</span>(<span class="dt">by =</span> <span class="st">&quot;year&quot;</span>, <span class="dt">free.coords =</span> <span class="ot">FALSE</span>, <span class="dt">nrow =</span> <span class="dv">1</span>, <span class="dt">ncol =</span> <span class="dv">1</span>)</code></pre></div>
-<p>The code above creates a set of separate maps for each year. Next, we combine them and save as an animation file with <code>tmap_animation()</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tmap_animation</span>(us_anim, <span class="dt">filename =</span> <span class="st">&quot;us_anim.gif&quot;</span>, <span class="dt">delay =</span> <span class="dv">25</span>)</code></pre></div>
-<p>The power of animated maps is illustrated in Figure <a href="#fig:animus"><strong>??</strong></a>, which shows the colonization of the United States progressively from the East to the West and then into the interior.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tmap)
-statepop =<span class="st"> </span>historydata::us_state_populations %&gt;%
-<span class="st">  </span>dplyr::<span class="kw">select</span>(-GISJOIN) %&gt;%<span class="st"> </span><span class="kw">rename</span>(<span class="dt">NAME =</span> state)
-statepop_wide =<span class="st"> </span><span class="kw">spread</span>(statepop, year, population, <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>)
-statepop_sf =<span class="st"> </span><span class="kw">left_join</span>(spData::us_states, statepop_wide) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">st_transform</span>(<span class="dv">2163</span>)
-<span class="co"># map_dbl(statepop_sf, ~sum(is.na(.)))  # looks about right</span>
-year_vars =<span class="st"> </span><span class="kw">names</span>(statepop_sf)[<span class="kw">grepl</span>(<span class="st">&quot;year&quot;</span>, <span class="kw">names</span>(statepop_sf))]
-facet_anim =<span class="st"> </span><span class="kw">tm_shape</span>(statepop_sf) +<span class="st"> </span><span class="kw">tm_fill</span>(year_vars) +<span class="st"> </span><span class="kw">tm_facets</span>(<span class="dt">free.scales.fill =</span> <span class="ot">FALSE</span>, 
-  <span class="dt">ncol =</span> <span class="dv">1</span>, <span class="dt">nrow =</span> <span class="dv">1</span>)
-<span class="kw">animation_tmap</span>(<span class="dt">tm =</span> facet_anim, <span class="dt">filename =</span> <span class="st">&quot;figures/09-us_pop.gif&quot;</span>)</code></pre></div>
-<p><img src="figures/09-us_pop.gif" style="display: block; margin: auto;" /></p>
+<p>The resulting <code>urb_anim</code> represents a set of separate maps for each year. The final stage is to combine them and save the result as a <code>.gif</code> file with <code>tmap_animation()</code>. The following command creates the animation illustrated in Figure <a href="adv-map.html#fig:urban-animated">9.15</a>, with a few elements missing, that we will add-in during the exercises:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tmap_animation</span>(urb_anim, <span class="dt">filename =</span> <span class="st">&quot;urb_anim.gif&quot;</span>, <span class="dt">delay =</span> <span class="dv">25</span>)</code></pre></div>
+<p>Another illustration of the power of animated maps is provided in Figure <a href="adv-map.html#fig:animus">9.16</a>. This shows the colonization of the United States, which moved progressively from the East to the West and finally into the interior. Code to reproduce this map can be found in the script <code>09-usboundaries.R</code>.</p>
+<div class="figure" style="text-align: center"><span id="fig:animus"></span>
+<img src="figures/09-us_pop.gif" alt="Animated map showing population growth and colonization in the United States."  />
+<p class="caption">
+Figure 9.16: Animated map showing population growth and colonization in the United States.
+</p>
+</div>
 </div>
 <div id="interactive-maps" class="section level2">
 <h2><span class="header-section-number">9.5</span> Interactive maps</h2>
@@ -863,7 +862,7 @@ facet_anim =<span class="st"> </span><span class="kw">tm_shape</span>(statepop_s
 In <strong>shiny</strong> apps these are often split into <code>ui.R</code> (short for user interface) and <code>server.R</code> files, naming conventions used by <a href="https://github.com/rstudio/shiny-server"><code>shiny-server</code></a>, a server-side Linux application for serving shiny apps on public-facing websites <code>shiny-server</code> also serves apps defined by a single <code>app.R</code> file in an ‘app folder’.
 </div>
 <p></p>
-<p>Before considering large apps it is worth seeing a minimal example, named ‘lifeApp’, in action.<a href="#fn57" class="footnoteRef" id="fnref57"><sup>57</sup></a> The code below defines and launches — with the command <code>shinyApp()</code> — a lifeApp, which provides an interactive slider allowing users to make countries appear with progressively lower levels of life expectancy (see Figure <a href="adv-map.html#fig:lifeApp">9.16</a>):</p>
+<p>Before considering large apps it is worth seeing a minimal example, named ‘lifeApp’, in action.<a href="#fn57" class="footnoteRef" id="fnref57"><sup>57</sup></a> The code below defines and launches — with the command <code>shinyApp()</code> — a lifeApp, which provides an interactive slider allowing users to make countries appear with progressively lower levels of life expectancy (see Figure <a href="adv-map.html#fig:lifeApp">9.17</a>):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ui =<span class="st"> </span><span class="kw">fluidPage</span>(
   <span class="kw">sliderInput</span>(<span class="dt">inputId =</span> <span class="st">&quot;life&quot;</span>, <span class="st">&quot;Life expectancy&quot;</span>, <span class="dv">0</span>, <span class="dv">80</span>, <span class="dt">value =</span> <span class="dv">80</span>),
       <span class="kw">leafletOutput</span>(<span class="dt">outputId =</span> <span class="st">&quot;map&quot;</span>)
@@ -878,10 +877,10 @@ server =<span class="st"> </span>function(input, output) {
 <iframe src="https://bookdown.org/robinlovelace/lifeapp/?showcase=0" width="576" height="400px">
 </iframe>
 <p class="caption">
-Figure 9.16: Minimal example of a web mapping application created with <strong>shiny</strong>.
+Figure 9.17: Minimal example of a web mapping application created with <strong>shiny</strong>.
 </p>
 </div>
-<p>The <strong>user interface</strong> (<code>ui</code>) of lifeApp is created by <code>fluidPage()</code>. This contains input ‘widgets’ — a <code>sliderInput()</code> in this case (many other <code>*Input()</code> functions are available) — and outputs, a <code>leafletOutput()</code> in this case. Elements added to a <code>fluidPage()</code> are arranged row-wise by default, explaining why the slider interface is placed directly above the map in Figure <a href="adv-map.html#fig:lifeApp">9.16</a> (<code>?column</code> explains how to add content column-wise). The <strong>server side</strong> (<code>server</code>) is a function with <code>input</code> and <code>output</code> arguments. <code>output</code> is a list of objects containing elements generated by <code>render*()</code> function — <code>renderLeaflet()</code> which generates <code>output$map</code> in this case. Inputs elements such as <code>input$life</code> referred to in the server must relate to elements that exist in the <code>ui</code> — defined by <code>inputId = &quot;life&quot;</code> in the code above. The function <code>shinyApp()</code> combines both the <code>ui</code> and <code>server</code> elements and serves the results interactively via a new R process. When you move the slider in in Figure <a href="adv-map.html#fig:lifeApp">9.16</a>, you are actually causing R code to re-run, although this is hidden from view in the user interface.</p>
+<p>The <strong>user interface</strong> (<code>ui</code>) of lifeApp is created by <code>fluidPage()</code>. This contains input ‘widgets’ — a <code>sliderInput()</code> in this case (many other <code>*Input()</code> functions are available) — and outputs, a <code>leafletOutput()</code> in this case. Elements added to a <code>fluidPage()</code> are arranged row-wise by default, explaining why the slider interface is placed directly above the map in Figure <a href="adv-map.html#fig:lifeApp">9.17</a> (<code>?column</code> explains how to add content column-wise). The <strong>server side</strong> (<code>server</code>) is a function with <code>input</code> and <code>output</code> arguments. <code>output</code> is a list of objects containing elements generated by <code>render*()</code> function — <code>renderLeaflet()</code> which generates <code>output$map</code> in this case. Inputs elements such as <code>input$life</code> referred to in the server must relate to elements that exist in the <code>ui</code> — defined by <code>inputId = &quot;life&quot;</code> in the code above. The function <code>shinyApp()</code> combines both the <code>ui</code> and <code>server</code> elements and serves the results interactively via a new R process. When you move the slider in in Figure <a href="adv-map.html#fig:lifeApp">9.17</a>, you are actually causing R code to re-run, although this is hidden from view in the user interface.</p>
 <p>Building on this basic example and knowing where to find help (see <code>?shiny</code>), the best way forward may be to stop reading and start programming! The recommended next step is to open the previously mentioned <a href="https://github.com/Robinlovelace/geocompr/blob/master/coffeeApp/app.R"><code>coffeeApp/app.R</code></a> script in an IDE of choice, modify it and re-run it repeatedly. The example contains some of the components of a web mapping application implemented in <strong>shiny</strong> and should ‘shine’ a light on how they behave (pun intended). The <code>coffeeApp/app.R</code> script contains <strong>shiny</strong> functions that go beyond those demonstrated in the simple ‘lifeApp’ example. These include <code>reactive()</code> and <code>observe()</code> (for creating outputs that respond to the user interface — see <code>?reactive</code>) and <code>leafletProxy()</code> (for modifying a <code>leaflet</code> object that has already been created). Such elements are critical to the creation of web mapping applications implemented in <strong>shiny</strong>.</p>
 <div class="rmdnote">
 <p>
@@ -896,7 +895,7 @@ There are a number of ways to run a <strong>shiny</strong> app. For RStudio user
 <iframe src="https://bookdown.org/robinlovelace/coffeeapp/?showcase=0" width="576" height="400px">
 </iframe>
 <p class="caption">
-Figure 9.17: coffeeApp, a simple web mapping application for exploring global coffee production in 2016 and 2017.
+Figure 9.18: coffeeApp, a simple web mapping application for exploring global coffee production in 2016 and 2017.
 </p>
 </div>
 </div>

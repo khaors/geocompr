@@ -272,7 +272,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveba7d582f38c6d92b
+preserve07915c1c21420ff7
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3110,7 +3110,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve6eba43c7ad984027
+preserve3d7b5ffeda704cc7
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5998,7 +5998,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservea827c8e2d772b212
+preserve09512a261c21ed62
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6614,7 +6614,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve8ac568a01ba8bbd6
+preserve0dd49ec188fb1ffb
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7340,8 +7340,8 @@ Furthermore the fact that each facet is separated by space on the screen or page
 With an increasing proportion of communication happening via digital screens, animated maps are becoming more popular.
 Animated maps can even be useful for paper reports: you can always link readers to a web-page containing an animated (or interactive) version of a printed map to help make it come alive.
 
-Figure \@ref(fig:urban-animated) is a simple example of the benefits of an animated map.
-Unlike the faceted plot it does not squeeze all 17 for them all to be displayed simultaneously (see the book's website for the animated version).
+Figure \@ref(fig:urban-animated) is a simple example of an animated map.
+Unlike the faceted plot it does not squeeze multiple maps into a single screen and allows the reader to see how the spatial distribution of the worlds top 30 agglomerations evolves over time (see the book's website for the animated version).
 
 <div class="figure" style="text-align: center">
 <img src="figures/urban-animated.gif" alt="Animated map showing the top 30 largest 'urban agglomerations' from 1950 to 2030 based on population projects by the United Nations."  />
@@ -7350,48 +7350,44 @@ Unlike the faceted plot it does not squeeze all 17 for them all to be displayed 
 
 
 
-Creation of this animated map is almost identical to the creation of faceted map presented in section \@ref(faceted-maps).
-We just need to add three new arguments to the `tm_facets()`.
-The first one, `free.coords = FALSE` maintains the same extend in all of the partial maps, while `nrow = 1` and `ncol = 1` forces to create only one facet per `"year"`.
+The animated map illustrated in Figure \@ref(fig:urban-animated) can be created using the same **tmap** techniques we have seen in subsequent sections.
+Animated maps can be created with the same code that generates faceted maps, demonstrated in section \@ref(faceted-maps).
+There are two differences, however, related to arguments in `tm_facets()`:
+
+- `free.coords = FALSE`, which maintains the map extent for each map iteration
+- `nrow = 1` and `ncol = 1` ensure only one facet is created per year
+
+These additional arguments are demonstrated in the subsequent code chunk:
 
 
 ```r
-us_anim = tm_shape(world) +
+urb_anim = tm_shape(world) +
   tm_polygons() + 
   tm_shape(urban_agglomerations) +
   tm_dots(size = "population_millions") +
   tm_facets(by = "year", free.coords = FALSE, nrow = 1, ncol = 1)
 ```
 
-The code above creates a set of separate maps for each year.
-Next, we combine them and save as an animation file with `tmap_animation()`:
+The resulting `urb_anim` represents a set of separate maps for each year.
+The final stage is to combine them and save the result as a `.gif` file with `tmap_animation()`.
+The following command creates the animation illustrated in Figure \@ref(fig:urban-animated), with a few elements missing, that we will add-in during the exercises:
 
 
 ```r
-tmap_animation(us_anim, filename = "us_anim.gif", delay = 25)
+tmap_animation(urb_anim, filename = "urb_anim.gif", delay = 25)
 ```
 
-The power of animated maps is illustrated in Figure \@ref(fig:animus), which shows the colonization of the United States progressively from the East to the West and then into the interior.
-
-
-```r
-library(tmap)
-statepop = historydata::us_state_populations %>%
-  dplyr::select(-GISJOIN) %>% rename(NAME = state)
-statepop_wide = spread(statepop, year, population, sep = "_")
-statepop_sf = left_join(spData::us_states, statepop_wide) %>% 
-  st_transform(2163)
-# map_dbl(statepop_sf, ~sum(is.na(.)))  # looks about right
-year_vars = names(statepop_sf)[grepl("year", names(statepop_sf))]
-facet_anim = tm_shape(statepop_sf) + tm_fill(year_vars) + tm_facets(free.scales.fill = FALSE, 
-  ncol = 1, nrow = 1)
-animation_tmap(tm = facet_anim, filename = "figures/09-us_pop.gif")
-```
+Another illustration of the power of animated maps is provided in Figure \@ref(fig:animus).
+This shows the colonization of the United States, which moved progressively from the East to the West and finally into the interior.
+Code to reproduce this map can be found in the script `09-usboundaries.R`.
 
 
 
 
-<img src="figures/09-us_pop.gif" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures/09-us_pop.gif" alt="Animated map showing population growth and colonization in the United States."  />
+<p class="caption">(\#fig:animus)Animated map showing population growth and colonization in the United States.</p>
+</div>
 
 ## Interactive maps
 
@@ -8476,30 +8472,26 @@ library(tidyverse)
 library(tibble)
 ```
 
-<!-- This sounds a bit strange. Also a single bullet point here looks a bit lost? -->
 - Required data will be downloaded in due course.
 
 ## Introduction
 
 Section \@ref(software-for-geocomputation) mentioned several programming languages suitable for command-line based geocomputation.
-<!-- unparalleled = outstanding?  -->
 The advantages of geocomputation with R were discussed, including its unparalleled statistical power.
 This chapter makes use of some of this statistical power, by demonstrating methods for predictive mapping by means of statistical learning [@james_introduction_2013].
 The main focus, however, is the use of spatial cross-validation (or 'spatial CV' in short, a term we will define shortly) to assess model performance and reduce spatial bias.
-<!-- I think this is confusing as it sounds that you use spatial cv to model/predict something. However, its only purpose is performance estimation. "CV is an excellent method to get a robust estimate of the performance of an algorithm on a data set. At the time of writing, Cv approaches tailored to spatial data are best supported in R than any other language." -->
-Spatial CV is an excellent example of using statistical methods to model spatial data and, at the time of writing, the technique is better supported in R than any other language.
+At the time of writing, the spatial CV is better supported in R than any other language.
 
-Statistical learning comprises a large suite of techniques for understanding data.
-Statistical learning can be roughly grouped into supervised and unsupervised techniques, both of which are used throughout a vast range of disciplines including economics, physics, medicine, biology, ecology and geography [@james_introduction_2013].
+Statistical learning comprises a large suite of techniques that learn from data.
+It can be roughly grouped into supervised and unsupervised techniques, both of which are used throughout a vast range of disciplines including economics, physics, medicine, biology, ecology and geography [@james_introduction_2013].
 In this chapter we will focus on supervised techniques, i.e., we have a response variable, in our case this will be a binary one (landslide vs. non-landslide occurrence) but could be also a numeric (pH value), an integer (species richness) or a categorical variable (land use).
 Supervised techniques model the relationship between the response variable and various predictors.
 For this we can use techniques from the field of statistics or from the field of machine learning.
-<!-- This sounds like that statistical models should not be used for prediction at all. Maybe write sth like "the possibility of conducting statistical inference or maximization of predictive accuracy" -->
-Which to use depends on the aim: statistical inference or prediction.
+Which to use depends on the primary aim: statistical inference or prediction.
 (Semi-)Parametric regression techniques are especially useful if the aim is statistical inference, i.e. if we are interested in a predictor's significance, its importance for a specific model and to explain relationships between response and predictors.
 To trust the p-values and standard errors of such models we need to perform a thorough model validation testing if one or several of the underlying model assumptions (heterogeneity, independence, etc.) have been violated [@zuur_mixed_2009].
-<!-- This again sounds like statistical models are not aimed for prediction at all (because you use "by contrast")-->
-By contrast, machine learning aims at predictions and is especially appealing due its lack of assumptions.
+One can use statistical modeling also to make predictions.
+Machine learning, on the other hand, primarly aims at making good predictions, and is especially appealing due its lack of assumptions.
 <!-- Usually ML > SL, so we would need to formulate it as "SL has the ability to be at least par with ML". I would not write about statistical inference and predictive performance in one sentence as they are unrelated here. Stay with one: "Although stat. inf. is impossible, some ML models provide the possibility to calcuilate variable importance" -->
 Though statistical inference is impossible [@james_introduction_2013], various studies have shown that machine learning is at least at par with regression techniques regarding predictive performance [e.g., @schratz_performance_nodate]. 
 <!-- machine learning has even gained in popularity "due to its ability to scale to large data and ignore the assumption of uncorrelated predictor variables" -->
@@ -8611,11 +8603,11 @@ The added columns are:
 
 
 ## Conventional modeling approach in R {#conventional-model}
-Later on we will introduce the **mlr** package, an umbrella-package providing a unified interface to a plethora of algorithms. 
+Later on we will introduce the **mlr** package, an umbrella-package providing a unified interface to a plethora of learning algorithms. 
 Before doing so, it is worth taking a look at the conventional modeling interface in R.
 This way we introduce statistical supervised modeling in R which provides the required skill set for doing spatial CV and additionally contributes to a better grasp on the **mlr** approach introduced later on.
 Usually, we model the response variable as a function of predictors. 
-Therefore, most algorithms implementations in R such as `lm`, `glm` and many more use the so-called formula interface.
+Therefore, most implementations in R such as `lm`, `glm` and many more use the so-called formula interface.
 We put this into practice by modeling the landslide occurrence as a function of terrain attributes.
 Since our response (landslide occurrence) is binary, we use a generalized linear model with a binomial family and a logit link function instead of a simple linear model which does not allow for other response distributions besides Gaussian.
 
