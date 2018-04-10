@@ -275,7 +275,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservebd7a1c1c4542f3c4
+preserve550177bc35cafa26
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3113,7 +3113,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve1e3fa16a09b206d3
+preserve8ecbc2b61ef3b8d1
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6001,7 +6001,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve5a3cc738c0e447e0
+preserve6fc0140a21405f5f
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6617,7 +6617,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservef99ffd9bf20285e2
+preserveb16fa84a33cb44bf
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6970,6 +6970,7 @@ These type of palettes are usually created by joining two single color sequentia
 <!-- Importantly, try to avoid using the rainbow color palette. -->
 <!-- ONE MORE SENTENCE ABOUT IT + REFERENCES -->
 <!-- Instead try to use colorblind friendly palettes as often as possible. -->
+<!-- how to reverse palettes with - -->
 
 <!-- FIGURE WITH COLORS - JUST PALETTES!! -->
 
@@ -7004,10 +7005,13 @@ It is useful for ordinal data <!--examples--> and never produce empty classes.
 This style, however, could gather very different values in the same category.
 Natural breaks method, also called `jenks`, tries to identify groups of similar values in the data.
 Breaks between classes are created to maximize the differences between categories. 
-This method provides classes that reflect the values distribution, but in the same creates classes that could be only meaningful for only this dataset.
-<!-- cont -->
-<!-- it is usually used in cases ...-->
-<!-- cat -->
+This method provides classes that reflect the values distribution, but in the same creates classes that could be meaningful only for this dataset.
+Categorical legend could be not the most suitable when presenting a large number of objects (e.g. points or polygons) or continuous fields (e.g. continuous rasters).
+In this situations, `cont` or `order` can be used. 
+The former is appropriate for variables with evenly distributed values, while the latter works well when the distribution of values is skewed (for example, only a few raster cells have very large values).
+Finally, the `cat` style should be used to represent categorical values.
+It assures that unique values will be presented by its own category, ane therefore color.
+<!-- references for more info -->
 
 ### Layouts and styles
 
