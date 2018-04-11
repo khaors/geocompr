@@ -275,7 +275,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve4a0650e62776d585
+preserve6e8ef02f3e8a8f13
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3113,7 +3113,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve3b886215d281f5a5
+preservea71d85562bb17dde
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6001,7 +6001,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve8fae062d6f579191
+preserve8ee21ef8f5f9d9ae
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6617,7 +6617,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserved21c7f33c5f31895
+preserve210d7185137323d4
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -8455,13 +8455,12 @@ The chapter uses the following packages:
 
 
 ```r
+library(sf)
+library(raster)
+library(tidyverse)
 library(mlr)
 library(pROC)
-library(raster)
 library(RSAGA)
-library(sf)
-library(tidyverse)
-library(tibble)
 ```
 
 - Required data will be downloaded in due course.
@@ -8484,6 +8483,7 @@ Statistical regression techniques are especially useful if the aim is statistica
 These techniques also allow predictions of unseen data points but this is usually only of secondary interest to statisticians.
 Statistical inference, on the other hand, refers among others to a predictor's significance, its importance for a specific model, its relationship with the response and the uncertainties associated with the estimated coefficients.
 To trust the p-values and standard errors of such models we need to perform a thorough model validation testing if one or several of the underlying model assumptions (heterogeneity, independence, etc.) have been violated [@zuur_mixed_2009].
+
 By contrast, statistical inference is impossible with machine learning [@james_introduction_2013].
 Instead machine learning primarly aims at making good predictions.
 Various studies have shown that machine learning is at least at par with regression techniques regarding predictive performance [e.g., @schratz_performance_nodate]. 
@@ -8529,14 +8529,14 @@ To make the ratio between landslide and non-landslide points more balanced, we r
 
 ```r
 # select non-landslide points
-non = filter(landslides, lslpts == FALSE)
+non_pts = filter(landslides, lslpts == FALSE)
 # select landslide points
 lsl_pts = filter(landslides, lslpts == TRUE)
 # randomly select 175 non-landslide points
-ind = sample(1:nrow(non), nrow(lsl_pts))
+non_ind = sample(1:nrow(non_pts), nrow(lsl_pts))
 # rowbind randomly selected non-landslide points and 
 # landslide points
-lsl = rbind(non[ind, ], lsl_pts)
+lsl = rbind(non_pts[non_ind, ], lsl_pts)
 ```
 
 `dem` is in fact a digital elevation model and consists of two list elements with the first being a raster header and the second being a matrix containing the altitudinal values.
@@ -8563,11 +8563,7 @@ The first three rows of the resulting dataframe (still named `lsl`) excluding th
 
 
 
-
-
-```r
-dplyr::select(lsl, -x, -y) %>%
-  head(3)
+```
 #>      lslpts slope    cplan    cprof elev log_carea
 #> 1337  FALSE  39.7  0.02512 -0.00311 2357      2.66
 #> 384   FALSE  55.7 -0.03212 -0.00491 2093      2.96
@@ -8576,9 +8572,9 @@ dplyr::select(lsl, -x, -y) %>%
 
 The added columns are:
 
-- `slope`: slope angle (°)
+- `slope`: slope angle (°).
 - `cplan`: plan curvature (rad m^−1^) expressing the convergence or divergence of a slope and thus water flow.
-- `cprof`: profile curvature (rad m^-1^) as a measure of flow acceleration, also known as downslope change in slope angle 
+- `cprof`: profile curvature (rad m^-1^) as a measure of flow acceleration, also known as downslope change in slope angle.
 - `elev`: elevation (m a.s.l.) as the representation of different altitudinal zones of vegetation and precipitation in the study area.
 - `log_carea`: the decadic logarithm of the catchment area (log m^2^) representing the amount of water flowing towards a location.
 
@@ -8586,7 +8582,6 @@ The added columns are:
 <img src="figures/lsl-map-1.png" alt="Landslide initiation points (red) and points unaffected by landsliding (blue) in Southern Ecuador. CRS: UTM zone 17S (EPSG: 32717)." width="576" />
 <p class="caption">(\#fig:lsl-map)Landslide initiation points (red) and points unaffected by landsliding (blue) in Southern Ecuador. CRS: UTM zone 17S (EPSG: 32717).</p>
 </div>
-
 
 ## Conventional modeling approach in R {#conventional-model}
 Before introducing the **mlr** package, an umbrella-package providing a unified interface to a plethora of learning algorithms, it is worth taking a look at the conventional modeling interface in R.
@@ -8621,7 +8616,6 @@ The generic S3 `predict()` command automatically chooses the right prediction fu
 Setting `type` to `response` it returns the predicted probabilities (of landslide occurrence) for each observation in `lsl` (see `?predict.glm`).
 
 
-
 ```r
 head(predict(object = fit, type = "response"))
 #>  1337   384  1551  1555   209  1135 
@@ -8643,8 +8637,8 @@ pred = raster::predict(object = ta, model = fit,
 
 
 <div class="figure" style="text-align: center">
-<img src="figures/lsl-susc-1.png" alt="Spatial prediction of landslide susceptibility using a  GLM. CRS: UTM zone 17S (EPSG: 32717)." width="576" />
-<p class="caption">(\#fig:lsl-susc)Spatial prediction of landslide susceptibility using a  GLM. CRS: UTM zone 17S (EPSG: 32717).</p>
+<img src="figures/lsl-susc-1.png" alt="Spatial prediction of landslide susceptibility using a GLM. CRS: UTM zone 17S (EPSG: 32717)." width="576" />
+<p class="caption">(\#fig:lsl-susc)Spatial prediction of landslide susceptibility using a GLM. CRS: UTM zone 17S (EPSG: 32717).</p>
 </div>
 
 Here, when making predictions we neglect spatial autocorrelation since we assume that on average the predictive accuracy remains the same with or without spatial autocorrelation structures.
@@ -8680,7 +8674,6 @@ However, this is an overoptimistic estimation since we have computed it on the c
 To derive a biased-reduced assessment we have to use cross-validation and in the case of spatial data we will have to make use of spatial CV.
 
 ## Introduction to (spatial) cross-validation {#intro-cv} 
-
 Cross-validation belongs to the family of resampling methods [@james_introduction_2013].
 The basic idea is to split (repeatedly) a dataset into training and test sets whereby the training data is used to fit a model which then is applied to the test set.
 Comparing the predicted values with the known response values from the test set (using a performance measure such as the AUROC in the binomial case) gives a bias-reduced assessment of the model's capability to generalize the learned relationship to independent data.
@@ -8718,11 +8711,11 @@ In R there are literally hundreds of packages available for statistical learning
 In section \@ref(conventional-model) we used the **stats** package to fit a logistic regression using the `glm()` command.
 `glm()` uses the typical R modeling interface: 
 
-1. specify the response and predictor variables via a formula object
-2. build a model
-3. make a prediction.
+1. Specify the response and predictor variables via a formula object.
+2. Build a model.
+3. Make a prediction.
 
-However, many packages come with their own or a modified statistical learning interface which is why users frequently have to spend a lot of time to figure out the specifics of each of these packages, how to carry out cross-validation and hyperparameter tuning or how to compare modeling results from different packages.
+However, many packages come with their own or a modified statistical learning interface. This is why users frequently have to spend a lot of time to figure out the specifics of each of these packages, how to carry out cross-validation and hyperparameter tuning or how to compare modeling results from different packages.
 The **mlr** package acts as a meta- or umbrella-package providing a unified interface to the most popular statistical learning techniques available in R including classification, regression, survival analysis and clustering [@bischl_mlr:_2016].^[As pointed out in the beginning we will solely focus on supervised learning techniques in this chapter.]
 The standardized **mlr** interface is based on so-called basic building blocks (Figure \@ref(fig:building-blocks)).
 
@@ -8756,6 +8749,7 @@ library(mlr)
 coords = lsl[, c("x", "y")]
 # select response and predictors to use in the modeling
 data = dplyr::select(lsl, -x, -y)
+coords = lsl[, c("x", "y")]
 # create task
 task = makeClassifTask(data = data, target = "lslpts",
                        positive = "TRUE", coordinates = coords)
@@ -8763,7 +8757,7 @@ task = makeClassifTask(data = data, target = "lslpts",
 
 `makeLearner()` determines the statistical learning method to use.
 All classification **learners** start with `classif.` and all regression learners with `regr.` (see `?makeLearners` for more details). 
-`listLearners()` helps to find out about all available learners and from which package **mlr** imports them. 
+`listLearners()` helps to find out about all available learners and from which package **mlr** imports them (Table \@ref(tab:lrns)). 
 For a specific task, we can run:
 
 <!-- no idea, why render_book() fails frequently because function listLearners() cannot be found...:
@@ -8771,17 +8765,20 @@ I also have this issue (RL - so not running and hardcoding result)-->
 
 
 ```r
-lrns = listLearners(task)
-dplyr::select(lrns, class, name, package) %>%
-  head
-#>                 class                         name package
-#> 1    classif.binomial          Binomial Regression   stats
-#> 2 classif.featureless       Featureless classifier     mlr
-#> 3         classif.fnn     Fast k-Nearest Neighbour     FNN
-#> 4         classif.knn           k-Nearest Neighbor   class
-#> 5         classif.lda Linear Discriminant Analysis    MASS
-#> 6      classif.logreg          Logistic Regression   stats
+listLearners(task)
 ```
+
+
+Table: (\#tab:lrns)Sample of available learners in the **mlr** package.
+
+class                 name                           package 
+--------------------  -----------------------------  --------
+classif.binomial      Binomial Regression            stats   
+classif.featureless   Featureless classifier         mlr     
+classif.fnn           Fast k-Nearest Neighbour       FNN     
+classif.knn           k-Nearest Neighbor             class   
+classif.lda           Linear Discriminant Analysis   MASS    
+classif.logreg        Logistic Regression            stats   
 
 This yields all learners able to model two-class problems (landslide yes or no).
 We opt for the binomial classification method from the **stats** package which we already have used in section \@ref(conventional-model) and is implemented as `classif.binomial` in **mlr**.
@@ -8826,7 +8823,7 @@ identical(fit$coefficients, mlr_fit$coefficients)
 In the beginning, it might seem a bit tedious to learn the **mlr** interface for modeling.
 But remember that one only has to learn one single interface to run 169 learners (**mlr** package version: 2.13).
 Further advantages are the easy parallelization of resampling techniques and the tuning of machine learning hyperparameters, also spatially, in an inner fold (see section \@ref(svm)).
-Most importantly, (spatial) resampling in **mlr** is really easy, and only requires two more steps: specifying a resampling method and running it.
+Most importantly, (spatial) resampling in **mlr** is really easy, and requires only two more steps: specifying a resampling method and running it.
 We will use a 100-repeated 5-fold spatial CV.
 This ensures that a spatial partitioning with five partitions is chosen based on the provided coordinates in our `task` and that the partitioning is repeated 100 times.
 <!-- you could link to the arxiv preprint of my paper-->
@@ -9066,7 +9063,7 @@ Note that runtime depends on many aspects: CPU speed, the selected algorithm, th
 
 ```r
 # Exploring the results
-# run time in minutes
+# runtime in minutes
 round(result$runtime / 60, 2)
 #> [1] 37.4
 ```
@@ -9125,7 +9122,6 @@ Finally, for more details please check out also the fantastic **mlr** online doc
 
 ## Acknowledgments
 We dearly thank Patrick Schratz (University of Jena) for fruitful discussions on **mlr** and for providing code input.
-
 
 ## Exercises
 

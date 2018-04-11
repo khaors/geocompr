@@ -353,13 +353,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h2>Prerequisites</h2>
 <p>This chapter requires a strong grasp of spatial data analysis and processing, covered in chapters <a href="spatial-class.html#spatial-class">2</a> to <a href="transform.html#transform">5</a>. You should also be familiar with linear regression, its generalized extensions and machine learning <span class="citation">(e.g. Zuur et al. <a href="#ref-zuur_mixed_2009">2009</a>; James et al. <a href="#ref-james_introduction_2013">2013</a>)</span>.</p>
 <p>The chapter uses the following packages:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(mlr)
-<span class="kw">library</span>(pROC)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sf)
 <span class="kw">library</span>(raster)
-<span class="kw">library</span>(RSAGA)
-<span class="kw">library</span>(sf)
 <span class="kw">library</span>(tidyverse)
-<span class="kw">library</span>(tibble)</code></pre></div>
+<span class="kw">library</span>(mlr)
+<span class="kw">library</span>(pROC)
+<span class="kw">library</span>(RSAGA)</code></pre></div>
 <ul>
 <li>Required data will be downloaded in due course.</li>
 </ul>
@@ -367,7 +366,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="introduction-8" class="section level2">
 <h2><span class="header-section-number">13.1</span> Introduction</h2>
 <p>Section <a href="intro.html#software-for-geocomputation">1.3</a> mentioned several programming languages suitable for command-line based geocomputation. The advantages of geocomputation with R were discussed, including its unparalleled statistical power. This chapter makes use of some of this statistical power, by demonstrating methods for predictive mapping by means of statistical learning <span class="citation">(James et al. <a href="#ref-james_introduction_2013">2013</a>)</span>. The main focus, however, is the use of spatial cross-validation (or ‘spatial CV’ in short, a term we will define shortly) to assess model performance and reduce spatial bias. At the time of writing, the spatial CV is better supported in R than any other language.</p>
-<p>Statistical learning combines and blends methods from both statistics and machine learning that learn from data. Roughly, one can distinguish these into supervised and unsupervised techniques, both of which are used throughout a vast range of disciplines including economics, physics, medicine, biology, ecology and geography <span class="citation">(James et al. <a href="#ref-james_introduction_2013">2013</a>)</span>. In this chapter we will focus on supervised techniques, i.e., we have a response variable, in our case this will be a binary one (landslide vs. non-landslide occurrence) but could be also a numeric (pH value), an integer (species richness) or a categorical variable (land use). Supervised techniques model the relationship between the response variable and various predictors. For this we can use techniques from the field of statistics or from the field of machine learning. Which to use depends on the primary aim: statistical inference or prediction. Statistical regression techniques are especially useful if the aim is statistical inference. These techniques also allow predictions of unseen data points but this is usually only of secondary interest to statisticians. Statistical inference, on the other hand, refers among others to a predictor’s significance, its importance for a specific model, its relationship with the response and the uncertainties associated with the estimated coefficients. To trust the p-values and standard errors of such models we need to perform a thorough model validation testing if one or several of the underlying model assumptions (heterogeneity, independence, etc.) have been violated <span class="citation">(Zuur et al. <a href="#ref-zuur_mixed_2009">2009</a>)</span>. By contrast, statistical inference is impossible with machine learning <span class="citation">(James et al. <a href="#ref-james_introduction_2013">2013</a>)</span>. Instead machine learning primarly aims at making good predictions. Various studies have shown that machine learning is at least at par with regression techniques regarding predictive performance <span class="citation">(e.g., Schratz et al. <a href="#ref-schratz_performance_nodate">2018</a>)</span>. Machine learning is especially appealing due its lack of assumptions and its ability to scale to large data. Naturally, with the advent of big data, machine learning has even gained in popularity since frequently the prediction is frequently of more interest than the relationship between variables. Think for instance of future customer behavior, recommendation services (music, movies, what to buy next), face recognition, autonomous driving, classifying e-mails as spam and predictive maintenance (infrastructure, industry) to name but a few. Note that we can borrow regression techniques from statistics for machine learning when the aim is prediction. In this case we do not have too worry too much about possible model misspecifications since we explicitly do not want to do statistical inference. In this chapter the aim will be the (spatial) prediction of landslide susceptibility. For this, we will first use a simple Generalized Linear Model (GLM)<a href="#fn60" class="footnoteRef" id="fnref60"><sup>60</sup></a>, before moving on to using a support vector machine which is a typical machine learning algorithm. In both cases, we will access the models’ predictive performance by means of spatial CV, this means while accounting for the fact that geographic data is special.</p>
+<p>Statistical learning combines and blends methods from both statistics and machine learning that learn from data. Roughly, one can distinguish these into supervised and unsupervised techniques, both of which are used throughout a vast range of disciplines including economics, physics, medicine, biology, ecology and geography <span class="citation">(James et al. <a href="#ref-james_introduction_2013">2013</a>)</span>. In this chapter we will focus on supervised techniques, i.e., we have a response variable, in our case this will be a binary one (landslide vs. non-landslide occurrence) but could be also a numeric (pH value), an integer (species richness) or a categorical variable (land use). Supervised techniques model the relationship between the response variable and various predictors. For this we can use techniques from the field of statistics or from the field of machine learning. Which to use depends on the primary aim: statistical inference or prediction. Statistical regression techniques are especially useful if the aim is statistical inference. These techniques also allow predictions of unseen data points but this is usually only of secondary interest to statisticians. Statistical inference, on the other hand, refers among others to a predictor’s significance, its importance for a specific model, its relationship with the response and the uncertainties associated with the estimated coefficients. To trust the p-values and standard errors of such models we need to perform a thorough model validation testing if one or several of the underlying model assumptions (heterogeneity, independence, etc.) have been violated <span class="citation">(Zuur et al. <a href="#ref-zuur_mixed_2009">2009</a>)</span>.</p>
+<p>By contrast, statistical inference is impossible with machine learning <span class="citation">(James et al. <a href="#ref-james_introduction_2013">2013</a>)</span>. Instead machine learning primarly aims at making good predictions. Various studies have shown that machine learning is at least at par with regression techniques regarding predictive performance <span class="citation">(e.g., Schratz et al. <a href="#ref-schratz_performance_nodate">2018</a>)</span>. Machine learning is especially appealing due its lack of assumptions and its ability to scale to large data. Naturally, with the advent of big data, machine learning has even gained in popularity since frequently the prediction is frequently of more interest than the relationship between variables. Think for instance of future customer behavior, recommendation services (music, movies, what to buy next), face recognition, autonomous driving, classifying e-mails as spam and predictive maintenance (infrastructure, industry) to name but a few. Note that we can borrow regression techniques from statistics for machine learning when the aim is prediction. In this case we do not have too worry too much about possible model misspecifications since we explicitly do not want to do statistical inference. In this chapter the aim will be the (spatial) prediction of landslide susceptibility. For this, we will first use a simple Generalized Linear Model (GLM)<a href="#fn60" class="footnoteRef" id="fnref60"><sup>60</sup></a>, before moving on to using a support vector machine which is a typical machine learning algorithm. In both cases, we will access the models’ predictive performance by means of spatial CV, this means while accounting for the fact that geographic data is special.</p>
 <p>CV determines a model’s ability to generalize to new data. To achieve this, CV splits a dataset (repeatedly) into test and training sets. It uses the training data to fit the model, and checks its performance when predicting to the test data. Basically, CV helps to detect overfitting since a model that fits the training data too closely (including the data’s noise and random fluctuations) will have a bad prediction performance on the test data. The basic requirement for this is that the test data consists of observations that the model has not seen before, i.e. that the test data is independent of the training data. CV achieves this by splitting the data randomly into test and training set. However, randomly splitting spatial data leads to training points that are neighbors of test points. Since points close to each other are more similar compared to points further away (spatial autocorrelation), test and training datasets might not be independent. As a consequence, CV would fail to detect a possible overfitting in the presence of spatial autocorrelation. Spatial CV is able to considerably alleviate this problem and will be main topic of this chapter.</p>
 </div>
 <div id="case-landslide" class="section level2">
@@ -376,14 +376,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;landslides&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;RSAGA&quot;</span>)</code></pre></div>
 <p><code>landslides</code> contains a factor column <code>lslpts</code> where <code>TRUE</code> corresponds to an observed landslide initiation point and <code>FALSE</code> to points where no landsliding occurred. Columns <code>x</code> and <code>y</code> contain the corresponding coordinates. The landslide initiation point is located in the scarp of a landslide polygon. The coordinates for the non-landslide points were sampled randomly with the restriction to fall outside of the slightly buffered landslide polygons. <code>summary(landslides$lslpts)</code> tells us that 175 landslide points and 1360 non-landslide points are available. To make the ratio between landslide and non-landslide points more balanced, we randomly sample 175 from the 1360 non-landslide points.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># select non-landslide points</span>
-non =<span class="st"> </span><span class="kw">filter</span>(landslides, lslpts ==<span class="st"> </span><span class="ot">FALSE</span>)
+non_pts =<span class="st"> </span><span class="kw">filter</span>(landslides, lslpts ==<span class="st"> </span><span class="ot">FALSE</span>)
 <span class="co"># select landslide points</span>
 lsl_pts =<span class="st"> </span><span class="kw">filter</span>(landslides, lslpts ==<span class="st"> </span><span class="ot">TRUE</span>)
 <span class="co"># randomly select 175 non-landslide points</span>
-ind =<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span>:<span class="kw">nrow</span>(non), <span class="kw">nrow</span>(lsl_pts))
+non_ind =<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span>:<span class="kw">nrow</span>(non_pts), <span class="kw">nrow</span>(lsl_pts))
 <span class="co"># rowbind randomly selected non-landslide points and </span>
 <span class="co"># landslide points</span>
-lsl =<span class="st"> </span><span class="kw">rbind</span>(non[ind, ], lsl_pts)</code></pre></div>
+lsl =<span class="st"> </span><span class="kw">rbind</span>(non_pts[non_ind, ], lsl_pts)</code></pre></div>
 <p><code>dem</code> is in fact a digital elevation model and consists of two list elements with the first being a raster header and the second being a matrix containing the altitudinal values. To transform this list into a <code>raster</code> object, we can write:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dem =<span class="st"> </span>
 <span class="st">  </span><span class="kw">raster</span>(dem$data, 
@@ -395,17 +395,15 @@ lsl =<span class="st"> </span><span class="kw">rbind</span>(non[ind, ], lsl_pts)
          <span class="dt">ymx =</span> dem$header$yllcorner +<span class="st"> </span>
 <span class="st">           </span>dem$header$nrows *<span class="st"> </span>dem$header$cellsize)</code></pre></div>
 <p>To model the probability for landslide occurrence, we need some predictors. We will use selected terrain attributes frequently associated with landsliding <span class="citation">(Muenchow, Brenning, and Richter <a href="#ref-muenchow_geomorphic_2012">2012</a>)</span>, all of which can be computed from the provided digital elevation model (<code>dem</code>) using R-GIS bridges (see Chapter <a href="gis.html#gis">10</a>). We leave it as an exercise to the reader to compute the terrain attribute rasters and extract the corresponding values to our landslide/non-landslide dataframe (see also exercises). The first three rows of the resulting dataframe (still named <code>lsl</code>) excluding the coordinates could look like this: <!-- has anybody an idea why I have to run the following code chunk two times to make it work when rendering the book with `bookdown::render_book()`?--></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dplyr::<span class="kw">select</span>(lsl, -x, -y) %&gt;%
-<span class="st">  </span><span class="kw">head</span>(<span class="dv">3</span>)
-<span class="co">#&gt;      lslpts slope    cplan    cprof elev log_carea</span>
-<span class="co">#&gt; 1337  FALSE  39.7  0.02512 -0.00311 2357      2.66</span>
-<span class="co">#&gt; 384   FALSE  55.7 -0.03212 -0.00491 2093      2.96</span>
-<span class="co">#&gt; 1551  FALSE  36.7 -0.00347  0.00615 1815      2.82</span></code></pre></div>
+<pre><code>#&gt;      lslpts slope    cplan    cprof elev log_carea
+#&gt; 1337  FALSE  39.7  0.02512 -0.00311 2357      2.66
+#&gt; 384   FALSE  55.7 -0.03212 -0.00491 2093      2.96
+#&gt; 1551  FALSE  36.7 -0.00347  0.00615 1815      2.82</code></pre>
 <p>The added columns are:</p>
 <ul>
-<li><code>slope</code>: slope angle (°)</li>
+<li><code>slope</code>: slope angle (°).</li>
 <li><code>cplan</code>: plan curvature (rad m<sup>−1</sup>) expressing the convergence or divergence of a slope and thus water flow.</li>
-<li><code>cprof</code>: profile curvature (rad m<sup>-1</sup>) as a measure of flow acceleration, also known as downslope change in slope angle</li>
+<li><code>cprof</code>: profile curvature (rad m<sup>-1</sup>) as a measure of flow acceleration, also known as downslope change in slope angle.</li>
 <li><code>elev</code>: elevation (m a.s.l.) as the representation of different altitudinal zones of vegetation and precipitation in the study area.</li>
 <li><code>log_carea</code>: the decadic logarithm of the catchment area (log m<sup>2</sup>) representing the amount of water flowing towards a location.</li>
 </ul>
@@ -446,7 +444,7 @@ fit
 pred =<span class="st"> </span>raster::<span class="kw">predict</span>(<span class="dt">object =</span> ta, <span class="dt">model =</span> fit,
                        <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:lsl-susc"></span>
-<img src="figures/lsl-susc-1.png" alt="Spatial prediction of landslide susceptibility using a  GLM. CRS: UTM zone 17S (EPSG: 32717)." width="576" />
+<img src="figures/lsl-susc-1.png" alt="Spatial prediction of landslide susceptibility using a GLM. CRS: UTM zone 17S (EPSG: 32717)." width="576" />
 <p class="caption">
 Figure 13.2: Spatial prediction of landslide susceptibility using a GLM. CRS: UTM zone 17S (EPSG: 32717).
 </p>
@@ -482,11 +480,11 @@ Figure 13.3: Spatial visualization of selected test and training observations fo
 <h2><span class="header-section-number">13.5</span> Spatial CV with <strong>mlr</strong></h2>
 <p>In R there are literally hundreds of packages available for statistical learning (e.g., have a look at the <a href="https://CRAN.R-project.org/view=MachineLearning">CRAN task machine learning</a>). In section <a href="spatial-cv.html#conventional-model">13.3</a> we used the <strong>stats</strong> package to fit a logistic regression using the <code>glm()</code> command. <code>glm()</code> uses the typical R modeling interface:</p>
 <ol style="list-style-type: decimal">
-<li>specify the response and predictor variables via a formula object</li>
-<li>build a model</li>
-<li>make a prediction.</li>
+<li>Specify the response and predictor variables via a formula object.</li>
+<li>Build a model.</li>
+<li>Make a prediction.</li>
 </ol>
-<p>However, many packages come with their own or a modified statistical learning interface which is why users frequently have to spend a lot of time to figure out the specifics of each of these packages, how to carry out cross-validation and hyperparameter tuning or how to compare modeling results from different packages. The <strong>mlr</strong> package acts as a meta- or umbrella-package providing a unified interface to the most popular statistical learning techniques available in R including classification, regression, survival analysis and clustering <span class="citation">(Bischl et al. <a href="#ref-bischl_mlr:_2016">2016</a>)</span>.<a href="#fn62" class="footnoteRef" id="fnref62"><sup>62</sup></a> The standardized <strong>mlr</strong> interface is based on so-called basic building blocks (Figure <a href="spatial-cv.html#fig:building-blocks">13.4</a>).</p>
+<p>However, many packages come with their own or a modified statistical learning interface. This is why users frequently have to spend a lot of time to figure out the specifics of each of these packages, how to carry out cross-validation and hyperparameter tuning or how to compare modeling results from different packages. The <strong>mlr</strong> package acts as a meta- or umbrella-package providing a unified interface to the most popular statistical learning techniques available in R including classification, regression, survival analysis and clustering <span class="citation">(Bischl et al. <a href="#ref-bischl_mlr:_2016">2016</a>)</span>.<a href="#fn62" class="footnoteRef" id="fnref62"><sup>62</sup></a> The standardized <strong>mlr</strong> interface is based on so-called basic building blocks (Figure <a href="spatial-cv.html#fig:building-blocks">13.4</a>).</p>
 <!-- @Jakub: yes, I will ask if we me may use the figure -->
 <div class="figure" style="text-align: center"><span id="fig:building-blocks"></span>
 <img src="figures/13_ml_abstraction_crop.png" alt="Basic building blocks of the **mlr** package. Source: [openml.github.io](http://openml.github.io/articles/slides/useR2017_tutorial/slides_tutorial_files/ml_abstraction-crop.png)." width="862" />
@@ -503,22 +501,56 @@ Figure 13.4: Basic building blocks of the <strong>mlr</strong> package. Source: 
 coords =<span class="st"> </span>lsl[, <span class="kw">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>)]
 <span class="co"># select response and predictors to use in the modeling</span>
 data =<span class="st"> </span>dplyr::<span class="kw">select</span>(lsl, -x, -y)
+coords =<span class="st"> </span>lsl[, <span class="kw">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>)]
 <span class="co"># create task</span>
 task =<span class="st"> </span><span class="kw">makeClassifTask</span>(<span class="dt">data =</span> data, <span class="dt">target =</span> <span class="st">&quot;lslpts&quot;</span>,
                        <span class="dt">positive =</span> <span class="st">&quot;TRUE&quot;</span>, <span class="dt">coordinates =</span> coords)</code></pre></div>
-<p><code>makeLearner()</code> determines the statistical learning method to use. All classification <strong>learners</strong> start with <code>classif.</code> and all regression learners with <code>regr.</code> (see <code>?makeLearners</code> for more details). <code>listLearners()</code> helps to find out about all available learners and from which package <strong>mlr</strong> imports them. For a specific task, we can run:</p>
+<p><code>makeLearner()</code> determines the statistical learning method to use. All classification <strong>learners</strong> start with <code>classif.</code> and all regression learners with <code>regr.</code> (see <code>?makeLearners</code> for more details). <code>listLearners()</code> helps to find out about all available learners and from which package <strong>mlr</strong> imports them (Table <a href="spatial-cv.html#tab:lrns">13.1</a>). For a specific task, we can run:</p>
 <!-- no idea, why render_book() fails frequently because function listLearners() cannot be found...:
 I also have this issue (RL - so not running and hardcoding result)-->
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lrns =<span class="st"> </span><span class="kw">listLearners</span>(task)
-dplyr::<span class="kw">select</span>(lrns, class, name, package) %&gt;%
-<span class="st">  </span>head
-<span class="co">#&gt;                 class                         name package</span>
-<span class="co">#&gt; 1    classif.binomial          Binomial Regression   stats</span>
-<span class="co">#&gt; 2 classif.featureless       Featureless classifier     mlr</span>
-<span class="co">#&gt; 3         classif.fnn     Fast k-Nearest Neighbour     FNN</span>
-<span class="co">#&gt; 4         classif.knn           k-Nearest Neighbor   class</span>
-<span class="co">#&gt; 5         classif.lda Linear Discriminant Analysis    MASS</span>
-<span class="co">#&gt; 6      classif.logreg          Logistic Regression   stats</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">listLearners</span>(task)</code></pre></div>
+<table>
+<caption><span id="tab:lrns">Table 13.1: </span>Sample of available learners in the <strong>mlr</strong> package.</caption>
+<thead>
+<tr class="header">
+<th align="left">class</th>
+<th align="left">name</th>
+<th align="left">package</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">classif.binomial</td>
+<td align="left">Binomial Regression</td>
+<td align="left">stats</td>
+</tr>
+<tr class="even">
+<td align="left">classif.featureless</td>
+<td align="left">Featureless classifier</td>
+<td align="left">mlr</td>
+</tr>
+<tr class="odd">
+<td align="left">classif.fnn</td>
+<td align="left">Fast k-Nearest Neighbour</td>
+<td align="left">FNN</td>
+</tr>
+<tr class="even">
+<td align="left">classif.knn</td>
+<td align="left">k-Nearest Neighbor</td>
+<td align="left">class</td>
+</tr>
+<tr class="odd">
+<td align="left">classif.lda</td>
+<td align="left">Linear Discriminant Analysis</td>
+<td align="left">MASS</td>
+</tr>
+<tr class="even">
+<td align="left">classif.logreg</td>
+<td align="left">Logistic Regression</td>
+<td align="left">stats</td>
+</tr>
+</tbody>
+</table>
 <p>This yields all learners able to model two-class problems (landslide yes or no). We opt for the binomial classification method from the <strong>stats</strong> package which we already have used in section <a href="spatial-cv.html#conventional-model">13.3</a> and is implemented as <code>classif.binomial</code> in <strong>mlr</strong>. Additionally, we have to specify the link-function. We choose the <code>logit</code> link which is also the default when using the <code>binomial</code> family in <code>glm</code> (run <code>binomial()</code> to verify). <code>predict.type</code> determines the type of the prediction with <code>prob</code> resulting in the predicted probability for landslide occurrence between 0 and 1.<a href="#fn64" class="footnoteRef" id="fnref64"><sup>64</sup></a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lrn =<span class="st"> </span><span class="kw">makeLearner</span>(<span class="dt">cl =</span> <span class="st">&quot;classif.binomial&quot;</span>,
                   <span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>,
@@ -549,7 +581,7 @@ identical(fit$coefficients, mlr_fit$coefficients)
 #> [1] TRUE
 ```
 -->
-<p>In the beginning, it might seem a bit tedious to learn the <strong>mlr</strong> interface for modeling. But remember that one only has to learn one single interface to run 169 learners (<strong>mlr</strong> package version: 2.13). Further advantages are the easy parallelization of resampling techniques and the tuning of machine learning hyperparameters, also spatially, in an inner fold (see section <a href="spatial-cv.html#svm">13.5.2</a>). Most importantly, (spatial) resampling in <strong>mlr</strong> is really easy, and only requires two more steps: specifying a resampling method and running it. We will use a 100-repeated 5-fold spatial CV. This ensures that a spatial partitioning with five partitions is chosen based on the provided coordinates in our <code>task</code> and that the partitioning is repeated 100 times. <!-- you could link to the arxiv preprint of my paper--> Please note that package <strong>sperrorest</strong> initially implemented spatial cross-validation in R <span class="citation">(A. Brenning <a href="#ref-brenning_spatial_2012">2012</a><a href="#ref-brenning_spatial_2012">b</a>)</span>. In the meantime, its functionality was integrated into the <strong>mlr</strong> package which is the reason why we are using <strong>mlr</strong> <span class="citation">(Schratz et al. <a href="#ref-schratz_performance_nodate">2018</a>)</span>.<a href="#fn65" class="footnoteRef" id="fnref65"><sup>65</sup></a></p>
+<p>In the beginning, it might seem a bit tedious to learn the <strong>mlr</strong> interface for modeling. But remember that one only has to learn one single interface to run 169 learners (<strong>mlr</strong> package version: 2.13). Further advantages are the easy parallelization of resampling techniques and the tuning of machine learning hyperparameters, also spatially, in an inner fold (see section <a href="spatial-cv.html#svm">13.5.2</a>). Most importantly, (spatial) resampling in <strong>mlr</strong> is really easy, and requires only two more steps: specifying a resampling method and running it. We will use a 100-repeated 5-fold spatial CV. This ensures that a spatial partitioning with five partitions is chosen based on the provided coordinates in our <code>task</code> and that the partitioning is repeated 100 times. <!-- you could link to the arxiv preprint of my paper--> Please note that package <strong>sperrorest</strong> initially implemented spatial cross-validation in R <span class="citation">(A. Brenning <a href="#ref-brenning_spatial_2012">2012</a><a href="#ref-brenning_spatial_2012">b</a>)</span>. In the meantime, its functionality was integrated into the <strong>mlr</strong> package which is the reason why we are using <strong>mlr</strong> <span class="citation">(Schratz et al. <a href="#ref-schratz_performance_nodate">2018</a>)</span>.<a href="#fn65" class="footnoteRef" id="fnref65"><sup>65</sup></a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">resampling =<span class="st"> </span><span class="kw">makeResampleDesc</span>(<span class="dt">method =</span> <span class="st">&quot;SpRepCV&quot;</span>, <span class="dt">folds =</span> <span class="dv">5</span>, 
                               <span class="dt">reps =</span> <span class="dv">100</span>)</code></pre></div>
 <p>To execute the spatial resampling, we run <code>resample()</code> using the specified learner, task, resampling strategy and of course the performance measure, here the AUROC. This takes a short while because we ask R to compute the AUROC from 500 models. Setting a seed ensures that when re-running the code the same spatial partitions will be used, hence the same result will be reproduced.</p>
@@ -671,7 +703,7 @@ result =<span class="st"> </span>mlr::<span class="kw">resample</span>(<span cla
 <span class="co"># saveRDS(result, &quot;svm_sp_sp_rbf_50it.rds&quot;)</span></code></pre></div>
 <p>Running 125,000 models took around 37 minutes on our server (while using 24 cores). Note that runtime depends on many aspects: CPU speed, the selected algorithm, the selected number of cores and the dataset.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Exploring the results</span>
-<span class="co"># run time in minutes</span>
+<span class="co"># runtime in minutes</span>
 <span class="kw">round</span>(result$runtime /<span class="st"> </span><span class="dv">60</span>, <span class="dv">2</span>)
 <span class="co">#&gt; [1] 37.4</span></code></pre></div>
 <p>Even more important than the runtime is the final aggregated AUROC, i.e. the model’s ability to discriminate the two classes.</p>
