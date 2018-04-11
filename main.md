@@ -275,7 +275,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve6e8ef02f3e8a8f13
+preserve94a68c7f526dabf9
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3113,7 +3113,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservea71d85562bb17dde
+preserve54af225ac28bd2fe
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6001,7 +6001,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve8ee21ef8f5f9d9ae
+preserve85d6e1ab207eef37
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6617,7 +6617,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve210d7185137323d4
+preserveda6b746424986695
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6948,20 +6948,16 @@ The default color scheme can be changed using the `palette` argument.
 It expects a vector of colors or a new color palette name, which can be selected interactively with `tmaptools::palette_explorer()`.
 Decision about selected color palette should depend largely on the input data type and a map purpose.
 While this could be an uneasy decision to be made, we can give some advice.
-There are three main groups of color palettes - categorical, sequential and diverging, and each of them serves a different purpose.
-Categorical palettes are used for categorical data without any particular order, for example names of states or land cover categories.
+There are three main groups of color palettes - categorical, sequential and diverging (Figure \@ref(fig:colpal)), and each of them serves a different purpose.
+The first group is used for categorical data without any particular order, for example names of states or land cover categories.
 Their colors need to be easy to distinguish and they should, if possible, reflect the most common color association.
 Therefore, for most cases you should not experiment with red rivers and green deserts.
-You also need to know the limitation of human perception - while it is usually easy to distinguish several colors from each other, this task become more and more difficult with a growing number of categories.
-<!-- expand and test how tmap behaves with a large number of classes -->
-<!-- the `col = "MAP_COLORS"` argument -->
-<!-- sequential -->
+You also need to know the limitation of human perception - while it is usually easy to distinguish several colors from each other, this task become more and more difficult with a growing number of categories.^[The `col = "MAP_COLORS"` argument can be used in situations with a large number of unique object (for example a map of individual countries).]
 Sequential palettes are used for the maps of quantitative data to show the order of values.
 It is usually presented by changes in color brightness either for a single (e.g. the `Blues` palette going from light blue to dark blue) or multi-hue combination (e.g. the `YlGn` palette going from light yellow to dark green).
 Usually, lower values are represented by light colors and darker colors indicate larger values.
-<!-- diverging -->
 Diverging palettes are used to represent the departure of values from a reference point.
-For example, this mid-point could be a temperature of zero degree Celsius, median of a household income, probability of 50% for some event or a sex ratio of 1.
+For example, this mid-point could be a temperature of zero degree Celsius, median of a household income, probability of 50% for a drought event or a sex ratio of 1.
 These type of palettes are usually created by joining two single color sequential palettes with the darker colors at each end.
 <!-- one more color example -->
 <!-- mention bivariate color maps -->
@@ -6973,50 +6969,38 @@ These type of palettes are usually created by joining two single color sequentia
 <!-- how to reverse palettes with - -->
 
 <div class="figure" style="text-align: center">
-<img src="figures/colpal-1.png" alt="Examples of categorical, sequential and diverging palletes." width="576" />
-<p class="caption">(\#fig:colpal)Examples of categorical, sequential and diverging palletes.</p>
+<img src="figures/colpal-1.png" alt="Examples of categorical, sequential and diverging palettes." width="576" />
+<p class="caption">(\#fig:colpal)Examples of categorical, sequential and diverging palettes.</p>
 </div>
 
-<!-- Show and describe three groups of colors to be used on the map:  -->
-<!-- - categorical (+ info about automatic tmap option on factor/character, but also style = cat) -->
-<!-- - sequential -->
-<!-- - diverging (show example of above/below median) -->
-<!-- Give pros and cons of these methods and provide some examples. -->
-<!-- Mention colorblindness and bw printing. -->
-<!-- Finally, give links/references to some resources (e.g. colorbrewer). -->
-
-The `style` argument refers to the method by which continuous variables are plotted on the map.
-<!-- broken into discrete bins for plotting on the map-->
-The package offers many options for specifying bins, in addition to setting `breaks` manually, as we have already seen in the previous subsection.
-<!--check this statement-->
-<!-- Different binning methods are with `style` argument in functions that can convert numeric variables into colors such as `tm_fill()`. -->
-Some of the most useful binning methods are illustrated in Figure \@ref(fig:break-styles).
+The **tmap** package offers many methods for specifying how variables are plotted on the map, in addition to setting `breaks` manually as we have already seen in this subsection.
+They are set with the `style` argument and some of the most useful methods are illustrated in Figure \@ref(fig:break-styles).
 
 <div class="figure" style="text-align: center">
-<img src="figures/break-styles-1.png" alt="Illustration of different binning methods set using the syle argument in tmap." width="576" />
-<p class="caption">(\#fig:break-styles)Illustration of different binning methods set using the syle argument in tmap.</p>
+<img src="figures/break-styles-1.png" alt="Illustration of different binning methods set using the style argument in tmap." width="576" />
+<p class="caption">(\#fig:break-styles)Illustration of different binning methods set using the style argument in tmap.</p>
 </div>
 
 <!-- explain and describe classification intervals -->
-The default value of the `style` is `pretty`.
-It automatically rounds categories' breaks values and evenly spaces them.
+The default value of `style` is `pretty`.
+It automatically rounds breaks values and evenly spaces them.
 The `equal` style divides the range of input values into subranges of equal range.
 This style is often used on data with regular distribution of values and common values range, such as percentages.
 On the other hand, it could produce categories with a large number of elements (points, areas) and those without any observation.
 To have the same number of elements in each category, one can use the `quantile` style. 
 It is useful for ordinal data <!--examples--> and never produce empty classes. 
-This style, however, could gather very different values in the same category.
+This style, however, could have very different values in the same category.
 Natural breaks method, also called `jenks`, tries to identify groups of similar values in the data.
 Breaks between classes are created to maximize the differences between categories. 
 This method provides classes that reflect the values distribution, but in the same creates classes that could be meaningful only for this dataset.
-Categorical legend could be not the most suitable when presenting a large number of objects (e.g. points or polygons) or continuous fields (e.g. continuous rasters).
+Importantly, categorical legends described above could be not the most suitable when presenting a large number of objects (e.g. points or polygons) or continuous fields (e.g. continuous rasters).
 In this situations, `cont` or `order` can be used. 
 The former is appropriate for variables with evenly distributed values, while the latter works well when the distribution of values is skewed (for example, only a few raster cells have very large values).
 Finally, the `cat` style should be used to represent categorical values.
-It assures that unique values will be presented by its own category, ane therefore color.
+It assures that ech unique value will be presented by its own category, and therefore color.
 <!-- references for more info -->
 
-### Layouts and styles
+### Layouts
 
 Layout refers not to the map itself but to its wider surroundings.
 Color settings relate to the palette and break-points used affect how the map looks.
