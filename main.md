@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-04-10'
+date: '2018-04-11'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-04-10 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-04-11 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -275,7 +275,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve64e2ce61bfb8903e
+preserve4a0650e62776d585
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3113,7 +3113,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve4ffbe2372f631682
+preserve3b886215d281f5a5
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6001,7 +6001,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve2498cdc66cc1b2b1
+preserve8fae062d6f579191
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6617,7 +6617,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve95e8efb363d31e66
+preserved21c7f33c5f31895
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -8841,10 +8841,9 @@ resampling = makeResampleDesc(method = "SpRepCV", folds = 5,
 
 To execute the spatial resampling, we run `resample()` using the specified learner, task, resampling strategy and of course the performance measure, here the AUROC.
 This takes a short while because we ask R to compute the AUROC from 500 models. 
+Setting a seed ensures that when re-running the code the same spatial partitions will be used, hence the same result will be reproduced.
 
-<!-- maybe explain the seed setting here (not everyone might be aware)
-
-I just thought it might be worth showing the differences between an error on the fold level and repetition level but aggregating to the rep levle is not a one-liner in mlr -->
+<!-- I just thought it might be worth showing the differences between an error on the fold level and repetition level but aggregating to the rep levle is not a one-liner in mlr -->
 
 
 
@@ -8885,10 +8884,10 @@ As expected, the spatially cross-validated result yields lower AUROC values on a
 In the beginning we have already distinguished the field of statistics from the field of machine learning.
 As a reminder we define machine learning here again with the words of [Jason Brownlee](https://machinelearningmastery.com/linear-regression-for-machine-learning/):
 
-> Machine learning, more specifically the field of predictive modeling is primarily concerned with minimizing the error of a model or making the most accurate predictions possible, at the expense of explainability. In applied machine learning we will borrow, reuse and steal algorithms from many different fields, including statistics and use them towards these ends.
+> Machine learning, more specifically the field of predictive modeling is primarily concerned with minimizing the error of a model or making the most accurate predictions possible, at the expense of explainability.
+In applied machine learning we will borrow, reuse and steal algorithms from many different fields, including statistics and use them towards these ends.
 
-In the previous section (section \@ref(glm)) we have used a GLM for predicting landslide susceptibility, in this section we will introduce the support vector machine (SVM) for the same purpose.
-It is beyond the scope of this book to explain exactly what a SVM is.
+In the previous section (section \@ref(glm)) we have used a GLM for predicting landslide susceptibility, now we will introduce the support vector machine (SVM) for the same purpose.
 In short, SVMs are trying to find the best possible hyperplanes to separate classes (in a classification case).
 Kernels with specific hyperparameters allow for non-linear boundaries between classes [@james_introduction_2013].
 Hyperparameters should not be confused with coefficients of parametric models, which are sometimes also referred to as parameters.^[For a more detailed description of the difference between coefficients and hyperparameters, have a look at this [machine mastery blog](https://machinelearningmastery.com/difference-between-a-parameter-and-a-hyperparameter/).]
@@ -8897,8 +8896,7 @@ Optimal hyperparameters are usually determined within a defined range with the h
 This is called hyperparameter tuning.
 Some SVM implementations come with an automated tuning which is usually based on random sampling (see upper row of Figure \@ref(fig:partitioning)) such as **kernlab**'s `ksvm()`.
 This is useful in the case of non-spatial data but of less use in the case of spatial data where spatial tuning should be preferred.
-<!-- somethings missing here after "automated"-->
-Therefore, we will make sure to replace automated by spatial hyperparameter tuning in the following.
+Therefore, we will make sure to explicitly use spatial hyperparameter tuning instead of the automated tuning.
 
 Before defining the tuning, we have to set up the **mlr** building blocks for the SVM as introduced in the previous section (section \@ref(glm)), i.e. we define a task, a learner and a resampling strategy.
 The task remains the same, hence we can use the one already defined in the previous section (section \@ref(glm)), namely `task`.
@@ -8934,8 +8932,8 @@ Again we will use a 100-repeated 5-fold spatial CV.
 
 
 ```r
-# outer resampling loop
-outer = makeResampleDesc("SpRepCV", folds = 5, reps = 100)
+# performance estimation level
+perf_level = makeResampleDesc("SpRepCV", folds = 5, reps = 100)
 ```
 
 So far, this is exactly the same as we have done when using the GLM (section \@ref(glm)), however, now we need to additionally tune the SVM hyperparameters.
@@ -8943,11 +8941,11 @@ Using the same data for the performance assessment and the tuning would potentia
 To avoid this we will use a nested spatial CV.
 
 <div class="figure" style="text-align: center">
-<img src="figures/13_cv.png" alt="Visual representation of inner and outer folds in spatial and non-spatial cross-validation. Permission for reusing the figure was kindly granted by Patrick Schratz [@schratz_performance_nodate]." width="500" />
-<p class="caption">(\#fig:inner-outer)Visual representation of inner and outer folds in spatial and non-spatial cross-validation. Permission for reusing the figure was kindly granted by Patrick Schratz [@schratz_performance_nodate].</p>
+<img src="figures/13_cv.png" alt="Visual representation of the hyperparameter tuning and performance estimation levels in spatial and non-spatial cross-validation. Permission for reusing the figure was kindly granted by Patrick Schratz [@schratz_performance_nodate]." width="500" />
+<p class="caption">(\#fig:inner-outer)Visual representation of the hyperparameter tuning and performance estimation levels in spatial and non-spatial cross-validation. Permission for reusing the figure was kindly granted by Patrick Schratz [@schratz_performance_nodate].</p>
 </div>
 
-This means that we split each fold again into five spatially disjoint subfolds which are used to determine the optimal hyperparameters (`inner` object in the code chunk below; see Figure \@ref(fig:inner-outer) for a visual representation).
+This means that we split each fold again into five spatially disjoint subfolds which are used to determine the optimal hyperparameters (`tune_level` object in the code chunk below; see Figure \@ref(fig:inner-outer) for a visual representation).
 To find the optimal hyperparameter combination we here fit 50 models in each of these subfolds with randomly selected hyperparameter values (`ctrl` object in the code chunk below).
 Additionally, we restrict the randomly chosen values to a predefined tuning space (`ps` object).
 The latter was chosen with values recommended in the literature [@schratz_performance_nodate].
@@ -8961,14 +8959,17 @@ Questions Pat:
 - trafo-function?
 ## is just a different approach of writing the limits. You could also directly write 2^{-15}. Makes it easier to see the limits at the first glance. Personal preference though
 - 125,000 models
-- mc.set.seed = TRUE -> make sure that the partitioning remains the same in each thread
+-->
+
+<!--
+talk in person (see also exercises):
 - can I compare the mean AUROC of the GLM and the SVM when using the same seed? Or is seeding not strictly necessary? I mean, ok, the partitions vary a bit but overall...
 -->
 
 
 ```r
 # five spatially disjoint partitions
-inner = makeResampleDesc("SpCV", iters = 5)
+tune_level = makeResampleDesc("SpCV", iters = 5)
 # use 50 randomly selected hyperparameters
 ctrl = makeTuneControlRandom(maxit = 50)
 # define the outer limits of the randomly selected hyperparameters
@@ -8983,7 +8984,7 @@ Finally, we modify our learner `lrn_ksvm` in accordance with all the characteris
 
 ```r
 wrapped_lrn_ksvm = makeTuneWrapper(learner = lrn_ksvm, 
-                                   resampling = inner,
+                                   resampling = tune_level,
                                    par.set = ps,
                                    control = ctrl, 
                                    show.info = TRUE,
@@ -8992,18 +8993,16 @@ wrapped_lrn_ksvm = makeTuneWrapper(learner = lrn_ksvm,
 
 <!-- I understand what you mean there but I think its confusing for the average reader. 
 # Here my take: "Overall, this set up implies that we ask R to fit 250 models to find the best hyperparameters for each fold. Doing this 5 times (for each fold) sums up to 1250 (250 \* 5) models per repetition. Since we are doing 100 repetitions, we are fitting a total of 125000 models just to find the optimal hyperparameters for each respective fold. (Note that in this count we do not count the models fitted with the optimal hyperparameters at the performance estimation level, which are additionally 500 (5 folds * 100 reps))."" -->
-Overall, this set up implies that we ask R to fit 250 models to determine the optimal hyperparameters which are then used five times, once for each fold (see also Figure \@ref(fig:partitioning)), for the performance assessment in the first repetition of the outer resampling loop.
-This amounts to 250 * 5 models for one repetition
-Since we are requesting 100 repetitions this leads to a total of 125,000 models. 
-
-
+Overall, this set up implies that we ask R to fit 250 models to determine the optimal hyperparameters for one fold. 
+Repeating this for each fold, we end up with 1250 (250 \* 5) models for each repetition.
+Sence we are doing 100 repetitions, we are fitting a total of 125,000 models just to finde the optimal hyperparameters (Figure \@ref(fig:partitioning)).
+These are finally used in the performance estimation level, which requires the fitting of  another 500 models (5 folds \* 100 repetitions; Figure \@ref(fig:partitioning)). 
 
 This is computationally quite demanding even with the small dataset used here.
 So before starting the actual resampling it would be wise to reduce runtime with the help of a parallelization approach. 
 In general, multicore processing is easier on Unix-based systems than on Windows systems.
 <!-- "cloud development is done on linux servers" is somehow a strange read that I cannot relate really. Maybe sth like: "Parallelilaztion and cloud-computing are most often done on Linux operating systems nowadays. This has some reasons, one of them that directly affects us is that only on Linux systems we can set a parallel seed in R that makes the parallel processes reproducible [this is still an assumption, I will check on that!]"-->
-In fact, cloud computing is usually done and developed on Linux servers.
-Therefore, we will present how to do nested cross-validation using a parallelization approach working only under Unix-based systems.^[Note also that the `mc.set.seeds` parameter used later on is only available on Unix-based systems].
+Here, we will present a parallelization approach working only under Unix-based systems.^[Note also that the `mc.set.seeds` parameter used later on is only available on Unix-based systems].
 
 Windows users have at least four options:
 
@@ -9024,11 +9023,11 @@ configureMlr(on.learner.error = "warn", on.error.dump = TRUE)
 
 To start the parallelization, we set the `mode` to `multicore` which will use `mclapply()` in the background on a single machine.^[Check out `?parallelStart` for further modes and the **parallelMap** [github page](https://github.com/berndbischl/parallelMap) for more information on the unified interface to popular parallelization back-ends.
 Note also that `mclapply()` only supports multicore processing on Unix-based systems.]
-`level` defines the level where to enable the parallelization with `mlr.tuneParams` determining that the inner resampling fold should be parallelized, i.e. the hyperparameter tuning (see lower left part of Figure \@ref(fig:inner-outer); and have a look at `parallelMap::parallelGetRegisteredLevels()` for supported levels as well as at the **mlr** [parallelization tutorial](https://mlr-org.github.io/mlr-tutorial/release/html/parallelization/index.html#parallelization-levels)).
+`level` defines the level where to enable the parallelization with `mlr.tuneParams` determining that the hyperparameter tuning level should be parallelized (see lower left part of Figure \@ref(fig:inner-outer); and have a look at `parallelMap::parallelGetRegisteredLevels()` for supported levels as well as at the **mlr** [parallelization tutorial](https://mlr-org.github.io/mlr-tutorial/release/html/parallelization/index.html#parallelization-levels)).
 <!-- no one ones and cares how much cores you had available there, so proably just add a note: "make sure to check your numbers of cores on the server before setting a number. You will most likely not be the only user." Der automatisierte call zu 1/2 of avail cores ist gut!-->
 Probably we are not the only ones using the server, therefore we are friendly and will use only half of its cores which in our case corresponds to 24 (`cpus` parameter).
 <!--no, the partitions are created before the parallelization by the normal set.seed() call. mc.set.seed makes sure that the randomly chosen hyperparameters for the tuning are reproducible. These will first set within the parallelization.-->
-To make sure that the same partitions are used in each parallelized thread, we set `mc.set.seed` to `TRUE`.
+Setting `mc.set.seed` to `TRUE` ensures that the randomly chosen hyperparameters can be reproduced when running the code again.
 
 
 ```r
@@ -9041,10 +9040,9 @@ parallelStart(mode = "multicore",
 ```
 
 Finally, we are all set up for conducting the nested spatial CV.
-Specifying the `resample()` parameters follows the exact same procedure as presented when using a GLM with the only difference that we additionally tell it to give back the hyperparameter tuning results (`extract` parameter).
-<!-- # Add: This is important if we could like to do a follow-up analysis on the hyperparameter tuning-->
+Specifying the `resample()` parameters follows the exact same procedure as presented when using a GLM with the only difference that we additionally tell it to give back the hyperparameter tuning results (`extract` parameter), which is important if we plan follow-up analyses on the hyperparameter tuning.
 After the processing, it is good practice to explicitly stop the parallelization which is exactly what `parallelStop()` is doing.
-We also want to save the resulting `result` object that contains all results to disk to not have to recompute everything (`saveRDS()`).
+Finally, it is a good idea to save the output object (`result`) to disk in case we would like to use it another R session again.
 
 
 ```r
@@ -9057,14 +9055,13 @@ result = mlr::resample(learner = wrapped_lrn_ksvm,
 # stop parallelization
 parallelStop()
 # save your result, e.g.:
-# saveRDS(result, "svm_sp_sp_rbf_50it.rda")
+# saveRDS(result, "svm_sp_sp_rbf_50it.rds")
 ```
 
 
 
-Running 25,000 models using 24 cores took around 37 minutes.
+Running 125,000 models took around 37 minutes on our server (while using 24 cores).
 Note that runtime depends on many aspects: CPU speed, the selected algorithm, the selected number of cores and the dataset.
-You might first run only repetition and check its runtime before scaling it up to 100 repetitions.
 
 
 ```r
@@ -9089,13 +9086,10 @@ mean(result$measures.test$auc)
 
 It appears that the GLM (aggregated AUROC was 0.788) is slightly better than the SVM in this specific case.
 However, using more than 50 iterations in the random search would probably yield hyperparameters that result in models with a better AUROC [@schratz_performance_nodate].
-<!-- Is the footnote here not a bit unrelated to the meaning of the sentence (increasing random search iterations)? -->
-On the other hand, increasing the number of random search iterations would also increase the total number of models to be fitted which then leads to an increased runtime.^[Have also a look at @james_introduction_2013 for a short discussion on the simililarity of logistic regression and SVM.]
+On the other hand, increasing the number of random search iterations would also increase the total number of models to be fitted which then leads to an increased runtime.
 
 Finally, we can have a look at the estimated optimal hyperparameters for each fold at the performance estimation level.
-Note that the AUROC shown here refers to the estimated value during tuning.
-This estimate is not included in the calculation of the overall performance.
-It is usually higher than the value received from the fold at the performance estimation level to which the hyperparameters have been applied to.
+Note that the AUROC of the best hyperparameter combination is usually better than the AUROC computed at the performance estimation level with the help of these hyperparameters.
 
 
 ```r
@@ -9106,7 +9100,7 @@ result$extract[[1]]
 #> Op. pars: C=0.458; sigma=0.023
 #> auc.test.mean=0.823
 # here one can observe that the AUROC of the tuning test data is usually higher
-# than for the model in the outer fold
+# than for the model in the performance estimation level
 result$measures.test[1, ]
 #>   iter   auc
 #> 1    1 0.799
@@ -9121,14 +9115,12 @@ Spatial data is statistically often not independent due to spatial autocorrelati
 Therefore, we introduced spatial CV, which reduces the bias introduced by spatial autocorrelation. 
 The **mlr** package makes it easy to use (spatial) resampling techniques in combination with the most popular statistical learning techniques including, of course, linear regression, but also semi-parametric models (e.g., generalized additive models) and typical machine learning techniques such as random forests, support vector machines or boosted regression trees [@bischl_mlr:_2016;@schratz_performance_nodate].
 Machine learning algorithms often require the tuning of so-called hyperparameters.
-<!-- I would leave the footnote out here or rephrase it. It somehow reads that computation times is not increased anymore when we do hyperparameter tuning -->
-Finding an optimal set of hyperparameters requires the fitting of thousands of models which substantially increases computing time.^[Naturally, computation time additionally increases with the size of the input data.]
+Finding an optimal set of hyperparameters requires the fitting of thousands of models which substantially increases computing time.
 To reduce computing time, **mlr** makes parallelization easy through various supported methods.
 
-<!-- maybe directly link to the spatial data chapter? https://mlr-org.github.io/mlr/articles/tutorial/devel/handling_of_spatial_data.html-->
 Finally, for more details please check out also the fantastic **mlr** online documentation:
 
-- https://mlr-org.github.io/mlr-tutorial/
+- https://mlr-org.github.io/mlr-tutorial/, and specifically https://mlr-org.github.io/mlr/articles/tutorial/devel/handling_of_spatial_data.html
 - https://github.com/mlr-org/mlr/wiki/user-2015-tutorial
 
 ## Acknowledgments
@@ -9142,15 +9134,18 @@ Keep all landslide initiation points and 175 randomly selected non-landslide poi
 1. Use the derived terrain attribute rasters in combination with a GLM to make a spatial prediction map similar to Figure \@ref(fig:lsl-susc).
 1. Compute a 100-repeated 5-fold non-spatial cross-validation and spatial CV based on the GLM learner and compare the AUROC values from both resampling strategies with the help of boxplots (see Figure \@ref(fig:boxplot-cv)).
 Hint: You need to specify a non-spatial task and a non-spatial resampling strategy.
-Before running the spatial cross-validation for both tasks set a seed to make sure that both use the same partitions which in turn guarantees comparability.
+<!-- @Patrick: talk in person; but I think this step is not necessary since spatial and non-spatial partitions must be different -->
+<!-- Before running the spatial cross-validation for both tasks set a seed to make sure that both use the same partitions which in turn guarantees comparability.-->
 1. Model landslide susceptibility using a quadratic discriminant analysis [QDA, @james_introduction_2013].
 Assess the predictive performance (AUROC) of the QDA. 
 What is the a difference between the spatially cross-validated mean AUROC value of the QDA and the GLM?
-Hint: Before running the spatial cross-validation for both learners set a seed to make sure that both use the same partitions which in turn guarantees comparability.
+<!-- so I think, setting a seed here makes sure that the same spatial partitions are used for both models, right?-->
+Hint: Before running the spatial cross-validation for both learners set a seed to make sure that both use the same spatial partitions which in turn guarantees comparability.
 1. Run the SVM without tuning the hyperparameters.
 Use the `rbfdot` kernel with $\sigma$ = 1 and *C* = 1. 
 Leaving the hyperparameters unspecified in **kernlab**'s `ksvm()` would otherwise initialize an automatic non-spatial hyperparameter tuning.
 For a discussion on the need for (spatial) tuning of hyperparameters please refer to @schratz_performance_nodate.
+<!-- Possibly adjust the exercise, random forests take forever-->
 1. Model landslide susceptibility with the help of **mlr** using a random forest model as implemented by the **ranger** package.
 Apply a nested spatial CV.
 Parallelize the tuning level.
