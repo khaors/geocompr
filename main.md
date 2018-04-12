@@ -275,7 +275,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservecaab3fe085208061
+preserve7ccb7d5dc039776f
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3113,7 +3113,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve029459154507972c
+preserve16c688fd77aa2855
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6001,7 +6001,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserveb8d63f2c37e8888b
+preserveecbfe66296c5a6ab
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6617,7 +6617,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve353fdb9125a5f4e1
+preserveedd8a99e15acc786
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -8443,6 +8443,7 @@ library(sf)
 library(raster)
 library(tidyverse)
 library(mlr)
+library(parallelMap)
 library(pROC)
 library(RSAGA)
 ```
@@ -8517,6 +8518,7 @@ non_pts = filter(landslides, lslpts == FALSE)
 # select landslide points
 lsl_pts = filter(landslides, lslpts == TRUE)
 # randomly select 175 non-landslide points
+set.seed(11042018)
 non_ind = sample(1:nrow(non_pts), nrow(lsl_pts))
 # rowbind randomly selected non-landslide points and 
 # landslide points
@@ -8630,8 +8632,7 @@ However, it is possible to include spatial autocorrelation structures into model
 This is, however, beyond the scope of this book.
 Nevertheless, we give the interested reader some pointers where to look it up:
 
-1. The predictions of universal kriging are the predictions of a simple linear model plus the kriged model's residuals, i.e. spatially interpolated residuals [@bivand_applied_2013]. 
-2. Adding a spatial correlation (dependency) structure to a generalized least squares model  [`nlme::gls()`; @zuur_mixed_2009; @zuur_beginners_2017].  
+1. The predictions of universal kriging are the predictions of a simple linear model plus the kriged model's residuals, i.e. spatially interpolated residuals [@bivand_applied_2013]. 2. One can also add a spatial correlation (dependency) structure to a generalized least squares model  [`nlme::gls()`; @zuur_mixed_2009; @zuur_beginners_2017].  
 3. Finally, there are mixed-effect modeling approaches.
 Basically, a random effect imposes a dependency structure on the response variable which in turn allows for observations of one class to be more similar to each other than to those of another class [@zuur_mixed_2009]. 
 Classes can be, for example, bee hives, owl nests, vegetation transects or an altitudinal stratification.
@@ -8703,7 +8704,6 @@ However, many packages come with their own or a modified statistical learning in
 The **mlr** package acts as a meta- or umbrella-package providing a unified interface to the most popular statistical learning techniques available in R including classification, regression, survival analysis and clustering [@bischl_mlr:_2016].^[As pointed out in the beginning we will solely focus on supervised learning techniques in this chapter.]
 The standardized **mlr** interface is based on so-called basic building blocks (Figure \@ref(fig:building-blocks)).
 
-<!-- @Jakub: yes, I will ask if we me may use the figure -->
 <div class="figure" style="text-align: center">
 <img src="figures/13_ml_abstraction_crop.png" alt="Basic building blocks of the **mlr** package. Source: [openml.github.io](http://openml.github.io/articles/slides/useR2017_tutorial/slides_tutorial_files/ml_abstraction-crop.png)." width="862" />
 <p class="caption">(\#fig:building-blocks)Basic building blocks of the **mlr** package. Source: [openml.github.io](http://openml.github.io/articles/slides/useR2017_tutorial/slides_tutorial_files/ml_abstraction-crop.png).</p>
@@ -8776,11 +8776,14 @@ lrn = makeLearner(cl = "classif.binomial",
                   link = "logit",
                   predict.type = "prob",
                   fix.factors.prediction = TRUE)
-# run the following lines to find out from which package the
-# learner is taken and how to access the corresponding help 
-# file(s)
-# getLearnerPackages(learner)
-# helpLearner(learner)
+```
+
+To find out from which package the specified learner is taken and how to access the corresponding help pages, we can run:
+
+
+```r
+getLearnerPackages(lrn)
+helpLearner(lrn)
 ```
 
 <!--
@@ -8805,8 +8808,8 @@ identical(fit$coefficients, mlr_fit$coefficients)
 -->
 
 In the beginning, it might seem a bit tedious to learn the **mlr** interface for modeling.
-But remember that one only has to learn one single interface to run 169 learners (**mlr** package version: 2.13).
-Further advantages are the easy parallelization of resampling techniques and the tuning of machine learning hyperparameters, also spatially, in an inner fold (see section \@ref(svm)).
+But remember that one only has to learn one single interface to run more than 160 learners (**mlr** package version: 2.13).
+Further advantages are the easy parallelization of resampling techniques and the tuning of machine learning hyperparameters (see section \@ref(svm)).
 Most importantly, (spatial) resampling in **mlr** is really easy, and requires only two more steps: specifying a resampling method and running it.
 We will use a 100-repeated 5-fold spatial CV.
 This ensures that a spatial partitioning with five partitions is chosen based on the provided coordinates in our `task` and that the partitioning is repeated 100 times.
@@ -9012,8 +9015,9 @@ Setting `mc.set.seed` to `TRUE` ensures that the randomly chosen hyperparameters
 
 
 ```r
-# parallelize the tuning, i.e. the inner fold
+library(parallelMap)
 parallelStart(mode = "multicore", 
+              # parallelize the hyperparameter tuning level
               level = "mlr.tuneParams", 
               # just use half of the available cores
               cpus = round(parallel::detectCores() / 2),
@@ -9030,7 +9034,7 @@ Finally, it is a good idea to save the output object (`result`) to disk in case 
 set.seed(12345)
 result = mlr::resample(learner = wrapped_lrn_ksvm, 
                        task = task,
-                       resampling = outer,
+                       resampling = perf_level,
                        extract = getTuneResult,
                        measures = mlr::auc)
 # stop parallelization
@@ -9067,25 +9071,37 @@ mean(result$measures.test$auc)
 
 It appears that the GLM (aggregated AUROC was 0.788) is slightly better than the SVM in this specific case.
 However, using more than 50 iterations in the random search would probably yield hyperparameters that result in models with a better AUROC [@schratz_performance_nodate].
-On the other hand, increasing the number of random search iterations would also increase the total number of models to be fitted which then leads to an increased runtime.
+On the other hand, increasing the number of random search iterations would also increase the total number of models and thus runtime
 
 Finally, we can have a look at the estimated optimal hyperparameters for each fold at the performance estimation level.
-Note that the AUROC of the best hyperparameter combination is usually better than the AUROC computed at the performance estimation level with the help of these hyperparameters.
+
+Let us have a look at the best hyperparameter combination of the first fold of the first iteration.
+Remember that this already corresponds to 5 \* 50 models.
 
 
 ```r
 # winning hyperparameters of tuning step, i.e. the best combination out of 50 *
 # 5 models
-result$extract[[1]]
-#> Tune result:
-#> Op. pars: C=0.458; sigma=0.023
-#> auc.test.mean=0.823
-# here one can observe that the AUROC of the tuning test data is usually higher
-# than for the model in the performance estimation level
+result$extract[[1]]$x
+#> $C
+#> [1] 0.458
+#> 
+#> $sigma
+#> [1] 0.023
+```
+
+The estimated hyperparameters have been used for the first fold in the first iteration of the performance estimation level which resulted in the following AUROC value:
+
+
+```r
 result$measures.test[1, ]
 #>   iter   auc
 #> 1    1 0.799
 ```
+
+Please remember that we here have used spatial CV to assess how well a learning algorithm is able to generalize to unseen data.
+If one is interested in making a prediction map, one would tune the hyperparameters on the complete dataset. 
+Please refer to Chapter \@ref(eco) for an example.
 
 <!-- # maybe add a figure (boxplot) showing the differences between tuning and no tuning?-->
 

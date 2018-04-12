@@ -357,6 +357,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">library</span>(raster)
 <span class="kw">library</span>(tidyverse)
 <span class="kw">library</span>(mlr)
+<span class="kw">library</span>(parallelMap)
 <span class="kw">library</span>(pROC)
 <span class="kw">library</span>(RSAGA)</code></pre></div>
 <ul>
@@ -380,6 +381,7 @@ non_pts =<span class="st"> </span><span class="kw">filter</span>(landslides, lsl
 <span class="co"># select landslide points</span>
 lsl_pts =<span class="st"> </span><span class="kw">filter</span>(landslides, lslpts ==<span class="st"> </span><span class="ot">TRUE</span>)
 <span class="co"># randomly select 175 non-landslide points</span>
+<span class="kw">set.seed</span>(<span class="dv">11042018</span>)
 non_ind =<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span>:<span class="kw">nrow</span>(non_pts), <span class="kw">nrow</span>(lsl_pts))
 <span class="co"># rowbind randomly selected non-landslide points and </span>
 <span class="co"># landslide points</span>
@@ -451,8 +453,7 @@ Figure 13.2: Spatial prediction of landslide susceptibility using a GLM. CRS: UT
 </div>
 <p>Here, when making predictions we neglect spatial autocorrelation since we assume that on average the predictive accuracy remains the same with or without spatial autocorrelation structures. However, it is possible to include spatial autocorrelation structures into models as well as into the predictions. This is, however, beyond the scope of this book. Nevertheless, we give the interested reader some pointers where to look it up:</p>
 <ol style="list-style-type: decimal">
-<li>The predictions of universal kriging are the predictions of a simple linear model plus the kriged model’s residuals, i.e. spatially interpolated residuals <span class="citation">(Bivand, Pebesma, and Gómez-Rubio <a href="#ref-bivand_applied_2013">2013</a>)</span>.</li>
-<li>Adding a spatial correlation (dependency) structure to a generalized least squares model <span class="citation">(<code>nlme::gls()</code>; Zuur et al. <a href="#ref-zuur_mixed_2009">2009</a>; Zuur et al. <a href="#ref-zuur_beginners_2017">2017</a>)</span>.<br />
+<li>The predictions of universal kriging are the predictions of a simple linear model plus the kriged model’s residuals, i.e. spatially interpolated residuals <span class="citation">(Bivand, Pebesma, and Gómez-Rubio <a href="#ref-bivand_applied_2013">2013</a>)</span>. 2. One can also add a spatial correlation (dependency) structure to a generalized least squares model <span class="citation">(<code>nlme::gls()</code>; Zuur et al. <a href="#ref-zuur_mixed_2009">2009</a>; Zuur et al. <a href="#ref-zuur_beginners_2017">2017</a>)</span>.<br />
 </li>
 <li>Finally, there are mixed-effect modeling approaches. Basically, a random effect imposes a dependency structure on the response variable which in turn allows for observations of one class to be more similar to each other than to those of another class <span class="citation">(Zuur et al. <a href="#ref-zuur_mixed_2009">2009</a>)</span>. Classes can be, for example, bee hives, owl nests, vegetation transects or an altitudinal stratification. This mixed modeling approach assumes normal and independent distributed random intercepts.<a href="#fn62" class="footnoteRef" id="fnref62"><sup>62</sup></a> This can even be extended by using a random intercept that is normal and spatially dependent. For this, however, you will have to resort most likely to Bayesian modeling approaches since frequentist software tools are rather limited in this respect especially for more complex models <span class="citation">(Blangiardo and Cameletti <a href="#ref-blangiardo_spatial_2015">2015</a>; Zuur et al. <a href="#ref-zuur_beginners_2017">2017</a>)</span>.</li>
 </ol>
@@ -485,7 +486,6 @@ Figure 13.3: Spatial visualization of selected test and training observations fo
 <li>Make a prediction.</li>
 </ol>
 <p>However, many packages come with their own or a modified statistical learning interface. This is why users frequently have to spend a lot of time to figure out the specifics of each of these packages, how to carry out cross-validation and hyperparameter tuning or how to compare modeling results from different packages. The <strong>mlr</strong> package acts as a meta- or umbrella-package providing a unified interface to the most popular statistical learning techniques available in R including classification, regression, survival analysis and clustering <span class="citation">(Bischl et al. <a href="#ref-bischl_mlr:_2016">2016</a>)</span>.<a href="#fn63" class="footnoteRef" id="fnref63"><sup>63</sup></a> The standardized <strong>mlr</strong> interface is based on so-called basic building blocks (Figure <a href="spatial-cv.html#fig:building-blocks">13.4</a>).</p>
-<!-- @Jakub: yes, I will ask if we me may use the figure -->
 <div class="figure" style="text-align: center"><span id="fig:building-blocks"></span>
 <img src="figures/13_ml_abstraction_crop.png" alt="Basic building blocks of the **mlr** package. Source: [openml.github.io](http://openml.github.io/articles/slides/useR2017_tutorial/slides_tutorial_files/ml_abstraction-crop.png)." width="862" />
 <p class="caption">
@@ -555,12 +555,10 @@ I also have this issue (RL - so not running and hardcoding result)-->
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lrn =<span class="st"> </span><span class="kw">makeLearner</span>(<span class="dt">cl =</span> <span class="st">&quot;classif.binomial&quot;</span>,
                   <span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>,
                   <span class="dt">predict.type =</span> <span class="st">&quot;prob&quot;</span>,
-                  <span class="dt">fix.factors.prediction =</span> <span class="ot">TRUE</span>)
-<span class="co"># run the following lines to find out from which package the</span>
-<span class="co"># learner is taken and how to access the corresponding help </span>
-<span class="co"># file(s)</span>
-<span class="co"># getLearnerPackages(learner)</span>
-<span class="co"># helpLearner(learner)</span></code></pre></div>
+                  <span class="dt">fix.factors.prediction =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p>To find out from which package the specified learner is taken and how to access the corresponding help pages, we can run:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">getLearnerPackages</span>(lrn)
+<span class="kw">helpLearner</span>(lrn)</code></pre></div>
 <!--
 Having specified a learner and a task, we can train our model which basically executes the `glm()` command in the background for our task. 
 
@@ -581,7 +579,7 @@ identical(fit$coefficients, mlr_fit$coefficients)
 #> [1] TRUE
 ```
 -->
-<p>In the beginning, it might seem a bit tedious to learn the <strong>mlr</strong> interface for modeling. But remember that one only has to learn one single interface to run 169 learners (<strong>mlr</strong> package version: 2.13). Further advantages are the easy parallelization of resampling techniques and the tuning of machine learning hyperparameters, also spatially, in an inner fold (see section <a href="spatial-cv.html#svm">13.5.2</a>). Most importantly, (spatial) resampling in <strong>mlr</strong> is really easy, and requires only two more steps: specifying a resampling method and running it. We will use a 100-repeated 5-fold spatial CV. This ensures that a spatial partitioning with five partitions is chosen based on the provided coordinates in our <code>task</code> and that the partitioning is repeated 100 times. <!-- you could link to the arxiv preprint of my paper--> Please note that package <strong>sperrorest</strong> initially implemented spatial cross-validation in R <span class="citation">(A. Brenning <a href="#ref-brenning_spatial_2012">2012</a><a href="#ref-brenning_spatial_2012">b</a>)</span>. In the meantime, its functionality was integrated into the <strong>mlr</strong> package which is the reason why we are using <strong>mlr</strong> <span class="citation">(Schratz et al. <a href="#ref-schratz_performance_nodate">2018</a>)</span>.<a href="#fn66" class="footnoteRef" id="fnref66"><sup>66</sup></a></p>
+<p>In the beginning, it might seem a bit tedious to learn the <strong>mlr</strong> interface for modeling. But remember that one only has to learn one single interface to run more than 160 learners (<strong>mlr</strong> package version: 2.13). Further advantages are the easy parallelization of resampling techniques and the tuning of machine learning hyperparameters (see section <a href="spatial-cv.html#svm">13.5.2</a>). Most importantly, (spatial) resampling in <strong>mlr</strong> is really easy, and requires only two more steps: specifying a resampling method and running it. We will use a 100-repeated 5-fold spatial CV. This ensures that a spatial partitioning with five partitions is chosen based on the provided coordinates in our <code>task</code> and that the partitioning is repeated 100 times. <!-- you could link to the arxiv preprint of my paper--> Please note that package <strong>sperrorest</strong> initially implemented spatial cross-validation in R <span class="citation">(A. Brenning <a href="#ref-brenning_spatial_2012">2012</a><a href="#ref-brenning_spatial_2012">b</a>)</span>. In the meantime, its functionality was integrated into the <strong>mlr</strong> package which is the reason why we are using <strong>mlr</strong> <span class="citation">(Schratz et al. <a href="#ref-schratz_performance_nodate">2018</a>)</span>.<a href="#fn66" class="footnoteRef" id="fnref66"><sup>66</sup></a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">resampling =<span class="st"> </span><span class="kw">makeResampleDesc</span>(<span class="dt">method =</span> <span class="st">&quot;SpRepCV&quot;</span>, <span class="dt">folds =</span> <span class="dv">5</span>, 
                               <span class="dt">reps =</span> <span class="dv">100</span>)</code></pre></div>
 <p>To execute the spatial resampling, we run <code>resample()</code> using the specified learner, task, resampling strategy and of course the performance measure, here the AUROC. This takes a short while because we ask R to compute the AUROC from 500 models. Setting a seed ensures that when re-running the code the same spatial partitions will be used, hence the same result will be reproduced.</p>
@@ -684,8 +682,9 @@ ps =<span class="st"> </span><span class="kw">makeParamSet</span>(
 <p>Before starting the parallelization, we make sure that the processing continues even if one of the models throws an error by setting <code>on.learner.error</code> to <code>warn</code>. This is quite handy since we really want to avoid that the processing stops just because of one failed model after running a server at full capacity for several days. To inspect the failed models once the processing is completed, we dump them.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">configureMlr</span>(<span class="dt">on.learner.error =</span> <span class="st">&quot;warn&quot;</span>, <span class="dt">on.error.dump =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p>To start the parallelization, we set the <code>mode</code> to <code>multicore</code> which will use <code>mclapply()</code> in the background on a single machine.<a href="#fn69" class="footnoteRef" id="fnref69"><sup>69</sup></a> <code>level</code> defines the level where to enable the parallelization with <code>mlr.tuneParams</code> determining that the hyperparameter tuning level should be parallelized (see lower left part of Figure <a href="spatial-cv.html#fig:inner-outer">13.6</a>; and have a look at <code>parallelMap::parallelGetRegisteredLevels()</code> for supported levels as well as at the <strong>mlr</strong> <a href="https://mlr-org.github.io/mlr-tutorial/release/html/parallelization/index.html#parallelization-levels">parallelization tutorial</a>). <!-- no one ones and cares how much cores you had available there, so proably just add a note: "make sure to check your numbers of cores on the server before setting a number. You will most likely not be the only user." Der automatisierte call zu 1/2 of avail cores ist gut!--> Probably we are not the only ones using the server, therefore we are friendly and will use only half of its cores which in our case corresponds to 24 (<code>cpus</code> parameter). <!--no, the partitions are created before the parallelization by the normal set.seed() call. mc.set.seed makes sure that the randomly chosen hyperparameters for the tuning are reproducible. These will first set within the parallelization.--> Setting <code>mc.set.seed</code> to <code>TRUE</code> ensures that the randomly chosen hyperparameters can be reproduced when running the code again.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># parallelize the tuning, i.e. the inner fold</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(parallelMap)
 <span class="kw">parallelStart</span>(<span class="dt">mode =</span> <span class="st">&quot;multicore&quot;</span>, 
+              <span class="co"># parallelize the hyperparameter tuning level</span>
               <span class="dt">level =</span> <span class="st">&quot;mlr.tuneParams&quot;</span>, 
               <span class="co"># just use half of the available cores</span>
               <span class="dt">cpus =</span> <span class="kw">round</span>(parallel::<span class="kw">detectCores</span>() /<span class="st"> </span><span class="dv">2</span>),
@@ -694,7 +693,7 @@ ps =<span class="st"> </span><span class="kw">makeParamSet</span>(
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">12345</span>)
 result =<span class="st"> </span>mlr::<span class="kw">resample</span>(<span class="dt">learner =</span> wrapped_lrn_ksvm, 
                        <span class="dt">task =</span> task,
-                       <span class="dt">resampling =</span> outer,
+                       <span class="dt">resampling =</span> perf_level,
                        <span class="dt">extract =</span> getTuneResult,
                        <span class="dt">measures =</span> mlr::auc)
 <span class="co"># stop parallelization</span>
@@ -714,19 +713,22 @@ result$aggr
 <span class="co"># same as</span>
 <span class="kw">mean</span>(result$measures.test$auc)
 <span class="co">#&gt; [1] 0.758</span></code></pre></div>
-<p>It appears that the GLM (aggregated AUROC was 0.788) is slightly better than the SVM in this specific case. However, using more than 50 iterations in the random search would probably yield hyperparameters that result in models with a better AUROC <span class="citation">(Schratz et al. <a href="#ref-schratz_performance_nodate">2018</a>)</span>. On the other hand, increasing the number of random search iterations would also increase the total number of models to be fitted which then leads to an increased runtime.</p>
-<p>Finally, we can have a look at the estimated optimal hyperparameters for each fold at the performance estimation level. Note that the AUROC of the best hyperparameter combination is usually better than the AUROC computed at the performance estimation level with the help of these hyperparameters.</p>
+<p>It appears that the GLM (aggregated AUROC was 0.788) is slightly better than the SVM in this specific case. However, using more than 50 iterations in the random search would probably yield hyperparameters that result in models with a better AUROC <span class="citation">(Schratz et al. <a href="#ref-schratz_performance_nodate">2018</a>)</span>. On the other hand, increasing the number of random search iterations would also increase the total number of models and thus runtime</p>
+<p>Finally, we can have a look at the estimated optimal hyperparameters for each fold at the performance estimation level.</p>
+<p>Let us have a look at the best hyperparameter combination of the first fold of the first iteration. Remember that this already corresponds to 5 * 50 models.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># winning hyperparameters of tuning step, i.e. the best combination out of 50 *</span>
 <span class="co"># 5 models</span>
-result$extract[[<span class="dv">1</span>]]
-<span class="co">#&gt; Tune result:</span>
-<span class="co">#&gt; Op. pars: C=0.458; sigma=0.023</span>
-<span class="co">#&gt; auc.test.mean=0.823</span>
-<span class="co"># here one can observe that the AUROC of the tuning test data is usually higher</span>
-<span class="co"># than for the model in the performance estimation level</span>
-result$measures.test[<span class="dv">1</span>, ]
+result$extract[[<span class="dv">1</span>]]$x
+<span class="co">#&gt; $C</span>
+<span class="co">#&gt; [1] 0.458</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $sigma</span>
+<span class="co">#&gt; [1] 0.023</span></code></pre></div>
+<p>The estimated hyperparameters have been used for the first fold in the first iteration of the performance estimation level which resulted in the following AUROC value:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">result$measures.test[<span class="dv">1</span>, ]
 <span class="co">#&gt;   iter   auc</span>
 <span class="co">#&gt; 1    1 0.799</span></code></pre></div>
+<p>Please remember that we here have used spatial CV to assess how well a learning algorithm is able to generalize to unseen data. If one is interested in making a prediction map, one would tune the hyperparameters on the complete dataset. Please refer to Chapter <a href="#eco"><strong>??</strong></a> for an example.</p>
 <!-- # maybe add a figure (boxplot) showing the differences between tuning and no tuning?-->
 </div>
 </div>
