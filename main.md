@@ -275,7 +275,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve2a1942b7753dfeb4
+preserve707ee99681e82428
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3113,7 +3113,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve371752151096e05f
+preserveabf2c379b4650398
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6001,7 +6001,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservebf0f59c77ead8c1d
+preservef6f11f9134a5dfc1
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6617,7 +6617,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve488055dfb3ba2be3
+preservec20fe6dba4f768a6
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6939,14 +6939,12 @@ tm_shape(nz) + tm_fill(col = "AREA_SQ_KM", palette = "RdBu")
 <p class="caption">(\#fig:tmpal)Illustration of settings that affect variable aesthetics. The result shows a continuous variable (the area in square kilometers of regions in New Zealand) converted to color with (from left to right): default settings, manual breaks, n breaks, and an alternative palette.</p>
 </div>
 
-<!-- intro to style and color -->
-
 A variable, which name is provided in the `col` argument, is represented by a color palette.
-<!-- As a default... DESCRIBE THE DEFAULTS! -->
-The default color scheme can be changed using the `palette` argument.
+The default color palette is specified in `tm_layout()`  (see section \@ref(layouts) to learn more), however it could be quickly changed using the `palette` argument.
 It expects a vector of colors or a new color palette name, which can be selected interactively with `tmaptools::palette_explorer()`.
 Decision about selected color palette should depend largely on the input data type and a map purpose.
 While this could be an uneasy decision to be made, we can give some advice.
+
 There are three main groups of color palettes - categorical, sequential and diverging (Figure \@ref(fig:colpal)), and each of them serves a different purpose.
 The first group is used for categorical data without any particular order, for example names of states or land cover categories.
 Their colors need to be easy to distinguish and they should, if possible, reflect the most common color association.
@@ -6961,6 +6959,8 @@ These type of palettes are usually created by joining two single color sequentia
 <!-- one more color example -->
 <!-- mention bivariate color maps -->
 <!-- is it possible to made them with tmap?? -->
+
+
 <!-- additional tips: -->
 <!-- Importantly, try to avoid using the rainbow color palette. -->
 <!-- ONE MORE SENTENCE ABOUT IT + REFERENCES -->
