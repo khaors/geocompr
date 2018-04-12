@@ -281,8 +281,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="9.3" data-path="adv-map.html"><a href="adv-map.html#animated-maps"><i class="fa fa-check"></i><b>9.3</b> Animated maps</a></li>
 <li class="chapter" data-level="9.4" data-path="adv-map.html"><a href="adv-map.html#interactive-maps"><i class="fa fa-check"></i><b>9.4</b> Interactive maps</a></li>
-<li class="chapter" data-level="9.5" data-path="adv-map.html"><a href="adv-map.html#pseudo-unusual-maps"><i class="fa fa-check"></i><b>9.5</b> Pseudo (unusual) maps</a></li>
-<li class="chapter" data-level="9.6" data-path="adv-map.html"><a href="adv-map.html#web-mapping-applications-with-shiny"><i class="fa fa-check"></i><b>9.6</b> Web mapping applications with shiny</a></li>
+<li class="chapter" data-level="9.5" data-path="adv-map.html"><a href="adv-map.html#web-mapping-applications-with-shiny"><i class="fa fa-check"></i><b>9.5</b> Web mapping applications with shiny</a></li>
+<li class="chapter" data-level="9.6" data-path="adv-map.html"><a href="adv-map.html#pseudo-unusual-maps"><i class="fa fa-check"></i><b>9.6</b> Pseudo (unusual) maps</a></li>
 <li class="chapter" data-level="9.7" data-path="adv-map.html"><a href="adv-map.html#other-mapping-packages"><i class="fa fa-check"></i><b>9.7</b> Other mapping packages</a></li>
 <li class="chapter" data-level="9.8" data-path="adv-map.html"><a href="adv-map.html#exercises-6"><i class="fa fa-check"></i><b>9.8</b> Exercises</a></li>
 </ul></li>
@@ -485,19 +485,20 @@ map_nza =<span class="st"> </span><span class="kw">tm_shape</span>(nz) +
 Figure 9.5: Illustration of settings that affect variable aesthetics. The result shows a continuous variable (the area in square kilometers of regions in New Zealand) converted to color with (from left to right): default settings, manual breaks, n breaks, and an alternative palette.
 </p>
 </div>
-<p>A variable, which name is provided in the <code>col</code> argument, is represented by a color palette. The default color palette is specified in <code>tm_layout()</code> (see section <a href="adv-map.html#layouts">9.2.5</a> to learn more), however it could be quickly changed using the <code>palette</code> argument. It expects a vector of colors or a new color palette name, which can be selected interactively with <code>tmaptools::palette_explorer()</code>. Decision about selected color palette should depend largely on the input data type and a map purpose. While this could be an uneasy decision to be made, we can give some advice.</p>
+<p>A variable, which name is provided in the <code>col</code> argument, is represented by a color palette. The default color palette is specified in <code>tm_layout()</code> (see section <a href="adv-map.html#layouts">9.2.5</a> to learn more), however it could be quickly changed using the <code>palette</code> argument. It expects a vector of colors or a new color palette name, which can be selected interactively with <code>tmaptools::palette_explorer()</code>. Selection of the color palette used should depend largely on the input data type and a map purpose. While this could be an uneasy decision to be made, we can give some advice.</p>
 <p>There are three main groups of color palettes - categorical, sequential and diverging (Figure <a href="adv-map.html#fig:colpal">9.6</a>), and each of them serves a different purpose. The first group is used for categorical data without any particular order, for example names of states or land cover categories. Their colors need to be easy to distinguish and they should, if possible, reflect the most common color association. Therefore, for most cases you should not experiment with red rivers and green deserts. You also need to know the limitation of human perception - while it is usually easy to distinguish several colors from each other, this task become more and more difficult with a growing number of categories.<a href="#fn56" class="footnoteRef" id="fnref56"><sup>56</sup></a> Sequential palettes are used for the maps of quantitative data to show the order of values. It is usually presented by changes in color brightness either for a single (e.g. the <code>Blues</code> palette going from light blue to dark blue) or multi-hue combination (e.g. the <code>YlGn</code> palette going from light yellow to dark green). Usually, lower values are represented by light colors and darker colors indicate larger values. Diverging palettes are used to represent the departure of values from a reference point. For example, this mid-point could be a temperature of zero degree Celsius, median of a household income, probability of 50% for a drought event or a sex ratio of 1. These type of palettes are usually created by joining two single color sequential palettes with the darker colors at each end. <!-- one more color example --> <!-- mention bivariate color maps --> <!-- is it possible to made them with tmap?? --></p>
-<!-- additional tips: -->
-<!-- Importantly, try to avoid using the rainbow color palette. -->
-<!-- ONE MORE SENTENCE ABOUT IT + REFERENCES -->
-<!-- Instead try to use colorblind friendly palettes as often as possible. -->
-<!-- how to reverse palettes with - -->
 <div class="figure" style="text-align: center"><span id="fig:colpal"></span>
 <img src="figures/colpal-1.png" alt="Examples of categorical, sequential and diverging palettes." width="576" />
 <p class="caption">
 Figure 9.6: Examples of categorical, sequential and diverging palettes.
 </p>
 </div>
+<!-- additional tips: -->
+<!-- Importantly, try to avoid using the rainbow color palette. -->
+<!-- ONE MORE SENTENCE ABOUT IT + REFERENCES -->
+<!-- Instead try to use colorblind friendly palettes as often as possible. -->
+<!-- how to reverse palettes with - -->
+<!-- references -->
 <p>The <strong>tmap</strong> package offers many methods for specifying how variables are plotted on the map, in addition to setting <code>breaks</code> manually as we have already seen in this subsection. They are set with the <code>style</code> argument and some of the most useful methods are illustrated in Figure <a href="adv-map.html#fig:break-styles">9.7</a>.</p>
 <div class="figure" style="text-align: center"><span id="fig:break-styles"></span>
 <img src="figures/break-styles-1.png" alt="Illustration of different binning methods set using the style argument in tmap." width="576" />
@@ -689,17 +690,8 @@ Figure 9.16: Animated map showing population growth and colonization in the Unit
 <!-- leaflet -->
 <!-- leaflet plugins -->
 </div>
-<div id="pseudo-unusual-maps" class="section level2">
-<h2><span class="header-section-number">9.5</span> Pseudo (unusual) maps</h2>
-<!--we need a better name -->
-<!-- geofacet - https://hafen.github.io/geofacet/-->
-<!-- population lines - https://github.com/rCarto/linemap-->
-<!-- cartogram - https://github.com/sjewo/cartogram -->
-<!-- geogrid - https://github.com/jbaileyh/geogrid -->
-<!-- dot density maps -->
-</div>
 <div id="web-mapping-applications-with-shiny" class="section level2">
-<h2><span class="header-section-number">9.6</span> Web mapping applications with shiny</h2>
+<h2><span class="header-section-number">9.5</span> Web mapping applications with shiny</h2>
 <p>The interactive web maps demonstrated in section <a href="adv-map.html#interactive-maps">9.4</a> can go far. Careful selection of layers to display, base-maps and pop-ups can be used to communicate the main results of many projects involving geocomputation. But the web mapping approach to interactivity has limitations:</p>
 <ul>
 <li>Although the map is interactive in terms of panning, zooming and clicking, the code is static, meaning the user interface is fixed.</li>
@@ -750,6 +742,15 @@ There are a number of ways to run a <strong>shiny</strong> app. For RStudio user
 Figure 9.18: coffeeApp, a simple web mapping application for exploring global coffee production in 2016 and 2017.
 </p>
 </div>
+</div>
+<div id="pseudo-unusual-maps" class="section level2">
+<h2><span class="header-section-number">9.6</span> Pseudo (unusual) maps</h2>
+<!--we need a better name -->
+<!-- geofacet - https://hafen.github.io/geofacet/-->
+<!-- population lines - https://github.com/rCarto/linemap-->
+<!-- cartogram - https://github.com/sjewo/cartogram -->
+<!-- geogrid - https://github.com/jbaileyh/geogrid -->
+<!-- dot density maps -->
 </div>
 <div id="other-mapping-packages" class="section level2">
 <h2><span class="header-section-number">9.7</span> Other mapping packages</h2>

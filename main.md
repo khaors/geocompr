@@ -275,7 +275,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve8a3eb85f2aa29f3d
+preservebc31a49092a62eb1
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3113,7 +3113,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserved4498181fc7bd559
+preserve9e15ee48c47b059e
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6001,7 +6001,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve2ebba62b43f8c8de
+preserve5ee044b4afc4c17b
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6617,7 +6617,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve752843cf46a709b9
+preservee97eab9d1912d7a6
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6942,7 +6942,7 @@ tm_shape(nz) + tm_fill(col = "AREA_SQ_KM", palette = "RdBu")
 A variable, which name is provided in the `col` argument, is represented by a color palette.
 The default color palette is specified in `tm_layout()`  (see section \@ref(layouts) to learn more), however it could be quickly changed using the `palette` argument.
 It expects a vector of colors or a new color palette name, which can be selected interactively with `tmaptools::palette_explorer()`.
-Decision about selected color palette should depend largely on the input data type and a map purpose.
+Selection of the color palette used should depend largely on the input data type and a map purpose.
 While this could be an uneasy decision to be made, we can give some advice.
 
 There are three main groups of color palettes - categorical, sequential and diverging (Figure \@ref(fig:colpal)), and each of them serves a different purpose.
@@ -6960,17 +6960,17 @@ These type of palettes are usually created by joining two single color sequentia
 <!-- mention bivariate color maps -->
 <!-- is it possible to made them with tmap?? -->
 
+<div class="figure" style="text-align: center">
+<img src="figures/colpal-1.png" alt="Examples of categorical, sequential and diverging palettes." width="576" />
+<p class="caption">(\#fig:colpal)Examples of categorical, sequential and diverging palettes.</p>
+</div>
 
 <!-- additional tips: -->
 <!-- Importantly, try to avoid using the rainbow color palette. -->
 <!-- ONE MORE SENTENCE ABOUT IT + REFERENCES -->
 <!-- Instead try to use colorblind friendly palettes as often as possible. -->
 <!-- how to reverse palettes with - -->
-
-<div class="figure" style="text-align: center">
-<img src="figures/colpal-1.png" alt="Examples of categorical, sequential and diverging palettes." width="576" />
-<p class="caption">(\#fig:colpal)Examples of categorical, sequential and diverging palettes.</p>
-</div>
+<!-- references -->
 
 The **tmap** package offers many methods for specifying how variables are plotted on the map, in addition to setting `breaks` manually as we have already seen in this subsection.
 They are set with the `style` argument and some of the most useful methods are illustrated in Figure \@ref(fig:break-styles).
@@ -7282,15 +7282,6 @@ Code to reproduce this map can be found in the script `09-usboundaries.R`.
 <!-- leaflet -->
 <!-- leaflet plugins -->
 
-## Pseudo (unusual) maps 
-<!--we need a better name -->
-
-<!-- geofacet - https://hafen.github.io/geofacet/-->
-<!-- population lines - https://github.com/rCarto/linemap-->
-<!-- cartogram - https://github.com/sjewo/cartogram -->
-<!-- geogrid - https://github.com/jbaileyh/geogrid -->
-<!-- dot density maps -->
-
 ## Web mapping applications with shiny
 
 The interactive web maps demonstrated in section \@ref(interactive-maps) can go far.
@@ -7383,6 +7374,15 @@ This way your prototype web applications should be limited not by technical cons
 <iframe src="https://bookdown.org/robinlovelace/coffeeapp/?showcase=0" width="576" height="400px"></iframe>
 <p class="caption">(\#fig:coffeeApp)coffeeApp, a simple web mapping application for exploring global coffee production in 2016 and 2017.</p>
 </div>
+
+## Pseudo (unusual) maps 
+<!--we need a better name -->
+
+<!-- geofacet - https://hafen.github.io/geofacet/-->
+<!-- population lines - https://github.com/rCarto/linemap-->
+<!-- cartogram - https://github.com/sjewo/cartogram -->
+<!-- geogrid - https://github.com/jbaileyh/geogrid -->
+<!-- dot density maps -->
 
 ## Other mapping packages
 
