@@ -798,11 +798,11 @@ multilayer_stack =<span class="st"> </span><span class="kw">stack</span>(multila
 <span class="kw">plot</span>(world[<span class="st">&quot;lifeExp&quot;</span>])
 <span class="kw">dev.off</span>()</code></pre></div>
 <p>Other available graphic devices include <code>pdf()</code>, <code>bmp()</code>, <code>jpeg()</code>, <code>png()</code>, and <code>tiff()</code>. You can specify several properties of the output plot, including width, height and resolution.</p>
-<p>Additionally, several graphic packages provide thier own functions to save a graphical output. For example, the <strong>tmap</strong> package has the <code>save_tmap()</code> function. You can save a <code>tmap</code> object to different graphic formats by specifying the object name and a file path to a new graphic file.</p>
+<p>Additionally, several graphic packages provide thier own functions to save a graphical output. For example, the <strong>tmap</strong> package has the <code>tmap_save()</code> function. You can save a <code>tmap</code> object to different graphic formats by specifying the object name and a file path to a new graphic file.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tmap)
 tmap_obj =<span class="st"> </span><span class="kw">tm_shape</span>(world) +
 <span class="st">  </span><span class="kw">tm_polygons</span>(<span class="dt">col =</span> <span class="st">&quot;lifeExp&quot;</span>)
-<span class="kw">save_tmap</span>(<span class="dt">tm  =</span> tmap_obj, <span class="dt">filename =</span> <span class="st">&quot;lifeExp_tmap.png&quot;</span>)</code></pre></div>
+<span class="kw">tmap_save</span>(<span class="dt">tm  =</span> tmap_obj, <span class="dt">filename =</span> <span class="st">&quot;lifeExp_tmap.png&quot;</span>)</code></pre></div>
 <!-- Note about that the `plot` function do not create an object -->
 <!-- ```{r} -->
 <!-- a = plot(world["lifeExp"]) -->

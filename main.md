@@ -275,7 +275,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve1df5011ff695bff9
+preserveed5819bce8535369
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3113,7 +3113,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservea037c83bb13532e3
+preserve02c7e64d22de9478
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -5355,7 +5355,7 @@ Other available graphic devices include `pdf()`, `bmp()`, `jpeg()`, `png()`, and
 You can specify several properties of the output plot, including width, height and resolution.
 
 Additionally, several graphic packages provide thier own functions to save a graphical output.
-For example, the **tmap** package has the `save_tmap()` function.
+For example, the **tmap** package has the `tmap_save()` function.
 You can save a `tmap` object to different graphic formats by specifying the object name and a file path to a new graphic file.
 
 
@@ -5363,7 +5363,7 @@ You can save a `tmap` object to different graphic formats by specifying the obje
 library(tmap)
 tmap_obj = tm_shape(world) +
   tm_polygons(col = "lifeExp")
-save_tmap(tm  = tmap_obj, filename = "lifeExp_tmap.png")
+tmap_save(tm  = tmap_obj, filename = "lifeExp_tmap.png")
 ```
 
 <!-- Note about that the `plot` function do not create an object -->
@@ -6001,7 +6001,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservea4c35f149f35c96d
+preserve30d85d1ab125d476
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6617,7 +6617,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve9569fa5c75d9f0fa
+preserve034536f2a84050d8
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7170,7 +7170,7 @@ print(nz_height_map, vp = grid::viewport(0.3, 0.7, width = 0.4, height = 0.4))
 <p class="caption">(\#fig:insetmap1)Inset map showing the central part of the Southern Alps in New Zealand.</p>
 </div>
 
-Inset map can be save to file either by using a graphic device (see section \@ref(visual-outputs)) or the `save_tmap()` function and its arguments - `insets_tm` and `insets_vp`.
+Inset map can be save to file either by using a graphic device (see section \@ref(visual-outputs)) or the `tmap_save()` function and its arguments - `insets_tm` and `insets_vp`.
 
 Inset maps are also used to create one map of non-contiguous areas.
 Probably, the most often use example is a map of United States, which consists of the contiguous United States, Hawaii and Alaska.
