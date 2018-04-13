@@ -275,7 +275,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve30ae4f31dc0f6127
+preserved2225d13ddfcc38f
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3113,7 +3113,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve805b6a25148b148f
+preserve5947725fb6736ec1
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6001,7 +6001,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve4bcca177ce015ded
+preserve7366a295dcce0977
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6617,7 +6617,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve536c0128b14cb24b
+preserve662de7f0e8a9a994
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -8565,7 +8565,7 @@ The added columns are:
 
 ## Conventional modeling approach in R {#conventional-model}
 Before introducing the **mlr** package, an umbrella-package providing a unified interface to a plethora of learning algorithms, it is worth taking a look at the conventional modeling interface in R.
-This way we introduce statistical supervised modeling in R which provides the required skill set for doing spatial CV and additionally contributes to a better grasp on the **mlr** approach introduced later on.
+This way we introduce supervised modeling in R which provides the required skill set for doing spatial CV and additionally contributes to a better grasp on the **mlr** approach introduced later on.
 Usually, we model the response variable as a function of predictors. 
 Therefore, most implementations in R such as `lm`, `glm` and many more use the so-called formula interface.
 To show this, we will model landslide occurrence as a function of terrain attributes.
@@ -8622,17 +8622,20 @@ pred = raster::predict(object = ta, model = fit,
 </div>
 
 Here, when making predictions we neglect spatial autocorrelation since we assume that on average the predictive accuracy remains the same with or without spatial autocorrelation structures.
-However, it is possible to include spatial autocorrelation structures into models as well as into the predictions.
+However, it is possible to include spatial autocorrelation structures into models [@zuur_mixed_2009;@blangiardo_spatial_2015; @zuur_beginners_2017] as well as into predictions [kriging approaches,  see e.g., @goovaerts_geostatistics_1997;@hengl_pracical_2007;@bivand_applied_2013].
 This is, however, beyond the scope of this book.
+<!--
 Nevertheless, we give the interested reader some pointers where to look it up:
 
-1. The predictions of universal kriging are the predictions of a simple linear model plus the kriged model's residuals, i.e. spatially interpolated residuals [@bivand_applied_2013]. 2. One can also add a spatial correlation (dependency) structure to a generalized least squares model  [`nlme::gls()`; @zuur_mixed_2009; @zuur_beginners_2017].  
+1. The predictions of regression kriging combines the predictions of a regression with the kriging of the regression's residuals [@bivand_applied_2013]. 
+2. One can also add a spatial correlation (dependency) structure to a generalized least squares model  [`nlme::gls()`; @zuur_mixed_2009; @zuur_beginners_2017].  
 3. Finally, there are mixed-effect modeling approaches.
 Basically, a random effect imposes a dependency structure on the response variable which in turn allows for observations of one class to be more similar to each other than to those of another class [@zuur_mixed_2009]. 
 Classes can be, for example, bee hives, owl nests, vegetation transects or an altitudinal stratification.
 This mixed modeling approach assumes normal and independent distributed random intercepts.^[Note that for spatial predictions one would usually use the population intercept.]
 This can even be extended by using a random intercept that is normal and spatially dependent.
 For this, however, you will have to resort most likely to Bayesian modeling approaches since frequentist software tools are rather limited in this respect especially for more complex models [@blangiardo_spatial_2015; @zuur_beginners_2017]. 
+-->
 
 Spatial prediction maps are one very important outcome of a model.
 Even more important is how good the underlying model is at making them since a prediction map is useless if the model's predictive performance is bad.
