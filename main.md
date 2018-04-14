@@ -275,7 +275,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve570cd71c9b019b18
+preserveb000afb41c67b5e7
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3115,7 +3115,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveb1e30a1fefb8e148
+preserved1e4c9896c8949a6
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6002,7 +6002,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve596d5def41f1a296
+preserved0d9948ceac9b6f4
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6618,7 +6618,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve177f837491146c58
+preservede94613a94cd9723
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6963,12 +6963,6 @@ tm_shape(nz) + tm_fill(col = "Median_income", palette = "RdBu")
 The **tmap** package offers many methods for specifying how variables are plotted on the map, in addition to setting `breaks` manually as we have already seen in this subsection.
 They are set with the `style` argument and some of the most useful methods are illustrated in Figure \@ref(fig:break-styles).
 
-<!-- Is there a way to improve the legends, so far they are not really appealaing -->
-<div class="figure" style="text-align: center">
-<img src="figures/break-styles-1.png" alt="Illustration of different binning methods set using the style argument in tmap." width="576" />
-<p class="caption">(\#fig:break-styles)Illustration of different binning methods set using the style argument in tmap.</p>
-</div>
-
 <!-- explain and describe classification intervals -->
 The default value of `style` is `pretty`.
 It automatically rounds breaks values and evenly spaces them.
@@ -6988,6 +6982,12 @@ The former is appropriate for variables with evenly distributed values, while th
 Finally, the `cat` style should be used to represent categorical values.
 It assures that each category receives a unique color.
 <!-- references for more info -->
+
+<!-- Is there a way to improve the legends, so far they are not really appealaing -->
+<div class="figure" style="text-align: center">
+<img src="figures/break-styles-1.png" alt="Illustration of different binning methods set using the style argument in tmap." width="576" />
+<p class="caption">(\#fig:break-styles)Illustration of different binning methods set using the style argument in tmap.</p>
+</div>
 
 <!-- sth. wrong with the next sentence -->
 A variable, which name is provided in the `col` argument, is represented by a color palette.
@@ -7323,7 +7323,7 @@ mapview::mapview(nz)
 ```
 
 <div class="figure" style="text-align: center">
-preservec600b462e7bdae1d
+preserved62b1eae3d237984
 <p class="caption">(\#fig:mapview)Illustration of mapview in action.</p>
 </div>
 
