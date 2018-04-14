@@ -275,7 +275,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservebd3c19a2149597fa
+preserve570cd71c9b019b18
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3115,7 +3115,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve2730b0331c451d22
+preserveb1e30a1fefb8e148
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6002,7 +6002,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservec10d5fb4977306ae
+preserve596d5def41f1a296
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6618,7 +6618,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve22a66ab9aa56dd99
+preserve177f837491146c58
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6959,6 +6959,36 @@ tm_shape(nz) + tm_fill(col = "Median_income", palette = "RdBu")
 <p class="caption">(\#fig:tmpal)Illustration of settings that affect variable aesthetics. The result shows a continuous variable (the area in square kilometers of regions in New Zealand) converted to color with (from left to right): default settings, manual breaks, n breaks, and an alternative palette.</p>
 </div>
 
+<!-- This is quite an abrupt change of topics and does not connect well with the previous paragraphs on palette options. -->
+The **tmap** package offers many methods for specifying how variables are plotted on the map, in addition to setting `breaks` manually as we have already seen in this subsection.
+They are set with the `style` argument and some of the most useful methods are illustrated in Figure \@ref(fig:break-styles).
+
+<!-- Is there a way to improve the legends, so far they are not really appealaing -->
+<div class="figure" style="text-align: center">
+<img src="figures/break-styles-1.png" alt="Illustration of different binning methods set using the style argument in tmap." width="576" />
+<p class="caption">(\#fig:break-styles)Illustration of different binning methods set using the style argument in tmap.</p>
+</div>
+
+<!-- explain and describe classification intervals -->
+The default value of `style` is `pretty`.
+It automatically rounds breaks values and evenly spaces them.
+The `equal` style divides the range of input values into subranges of equal range.
+This style is often used on data with regular distribution of values and common values range, such as percentages.
+On the other hand, it could produce categories with a large number of elements (points, areas) and those without any observation.
+To have the same number of elements in each category, one can use the `quantile` style. 
+It is useful for ordinal data <!--examples--> and never produces empty classes. 
+This style, however, could have very different values in the same category.
+Natural breaks method, also called `jenks`, tries to identify groups of similar values in the data.
+Breaks between classes are created to maximize the differences between categories. 
+<!-- what do you mean by could be meaningful only for this? Also "Importantly" sentence sounds strange -->
+This method provides classes that reflect the values distribution, but at the same time creates classes that could be meaningful only for this dataset.
+Importantly, categorical legends described above could be not the most suitable when presenting a large number of objects (e.g. points or polygons) or continuous fields (e.g. continuous rasters).
+In these situations, `cont` or `order` can be used. 
+The former is appropriate for variables with evenly distributed values, while the latter works well when the distribution of values is skewed (for example, only a few raster cells have very large values).
+Finally, the `cat` style should be used to represent categorical values.
+It assures that each category receives a unique color.
+<!-- references for more info -->
+
 <!-- sth. wrong with the next sentence -->
 A variable, which name is provided in the `col` argument, is represented by a color palette.
 The default color palette is specified in `tm_layout()` (see section \@ref(layouts) to learn more), however, it could be quickly changed using the `palette` argument.
@@ -6994,36 +7024,6 @@ Their main purpose is too visualize the difference from an important reference p
 <!-- Instead try to use colorblind friendly palettes as often as possible. -->
 <!-- how to reverse palettes with - -->
 <!-- references -->
-
-<!-- This is quite an abrupt change of topics and does not connect well with the previous paragraphs on palette options. -->
-The **tmap** package offers many methods for specifying how variables are plotted on the map, in addition to setting `breaks` manually as we have already seen in this subsection.
-They are set with the `style` argument and some of the most useful methods are illustrated in Figure \@ref(fig:break-styles).
-
-<!-- Is there a way to improve the legends, so far they are not really appealaing -->
-<div class="figure" style="text-align: center">
-<img src="figures/break-styles-1.png" alt="Illustration of different binning methods set using the style argument in tmap." width="576" />
-<p class="caption">(\#fig:break-styles)Illustration of different binning methods set using the style argument in tmap.</p>
-</div>
-
-<!-- explain and describe classification intervals -->
-The default value of `style` is `pretty`.
-It automatically rounds breaks values and evenly spaces them.
-The `equal` style divides the range of input values into subranges of equal range.
-This style is often used on data with regular distribution of values and common values range, such as percentages.
-On the other hand, it could produce categories with a large number of elements (points, areas) and those without any observation.
-To have the same number of elements in each category, one can use the `quantile` style. 
-It is useful for ordinal data <!--examples--> and never produces empty classes. 
-This style, however, could have very different values in the same category.
-Natural breaks method, also called `jenks`, tries to identify groups of similar values in the data.
-Breaks between classes are created to maximize the differences between categories. 
-<!-- what do you mean by could be meaningful only for this? Also "Importantly" sentence sounds strange -->
-This method provides classes that reflect the values distribution, but at the same time creates classes that could be meaningful only for this dataset.
-Importantly, categorical legends described above could be not the most suitable when presenting a large number of objects (e.g. points or polygons) or continuous fields (e.g. continuous rasters).
-In these situations, `cont` or `order` can be used. 
-The former is appropriate for variables with evenly distributed values, while the latter works well when the distribution of values is skewed (for example, only a few raster cells have very large values).
-Finally, the `cat` style should be used to represent categorical values.
-It assures that each category receives a unique color.
-<!-- references for more info -->
 
 ### Layouts
 
@@ -7323,7 +7323,7 @@ mapview::mapview(nz)
 ```
 
 <div class="figure" style="text-align: center">
-preservef8d9e1fa56fb24ea
+preservec600b462e7bdae1d
 <p class="caption">(\#fig:mapview)Illustration of mapview in action.</p>
 </div>
 
