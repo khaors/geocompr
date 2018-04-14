@@ -275,7 +275,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveb000afb41c67b5e7
+preserved31935d76ac723d0
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3115,7 +3115,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserved1e4c9896c8949a6
+preservee73a17028af971ce
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6002,7 +6002,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserved0d9948ceac9b6f4
+preservee3372e2ef58a2d34
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6618,7 +6618,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservede94613a94cd9723
+preservef4d558eb3b71fe79
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6976,8 +6976,8 @@ Natural breaks method, also called `jenks`, tries to identify groups of similar 
 Breaks between classes are created to maximize the differences between categories. 
 <!-- what do you mean by could be meaningful only for this? Also "Importantly" sentence sounds strange -->
 This method provides classes that reflect the values distribution, but at the same time creates classes that could be meaningful only for this dataset.
-Importantly, categorical legends described above could be not the most suitable when presenting a large number of objects (e.g. points or polygons) or continuous fields (e.g. continuous rasters).
-In these situations, `cont` or `order` can be used. 
+Discrete legends are not always the most suitable as they present similar values by just a few colors.
+Alternatively, the `cont` or `order` styles can be used when presenting a large number of objects (e.g. points or polygons) or continuous fields (e.g. continuous rasters).
 The former is appropriate for variables with evenly distributed values, while the latter works well when the distribution of values is skewed (for example, only a few raster cells have very large values).
 Finally, the `cat` style should be used to represent categorical values.
 It assures that each category receives a unique color.
@@ -6990,7 +6990,7 @@ It assures that each category receives a unique color.
 </div>
 
 <!-- sth. wrong with the next sentence -->
-A variable, which name is provided in the `col` argument, is represented by a color palette.
+Values of selected variable are represented by a color palette.
 The default color palette is specified in `tm_layout()` (see section \@ref(layouts) to learn more), however, it could be quickly changed using the `palette` argument.
 It expects a vector of colors or a new color palette name, which can be selected interactively with `tmaptools::palette_explorer()`.
 What color palette to use, largely depends on the input data type and the purpose of the map.
@@ -7080,6 +7080,18 @@ map_nza + tm_style_bw()
 map_nza + tm_style_classic()
 map_nza + tm_style_cobalt()
 map_nza + tm_style_col_blind()
+```
+
+
+```
+#> Warning in tm_style_bw(): tm_style_bw is deprecated as of tmap version 2.0.
+#> Please use tm_style("bw", ...) instead
+#> Warning in tm_style_classic(): tm_style_classic is deprecated as of tmap
+#> version 2.0. Please use tm_style("classic", ...) instead
+#> Warning in tm_style_cobalt(): tm_style_white is deprecated as of tmap
+#> version 2.0. Please use tm_style("cobalt", ...) instead
+#> Warning in tm_style_col_blind(): tm_style_col_blind is deprecated as of
+#> tmap version 2.0. Please use tm_style("col_blind", ...) instead
 ```
 
 <div class="figure" style="text-align: center">
@@ -7323,7 +7335,7 @@ mapview::mapview(nz)
 ```
 
 <div class="figure" style="text-align: center">
-preserved62b1eae3d237984
+preserve1142f098eee7eb5b
 <p class="caption">(\#fig:mapview)Illustration of mapview in action.</p>
 </div>
 
