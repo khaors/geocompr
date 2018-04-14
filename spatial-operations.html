@@ -382,7 +382,7 @@ It is important to note that spatial operations that use two spatial objects rel
 <h3><span class="header-section-number">4.2.1</span> Spatial subsetting</h3>
 <p>Spatial subsetting is the process of selecting features of a spatial object based on whether or not they in some way <em>relate</em> in space to another object. It is analogous to <em>attribute subsetting</em> (covered in section <a href="attr.html#vector-attribute-subsetting">3.2.1</a>) and can be done with the base R square bracket (<code>[</code>) operator or with the <code>filter()</code> function from the <strong>tidyverse</strong>.</p>
 <p>An example of spatial subsetting is provided by the <code>nz</code> and <code>nz_height</code> datasets in <strong>spData</strong>. These contain projected data on the 16 main regions and 101 highest points in New Zealand respectively (Figure <a href="spatial-operations.html#fig:nz-subset">4.1</a>). The following code chunk first creates an object representing Canterbury, then uses spatial subsetting to return all high points in the region:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">canterbury =<span class="st"> </span>nz %&gt;%<span class="st"> </span><span class="kw">filter</span>(REGC2017_NAME ==<span class="st"> &quot;Canterbury Region&quot;</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">canterbury =<span class="st"> </span>nz %&gt;%<span class="st"> </span><span class="kw">filter</span>(Name ==<span class="st"> &quot;Canterbury&quot;</span>)
 canterbury_height =<span class="st"> </span>nz_height[canterbury, ]</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:nz-subset"></span>
 <img src="figures/nz-subset-1.png" alt="Illustration of spatial subsetting with red triangles representing 101 high points in New Zealand, clustered near the central Canterbuy region (left). The points in Canterbury were created with the `[` subsetting operator (highlighted in grey, right)." width="576" />
@@ -431,7 +431,7 @@ This discarding of row names is not something that is specific to spatial data, 
 <span class="kw">dim</span>(sel)
 <span class="co">#&gt; [1] 101   1</span></code></pre></div>
 <p>The dimensions of <code>sel</code> (returned by the base R command <code>dim()</code>) show one row per feature in the target object (<code>nz_height</code>) and a column per feature in the subsetting object (<code>canterbury</code>). The general pattern here is that <code>sel[i, j]</code> is <code>TRUE</code> if the i<sup>th</sup> feature in the target object intersects with the j<sup>th</sup> feature in the subsetting object. If there is more than one feature in <code>y</code> the resulting selection <code>matrix</code> must be converted into a <code>vector</code> before it is used for subsetting, e.g. with <code>rowSums(sel_matrix) &gt; 0</code>. Another solution is to convert the default sparse matrix (<code>list</code>) output from <code>st_intersects()</code> to a <code>logical</code> vector using the function <code>lengths()</code>. This approach to spatial subsetting, used internally by <strong>sf</strong> (see the source code of <code>sf:::`[.sf`</code>), is illustrated in the code chunk below:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">co =<span class="st"> </span><span class="kw">filter</span>(nz, <span class="kw">grepl</span>(<span class="st">&quot;Canter|Otag&quot;</span>, REGC2017_NAME))
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">co =<span class="st"> </span><span class="kw">filter</span>(nz, <span class="kw">grepl</span>(<span class="st">&quot;Canter|Otag&quot;</span>, Name))
 sel_sparse =<span class="st"> </span><span class="kw">st_intersects</span>(nz_height, co)
 sel_vector =<span class="st"> </span><span class="kw">lengths</span>(sel_sparse) &gt;<span class="st"> </span><span class="dv">0</span>
 heights_co =<span class="st"> </span>nz_height[sel_vector, ]</code></pre></div>
@@ -640,7 +640,7 @@ Figure 4.5: Average height of the top 101 high points across the regions of New 
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz_avheight2 =<span class="st"> </span><span class="kw">st_join</span>(nz, nz_height) %&gt;%
-<span class="st">  </span><span class="kw">group_by</span>(REGC2017_NAME) %&gt;%
+<span class="st">  </span><span class="kw">group_by</span>(Name) %&gt;%
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">elevation =</span> <span class="kw">mean</span>(elevation, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</code></pre></div>
 <p>The resulting <code>nz_avheight</code> objects have the same geometry as the aggregating object <code>nz</code> but with a new column representing the mean average height of points within each region of New Zealand (other summary functions such as <code>median()</code> and <code>sd()</code> can be used in place of <code>mean()</code>). Note that regions containing no points have an associated <code>elevation</code> value of <code>NA</code>. For aggregating operations which also create new geometries, see section <a href="transform.html#geometry-unions">5.3.6</a>.</p>
 <p>Spatial congruence is an important concept related to spatial aggregation. An <em>aggregating object</em> (which we will refer to as <code>y</code>) is <em>congruent</em> with the target object (<code>x</code>) if the two objects have shared borders. Often this is the case for administrative boundary data, whereby the larger units (e.g. Middle Layer Super Output Areas in the UK or districts in many other European countries) are composed of many smaller units (Output Areas in the UK, see <a href="https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeography">ons.gov.uk</a> for further details or municipalities in many other European countries).</p>
@@ -666,7 +666,7 @@ canterbury_centroid =<span class="st"> </span><span class="kw">st_centroid</span
 <span class="kw">st_distance</span>(nz_heighest, canterbury_centroid)
 <span class="co">#&gt; Units: m</span>
 <span class="co">#&gt;        [,1]</span>
-<span class="co">#&gt; [1,] 115566</span></code></pre></div>
+<span class="co">#&gt; [1,] 115540</span></code></pre></div>
 <p>There are two potentially surprising things about the result: 1) it comes with a <code>units</code> attribute, so you know that it’s just over 100,000 m (not 100,000 inches, or any other measure of distance!); and 2) it is returned as a matrix, even though the result only contains a single value. This second feature hints at another useful feature of <code>st_distance()</code>, its ability to return <em>distance matrices</em> between all combinations of features in objects <code>x</code> and <code>y</code>. This is illustrated in the command below, which finds the distances between the first three features in <code>nz_height</code> and the Otago and Canterbury regions of New Zealand represented by the object <code>co</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">st_distance</span>(nz_height[<span class="dv">1</span>:<span class="dv">3</span>, ], co)
 <span class="co">#&gt; Units: m</span>
@@ -872,7 +872,7 @@ aut_ch =<span class="st"> </span><span class="kw">merge</span>(aut, ch)</code></
 <div class="footnotes">
 <hr />
 <ol start="23">
-<li id="fn23"><p>This can be verified with <code>identical(nz$geometry, nz_avheight$geometry)</code>.<a href="spatial-operations.html#fnref23">↩</a></p></li>
+<li id="fn23"><p>This can be verified with <code>identical(st_geometry(nz), nz_avheight$geometry)</code>.<a href="spatial-operations.html#fnref23">↩</a></p></li>
 </ol>
 </div>
             </section>
