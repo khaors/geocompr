@@ -275,7 +275,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservef0cc240e2a1c4062
+preserve9100797c004861ee
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3115,7 +3115,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservee0e85705260ef7c2
+preserve0625959cd312ee1b
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6002,7 +6002,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve839a9c2ebbb8b242
+preserve61fe4830d5e50160
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6618,7 +6618,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve1502afc05a2aff34
+preserve19ce4dd0f77863d4
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6988,7 +6988,6 @@ Six of the most useful break styles are illustrated in Figure \@ref(fig:break-st
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">Although `style` is an argument of **tmap** functions it in facts originates as an argument in `classInt::classIntervals()` --- see the help page of this function for details.</div>\EndKnitrBlock{rmdnote}
 
-<!-- sth. wrong with the next sentence -->
 Pallettes define the color ranges associated the bins determined by the `breaks`, `n`, and `style` arguments described above.
 The default color palette is specified in `tm_layout()` (see section \@ref(layouts) to learn more), however, it could be quickly changed using the `palette` argument.
 It expects a vector of colors or a new color palette name, which can be selected interactively with `tmaptools::palette_explorer()`.
@@ -7018,6 +7017,7 @@ Their main purpose is too visualize the difference from an important reference p
 </div>
 
 <!-- additional tips: -->
+<!-- Accessibility and Perception -->
 <!-- Importantly, try to avoid using the rainbow color palette. -->
 <!-- ONE MORE SENTENCE ABOUT IT + REFERENCES -->
 <!-- Instead try to use colorblind friendly palettes as often as possible. -->
@@ -7334,7 +7334,7 @@ mapview::mapview(nz)
 ```
 
 <div class="figure" style="text-align: center">
-preserve568fbb495a2073b8
+preserve2dd23dfebf3e82d0
 <p class="caption">(\#fig:mapview)Illustration of mapview in action.</p>
 </div>
 

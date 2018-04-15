@@ -528,7 +528,6 @@ Figure 9.6: Illustration of different binning methods set using the style argume
 Although <code>style</code> is an argument of <strong>tmap</strong> functions it in facts originates as an argument in <code>classInt::classIntervals()</code> — see the help page of this function for details.
 </div>
 <p></p>
-<!-- sth. wrong with the next sentence -->
 <p>Pallettes define the color ranges associated the bins determined by the <code>breaks</code>, <code>n</code>, and <code>style</code> arguments described above. The default color palette is specified in <code>tm_layout()</code> (see section <a href="adv-map.html#layouts">9.2.5</a> to learn more), however, it could be quickly changed using the <code>palette</code> argument. It expects a vector of colors or a new color palette name, which can be selected interactively with <code>tmaptools::palette_explorer()</code>. What color palette to use, largely depends on the input data type and the purpose of the map. <!--While this could be an uneasy decision to be made, we can give some advice.--></p>
 <p>There are three main groups of color palettes - categorical, sequential and diverging (Figure <a href="adv-map.html#fig:colpal">9.7</a>), and each of them serves a different purpose.</p>
 <p>Categorical palettes consist of easily distinguishable colors and are most appropriate for categorical data without any particular order such as state names or land cover classes. If possible, the color choice should be intuitive as in the case of blue rivers (and pastures green). One should also avoid too many categories since this could make a map hard to read.<a href="#fn55" class="footnoteRef" id="fnref55"><sup>55</sup></a></p>
@@ -544,6 +543,7 @@ Figure 9.7: Examples of categorical, sequential and diverging palettes.
 </p>
 </div>
 <!-- additional tips: -->
+<!-- Accessibility and Perception -->
 <!-- Importantly, try to avoid using the rainbow color palette. -->
 <!-- ONE MORE SENTENCE ABOUT IT + REFERENCES -->
 <!-- Instead try to use colorblind friendly palettes as often as possible. -->
