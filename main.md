@@ -275,7 +275,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve8fd87968f07b1595
+preserve4fbcb6af811459c6
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3115,7 +3115,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservecbbe8c4ab8958ec0
+preserve2d34768eaabf531d
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6002,7 +6002,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservee3f7c93db49c8257
+preserve64e43044986c615e
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6618,7 +6618,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve8cdb101ed86c511a
+preserve55b94c3a9d0ed529
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6975,7 +6975,7 @@ Six of the most useful break styles are illustrated in Figure \@ref(fig:break-st
 - `style = jenks` identifies groups of similar values in the data and maximizes the differences between categories
 <!-- This method provides classes that reflect the values distribution, but at the same time creates classes that could be meaningful only for this dataset. -->
 <!-- Discrete legends are not always the most suitable as they present similar values by just a few colors. -->
-- `style = cont` (and `order`) present a large number of colors over continuous colour field, and are particularly suited for continuous rasters
+- `style = cont` (and `order`) present a large number of colors over continuous color field, and are particularly suited for continuous rasters
 <!-- The former is appropriate for variables with evenly distributed values, while the latter works well when the distribution of values is skewed (for example, only a few raster cells have very large values). -->
 - `style = cat` was designed to represent categorical values and assures that each category receives a unique color.
 <!-- references for more info -->
@@ -6988,7 +6988,7 @@ Six of the most useful break styles are illustrated in Figure \@ref(fig:break-st
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">Although `style` is an argument of **tmap** functions it in facts originates as an argument in `classInt::classIntervals()` --- see the help page of this function for details.</div>\EndKnitrBlock{rmdnote}
 
-Pallettes define the color ranges associated the bins determined by the `breaks`, `n`, and `style` arguments described above.
+Palettes define the color ranges associated the bins determined by the `breaks`, `n`, and `style` arguments described above.
 The default color palette is specified in `tm_layout()` (see section \@ref(layouts) to learn more), however, it could be quickly changed using the `palette` argument.
 It expects a vector of colors or a new color palette name, which can be selected interactively with `tmaptools::palette_explorer()`.
 What color palette to use, largely depends on the input data type and the purpose of the map.
@@ -7330,7 +7330,7 @@ mapview::mapview(nz)
 ```
 
 <div class="figure" style="text-align: center">
-preserve8f0d9d690f38ba9e
+preserve0a8193fecb90727b
 <p class="caption">(\#fig:mapview)Illustration of mapview in action.</p>
 </div>
 
