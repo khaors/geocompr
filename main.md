@@ -275,7 +275,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve568b38b2c4722117
+preserve4b39c4ad112c6bb4
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3115,7 +3115,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservec8ee8166e4ff4631
+preserve408d714de5962d68
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6002,7 +6002,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservee63ae89c4ba9fa83
+preservea1e2168555b3416c
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6618,7 +6618,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve1aa70fb77c0c2b4c
+preserve6f1f281276c55140
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7007,17 +7007,13 @@ Sequential palettes are most appropriate for mapping quantitative data.
 The last group, diverging palettes, typically range between three distinct colors (purple-white-green in Figure \@ref(fig:colpal)) and are usually created by joining two single color sequential palettes with the darker colors at each end.
 Their main purpose is too visualize the difference from an important reference point, e.g. a certain temperature, the median household income or the mean probability for a drought event.
 
-<!-- one more color example -->
-<!-- mention bivariate color maps -->
-<!-- is it possible to made them with tmap?? -->
-
 <div class="figure" style="text-align: center">
 <img src="figures/colpal-1.png" alt="Examples of categorical, sequential and diverging palettes." width="576" />
 <p class="caption">(\#fig:colpal)Examples of categorical, sequential and diverging palettes.</p>
 </div>
 
 <!-- additional tips: -->
-<!-- Accessibility and Perception -->
+<!-- Perception and Accessibility -->
 <!-- Importantly, try to avoid using the rainbow color palette. -->
 <!-- ONE MORE SENTENCE ABOUT IT + REFERENCES -->
 <!-- Instead try to use colorblind friendly palettes as often as possible. -->
@@ -7334,7 +7330,7 @@ mapview::mapview(nz)
 ```
 
 <div class="figure" style="text-align: center">
-preserve824e76dc583033a1
+preserved8bc7fbe8c0819a2
 <p class="caption">(\#fig:mapview)Illustration of mapview in action.</p>
 </div>
 
