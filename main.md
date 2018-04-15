@@ -275,7 +275,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve896270ed3dc93244
+preserve7a8d4656b26af282
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3115,7 +3115,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve74750ef04010f497
+preserve5ec30205646b2231
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6002,7 +6002,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve3f8fe65d1b9a6156
+preserveb927a75af9e687fa
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6618,7 +6618,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve24a7e0b417923530
+preserve565276dea7a6cfe9
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6826,16 +6826,15 @@ class(map_nz)
 New *shapes* can be added with `+ tm_shape(new_obj)`.
 In this case `new_obj` represents a new spatial object to be plotted on top of preceding layers.
 When a new new shape is added in this way all subsequent aesthetic functions refer to it, until another new shape is added.
-This syntax allows the creation of maps with multiple shapes and layers, as illustrated in the next code chunk which uses the function `tm_raster()` to plot a raster layer representing heights in New Zealand:
+This syntax allows the creation of maps with multiple shapes and layers, as illustrated in the next code chunk which uses the function `tm_raster()` to plot a raster layer (with `alpha` set to make the layer semi-transparent):
 
 
 ```r
 map_nz1 = map_nz +
-  tm_shape(nz_elev) + tm_raster()
+  tm_shape(nz_elev) + tm_raster(alpha = 0.7)
 ```
 
-Building on the previously created `map_nz` object the preceding code creates a new map object `map_nz1` which contains another shape (`nz_height`), representing high points (see Figure \@ref(fig:tmlayers), left).
-<!-- tm_bubbles explanation is missing -->
+Building on the previously created `map_nz` object the preceding code creates a new map object `map_nz1` which contains another shape (`nz_eleve`), representing average elevation across New Zealand (see Figure \@ref(fig:tmlayers), left).
 More shapes and layers can be added, as illustrated in the code chunk below which creates `nz_water`, representing New Zealand's [territorial waters](https://en.wikipedia.org/wiki/Territorial_waters), and adds the resulting lines to an existing map object.
 
 
@@ -6846,9 +6845,10 @@ map_nz2 = map_nz1 +
   tm_shape(nz_water) + tm_lines()
 ```
 
-There is no limit to the number of layers or shapes.
-The same shape can even be used multiple times, as demonstrated by `map_nz3`.
-This map is created by adding another instance of the `nz_height` shape onto the previously created `map_nz2` object, as illustrated in the right-hand panel of Figure \@ref(fig:tmlayers):
+There is no limit to the number of layers or shapes that can be added to `tmap` objects.
+The same shape can even be used multiple times.
+The final map illustrated in Figure \@ref(fig:tmlayers) is created by adding a layer representing high points (stored in the object `nz_height`) onto the previously created `map_nz2` object with `tm_dots()` (see `?tm_dots` and `?tm_bubbles` for details on **tmap**'s point plotting functions).
+The resulting map, which has 5 layers, is illustrated in the right-hand panel of:
 
 
 ```r
@@ -7338,7 +7338,7 @@ mapview::mapview(nz)
 ```
 
 <div class="figure" style="text-align: center">
-preserve879d957c8462a8a3
+preserve531c26eb10b8e493
 <p class="caption">(\#fig:mapview)Illustration of mapview in action.</p>
 </div>
 
