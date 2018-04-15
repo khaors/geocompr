@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-04-14">
+<meta name="date" content="2018-04-15">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -372,12 +372,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="introduction-6" class="section level2">
 <h2><span class="header-section-number">9.1</span> Introduction</h2>
-<p>A satisfying and important aspect of geographic research is producing and communicating the results in the form of maps. Map making — the art of Cartography — is an ancient skill that involves precision, consideration of the map-reader and often an element of creativity. Basic plotting of geographic data is straightforward in R with <code>plot()</code> (see section <a href="spatial-class.html#basic-map">2.1.3</a>) which already allows the fabrication of quality maps. Advanced map-making even increases this quality and is a skill worth learning, since: a carefully crafted map can communicate results effectively and avoid time spent generating them going to waste due to poor presentation <span class="citation">(Brewer <a href="#ref-brewer_designing_2015">2015</a>)</span>:</p>
+<p>A satisfying and important aspect of geographic research is producing and communicating the results in the form of maps. Map making — the art of Cartography — is an ancient skill that involves precision, consideration of the map-reader and often an element of creativity. Basic plotting of geographic data is straightforward in R with <code>plot()</code> (see section <a href="spatial-class.html#basic-map">2.1.3</a>), and it is possible to create advanced maps using base R methods <span class="citation">(Murrell <a href="#ref-murrell_r_2016">2016</a>)</span>.</p>
+<p>This chapter focuses on dedicated map-making packages, especially <strong>tmap</strong>, for reasons that are explained in section <a href="adv-map.html#static-maps">9.2</a>. There are a multitude of options but when learning a new skill (in this case map making), it makes sense to gain depth-of-knowledge in one package before branching out, a concept that also applies to the choice of programming language as we saw in Chapter <a href="intro.html#intro">1</a>. It is worth developing advanced map making skills not only because it is a fun activity that can produce beautiful results. Map making also has important practical applications. A carefully crafted map can help ensure that time spent in the analysis phases of geocomputational projects — for example using methods covered in chapters <a href="spatial-class.html#spatial-class">2</a> to <a href="transform.html#transform">5</a> — are communicated effectively <span class="citation">(Brewer <a href="#ref-brewer_designing_2015">2015</a>)</span>:</p>
 <blockquote>
 <p>Amateur-looking maps can undermine your audience’s ability to understand important information and weaken the presentation of a professional data investigation.</p>
 </blockquote>
 <!-- Todo: consider adding footnote saying it's good to focus on visualization early as in R4DS but that we cover it later because there's a risk of getting distracted by pretty pictures to the detriment of good analysis. -->
-<p>Maps have been used for several thousand years for a wide variety of purposes. Historic examples include maps on buildings in Babylon and Ptolemy’s world map in his masterpiece <em>Geography</em>. However, maps have historically been out of reach for everyday people <span class="citation">(Talbert <a href="#ref-talbert_ancient_2014">2014</a>)</span>. Modern computing has the potential to change this. Map making skills can also help meet research and public engagement objectives. From a research perspective clear maps are often be the best way to present the results of geocomputational research. From policy and ‘citizen science’ perspectives, attractive and engaging maps can help change peoples’ minds, based on the evidence. Map making is therefore a critical part of geocomputation and its emphasis is not only describing, but also changing the world (see Chapter <a href="intro.html#intro">1</a>).</p>
+<p>Maps have been used for several thousand years for a wide variety of purposes. Historic examples include maps of buildings and land ownership in the Old Babylonian dynasty more than 3000 years ago and Ptolemy’s world map in his masterpiece <em>Geography</em> nearly 2000 years ago <span class="citation">(Talbert <a href="#ref-talbert_ancient_2014">2014</a>)</span>. However, maps have historically been out of reach for everyday people.</p>
+<p>Modern computing has the potential to change this. Map making skills can also help meet research and public engagement objectives. From a research perspective clear maps are often be the best way to present the results of geocomputational research. From policy and ‘citizen science’ perspectives, attractive and engaging maps can help change peoples’ minds, based on the evidence. Map making is therefore a critical part of geocomputation and its emphasis is not only describing, but also changing the world (see Chapter <a href="intro.html#intro">1</a>).</p>
 <!-- info about relation between efficiency and editability -->
 <!-- intro to the chapter structure -->
 </div>
@@ -946,14 +948,14 @@ Figure 9.21: Map of New Zealand created with ggplot2.
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
+<div id="ref-murrell_r_2016">
+<p>Murrell, Paul. 2016. <em>R Graphics, Second Edition</em>. CRC Press.</p>
+</div>
 <div id="ref-brewer_designing_2015">
 <p>Brewer, Cynthia A. 2015. <em>Designing Better Maps: A Guide for GIS Users</em>. 2 edition. Redlands, California: Esri Press. <a href="http://esripress.esri.com/storage/esripress/images/293/betmaped2_chapter%201.pdf">http://esripress.esri.com/storage/esripress/images/293/betmaped2_chapter%201.pdf</a>.</p>
 </div>
 <div id="ref-talbert_ancient_2014">
 <p>Talbert, Richard J. A. 2014. <em>Ancient Perspectives: Maps and Their Place in Mesopotamia, Egypt, Greece, and Rome</em>. University of Chicago Press.</p>
-</div>
-<div id="ref-murrell_r_2016">
-<p>Murrell, Paul. 2016. <em>R Graphics, Second Edition</em>. CRC Press.</p>
 </div>
 <div id="ref-lovelace_propensity_2017">
 <p>Lovelace, Robin, Anna Goodman, Rachel Aldred, Nikolai Berkoff, Ali Abbas, and James Woodcock. 2017. “The Propensity to Cycle Tool: An Open Source Online System for Sustainable Transport Planning.” <em>Journal of Transport and Land Use</em> 10 (1). doi:<a href="https://doi.org/10.5198/jtlu.2016.862">10.5198/jtlu.2016.862</a>.</p>

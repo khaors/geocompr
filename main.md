@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-04-14'
+date: '2018-04-15'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-04-14 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-04-15 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -275,7 +275,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserved97ec86c9a306cc7
+preserve0e2f4b3368e57c85
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3115,7 +3115,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve8a2eb5914763f166
+preserve7f74f7633294cf3f
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6002,7 +6002,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservef68a273163f5e6b9
+preservef8e33a803cdf6ad5
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6618,7 +6618,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve61f145e376758c5f
+preservea665a90e96674bf7
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6718,17 +6718,22 @@ library(tmap)    # for static and interactive maps
 
 A satisfying and important aspect of geographic research is producing and communicating the results in the form of maps.
 Map making --- the art of Cartography --- is an ancient skill that involves precision, consideration of the map-reader and often an element of creativity.
-Basic plotting of geographic data is straightforward in R with `plot()` (see section \@ref(basic-map)) which already allows the fabrication of quality maps.
-Advanced map-making even increases this quality and is a skill worth learning, since:
-a carefully crafted map can communicate results effectively and avoid time spent generating them going to waste due to poor presentation [@brewer_designing_2015]:
+Basic plotting of geographic data is straightforward in R with `plot()` (see section \@ref(basic-map)), and it is possible to create advanced maps using base R methods [@murrell_r_2016].
+
+This chapter focuses on dedicated map-making packages, especially **tmap**, for reasons that are explained in section \@ref(static-maps).
+There are a multitude of options but when learning a new skill (in this case map making), it makes sense to gain depth-of-knowledge in one package before branching out, a concept that also applies to the choice of programming language as we saw in Chapter \@ref(intro).
+It is worth developing advanced map making skills not only because it is a fun activity that can produce beautiful results. 
+Map making also has important practical applications.
+A carefully crafted map can help ensure that time spent in the analysis phases of geocomputational projects --- for example using methods covered in chapters \@ref(spatial-class) to \@ref(transform) --- are communicated effectively [@brewer_designing_2015]:
 
 > Amateur-looking maps can undermine your audience’s ability to understand important information and weaken the presentation of a professional data investigation.
 
 <!-- Todo: consider adding footnote saying it's good to focus on visualization early as in R4DS but that we cover it later because there's a risk of getting distracted by pretty pictures to the detriment of good analysis. -->
 
 Maps have been used for several thousand years for a wide variety of purposes.
-Historic examples include maps on buildings in Babylon and Ptolemy's world map in his masterpiece *Geography*.
-However, maps have historically been out of reach for everyday people [@talbert_ancient_2014].
+Historic examples include maps of buildings and land ownership in the Old Babylonian dynasty more than 3000 years ago and Ptolemy's world map in his masterpiece *Geography* nearly 2000 years ago [@talbert_ancient_2014].
+However, maps have historically been out of reach for everyday people.
+
 Modern computing has the potential to change this.
 Map making skills can also help meet research and public engagement objectives.
 From a research perspective clear maps are often be the best way to present the results of geocomputational research.
@@ -7335,7 +7340,7 @@ mapview::mapview(nz)
 ```
 
 <div class="figure" style="text-align: center">
-preservea5383a2a36a8f5f4
+preservee3d86a2df28c248e
 <p class="caption">(\#fig:mapview)Illustration of mapview in action.</p>
 </div>
 
