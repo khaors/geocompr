@@ -275,7 +275,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve0e2f4b3368e57c85
+preserve8c279c4079e309b2
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3115,7 +3115,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve7f74f7633294cf3f
+preserve12d07776065c7390
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6002,7 +6002,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservef8e33a803cdf6ad5
+preserve2a7736eeabcb88cd
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6618,7 +6618,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservea665a90e96674bf7
+preserve83097d1bfd58b705
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6738,7 +6738,7 @@ Modern computing has the potential to change this.
 Map making skills can also help meet research and public engagement objectives.
 From a research perspective clear maps are often be the best way to present the results of geocomputational research.
 From policy and 'citizen science' perspectives, attractive and engaging maps can help change peoples' minds, based on the evidence.
-Map making is therefore a critical part of geocomputation and its emphasis is not only describing, but also changing the world (see Chapter \@ref(intro)).
+Map making is therefore a critical part of geocomputation and its emphasis not only on describing, but also *changing* the world (see Chapter \@ref(intro)).
 
 <!-- info about relation between efficiency and editability -->
 <!-- intro to the chapter structure -->
@@ -6753,15 +6753,13 @@ The generic `plot()` function is often the fastest way to create static maps fro
 Sometimes the simplicity and speed of this approach is sufficient, especially during the development phase of a project:
 when using R interactively to understand a geographic dataset, you will likely be the only person who sees them.
 The base R approach is also extensible, as illustrated in Chapter [14](https://www.stat.auckland.ac.nz/~paul/RG2e/chapter14.html) of *R Graphics* [@murrell_r_2016], allowing detailed control over graphical parameters provided by `plot()` and the **grid** package.
-<!-- well, base R plotting and the grid package already allow for the making of high-quality maps suitable for publication. So the advantage of tmap is to do the same in with less and concise code? In any case, it would be good to emphasize the advantage the specific advantage of tmap compared to base plotting + grid. It would be also worth noting why tmap is the better option than ggplot2. Allows a wide variety of spatial formats -->
 The focus of this section, however, is map making publication-quality and engaging maps using minimal time and code with dedicated packages, particularly **tmap**.
-<!-- well, base R plotting and the grid package already allow for the making of high-quality maps suitable for publication. So the advantage of tmap is to do the same in with less and concise code? In any case, it would be good to emphasize the advantage the specific advantage of tmap compared to base plotting + grid. It would be also worth noting why tmap is the better option than ggplot2.
-Robin: tmap allows a wide variety of spatial formats especially raster objects (probably will also support stars?) -->
 
 Why **tmap**?
 It is a powerful and flexible map-making package with sensible defaults.
-It has a concise syntax that will be familiar to **ggplot2** users and has a unique capability to generate static and interactive maps using the same code via `tmap_mode()`.
-**tmap** is well documented in the vignettes [`tmap-nutshell`](https://cran.r-project.org/web/packages/tmap/vignettes/tmap-nutshell.html) and [`tmap-modes`](https://cran.r-project.org/web/packages/tmap/vignettes/tmap-modes.html).
+It has a concise syntax that allows for the creation of attractive maps with minimal code, that will be familiar to **ggplot2** users.
+Furthermore, **tmap** has a unique capability to generate static and interactive maps using the same code via `tmap_mode()`.
+It accepts a wider range of spatial classes (including `raster` objects) than alternatives such as **ggplot2**, as documented in vignettes [`tmap-nutshell`](https://cran.r-project.org/web/packages/tmap/vignettes/tmap-nutshell.html) and [`tmap-modes`](https://cran.r-project.org/web/packages/tmap/vignettes/tmap-modes.html).
 This section teaches how to make static maps with **tmap**, emphasizing the important aesthetic and layout options.
 
 ### tmap basics
@@ -7340,7 +7338,7 @@ mapview::mapview(nz)
 ```
 
 <div class="figure" style="text-align: center">
-preservee3d86a2df28c248e
+preservece7dd6563099a33a
 <p class="caption">(\#fig:mapview)Illustration of mapview in action.</p>
 </div>
 
