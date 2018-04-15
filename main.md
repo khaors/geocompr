@@ -275,7 +275,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve221b43ce69a40f6a
+preserveb9d2ebb87253d138
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3115,7 +3115,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveda0ab706e2027c47
+preserve1c327405fe4fdb0d
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6002,7 +6002,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve731399a6a7b0585c
+preserve8b9deba1bc0885a0
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6618,7 +6618,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservebcbb534af671bbf2
+preserve65383154b4b2bf68
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7339,7 +7339,7 @@ mapview::mapview(nz)
 ```
 
 <div class="figure" style="text-align: center">
-preserve27c0d0275e0a7542
+preservedfe3a6a7726d9ea0
 <p class="caption">(\#fig:mapview)Illustration of mapview in action.</p>
 </div>
 
@@ -7511,18 +7511,11 @@ Table: (\#tab:map-pkgs)Selected mapping packages, with associated metrics.
 package       title                                                              latest_release 
 ------------  -----------------------------------------------------------------  ---------------
 cartography   Thematic Cartography                                               2017-11-13     
-cartogram     Create Cartograms with R                                           2016-09-28     
 ggplot2       Create Elegant Data Visualisations Using the Grammar of Graphics   2016-12-30     
-globe         Plot 2D and 3D Views of the Earth, Including Major Coastline       2017-05-12     
 leaflet       Create Interactive Web Maps with Leaflet                           2017-02-21     
-maps          Draw Geographical Maps                                             2018-04-03     
-mapmisc       Utilities for Producing Maps                                       2018-04-09     
 mapview       Interactive Viewing of Spatial Data in R                           2018-01-30     
 plotly        Create Interactive Web Graphics via 'plotly.js'                    2017-07-29     
-raster        Geographic Data Analysis and Modeling                              2017-11-13     
 rasterVis     Visualization Methods for Raster Data                              2018-04-05     
-rworldmap     Mapping Global Data                                                2016-02-03     
-sf            Simple Features for R                                              2018-03-22     
 tmap          Thematic Maps                                                      2018-04-10     
 
 Table \@ref(tab:map-pkgs) shows a range of mapping packages are available, and there are many others not listed in this table.
