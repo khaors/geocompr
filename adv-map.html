@@ -278,7 +278,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="9.2.1" data-path="adv-map.html"><a href="adv-map.html#tmap-basics"><i class="fa fa-check"></i><b>9.2.1</b> tmap basics</a></li>
 <li class="chapter" data-level="9.2.2" data-path="adv-map.html"><a href="adv-map.html#map-objects-shapes-and-layers"><i class="fa fa-check"></i><b>9.2.2</b> Map objects, shapes and layers</a></li>
 <li class="chapter" data-level="9.2.3" data-path="adv-map.html"><a href="adv-map.html#aesthetics"><i class="fa fa-check"></i><b>9.2.3</b> Aesthetics</a></li>
-<li class="chapter" data-level="9.2.4" data-path="adv-map.html"><a href="adv-map.html#map-colors-and-categories"><i class="fa fa-check"></i><b>9.2.4</b> Map colors and categories</a></li>
+<li class="chapter" data-level="9.2.4" data-path="adv-map.html"><a href="adv-map.html#color-settings"><i class="fa fa-check"></i><b>9.2.4</b> Color settings</a></li>
 <li class="chapter" data-level="9.2.5" data-path="adv-map.html"><a href="adv-map.html#layouts"><i class="fa fa-check"></i><b>9.2.5</b> Layouts</a></li>
 <li class="chapter" data-level="9.2.6" data-path="adv-map.html"><a href="adv-map.html#faceted-maps"><i class="fa fa-check"></i><b>9.2.6</b> Faceted maps</a></li>
 <li class="chapter" data-level="9.2.7" data-path="adv-map.html"><a href="adv-map.html#inset-maps"><i class="fa fa-check"></i><b>9.2.7</b> Inset maps</a></li>
@@ -471,7 +471,7 @@ Figure 9.3: The impact of changing commonly used fill and border aesthetics to f
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">st_geometry</span>(nz), <span class="dt">col =</span> <span class="dv">1</span>:<span class="kw">nrow</span>(nz))      <span class="co"># works</span>
 <span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="dv">1</span>:<span class="kw">nrow</span>(nz)) <span class="co"># fails:</span>
 <span class="co">#&gt; Error: Fill argument neither colors nor valid variable name(s)</span></code></pre></div>
-<p>Instead <code>col</code> (and other aesthetics that can vary such as <code>lwd</code> for line layers and <code>size</code> for point layers) requires a character string naming an attribute associated with the geometry to be plotted. Thus, one would achieve the desired (plotted in the right-hand panel of Figure <a href="adv-map.html#fig:tmcol">9.4</a>) result as follows:<a href="#fn55" class="footnoteRef" id="fnref55"><sup>55</sup></a></p>
+<p>Instead <code>col</code> (and other aesthetics that can vary such as <code>lwd</code> for line layers and <code>size</code> for point layers) requires a character string naming an attribute associated with the geometry to be plotted. Thus, one would achieve the desired (plotted in the right-hand panel of Figure <a href="adv-map.html#fig:tmcol">9.4</a>) result as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nz$col =<span class="st"> </span><span class="dv">1</span>:<span class="kw">nrow</span>(nz)
 <span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;col&quot;</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:tmcol"></span>
@@ -486,25 +486,36 @@ map_nza =<span class="st"> </span><span class="kw">tm_shape</span>(nz) +
 <span class="st">  </span><span class="kw">tm_fill</span>(<span class="dt">col =</span> <span class="st">&quot;Land_area&quot;</span>, <span class="dt">title =</span> legend_title) +<span class="st"> </span><span class="kw">tm_borders</span>()</code></pre></div>
 <p>The resulting <code>tmap</code> object <code>map_nza</code> will be used, alongside <code>map_nz</code>, to illustrate different layout settings in the next section.</p>
 </div>
-<div id="map-colors-and-categories" class="section level3">
-<h3><span class="header-section-number">9.2.4</span> Map colors and categories</h3>
+<div id="color-settings" class="section level3">
+<h3><span class="header-section-number">9.2.4</span> Color settings</h3>
 <!-- title to be improved -->
-<p>Additional aesthetic settings are demonstrated in the code chunk below, which colors regions in New Zealand depending on their area. The results show how custom breaks can be set with the <code>breaks</code> argument (Figure <a href="adv-map.html#fig:tmpal">9.5</a> center). Additional palette options include <code>n</code> (which sets the number of bins into which numeric variables are categorized) and <code>palette</code> (which defines the color scheme). Results of changing values for these simultaneously are shown in Figure <a href="adv-map.html#fig:tmpal">9.5</a> (right):</p>
+<p>Color settings are an important part of map design. They can have a major impact on how spatial variability is portrayed as illustrated in Figure <a href="adv-map.html#fig:tmpal">9.5</a>. This shows four ways of coloring regions in New Zealand depending on median income, from right to left (and demonstrated in the code chunk below):</p>
+<ul>
+<li>The default setting uses ‘pretty’ breaks, described in the next paragraph</li>
+<li><code>breaks</code> which allows you to manually set the breaks</li>
+<li><code>n</code> which sets the number of bins into which numeric variables are categorized and</li>
+<li><code>palette</code> which defines the color scheme, for example <code>Reds</code></li>
+</ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">breaks =<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>) *<span class="st"> </span><span class="dv">10000</span>
 <span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_polygons</span>(<span class="dt">col =</span> <span class="st">&quot;Median_income&quot;</span>)
 <span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_polygons</span>(<span class="dt">col =</span> <span class="st">&quot;Median_income&quot;</span>, <span class="dt">breaks =</span> breaks)
 <span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_polygons</span>(<span class="dt">col =</span> <span class="st">&quot;Median_income&quot;</span>, <span class="dt">n =</span> <span class="dv">10</span>)
 <span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_polygons</span>(<span class="dt">col =</span> <span class="st">&quot;Median_income&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;RdBu&quot;</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:tmpal"></span>
-<img src="figures/tmpal-1.png" alt="Illustration of settings that affect variable aesthetics. The result shows a continuous variable (the area in square kilometers of regions in New Zealand) converted to color with (from left to right): default settings, manual breaks, n breaks, and an alternative palette." width="576" />
+<img src="figures/tmpal-1.png" alt="Illustration of settings that affect color settings. The results show (from left to right): default settings, manual breaks, n breaks, and the impact of changing the palette." width="576" />
 <p class="caption">
-Figure 9.5: Illustration of settings that affect variable aesthetics. The result shows a continuous variable (the area in square kilometers of regions in New Zealand) converted to color with (from left to right): default settings, manual breaks, n breaks, and an alternative palette.
+Figure 9.5: Illustration of settings that affect color settings. The results show (from left to right): default settings, manual breaks, n breaks, and the impact of changing the palette.
 </p>
 </div>
-<!-- This is quite an abrupt change of topics and does not connect well with the previous paragraphs on palette options. -->
-<p>The <strong>tmap</strong> package offers many methods for specifying how variables are plotted on the map, in addition to setting <code>breaks</code> manually as we have already seen in this subsection. They are set with the <code>style</code> argument and some of the most useful methods are illustrated in Figure <a href="adv-map.html#fig:break-styles">9.6</a>.</p>
-<!-- explain and describe classification intervals -->
-<p>The default value of <code>style</code> is <code>pretty</code>. It automatically rounds breaks values and evenly spaces them. The <code>equal</code> style divides the range of input values into subranges of equal range. This style is often used on data with regular distribution of values and common values range, such as percentages. On the other hand, it could produce categories with a large number of elements (points, areas) and those without any observation. To have the same number of elements in each category, one can use the <code>quantile</code> style. It is useful for ordinal data <!--examples--> and never produces empty classes. This style, however, could have very different values in the same category. Natural breaks method, also called <code>jenks</code>, tries to identify groups of similar values in the data. Breaks between classes are created to maximize the differences between categories. <!-- what do you mean by could be meaningful only for this? Also "Importantly" sentence sounds strange --> This method provides classes that reflect the values distribution, but at the same time creates classes that could be meaningful only for this dataset. Discrete legends are not always the most suitable as they present similar values by just a few colors. Alternatively, the <code>cont</code> or <code>order</code> styles can be used when presenting a large number of objects (e.g. points or polygons) or continuous fields (e.g. continuous rasters). The former is appropriate for variables with evenly distributed values, while the latter works well when the distribution of values is skewed (for example, only a few raster cells have very large values). Finally, the <code>cat</code> style should be used to represent categorical values. It assures that each category receives a unique color. <!-- references for more info --></p>
+<p>Another way to change color settings is by altering color break (or bin) settings. In addition to manually setting <code>breaks</code> <strong>tmap</strong> allows users to specify algorithms to automatically create breaks with the <code>style</code> argument. Six of the most useful break styles are illustrated in Figure <a href="adv-map.html#fig:break-styles">9.6</a> and described in the bullet points below:</p>
+<ul>
+<li><code>style = pretty</code>, the default setting, rounds breaks into whole numbers where possible and spaces them evenly</li>
+<li><code>style = equal</code> divides input values into bins of equal range, and is appropriate for variables with a uniform distribution <!-- On the other hand, it could produce categories with a large number of elements (points, areas) and those without any observation. --></li>
+<li><code>style = quantile</code> ensures the same number of observations fall into each category <!-- This style, however, could have very different values in the same category. --></li>
+<li><code>style = jenks</code> identifies groups of similar values in the data and maximizes the differences between categories <!-- This method provides classes that reflect the values distribution, but at the same time creates classes that could be meaningful only for this dataset. --> <!-- Discrete legends are not always the most suitable as they present similar values by just a few colors. --></li>
+<li><code>style = cont</code> (and <code>order</code>) present a large number of colors over continuous colour field, and are particularly suited for continuous rasters <!-- The former is appropriate for variables with evenly distributed values, while the latter works well when the distribution of values is skewed (for example, only a few raster cells have very large values). --></li>
+<li><code>style = cat</code> was designed to represent categorical values and assures that each category receives a unique color. <!-- references for more info --></li>
+</ul>
 <!-- Is there a way to improve the legends, so far they are not really appealaing -->
 <div class="figure" style="text-align: center"><span id="fig:break-styles"></span>
 <img src="figures/break-styles-1.png" alt="Illustration of different binning methods set using the style argument in tmap." width="576" />
@@ -512,10 +523,15 @@ Figure 9.5: Illustration of settings that affect variable aesthetics. The result
 Figure 9.6: Illustration of different binning methods set using the style argument in tmap.
 </p>
 </div>
+
+<div class="rmdnote">
+Although <code>style</code> is an argument of <strong>tmap</strong> functions it in facts originates as an argument in <code>classInt::classIntervals()</code> — see the help page of this function for details.
+</div>
+<p></p>
 <!-- sth. wrong with the next sentence -->
-<p>Values of selected variable are represented by a color palette. The default color palette is specified in <code>tm_layout()</code> (see section <a href="adv-map.html#layouts">9.2.5</a> to learn more), however, it could be quickly changed using the <code>palette</code> argument. It expects a vector of colors or a new color palette name, which can be selected interactively with <code>tmaptools::palette_explorer()</code>. What color palette to use, largely depends on the input data type and the purpose of the map. <!--While this could be an uneasy decision to be made, we can give some advice.--></p>
+<p>Pallettes define the color ranges associated the bins determined by the <code>breaks</code>, <code>n</code>, and <code>style</code> arguments described above. The default color palette is specified in <code>tm_layout()</code> (see section <a href="adv-map.html#layouts">9.2.5</a> to learn more), however, it could be quickly changed using the <code>palette</code> argument. It expects a vector of colors or a new color palette name, which can be selected interactively with <code>tmaptools::palette_explorer()</code>. What color palette to use, largely depends on the input data type and the purpose of the map. <!--While this could be an uneasy decision to be made, we can give some advice.--></p>
 <p>There are three main groups of color palettes - categorical, sequential and diverging (Figure <a href="adv-map.html#fig:colpal">9.7</a>), and each of them serves a different purpose.</p>
-<p>Categorical palettes consist of easily distinguishable colors and are most appropriate for categorical data without any particular order such as state names or land cover classes. If possible, the color choice should be intuitive as in the case of blue rivers (and pastures green). One should also avoid too many categories since this could make a map hard to read.<a href="#fn56" class="footnoteRef" id="fnref56"><sup>56</sup></a></p>
+<p>Categorical palettes consist of easily distinguishable colors and are most appropriate for categorical data without any particular order such as state names or land cover classes. If possible, the color choice should be intuitive as in the case of blue rivers (and pastures green). One should also avoid too many categories since this could make a map hard to read.<a href="#fn55" class="footnoteRef" id="fnref55"><sup>55</sup></a></p>
 <p>The second group, sequential palettes, mostly follow a gradient from light to dark colors with the former usually representing lower and the latter representing higher values. For this, one can use either a single color (e.g. gradient from light to dark blue) or a multi-hue color combination (e.g. a gradient from light yellow to dark green). Sequential palettes are most appropriate for mapping quantitative data.</p>
 <p>The last group, diverging palettes, typically range between three distinct colors (purple-white-green in Figure <a href="adv-map.html#fig:colpal">9.7</a>) and are usually created by joining two single color sequential palettes with the darker colors at each end. Their main purpose is too visualize the difference from an important reference point, e.g. a certain temperature, the median household income or the mean probability for a drought event.</p>
 <!-- one more color example -->
@@ -758,7 +774,7 @@ Figure 9.17: Illustration of mapview in action.
 In <strong>shiny</strong> apps these are often split into <code>ui.R</code> (short for user interface) and <code>server.R</code> files, naming conventions used by <a href="https://github.com/rstudio/shiny-server"><code>shiny-server</code></a>, a server-side Linux application for serving shiny apps on public-facing websites <code>shiny-server</code> also serves apps defined by a single <code>app.R</code> file in an ‘app folder’.
 </div>
 <p></p>
-<p>Before considering large apps it is worth seeing a minimal example, named ‘lifeApp’, in action.<a href="#fn57" class="footnoteRef" id="fnref57"><sup>57</sup></a> The code below defines and launches — with the command <code>shinyApp()</code> — a lifeApp, which provides an interactive slider allowing users to make countries appear with progressively lower levels of life expectancy (see Figure <a href="adv-map.html#fig:lifeApp">9.18</a>):</p>
+<p>Before considering large apps it is worth seeing a minimal example, named ‘lifeApp’, in action.<a href="#fn56" class="footnoteRef" id="fnref56"><sup>56</sup></a> The code below defines and launches — with the command <code>shinyApp()</code> — a lifeApp, which provides an interactive slider allowing users to make countries appear with progressively lower levels of life expectancy (see Figure <a href="adv-map.html#fig:lifeApp">9.18</a>):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ui =<span class="st"> </span><span class="kw">fluidPage</span>(
   <span class="kw">sliderInput</span>(<span class="dt">inputId =</span> <span class="st">&quot;life&quot;</span>, <span class="st">&quot;Life expectancy&quot;</span>, <span class="dv">0</span>, <span class="dv">80</span>, <span class="dt">value =</span> <span class="dv">80</span>),
       <span class="kw">leafletOutput</span>(<span class="dt">outputId =</span> <span class="st">&quot;map&quot;</span>)
@@ -925,9 +941,8 @@ Figure 9.21: Map of New Zealand created with ggplot2.
 <div class="footnotes">
 <hr />
 <ol start="55">
-<li id="fn55"><p><!-- wouldn't say sensible, since here it appears as if tmap simply uses equal class sizes...--> Figure <a href="adv-map.html#fig:tmcol">9.4</a> also demonstrates another benefit of <strong>tmap</strong>: it automatically converts numeric variables into sensible, graduated bins.<a href="adv-map.html#fnref55">↩</a></p></li>
-<li id="fn56"><p>The <code>col = &quot;MAP_COLORS&quot;</code> argument can be used in situations with a large number of unique object (for example a map of individual countries).<a href="adv-map.html#fnref56">↩</a></p></li>
-<li id="fn57"><p>The word ‘app’ in this context refers to ‘web application’ and should not be confused with smartphone apps, the more common meaning of the word.<a href="adv-map.html#fnref57">↩</a></p></li>
+<li id="fn55"><p>The <code>col = &quot;MAP_COLORS&quot;</code> argument can be used in situations with a large number of unique object (for example a map of individual countries).<a href="adv-map.html#fnref55">↩</a></p></li>
+<li id="fn56"><p>The word ‘app’ in this context refers to ‘web application’ and should not be confused with smartphone apps, the more common meaning of the word.<a href="adv-map.html#fnref56">↩</a></p></li>
 </ol>
 </div>
             </section>

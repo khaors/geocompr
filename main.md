@@ -275,7 +275,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveb9d2ebb87253d138
+preserve86f8629c253bc220
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3115,7 +3115,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve1c327405fe4fdb0d
+preserve18b8ec0b096ae201
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6002,7 +6002,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve8b9deba1bc0885a0
+preserve83937f93a06fe610
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6618,7 +6618,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve65383154b4b2bf68
+preservefa87e0931eb44f74
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6912,11 +6912,7 @@ tm_shape(nz) + tm_fill(col = 1:nrow(nz)) # fails:
 ```
 
 Instead `col` (and other aesthetics that can vary such as `lwd` for line layers and `size` for point layers) requires a character string naming an attribute associated with the geometry to be plotted.
-Thus, one would achieve the desired (plotted in the right-hand panel of Figure \@ref(fig:tmcol)) result as follows:^[
-<!-- wouldn't say sensible, since here it appears as if tmap simply uses equal class sizes...-->
-Figure \@ref(fig:tmcol) also demonstrates another benefit of **tmap**:
-it automatically converts numeric variables into sensible, graduated bins.
-]
+Thus, one would achieve the desired (plotted in the right-hand panel of Figure \@ref(fig:tmcol)) result as follows:
 
 
 ```r
@@ -6941,13 +6937,17 @@ map_nza = tm_shape(nz) +
 
 The resulting `tmap` object `map_nza` will be used, alongside `map_nz`, to illustrate different layout settings in the next section.
 
-### Map colors and categories
+### Color settings
 <!-- title to be improved -->
 
-Additional aesthetic settings are demonstrated in the code chunk below, which colors regions in New Zealand depending on their area.
-The results show how custom breaks can be set with the `breaks` argument (Figure \@ref(fig:tmpal) center).
-Additional palette options include `n` (which sets the number of bins into which numeric variables are categorized) and `palette` (which defines the color scheme).
-Results of changing values for these simultaneously are shown in Figure \@ref(fig:tmpal) (right):
+Color settings are an important part of map design.
+They can have a major impact on how spatial variability is portrayed as illustrated in Figure \@ref(fig:tmpal).
+This shows four ways of coloring regions in New Zealand depending on median income, from right to left (and demonstrated in the code chunk below):
+
+- The default setting uses 'pretty' breaks, described in the next paragraph
+- `breaks` which allows you to manually set the breaks
+- `n` which sets the number of bins into which numeric variables are categorized and
+- `palette` which defines the color scheme, for example `Reds`
 
 
 ```r
@@ -6959,32 +6959,25 @@ tm_shape(nz) + tm_polygons(col = "Median_income", palette = "RdBu")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figures/tmpal-1.png" alt="Illustration of settings that affect variable aesthetics. The result shows a continuous variable (the area in square kilometers of regions in New Zealand) converted to color with (from left to right): default settings, manual breaks, n breaks, and an alternative palette." width="576" />
-<p class="caption">(\#fig:tmpal)Illustration of settings that affect variable aesthetics. The result shows a continuous variable (the area in square kilometers of regions in New Zealand) converted to color with (from left to right): default settings, manual breaks, n breaks, and an alternative palette.</p>
+<img src="figures/tmpal-1.png" alt="Illustration of settings that affect color settings. The results show (from left to right): default settings, manual breaks, n breaks, and the impact of changing the palette." width="576" />
+<p class="caption">(\#fig:tmpal)Illustration of settings that affect color settings. The results show (from left to right): default settings, manual breaks, n breaks, and the impact of changing the palette.</p>
 </div>
 
-<!-- This is quite an abrupt change of topics and does not connect well with the previous paragraphs on palette options. -->
-The **tmap** package offers many methods for specifying how variables are plotted on the map, in addition to setting `breaks` manually as we have already seen in this subsection.
-They are set with the `style` argument and some of the most useful methods are illustrated in Figure \@ref(fig:break-styles).
+Another way to change color settings is by altering color break (or bin) settings.
+In addition to manually setting `breaks` **tmap** allows users to specify algorithms to automatically create breaks with the `style` argument.
+Six of the most useful break styles are illustrated in Figure \@ref(fig:break-styles) and described in the bullet points below:
 
-<!-- explain and describe classification intervals -->
-The default value of `style` is `pretty`.
-It automatically rounds breaks values and evenly spaces them.
-The `equal` style divides the range of input values into subranges of equal range.
-This style is often used on data with regular distribution of values and common values range, such as percentages.
-On the other hand, it could produce categories with a large number of elements (points, areas) and those without any observation.
-To have the same number of elements in each category, one can use the `quantile` style. 
-It is useful for ordinal data <!--examples--> and never produces empty classes. 
-This style, however, could have very different values in the same category.
-Natural breaks method, also called `jenks`, tries to identify groups of similar values in the data.
-Breaks between classes are created to maximize the differences between categories. 
-<!-- what do you mean by could be meaningful only for this? Also "Importantly" sentence sounds strange -->
-This method provides classes that reflect the values distribution, but at the same time creates classes that could be meaningful only for this dataset.
-Discrete legends are not always the most suitable as they present similar values by just a few colors.
-Alternatively, the `cont` or `order` styles can be used when presenting a large number of objects (e.g. points or polygons) or continuous fields (e.g. continuous rasters).
-The former is appropriate for variables with evenly distributed values, while the latter works well when the distribution of values is skewed (for example, only a few raster cells have very large values).
-Finally, the `cat` style should be used to represent categorical values.
-It assures that each category receives a unique color.
+- `style = pretty`, the default setting, rounds breaks into whole numbers where possible and spaces them evenly
+- `style = equal` divides input values into bins of equal range, and is appropriate for variables with a uniform distribution
+<!-- On the other hand, it could produce categories with a large number of elements (points, areas) and those without any observation. -->
+- `style = quantile` ensures the same number of observations fall into each category
+<!-- This style, however, could have very different values in the same category. -->
+- `style = jenks` identifies groups of similar values in the data and maximizes the differences between categories
+<!-- This method provides classes that reflect the values distribution, but at the same time creates classes that could be meaningful only for this dataset. -->
+<!-- Discrete legends are not always the most suitable as they present similar values by just a few colors. -->
+- `style = cont` (and `order`) present a large number of colors over continuous colour field, and are particularly suited for continuous rasters
+<!-- The former is appropriate for variables with evenly distributed values, while the latter works well when the distribution of values is skewed (for example, only a few raster cells have very large values). -->
+- `style = cat` was designed to represent categorical values and assures that each category receives a unique color.
 <!-- references for more info -->
 
 <!-- Is there a way to improve the legends, so far they are not really appealaing -->
@@ -6993,8 +6986,10 @@ It assures that each category receives a unique color.
 <p class="caption">(\#fig:break-styles)Illustration of different binning methods set using the style argument in tmap.</p>
 </div>
 
+\BeginKnitrBlock{rmdnote}<div class="rmdnote">Although `style` is an argument of **tmap** functions it in facts originates as an argument in `classInt::classIntervals()` --- see the help page of this function for details.</div>\EndKnitrBlock{rmdnote}
+
 <!-- sth. wrong with the next sentence -->
-Values of selected variable are represented by a color palette.
+Pallettes define the color ranges associated the bins determined by the `breaks`, `n`, and `style` arguments described above.
 The default color palette is specified in `tm_layout()` (see section \@ref(layouts) to learn more), however, it could be quickly changed using the `palette` argument.
 It expects a vector of colors or a new color palette name, which can be selected interactively with `tmaptools::palette_explorer()`.
 What color palette to use, largely depends on the input data type and the purpose of the map.
@@ -7339,7 +7334,7 @@ mapview::mapview(nz)
 ```
 
 <div class="figure" style="text-align: center">
-preservedfe3a6a7726d9ea0
+preservea6caa8c2dac39023
 <p class="caption">(\#fig:mapview)Illustration of mapview in action.</p>
 </div>
 
