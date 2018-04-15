@@ -275,7 +275,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve7a8d4656b26af282
+preserved2f75eeda1fa068c
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3115,7 +3115,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve5ec30205646b2231
+preserveb6d2f95ff21ad1d7
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6002,7 +6002,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserveb927a75af9e687fa
+preservebec322fde4882e54
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6618,7 +6618,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve565276dea7a6cfe9
+preserve084b755f11f9ef65
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6876,7 +6876,8 @@ Aesthetic settings, however, are controlled by arguments to layer functions.
 
 The plots in the previous section demonstrate **tmap**'s default aesthetic settings.
 Grey shades are used for `tm_fill()` and  `tm_bubbles()` layers and a continuous red line is used to represent lines created with `tm_lines()`.
-Of course, the user is provided with a fine-grained control over these default values, and other aesthetics.
+Of course, these default values and other aesthetics can be overridden.
+The purpose this section is to show how.
 
 There are two main types of map aesthetics: those that change with the data and those that are constant.
 Unlike **ggplot2** which uses the helper function `aes()` to represent the former, **tmap** layer functions accept aesthetic arguments that are either constant values *or* variable fields.
@@ -7338,7 +7339,7 @@ mapview::mapview(nz)
 ```
 
 <div class="figure" style="text-align: center">
-preserve531c26eb10b8e493
+preservebeb692e34376541e
 <p class="caption">(\#fig:mapview)Illustration of mapview in action.</p>
 </div>
 
