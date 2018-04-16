@@ -275,7 +275,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservea647435e6d29e9b8
+preservedd52f61dc12db435
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3115,7 +3115,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve4c04614a6f33884f
+preserveb0f8b4b6748d9f04
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6002,7 +6002,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve26828aaa77f2aca7
+preservec6eb3730ae553fbe
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6618,7 +6618,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveedbf19d7e305cfb3
+preserve0bbf7b0033f0605b
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6985,14 +6985,13 @@ Six of the most useful break styles are illustrated in Figure \@ref(fig:break-st
 Palettes define the color ranges associated the bins determined by the `breaks`, `n`, and `style` arguments described above.
 The default color palette is specified in `tm_layout()` (see section \@ref(layouts) to learn more), however, it could be quickly changed using the `palette` argument.
 It expects a vector of colors or a new color palette name, which can be selected interactively with `tmaptools::palette_explorer()`.
-What color palette to use, largely depends on the input data type and the purpose of the map.
-<!--While this could be an uneasy decision to be made, we can give some advice.-->
 
 There are three main groups of color palettes - categorical, sequential and diverging (Figure \@ref(fig:colpal)), and each of them serves a different purpose.
-
 Categorical palettes consist of easily distinguishable colors and are most appropriate for categorical data without any particular order such as state names or land cover classes.
-If possible, the color choice should be intuitive as in the case of blue rivers (and pastures green).
-One should also avoid too many categories since this could make a map hard to read.^[The `col = "MAP_COLORS"` argument can be used in situations with a large number of unique object (for example a map of individual countries).]
+Colors should be intuitive: rivers should be blue, for example, and pastures green.
+Avoid too many categories: this large legends can make maps uninterpretable.
+<!-- Not sure what this means. Please clarify (and if possible create reproducible example, e.g. `qtm(nz, col = "MAP_COLORS")`) to re-instate this (RL) -->
+<!-- ^[The `col = "MAP_COLORS"` argument can be used in situations with a large number of unique object (for example a map of individual countries).] -->
 
 The second group, sequential palettes, mostly follow a gradient from light to dark colors with the former usually representing lower and the latter representing higher values. 
 For this, one can use either a single color (e.g. gradient from light to dark blue) or a multi-hue color combination (e.g. a gradient from light yellow to dark green).
@@ -7324,7 +7323,7 @@ mapview::mapview(nz)
 ```
 
 <div class="figure" style="text-align: center">
-preserve079b4b437f52ad82
+preservedaf1cd1548cf3e76
 <p class="caption">(\#fig:mapview)Illustration of mapview in action.</p>
 </div>
 
