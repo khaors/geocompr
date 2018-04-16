@@ -275,7 +275,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservea886bd3e94f3dd1d
+preserve10f50139cf748d2c
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3115,7 +3115,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserved25ad71b714d2916
+preserve766ac01b3c738665
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6002,7 +6002,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserved9f3198c2ba14d22
+preserveed21e6c0793f16a2
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6618,7 +6618,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve029071758b07e419
+preserve18bee1bbddbf458c
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6989,7 +6989,7 @@ It expects a vector of colors or a new color palette name, which can be selected
 There are three main groups of color palettes - categorical, sequential and diverging (Figure \@ref(fig:colpal)), and each of them serves a different purpose.
 Categorical palettes consist of easily distinguishable colors and are most appropriate for categorical data without any particular order such as state names or land cover classes.
 Colors should be intuitive: rivers should be blue, for example, and pastures green.
-Avoid too many categories: large legends and maps with many colors can make maps uninterpretable.
+Avoid too many categories: maps with large legends and many colors can be uninterpretable.
 <!-- Not sure what this means. Please clarify (and if possible create reproducible example, e.g. `qtm(nz, col = "MAP_COLORS")`) to re-instate this (RL) -->
 <!-- ^[The `col = "MAP_COLORS"` argument can be used in situations with a large number of unique object (for example a map of individual countries).] -->
 
@@ -7114,7 +7114,7 @@ The changing populations of settlements, for example, can be represented in a fa
 The time dimension could be represented via another *aesthetic* such as color.
 However, this risks cluttering the map because it will involve multiple overlapping points (cities do not tend to move over time!).
 
-Typically all individual facets in a faceted map contain the same geometry data repeated multiple times, once for each column in the attribute data (this is the default plotting method for `sf` objects, as we saw in Chapter \@ref(#spatial-class)).
+Typically all individual facets in a faceted map contain the same geometry data repeated multiple times, once for each column in the attribute data (this is the default plotting method for `sf` objects, see \@ref(spatial-class)).
 However, facets can also represent shifting geometries such as as the evolution of a point pattern over time.
 This use case of faceted plot is illustrated in Figure \@ref(fig:urban-facet).
 
@@ -7330,7 +7330,7 @@ mapview::mapview(nz)
 ```
 
 <div class="figure" style="text-align: center">
-preserve667388154240cedd
+preserved4e5be6ce07dfa17
 <p class="caption">(\#fig:mapview)Illustration of mapview in action.</p>
 </div>
 
