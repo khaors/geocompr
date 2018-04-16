@@ -275,7 +275,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve10f50139cf748d2c
+preserve44a544b98bae7d3e
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3115,7 +3115,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve766ac01b3c738665
+preserve4c9f9ae4ffb3f304
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6002,7 +6002,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserveed21e6c0793f16a2
+preservec362f04e01888493
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6618,7 +6618,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve18bee1bbddbf458c
+preservefd106cc78830deac
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6938,7 +6938,6 @@ map_nza = tm_shape(nz) +
 The resulting `tmap` object `map_nza` will be used, alongside `map_nz`, to illustrate different layout settings in the next section.
 
 ### Color settings
-<!-- title to be improved -->
 
 Color settings are an important part of map design.
 They can have a major impact on how spatial variability is portrayed as illustrated in Figure \@ref(fig:tmpal).
@@ -7023,10 +7022,8 @@ Their main purpose is too visualize the difference from an important reference p
 ### Layouts
 
 The map layout refers to the combination of all map elements into a cohesive map.
-Map elements include among others the objects to be mapped, the title, the scale bar, margins and aspect ratios.
-<!-- what is the relation of the next two sentences to the general map layout. It sounds more like these should be moved to the palette and break sections. -->
-Color settings relate to the palette and break-points used affect how the map looks.
-Both may result in subtle changes that can nonetheless have a large impact on the impression left by your maps.
+Map elements include among others the objects to be mapped, the title, the scale bar, margins and aspect ratios, while the color settings covered in the previous section relate to the palette and break-points used affect how the map looks.
+Both may result in subtle changes that can have an equally large impact on the impression left by your maps.
 
 **tmap** allows a wide variety of layout settings to be changed, some of which are illustrated in Figure \@ref(fig:layout1), produced using the following code (see `args(tm_layout)` or `?tm_layout` for a full list):
 
@@ -7306,8 +7303,6 @@ The following command creates the animation illustrated in Figure \@ref(fig:urba
 tmap_animation(urb_anim, filename = "urb_anim.gif", delay = 25)
 ```
 
-<!-- Though the second animation is great, I wonder if it is necessary here, especially if the underlying code is not explained in more detail. So this could be also a great challenge for the exercise section?
--->
 Another illustration of the power of animated maps is provided in Figure \@ref(fig:animus).
 This shows the colonization of the United States, which moved progressively from the East to the West and finally into the interior.
 Code to reproduce this map can be found in the script `09-usboundaries.R`.
@@ -7330,7 +7325,7 @@ mapview::mapview(nz)
 ```
 
 <div class="figure" style="text-align: center">
-preserved4e5be6ce07dfa17
+preserveb7c4e58f4c2dc537
 <p class="caption">(\#fig:mapview)Illustration of mapview in action.</p>
 </div>
 
@@ -7438,8 +7433,6 @@ This way your prototype web applications should be limited not by technical cons
 But there are many other options for creating maps in R.
 The aim of this section is to provide a taster of some of these and pointers for additional resources: map making is a surprisingly active area of R package development so there is more to learn than can be covered here.
 
-<!-- maybe this should be separated from basic-map and basic-map-raster
-Also really doesn't belong here since the section header is other mapping packages-->
 The most mature option is to use `plot()` methods provided by core spatial packages **sf** and **raster**, covered in sections \@ref(basic-map) and \@ref(basic-map-raster) respectively.
 What we have not mentioned in those sections was that plot methods for raster and vector objects can be combined, as illustrated in the subsequent code chunk which generates Figure \@ref(fig:nz-plot).
 `plot()` has many options which can be explored by following links in the `?plot` help page and the **sf** vignette [`sf5`](https://cran.r-project.org/web/packages/sf/vignettes/sf5.html).
@@ -7513,6 +7506,7 @@ Of note is **cartography**, which generates a range of unusual maps including ch
 
 <!-- Pseudo (unusual) maps  -->
 <!--we need a better name -->
+<!-- I think we are abandoning this section - the links below can go into Other mapping packages (RL) -->
 
 <!-- geofacet - https://hafen.github.io/geofacet/-->
 <!-- population lines - https://github.com/rCarto/linemap-->
