@@ -275,7 +275,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve44a544b98bae7d3e
+preserveecac6896b15a1ba1
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3115,7 +3115,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve4c9f9ae4ffb3f304
+preserve946a0dbfb4a3382d
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6002,7 +6002,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preservec362f04e01888493
+preserve5d45979a6a63b432
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6618,7 +6618,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservefd106cc78830deac
+preservea0c60fcc4c948edc
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6968,7 +6968,7 @@ Six of the most useful break styles are illustrated in Figure \@ref(fig:break-st
 
 - `style = pretty`, the default setting, rounds breaks into whole numbers where possible and spaces them evenly
 - `style = equal` divides input values into bins of equal range, and is appropriate for variables with a uniform distribution (not recommended for variables with a skewed distribution as the resulting map may end-up having little color diversity)
-- `style = quantile` ensures the same number of observations fall into each category (with the potential down side that bin sizes can vary widely)
+- `style = quantile` ensures the same number of observations fall into each category (with the potential down side that bin ranges can vary widely)
 - `style = jenks` identifies groups of similar values in the data and maximizes the differences between categories
 - `style = cont` (and `order`) present a large number of colors over continuous color field, and are particularly suited for continuous rasters (`order` can help visualise skewed distributions)
 - `style = cat` was designed to represent categorical values and assures that each category receives a unique color.
@@ -7325,7 +7325,7 @@ mapview::mapview(nz)
 ```
 
 <div class="figure" style="text-align: center">
-preserveb7c4e58f4c2dc537
+preserve1903b92612b0598a
 <p class="caption">(\#fig:mapview)Illustration of mapview in action.</p>
 </div>
 
