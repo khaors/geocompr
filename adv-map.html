@@ -510,10 +510,10 @@ Figure 9.5: Illustration of settings that affect color settings. The results sho
 <p>Another way to change color settings is by altering color break (or bin) settings. In addition to manually setting <code>breaks</code> <strong>tmap</strong> allows users to specify algorithms to automatically create breaks with the <code>style</code> argument. Six of the most useful break styles are illustrated in Figure <a href="adv-map.html#fig:break-styles">9.6</a> and described in the bullet points below:</p>
 <ul>
 <li><code>style = pretty</code>, the default setting, rounds breaks into whole numbers where possible and spaces them evenly</li>
-<li><code>style = equal</code> divides input values into bins of equal range, and is appropriate for variables with a uniform distribution <!-- On the other hand, it could produce categories with a large number of elements (points, areas) and those without any observation. --></li>
-<li><code>style = quantile</code> ensures the same number of observations fall into each category <!-- This style, however, could have very different values in the same category. --></li>
-<li><code>style = jenks</code> identifies groups of similar values in the data and maximizes the differences between categories <!-- This method provides classes that reflect the values distribution, but at the same time creates classes that could be meaningful only for this dataset. --> <!-- Discrete legends are not always the most suitable as they present similar values by just a few colors. --></li>
-<li><code>style = cont</code> (and <code>order</code>) present a large number of colors over continuous color field, and are particularly suited for continuous rasters <!-- The former is appropriate for variables with evenly distributed values, while the latter works well when the distribution of values is skewed (for example, only a few raster cells have very large values). --></li>
+<li><code>style = equal</code> divides input values into bins of equal range, and is appropriate for variables with a uniform distribution (not recommended for variables with a skewed distribution as the resulting map may end-up having little color diversity)</li>
+<li><code>style = quantile</code> ensures the same number of observations fall into each category (with the potential down side that bin sizes can vary widely)</li>
+<li><code>style = jenks</code> identifies groups of similar values in the data and maximizes the differences between categories</li>
+<li><code>style = cont</code> (and <code>order</code>) present a large number of colors over continuous color field, and are particularly suited for continuous rasters (<code>order</code> can help visualise skewed distributions)</li>
 <li><code>style = cat</code> was designed to represent categorical values and assures that each category receives a unique color. <!-- references for more info --></li>
 </ul>
 <!-- Is there a way to improve the legends, so far they are not really appealaing -->

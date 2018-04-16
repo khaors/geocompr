@@ -275,7 +275,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve49db952cff69bc54
+preservef423b3d146833280
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3115,7 +3115,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve314140cb122fa46c
+preserveafd5d13d8a007d7b
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6002,7 +6002,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserveee7a83ef7a363cb5
+preserve478ed8eaa91597e1
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6618,7 +6618,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve00476a9f99e3fad9
+preserve62352fd215a0951e
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6968,15 +6968,10 @@ In addition to manually setting `breaks` **tmap** allows users to specify algori
 Six of the most useful break styles are illustrated in Figure \@ref(fig:break-styles) and described in the bullet points below:
 
 - `style = pretty`, the default setting, rounds breaks into whole numbers where possible and spaces them evenly
-- `style = equal` divides input values into bins of equal range, and is appropriate for variables with a uniform distribution
-<!-- On the other hand, it could produce categories with a large number of elements (points, areas) and those without any observation. -->
-- `style = quantile` ensures the same number of observations fall into each category
-<!-- This style, however, could have very different values in the same category. -->
+- `style = equal` divides input values into bins of equal range, and is appropriate for variables with a uniform distribution (not recommended for variables with a skewed distribution as the resulting map may end-up having little color diversity)
+- `style = quantile` ensures the same number of observations fall into each category (with the potential down side that bin sizes can vary widely)
 - `style = jenks` identifies groups of similar values in the data and maximizes the differences between categories
-<!-- This method provides classes that reflect the values distribution, but at the same time creates classes that could be meaningful only for this dataset. -->
-<!-- Discrete legends are not always the most suitable as they present similar values by just a few colors. -->
-- `style = cont` (and `order`) present a large number of colors over continuous color field, and are particularly suited for continuous rasters
-<!-- The former is appropriate for variables with evenly distributed values, while the latter works well when the distribution of values is skewed (for example, only a few raster cells have very large values). -->
+- `style = cont` (and `order`) present a large number of colors over continuous color field, and are particularly suited for continuous rasters (`order` can help visualise skewed distributions)
 - `style = cat` was designed to represent categorical values and assures that each category receives a unique color.
 <!-- references for more info -->
 
@@ -7330,7 +7325,7 @@ mapview::mapview(nz)
 ```
 
 <div class="figure" style="text-align: center">
-preserve10716cb5d7c0c05f
+preservec178861e1c4821ef
 <p class="caption">(\#fig:mapview)Illustration of mapview in action.</p>
 </div>
 
