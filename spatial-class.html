@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-04-16">
+<meta name="date" content="2018-04-17">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -497,7 +497,7 @@ Figure 2.4: Plotting with sf, with multiple variables (left) and a single variab
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">asia =<span class="st"> </span>world[world$continent ==<span class="st"> &quot;Asia&quot;</span>, ]
 asia =<span class="st"> </span><span class="kw">st_union</span>(asia)</code></pre></div>
 <p>We can now plot the Asian continent over a map of the world. Note, however, that this only works if the initial plot has only one layer:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(world[<span class="st">&quot;pop&quot;</span>])
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(world[<span class="st">&quot;pop&quot;</span>], <span class="dt">reset =</span> <span class="ot">FALSE</span>)
 <span class="kw">plot</span>(asia, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:asia"></span>
 <img src="figures/asia-1.png" alt="A plot of Asia added as a layer on top of countries worldwide." width="50%" />
@@ -527,8 +527,9 @@ sel_asia =<span class="st"> </span><span class="kw">st_intersects</span>(world_c
 <span class="co">#&gt;  TRUE :43</span></code></pre></div>
 <p>Note: <code>st_intersects()</code> uses <a href="https://trac.osgeo.org/geos/">GEOS</a> in the background for the spatial overlay operation (see also Chapter <a href="spatial-operations.html#spatial-operations">4</a>).</p>
 <p>Since <strong>sf</strong>’s <code>plot()</code> function builds on base plotting methods, you may also use its many optional arguments (see <code>?plot</code> and <code>?par</code>). This provides a powerful but not necessarily intuitive interface. To make the area of circles proportional to population, for example, the <code>cex</code> argument can be used as follows (see Figure <a href="spatial-class.html#fig:contpop">2.6</a> created with the code below and the exercises in section <a href="spatial-class.html#ex2">2.5</a>):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(world[<span class="st">&quot;continent&quot;</span>])
-<span class="kw">plot</span>(world_centroids, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">cex =</span> <span class="kw">sqrt</span>(world$pop) /<span class="st"> </span><span class="dv">10000</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(world[<span class="st">&quot;continent&quot;</span>], <span class="dt">reset =</span> <span class="ot">FALSE</span>)
+cex =<span class="st"> </span><span class="kw">sqrt</span>(world$pop) /<span class="st"> </span><span class="dv">10000</span>
+<span class="kw">plot</span>(world_centroids, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">cex =</span> cex, <span class="dt">lwd =</span> <span class="dv">5</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:contpop"></span>
 <img src="figures/contpop-1.png" alt="Country continents (represented by fill color) and 2015 populations (represented by points, with point area proportional to population) worldwide." width="576" />
 <p class="caption">
