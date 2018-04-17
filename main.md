@@ -275,7 +275,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve4a836095e759c195
+preservef8f064b54cfc7159
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -779,7 +779,7 @@ asia = st_union(asia)
 ```
 
 We can now plot the Asian continent over a map of the world.
-Note, however, that this only works if the initial plot has only one layer:
+Note that this only works when the initial plot has only one facet and when `reset` (which resets plot settings) is set to `FALSE`:
 
 
 ```r
@@ -834,9 +834,9 @@ summary(sel_asia)
 
 Note: `st_intersects()` uses [GEOS](https://trac.osgeo.org/geos/) in the background for the spatial overlay operation (see also Chapter \@ref(spatial-operations)).
 
-Since **sf**'s `plot()` function builds on base plotting methods, you may also use its many optional arguments (see `?plot` and `?par`).
-This provides a powerful but not necessarily intuitive interface.
-To make the area of circles proportional to population, for example, the `cex` argument can be used as follows (see Figure \@ref(fig:contpop) created with the code below and the exercises in section \@ref(ex2)):
+Since **sf**'s `plot()` function builds on base plotting methods, you may also use its many optional arguments (see `?graphics::plot` and `?par`).
+This provides many options, but may not be the most concise way to generate maps for publication (see Chapter \@ref(adv-map)).
+A simple illustration of the flexibility of `plot()` is provided in Figure \@ref(fig:contpop), which adds circles representing population size to a map of the world (see exercises in section \@ref(ex2) which build on this example) and is created with the following code:
 
 
 ```r
@@ -3116,7 +3116,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve2b95e5da4f1952a4
+preservec88e0081282b63ed
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6003,7 +6003,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve5ef048add9273119
+preserve447108cf99e663c6
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6619,7 +6619,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve9240386848fbbb92
+preservea5191236efae07e8
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7326,7 +7326,7 @@ mapview::mapview(nz)
 ```
 
 <div class="figure" style="text-align: center">
-preserve388f2677d2b37def
+preserve313dcca0ca2381c9
 <p class="caption">(\#fig:mapview)Illustration of mapview in action.</p>
 </div>
 
