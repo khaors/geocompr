@@ -275,7 +275,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservefb64498832feeb9c
+preserve99b6e06c7184d204
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3117,7 +3117,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserveaf7e7a2927176775
+preservefc7672c70f1f80ba
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6004,7 +6004,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve5a935fe3f4cd0b01
+preservee8d13f65547d39b4
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6620,7 +6620,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservea0067cba3a3dc0f0
+preservef4d3daacebe949b3
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7323,7 +7323,7 @@ mapview::mapview(nz)
 ```
 
 <div class="figure" style="text-align: center">
-preserveaabf42565cc018c9
+preserve36cdc4fbc98ac2d8
 <p class="caption">(\#fig:mapview)Illustration of mapview in action.</p>
 </div>
 
@@ -8493,11 +8493,8 @@ Required data will be downloaded in due course.
 ## Introduction {#intro-cv}
 
 Statistical learning is concerned with the use of statistical and computational models for identifying patterns in data and predicting from these patterns.
-Due to its origins, statistical learning is one of R's great strengths R (see section \@ref(software-for-geocomputation)).
-Applying statistical techniques to geographic data has been an active topic of research for many decades, within the overlapping fields of Geostatistics and Spatial Statistics [@diggle_modelbased_2007; @gelfand_handbook_2010] and the vibrant sub-field of point pattern analysis [@baddeley_spatial_2015].
+Due to its origins, statistical learning is one of R's great strengths R (see section \@ref(software-for-geocomputation)).^[Moreover, applying statistical techniques to geographic data has been an active topic of research for many decades, within the overlapping fields of Geostatistics and Spatial Statistics [@diggle_modelbased_2007; @gelfand_handbook_2010] and the vibrant sub-field of point pattern analysis [@baddeley_spatial_2015]].
 
-It would be impossible to cover all the content in these large fields, which are built on well-established theory and implementations in packages such as **spatstat**.
-Instead, this chapter seeks to provide an introduction to applying recently developed techniques of statistical learning to geographic data.
 Statistical learning combines and blends methods from both statistics and machine learning that learn from data.
 Roughly, one can distinguish statistical learning into supervised and unsupervised techniques, both of which are used throughout a vast range of disciplines including economics, physics, medicine, biology, ecology and geography [@james_introduction_2013].
 
@@ -8522,10 +8519,9 @@ Machine learning is conducive to tasks such as the prediction of future customer
 <!-- ^[In this case we do not have too worry too much about possible model misspecifications since we explicitly do not want to do statistical inference.] -->
 
 This chapter is based on a case study: the (spatial) prediction of landslides.
-This application links to the applied nature of geocomputation, defined in Chapter \@ref(intro), and illustrates how machine learning borrows from the field of statistics.
-The first model is a classic statistical technique: a Generalized Linear Model (GLM) [@zuur_mixed_2009].
-<!-- ^[Readers who are in need of refreshing their regression skills might have a look at @zuur_mixed_2009 and @james_introduction_2013, respectively.] -->
-Building on this the chapter implements a more typical machine learning algorithm.
+This application links to the applied nature of geocomputation, defined in Chapter \@ref(intro), and illustrates how machine learning borrows from the field of statistics when the sole aim is prediction.
+Therefore, this chapter first introduces modeling and cross-validation concepts with the help of a Generalized Linear Model [GLM; @zuur_mixed_2009].
+Building on this the chapter implements a more typical machine learning algorithm, namely a Support Vector Machine (SVM).
 The models' **predictive performance** will be assessed using spatial cross-validation (CV), which accounts for the fact that geographic data is special.
 
 CV determines a model's ability to generalize to new data, by splitting a dataset (repeatedly) into training and test sets.
@@ -8553,7 +8549,7 @@ The landslide initiation point is located in the scarp of a landslide polygon. S
 
 The coordinates for the non-landslide points were sampled randomly from the study area, with the restriction that they must fall outside a small buffer around the landslide polygons.
 There are 175 landslide points and 1360 non-landslide, as shown by `summary(landslides)`.
-To make number of landslide and non-landslide points balacned, let's sample 175 from the 1360 non-landslide points.
+To make number of landslide and non-landslide points balanced, let us sample 175 from the 1360 non-landslide points.
 
 
 ```r
@@ -8736,7 +8732,7 @@ Of course, the data splitting will differ in each repetition.
 <!--if the error is calc. on the fold-level. most often its calc. on the repetition level. maybe worth noting.
 talk about this in person
 -->
-Overall, this sums up to 500 models whereas the mean performance measure (AUROC) of all models is the model's overall predictive power based on non-spatial data.
+Overall, this sums up to 500 models whereas the mean performance measure (AUROC) of all models is the model's overall predictive power.
 
 However, geographic data is special.
 As we saw in Chapter \@ref(transport), the 'first law' of geography states that points close to each other are, generally, more similar than points further away [@miller_toblers_2004].
@@ -8762,7 +8758,7 @@ This is because there are still a few points in the test and training data which
 ## Spatial CV with **mlr**
 
 There are dozens of packages for statistical learning, as described for example in the [CRAN machine learning task view](https://CRAN.R-project.org/view=MachineLearning).
-Learning how to use each of these packages, including how to undertake cross-validation and hyperparameter tuning, can be a time-consuming process.
+Getting acquainted with each of these packages, including how to undertake cross-validation and hyperparameter tuning, can be a time-consuming process.
 Comparing model results from different packages can be even more laborious.
 The **mlr** package was developed to address these issues.
 It acts as a 'meta-package', providing a unified interface to the most popular statistical learning techniques including classification, regression, survival analysis and clustering [@bischl_mlr:_2016].^[As pointed out in the beginning we will solely focus on supervised learning techniques in this chapter.]
@@ -8770,8 +8766,8 @@ The standardized **mlr** interface is based on eight 'building blocks'.
 As illustrated in Figure \@ref(fig:building-blocks), these have a clear order.
 
 <div class="figure" style="text-align: center">
-<img src="figures/13_ml_abstraction_crop.png" alt="Basic building blocks of the **mlr** package. Source: [openml.github.io](http://openml.github.io/articles/slides/useR2017_tutorial/slides_tutorial_files/ml_abstraction-crop.png)." width="862" />
-<p class="caption">(\#fig:building-blocks)Basic building blocks of the **mlr** package. Source: [openml.github.io](http://openml.github.io/articles/slides/useR2017_tutorial/slides_tutorial_files/ml_abstraction-crop.png).</p>
+<img src="figures/13_ml_abstraction_crop.png" alt="Basic building blocks of the **mlr** package. Source: [openml.github.io](http://openml.github.io/articles/slides/useR2017_tutorial/slides_tutorial_files/ml_abstraction-crop.png). Permission to reuse this figure was kindly granted." width="862" />
+<p class="caption">(\#fig:building-blocks)Basic building blocks of the **mlr** package. Source: [openml.github.io](http://openml.github.io/articles/slides/useR2017_tutorial/slides_tutorial_files/ml_abstraction-crop.png). Permission to reuse this figure was kindly granted.</p>
 </div>
 
 The **mlr** modelling process consists of three main stages.
@@ -8806,29 +8802,28 @@ All classification **learners** start with `classif.` and all regression learner
 `listLearners()` helps to find out about all available learners and from which package **mlr** imports them (Table \@ref(tab:lrns)). 
 For a specific task, we can run:
 
-<!-- no idea, why render_book() fails frequently because function listLearners() cannot be found...:
-I also have this issue (RL - so not running and hardcoding result)-->
-
 
 ```r
-listLearners(task)
+listLearners(task, warn.missing.packages = FALSE) %>%
+  dplyr::select(class, name, short.name, package) %>%
+  head
 ```
 
 
-Table: (\#tab:lrns)Sample of available learners in the **mlr** package.
+Table: (\#tab:lrns)Sample of available learners for binomial tasks in the **mlr** package.
 
-class                 name                           package 
---------------------  -----------------------------  --------
-classif.binomial      Binomial Regression            stats   
-classif.featureless   Featureless classifier         mlr     
-classif.fnn           Fast k-Nearest Neighbour       FNN     
-classif.knn           k-Nearest Neighbor             class   
-classif.lda           Linear Discriminant Analysis   MASS    
-classif.logreg        Logistic Regression            stats   
+class                 name                           short.name    package 
+--------------------  -----------------------------  ------------  --------
+classif.binomial      Binomial Regression            binomial      stats   
+classif.featureless   Featureless classifier         featureless   mlr     
+classif.fnn           Fast k-Nearest Neighbour       fnn           FNN     
+classif.knn           k-Nearest Neighbor             knn           class   
+classif.lda           Linear Discriminant Analysis   lda           MASS    
+classif.logreg        Logistic Regression            logreg        stats   
 
 This yields all learners able to model two-class problems (landslide yes or no).
-We opt for the binomial classification method used in section \@ref(conventional-model) and implement it as `classif.binomial` in **mlr**.
-Additionally, we must specify the link-function, `logit` in this case, the default of the `binomial` family in `glm`.
+We opt for the binomial classification method used in section \@ref(conventional-model) and implemented as `classif.binomial` in **mlr**.
+Additionally, we must specify the link-function, `logit` in this case, which is also the default of the `binomial()` function.
 `predict.type` determines the type of the prediction with `prob` resulting in the predicted probability for landslide occurrence between 0 and 1 (this corresponds to `type = response` in `predict.glm`).
 
 
@@ -8868,7 +8863,7 @@ identical(fit$coefficients, mlr_fit$coefficients)
 ```
 -->
 
-The set-up steps for modelling with **mlr** may seem tedious. 
+The set-up steps for modeling with **mlr** may seem tedious. 
 But remember this single interface provides access to the 150+ learners shown by `listLearners()`; it would be far more tedious to learn the interface for each learner!
 Further advantages are simple parallelization of resampling techniques and the ability to tune machine learning hyperparameters (see section \@ref(svm)).
 Most importantly, (spatial) resampling in **mlr** is straightforward, requiring only two more steps: specifying a resampling method and running it.
@@ -8953,9 +8948,9 @@ Learners implementing SVM can be found using `listLearners()` as follows:
 
 
 ```r
-lrns = listLearners(task)
+lrns = listLearners(task, warn.missing.packages = FALSE)
 filter(lrns, grepl("svm", class)) %>% 
-  dplyr::select(., class, name, package) 
+  dplyr::select(class, name, short.name, package)
 #>            class                                 name short.name package
 #> 6   classif.ksvm              Support Vector Machines       ksvm kernlab
 #> 9  classif.lssvm Least Squares Support Vector Machine      lssvm kernlab
@@ -9046,16 +9041,8 @@ Repeated 100 times means fitting a total of 125,000 models to identify optimal h
 These are used in the performance estimation, which requires the fitting of another 500 models (5 folds \* 100 repetitions; see Figure \@ref(fig:partitioning)). 
 
 The process of hyperparameter tuning and performance estimation is computationally intensive.
-Model runtime can be reduced with parallelization, which can be done in a number of ways, depending on operating system.
+Model runtime can be reduced with parallelization, which can be done in a number of ways, depending on the operating system.
 <!-- "cloud development is done on linux servers" is somehow a strange read that I cannot relate really. Maybe sth like: "Parallelilaztion and cloud-computing are most often done on Linux operating systems nowadays. This has some reasons, one of them that directly affects us is that only on Linux systems we can set a parallel seed in R that makes the parallel processes reproducible [this is still an assumption, I will check on that!]"-->
-The parallelization approach demonstrated below works only under Unix-based systems.^[Note also that the `mc.set.seeds` parameter used later on is only available on Unix-based systems].
-Windows users have at least four options:
-
-1. Run the resampling without parallelizing it though this will take most likely more than half a day.
-2. Install a virtual machine (e.g. [Oracle VirtualBox](https://www.virtualbox.org/)) to reproduce the parallelization code.
-3. Connect remotely to a Linux-Server (which is what we have done).
-Of course, this also implies that R and all related packages are installed on the server.
-4. Install [Docker](https://docs.docker.com/docker-for-windows/) and run a container made of Linux image with a pre-installed R configuration. 
 
 Before starting the parallelization, we ensure that the processing continues even if one of the models throws an error by setting `on.learner.error` to `warn`.
 This avoids the process stopping just because of one failed model, which is desirable on large model runs.
@@ -9066,25 +9053,34 @@ To inspect the failed models once the processing is completed, we dump them:
 configureMlr(on.learner.error = "warn", on.error.dump = TRUE)
 ```
 
-To start the parallelization, we set the `mode` to `multicore` which will use `mclapply()` in the background on a single machine.^[See `?parallelStart` for further modes and the **parallelMap** [github page](https://github.com/berndbischl/parallelMap) for more information on the unified interface to popular parallelization back-ends.
-Note also that `mclapply()` only supports multicore processing on Unix-based systems.]
+To start the parallelization, we set the `mode` to `multicore` which will use `mclapply()` in the background on a single machine in the case of a Unix-based operating system^[See `?parallelStart` for further modes and the **parallelMap** [github page](https://github.com/berndbischl/parallelMap) for more information on the unified interface to popular parallelization back-ends.]
+Equivalenty, `parallelStartSocket()` enables parallelization under Windows. 
 `level` defines the level at which to enable parallelization, with `mlr.tuneParams` determining that the hyperparameter tuning level should be parallelized (see lower left part of Figure \@ref(fig:inner-outer), `?parallelGetRegisteredLevels`, and the **mlr** [parallelization tutorial](https://mlr-org.github.io/mlr-tutorial/release/html/parallelization/index.html#parallelization-levels) for details).
-We will use half of the available cores (set with the `cpus` parameter), a setting that allows possilbe other users to also work on the same high performance computing cluster (HPC).
+We will use half of the available cores (set with the `cpus` parameter), a setting that allows possible other users to work on the same high performance computing cluster in case one is used (which was the case when we ran the code).
 <!-- the partitions are created before the parallelization by the normal set.seed() call. mc.set.seed makes sure that the randomly chosen hyperparameters for the tuning are reproducible. These will first set within the parallelization.-->
 Setting `mc.set.seed` to `TRUE` ensures that the randomly chosen hyperparameters during the tuning can be reproduced when running the code again.
+Unfortunately, `mc.set.seed` is only available under Unix-based systems.
 
 
 ```r
 library(parallelMap)
+if (Sys.info()["sysname"] %in% c("Linux, Darwin")) {
 parallelStart(mode = "multicore", 
               # parallelize the hyperparameter tuning level
               level = "mlr.tuneParams", 
               # just use half of the available cores
               cpus = round(parallel::detectCores() / 2),
-              mc.set.seed = TRUE) 
+              mc.set.seed = TRUE)
+}
+
+if (Sys.info()["sysname"] == "Windows") {
+  parallelStartSocket(level = "mlr.tuneParams",
+                      cpus =  round(parallel::detectCores() / 2))
+}
 ```
 
 Now we are set-up for computing the nested spatial CV.
+Using a seed allows to recreate the exact same spatial partitions when re-running the code.
 Specifying the `resample()` parameters follows the exact same procedure as presented when using a GLM, the only difference being the `extract` argument.
 This allows the extraction of the hyperparameter tuning results which is important if we plan follow-up analyses on the tuning.
 After the processing, it is good practice to explicitly stop the parallelization with `parallelStop()`.
@@ -9101,20 +9097,6 @@ result = mlr::resample(learner = wrapped_lrn_ksvm,
                        measures = mlr::auc)
 # stop parallelization
 parallelStop()
-# save your result, e.g.:
-# saveRDS(result, "svm_sp_sp_rbf_50it.rds")
-```
-
-
-```r
-system.time({set.seed(12345)
-result = mlr::resample(learner = wrapped_lrn_ksvm, 
-                       task = task,
-                       resampling = perf_level,
-                       extract = getTuneResult,
-                       measures = mlr::auc)
-# stop parallelization
-parallelStop()})
 # save your result, e.g.:
 # saveRDS(result, "svm_sp_sp_rbf_50it.rds")
 ```
@@ -9193,8 +9175,7 @@ We recommend the following resources in this direction:
 
 - The **mlr** tutorials on [Machine Learning in R](https://mlr-org.github.io/mlr-tutorial/release/html/) and [Handling of spatial Data](https://mlr-org.github.io/mlr-tutorial/release/html/handling_of_spatial_data/index.html).
 - An academic paper on hyperparameter tuning [@schratz_performance_nodate].
-
-<!-- Anything else? -->
+- In case of spatio-temporal data, one should also account for temporal autocorrelation when doing CV [@meyer_improving_2018].
 
 ## Acknowledgments
 
