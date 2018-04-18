@@ -25,7 +25,7 @@
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 
 
-<meta name="date" content="2018-04-17">
+<meta name="date" content="2018-04-18">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -526,8 +526,8 @@ Figure 9.6: Illustration of different binning methods set using the style argume
 Although <code>style</code> is an argument of <strong>tmap</strong> functions it in facts originates as an argument in <code>classInt::classIntervals()</code> — see the help page of this function for details.
 </div>
 <p></p>
-<p>Palettes define the color ranges associated the bins determined by the <code>breaks</code>, <code>n</code>, and <code>style</code> arguments described above. The default color palette is specified in <code>tm_layout()</code> (see section <a href="adv-map.html#layouts">9.2.5</a> to learn more), however, it could be quickly changed using the <code>palette</code> argument. It expects a vector of colors or a new color palette name, which can be selected interactively with <code>tmaptools::palette_explorer()</code>.</p>
-<p>There are three main groups of color palettes - categorical, sequential and diverging (Figure <a href="adv-map.html#fig:colpal">9.7</a>), and each of them serves a different purpose. Categorical palettes consist of easily distinguishable colors and are most appropriate for categorical data without any particular order such as state names or land cover classes. Colors should be intuitive: rivers should be blue, for example, and pastures green. Avoid too many categories: maps with large legends and many colors can be uninterpretable. <!-- Not sure what this means. Please clarify (and if possible create reproducible example, e.g. `qtm(nz, col = "MAP_COLORS")`) to re-instate this (RL) --> <!-- ^[The `col = "MAP_COLORS"` argument can be used in situations with a large number of unique object (for example a map of individual countries).] --></p>
+<p>Palettes define the color ranges associated the bins determined by the <code>breaks</code>, <code>n</code>, and <code>style</code> arguments described above. The default color palette is specified in <code>tm_layout()</code> (see section <a href="adv-map.html#layouts">9.2.5</a> to learn more), however, it could be quickly changed using the <code>palette</code> argument. It expects a vector of colors or a new color palette name, which can be selected interactively with <code>tmaptools::palette_explorer()</code>. You can add a <code>-</code> as prefix to reverse the palette order.</p>
+<p>There are three main groups of color palettes - categorical, sequential and diverging (Figure <a href="adv-map.html#fig:colpal">9.7</a>), and each of them serves a different purpose. Categorical palettes consist of easily distinguishable colors and are most appropriate for categorical data without any particular order such as state names or land cover classes. Colors should be intuitive: rivers should be blue, for example, and pastures green. Avoid too many categories: maps with large legends and many colors can be uninterpretable. <!-- Not sure what this means. Please clarify (and if possible create reproducible example, e.g. `tm_shape(nz) + tm_polygons(col = "MAP_COLORS")`) to re-instate this (RL) --> <!-- ^[The `col = "MAP_COLORS"` argument can be used in situations with a large number of unique object (for example a map of individual countries).] --></p>
 <p>The second group is sequential palettes. These follow a gradient, for example from light to dark colors (light colors tend to represent lower values), and appropriate for continuous (numeric) variables. Sequential palettes can be single (<code>Blues</code> go from light to dark blue for example) or multi-color/hue (<code>YlOrBr</code> is gradient from light yellow to brown via orange, for example), as demonstrated in the code chunk below — output not shown, run the code yourself to see the results!</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>(<span class="st">&quot;Population&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;Blues&quot;</span>)
 <span class="kw">tm_shape</span>(nz) +<span class="st"> </span><span class="kw">tm_fill</span>(<span class="st">&quot;Population&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;YlOrBr&quot;</span>)</code></pre></div>
@@ -538,13 +538,7 @@ Although <code>style</code> is an argument of <strong>tmap</strong> functions it
 Figure 9.7: Examples of categorical, sequential and diverging palettes.
 </p>
 </div>
-<!-- additional tips: -->
-<!-- Perception and Accessibility -->
-<!-- Importantly, try to avoid using the rainbow color palette. -->
-<!-- ONE MORE SENTENCE ABOUT IT + REFERENCES -->
-<!-- Instead try to use colorblind friendly palettes as often as possible. -->
-<!-- how to reverse palettes with - -->
-<!-- references -->
+<p>There are two important principles for consideration when working with colors - perceptibility and accessibility. Firstly, colors on maps should match our perception. This means that certain colors are viewed through our experience and also cultural lenses. For example, green color usually represent vegetation or lowlands and blue is connected with water or cool. Color palettes also should be easy to understand by effectively conveying information. It should be clear which values are lower and which are higher, and colors should change gradually. This property is not preserved in the rainbow color palette, therefore we suggest avoiding it in spatial data visualization <span class="citation">(<span class="citeproc-not-found" data-reference-id="borland_rainbow_2007"><strong>???</strong></span>)</span>. Secondly, changes in colors should be accessible to the largest number of people. Therefore, it is important to use colorblind friendly palettes as often as possible.<a href="#fn55" class="footnoteRef" id="fnref55"><sup>55</sup></a></p>
 </div>
 <div id="layouts" class="section level3">
 <h3><span class="header-section-number">9.2.5</span> Layouts</h3>
@@ -768,7 +762,7 @@ Figure 9.17: Illustration of mapview in action.
 In <strong>shiny</strong> apps these are often split into <code>ui.R</code> (short for user interface) and <code>server.R</code> files, naming conventions used by <a href="https://github.com/rstudio/shiny-server"><code>shiny-server</code></a>, a server-side Linux application for serving shiny apps on public-facing websites <code>shiny-server</code> also serves apps defined by a single <code>app.R</code> file in an ‘app folder’.
 </div>
 <p></p>
-<p>Before considering large apps it is worth seeing a minimal example, named ‘lifeApp’, in action.<a href="#fn55" class="footnoteRef" id="fnref55"><sup>55</sup></a> The code below defines and launches — with the command <code>shinyApp()</code> — a lifeApp, which provides an interactive slider allowing users to make countries appear with progressively lower levels of life expectancy (see Figure <a href="adv-map.html#fig:lifeApp">9.18</a>):</p>
+<p>Before considering large apps it is worth seeing a minimal example, named ‘lifeApp’, in action.<a href="#fn56" class="footnoteRef" id="fnref56"><sup>56</sup></a> The code below defines and launches — with the command <code>shinyApp()</code> — a lifeApp, which provides an interactive slider allowing users to make countries appear with progressively lower levels of life expectancy (see Figure <a href="adv-map.html#fig:lifeApp">9.18</a>):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ui =<span class="st"> </span><span class="kw">fluidPage</span>(
   <span class="kw">sliderInput</span>(<span class="dt">inputId =</span> <span class="st">&quot;life&quot;</span>, <span class="st">&quot;Life expectancy&quot;</span>, <span class="dv">0</span>, <span class="dv">80</span>, <span class="dt">value =</span> <span class="dv">80</span>),
       <span class="kw">leafletOutput</span>(<span class="dt">outputId =</span> <span class="st">&quot;map&quot;</span>)
@@ -934,7 +928,8 @@ Figure 9.21: Map of New Zealand created with ggplot2.
 <div class="footnotes">
 <hr />
 <ol start="55">
-<li id="fn55"><p>The word ‘app’ in this context refers to ‘web application’ and should not be confused with smartphone apps, the more common meaning of the word.<a href="adv-map.html#fnref55">↩</a></p></li>
+<li id="fn55"><p>See the “Color blindness simulator” options in <code>tmaptools::palette_explorer()</code><a href="adv-map.html#fnref55">↩</a></p></li>
+<li id="fn56"><p>The word ‘app’ in this context refers to ‘web application’ and should not be confused with smartphone apps, the more common meaning of the word.<a href="adv-map.html#fnref56">↩</a></p></li>
 </ol>
 </div>
             </section>

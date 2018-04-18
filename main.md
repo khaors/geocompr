@@ -2,7 +2,7 @@
 --- 
 title: 'Geocomputation with R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2018-04-17'
+date: '2018-04-18'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 documentclass: book
@@ -39,7 +39,7 @@ New chapters will be added to this website as the project progresses, hosted at 
 
 [![Build Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 
-The version of the book you are reading now was built on 2018-04-17 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
+The version of the book you are reading now was built on 2018-04-18 and was built on [Travis](https://travis-ci.org/Robinlovelace/geocompr).
 
 ## How to contribute? {-}
 
@@ -275,7 +275,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve34829b01f01317cc
+preservec33f253e0992ba94
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3116,7 +3116,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve7b6b6c88d855a6be
+preserve09ed2771b49f7c7d
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6003,7 +6003,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve1161771634ec0121
+preserveaf75ea6d626c014e
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6619,7 +6619,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve5c9aa1444c053a22
+preserve71b6ff00adf1162d
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6985,12 +6985,13 @@ Six of the most useful break styles are illustrated in Figure \@ref(fig:break-st
 Palettes define the color ranges associated the bins determined by the `breaks`, `n`, and `style` arguments described above.
 The default color palette is specified in `tm_layout()` (see section \@ref(layouts) to learn more), however, it could be quickly changed using the `palette` argument.
 It expects a vector of colors or a new color palette name, which can be selected interactively with `tmaptools::palette_explorer()`.
+You can add a `-` as prefix to reverse the palette order.
 
 There are three main groups of color palettes - categorical, sequential and diverging (Figure \@ref(fig:colpal)), and each of them serves a different purpose.
 Categorical palettes consist of easily distinguishable colors and are most appropriate for categorical data without any particular order such as state names or land cover classes.
 Colors should be intuitive: rivers should be blue, for example, and pastures green.
 Avoid too many categories: maps with large legends and many colors can be uninterpretable.
-<!-- Not sure what this means. Please clarify (and if possible create reproducible example, e.g. `qtm(nz, col = "MAP_COLORS")`) to re-instate this (RL) -->
+<!-- Not sure what this means. Please clarify (and if possible create reproducible example, e.g. `tm_shape(nz) + tm_polygons(col = "MAP_COLORS")`) to re-instate this (RL) -->
 <!-- ^[The `col = "MAP_COLORS"` argument can be used in situations with a large number of unique object (for example a map of individual countries).] -->
 
 The second group is sequential palettes.
@@ -7003,7 +7004,6 @@ tm_shape(nz) + tm_fill("Population", palette = "Blues")
 tm_shape(nz) + tm_fill("Population", palette = "YlOrBr")
 ```
 
-
 The last group, diverging palettes, typically range between three distinct colors (purple-white-green in Figure \@ref(fig:colpal)) and are usually created by joining two single color sequential palettes with the darker colors at each end.
 Their main purpose is too visualize the difference from an important reference point, e.g. a certain temperature, the median household income or the mean probability for a drought event.
 
@@ -7012,13 +7012,15 @@ Their main purpose is too visualize the difference from an important reference p
 <p class="caption">(\#fig:colpal)Examples of categorical, sequential and diverging palettes.</p>
 </div>
 
-<!-- additional tips: -->
-<!-- Perception and Accessibility -->
-<!-- Importantly, try to avoid using the rainbow color palette. -->
-<!-- ONE MORE SENTENCE ABOUT IT + REFERENCES -->
-<!-- Instead try to use colorblind friendly palettes as often as possible. -->
-<!-- how to reverse palettes with - -->
-<!-- references -->
+There are two important principles for consideration when working with colors - perceptibility and accessibility.
+Firstly, colors on maps should match our perception. 
+This means that certain colors are viewed through our experience and also cultural lenses.
+For example, green color usually represent vegetation or lowlands and blue is connected with water or cool.
+Color palettes also should be easy to understand by effectively conveying information.
+It should be clear which values are lower and which are higher, and colors should change gradually.
+This property is not preserved in the rainbow color palette, therefore we suggest avoiding it in spatial data visualization [@borland_rainbow_2007].
+Secondly, changes in colors should be accessible to the largest number of people.
+Therefore, it is important to use colorblind friendly palettes as often as possible.^[See the "Color blindness simulator" options in `tmaptools::palette_explorer()`]
 
 ### Layouts
 
@@ -7326,7 +7328,7 @@ mapview::mapview(nz)
 ```
 
 <div class="figure" style="text-align: center">
-preserved930da126b656450
+preserve0b254aca233a94c5
 <p class="caption">(\#fig:mapview)Illustration of mapview in action.</p>
 </div>
 
