@@ -275,7 +275,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserveeaca57ced0ca9ddd
+preserve87fa9d3436ea48de
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3117,7 +3117,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve1754dde5d39215b1
+preserve31c265ad9ba6e1ee
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6004,7 +6004,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve63f39d0c540f57db
+preserve76d25ad03e3c99d4
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6620,7 +6620,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveb9eeed21de6a6503
+preserve7a74603afe41f785
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -6991,9 +6991,7 @@ You can add a `-` as prefix to reverse the palette order.
 There are three main groups of color palettes - categorical, sequential and diverging (Figure \@ref(fig:colpal)), and each of them serves a different purpose.
 Categorical palettes consist of easily distinguishable colors and are most appropriate for categorical data without any particular order such as state names or land cover classes.
 Colors should be intuitive: rivers should be blue, for example, and pastures green.
-Avoid too many categories: maps with large legends and many colors can be uninterpretable.
-<!-- Not sure what this means. Please clarify (and if possible create reproducible example, e.g. `tm_shape(nz) + tm_polygons(col = "MAP_COLORS")`) to re-instate this (RL) -->
-<!-- ^[The `col = "MAP_COLORS"` argument can be used in situations with a large number of unique object (for example a map of individual countries).] -->
+Avoid too many categories: maps with large legends and many colors can be uninterpretable.^[The `col = "MAP_COLORS"` argument can be used in maps with a large number of individual polygons (for example a map of individual countries). It creates unique colors for adjacent polygons.] 
 
 The second group is sequential palettes.
 These follow a gradient, for example from light to dark colors (light colors tend to represent lower values), and appropriate for continuous (numeric) variables.
@@ -7100,12 +7098,8 @@ This creates a folder called `tmap_style_previews` containing (in **tmap** 2.0) 
 Each image, from `tm_style_albatross.png` to `tm_style_white.png` shows a faceted map of Europe in the corresponding style.
 Note: `tmap_style_catalogue()` takes some time to run.</div>\EndKnitrBlock{rmdnote}
 
-<!-- 
-- joining vector/raster data
-- satellite tiles in the background
-- north arrow
-- scale bar
--->
+<!-- - north arrow -->
+<!-- - scale bar -->
 
 ### Faceted maps
 
@@ -7329,7 +7323,7 @@ mapview::mapview(nz)
 ```
 
 <div class="figure" style="text-align: center">
-preserve0e3b9a1e9635baed
+preserve74ccd31d065eacc4
 <p class="caption">(\#fig:mapview)Illustration of mapview in action.</p>
 </div>
 
