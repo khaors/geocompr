@@ -275,7 +275,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preservefccddfef5e87072e
+preservece835298374abc17
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3117,7 +3117,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve710f66a60ceb17de
+preserve1702eff7875c4c73
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6004,7 +6004,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve858ac32b4710ba14
+preserve1736ecebb1d30c5a
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6620,7 +6620,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve1c9dafbbaf2d2bb0
+preservef079afa726325287
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7329,7 +7329,7 @@ mapview::mapview(nz)
 ```
 
 <div class="figure" style="text-align: center">
-preservec60c897a7a3f5804
+preservef0accef3c43b5cd6
 <p class="caption">(\#fig:mapview)Illustration of mapview in action.</p>
 </div>
 
@@ -8499,7 +8499,7 @@ Required data will be downloaded in due course.
 ## Introduction {#intro-cv}
 
 Statistical learning is concerned with the use of statistical and computational models for identifying patterns in data and predicting from these patterns.
-Because of its original as a statistical programming language, statistical learning is one of R's great strengths R (see section \@ref(software-for-geocomputation)).
+Due to its origins, statistical learning is one of R's great strengths R (see section \@ref(software-for-geocomputation)).
 Applying statistical techniques to geographic data has been an active topic of research for many decades, within the overlapping fields of Geostatistics and Spatial Statistics [@diggle_modelbased_2007; @gelfand_handbook_2010] and the vibrant sub-field of point pattern analysis [@baddeley_spatial_2015].
 
 It would be impossible to cover all the content in these large fields, which are built on well-established theory and implementations in packages such as **spatstat**.
