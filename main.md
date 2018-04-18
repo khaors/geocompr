@@ -275,7 +275,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve1c4f928234c6c81a
+preservefe30f06a8dfae233
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -836,7 +836,8 @@ Note: `st_intersects()` uses [GEOS](https://trac.osgeo.org/geos/) in the backgro
 
 Since **sf**'s `plot()` function builds on base plotting methods, you may also use its many optional arguments (see `?graphics::plot` and `?par`).
 This provides many options, but may not be the most concise way to generate maps for publication (see Chapter \@ref(adv-map)).
-A simple illustration of the flexibility of `plot()` is provided in Figure \@ref(fig:contpop), which adds circles representing population size to a map of the world (see exercises in section \@ref(ex2) which build on this example) and is created with the following code:
+A simple illustration of the flexibility of `plot()` is provided in Figure \@ref(fig:contpop), which adds circles representing population size to a map of the world.
+A basic version of the map can be created with the following commands (see exercises in section \@ref(ex2) and the script [`02-contplot`](https://github.com/Robinlovelace/geocompr/blob/master/code/02-contpop.R) in the GitHub repo for further details):
 
 
 ```r
@@ -3116,7 +3117,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve24e0d3d81407a2fa
+preserve6029f45a4feaa7f6
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6003,7 +6004,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve6ccca1b88f06fcf0
+preservee058ee707b979038
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6619,7 +6620,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preservea7f5d57853f30bc9
+preserve1eeda3fe6b7adc13
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7328,7 +7329,7 @@ mapview::mapview(nz)
 ```
 
 <div class="figure" style="text-align: center">
-preserve43e11740ce898f8f
+preserved1c14aba2743d893
 <p class="caption">(\#fig:mapview)Illustration of mapview in action.</p>
 </div>
 
