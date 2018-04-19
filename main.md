@@ -275,7 +275,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve4dd58e655cc0de1d
+preserve3f9555a2f3b624dc
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3117,7 +3117,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preserve9f7e6720c8b48dad
+preserve3073cf6871c7a467
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6004,7 +6004,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserve1c64159326a36036
+preserve9466bd36628458b4
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6620,7 +6620,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserveb273bab2f942f0a6
+preservef822aa452936c5b8
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7323,7 +7323,7 @@ mapview::mapview(nz)
 ```
 
 <div class="figure" style="text-align: center">
-preserve9558b7e9c1763096
+preserveb791304450633349
 <p class="caption">(\#fig:mapview)Illustration of mapview in action.</p>
 </div>
 
@@ -8476,7 +8476,7 @@ This chapter assumes proficiency with spatial data, for example gained by studyi
 A familiarity with generalized linear regression and machine learning is highly recommended [for example from @zuur_mixed_2009;@james_introduction_2013].
 
 The chapter uses the following packages:^[
-**pROC** and **RSAGA** packages must also be installed although these do not need to be loaded.
+Package **pROC**, **RSAGA** and **spDataLarge** must also be installed although these do not need to be attached.
 ]
 
 
@@ -8488,12 +8488,12 @@ library(tidyverse)
 library(parallelMap)
 ```
 
-Required data will be downloaded in due course.
+Required data will be attached in due course.
 
 ## Introduction {#intro-cv}
 
 Statistical learning is concerned with the use of statistical and computational models for identifying patterns in data and predicting from these patterns.
-Due to its origins, statistical learning is one of R's great strengths R (see section \@ref(software-for-geocomputation)).^[Moreover, applying statistical techniques to geographic data has been an active topic of research for many decades, within the overlapping fields of Geostatistics and Spatial Statistics [@diggle_modelbased_2007; @gelfand_handbook_2010] and the vibrant sub-field of point pattern analysis [@baddeley_spatial_2015].]
+Due to its origins, statistical learning is one of R's great strengths (see section \@ref(software-for-geocomputation)).^[Moreover, applying statistical techniques to geographic data has been an active topic of research for many decades, within the overlapping fields of Geostatistics and Spatial Statistics [@diggle_modelbased_2007; @gelfand_handbook_2010] and the vibrant sub-field of point pattern analysis [@baddeley_spatial_2015].]
 
 Statistical learning combines and blends methods from both statistics and machine learning that learn from data.
 Roughly, one can distinguish statistical learning into supervised and unsupervised techniques, both of which are used throughout a vast range of disciplines including economics, physics, medicine, biology, ecology and geography [@james_introduction_2013].
@@ -8592,19 +8592,17 @@ We leave it as an exercise to the reader to compute the following terrain attrib
 - `elev`: elevation (m a.s.l.) as the representation of different altitudinal zones of vegetation and precipitation in the study area.
 - `log10_carea`: the decadic logarithm of the catchment area (log10 m^2^) representing the amount of water flowing towards a location.
 
-The first three rows of the resulting data frame (still named `lsl`, which are stored in the file [`spatialcv.Rdata`](https://github.com/Robinlovelace/geocompr/blob/master/extdata/spatialcv.Rdata)) in the book's GitHub repo, should look like this (rounded to two significant digits):
-<!-- has anybody an idea why I have to run the following code chunk two times to make it work when rendering the book with `bookdown::render_book()`?-->
-
-
+The first three rows of the resulting data frame, still named `lsl` look like this (rounded to two significant digits):
 
 
 ```
 #>        x       y lslpts slope  cplan  cprof elev log10_carea
-#> 1 720000 9600000  FALSE    37  0.021 0.0087 2500         2.6
-#> 2 710000 9600000  FALSE    42 -0.024 0.0068 2500         3.1
-#> 3 710000 9600000  FALSE    20  0.039 0.0150 2100         2.3
+#> 1 715078 9558647  FALSE    37  0.021 0.0087 2500         2.6
+#> 2 713748 9558047  FALSE    42 -0.024 0.0068 2500         3.1
+#> 3 712508 9558887  FALSE    20  0.039 0.0150 2100         2.3
 ```
 
+As a convenience to the reader, `lsl` is also available in the **spDataLarge** package along with the corresponding terrain attributes raster brick (`data("ta", package = "spDataLarge")`).
 
 <div class="figure" style="text-align: center">
 <img src="figures/lsl-map-1.png" alt="Landslide initiation points (red) and points unaffected by landsliding (blue) in Southern Ecuador." width="576" />
@@ -8674,8 +8672,8 @@ In addition to a model object (`fit`), this function also expects a raster stack
 
 
 ```r
-# loading among others ta, a raster stack containing the predictors
-load("extdata/spatialcv.Rdata")
+# attaching ta, a raster brick containing the predictors
+data("ta", package = "spDataLarge")
 # making the prediction
 pred = raster::predict(object = ta, model = fit,
                        type = "response")
@@ -8719,7 +8717,7 @@ pROC::auc(pROC::roc(lsl$lslpts, fitted(fit)))
 
 An AUROC of 0.83 represents a good fit.
 However, this is an overoptimistic estimation since we have computed it on the complete dataset. 
-To derive a biased-reduced assessment we have to use cross-validation and in the case of spatial data we will have to make use of spatial CV.
+To derive a biased-reduced assessment we have to use cross-validation and in the case of spatial data should make use of spatial CV.
 
 ## Introduction to (spatial) cross-validation {#intro-cv} 
 Cross-validation belongs to the family of resampling methods [@james_introduction_2013].
@@ -8923,10 +8921,10 @@ As expected, the spatially cross-validated result yields lower AUROC values on a
 <p class="caption">(\#fig:boxplot-cv)Boxplot showing the difference in AUROC values between spatial and conventional 100-repeated 5-fold cross-validation.</p>
 </div>
 
-### Tuning (spatial) machine-learning hyperparameters {#svm}
+### Spatial tuning of machine-learning hyperparameters {#svm}
 
-Section \@ref(intro-cv) provided an overview of machine learning in relation to the field of statistics.
-To recap, we adhere to the following definition by [Jason Brownlee](https://machinelearningmastery.com/linear-regression-for-machine-learning/):
+Section \@ref(intro-cv) introduced machine learning as part of statistical learning.
+To recap, we adhere to the following definition of machine learning by [Jason Brownlee](https://machinelearningmastery.com/linear-regression-for-machine-learning/):
 
 > Machine learning, more specifically the field of predictive modeling is primarily concerned with minimizing the error of a model or making the most accurate predictions possible, at the expense of explainability.
 In applied machine learning we will borrow, reuse and steal algorithms from many different fields, including statistics and use them towards these ends.
@@ -9175,7 +9173,7 @@ We recommend the following resources in this direction:
 
 - The **mlr** tutorials on [Machine Learning in R](https://mlr-org.github.io/mlr-tutorial/release/html/) and [Handling of spatial Data](https://mlr-org.github.io/mlr-tutorial/release/html/handling_of_spatial_data/index.html).
 - An academic paper on hyperparameter tuning [@schratz_performance_nodate].
-- In case of spatio-temporal data, one should also account for temporal autocorrelation when doing CV [@meyer_improving_2018].
+- In case of spatio-temporal data, one should account for spatial and temporal autocorrelation when doing CV [@meyer_improving_2018].
 
 ## Acknowledgments
 
