@@ -277,7 +277,7 @@ leaflet() %>%
 ```
 
 <div class="figure" style="text-align: center">
-preserve0e408adb73a1ab08
+preservefe8efdb4eadcf883
 <p class="caption">(\#fig:interactive)Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.</p>
 </div>
 
@@ -3119,7 +3119,7 @@ any(st_touches(cycle_hire, cycle_hire_osm, sparse = FALSE))
 
 
 <div class="figure" style="text-align: center">
-preservef01300dd3dae57b8
+preservec4c1b3e61c55a91a
 <p class="caption">(\#fig:cycle-hire)The spatial distribution of cycle hire points in London based on official data (blue) and OpenStreetMap data (red).</p>
 </div>
 
@@ -6006,7 +6006,7 @@ The result of this code, visualized in Figure \@ref(fig:cycleways), identifies r
 Although other routes between zones are likely to be used --- in reality people do not travel to zone centroids or always use the shortest route algorithm for a particular mode --- the results demonstrate routes along which cycle paths could be prioritized.
 
 <div class="figure" style="text-align: center">
-preserveeb40daf4e4254e88
+preservecd30c73054713439
 <p class="caption">(\#fig:cycleways)Potential routes along which to prioritise cycle infrastructure in Bristol, based on access key rail stations (red dots) and routes with many short car journeys (north of Bristol surrounding Stoke Bradley). Line thickness is proportional to number of trips.</p>
 </div>
 
@@ -6622,7 +6622,7 @@ result = sum(reclass)
 For instance, a score greater than 9 might be a suitable threshold indicating raster cells where a bike shop could be placed (Figure \@ref(fig:bikeshop-berlin)).
 
 <div class="figure" style="text-align: center">
-preserve2907db4024bd130d
+preserve7afb238a2eb0a7c6
 <p class="caption">(\#fig:bikeshop-berlin)Suitable areas (i.e. raster cells with a score > 9) in accordance with our hypothetical survey for bike stores in Berlin.</p>
 </div>
 
@@ -7021,7 +7021,7 @@ Color palettes also should be easy to understand by effectively conveying inform
 It should be clear which values are lower and which are higher, and colors should change gradually.
 This property is not preserved in the rainbow color palette, therefore we suggest avoiding it in spatial data visualization [@borland_rainbow_2007].
 Secondly, changes in colors should be accessible to the largest number of people.
-Therefore, it is important to use colorblind friendly palettes as often as possible.^[See the "Color blindness simulator" options in `tmaptools::palette_explorer()`]
+Therefore, it is important to use colorblind friendly palettes as often as possible.^[See the "Color blindness simulator" options in `tmaptools::palette_explorer()`.]
 
 ### Layouts
 
@@ -7325,7 +7325,7 @@ mapview::mapview(nz)
 ```
 
 <div class="figure" style="text-align: center">
-preserve083c751c88ed1c2a
+preserve3bbedbdb4057c9b1
 <p class="caption">(\#fig:mapview)Illustration of mapview in action.</p>
 </div>
 
@@ -7515,7 +7515,14 @@ Of note is **cartography**, which generates a range of unusual maps including ch
 <!-- dot density maps -->
 
 ## Exercises
-<!-- Exercises are still missing -->
+
+<!-- static map 1 -->
+<!-- static map 2 -->
+<!-- faceted map -->
+<!-- inset map -->
+<!-- animated map -->
+<!-- interactive map -->
+<!-- web mapping -->
 1. Sketch out on paper ideas for a web mapping app that could be used to make transport or land-use policies more evidence based:
   - In the city you live in, for a couple of users per day
   - In the country you live in, for dozens of users per day
@@ -7524,6 +7531,9 @@ Of note is **cartography**, which generates a range of unusual maps including ch
 1. Update the code in `coffeeApp/app.R` so that instead of centering on Brazil the user can select which country to focus on:
     - Using `textInput()`
     - Using `selectInput()`
+
+<!-- other mapping packages 1 -->
+<!-- other mapping packages 2 -->
 
 <!--chapter:end:09-mapping.Rmd-->
 
